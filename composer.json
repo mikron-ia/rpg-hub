@@ -9,9 +9,7 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": ">=2.0.6",
         "yiisoft/yii2-bootstrap": "*",
-        "yiisoft/yii2-swiftmailer": "*",
-        "johnitvn/yii2-ajaxcrud": "*",
-        "johnitvn/yii2-rbac-plus": "^1.0"
+        "yiisoft/yii2-swiftmailer": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
