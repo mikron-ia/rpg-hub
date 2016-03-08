@@ -33,7 +33,7 @@ class StoryController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Story::find(),
+            'query' => Story::find()->orderBy('story_id DESC'),
         ]);
 
         return $this->render('index', [
