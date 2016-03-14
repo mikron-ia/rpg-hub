@@ -17,7 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
-            return Html::a(Html::encode($model->name), ['view', 'id' => $model->story_id]);
+            //return Html::a(Html::encode($model->name), ['view', 'id' => $model->story_id]);
+            return $this->render('_index_box',['model' => $model]);
         },
     ]) ?>
 

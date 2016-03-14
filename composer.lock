@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b370ee76292bd15ab42c5b3e415a658e",
-    "content-hash": "d71b68aec1f5fbd5536e1d196b54b793",
+    "hash": "fa0a85b3b3dc37b625b63e72592fc1ae",
+    "content-hash": "fc99e4aa29508195823e214ad408a169",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -660,6 +660,45 @@
             "extra": {
                 "bower-asset-main": "dist/typeahead.bundle.js"
             }
+        },
+        {
+            "name": "c006/yii2-migration-utility",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c006/yii2-migration-utility.git",
+                "reference": "fa72d1a9a72656400a63ea4cab3970f8799a89e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c006/yii2-migration-utility/zipball/fa72d1a9a72656400a63ea4cab3970f8799a89e0",
+                "reference": "fa72d1a9a72656400a63ea4cab3970f8799a89e0",
+                "shasum": ""
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "c006\\utility\\migration\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Chambers",
+                    "email": "jchambers.dev@gmail.com"
+                }
+            ],
+            "description": "Automatically writes the create tables for migrations or create tables in general",
+            "keywords": [
+                "extension",
+                "migration",
+                "tables",
+                "yii2"
+            ],
+            "time": "2015-12-11 17:22:16"
         },
         {
             "name": "codeception/codeception",

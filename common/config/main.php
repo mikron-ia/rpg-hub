@@ -6,4 +6,9 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
     ],
+    'modules' => [
+        'utility' => [
+            'class' => 'c006\utility\migration\Module',
+        ],
+    ],
 ];

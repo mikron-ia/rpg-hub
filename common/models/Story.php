@@ -10,7 +10,11 @@ use Yii;
  * @property string $story_id
  * @property string $key
  * @property string $name
+ * @property string $short
+ * @property string $long
  * @property string $data
+ *
+ * @property StoryParameter[] $storyParameters
  */
 class Story extends \yii\db\ActiveRecord
 {
@@ -28,8 +32,8 @@ class Story extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['key', 'name', 'data'], 'required'],
-            [['data'], 'string'],
+            [['key', 'name', 'short', 'long', 'data'], 'required'],
+            [['short', 'long', 'data'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120]
         ];
@@ -42,10 +46,20 @@ class Story extends \yii\db\ActiveRecord
     {
         return [
             'story_id' => Yii::t('app', 'Story ID'),
-            'key' => Yii::t('app', 'Story Key'),
-            'name' => Yii::t('app', 'Title'),
+            'key' => Yii::t('app', 'Key'),
+            'name' => Yii::t('app', 'Name'),
+            'short' => Yii::t('app', 'Short'),
+            'long' => Yii::t('app', 'Long'),
             'data' => Yii::t('app', 'Data'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStoryParameters()
+    {
+        return $this->hasMany(StoryParameter::className(), ['story_id' => 'story_id']);
     }
 
     /**
