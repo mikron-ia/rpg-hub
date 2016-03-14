@@ -6,17 +6,17 @@ use yii\helpers\Html;
 
 ?>
 
-<div id="story-{{ loop.index }}">
+<div id="story-<?php echo $model->story_id; ?>">
 
     <h2 class="center">
         <?php echo Html::a(Html::encode($model->name), ['view', 'id' => $model->story_id]); ?>
     </h2>
 
-    <div class="col-lg-8">
+    <div class="col-lg-9">
         <?php echo $model->short; ?>
     </div>
 
-    <div class="col-lg-4">
+    <div class="col-lg-3">
 
         <table class="table table-bordered table-hover">
             <tbody>

@@ -103,3 +103,7 @@ a.desc:after {
 .nav > li > form > button:hover {
     text-decoration: none;
 }
+
+p {
+    text-align: justify;
+}
