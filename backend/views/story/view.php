@@ -29,12 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'key',
-            'name',
-            'short',
-            'long:ntext',
             'data:ntext',
         ],
     ]) ?>
+
+    <h2>Short description</h2>
+    <?php echo $model->short; ?>
+
+    <h2>Long description</h2>
+    <?php echo $model->long; ?>
 
     <h2>Story parameters</h2>
     <table class="table table-bordered">
