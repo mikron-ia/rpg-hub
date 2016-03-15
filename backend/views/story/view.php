@@ -28,11 +28,24 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'story_id',
             'key',
             'name',
+            'short',
+            'long:ntext',
             'data:ntext',
         ],
     ]) ?>
+
+    <h2>Story parameters</h2>
+    <table class="table table-bordered">
+        <tbody>
+        <?php foreach ($model->storyParameters as $storyParameter): ?>
+            <tr>
+                <td><?php echo $storyParameter->code; ?></td>
+                <td><?php echo $storyParameter->content; ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
 
 </div>
