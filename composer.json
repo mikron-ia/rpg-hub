@@ -1,12 +1,12 @@
 {
     "name": "mikron-ia/rpg-hub-integrated",
-    "description": "Integrated RPG hub",
+    "description": "Integrated RPG hub - an integrated attempt",
     "keywords": ["yii2", "rpg"],
     "type": "project",
     "license": "GPL-2.0",
     "minimum-stability": "stable",
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.5.0",
         "yiisoft/yii2": ">=2.0.6",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
