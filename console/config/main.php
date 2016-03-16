@@ -20,6 +20,12 @@ return [
                 ],
             ],
         ],
+        'i18n' => [
+            'translations' => [
+                'class' => \yii\i18n\PhpMessageSource::className(),
+                'basePath' => '@common/messages',
+            ]
+        ],
     ],
     'params' => $params,
 ];
