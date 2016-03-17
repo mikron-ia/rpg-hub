@@ -7,7 +7,7 @@ return [
     'languages' => ['en', 'pl'],
     'translator' => 'Yii::t',
     'sort' => true,
-    'removeUnused' => true,
+    'removeUnused' => false,
     'only' => ['*.php'],
     'except' => [
         '.git',

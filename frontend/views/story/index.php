@@ -6,7 +6,7 @@ use yii\widgets\ListView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stories');
+$this->title = Yii::t('app', 'TITLE_STORIES');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="story-index">
