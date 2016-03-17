@@ -45,12 +45,12 @@ class Story extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'story_id' => Yii::t('app', 'Story ID'),
-            'key' => Yii::t('app', 'Key'),
-            'name' => Yii::t('app', 'Name'),
-            'short' => Yii::t('app', 'Short'),
-            'long' => Yii::t('app', 'Long'),
-            'data' => Yii::t('app', 'Data'),
+            'story_id' => Yii::t('app', 'STORY_ID'),
+            'key' => Yii::t('app', 'STORY_KEY'),
+            'name' => Yii::t('app', 'STORY_NAME'),
+            'short' => Yii::t('app', 'STORY_SHORT'),
+            'long' => Yii::t('app', 'STORY_LONG'),
+            'data' => Yii::t('app', 'STORY_DATA'),
         ];
     }
 

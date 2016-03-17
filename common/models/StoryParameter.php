@@ -45,11 +45,11 @@ class StoryParameter extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'story_parameter_id' => Yii::t('app', 'Story Parameter ID'),
-            'story_id' => Yii::t('app', 'Story ID'),
-            'code' => Yii::t('app', 'Code'),
-            'visibility' => Yii::t('app', 'Visibility'),
-            'content' => Yii::t('app', 'Content'),
+            'story_parameter_id' => Yii::t('app', 'STORY_PARAMETER_ID'),
+            'story_id' => Yii::t('app', 'STORY_ID'),
+            'code' => Yii::t('app', 'STORY_PARAMETER_CODE'),
+            'visibility' => Yii::t('app', 'STORY_PARAMETER_VISIBILITY'),
+            'content' => Yii::t('app', 'STORY_PARAMETER_CONTENT'),
         ];
     }
 

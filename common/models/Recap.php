@@ -43,11 +43,11 @@ class Recap extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'recap_id' => Yii::t('app', 'Recap ID'),
-            'key' => Yii::t('app', 'Key'),
-            'name' => Yii::t('app', 'Name'),
-            'data' => Yii::t('app', 'Data'),
-            'time' => Yii::t('app', 'Time'),
+            'recap_id' => Yii::t('app', 'RECAP_ID'),
+            'key' => Yii::t('app', 'RECAP_KEY'),
+            'name' => Yii::t('app', 'RECAP_NAME'),
+            'data' => Yii::t('app', 'RECAP_DATA'),
+            'time' => Yii::t('app', 'RECAP_TIME'),
         ];
     }
 }
