@@ -47,7 +47,7 @@ return [
     'STORY_PARAMETER_ID' => 'Story parameter ID',
     'STORY_PARAMETER_VISIBILITY' => 'Visibility',
     'STORY_SHORT' => 'Short description',
-    'Stories' => '',
+    'Stories' => 'Stories',
     'TITLE_LOGIN' => 'Login',
     'TITLE_PASSWORD_RESET' => 'Password reset',
     'TITLE_RECAP' => 'Recaps',

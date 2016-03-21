@@ -47,7 +47,7 @@ return [
     'STORY_PARAMETER_ID' => 'ID parametru historii',
     'STORY_PARAMETER_VISIBILITY' => 'Widoczność',
     'STORY_SHORT' => 'Krótki opis',
-    'Stories' => '',
+    'Stories' => 'Historie',
     'TITLE_LOGIN' => 'Logowanie',
     'TITLE_PASSWORD_RESET' => 'Reset hasła',
     'TITLE_RECAP' => 'Streszczenia',
