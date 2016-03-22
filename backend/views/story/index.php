@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'TITLE_STORIES');
+$this->title = Yii::t('app', 'STORY_TITLE_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="story-index">

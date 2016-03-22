@@ -21,7 +21,7 @@ $this->title = 'RPG hub - control';
         <div class="row">
 
             <div class="col-lg-4">
-                <h2>Recaps</h2>
+                <h2><?php echo Yii::t('app', 'RECAP_TITLE_INDEX'); ?></h2>
 
                 <p>Recaps describe past of the party.</p>
 
