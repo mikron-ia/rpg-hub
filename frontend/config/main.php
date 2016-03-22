@@ -34,5 +34,6 @@ return [
             //'rules' => [],
         ],
     ],
+    'name' => 'RPG Hub',
     'params' => $params,
 ];

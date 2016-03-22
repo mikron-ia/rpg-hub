@@ -35,5 +35,6 @@ return [
             //'rules' => [],
         ],
     ],
+    'name' => 'RPG Hub - control panel',
     'params' => $params,
 ];
