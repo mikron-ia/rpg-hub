@@ -17,7 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Are you sure you want to delete this item?' => '',
+    'ABOUT_TITLE' => 'O stronie',
+    'QUESTION_DELETE' => 'Usunąć obiekt?',
     'BUTTON_CREATE' => 'Stwórz',
     'BUTTON_DELETE' => 'Usuń',
     'BUTTON_LOGIN' => 'Zaloguj',
@@ -26,9 +27,11 @@ return [
     'BUTTON_SEND' => 'Wyślij',
     'BUTTON_SIGNUP' => 'Zarejestruj',
     'BUTTON_STORY_CREATE' => 'Stwórz Historię',
+    'BUTTON_SUBMIT' => 'Wyślij',
     'BUTTON_UPDATE' => 'Zmień',
-    'BUTTON_USER_CREATE' => '',
-    'Create' => '',
+    'BUTTON_USER_CREATE' => 'Zarejestruj użytkownika',
+    'CONTACT_TITLE' => 'Kontakt',
+    'LOGIN_TITLE' => 'Logowanie',
     'MESSAGE_DELETE_CONFIRMATION' => 'Czy chcesz usunąć ten obiekt?',
     'RECAP_CREATE_TITLE' => 'Nowe streszczenie',
     'RECAP_DATA' => 'Dane',
@@ -36,7 +39,7 @@ return [
     'RECAP_KEY' => 'Klucz',
     'RECAP_NAME' => 'Tytuł',
     'RECAP_TIME' => 'Czas',
-    'RECAP_TITLE_INDEX' => 'Recaps',
+    'RECAP_TITLE_INDEX' => 'Streszczenia',
     'STORY_DATA' => 'Dane',
     'STORY_ID' => 'ID Historii',
     'STORY_KEY' => 'Klucz',
@@ -53,6 +56,7 @@ return [
     'Stories' => 'Historie',
     'TITLE_LOGIN' => 'Logowanie',
     'TITLE_PASSWORD_RESET' => 'Reset hasła',
+    'TITLE_PASSWORD_RESET_REQUEST' => 'Żądanie resetu hasła',
     'TITLE_SIGNUP' => 'Rejestracja',
     'Update' => 'Update',
 ];

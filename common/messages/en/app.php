@@ -17,7 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Are you sure you want to delete this item?' => '',
+    'ABOUT_TITLE' => 'About',
+    'QUESTION_DELETE' => 'Are you sure you want to delete this item?',
     'BUTTON_CREATE' => 'Create',
     'BUTTON_DELETE' => 'Delete',
     'BUTTON_LOGIN' => 'Login',
@@ -26,9 +27,11 @@ return [
     'BUTTON_SEND' => 'Send',
     'BUTTON_SIGNUP' => 'Sign up',
     'BUTTON_STORY_CREATE' => 'Create story',
+    'BUTTON_SUBMIT' => 'Submit',
     'BUTTON_UPDATE' => 'Update',
-    'BUTTON_USER_CREATE' => '',
-    'Create' => '',
+    'BUTTON_USER_CREATE' => 'Create user',
+    'CONTACT_TITLE' => 'Contact',
+    'LOGIN_TITLE' => 'Login',
     'MESSAGE_DELETE_CONFIRMATION' => 'Are you sure you want to delete this item?',
     'RECAP_CREATE_TITLE' => 'Create recap',
     'RECAP_DATA' => 'Data',
@@ -53,6 +56,7 @@ return [
     'Stories' => 'Stories',
     'TITLE_LOGIN' => 'Login',
     'TITLE_PASSWORD_RESET' => 'Password reset',
+    'TITLE_PASSWORD_RESET_REQUEST' => 'Request password reset',
     'TITLE_SIGNUP' => 'Sign up',
     'Update' => '',
 ];
