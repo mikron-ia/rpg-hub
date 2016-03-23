@@ -120,6 +120,7 @@ class m160313_144138_dev_0 extends Migration
                     'status' => 'SMALLINT(6) NOT NULL DEFAULT \'10\'',
                     'created_at' => 'INT(11) NOT NULL',
                     'updated_at' => 'INT(11) NOT NULL',
+                    'language' => 'CHAR(2) NOT NULL DEFAULT \'en\'',
                 ], $tableOptions_mysql);
             }
         }

@@ -10,7 +10,13 @@ return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        [
+            'class' => 'common\components\LanguageSelector',
+            'supportedLanguages' => ['en', 'pl'],
+        ],
+    ],
     'modules' => [],
     'components' => [
         'user' => [
