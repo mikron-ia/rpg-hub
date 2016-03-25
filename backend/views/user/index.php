@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Users';
+$this->title = 'USERS_INDEX_TITLE';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -21,11 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             'username',
-             'email:email',
-            // 'status',
-            // 'created_at',
-            // 'updated_at',
-
+            'email:email',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update}'
