@@ -40,6 +40,7 @@ return [
     'RECAP_NAME' => 'Recap title',
     'RECAP_TIME' => 'Time',
     'RECAP_TITLE_INDEX' => 'Recaps',
+    'RECAP_TITLE_UPDATE' => 'Recap edit',
     'STORY_DATA' => 'Data',
     'STORY_ID' => 'Story ID',
     'STORY_KEY' => 'Key',

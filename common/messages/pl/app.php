@@ -40,6 +40,7 @@ return [
     'RECAP_NAME' => 'Tytuł',
     'RECAP_TIME' => 'Czas',
     'RECAP_TITLE_INDEX' => 'Streszczenia',
+    'RECAP_TITLE_UPDATE' => 'Edycja streszczenia',
     'STORY_DATA' => 'Dane',
     'STORY_ID' => 'ID Historii',
     'STORY_KEY' => 'Klucz',
