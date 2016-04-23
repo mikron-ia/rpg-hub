@@ -26,10 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-    <h2>Short description</h2>
+    <h2><?php echo $model->getAttributeLabel('short'); ?></h2>
     <?php echo $model->short; ?>
 
-    <h2>Long description</h2>
+    <h2><?php echo $model->getAttributeLabel('long'); ?></h2>
     <?php echo $model->long; ?>
 
     <h2>Story parameters</h2>

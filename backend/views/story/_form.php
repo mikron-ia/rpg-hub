@@ -24,6 +24,16 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
     </div>
 
+
+    <div class="col-lg-12">
+        <?= $form->field($model, 'short')->textarea(['rows' => 6]) ?>
+    </div>
+
+
+    <div class="col-lg-12">
+        <?= $form->field($model, 'long')->textarea(['rows' => 6]) ?>
+    </div>
+
     <div class="form-group col-lg-2">
         <?php
         echo Html::submitButton(
