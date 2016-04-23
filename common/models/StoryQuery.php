@@ -2,34 +2,72 @@
 
 namespace common\models;
 
-/**
- * This is the ActiveQuery class for [[Story]].
- *
- * @see Story
- */
-class StoryQuery extends \yii\db\ActiveQuery
-{
-    /*public function active()
-    {
-        $this->andWhere('[[status]]=1');
-        return $this;
-    }*/
+use Yii;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
+use common\models\Story;
 
+/**
+ * StoryQuery represents the model behind the search form about `common\models\Story`.
+ */
+class StoryQuery extends Story
+{
     /**
      * @inheritdoc
-     * @return Story[]|array
      */
-    public function all($db = null)
+    public function rules()
     {
-        return parent::all($db);
+        return [
+            [['story_id'], 'integer'],
+            [['key', 'name', 'short', 'long', 'data'], 'safe'],
+        ];
     }
 
     /**
      * @inheritdoc
-     * @return Story|array|null
      */
-    public function one($db = null)
+    public function scenarios()
     {
-        return parent::one($db);
+        // bypass scenarios() implementation in the parent class
+        return Model::scenarios();
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function search($params)
+    {
+        $query = Story::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'story_id' => $this->story_id,
+        ]);
+
+        $query->andFilterWhere(['like', 'key', $this->key])
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'short', $this->short])
+            ->andFilterWhere(['like', 'long', $this->long])
+            ->andFilterWhere(['like', 'data', $this->data]);
+
+        return $dataProvider;
     }
 }

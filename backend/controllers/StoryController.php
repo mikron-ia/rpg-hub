@@ -7,6 +7,7 @@ use common\models\Story;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -99,6 +100,16 @@ class StoryController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    /**
+     * @param string $id
+     * @return mixed
+     * @throws HttpException
+     */
+    public function actionParameterUpdate($id)
+    {
+        throw new HttpException(501, "Not yet implemented");
     }
 
     /**

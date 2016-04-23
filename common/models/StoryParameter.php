@@ -35,7 +35,8 @@ class StoryParameter extends \yii\db\ActiveRecord
             [['story_id'], 'integer'],
             [['visibility'], 'string'],
             [['code'], 'string', 'max' => 20],
-            [['content'], 'string', 'max' => 80]
+            [['content'], 'string', 'max' => 80],
+            [['story_id'], 'exist', 'skipOnError' => true, 'targetClass' => Story::className(), 'targetAttribute' => ['story_id' => 'story_id']],
         ];
     }
 

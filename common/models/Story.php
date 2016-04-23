@@ -51,6 +51,7 @@ class Story extends \yii\db\ActiveRecord
             'short' => Yii::t('app', 'STORY_SHORT'),
             'long' => Yii::t('app', 'STORY_LONG'),
             'data' => Yii::t('app', 'STORY_DATA'),
+            'storyParameters' => Yii::t('app', 'STORY_PARAMETERS'),
         ];
     }
 
@@ -60,14 +61,5 @@ class Story extends \yii\db\ActiveRecord
     public function getStoryParameters()
     {
         return $this->hasMany(StoryParameter::className(), ['story_id' => 'story_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StoryQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StoryQuery(get_called_class());
     }
 }

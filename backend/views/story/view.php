@@ -1,5 +1,6 @@
 <?php
 
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -15,7 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p class="text-right">
-        <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->story_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->story_id],
+            ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -27,21 +29,37 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     <h2><?php echo $model->getAttributeLabel('short'); ?></h2>
-    <?php echo $model->short; ?>
+
+    <div>
+        <?php echo $model->short; ?>
+    </div>
 
     <h2><?php echo $model->getAttributeLabel('long'); ?></h2>
-    <?php echo $model->long; ?>
 
-    <h2>Story parameters</h2>
-    <table class="table table-bordered">
-        <tbody>
-        <?php foreach ($model->storyParameters as $storyParameter): ?>
-            <tr>
-                <td><?php echo $storyParameter->code; ?></td>
-                <td><?php echo $storyParameter->content; ?></td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
+    <div>
+        <?php echo $model->long; ?>
+    </div>
+
+    <h2><?php echo $model->getAttributeLabel('storyParameters'); ?></h2>
+
+    <?= GridView::widget([
+        'dataProvider' => new \yii\data\ActiveDataProvider(['query' => \common\models\StoryParameter::find()->with('story')->where(['story_id' => $model->story_id])]),
+        'summary' => '',
+        'columns' => [
+            'code',
+            'content',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update-parameter}',
+                'buttons' => [
+                    'update-parameter' => function ($url, $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-cog"></span>', $url, [
+                            'title' => Yii::t('app', 'View'),
+                        ]);
+                    }
+                ]
+            ],
+        ],
+    ]); ?>
 
 </div>
