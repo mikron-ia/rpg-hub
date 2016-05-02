@@ -19,8 +19,7 @@
         "yiisoft/yii2-faker": "*",
         "codeception/codeception": "2.0.*",
         "codeception/specify": "*",
-        "codeception/verify": "*",
-        "c006/yii2-migration-utility": "^1.1"
+        "codeception/verify": "*"
     },
     "config": {
         "process-timeout": 1800
