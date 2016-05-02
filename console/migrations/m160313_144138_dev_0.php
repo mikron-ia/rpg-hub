@@ -15,11 +15,11 @@ class m160313_144138_dev_0 extends Migration
             if ($dbType == "mysql") {
                 $this->createTable('{{%character}}', [
                     'character_id' => 'INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
-                    0 => 'PRIMARY KEY (`character_id`)',
                     'key' => 'VARCHAR(80) NOT NULL',
                     'name' => 'VARCHAR(120) NOT NULL',
                     'data' => 'TEXT NOT NULL',
                     'person_id' => 'INT(10) UNSIGNED NULL',
+                    0 => 'PRIMARY KEY (`character_id`)',
                 ], $tableOptions_mysql);
             }
         }
@@ -29,13 +29,13 @@ class m160313_144138_dev_0 extends Migration
             if ($dbType == "mysql") {
                 $this->createTable('{{%description}}', [
                     'description_id' => 'INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
-                    0 => 'PRIMARY KEY (`description_id`)',
                     'description_pack_id' => 'INT(10) UNSIGNED NOT NULL',
                     'title' => 'VARCHAR(80) NOT NULL',
                     'code' => 'VARCHAR(40) NOT NULL',
                     'public_text' => 'TEXT NOT NULL',
                     'private_text' => 'TEXT NOT NULL',
                     'lang' => 'VARCHAR(8) NOT NULL',
+                    0 => 'PRIMARY KEY (`description_id`)',
                 ], $tableOptions_mysql);
             }
         }
@@ -45,8 +45,8 @@ class m160313_144138_dev_0 extends Migration
             if ($dbType == "mysql") {
                 $this->createTable('{{%description_pack}}', [
                     'description_pack_id' => 'INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
-                    0 => 'PRIMARY KEY (`description_pack_id`)',
                     'name' => 'VARCHAR(80) NOT NULL',
+                    0 => 'PRIMARY KEY (`description_pack_id`)',
                 ], $tableOptions_mysql);
             }
         }
@@ -56,10 +56,10 @@ class m160313_144138_dev_0 extends Migration
             if ($dbType == "mysql") {
                 $this->createTable('{{%group}}', [
                     'group_id' => 'INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
-                    0 => 'PRIMARY KEY (`group_id`)',
                     'key' => 'VARCHAR(80) NOT NULL',
                     'name' => 'VARCHAR(120) NOT NULL',
                     'data' => 'TEXT NOT NULL',
+                    0 => 'PRIMARY KEY (`group_id`)',
                 ], $tableOptions_mysql);
             }
         }
@@ -69,12 +69,12 @@ class m160313_144138_dev_0 extends Migration
             if ($dbType == "mysql") {
                 $this->createTable('{{%person}}', [
                     'person_id' => 'INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
-                    0 => 'PRIMARY KEY (`person_id`)',
                     'key' => 'VARCHAR(80) NOT NULL',
                     'name' => 'VARCHAR(120) NOT NULL',
                     'tagline' => 'VARCHAR(120) NOT NULL',
                     'data' => 'TEXT NOT NULL',
                     'visibility' => 'ENUM(\'none\',\'linked\',\'complete\') NULL',
+                    0 => 'PRIMARY KEY (`person_id`)',
                 ], $tableOptions_mysql);
             }
         }
@@ -84,11 +84,11 @@ class m160313_144138_dev_0 extends Migration
             if ($dbType == "mysql") {
                 $this->createTable('{{%recap}}', [
                     'recap_id' => 'INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
-                    0 => 'PRIMARY KEY (`recap_id`)',
                     'key' => 'VARCHAR(80) NOT NULL',
                     'name' => 'VARCHAR(120) NOT NULL',
                     'data' => 'TEXT NOT NULL',
                     'time' => 'DATETIME NOT NULL',
+                    0 => 'PRIMARY KEY (`recap_id`)',
                 ], $tableOptions_mysql);
             }
         }
@@ -98,10 +98,10 @@ class m160313_144138_dev_0 extends Migration
             if ($dbType == "mysql") {
                 $this->createTable('{{%story}}', [
                     'story_id' => 'INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
-                    0 => 'PRIMARY KEY (`story_id`)',
                     'key' => 'VARCHAR(80) NOT NULL',
                     'name' => 'VARCHAR(120) NOT NULL',
                     'data' => 'TEXT NOT NULL',
+                    0 => 'PRIMARY KEY (`story_id`)',
                 ], $tableOptions_mysql);
             }
         }
@@ -111,7 +111,6 @@ class m160313_144138_dev_0 extends Migration
             if ($dbType == "mysql") {
                 $this->createTable('{{%user}}', [
                     'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
-                    0 => 'PRIMARY KEY (`id`)',
                     'username' => 'VARCHAR(255) NOT NULL',
                     'auth_key' => 'VARCHAR(32) NOT NULL',
                     'password_hash' => 'VARCHAR(255) NOT NULL',
@@ -121,22 +120,24 @@ class m160313_144138_dev_0 extends Migration
                     'created_at' => 'INT(11) NOT NULL',
                     'updated_at' => 'INT(11) NOT NULL',
                     'language' => 'CHAR(2) NOT NULL DEFAULT \'en\'',
+                    0 => 'PRIMARY KEY (`id`)',
                 ], $tableOptions_mysql);
             }
         }
 
-
+        /*
         $this->createIndex('idx_person_id_6733_00', 'character', 'person_id', 0);
         $this->createIndex('idx_description_pack_id_6803_01', 'description', 'description_pack_id', 0);
         $this->createIndex('idx_UNIQUE_username_7323_02', 'user', 'username', 1);
         $this->createIndex('idx_UNIQUE_email_7323_03', 'user', 'email', 1);
         $this->createIndex('idx_UNIQUE_password_reset_token_7323_04', 'user', 'password_reset_token', 1);
+        */
 
         $this->execute('SET foreign_key_checks = 0');
-        $this->addForeignKey('fk_person_6723_00', '{{%character}}', 'person_id', '{{%person}}', 'person_id', 'CASCADE',
-            'NO ACTION');
-        $this->addForeignKey('fk_description_pack_6803_01', '{{%description}}', 'description_pack_id',
-            '{{%description_pack}}', 'description_pack_id', 'CASCADE', 'NO ACTION');
+        $this->addForeignKey('character_ibfk_1', '{{%character}}', 'person_id', '{{%person}}', 'person_id', 'CASCADE',
+            'CASCADE');
+        $this->addForeignKey('description_ibfk_1', '{{%description}}', 'description_pack_id', '{{%description_pack}}',
+            'description_pack_id', 'CASCADE', 'CASCADE');
         $this->execute('SET foreign_key_checks = 1;');
     }
 
@@ -144,26 +145,12 @@ class m160313_144138_dev_0 extends Migration
     {
         $this->execute('SET foreign_key_checks = 0');
         $this->execute('DROP TABLE IF EXISTS `character`');
-        $this->execute('SET foreign_key_checks = 1;');
-        $this->execute('SET foreign_key_checks = 0');
         $this->execute('DROP TABLE IF EXISTS `description`');
-        $this->execute('SET foreign_key_checks = 1;');
-        $this->execute('SET foreign_key_checks = 0');
         $this->execute('DROP TABLE IF EXISTS `description_pack`');
-        $this->execute('SET foreign_key_checks = 1;');
-        $this->execute('SET foreign_key_checks = 0');
         $this->execute('DROP TABLE IF EXISTS `group`');
-        $this->execute('SET foreign_key_checks = 1;');
-        $this->execute('SET foreign_key_checks = 0');
         $this->execute('DROP TABLE IF EXISTS `person`');
-        $this->execute('SET foreign_key_checks = 1;');
-        $this->execute('SET foreign_key_checks = 0');
         $this->execute('DROP TABLE IF EXISTS `recap`');
-        $this->execute('SET foreign_key_checks = 1;');
-        $this->execute('SET foreign_key_checks = 0');
         $this->execute('DROP TABLE IF EXISTS `story`');
-        $this->execute('SET foreign_key_checks = 1;');
-        $this->execute('SET foreign_key_checks = 0');
         $this->execute('DROP TABLE IF EXISTS `user`');
         $this->execute('SET foreign_key_checks = 1;');
     }
