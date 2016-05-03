@@ -15,9 +15,5 @@ return [
             ],
         ],
     ],
-    'modules' => [
-        'utility' => [
-            'class' => 'c006\utility\migration\Module',
-        ],
-    ],
+    'modules' => [],
 ];
