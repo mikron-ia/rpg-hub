@@ -118,15 +118,15 @@ class m160313_144138_v0_1_0 extends Migration
     public function safeDown()
     {
         $this->execute('SET foreign_key_checks = 0');
-        $this->execute('DROP TABLE IF EXISTS `character`');
-        $this->execute('DROP TABLE IF EXISTS `description`');
-        $this->execute('DROP TABLE IF EXISTS `description_pack`');
-        $this->execute('DROP TABLE IF EXISTS `group`');
-        $this->execute('DROP TABLE IF EXISTS `person`');
-        $this->execute('DROP TABLE IF EXISTS `recap`');
-        $this->execute('DROP TABLE IF EXISTS `story`');
-        $this->execute('DROP TABLE IF EXISTS `story_parameter`');
-        $this->execute('DROP TABLE IF EXISTS `user`');
+        $this->dropTable('{{%character}}');
+        $this->dropTable('{{%description}}');
+        $this->dropTable('{{%description_pack}}');
+        $this->dropTable('{{%group}}');
+        $this->dropTable('{{%person}}');
+        $this->dropTable('{{%recap}}');
+        $this->dropTable('{{%story}}');
+        $this->dropTable('{{%story_parameter}}');
+        $this->dropTable('{{%user}}');
         $this->execute('SET foreign_key_checks = 1;');
     }
 }
