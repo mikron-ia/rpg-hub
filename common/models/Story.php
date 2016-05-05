@@ -32,7 +32,7 @@ class Story extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['key', 'name', 'short', 'long', 'data'], 'required'],
+            [['key', 'name', 'short', 'data'], 'required'],
             [['short', 'long', 'data'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120]

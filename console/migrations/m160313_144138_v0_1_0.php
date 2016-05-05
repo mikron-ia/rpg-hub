@@ -74,6 +74,8 @@ class m160313_144138_v0_1_0 extends Migration
                 'key' => $this->string(80)->notNull(),
                 'name' => $this->string(120)->notNull(),
                 'data' => $this->text()->notNull(),
+                'short' => $this->text()->notNull(),
+                'long' => $this->text(),
             ], $tableOptions);
         }
 
