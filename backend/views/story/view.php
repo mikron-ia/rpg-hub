@@ -42,6 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h2><?php echo $model->getAttributeLabel('storyParameters'); ?></h2>
 
+    <p class="text-right">
+        <?= Html::a(Yii::t('app', 'BUTTON_STORY_PARAMETER_CREATE'), ['create-parameter'], ['class' => 'btn btn-success']) ?>
+    </p>
+
     <?= GridView::widget([
         'dataProvider' => new \yii\data\ActiveDataProvider(['query' => \common\models\StoryParameter::find()->with('story')->where(['story_id' => $model->story_id])]),
         'summary' => '',
