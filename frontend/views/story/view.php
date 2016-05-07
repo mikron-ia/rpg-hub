@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Story */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'RECAP_TITLE_INDEX'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'STORY_TITLE_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="story-view">
@@ -23,9 +23,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'key',
             'name',
-            'short',
-            'long',
         ],
     ]) ?>
+
+    <h2><?= Yii::t('app', 'STORY_HEADER_SHORT'); ?></h2>
+    <?= $model->short; ?>
+
+    <h2><?= Yii::t('app', 'STORY_HEADER_LONG'); ?></h2>
+    <?= $model->long; ?>
 
 </div>
