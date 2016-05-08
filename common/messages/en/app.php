@@ -42,7 +42,7 @@ return [
     'RECAP_ID' => 'Recap ID',
     'RECAP_KEY' => 'Key',
     'RECAP_NAME' => 'Recap title',
-    'RECAP_TIME' => 'Time',
+    'RECAP_TIME' => 'Time ',
     'RECAP_TITLE_INDEX' => 'Recaps',
     'RECAP_TITLE_UPDATE' => 'Recap edit',
     'STORY_BASICS_HEADER' => 'Basic data',

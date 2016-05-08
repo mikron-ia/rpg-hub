@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\Markdown;
 
 /**
  * This is the model class for table "recap".
@@ -49,5 +50,10 @@ class Recap extends \yii\db\ActiveRecord
             'data' => Yii::t('app', 'RECAP_DATA'),
             'time' => Yii::t('app', 'RECAP_TIME'),
         ];
+    }
+
+    public function getDataFormatted()
+    {
+        return Markdown::process($this->data);
     }
 }

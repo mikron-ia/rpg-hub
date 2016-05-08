@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h2><?= Yii::t('app', 'LABEL_CONTENT'); ?></h2>
     <div>
-        <?= $model->data; ?>
+        <?= $model->dataFormatted; ?>
     </div>
 
 </div>
