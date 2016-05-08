@@ -32,6 +32,7 @@ return [
     'BUTTON_USER_CREATE' => 'Create user',
     'CONTACT_TITLE' => 'Contact',
     'Create' => '',
+    'LABEL_CONTENT' => 'Content',
     'LABEL_UPDATE' => 'Edit',
     'LOGIN_TITLE' => 'Login',
     'Login' => '',

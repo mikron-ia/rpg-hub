@@ -29,9 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'key',
-            'data:ntext',
             'time',
         ],
     ]) ?>
+
+    <h2><?= Yii::t('app', 'LABEL_CONTENT'); ?></h2>
+    <div>
+        <?= $model->data; ?>
+    </div>
 
 </div>
