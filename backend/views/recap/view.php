@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <p class="text-right">
         <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->recap_id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->recap_id], [
             'class' => 'btn btn-danger',
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h2><?= Yii::t('app', 'LABEL_CONTENT'); ?></h2>
     <div>
-        <?= $model->dataFormatted; ?>
+        <?= $model->getDataFormatted(); ?>
     </div>
 
 </div>
