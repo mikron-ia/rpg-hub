@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Recap;
-use yii\data\ActiveDataProvider;
+use common\models\RecapQuery;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -15,6 +15,9 @@ use yii\filters\VerbFilter;
  */
 class RecapController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
@@ -43,11 +46,11 @@ class RecapController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Recap::find()->orderBy('time DESC'),
-        ]);
+        $searchModel = new RecapQuery();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
