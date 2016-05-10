@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\Markdown;
 
 /**
  * This is the model class for table "story".
@@ -53,6 +54,22 @@ class Story extends \yii\db\ActiveRecord
             'data' => Yii::t('app', 'STORY_DATA'),
             'storyParameters' => Yii::t('app', 'STORY_PARAMETERS'),
         ];
+    }
+
+    /**
+     * @return string Short summary formatted to HTML
+     */
+    public function getShortFormatted()
+    {
+        return Markdown::process($this->short);
+    }
+
+    /**
+     * @return string Long summary formatted to HTML
+     */
+    public function getLongFormatted()
+    {
+        return Markdown::process($this->long);
     }
 
     /**

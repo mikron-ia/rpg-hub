@@ -20,19 +20,16 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-lg-12">
-        <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
+    <div class="col-lg-6">
+        <?= $form->field($model, 'data')->textarea(['rows' => 10]) ?>
+        <?= $form->field($model, 'short')->textarea(['rows' => 10]) ?>
     </div>
 
-    <div class="col-lg-12">
-        <?= $form->field($model, 'short')->textarea(['rows' => 6]) ?>
+    <div class="col-lg-6">
+        <?= $form->field($model, 'long')->textarea(['rows' => 20]) ?>
     </div>
 
-    <div class="col-lg-12">
-        <?= $form->field($model, 'long')->textarea(['rows' => 6]) ?>
-    </div>
-
-    <div class="form-group col-lg-2">
+    <div class="form-group col-lg-22">
         <?php
         echo Html::submitButton(
             $model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),

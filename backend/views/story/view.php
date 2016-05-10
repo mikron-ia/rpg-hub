@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h2><?php echo $model->getAttributeLabel('short'); ?></h2>
 
         <div>
-            <?php echo $model->short; ?>
+            <?php echo $model->getShortFormatted(); ?>
         </div>
     </div>
 
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h2><?php echo $model->getAttributeLabel('long'); ?></h2>
 
         <div>
-            <?php echo $model->long; ?>
+            <?php echo $model->getLongFormatted(); ?>
         </div>
 
     </div>

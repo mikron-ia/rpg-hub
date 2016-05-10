@@ -13,7 +13,7 @@ return [
     'bootstrap' => [
         'log',
         [
-            'class' => 'common\components\LanguageSelector',
+            'class' => common\components\LanguageSelector::class,
             'supportedLanguages' => ['en', 'pl'],
         ],
     ],
@@ -27,7 +27,7 @@ return [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget',
+                    'class' => yii\log\FileTarget::class,
                     'levels' => ['error', 'warning'],
                 ],
             ],
