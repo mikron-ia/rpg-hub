@@ -61,7 +61,7 @@ class Story extends \yii\db\ActiveRecord
      */
     public function getShortFormatted()
     {
-        return Markdown::process($this->short);
+        return Markdown::process($this->short, 'gfm');
     }
 
     /**
@@ -69,7 +69,7 @@ class Story extends \yii\db\ActiveRecord
      */
     public function getLongFormatted()
     {
-        return Markdown::process($this->long);
+        return Markdown::process($this->long, 'gfm');
     }
 
     /**

@@ -54,6 +54,6 @@ class Recap extends \yii\db\ActiveRecord
 
     public function getDataFormatted()
     {
-        return Markdown::process($this->data);
+        return Markdown::process($this->data, 'gfm');
     }
 }
