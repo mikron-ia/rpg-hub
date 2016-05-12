@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Story */
 
 $this->title = Yii::t('app', 'STORY_TITLE_CREATE');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Stories'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'STORY_TITLE_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="story-create">

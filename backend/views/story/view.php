@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'buttons' => [
                         'update-parameter' => function ($url, $model, $key) {
                             return Html::a('<span class="glyphicon glyphicon-cog"></span>', $url, [
-                                'title' => Yii::t('app', 'View'),
+                                'title' => Yii::t('app', 'LABEL_VIEW'),
                             ]);
                         }
                     ]
