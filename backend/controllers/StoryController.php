@@ -2,15 +2,15 @@
 
 namespace backend\controllers;
 
-use common\models\StoryParameter;
 use Yii;
+use common\models\StoryParameter;
 use common\models\Story;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * StoryController implements the CRUD actions for Story model.
@@ -24,7 +24,7 @@ class StoryController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'update', 'view', 'parameter-update', 'parameter-create'],
+                        'actions' => ['create', 'delete', 'index', 'update', 'view', 'update-parameter', 'create-parameter'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -107,7 +107,7 @@ class StoryController extends Controller
      * @return mixed
      * @throws HttpException
      */
-    public function actionParameterCreate()
+    public function actionCreateParameter()
     {
         $model = new StoryParameter();
 
@@ -125,7 +125,7 @@ class StoryController extends Controller
      * @return mixed
      * @throws HttpException
      */
-    public function actionParameterUpdate($id)
+    public function actionUpdateParameter($id)
     {
         throw new HttpException(501, "Not yet implemented");
     }

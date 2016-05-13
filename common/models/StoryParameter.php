@@ -25,6 +25,11 @@ class StoryParameter extends \yii\db\ActiveRecord
     const PARAMETER_PCS_ACTIVE = 'active-pcs';
     const PARAMETER_CS_ACTIVE = 'active-cs';
 
+    const VISIBILITY_NONE = 'none';
+    const VISIBILITY_LOGGED = 'logged';
+    const VISIBILITY_GM = 'gm';
+    const VISIBILITY_FULL = 'full';
+
     private $allowedCodes = [
         self::PARAMETER_STORY_NUMBER,
         self::PARAMETER_TIME_RANGE,
@@ -33,6 +38,13 @@ class StoryParameter extends \yii\db\ActiveRecord
         self::PARAMETER_SESSION_COUNT,
         self::PARAMETER_PCS_ACTIVE,
         self::PARAMETER_CS_ACTIVE,
+    ];
+
+    private $allowedVisibility = [
+        self::VISIBILITY_NONE,
+        self::VISIBILITY_LOGGED,
+        self::VISIBILITY_GM,
+        self::VISIBILITY_FULL,
     ];
 
     /**
@@ -53,6 +65,16 @@ class StoryParameter extends \yii\db\ActiveRecord
             self::PARAMETER_SESSION_COUNT => Yii::t('app', 'ST_PARAM_SESSION_COUNT'),
             self::PARAMETER_PCS_ACTIVE => Yii::t('app', 'ST_PARAM_PCS_ACTIVE'),
             self::PARAMETER_CS_ACTIVE => Yii::t('app', 'ST_PARAM_CS_ACTIVE'),
+        ];
+    }
+
+    static public function visibilityNames()
+    {
+        return [
+            self::VISIBILITY_NONE => Yii::t('app', 'ST_PARAM_VISIBILITY_NONE'),
+            self::VISIBILITY_LOGGED => Yii::t('app', 'ST_PARAM_VISIBILITY_LOGGED'),
+            self::VISIBILITY_GM => Yii::t('app', 'ST_PARAM_VISIBILITY_GM'),
+            self::VISIBILITY_FULL => Yii::t('app', 'ST_PARAM_VISIBILITY_FULL'),
         ];
     }
 

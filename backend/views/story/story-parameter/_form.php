@@ -1,5 +1,6 @@
 <?php
 
+use common\models\StoryParameter;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -17,11 +18,11 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-lg-6">
-        <?= $form->field($model, 'code')->dropDownList([]) ?>
+        <?= $form->field($model, 'code')->dropDownList(StoryParameter::codeNames()) ?>
     </div>
 
     <div class="col-lg-6">
-        <?= $form->field($model, 'visibility')->dropDownList([]) ?>
+        <?= $form->field($model, 'visibility')->dropDownList(StoryParameter::visibilityNames()) ?>
     </div>
 
     <div class="col-lg-12">
