@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Story;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -25,6 +26,22 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update}',
+                'buttons' => [
+                    'view' => function ($url, Story $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-eye-open"></span>',
+                            $url,
+                            ['title' => Yii::t('app', 'View')]
+                        );
+                    },
+                    'update' => function ($url, Story $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-pencil"></span>',
+                            $url,
+                            ['title' => Yii::t('app', 'Update')]
+                        );
+                    },
+                ],
             ],
         ],
     ]); ?>

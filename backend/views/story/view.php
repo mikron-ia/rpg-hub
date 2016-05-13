@@ -1,8 +1,8 @@
 <?php
 
+use common\models\StoryParameter;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Story */
@@ -38,22 +38,22 @@ $this->params['breadcrumbs'][] = $this->title;
         <p class="text-right">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_STORY_PARAMETER_CREATE'),
-                ['create-parameter'],
+                ['parameter-create'],
                 ['class' => 'btn btn-success']);
             ?>
         </p>
 
         <?= GridView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider(['query' => \common\models\StoryParameter::find()->with('story')->where(['story_id' => $model->story_id])]),
+            'dataProvider' => new \yii\data\ActiveDataProvider(['query' => StoryParameter::find()->with('story')->where(['story_id' => $model->story_id])]),
             'summary' => '',
             'columns' => [
                 'code',
                 'content',
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{update-parameter}',
+                    'template' => '{parameter-update}',
                     'buttons' => [
-                        'update-parameter' => function ($url, $model, $key) {
+                        'parameter-update' => function ($url, $model, $key) {
                             return Html::a('<span class="glyphicon glyphicon-cog"></span>', $url, [
                                 'title' => Yii::t('app', 'LABEL_VIEW'),
                             ]);

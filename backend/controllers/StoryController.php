@@ -24,7 +24,11 @@ class StoryController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'update', 'view', 'update-parameter', 'create-parameter'],
+                        'actions' => [
+                            'index',
+                            'create', 'delete', 'update', 'view',
+                            'parameter-create', 'parameter-update'
+                        ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -107,7 +111,7 @@ class StoryController extends Controller
      * @return mixed
      * @throws HttpException
      */
-    public function actionCreateParameter()
+    public function actionParameterCreate()
     {
         $model = new StoryParameter();
 
@@ -125,9 +129,17 @@ class StoryController extends Controller
      * @return mixed
      * @throws HttpException
      */
-    public function actionUpdateParameter($id)
+    public function actionParameterUpdate($id)
     {
-        throw new HttpException(501, "Not yet implemented");
+        $model = $this->findParameter($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->story_id]);
+        } else {
+            return $this->render('story-parameter/update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -155,7 +167,23 @@ class StoryController extends Controller
         if (($model = Story::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('The requested story does not exist.');
+        }
+    }
+
+    /**
+     * Finds the StoryParameter model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $id
+     * @return StoryParameter the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findParameter($id)
+    {
+        if (($model = StoryParameter::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested story parameter does not exist.');
         }
     }
 }
