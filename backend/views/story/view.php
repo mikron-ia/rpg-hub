@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <p class="text-right">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_STORY_PARAMETER_CREATE'),
-                ['create-parameter'],
+                ['parameter-create'],
                 ['class' => 'btn btn-success']);
             ?>
         </p>
@@ -51,9 +51,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'content',
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{update-parameter}',
+                    'template' => '{parameter-update}',
                     'buttons' => [
-                        'update-parameter' => function ($url, $model, $key) {
+                        'parameter-update' => function ($url, $model, $key) {
                             return Html::a('<span class="glyphicon glyphicon-cog"></span>', $url, [
                                 'title' => Yii::t('app', 'LABEL_VIEW'),
                             ]);

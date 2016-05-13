@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\StoryParameter;
 use Yii;
 use common\models\Story;
 use yii\data\ActiveDataProvider;
@@ -23,7 +24,7 @@ class StoryController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'update', 'view'],
+                        'actions' => ['create', 'delete', 'index', 'update', 'view', 'parameter-update', 'parameter-create'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -97,6 +98,23 @@ class StoryController extends Controller
             return $this->redirect(['view', 'id' => $model->story_id]);
         } else {
             return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * @return mixed
+     * @throws HttpException
+     */
+    public function actionParameterCreate()
+    {
+        $model = new StoryParameter();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->story_id]);
+        } else {
+            return $this->render('story-parameter/create', [
                 'model' => $model,
             ]);
         }
