@@ -33,7 +33,7 @@ return [
     'BUTTON_UPDATE' => 'Update',
     'BUTTON_USER_CREATE' => 'Add user',
     'BUTTON_VIEW' => 'View',
-    'CONFIRMATION_DELETE' => 'Please confirm deletion.',
+    'CONFIRMATION_DELETE {name}' => 'Please confirm deletion of "{name}".',
     'CONTACT_TITLE' => 'Contact',
     'LABEL_CONTENT' => 'Content',
     'LABEL_DELETE' => 'Delete',

@@ -13,15 +13,16 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
     <div class="story-view">
 
-        <h1><?= Html::encode($this->title) ?></h1>
-
-        <p class="text-right">
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_UPDATE'),
-                ['update', 'id' => $model->story_id],
-                ['class' => 'btn btn-primary']);
-            ?>
-        </p>
+        <h1>
+            <?= Html::encode($this->title) ?>
+            <span class="pull-right">
+                <?= Html::a(
+                    Yii::t('app', 'BUTTON_UPDATE'),
+                    ['update', 'id' => $model->story_id],
+                    ['class' => 'btn btn-primary']);
+                ?>
+            </span>
+        </h1>
 
         <div class="col-lg-6">
 
@@ -33,17 +34,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 <b><?= $model->getAttributeLabel('data'); ?> (JSON):</b> <?= $model->data; ?>
             </p>
 
-            <h2><?php echo $model->getAttributeLabel('storyParameters'); ?></h2>
-
-            <p class="text-right">
-                <?= Html::a('<span class="btn btn-success">' . Yii::t('app',
-                        'BUTTON_STORY_PARAMETER_CREATE') . '</span>', '#', [
-                    'class' => 'create-story-parameter-link',
-                    'title' => Yii::t('app', 'BUTTON_STORY_PARAMETER_CREATE'),
-                    'data-toggle' => 'modal',
-                    'data-target' => '#create-story-parameter-modal'
-                ]); ?>
-            </p>
+            <h2>
+                <?php echo $model->getAttributeLabel('storyParameters'); ?>
+                <span class="pull-right">
+                    <?= Html::a('<span class="btn btn-success">' . Yii::t('app',
+                            'BUTTON_STORY_PARAMETER_CREATE') . '</span>', '#', [
+                        'class' => 'create-story-parameter-link',
+                        'title' => Yii::t('app', 'BUTTON_STORY_PARAMETER_CREATE'),
+                        'data-toggle' => 'modal',
+                        'data-target' => '#create-story-parameter-modal'
+                    ]); ?>
+                </span>
+            </h2>
 
             <?= GridView::widget([
                 'dataProvider' => new \yii\data\ActiveDataProvider(['query' => StoryParameter::find()->with('story')->where(['story_id' => $model->story_id])]),
@@ -84,7 +86,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Html::a(
                                     '<span class="glyphicon glyphicon-erase"></span>', $url, [
                                     'title' => Yii::t('app', 'LABEL_DELETE'),
-                                    'data-confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
+                                    'data-confirm' => Yii::t(
+                                        'app',
+                                        'CONFIRMATION_DELETE {name}',
+                                        ['name' => $model->getCodeName()]
+                                    ),
                                     'data-method' => 'post',
                                 ]);
                             }

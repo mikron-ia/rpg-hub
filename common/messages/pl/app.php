@@ -33,7 +33,7 @@ return [
     'BUTTON_UPDATE' => 'Zmień',
     'BUTTON_USER_CREATE' => 'Zarejestruj użytkownika',
     'BUTTON_VIEW' => 'Wyświetl',
-    'CONFIRMATION_DELETE' => 'Potwierdź usunięcie obiektu.',
+    'CONFIRMATION_DELETE {name}' => 'Potwierdź usunięcie obiektu "{name}".',
     'CONTACT_TITLE' => 'Kontakt',
     'LABEL_CONTENT' => 'Treść',
     'LABEL_DELETE' => 'Usuń',
