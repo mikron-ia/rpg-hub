@@ -107,3 +107,8 @@ a.desc:after {
 p {
     text-align: justify;
 }
+
+.key {
+    font-family: "Courier New", Courier, monospace;
+    background-color: lightgoldenrodyellow;
+}

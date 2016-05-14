@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Recap;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -23,10 +24,22 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'columns' => [
-                'key',
-                'name',
-                'time',
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'attribute' => 'key',
+                    'format' => 'raw',
+                    'value' => function (Recap $model) {
+                        return '<span class="key">' . $model->key . '</span>';
+                    },
+                ],
+                [
+                    'attribute' => 'name',
+                ],
+                [
+                    'attribute' => 'time',
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn'
+                ],
             ],
         ]); ?>
     </div>

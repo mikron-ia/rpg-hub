@@ -21,8 +21,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            'key',
-            'name',
+            [
+                'attribute' => 'key',
+            ],
+            [
+                'attribute' => 'name',
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update}',
