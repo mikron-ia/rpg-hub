@@ -31,14 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Html::a(
                             '<span class="glyphicon glyphicon-eye-open"></span>',
                             $url,
-                            ['title' => Yii::t('app', 'View')]
+                            ['title' => Yii::t('app', 'BUTTON_VIEW')]
                         );
                     },
                     'update' => function ($url, Story $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-pencil"></span>',
                             $url,
-                            ['title' => Yii::t('app', 'Update')]
+                            ['title' => Yii::t('app', 'BUTTON_UPDATE')]
                         );
                     },
                 ],
