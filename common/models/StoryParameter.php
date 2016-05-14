@@ -84,7 +84,7 @@ class StoryParameter extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['story_id', 'code', 'name', 'content'], 'required'],
+            [['story_id', 'code', 'content'], 'required'],
             [['story_id'], 'integer'],
             [['visibility'], 'string'],
             [['code'], 'string', 'max' => 20],
@@ -135,5 +135,15 @@ class StoryParameter extends \yii\db\ActiveRecord
     public static function find()
     {
         return new StoryParameterQuery(get_called_class());
+    }
+
+    public function getCodeName() {
+        $codes = self::codeNames();
+        return isset($codes[$this->code])?$codes[$this->code]:$this->code;
+    }
+
+    public function getVisibilityName() {
+        $visibilities = self::visibilityNames();
+        return isset($visibilities[$this->visibility])?$visibilities[$this->visibility]:$this->visibility;
     }
 }

@@ -26,8 +26,13 @@ class StoryController extends Controller
                     [
                         'actions' => [
                             'index',
-                            'create', 'delete', 'update', 'view',
-                            'parameter-create', 'parameter-update'
+                            'create',
+                            'delete',
+                            'update',
+                            'view',
+                            'parameter-create',
+                            'parameter-update',
+                            'parameter-delete'
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -38,6 +43,7 @@ class StoryController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                    'parameter-delete' => ['post'],
                 ],
             ],
         ];
@@ -108,19 +114,25 @@ class StoryController extends Controller
     }
 
     /**
+     * @param int $story_id
      * @return mixed
-     * @throws HttpException
+     * @throws NotFoundHttpException
      */
-    public function actionParameterCreate()
+    public function actionParameterCreate($story_id)
     {
+        $story = $this->findModel($story_id);
         $model = new StoryParameter();
+
+        $model->story_id = $story->story_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->story_id]);
         } else {
-            return $this->render('story-parameter/create', [
-                'model' => $model,
-            ]);
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('story-parameter/create', ['model' => $model]);
+            } else {
+                return $this->render('story-parameter/create', ['model' => $model]);
+            }
         }
     }
 
@@ -136,10 +148,28 @@ class StoryController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->story_id]);
         } else {
-            return $this->render('story-parameter/update', [
-                'model' => $model,
-            ]);
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('story-parameter/update', ['model' => $model]);
+            } else {
+                return $this->render('story-parameter/update', ['model' => $model]);
+            }
         }
+    }
+
+    /**
+     * Deletes an existing StoryParameter model.
+     * If deletion is successful, the browser will be redirected to the story page.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionParameterDelete($id)
+    {
+        $model = $this->findParameter($id);
+
+        $storyId = $model->story_id;
+        $model->delete();
+
+        return $this->redirect(['view', 'id' => $storyId]);
     }
 
     /**

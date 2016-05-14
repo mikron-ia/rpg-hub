@@ -11,25 +11,27 @@ use yii\widgets\ActiveForm;
 
 <div class="story-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'story-parameter-form',
+        'action' => $model->isNewRecord ?
+            [
+                'parameter-create',
+                'story_id' => $model->story_id
+            ] :
+            [
+                'parameter-update',
+                'id' => $model->story_parameter_id
+            ],
+        'method' => 'post',
+    ]); ?>
 
-    <div class="col-lg-12">
-        <?= $form->field($model, 'story_id'); ?>
-    </div>
+    <?= $form->field($model, 'code')->dropDownList(StoryParameter::codeNames()) ?>
 
-    <div class="col-lg-6">
-        <?= $form->field($model, 'code')->dropDownList(StoryParameter::codeNames()) ?>
-    </div>
+    <?= $form->field($model, 'visibility')->dropDownList(StoryParameter::visibilityNames()) ?>
 
-    <div class="col-lg-6">
-        <?= $form->field($model, 'visibility')->dropDownList(StoryParameter::visibilityNames()) ?>
-    </div>
+    <?= $form->field($model, 'content') ?>
 
-    <div class="col-lg-12">
-        <?= $form->field($model, 'content') ?>
-    </div>
-
-    <div class="form-group pull-right">
+    <div class="form-group text-right">
         <?php
         echo Html::submitButton(
             $model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),
