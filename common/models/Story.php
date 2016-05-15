@@ -79,4 +79,40 @@ class Story extends \yii\db\ActiveRecord
     {
         return $this->hasMany(StoryParameter::className(), ['story_id' => 'story_id']);
     }
+
+    /**
+     * @return array Simple representation of the object content, fit for basic display
+     */
+    public function getSimpleData()
+    {
+        return [
+            'name' => $this->name,
+            'key' => $this->key,
+        ];
+    }
+
+    /**
+     * @return array Complete representation of public parts of object content, fit for full card display
+     */
+    public function getCompleteData()
+    {
+        $parameters = [];
+
+        foreach ($this->storyParameters as $storyParameter) {
+            $parameters[] = [
+                'name' => $storyParameter->getCodeName(),
+                'value' => $storyParameter->content,
+            ];
+        }
+
+        $basicData = [
+            'name' => $this->name,
+            'key' => $this->key,
+            'help' => [],
+            'parameters' => $parameters,
+            'short' => $this->getShortFormatted(),
+            'long' => $this->getLongFormatted(),
+        ];
+        return $basicData;
+    }
 }
