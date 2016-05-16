@@ -17,7 +17,7 @@ use yii\helpers\Markdown;
  *
  * @property StoryParameter[] $storyParameters
  */
-class Story extends \yii\db\ActiveRecord
+class Story extends \yii\db\ActiveRecord implements Displayable
 {
     /**
      * @inheritdoc
