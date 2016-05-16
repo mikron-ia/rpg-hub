@@ -24,12 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
             </span>
         </h1>
 
-        <div class="col-lg-6">
-
+        <div class="col-lg-12">
             <h2><?= Yii::t('app', 'STORY_BASICS_HEADER'); ?></h2>
 
             <p><b><?= $model->getAttributeLabel('key'); ?>:</b> <?= $model->key; ?></p>
-
             <p class="text-left">
                 <b><?= $model->getAttributeLabel('data'); ?> (JSON):</b> <?= $model->data; ?>
             </p>
@@ -99,6 +97,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]); ?>
 
+        </div>
+
+        <div class="col-lg-12">
             <h2><?php echo $model->getAttributeLabel('short'); ?></h2>
 
             <div>
@@ -106,14 +107,12 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
 
-        <div class="col-lg-6">
-
+        <div class="col-lg-12">
             <h2><?php echo $model->getAttributeLabel('long'); ?></h2>
 
             <div>
                 <?php echo $model->getLongFormatted(); ?>
             </div>
-
         </div>
 
     </div>
