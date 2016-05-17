@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m160313_144138_v0_1_0 extends Migration
+class m160313_144138_v0_1_dev_0 extends Migration
 {
     public function safeUp()
     {
@@ -119,7 +119,7 @@ class m160313_144138_v0_1_0 extends Migration
 
     public function safeDown()
     {
-        $this->execute('SET foreign_key_checks = 0');
+        $this->execute('SET foreign_key_checks = 0;');
         $this->dropTable('{{%character}}');
         $this->dropTable('{{%description}}');
         $this->dropTable('{{%description_pack}}');
