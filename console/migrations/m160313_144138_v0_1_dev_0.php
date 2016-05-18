@@ -111,9 +111,9 @@ class m160313_144138_v0_1_dev_0 extends Migration
         $this->addForeignKey('character_ibfk_1', '{{%character}}', 'person_id', '{{%person}}', 'person_id', 'CASCADE',
             'CASCADE');
         $this->addForeignKey('description_ibfk_1', '{{%description}}', 'description_pack_id', '{{%description_pack}}',
-            'description_pack_id', 'CASCADE', 'CASCADE');
+            'description_pack_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('story_parameter_ibfk_1', '{{%story_parameter}}', 'story_parameter_id', '{{%story}}',
-            'story_id', 'CASCADE', 'CASCADE');
+            'story_id', 'RESTRICT', 'CASCADE');
         $this->execute('SET foreign_key_checks = 1;');
     }
 
