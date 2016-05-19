@@ -9,12 +9,14 @@ use yii\helpers\Markdown;
  * This is the model class for table "story".
  *
  * @property string $story_id
+ * @property string $epic_id
  * @property string $key
  * @property string $name
  * @property string $short
  * @property string $long
  * @property string $data
  *
+ * @property Epic $epic
  * @property StoryParameter[] $storyParameters
  */
 class Story extends \yii\db\ActiveRecord implements Displayable
@@ -33,10 +35,12 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     public function rules()
     {
         return [
-            [['key', 'name', 'short', 'data'], 'required'],
+            [['epic_id', 'key', 'name', 'short', 'data'], 'required'],
+            [['epic_id'], 'integer'],
             [['short', 'long', 'data'], 'string'],
             [['key'], 'string', 'max' => 80],
-            [['name'], 'string', 'max' => 120]
+            [['name'], 'string', 'max' => 120],
+            [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
         ];
     }
 

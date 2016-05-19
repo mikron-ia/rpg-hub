@@ -9,10 +9,13 @@ use yii\helpers\Markdown;
  * This is the model class for table "recap".
  *
  * @property string $recap_id
+ * @property string $epic_id
  * @property string $key
  * @property string $name
  * @property string $data
  * @property string $time
+ *
+ * @property Epic $epic
  */
 class Recap extends \yii\db\ActiveRecord
 {
@@ -30,11 +33,13 @@ class Recap extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['key', 'name', 'data', 'time'], 'required'],
+            [['epic_id', 'key', 'name', 'data', 'time'], 'required'],
+            [['epic_id'], 'integer'],
             [['data'], 'string'],
             [['time'], 'safe'],
             [['key'], 'string', 'max' => 80],
-            [['name'], 'string', 'max' => 120]
+            [['name'], 'string', 'max' => 120],
+            [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
         ];
     }
 
@@ -55,5 +60,13 @@ class Recap extends \yii\db\ActiveRecord
     public function getDataFormatted()
     {
         return Markdown::process($this->data, 'gfm');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEpic()
+    {
+        return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
 }
