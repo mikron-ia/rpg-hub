@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\EpicQuery;
 use Yii;
 use common\models\Recap;
 use common\models\RecapQuery;
@@ -76,11 +77,14 @@ class RecapController extends Controller
     {
         $model = new Recap();
 
+        $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->recap_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'epicListForSelector' => $epicListForSelector,
             ]);
         }
     }
@@ -95,11 +99,14 @@ class RecapController extends Controller
     {
         $model = $this->findModel($id);
 
+        $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->recap_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'epicListForSelector' => $epicListForSelector,
             ]);
         }
     }

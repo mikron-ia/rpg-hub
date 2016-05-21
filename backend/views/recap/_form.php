@@ -6,11 +6,16 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Recap */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $epicListForSelector string[] */
 ?>
 
 <div class="recap-form">
 
     <?php $form = ActiveForm::begin(); ?>
+
+    <div class="col-lg-6">
+        <?= $form->field($model, 'epic_id')->dropDownList($epicListForSelector); ?>
+    </div>
 
     <div class="col-lg-6">
         <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
@@ -20,7 +25,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'time')->textInput() ?>
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-lg-6">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
 

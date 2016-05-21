@@ -56,7 +56,7 @@ class Recap extends \yii\db\ActiveRecord
     {
         return [
             'recap_id' => Yii::t('app', 'RECAP_ID'),
-            'epic_id' => Yii::t('app', 'EPIC_ID'),
+            'epic_id' => Yii::t('app', 'LABEL_EPIC'),
             'key' => Yii::t('app', 'RECAP_KEY'),
             'name' => Yii::t('app', 'RECAP_NAME'),
             'data' => Yii::t('app', 'RECAP_DATA'),
