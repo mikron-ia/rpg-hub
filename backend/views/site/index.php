@@ -8,11 +8,16 @@ $this->title = 'RPG hub - control';
 
     <div class="jumbotron">
 
-        <h1>RPG Hub</h1>
+        <h1>RPG Hub Control</h1>
 
-        <p class="lead">Data hub for the campaign is operational</p>
+        <p class="lead"><?= Yii::t('app', 'BACKEND_FRONT_PAGE_MAIN_TEXT'); ?></p>
 
-        <p><a class="btn btn-lg btn-success" href="index.php/story/">List stories</a></p>
+        <p class="btn-group btn-group-lg">
+            <a class="btn btn-lg btn-success" href="index.php/story/"><?= Yii::t('app', 'BUTTON_STORIES'); ?></a>
+            <a class="btn btn-lg btn-success" href="index.php/recap/"><?= Yii::t('app', 'BUTTON_RECAPS'); ?></a>
+            <a class="btn btn-lg btn-success" href="index.php/character/"><?= Yii::t('app', 'BUTTON_CHARACTERS'); ?></a>
+            <a class="btn btn-lg btn-success" href="index.php/person/"><?= Yii::t('app', 'BUTTON_PEOPLE'); ?></a>
+        </p>
 
     </div>
 
@@ -20,12 +25,17 @@ $this->title = 'RPG hub - control';
 
         <div class="row">
 
-            <div class="col-lg-4">
-                <h2><?php echo Yii::t('app', 'RECAP_TITLE_INDEX'); ?></h2>
+            <div class="col-lg-6">
+                <h2><?= Yii::t('app', 'CONFIGURATION_TITLE_INDEX'); ?></h2>
 
-                <p>Recaps describe past of the party.</p>
+                <p><?= Yii::t('app', 'CONFIGURATION_FRONTPAGE_TEXT'); ?></p>
 
-                <p><a class="btn btn-default" href="index.php/recap/">List recaps &raquo;</a></p>
+                <p class="text-center">
+                    <a class="btn btn-default btn-block" href="index.php/epic/"><?= Yii::t('app', 'BUTTON_EPICS'); ?></a>
+                </p>
+                <p class="text-center">
+                    <a class="btn btn-default btn-block" href="#"><?= Yii::t('app', 'BUTTON_CHANGE_EPIC'); ?> &raquo;</a>
+                </p>
             </div>
 
         </div>
