@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Epic */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Epics'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_EPICS'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="epic-view">
@@ -15,7 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->epic_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_UPDATE'),
+            ['update', 'id' => $model->epic_id],
+            ['class' => 'btn btn-primary']);
+        ?>
     </p>
 
     <?= DetailView::widget([

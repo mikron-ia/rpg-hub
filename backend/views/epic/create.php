@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Epic */
 
-$this->title = Yii::t('app', 'Create Epic');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Epics'), 'url' => ['index']];
+$this->title = Yii::t('app', 'TITLE_EPIC_CREATE');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_EPICS'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="epic-create">

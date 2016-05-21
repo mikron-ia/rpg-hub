@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Epic */
 
-$this->title = Yii::t('app', 'TITLE_UPDATE: ') . $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_INDEX_EPIC'), 'url' => ['index']];
+$this->title = Yii::t('app', 'LABEL_UPDATE') . ': ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_EPICS'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->epic_id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('app', 'LABEL_UPDATE');
 ?>
 <div class="epic-update">
 

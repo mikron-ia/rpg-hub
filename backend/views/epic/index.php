@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\EpicQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Epics');
+$this->title = Yii::t('app', 'TITLE_EPICS');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="epic-index">
