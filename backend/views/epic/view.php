@@ -3,7 +3,6 @@
 use common\models\Story;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Epic */
@@ -30,7 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <p><b><?= $model->getAttributeLabel('system'); ?>:</b> <?= $model->system; ?></p>
 
     <div class="col-lg-6">
-        <h2><?= Yii::t('app', 'EPIC_HEADER_STORIES'); ?></h2>
+        <h2>
+            <?= Yii::t('app', 'EPIC_HEADER_STORIES'); ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_STORY_CREATE'), ['story/create'], ['class' => 'btn btn-success pull-right']); ?>
+        </h2>
         <?= GridView::widget([
             'dataProvider' => new \yii\data\ActiveDataProvider([
                 'query' => $model->getStories()->orderBy('story_id DESC'),
@@ -66,7 +68,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="col-lg-6">
-        <h2><?= Yii::t('app', 'EPIC_HEADER_RECAPS'); ?></h2>
+        <h2>
+            <?= Yii::t('app', 'EPIC_HEADER_RECAPS'); ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_RECAP_CREATE'), ['story/create'], ['class' => 'btn btn-success pull-right']); ?>
+        </h2>
         <?= GridView::widget([
             'dataProvider' => new \yii\data\ActiveDataProvider([
                 'query' => $model->getRecaps()->orderBy('time DESC'),
