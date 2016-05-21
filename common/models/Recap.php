@@ -39,7 +39,13 @@ class Recap extends \yii\db\ActiveRecord
             [['time'], 'safe'],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
-            [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
+            [
+                ['epic_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Epic::className(),
+                'targetAttribute' => ['epic_id' => 'epic_id']
+            ],
         ];
     }
 
@@ -50,6 +56,7 @@ class Recap extends \yii\db\ActiveRecord
     {
         return [
             'recap_id' => Yii::t('app', 'RECAP_ID'),
+            'epic_id' => Yii::t('app', 'EPIC_ID'),
             'key' => Yii::t('app', 'RECAP_KEY'),
             'name' => Yii::t('app', 'RECAP_NAME'),
             'data' => Yii::t('app', 'RECAP_DATA'),
@@ -57,6 +64,10 @@ class Recap extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * Provides recap content formatted in HTML
+     * @return string HTML formatted text
+     */
     public function getDataFormatted()
     {
         return Markdown::process($this->data, 'gfm');

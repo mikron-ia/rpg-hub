@@ -18,7 +18,7 @@ use Yii;
  * @property Recap[] $recaps
  * @property Story[] $stories
  */
-class Epic extends \yii\db\ActiveRecord
+class Epic extends \yii\db\ActiveRecord implements Displayable
 {
     /**
      * @inheritdoc
@@ -91,5 +91,29 @@ class Epic extends \yii\db\ActiveRecord
     public function getStories()
     {
         return $this->hasMany(Story::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSimpleData()
+    {
+        return [
+            'name' => $this->name,
+            'key' => $this->key,
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCompleteData()
+    {
+        $basicData = [
+            'name' => $this->name,
+            'key' => $this->key,
+            'help' => [],
+        ];
+        return $basicData;
     }
 }

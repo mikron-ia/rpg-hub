@@ -51,6 +51,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     {
         return [
             'story_id' => Yii::t('app', 'STORY_ID'),
+            'epic_id' => Yii::t('app', 'EPIC_ID'),
             'key' => Yii::t('app', 'STORY_KEY'),
             'name' => Yii::t('app', 'STORY_NAME'),
             'short' => Yii::t('app', 'STORY_SHORT'),
@@ -61,19 +62,11 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     }
 
     /**
-     * @return string Short summary formatted to HTML
+     * @return \yii\db\ActiveQuery
      */
-    public function getShortFormatted()
+    public function getEpic()
     {
-        return Markdown::process($this->short, 'gfm');
-    }
-
-    /**
-     * @return string Long summary formatted to HTML
-     */
-    public function getLongFormatted()
-    {
-        return Markdown::process($this->long, 'gfm');
+        return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -84,8 +77,27 @@ class Story extends \yii\db\ActiveRecord implements Displayable
         return $this->hasMany(StoryParameter::className(), ['story_id' => 'story_id']);
     }
 
+
     /**
-     * @return array Simple representation of the object content, fit for basic display
+     * Provides story summary formatted in HTML
+     * @return string Short summary formatted to HTML
+     */
+    public function getShortFormatted()
+    {
+        return Markdown::process($this->short, 'gfm');
+    }
+
+    /**
+     * Provides story summary formatted in HTML
+     * @return string Long summary formatted to HTML
+     */
+    public function getLongFormatted()
+    {
+        return Markdown::process($this->long, 'gfm');
+    }
+
+    /**
+     * @inheritdoc
      */
     public function getSimpleData()
     {
@@ -96,7 +108,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     }
 
     /**
-     * @return array Complete representation of public parts of object content, fit for full card display
+     * @inheritdoc
      */
     public function getCompleteData()
     {
