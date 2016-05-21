@@ -68,4 +68,32 @@ class EpicQuery extends Epic
 
         return $dataProvider;
     }
+
+    static public function activeEpicsAsModels()
+    {
+        $query = Epic::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        return $dataProvider->getModels();
+    }
+
+    static public function getListOfEpicsForSelector()
+    {
+        $epicList = self::activeEpicsAsModels();
+
+        /** @var string $epicListForSelector */
+        $epicListForSelector = [];
+
+        foreach ($epicList as $story) {
+            $epicListForSelector[$story->epic_id] = $story->name;
+        }
+
+        return $epicListForSelector;
+    }
+
+    static public function allowedEpics()
+    {
+        return array_keys(self::activeEpicsAsModels());
+    }
 }

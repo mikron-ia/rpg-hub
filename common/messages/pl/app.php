@@ -49,6 +49,8 @@ return [
     'EPIC_ID' => 'ID kampanii',
     'LABEL_CONTENT' => 'Treść',
     'LABEL_DELETE' => 'Usuń',
+    'LABEL_EPIC' => 'Kampania',
+    'LABEL_STORY' => 'Historia',
     'LABEL_UPDATE' => 'Edycja',
     'LOGIN_TITLE' => 'Logowanie',
     'Name' => '',

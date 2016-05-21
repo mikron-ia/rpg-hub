@@ -49,6 +49,8 @@ return [
     'EPIC_ID' => 'Epic ID',
     'LABEL_CONTENT' => 'Content',
     'LABEL_DELETE' => 'Delete',
+    'LABEL_EPIC' => 'Epic',
+    'LABEL_STORY' => 'Story',
     'LABEL_UPDATE' => 'Edit',
     'LOGIN_TITLE' => 'Login',
     'QUESTION_DELETE' => 'Are you sure you want to delete this item?',

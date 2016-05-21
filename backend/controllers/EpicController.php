@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Story;
 use Yii;
 use common\models\Epic;
 use common\models\EpicQuery;
@@ -51,8 +52,9 @@ class EpicController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -118,7 +120,7 @@ class EpicController extends Controller
         if (($model = Epic::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('The requested epic does not exist.');
         }
     }
 }

@@ -40,7 +40,13 @@ class Story extends \yii\db\ActiveRecord implements Displayable
             [['short', 'long', 'data'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
-            [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
+            [
+                ['epic_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Epic::className(),
+                'targetAttribute' => ['epic_id' => 'epic_id']
+            ],
         ];
     }
 
@@ -51,7 +57,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     {
         return [
             'story_id' => Yii::t('app', 'STORY_ID'),
-            'epic_id' => Yii::t('app', 'EPIC_ID'),
+            'epic_id' => Yii::t('app', 'LABEL_EPIC'),
             'key' => Yii::t('app', 'STORY_KEY'),
             'name' => Yii::t('app', 'STORY_NAME'),
             'short' => Yii::t('app', 'STORY_SHORT'),

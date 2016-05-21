@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <p class="pull-right">
         <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
             ['update', 'id' => $model->epic_id],
