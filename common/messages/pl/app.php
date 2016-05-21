@@ -47,6 +47,8 @@ return [
     'CONFIRMATION_DELETE {name}' => 'Potwierdź usunięcie obiektu "{name}".',
     'CONTACT_TITLE' => 'Kontakt',
     'EPIC_GAME_SYSTEM' => 'System kampanii',
+    'EPIC_HEADER_RECAPS' => 'Streszczenia',
+    'EPIC_HEADER_STORIES' => 'Historie',
     'EPIC_ID' => 'ID kampanii',
     'EPIC_KEY' => 'Identyfikator kampanii',
     'EPIC_NAME' => 'Tytuł kampanii',

@@ -47,6 +47,8 @@ return [
     'CONFIRMATION_DELETE {name}' => 'Please confirm deletion of "{name}".',
     'CONTACT_TITLE' => 'Contact',
     'EPIC_GAME_SYSTEM' => 'Game system',
+    'EPIC_HEADER_RECAPS' => 'Recaps',
+    'EPIC_HEADER_STORIES' => 'Stories',
     'EPIC_ID' => 'Epic ID',
     'EPIC_KEY' => 'Key',
     'EPIC_NAME' => 'Name',
