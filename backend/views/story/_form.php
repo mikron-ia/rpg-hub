@@ -13,20 +13,24 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-lg-6">
-        <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'story_id')->dropDownList([]); ?>
     </div>
 
     <div class="col-lg-6">
-        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'key')->textInput(['maxlength' => true]); ?>
     </div>
 
     <div class="col-lg-6">
-        <?= $form->field($model, 'data')->textarea(['rows' => 10]) ?>
-        <?= $form->field($model, 'short')->textarea(['rows' => 10]) ?>
+        <?= $form->field($model, 'name')->textInput(['maxlength' => true]); ?>
     </div>
 
     <div class="col-lg-6">
-        <?= $form->field($model, 'long')->textarea(['rows' => 20]) ?>
+        <?= $form->field($model, 'data')->textarea(['rows' => 10]); ?>
+        <?= $form->field($model, 'short')->textarea(['rows' => 10]); ?>
+    </div>
+
+    <div class="col-lg-6">
+        <?= $form->field($model, 'long')->textarea(['rows' => 20]); ?>
     </div>
 
     <div class="form-group col-lg-22">

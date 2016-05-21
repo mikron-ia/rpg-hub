@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Epic;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -21,9 +22,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'summary' => '',
         'columns' => [
-            'key',
-            'name',
-            'system',
+            [
+                'attribute' => 'key',
+                'format' => 'raw',
+                'value' => function (Epic $model) {
+                    return '<span class="key">' . $model->key . '</span>';
+                },
+            ],
+            [
+                'attribute' => 'name',
+            ],
+            [
+                'attribute' => 'system',
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update}'

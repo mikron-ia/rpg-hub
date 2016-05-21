@@ -17,7 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p class="text-right">
-        <?= Html::a(Yii::t('app', 'BUTTON_RECAP_CREATE'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_RECAP_CREATE'),
+            ['create'],
+            ['class' => 'btn btn-success']);
+        ?>
     </p>
 
     <div class="col-lg-12">
