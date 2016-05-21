@@ -29,6 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <p><b><?= $model->getAttributeLabel('key'); ?>:</b> <?= $model->key; ?></p>
 
+        <p>
+            <b><?= $model->getAttributeLabel('epic_id'); ?>:</b>
+            <?= Html::a(
+                $model->epic->name,
+                ['epic/view', 'id' => $model->epic_id],
+                []
+            ); ?>
+        </p>
+
         <p class="text-left">
             <b><?= $model->getAttributeLabel('data'); ?> (JSON):</b> <?= $model->data; ?>
         </p>

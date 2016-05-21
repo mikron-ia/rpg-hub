@@ -46,10 +46,10 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
     public function attributeLabels()
     {
         return [
-            'epic_id' => Yii::t('app', 'Epic ID'),
-            'key' => Yii::t('app', 'Key'),
-            'name' => Yii::t('app', 'Name'),
-            'system' => Yii::t('app', 'System'),
+            'epic_id' => Yii::t('app', 'EPIC_ID'),
+            'key' => Yii::t('app', 'EPIC_KEY'),
+            'name' => Yii::t('app', 'EPIC_NAME'),
+            'system' => Yii::t('app', 'EPIC_GAME_SYSTEM'),
         ];
     }
 
