@@ -13,16 +13,15 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="story-view">
 
-    <h1>
-        <?= Html::encode($this->title) ?>
-        <span class="pull-right">
-                <?= Html::a(
-                    Yii::t('app', 'BUTTON_UPDATE'),
-                    ['update', 'id' => $model->story_id],
-                    ['class' => 'btn btn-primary']);
-                ?>
-            </span>
-    </h1>
+    <div class="buttoned-header">
+        <h1><?= Html::encode($this->title) ?></h1>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_UPDATE'),
+            ['update', 'id' => $model->story_id],
+            ['class' => 'btn btn-primary']
+        );
+        ?>
+    </div>
 
     <div class="col-lg-12">
         <h2><?= Yii::t('app', 'STORY_BASICS_HEADER'); ?></h2>
@@ -42,21 +41,19 @@ $this->params['breadcrumbs'][] = $this->title;
             <b><?= $model->getAttributeLabel('data'); ?> (JSON):</b> <?= $model->data; ?>
         </p>
 
-        <h2>
-            <?php echo $model->getAttributeLabel('storyParameters'); ?>
-            <span class="pull-right">
-                    <?= Html::a(
-                        '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_STORY_PARAMETER_CREATE') . '</span>',
-                        '#',
-                        [
-                            'class' => 'create-story-parameter-link',
-                            'title' => Yii::t('app', 'BUTTON_STORY_PARAMETER_CREATE'),
-                            'data-toggle' => 'modal',
-                            'data-target' => '#create-story-parameter-modal'
-                        ]
-                    ); ?>
-                </span>
-        </h2>
+        <div class="buttoned-header">
+            <h2><?php echo $model->getAttributeLabel('storyParameters'); ?></h2>
+            <?= Html::a(
+                '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_STORY_PARAMETER_CREATE') . '</span>',
+                '#',
+                [
+                    'class' => 'create-story-parameter-link',
+                    'title' => Yii::t('app', 'BUTTON_STORY_PARAMETER_CREATE'),
+                    'data-toggle' => 'modal',
+                    'data-target' => '#create-story-parameter-modal'
+                ]
+            ); ?>
+        </div>
 
         <?= GridView::widget([
             'dataProvider' => new \yii\data\ActiveDataProvider(['query' => StoryParameter::find()->with('story')->where(['story_id' => $model->story_id])]),

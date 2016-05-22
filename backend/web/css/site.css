@@ -112,3 +112,24 @@ p {
     font-family: "Courier New", Courier, monospace;
     background-color: lightgoldenrodyellow;
 }
+
+/* Clearing trick */
+.buttoned-header:before {
+    content: " ";
+    display: table;
+}
+
+.buttoned-header:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+.buttoned-header > h1, .buttoned-header > h2, .buttoned-header > h3  {
+    float: left;
+}
+
+.buttoned-header > a, .buttoned-header > div, .buttoned-header > p  {
+    float: right;
+    margin: 20px 0 10px 10px;
+}

@@ -13,26 +13,25 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="epic-view">
 
-    <h1>
-        <?= Html::encode($this->title) ?>
-        <span class="pull-right">
-                <?= Html::a(
-                    Yii::t('app', 'BUTTON_UPDATE'),
-                    ['update', 'id' => $model->epic_id],
-                    ['class' => 'btn btn-primary']);
-                ?>
-            </span>
-    </h1>
+    <div class="buttoned-header">
+        <h1><?= Html::encode($this->title) ?></h1>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_UPDATE'),
+            ['update', 'id' => $model->epic_id],
+            ['class' => 'btn btn-primary']);
+        ?>
+    </div>
 
     <p><b><?= $model->getAttributeLabel('key'); ?>:</b> <?= $model->key; ?></p>
 
     <p><b><?= $model->getAttributeLabel('system'); ?>:</b> <?= $model->system; ?></p>
 
     <div class="col-lg-6">
-        <h2>
-            <?= Yii::t('app', 'EPIC_HEADER_STORIES'); ?>
+
+        <div class="buttoned-header">
+            <h2><?= Yii::t('app', 'EPIC_HEADER_STORIES'); ?></h2>
             <?= Html::a(Yii::t('app', 'BUTTON_STORY_CREATE'), ['story/create'], ['class' => 'btn btn-success pull-right']); ?>
-        </h2>
+        </div>
         <?= GridView::widget([
             'dataProvider' => new \yii\data\ActiveDataProvider([
                 'query' => $model->getStories()->orderBy('story_id DESC'),
@@ -68,10 +67,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="col-lg-6">
-        <h2>
-            <?= Yii::t('app', 'EPIC_HEADER_RECAPS'); ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_RECAP_CREATE'), ['story/create'], ['class' => 'btn btn-success pull-right']); ?>
-        </h2>
+        <div class="buttoned-header">
+            <h2><?= Yii::t('app', 'EPIC_HEADER_RECAPS'); ?></h2>
+            <?= Html::a(Yii::t('app', 'BUTTON_RECAP_CREATE'), ['story/create'], ['class' => 'btn btn-success']); ?>
+        </div>
         <?= GridView::widget([
             'dataProvider' => new \yii\data\ActiveDataProvider([
                 'query' => $model->getRecaps()->orderBy('time DESC'),

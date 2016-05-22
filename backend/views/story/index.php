@@ -12,11 +12,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="story-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
+    <div class="buttoned-header">
+        <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(Yii::t('app', 'BUTTON_STORY_CREATE'), ['create'], ['class' => 'btn btn-success']); ?>
-    </p>
+    </div>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
