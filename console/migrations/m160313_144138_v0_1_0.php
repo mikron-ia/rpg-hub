@@ -118,9 +118,6 @@ class m160313_144138_v0_1_0 extends Migration
             ], $tableOptions);
         }
 
-        $this->createIndex('person_id', 'character', 'person_id', 0);
-        $this->createIndex('description_pack_id', 'description', 'description_pack_id', 0);
-
         $this->execute('SET foreign_key_checks = 0');
         $this->addForeignKey('character_ibfk_1', '{{%character}}', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('description_ibfk_1', '{{%description}}', 'description_pack_id', '{{%description_pack}}', 'description_pack_id', 'RESTRICT', 'CASCADE');
