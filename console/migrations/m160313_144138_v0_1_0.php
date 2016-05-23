@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m160313_144138_v0_1_dev_0 extends Migration
+class m160313_144138_v0_1_0 extends Migration
 {
     public function safeUp()
     {
@@ -12,10 +12,10 @@ class m160313_144138_v0_1_dev_0 extends Migration
         if (!in_array('character', $tables)) {
             $this->createTable('{{%character}}', [
                 'character_id' => $this->primaryKey()->unsigned(),
+                'epic_id' => $this->integer(11)->unsigned()->notNull(),
                 'key' => $this->string(80)->notNull(),
                 'name' => $this->string(120)->notNull(),
                 'data' => $this->text()->notNull(),
-                'person_id' => $this->integer(11)->unsigned(),
             ], $tableOptions);
         }
 
@@ -38,9 +38,19 @@ class m160313_144138_v0_1_dev_0 extends Migration
             ], $tableOptions);
         }
 
+        if (!in_array('epic', $tables)) {
+            $this->createTable('{{%epic}}', [
+                'epic_id' => $this->primaryKey()->unsigned(),
+                'key' => $this->string(80)->notNull(),
+                'name' => $this->string(80)->notNull()->comment('Public name for the epic'),
+                'system' => $this->string(20)->notNull()->comment('Code for the system used'),
+            ], $tableOptions);
+        }
+
         if (!in_array('group', $tables)) {
             $this->createTable('{{%group}}', [
                 'group_id' => $this->primaryKey()->unsigned(),
+                'epic_id' => $this->integer(11)->unsigned()->notNull(),
                 'key' => $this->string(80)->notNull(),
                 'name' => $this->string(120)->notNull(),
                 'data' => $this->text()->notNull(),
@@ -50,17 +60,20 @@ class m160313_144138_v0_1_dev_0 extends Migration
         if (!in_array('person', $tables)) {
             $this->createTable('{{%person}}', [
                 'person_id' => $this->primaryKey()->unsigned(),
+                'epic_id' => $this->integer(11)->unsigned()->notNull(),
                 'key' => $this->string(80)->notNull(),
                 'name' => $this->string(120)->notNull(),
                 'tagline' => $this->string(120)->notNull(),
                 'data' => $this->text()->notNull(),
                 'visibility' => 'ENUM(\'none\',\'linked\',\'complete\') NULL',
+                'character_id' => $this->integer(11)->unsigned()
             ], $tableOptions);
         }
 
         if (!in_array('recap', $tables)) {
             $this->createTable('{{%recap}}', [
                 'recap_id' => $this->primaryKey()->unsigned(),
+                'epic_id' => $this->integer(11)->unsigned()->notNull(),
                 'key' => $this->string(80)->notNull(),
                 'name' => $this->string(120)->notNull(),
                 'data' => $this->text()->notNull(),
@@ -71,6 +84,7 @@ class m160313_144138_v0_1_dev_0 extends Migration
         if (!in_array('story', $tables)) {
             $this->createTable('{{%story}}', [
                 'story_id' => $this->primaryKey()->unsigned(),
+                'epic_id' => $this->integer(11)->unsigned()->notNull(),
                 'key' => $this->string(80)->notNull(),
                 'name' => $this->string(120)->notNull(),
                 'short' => $this->text()->notNull(),
@@ -108,12 +122,15 @@ class m160313_144138_v0_1_dev_0 extends Migration
         $this->createIndex('description_pack_id', 'description', 'description_pack_id', 0);
 
         $this->execute('SET foreign_key_checks = 0');
-        $this->addForeignKey('character_ibfk_1', '{{%character}}', 'person_id', '{{%person}}', 'person_id', 'CASCADE',
-            'CASCADE');
-        $this->addForeignKey('description_ibfk_1', '{{%description}}', 'description_pack_id', '{{%description_pack}}',
-            'description_pack_id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('story_parameter_ibfk_1', '{{%story_parameter}}', 'story_parameter_id', '{{%story}}',
-            'story_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('character_ibfk_1', '{{%character}}', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('description_ibfk_1', '{{%description}}', 'description_pack_id', '{{%description_pack}}', 'description_pack_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('group_ibfk_1', '{{%group}}', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('person_ibfk_1', '{{%person}}', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('person_ibfk_2', '{{%person}}', 'character_id', '{{%character}}', 'character_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('recap_ibfk_1', '{{%recap}}', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('story_ibfk_1', '{{%story}}', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('story_parameter_ibfk_1', '{{%story_parameter}}', 'story_parameter_id', '{{%story}}', 'story_id', 'RESTRICT', 'CASCADE');
+
         $this->execute('SET foreign_key_checks = 1;');
     }
 
