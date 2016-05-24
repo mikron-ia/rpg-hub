@@ -47,11 +47,11 @@ class Character extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'character_id' => Yii::t('app', 'Character ID'),
-            'epic_id' => Yii::t('app', 'Epic ID'),
-            'key' => Yii::t('app', 'Key'),
-            'name' => Yii::t('app', 'Name'),
-            'data' => Yii::t('app', 'Data'),
+            'character_id' => Yii::t('app', 'CHARACTER_ID'),
+            'epic_id' => Yii::t('app', 'EPIC_LABEL'),
+            'key' => Yii::t('app', 'EPIC_KEY'),
+            'name' => Yii::t('app', 'EPIC_NAME'),
+            'data' => Yii::t('app', 'EPIC_DATE'),
         ];
     }
 

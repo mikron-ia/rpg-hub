@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Group */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Groups'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_GROUPS_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-view">
@@ -26,13 +26,19 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'key',
-            'name',
-            'data:ntext',
-        ],
-    ]) ?>
+    <p><b><?= $model->getAttributeLabel('key'); ?>:</b> <?= $model->key; ?></p>
+
+    <p>
+        <b><?= $model->getAttributeLabel('epic_id'); ?>:</b>
+        <?= Html::a(
+            $model->epic->name,
+            ['epic/view', 'id' => $model->epic_id],
+            []
+        ); ?>
+    </p>
+
+    <p class="text-left">
+        <b><?= $model->getAttributeLabel('data'); ?> (JSON):</b> <?= $model->data; ?>
+    </p>
 
 </div>

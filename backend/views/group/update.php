@@ -11,7 +11,7 @@ $this->title = Yii::t('app', 'Update {modelClass}: ', [
 ]) . $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Groups'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->group_id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_UPDATE');
 ?>
 <div class="group-update">
 

@@ -7,8 +7,8 @@ use yii\helpers\Html;
 /* @var $model common\models\Group */
 /* @var $epicListForSelector string[] */
 
-$this->title = Yii::t('app', 'Create Group');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Groups'), 'url' => ['index']];
+$this->title = Yii::t('app', 'TITLE_GROUPS_CREATE');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_GROUPS_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-create">

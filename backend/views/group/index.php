@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\GroupQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Groups');
+$this->title = Yii::t('app', 'TITLE_GROUPS_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-index">

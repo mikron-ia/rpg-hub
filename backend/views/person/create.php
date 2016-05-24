@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Person */
 /* @var $epicListForSelector string[] */
 
-$this->title = Yii::t('app', 'Create Person');
+$this->title = Yii::t('app', 'TITLE_PERSONS_CREATE');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'People'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
