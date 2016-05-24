@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Epic;
+use common\models\Group;
 
 /**
- * EpicQuery represents the model behind the search form about `common\models\Epic`.
+ * GroupQuery represents the model behind the search form about `common\models\Group`.
  */
-class EpicQuery extends Epic
+class GroupQuery extends Group
 {
     /**
      * @inheritdoc
@@ -18,7 +18,8 @@ class EpicQuery extends Epic
     public function rules()
     {
         return [
-            [['epic_id', 'key', 'name', 'system'], 'safe'],
+            [['group_id', 'epic_id'], 'integer'],
+            [['key', 'name', 'data'], 'safe'],
         ];
     }
 
@@ -40,7 +41,7 @@ class EpicQuery extends Epic
      */
     public function search($params)
     {
-        $query = Epic::find();
+        $query = Group::find();
 
         // add conditions that should always apply here
 
@@ -58,41 +59,14 @@ class EpicQuery extends Epic
 
         // grid filtering conditions
         $query->andFilterWhere([
+            'group_id' => $this->group_id,
             'epic_id' => $this->epic_id,
         ]);
 
         $query->andFilterWhere(['like', 'key', $this->key])
             ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'system', $this->system]);
+            ->andFilterWhere(['like', 'data', $this->data]);
 
         return $dataProvider;
-    }
-
-    static public function activeEpicsAsModels()
-    {
-        $query = Epic::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-        return $dataProvider->getModels();
-    }
-
-    static public function getListOfEpicsForSelector()
-    {
-        $epicList = self::activeEpicsAsModels();
-
-        /** @var string $epicListForSelector */
-        $epicListForSelector = [];
-
-        foreach ($epicList as $story) {
-            $epicListForSelector[$story->epic_id] = $story->name;
-        }
-
-        return $epicListForSelector;
-    }
-
-    static public function allowedEpics()
-    {
-        return array_keys(self::activeEpicsAsModels());
     }
 }

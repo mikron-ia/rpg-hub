@@ -4,14 +4,14 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Person */
+/* @var $model common\models\Group */
 /* @var $epicListForSelector string[] */
 
-$this->title = Yii::t('app', 'Create Person');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'People'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Group');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Groups'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="person-create">
+<div class="group-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

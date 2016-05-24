@@ -4,16 +4,16 @@ namespace backend\controllers;
 
 use common\models\EpicQuery;
 use Yii;
-use common\models\Person;
-use common\models\PersonQuery;
+use common\models\Group;
+use common\models\GroupQuery;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PersonController implements the CRUD actions for Person model.
+ * GroupController implements the CRUD actions for Group model.
  */
-class PersonController extends Controller
+class GroupController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +31,12 @@ class PersonController extends Controller
     }
 
     /**
-     * Lists all Person models.
+     * Lists all Group models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PersonQuery();
+        $searchModel = new GroupQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +46,7 @@ class PersonController extends Controller
     }
 
     /**
-     * Displays a single Person model.
+     * Displays a single Group model.
      * @param string $id
      * @return mixed
      */
@@ -58,18 +58,18 @@ class PersonController extends Controller
     }
 
     /**
-     * Creates a new Person model.
+     * Creates a new Group model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Person();
+        $model = new Group();
 
         $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->person_id]);
+            return $this->redirect(['view', 'id' => $model->group_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -79,7 +79,7 @@ class PersonController extends Controller
     }
 
     /**
-     * Updates an existing Person model.
+     * Updates an existing Group model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -91,7 +91,7 @@ class PersonController extends Controller
         $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->person_id]);
+            return $this->redirect(['view', 'id' => $model->group_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -101,7 +101,7 @@ class PersonController extends Controller
     }
 
     /**
-     * Deletes an existing Person model.
+     * Deletes an existing Group model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -114,15 +114,15 @@ class PersonController extends Controller
     }
 
     /**
-     * Finds the Person model based on its primary key value.
+     * Finds the Group model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Person the loaded model
+     * @return Group the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Person::findOne($id)) !== null) {
+        if (($model = Group::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

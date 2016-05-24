@@ -4,12 +4,12 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Person */
+/* @var $model common\models\Group */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $epicListForSelector string[] */
 ?>
 
-<div class="person-form">
+<div class="group-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -19,22 +19,6 @@ use yii\widgets\ActiveForm;
 
     <div class="col-lg-6">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-    </div>
-
-    <div class="col-lg-12">
-        <?= $form->field($model, 'tagline')->textInput(['maxlength' => true]) ?>
-    </div>
-
-    <div class="col-lg-6">
-        <?= $form->field($model, 'visibility')->dropDownList([
-            'none' => 'None',
-            'linked' => 'Linked',
-            'complete' => 'Complete',
-        ], ['prompt' => '']) ?>
-    </div>
-
-    <div class="col-lg-6">
-        <?= $form->field($model, 'character_id')->textInput(['maxlength' => true]) ?>
     </div>
 
     <div class="form-group">
