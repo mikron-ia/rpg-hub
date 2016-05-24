@@ -12,9 +12,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="person-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
+    <div class="buttoned-header">
+        <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->person_id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->person_id], [
             'class' => 'btn btn-danger',
@@ -23,19 +22,35 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+    </div>
+
+    <p class="note"><?= $model->tagline; ?></p>
+
+    <p><b><?= $model->getAttributeLabel('key'); ?>:</b> <?= $model->key; ?></p>
+
+    <p>
+        <b><?= $model->getAttributeLabel('epic_id'); ?>:</b>
+        <?= Html::a(
+            $model->epic->name,
+            ['epic/view', 'id' => $model->epic_id],
+            []
+        ); ?>
+    </p>
+
+    <p>
+        <b><?= $model->getAttributeLabel('character_id'); ?>:</b>
+        <?php
+        echo $model->character_id ?
+            Html::a($model->character->name, ['epic/view', 'id' => $model->character_id], []) :
+            Yii::t('app', 'CHARACTER_FIELD_NOT_SET');
+        ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'person_id',
-            'epic_id',
-            'key',
-            'name',
-            'tagline',
             'data:ntext',
             'visibility',
-            'character_id',
         ],
     ]) ?>
 

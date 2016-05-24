@@ -14,13 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
+        <?= Html::a(Yii::t('app', 'Create Person'), ['create'], ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Person'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
