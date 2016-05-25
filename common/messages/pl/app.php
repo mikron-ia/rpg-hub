@@ -57,6 +57,7 @@ return [
     'Data' => '',
     'EPIC_DATE' => 'Dane',
     'EPIC_GAME_SYSTEM' => 'System kampanii',
+    'EPIC_HEADER_GROUPS' => '',
     'EPIC_HEADER_RECAPS' => 'Streszczenia',
     'EPIC_HEADER_STORIES' => 'Historie',
     'EPIC_ID' => 'ID kampanii',

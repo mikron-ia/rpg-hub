@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Group;
 use common\models\Story;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -27,6 +28,44 @@ $this->params['breadcrumbs'][] = $this->title;
     <p><b><?= $model->getAttributeLabel('system'); ?>:</b> <?= $model->system; ?></p>
 
     <div class="col-lg-6">
+
+        <div class="buttoned-header">
+            <h2><?= Yii::t('app', 'EPIC_HEADER_GROUPS'); ?></h2>
+            <?= Html::a(Yii::t('app', 'BUTTON_GROUP_CREATE'), ['group/create'], ['class' => 'btn btn-success pull-right']); ?>
+        </div>
+
+        <?= GridView::widget([
+            'dataProvider' => new \yii\data\ActiveDataProvider([
+                'query' => $model->getGroups()->orderBy('group_id DESC'),
+                'sort' => false,
+            ]),
+            'summary' => '',
+            'columns' => [
+                [
+                    'attribute' => 'name',
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{view} {update}',
+                    'buttons' => [
+                        'view' => function ($url, Group $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-eye-open"></span>',
+                                Yii::$app->urlManager->createUrl(['group/view', 'id' => $model->group_id]),
+                                ['title' => Yii::t('app', 'BUTTON_VIEW')]
+                            );
+                        },
+                        'update' => function ($url, Group $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-pencil"></span>',
+                                Yii::$app->urlManager->createUrl(['group/update', 'id' => $model->group_id]),
+                                ['title' => Yii::t('app', 'BUTTON_UPDATE')]
+                            );
+                        },
+                    ],
+                ],
+            ],
+        ]); ?>
 
         <div class="buttoned-header">
             <h2><?= Yii::t('app', 'EPIC_HEADER_STORIES'); ?></h2>

@@ -57,6 +57,7 @@ return [
     'Data' => '',
     'EPIC_DATE' => 'Data',
     'EPIC_GAME_SYSTEM' => 'Game system',
+    'EPIC_HEADER_GROUPS' => 'Groups',
     'EPIC_HEADER_RECAPS' => 'Recaps',
     'EPIC_HEADER_STORIES' => 'Stories',
     'EPIC_ID' => 'Epic ID',

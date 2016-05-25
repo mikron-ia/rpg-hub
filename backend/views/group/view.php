@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ); ?>
     </p>
 
-    <p class="text-left">
+    <p>
         <b><?= $model->getAttributeLabel('data'); ?> (JSON):</b> <?= $model->data; ?>
     </p>
 
