@@ -4,6 +4,7 @@ use common\models\Group;
 use common\models\Story;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Epic */
@@ -23,9 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 
-    <p><b><?= $model->getAttributeLabel('key'); ?>:</b> <?= $model->key; ?></p>
-
-    <p><b><?= $model->getAttributeLabel('system'); ?>:</b> <?= $model->system; ?></p>
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            'key',
+            'system',
+        ],
+    ]) ?>
 
     <div class="col-lg-6">
 

@@ -4,7 +4,6 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Group */
-/* @var $epicListForSelector string[] */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Group',
@@ -19,7 +18,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_UPDATE');
 
     <?= $this->render('_form', [
         'model' => $model,
-        'epicListForSelector' => $epicListForSelector,
     ]) ?>
 
 </div>

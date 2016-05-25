@@ -26,31 +26,31 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p class="note"><?= $model->tagline; ?></p>
 
-    <p><b><?= $model->getAttributeLabel('key'); ?>:</b> <?= $model->key; ?></p>
-
-    <p>
-        <b><?= $model->getAttributeLabel('epic_id'); ?>:</b>
-        <?= Html::a(
-            $model->epic->name,
-            ['epic/view', 'id' => $model->epic_id],
-            []
-        ); ?>
-    </p>
-
-    <p>
-        <b><?= $model->getAttributeLabel('character_id'); ?>:</b>
-        <?php
-        echo $model->character_id ?
-            Html::a($model->character->name, ['epic/view', 'id' => $model->character_id], []) :
-            Yii::t('app', 'CHARACTER_FIELD_NOT_SET');
-        ?>
-    </p>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'data:ntext',
+            [
+                'attribute' => 'key',
+            ],
+            [
+                'attribute' => 'epic_id',
+                'format' => 'raw',
+                'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
+            ],
+            [
+                'label' => Yii::t('app', 'LABEL_DATA_SIZE'),
+                'format' => 'shortSize',
+                'value' => strlen($model->data),
+            ],
+            [
+                'attribute' => 'character_id',
+                'format' => 'raw',
+                'value' => $model->character_id ?
+                    Html::a($model->character->name, ['epic/view', 'id' => $model->character_id], []) :
+                    null,
+            ],
             'visibility',
+            'data:ntext',
         ],
     ]) ?>
 

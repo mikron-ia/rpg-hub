@@ -5,7 +5,6 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Group */
-/* @var $epicListForSelector string[] */
 
 $this->title = Yii::t('app', 'TITLE_GROUPS_CREATE');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_GROUPS_INDEX'), 'url' => ['index']];
@@ -17,7 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'epicListForSelector' => $epicListForSelector,
     ]) ?>
 
 </div>

@@ -49,9 +49,9 @@ class Character extends \yii\db\ActiveRecord
         return [
             'character_id' => Yii::t('app', 'CHARACTER_ID'),
             'epic_id' => Yii::t('app', 'EPIC_LABEL'),
-            'key' => Yii::t('app', 'EPIC_KEY'),
-            'name' => Yii::t('app', 'EPIC_NAME'),
-            'data' => Yii::t('app', 'EPIC_DATE'),
+            'key' => Yii::t('app', 'CHARACTER_KEY'),
+            'name' => Yii::t('app', 'CHARACTER_NAME'),
+            'data' => Yii::t('app', 'CHARACTER_DATA'),
         ];
     }
 

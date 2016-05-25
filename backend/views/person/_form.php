@@ -1,12 +1,12 @@
 <?php
 
+use common\models\EpicQuery;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Person */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $epicListForSelector string[] */
 ?>
 
 <div class="person-form">
@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-lg-6">
-        <?= $form->field($model, 'epic_id')->dropDownList($epicListForSelector); ?>
+        <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
     </div>
 
     <div class="col-lg-6">

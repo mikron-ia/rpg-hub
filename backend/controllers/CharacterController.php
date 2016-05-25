@@ -2,18 +2,17 @@
 
 namespace backend\controllers;
 
-use common\models\EpicQuery;
 use Yii;
-use common\models\Group;
-use common\models\GroupQuery;
+use common\models\Character;
+use common\models\CharacterQuery;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * GroupController implements the CRUD actions for Group model.
+ * CharacterController implements the CRUD actions for Character model.
  */
-class GroupController extends Controller
+class CharacterController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +30,12 @@ class GroupController extends Controller
     }
 
     /**
-     * Lists all Group models.
+     * Lists all Character models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new GroupQuery();
+        $searchModel = new CharacterQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class GroupController extends Controller
     }
 
     /**
-     * Displays a single Group model.
+     * Displays a single Character model.
      * @param string $id
      * @return mixed
      */
@@ -58,16 +57,16 @@ class GroupController extends Controller
     }
 
     /**
-     * Creates a new Group model.
+     * Creates a new Character model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Group();
+        $model = new Character();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->group_id]);
+            return $this->redirect(['view', 'id' => $model->character_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -76,7 +75,7 @@ class GroupController extends Controller
     }
 
     /**
-     * Updates an existing Group model.
+     * Updates an existing Character model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -86,7 +85,7 @@ class GroupController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->group_id]);
+            return $this->redirect(['view', 'id' => $model->character_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -95,7 +94,7 @@ class GroupController extends Controller
     }
 
     /**
-     * Deletes an existing Group model.
+     * Deletes an existing Character model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -108,15 +107,15 @@ class GroupController extends Controller
     }
 
     /**
-     * Finds the Group model based on its primary key value.
+     * Finds the Character model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Group the loaded model
+     * @return Character the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Group::findOne($id)) !== null) {
+        if (($model = Character::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
