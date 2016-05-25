@@ -1,5 +1,6 @@
 <?php
 
+use common\models\CharacterQuery;
 use common\models\EpicQuery;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -34,7 +35,12 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-lg-6">
-        <?= $form->field($model, 'character_id')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'character_id')->dropDownList(
+            CharacterQuery::getListOfCharactersForSelector(),
+            [
+                'prompt' => Yii::t('app', 'CHARACTER_PROMPT')
+            ]
+        ) ?>
     </div>
 
     <div class="form-group">

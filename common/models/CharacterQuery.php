@@ -5,7 +5,6 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Character;
 
 /**
  * CharacterQuery represents the model behind the search form about `common\models\Character`.
@@ -68,5 +67,33 @@ class CharacterQuery extends Character
             ->andFilterWhere(['like', 'data', $this->data]);
 
         return $dataProvider;
+    }
+
+    static public function activeCharactersAsModels()
+    {
+        $query = Character::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        return $dataProvider->getModels();
+    }
+
+    static public function getListOfCharactersForSelector()
+    {
+        $characterList = self::activeCharactersAsModels();
+
+        /** @var string $characterListForSelector */
+        $characterListForSelector = [];
+
+        foreach ($characterList as $story) {
+            $characterListForSelector[$story->character_id] = $story->name;
+        }
+
+        return $characterListForSelector;
+    }
+
+    static public function allowedCharacters()
+    {
+        return array_keys(self::activeCharactersAsModels());
     }
 }

@@ -51,14 +51,14 @@ class Person extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'person_id' => Yii::t('app', 'Person ID'),
-            'epic_id' => Yii::t('app', 'Epic'),
-            'key' => Yii::t('app', 'Key'),
-            'name' => Yii::t('app', 'Name'),
-            'tagline' => Yii::t('app', 'Tagline'),
-            'data' => Yii::t('app', 'Data'),
-            'visibility' => Yii::t('app', 'Visibility'),
-            'character_id' => Yii::t('app', 'Character'),
+            'person_id' => Yii::t('app', 'PERSON_ID'),
+            'epic_id' => Yii::t('app', 'LABEL_EPIC'),
+            'key' => Yii::t('app', 'PERSON_KEY'),
+            'name' => Yii::t('app', 'PERSON_NAME'),
+            'tagline' => Yii::t('app', 'PERSON_TAGLINE'),
+            'data' => Yii::t('app', 'PERSON_DATA'),
+            'visibility' => Yii::t('app', 'PERSON_VISIBILITY'),
+            'character_id' => Yii::t('app', 'LABEL_CHARACTER'),
         ];
     }
 
