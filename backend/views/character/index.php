@@ -12,12 +12,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="character-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="buttoned-header">
+        <h1><?= Html::encode($this->title) ?></h1>
+        <?= Html::a(Yii::t('app', 'BUTTON_CHARACTER_CREATE'), ['create'], ['class' => 'btn btn-success']); ?>
+    </div>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'BUTTON_CHARACTER_CREATE'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,

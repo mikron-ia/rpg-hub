@@ -4,7 +4,6 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Story */
-/* @var $epicListForSelector string[] */
 
 $this->title = Yii::t('app', 'STORY_TITLE_UPDATE') . ': ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'STORY_TITLE_INDEX'), 'url' => ['index']];
@@ -17,7 +16,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_UPDATE');
 
     <?= $this->render('_form', [
         'model' => $model,
-        'epicListForSelector' => $epicListForSelector,
     ]) ?>
 
 </div>

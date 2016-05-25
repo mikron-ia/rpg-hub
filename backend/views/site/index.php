@@ -12,11 +12,14 @@ $this->title = 'RPG hub - control';
 
         <h1><?= Yii::t('app', 'BACKEND_FRONT_PAGE_TITLE'); ?></h1>
 
-        <p class="lead"><?= Yii::t('app', 'BACKEND_FRONT_PAGE_MAIN_TEXT'); ?></p>
+        <p class="lead text-center"><?= Yii::t('app', 'BACKEND_FRONT_PAGE_MAIN_TEXT'); ?></p>
 
         <div class="btn-group btn-group-lg">
             <?= Html::a(Yii::t('app', 'BUTTON_STORIES'), ['story/index'], ['class' => 'btn btn-lg btn-success']); ?>
             <?= Html::a(Yii::t('app', 'BUTTON_RECAPS'), ['recap/index'], ['class' => 'btn btn-lg btn-success']); ?>
+        </div>
+
+        <div class="btn-group btn-group-lg">
             <?= Html::a(Yii::t('app', 'BUTTON_PEOPLE'), ['person/index'], ['class' => 'btn btn-lg btn-success']); ?>
             <?= Html::a(Yii::t('app', 'BUTTON_CHARACTERS'), ['character/index'], ['class' => 'btn btn-lg btn-success']); ?>
             <?= Html::a(Yii::t('app', 'BUTTON_GROUP'), ['group/index'], ['class' => 'btn btn-lg btn-success']); ?>
@@ -36,7 +39,7 @@ $this->title = 'RPG hub - control';
 
                 <p>
                     <?= Html::a(
-                        Yii::t('app', 'BUTTON_EPIC_CHANGE').' &raquo;',
+                        Yii::t('app', 'BUTTON_EPIC_CHANGE') . ' &raquo;',
                         ['epic/index'],
                         ['class' => 'btn btn-default btn-block']
                     ); ?>
@@ -44,7 +47,7 @@ $this->title = 'RPG hub - control';
 
                 <p>
                     <?= Html::a(
-                        Yii::t('app', 'BUTTON_EPIC_LIST').' &raquo;',
+                        Yii::t('app', 'BUTTON_EPIC_LIST') . ' &raquo;',
                         ['epic/index'],
                         ['class' => 'btn btn-default btn-block']
                     ); ?>

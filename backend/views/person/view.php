@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'character_id',
                 'format' => 'raw',
                 'value' => $model->character_id ?
-                    Html::a($model->character->name, ['epic/view', 'id' => $model->character_id], []) :
+                    Html::a($model->character->name, ['character/view', 'id' => $model->character_id], []) :
                     null,
             ],
             'visibility',

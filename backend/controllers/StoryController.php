@@ -87,14 +87,11 @@ class StoryController extends Controller
     {
         $model = new Story();
 
-        $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->story_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'epicListForSelector' => $epicListForSelector,
             ]);
         }
     }
@@ -109,14 +106,11 @@ class StoryController extends Controller
     {
         $model = $this->findModel($id);
 
-        $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->story_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'epicListForSelector' => $epicListForSelector,
             ]);
         }
     }
