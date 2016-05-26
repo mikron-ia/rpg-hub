@@ -3,6 +3,7 @@
 use common\models\StoryParameter;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Story */
@@ -23,23 +24,26 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            [
+                'attribute' => 'key',
+            ],
+            [
+                'attribute' => 'epic_id',
+                'format' => 'raw',
+                'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
+            ],
+            [
+                'label' => Yii::t('app', 'LABEL_DATA_SIZE'),
+                'format' => 'shortSize',
+                'value' => strlen($model->data),
+            ],
+        ],
+    ]) ?>
+
     <div class="col-lg-12">
-        <h2><?= Yii::t('app', 'STORY_BASICS_HEADER'); ?></h2>
-
-        <p><b><?= $model->getAttributeLabel('key'); ?>:</b> <?= $model->key; ?></p>
-
-        <p>
-            <b><?= $model->getAttributeLabel('epic_id'); ?>:</b>
-            <?= Html::a(
-                $model->epic->name,
-                ['epic/view', 'id' => $model->epic_id],
-                []
-            ); ?>
-        </p>
-
-        <p class="text-left">
-            <b><?= $model->getAttributeLabel('data'); ?> (JSON):</b> <?= $model->data; ?>
-        </p>
 
         <div class="buttoned-header">
             <h2><?php echo $model->getAttributeLabel('storyParameters'); ?></h2>
@@ -171,3 +175,13 @@ $this->params['breadcrumbs'][] = $this->title;
 });"
 );
 ?>
+
+<div class="col-lg-12">
+
+    <h2>JSON</h2>
+
+    <p class="text-left">
+        <?= Html::encode($model->data) ?>
+    </p>
+
+</div>
