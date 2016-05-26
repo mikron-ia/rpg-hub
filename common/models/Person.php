@@ -19,7 +19,7 @@ use Yii;
  * @property Epic $epic
  * @property Character $character
  */
-class Person extends \yii\db\ActiveRecord
+class Person extends \yii\db\ActiveRecord implements Displayable
 {
     /**
      * @inheritdoc
@@ -76,5 +76,30 @@ class Person extends \yii\db\ActiveRecord
     public function getCharacter()
     {
         return $this->hasOne(Character::className(), ['character_id' => 'character_id']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSimpleData()
+    {
+        return [
+            'name' => $this->name,
+            'key' => $this->key,
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCompleteData()
+    {
+        $decodedData = json_decode($this->data, true);
+
+        $decodedData['name'] = $this->name;
+        $decodedData['key'] = $this->key;
+        $decodedData['tagline'] = $this->tagline;
+
+        return $decodedData;
     }
 }

@@ -2,6 +2,9 @@
 
 namespace api\controllers;
 
+use common\models\Character;
+use common\models\Displayable;
+use common\models\Person;
 use yii\web\Response;
 use api\models\security\Authenticator;
 use common\models\Epic;
@@ -74,8 +77,8 @@ class ApiController extends \yii\web\Controller
             "content" => $content
         ];
     }
-    public function actionEpic($method, $key, $authMethod, $authKey)
-    {
+
+    protected function viewAction($method, $key, $authMethod, $authKey, $objectName, $title, $description) {
         if($method !== 'key') {
             throw new HttpException(405, "Only key-based access method is accepted.");
         }
@@ -89,15 +92,22 @@ class ApiController extends \yii\web\Controller
 
         $errors = [];
 
-        try {
-            $epic = $this->findEpicByKey($key);
-        } catch (Exception $e) {
-            $errors[] = $e->getName();
-            $epic = null;
+        $methodName = 'find'.$objectName.'ByKey';
+
+        if(!method_exists($this, $methodName)) {
+            throw new HttpException(501, "Method for object '$objectName' not found");
         }
 
-        if($epic) {
-            $content = $epic->getCompleteData();
+        try {
+            /* @var $object Displayable */
+            $object = $this->$methodName($key);
+        } catch (Exception $e) {
+            $errors[] = $e->getName();
+            $object = null;
+        }
+
+        if($object) {
+            $content = $object->getCompleteData();
         } else {
             $content = [
                 'errors' => $errors,
@@ -105,90 +115,42 @@ class ApiController extends \yii\web\Controller
         }
 
         $this->enterJsonMode();
-        return $this->processOutput("Epic data", "Epic data for epic page and story list", $content);
+        return $this->processOutput($title, $description, $content);
     }
 
-    public function actionStory($method, $key, $authMethod, $authKey)
+    public function actionEpic($method, $key, $authMethod, $authKey)
     {
-        if($method !== 'key') {
-            throw new HttpException(405, "Only key-based access method is accepted.");
-        }
-
-        Authenticator::checkAuthentication(
-            Yii::$app->params['authenticationReferences'],
-            Yii::$app->params['authentication'],
-            $authMethod,
-            $authKey
-        );
-
-        $errors = [];
-
-        try {
-            $story = $this->findStoryByKey($key);
-        } catch (Exception $e) {
-            $errors[] = $e->getName();
-            $story = null;
-        }
-
-        if($story) {
-            $content = $story->getCompleteData();
-        } else {
-            $content = [
-                'errors' => $errors,
-            ];
-        }
-
-        $this->enterJsonMode();
-        return $this->processOutput("Story data", "Complete story data", $content);
+        return $this->viewAction($method, $key, $authMethod, $authKey, "Epic", "Epic data", "Epic data for epic page and story list");
     }
 
     public function actionGroup($method, $key, $authMethod, $authKey)
     {
-        if ($method !== 'key') {
-            throw new HttpException(405, "Only key-based access method is accepted.");
-        }
+        return $this->viewAction($method, $key, $authMethod, $authKey, "Group", "Group data", "Group data for group page");
+    }
 
-        Authenticator::checkAuthentication(
-            Yii::$app->params['authenticationReferences'],
-            Yii::$app->params['authentication'],
-            $authMethod,
-            $authKey
-        );
+    public function actionPerson($method, $key, $authMethod, $authKey)
+    {
+        return $this->viewAction($method, $key, $authMethod, $authKey, "Person", "Person data", "Complete person data");
+    }
 
-        $errors = [];
-
-        try {
-            $group = $this->findGroupByKey($key);
-        } catch (Exception $e) {
-            $errors[] = $e->getName();
-            $group = null;
-        }
-
-        if($group) {
-            $content = $group->getCompleteData();
-        } else {
-            $content = [
-                'errors' => $errors,
-            ];
-        }
-
-        $this->enterJsonMode();
-        return $this->processOutput("Group data", "Group data for group page", $content);
+    public function actionStory($method, $key, $authMethod, $authKey)
+    {
+        return $this->viewAction($method, $key, $authMethod, $authKey, "Story", "Story data", "Complete story data");
     }
 
     /**
-     * Finds the Story model based on its primary key value.
+     * Finds the Character model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $key
-     * @return Story the loaded model
+     * @return Character the loaded model
      * @throws Exception
      */
-    protected function findStoryByKey($key)
+    protected function findCharacterByKey($key)
     {
-        if (($model = Story::findOne(['key' => $key])) !== null) {
+        if (($model = Character::findOne(['key' => $key])) !== null) {
             return $model;
         } else {
-            throw new Exception('The requested story does not exist.');
+            throw new Exception('The requested epic does not exist.');
         }
     }
 
@@ -209,7 +171,7 @@ class ApiController extends \yii\web\Controller
     }
 
     /**
-     * Finds the Epic model based on its primary key value.
+     * Finds the Group model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $key
      * @return Group the loaded model
@@ -221,6 +183,38 @@ class ApiController extends \yii\web\Controller
             return $model;
         } else {
             throw new Exception('The requested group does not exist.');
+        }
+    }
+
+    /**
+     * Finds the Person model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $key
+     * @return Person the loaded model
+     * @throws Exception
+     */
+    protected function findPersonByKey($key)
+    {
+        if (($model = Person::findOne(['key' => $key])) !== null) {
+            return $model;
+        } else {
+            throw new Exception('The requested story does not exist.');
+        }
+    }
+
+    /**
+     * Finds the Story model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $key
+     * @return Story the loaded model
+     * @throws Exception
+     */
+    protected function findStoryByKey($key)
+    {
+        if (($model = Story::findOne(['key' => $key])) !== null) {
+            return $model;
+        } else {
+            throw new Exception('The requested story does not exist.');
         }
     }
 }
