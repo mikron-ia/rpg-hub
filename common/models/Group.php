@@ -15,7 +15,7 @@ use Yii;
  *
  * @property Epic $epic
  */
-class Group extends \yii\db\ActiveRecord
+class Group extends \yii\db\ActiveRecord implements Displayable
 {
     /**
      * @inheritdoc
@@ -36,7 +36,13 @@ class Group extends \yii\db\ActiveRecord
             [['data'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
-            [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
+            [
+                ['epic_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Epic::className(),
+                'targetAttribute' => ['epic_id' => 'epic_id']
+            ],
         ];
     }
 
@@ -60,5 +66,29 @@ class Group extends \yii\db\ActiveRecord
     public function getEpic()
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSimpleData()
+    {
+        return [
+            'name' => $this->name,
+            'key' => $this->key,
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCompleteData()
+    {
+        $decodedData = json_decode($this->data, true);
+
+        $decodedData['name'] = $this->name;
+        $decodedData['key'] = $this->key;
+
+        return $decodedData;
     }
 }
