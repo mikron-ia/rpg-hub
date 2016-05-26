@@ -11,10 +11,38 @@ use yii\web\HttpException;
 
 class EpicController extends ApiController
 {
-    public function actionEpic()
+    public function actionEpic($method, $key, $authMethod, $authKey)
     {
+        if($method !== 'key') {
+            throw new HttpException(405, "Only key-based access method is accepted.");
+        }
+
+        Authenticator::checkAuthentication(
+            Yii::$app->params['authenticationReferences'],
+            Yii::$app->params['authentication'],
+            $authMethod,
+            $authKey
+        );
+
+        $errors = [];
+
+        try {
+            $story = $this->findEpicByKey($key);
+        } catch (Exception $e) {
+            $errors[] = $e->getName();
+            $story = null;
+        }
+
+        if($story) {
+            $content = $story->getCompleteData();
+        } else {
+            $content = [
+                'errors' => $errors,
+            ];
+        }
+
         $this->enterJsonMode();
-        return $this->processOutput("Epic data", "Epic data for epic page and story list", ["NYI"]);
+        return $this->processOutput("Epic data", "Epic data for epic page and story list", $content);
     }
 
     public function actionStory($method, $key, $authMethod, $authKey)

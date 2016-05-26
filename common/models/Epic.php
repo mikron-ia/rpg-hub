@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "epic".
@@ -94,6 +95,23 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
     }
 
     /**
+     * @return Recap|null
+     */
+    public function getCurrentRecap()
+    {
+        $query = new ActiveDataProvider(['query' => $this->getRecaps()->orderBy('time ASC')]);
+        $recaps = $query->getModels();
+
+        if($recaps) {
+            $recap = array_pop($recaps);
+        } else {
+            $recap = null;
+        }
+
+        return $recap;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getSimpleData()
@@ -109,11 +127,24 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
      */
     public function getCompleteData()
     {
-        $basicData = [
+        $query = new ActiveDataProvider(['query' => $this->getStories()->orderBy('story_id DESC')]);
+
+        /* @var $stories Story[] */
+        $stories = $query->getModels();
+        $storyData = [];
+        foreach ($stories as $story) {
+            $storyData[] = $story->getSimpleData();
+        }
+
+        $recap = $this->getCurrentRecap();
+        $recapData = ($recap ? $recap->getCompleteData() : null);
+
+        return [
             'name' => $this->name,
             'key' => $this->key,
             'help' => [],
+            'current' => $recapData,
+            'stories' => $storyData,
         ];
-        return $basicData;
     }
 }

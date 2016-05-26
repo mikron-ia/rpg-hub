@@ -102,22 +102,9 @@ class Story extends \yii\db\ActiveRecord implements Displayable
         return Markdown::process($this->long, 'gfm');
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getSimpleData()
+    public function formatParameters()
     {
-        return [
-            'name' => $this->name,
-            'key' => $this->key,
-        ];
-    }
 
-    /**
-     * @inheritdoc
-     */
-    public function getCompleteData()
-    {
         $parameters = [];
 
         foreach ($this->storyParameters as $storyParameter) {
@@ -127,11 +114,33 @@ class Story extends \yii\db\ActiveRecord implements Displayable
             ];
         }
 
+        return $parameters;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSimpleData()
+    {
+        return [
+            'name' => $this->name,
+            'key' => $this->key,
+            'parameters' => $this->formatParameters(),
+            'short' => $this->getShortFormatted(),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCompleteData()
+    {
+
         $basicData = [
             'name' => $this->name,
             'key' => $this->key,
             'help' => [],
-            'parameters' => $parameters,
+            'parameters' => $this->formatParameters(),
             'short' => $this->getShortFormatted(),
             'long' => $this->getLongFormatted(),
         ];

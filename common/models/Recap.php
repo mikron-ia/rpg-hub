@@ -17,7 +17,7 @@ use yii\helpers\Markdown;
  *
  * @property Epic $epic
  */
-class Recap extends \yii\db\ActiveRecord
+class Recap extends \yii\db\ActiveRecord implements Displayable
 {
     /**
      * @inheritdoc
@@ -79,5 +79,31 @@ class Recap extends \yii\db\ActiveRecord
     public function getEpic()
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSimpleData()
+    {
+        return [
+            'name' => $this->name,
+            'key' => $this->key,
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCompleteData()
+    {
+
+        $basicData = [
+            'name' => $this->name,
+            'key' => $this->key,
+            'help' => [],
+            'short' => $this->getDataFormatted(),
+        ];
+        return $basicData;
     }
 }
