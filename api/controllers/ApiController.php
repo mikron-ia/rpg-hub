@@ -118,6 +118,11 @@ class ApiController extends \yii\web\Controller
         return $this->processOutput($title, $description, $content);
     }
 
+    public function actionCharacter($method, $key, $authMethod, $authKey)
+    {
+        return $this->viewAction($method, $key, $authMethod, $authKey, "Character", "Character data", "Complete data");
+    }
+
     public function actionEpic($method, $key, $authMethod, $authKey)
     {
         return $this->viewAction($method, $key, $authMethod, $authKey, "Epic", "Epic data", "Epic data for epic page and story list");
