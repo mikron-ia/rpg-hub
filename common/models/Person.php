@@ -86,6 +86,8 @@ class Person extends \yii\db\ActiveRecord implements Displayable
         return [
             'name' => $this->name,
             'key' => $this->key,
+            'tagline' => $this->tagline,
+            'tags' => [],
         ];
     }
 
