@@ -2,14 +2,9 @@
 
 namespace api\controllers;
 
-use common\models\Character;
 use common\models\Displayable;
-use common\models\Person;
 use yii\web\Response;
 use api\models\security\Authenticator;
-use common\models\Epic;
-use common\models\Group;
-use common\models\Story;
 use Yii;
 use yii\base\Exception;
 use yii\web\HttpException;

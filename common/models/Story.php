@@ -104,14 +104,15 @@ class Story extends \yii\db\ActiveRecord implements Displayable
 
     public function formatParameters()
     {
-
         $parameters = [];
 
         foreach ($this->storyParameters as $storyParameter) {
-            $parameters[] = [
-                'name' => $storyParameter->getCodeName(),
-                'value' => $storyParameter->content,
-            ];
+            if ($storyParameter->visibility == StoryParameter::VISIBILITY_FULL) {
+                $parameters[] = [
+                    'name' => $storyParameter->getCodeName(),
+                    'value' => $storyParameter->content,
+                ];
+            }
         }
 
         return $parameters;
