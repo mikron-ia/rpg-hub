@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use common\models\EpicQuery;
 use Yii;
 use common\models\Group;
 use common\models\GroupQuery;

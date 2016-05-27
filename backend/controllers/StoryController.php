@@ -2,8 +2,6 @@
 
 namespace backend\controllers;
 
-use common\models\Epic;
-use common\models\EpicQuery;
 use Yii;
 use common\models\StoryParameter;
 use common\models\Story;

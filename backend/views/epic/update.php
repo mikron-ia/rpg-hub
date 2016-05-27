@@ -8,7 +8,7 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', 'LABEL_UPDATE') . ': ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_EPICS'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->epic_id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'LABEL_UPDATE');
+$this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_UPDATE');
 ?>
 <div class="epic-update">
 

@@ -39,8 +39,8 @@ class DescriptionPack extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'description_pack_id' => Yii::t('app', 'Description Pack ID'),
-            'name' => Yii::t('app', 'Name'),
+            'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK_ID'),
+            'name' => Yii::t('app', 'DESCRIPTION_PACK_NAME'),
         ];
     }
 

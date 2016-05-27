@@ -49,13 +49,13 @@ class Description extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'description_id' => Yii::t('app', 'Description ID'),
-            'description_pack_id' => Yii::t('app', 'Description Pack ID'),
-            'title' => Yii::t('app', 'Title'),
-            'code' => Yii::t('app', 'Code'),
-            'public_text' => Yii::t('app', 'Public Text'),
-            'private_text' => Yii::t('app', 'Private Text'),
-            'lang' => Yii::t('app', 'Lang'),
+            'description_id' => Yii::t('app', 'DESCRIPTION_ID'),
+            'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
+            'title' => Yii::t('app', 'DESCRIPTION_TITLE'),
+            'code' => Yii::t('app', 'DESCRIPTION_CODE'),
+            'public_text' => Yii::t('app', 'DESCRIPTION_TEXT_PUBLIC'),
+            'private_text' => Yii::t('app', 'DESCRIPTION_TEXT_PRIVATE'),
+            'lang' => Yii::t('app', 'LABEL_LANGUAGE'),
         ];
     }
 
