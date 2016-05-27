@@ -12,11 +12,13 @@ use Yii;
  * @property string $key
  * @property string $name
  * @property string $data
+ * @property string $currently_delivered_person_id
  *
  * @property Epic $epic
+ * @property Person $currentlyDeliveredPerson
  * @property Person[] $people
  */
-class Character extends \yii\db\ActiveRecord implements Displayable
+class Character extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,11 +35,26 @@ class Character extends \yii\db\ActiveRecord implements Displayable
     {
         return [
             [['epic_id', 'key', 'name', 'data'], 'required'],
-            [['epic_id'], 'integer'],
+            [['epic_id', 'currently_delivered_person_id'], 'integer'],
             [['data'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
-            [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
+            [
+                ['epic_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Epic::className(),
+                'targetAttribute' => ['epic_id' => 'epic_id']
+            ],
+            [
+                ['currently_delivered_person_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Person::className(),
+                'targetAttribute' => [
+                    'currently_delivered_person_id' => 'person_id'
+                ]
+            ],
         ];
     }
 
@@ -52,6 +69,7 @@ class Character extends \yii\db\ActiveRecord implements Displayable
             'key' => Yii::t('app', 'CHARACTER_KEY'),
             'name' => Yii::t('app', 'CHARACTER_NAME'),
             'data' => Yii::t('app', 'CHARACTER_DATA'),
+            'currently_delivered_person_id' => Yii::t('app', 'CHARACTER_DELIVERED_PERSON_ID'),
         ];
     }
 
@@ -61,6 +79,14 @@ class Character extends \yii\db\ActiveRecord implements Displayable
     public function getEpic()
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCurrentlyDeliveredPerson()
+    {
+        return $this->hasOne(Person::className(), ['person_id' => 'currently_delivered_person_id']);
     }
 
     /**
