@@ -21,12 +21,17 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-lg-6">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
 
     <div class="col-lg-6">
-        <?= $form->field($model, 'currently_delivered_person_id')->dropDownList($model->getPeopleAvailableToThisCharacterAsDropDownList()); ?>
+        <?= $form->field($model, 'currently_delivered_person_id')->dropDownList(
+            $model->getPeopleAvailableToThisCharacterAsDropDownList(),
+            [
+                'prompt' => ' --- ' . Yii::t('app', 'CHARACTER_FORM_SELECT_CURRENTLY_DELIVERED_PERSON') . ' --- '
+            ]
+        ); ?>
     </div>
 
     <div class="col-lg-12">
@@ -34,7 +39,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
