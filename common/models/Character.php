@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "character".
@@ -54,6 +55,13 @@ class Character extends \yii\db\ActiveRecord
                 'targetAttribute' => [
                     'currently_delivered_person_id' => 'person_id'
                 ]
+            ],
+            [
+                ['currently_delivered_person_id'],
+                'in',
+                'skipOnError' => true,
+                'range' => $this->getPeopleAvailableToThisCharacterAsIdList(),
+                'message' => Yii::t('app', 'CHARACTER_ERROR_PERSON_NOT_CONNECTED'),
             ],
         ];
     }
@@ -118,6 +126,33 @@ class Character extends \yii\db\ActiveRecord
         $decodedData['name'] = $this->name;
         $decodedData['key'] = $this->key;
 
+        if(isset($this->currently_delivered_person_id)) {
+            $decodedData['person'] = $this->currentlyDeliveredPerson->getCompleteData();
+        }
+
         return $decodedData;
+    }
+
+    public function getPeopleAvailableToThisCharacterAsDropDownList()
+    {
+        $query = new ActiveDataProvider([
+            'query' => $this->getPeople()
+        ]);
+
+        /* @var $peopleList Person[] */
+        $peopleList = $query->getModels();
+        $dropDownList = [];
+
+        foreach ($peopleList as $person) {
+            $dropDownList[$person->person_id] = $person->name;
+        }
+
+        return $dropDownList;
+
+    }
+
+    public function getPeopleAvailableToThisCharacterAsIdList()
+    {
+        return array_keys($this->getPeopleAvailableToThisCharacterAsDropDownList());
     }
 }

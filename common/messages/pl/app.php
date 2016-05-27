@@ -48,6 +48,7 @@ return [
     'BUTTON_VIEW' => 'Wyświetl',
     'CHARACTER_DATA' => 'Dane postaci',
     'CHARACTER_DELIVERED_PERSON_ID' => 'Aktualnie dostarczana postać',
+    'CHARACTER_ERROR_PERSON_NOT_CONNECTED' => 'Ta osoba nie jest powiązana z tą postacią',
     'CHARACTER_ID' => 'ID postaci',
     'CHARACTER_KEY' => 'Klucz',
     'CHARACTER_NAME' => 'Imię postaci',

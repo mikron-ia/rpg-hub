@@ -48,6 +48,7 @@ return [
     'BUTTON_VIEW' => 'View',
     'CHARACTER_DATA' => 'Character data',
     'CHARACTER_DELIVERED_PERSON_ID' => 'Currently delivered person',
+    'CHARACTER_ERROR_PERSON_NOT_CONNECTED' => 'This person is not connected with this character',
     'CHARACTER_ID' => 'Character ID',
     'CHARACTER_KEY' => 'Key',
     'CHARACTER_NAME' => 'Character name',

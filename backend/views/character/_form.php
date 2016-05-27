@@ -17,13 +17,16 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
     </div>
 
-
     <div class="col-lg-6">
         <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
     </div>
 
     <div class="col-lg-12">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    </div>
+
+    <div class="col-lg-6">
+        <?= $form->field($model, 'currently_delivered_person_id')->dropDownList($model->getPeopleAvailableToThisCharacterAsDropDownList()); ?>
     </div>
 
     <div class="col-lg-12">
