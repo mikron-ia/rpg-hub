@@ -134,6 +134,7 @@ return [
     'ST_PARAM_VISIBILITY_GM' => 'Widoczny tylko dla MG',
     'ST_PARAM_VISIBILITY_LOGGED' => 'Widoczny dla zalogowanych',
     'ST_PARAM_VISIBILITY_NONE' => 'Niewidoczny dla nikogo',
+    'ST_PARAM_XP_PARTY' => 'PD drużynowe',
     'TITLE_EPICS' => 'Kampanie',
     'TITLE_EPIC_CREATE' => 'Dodaj kampanię',
     'TITLE_GROUPS_INDEX' => 'Grupy',

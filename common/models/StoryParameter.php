@@ -22,6 +22,7 @@ class StoryParameter extends \yii\db\ActiveRecord
     const PARAMETER_POINT_START = 'point-start';
     const PARAMETER_POINT_END = 'point-end';
     const PARAMETER_SESSION_COUNT = 'session-count';
+    const PARAMETER_XP_PARTY = 'party-xp';
     const PARAMETER_PCS_ACTIVE = 'active-pcs';
     const PARAMETER_CS_ACTIVE = 'active-cs';
 
@@ -36,6 +37,7 @@ class StoryParameter extends \yii\db\ActiveRecord
         self::PARAMETER_POINT_START,
         self::PARAMETER_POINT_END,
         self::PARAMETER_SESSION_COUNT,
+        self::PARAMETER_XP_PARTY,
         self::PARAMETER_PCS_ACTIVE,
         self::PARAMETER_CS_ACTIVE,
     ];
@@ -63,6 +65,7 @@ class StoryParameter extends \yii\db\ActiveRecord
             self::PARAMETER_POINT_START => Yii::t('app', 'ST_PARAM_POINT_START'),
             self::PARAMETER_POINT_END => Yii::t('app', 'ST_PARAM_POINT_END'),
             self::PARAMETER_SESSION_COUNT => Yii::t('app', 'ST_PARAM_SESSION_COUNT'),
+            self::PARAMETER_XP_PARTY => Yii::t('app', 'ST_PARAM_XP_PARTY'),
             self::PARAMETER_PCS_ACTIVE => Yii::t('app', 'ST_PARAM_PCS_ACTIVE'),
             self::PARAMETER_CS_ACTIVE => Yii::t('app', 'ST_PARAM_CS_ACTIVE'),
         ];

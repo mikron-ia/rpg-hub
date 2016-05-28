@@ -134,6 +134,7 @@ return [
     'ST_PARAM_VISIBILITY_GM' => 'Visible to GM only',
     'ST_PARAM_VISIBILITY_LOGGED' => 'Visible to known users',
     'ST_PARAM_VISIBILITY_NONE' => 'Visible to none',
+    'ST_PARAM_XP_PARTY' => 'Party experience',
     'TITLE_EPICS' => 'Epics',
     'TITLE_EPIC_CREATE' => 'Add Epic',
     'TITLE_GROUPS_INDEX' => 'Groups',
