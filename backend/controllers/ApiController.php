@@ -1,10 +1,10 @@
 <?php
 
-namespace api\controllers;
+namespace backend\controllers;
 
 use common\models\Displayable;
 use yii\web\Response;
-use api\models\security\Authenticator;
+use backend\models\security\Authenticator;
 use Yii;
 use yii\base\Exception;
 use yii\web\HttpException;

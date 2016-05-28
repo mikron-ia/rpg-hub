@@ -1,6 +1,6 @@
 <?php
 
-namespace api\models\security;
+namespace backend\models\security;
 
 use yii\web\HttpException;
 
@@ -58,7 +58,7 @@ class Authentication
      */
     private function createToken($configWithChosenDirection, $authenticationMethod)
     {
-        $className = 'api\models\security\AuthenticationToken' . ucfirst($authenticationMethod);
+        $className = 'backend\models\security\AuthenticationToken' . ucfirst($authenticationMethod);
 
         if (!class_exists($className)) {
             throw new HttpException(

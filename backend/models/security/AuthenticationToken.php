@@ -1,6 +1,6 @@
 <?php
 
-namespace api\models\security;
+namespace backend\models\security;
 
 /**
  * Interface AuthenticationToken
