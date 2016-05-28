@@ -73,8 +73,10 @@ class ApiController extends \yii\web\Controller
         ];
     }
 
-    protected function viewAction($method, $key, $authMethod, $authKey, $objectName, $title, $description)
+    protected function viewAction($method, $key, $authMethod, $authKey, $objectName, $title, $description, $language)
     {
+        Yii::$app->language = $language;
+
         if ($method !== 'key') {
             throw new HttpException(405, "Only key-based access method is accepted.");
         }
@@ -108,38 +110,40 @@ class ApiController extends \yii\web\Controller
         return $this->processOutput($title, $description, $content);
     }
 
-    public function actionCharacter($method, $key, $authMethod, $authKey)
+    public function actionCharacter($method, $key, $authMethod, $authKey, $language)
     {
-        return $this->viewAction($method, $key, $authMethod, $authKey, "Character", "Character data", "Complete data");
+        return $this->viewAction($method, $key, $authMethod, $authKey, "Character", "Character data", "Complete data", $language);
     }
 
-    public function actionEpic($method, $key, $authMethod, $authKey)
+    public function actionEpic($method, $key, $authMethod, $authKey, $language)
     {
-        return $this->viewAction($method, $key, $authMethod, $authKey, "Epic", "Epic data", "Epic data for epic page and story list");
+        return $this->viewAction($method, $key, $authMethod, $authKey, "Epic", "Epic data", "Epic data for epic page and story list", $language);
     }
 
-    public function actionGroup($method, $key, $authMethod, $authKey)
+    public function actionGroup($method, $key, $authMethod, $authKey, $language)
     {
-        return $this->viewAction($method, $key, $authMethod, $authKey, "Group", "Group data", "Group data for group page");
+        return $this->viewAction($method, $key, $authMethod, $authKey, "Group", "Group data", "Group data for group page", $language);
     }
 
-    public function actionPeople($authMethod, $authKey)
+    public function actionPeople($authMethod, $authKey, $language)
     {
-        return $this->indexAction($authMethod, $authKey, "Person", "People list", "Complete people list");
+        return $this->indexAction($authMethod, $authKey, "Person", "People list", "Complete people list", $language);
     }
 
-    public function actionPerson($method, $key, $authMethod, $authKey)
+    public function actionPerson($method, $key, $authMethod, $authKey, $language)
     {
-        return $this->viewAction($method, $key, $authMethod, $authKey, "Person", "Person data", "Complete person data");
+        return $this->viewAction($method, $key, $authMethod, $authKey, "Person", "Person data", "Complete person data", $language);
     }
 
-    public function actionStory($method, $key, $authMethod, $authKey)
+    public function actionStory($method, $key, $authMethod, $authKey, $language)
     {
-        return $this->viewAction($method, $key, $authMethod, $authKey, "Story", "Story data", "Complete story data");
+        return $this->viewAction($method, $key, $authMethod, $authKey, "Story", "Story data", "Complete story data", $language);
     }
 
-    protected function indexAction($authMethod, $authKey, $objectName, $title, $description)
+    protected function indexAction($authMethod, $authKey, $objectName, $title, $description, $language)
     {
+        Yii::$app->language = $language;
+
         Authenticator::checkAuthentication(
             Yii::$app->params['authenticationReferences'],
             Yii::$app->params['authentication'],
