@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Displayable;
+use common\models\Epic;
 use yii\web\Response;
 use backend\models\security\Authenticator;
 use Yii;
@@ -49,6 +50,42 @@ class ApiController extends \yii\web\Controller
         return $this->processOutput("Error", "?", "?");
     }
 
+    public function actionCharacter($epicCode, $method, $key, $authMethod, $authKey, $language)
+    {
+        return $this->viewAction($epicCode, $method, $key, $authMethod, $authKey, "Character", "Character data",
+            "Complete data", $language);
+    }
+
+    public function actionEpic($epicCode, $method, $key, $authMethod, $authKey, $language)
+    {
+        return $this->viewAction($epicCode, $method, $key, $authMethod, $authKey, "Epic", "Epic data",
+            "Epic data for epic page and story list", $language);
+    }
+
+    public function actionGroup($epicCode, $method, $key, $authMethod, $authKey, $language)
+    {
+        return $this->viewAction($epicCode, $method, $key, $authMethod, $authKey, "Group", "Group data",
+            "Group data for group page", $language);
+    }
+
+    public function actionPeople($epicCode, $authMethod, $authKey, $language)
+    {
+        return $this->indexAction($epicCode, $authMethod, $authKey, "Person", "People list", "Complete people list",
+            $language);
+    }
+
+    public function actionPerson($epicCode, $method, $key, $authMethod, $authKey, $language)
+    {
+        return $this->viewAction($epicCode, $method, $key, $authMethod, $authKey, "Person", "Person data",
+            "Complete person data", $language);
+    }
+
+    public function actionStory($epicCode, $method, $key, $authMethod, $authKey, $language)
+    {
+        return $this->viewAction($epicCode, $method, $key, $authMethod, $authKey, "Story", "Story data",
+            "Complete story data", $language);
+    }
+
     /**
      * Sets up correct response mode
      */
@@ -73,8 +110,17 @@ class ApiController extends \yii\web\Controller
         ];
     }
 
-    protected function viewAction($method, $key, $authMethod, $authKey, $objectName, $title, $description, $language)
-    {
+    protected function viewAction(
+        $epicCode,
+        $method,
+        $key,
+        $authMethod,
+        $authKey,
+        $objectName,
+        $title,
+        $description,
+        $language
+    ) {
         Yii::$app->language = $language;
 
         if ($method !== 'key') {
@@ -91,10 +137,12 @@ class ApiController extends \yii\web\Controller
         $errors = [];
 
         try {
+            $epicId = $this->getEpicId($epicCode);
+
             /* @var $object Displayable */
-            $object = $this->findSomethingByKey($objectName, $key);
+            $object = $this->findSomethingByKey($objectName, $key, $epicId);
         } catch (Exception $e) {
-            $errors[] = $e->getName();
+            $errors[] = $e->getMessage();
             $object = null;
         }
 
@@ -110,37 +158,7 @@ class ApiController extends \yii\web\Controller
         return $this->processOutput($title, $description, $content);
     }
 
-    public function actionCharacter($method, $key, $authMethod, $authKey, $language)
-    {
-        return $this->viewAction($method, $key, $authMethod, $authKey, "Character", "Character data", "Complete data", $language);
-    }
-
-    public function actionEpic($method, $key, $authMethod, $authKey, $language)
-    {
-        return $this->viewAction($method, $key, $authMethod, $authKey, "Epic", "Epic data", "Epic data for epic page and story list", $language);
-    }
-
-    public function actionGroup($method, $key, $authMethod, $authKey, $language)
-    {
-        return $this->viewAction($method, $key, $authMethod, $authKey, "Group", "Group data", "Group data for group page", $language);
-    }
-
-    public function actionPeople($authMethod, $authKey, $language)
-    {
-        return $this->indexAction($authMethod, $authKey, "Person", "People list", "Complete people list", $language);
-    }
-
-    public function actionPerson($method, $key, $authMethod, $authKey, $language)
-    {
-        return $this->viewAction($method, $key, $authMethod, $authKey, "Person", "Person data", "Complete person data", $language);
-    }
-
-    public function actionStory($method, $key, $authMethod, $authKey, $language)
-    {
-        return $this->viewAction($method, $key, $authMethod, $authKey, "Story", "Story data", "Complete story data", $language);
-    }
-
-    protected function indexAction($authMethod, $authKey, $objectName, $title, $description, $language)
+    protected function indexAction($epicCode, $authMethod, $authKey, $objectName, $title, $description, $language)
     {
         Yii::$app->language = $language;
 
@@ -159,16 +177,19 @@ class ApiController extends \yii\web\Controller
             throw new HttpException(501, "Method for object '$objectName' not found");
         }
 
+        $peopleList = [];
+
         try {
+            $epicId = $this->getEpicId($epicCode);
+
             /* @var $object Displayable */
-            $objects = $className::find()->all();
+            $objects = $className::find(['epic_id' => $epicId])->all();
 
             foreach ($objects as $object) {
                 $peopleList[] = $object->getSimpleData();
             }
-
         } catch (Exception $e) {
-            $errors[] = $e->getName();
+            $errors[] = $e->getMessage();
             $objects = null;
         }
 
@@ -176,7 +197,28 @@ class ApiController extends \yii\web\Controller
         return $this->processOutput($title, $description, $peopleList);
     }
 
-    protected function findSomethingByKey($something, $key)
+    /**
+     * @param string $epicCode
+     * @return int
+     * @throws Exception
+     * @throws HttpException
+     */
+    protected function getEpicId($epicCode)
+    {
+        /* @var $epic Epic */
+        $epic = $this->findSomethingByKey('Epic', $epicCode, null);
+        return $epic->epic_id;
+    }
+
+    /**
+     * @param string $something Class name
+     * @param string $key DB key
+     * @param int $epicId DB ID for the epic
+     * @return Displayable
+     * @throws Exception
+     * @throws HttpException
+     */
+    protected function findSomethingByKey($something, $key, $epicId)
     {
         $className = 'common\models\\' . $something;
 
@@ -184,10 +226,16 @@ class ApiController extends \yii\web\Controller
             throw new HttpException(501, "Method for object '$className' not found");
         }
 
-        if (($model = $className::findOne(['key' => $key])) !== null) {
+        $parameters = ['key' => $key];
+
+        if($something != 'Epic') {
+            $parameters['epic_id'] = $epicId;
+        }
+
+        if (($model = $className::findOne($parameters)) !== null) {
             return $model;
         } else {
-            throw new Exception('The requested ' . $className . ' object does not exist.');
+            throw new Exception('The requested ' . $something . ' object does not exist.');
         }
     }
 }
