@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Displayable;
 use common\models\Epic;
+use common\models\Person;
 use yii\web\Response;
 use backend\models\security\Authenticator;
 use Yii;
@@ -183,7 +184,7 @@ class ApiController extends \yii\web\Controller
             $epicId = $this->getEpicId($epicCode);
 
             /* @var $object Displayable */
-            $objects = $className::find(['epic_id' => $epicId])->all();
+            $objects = Person::findAll(['epic_id' => $epicId]);
 
             foreach ($objects as $object) {
                 $peopleList[] = $object->getSimpleData();
