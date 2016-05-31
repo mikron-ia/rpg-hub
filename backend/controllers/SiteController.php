@@ -1,10 +1,11 @@
 <?php
 namespace backend\controllers;
 
+use common\models\user\PasswordChange;
 use Yii;
 use yii\filters\AccessControl;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use common\models\LoginForm;
 use yii\filters\VerbFilter;
 
 /**
@@ -26,7 +27,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'password-change'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -64,7 +65,7 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $model = new LoginForm();
+        $model = new PasswordChange();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
@@ -72,6 +73,28 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    /**
+     * Password change action
+     *
+     * @return mixed
+     * @throws BadRequestHttpException
+     */
+    public function actionPasswordChange()
+    {
+        $model = new PasswordChange();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if($model->savePassword()) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'PASSWORD_CHANGE_FLASH_SUCCESS'));
+                return $this->goHome();
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'PASSWORD_CHANGE_FLASH_FAILURE'));
+            }
+        }
+
+        return $this->render('user/password-change', ['model' => $model]);
     }
 
     public function actionLogout()

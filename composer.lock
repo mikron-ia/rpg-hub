@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ca8bed541f054002ce7a71db4827c971",
-    "content-hash": "230ccc6b742062d655f47cde5654dda2",
+    "hash": "dae38913317927008489d5372e5fbac2",
+    "content-hash": "d57e315c32fc971d4d2b79ab8942871d",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -300,6 +300,48 @@
             "time": "2015-08-05 01:03:42"
         },
         {
+            "name": "kartik-v/strength-meter",
+            "version": "v1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/strength-meter.git",
+                "reference": "2df5f073d4fe245bb295d4a9b3ba831aee5829b7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/strength-meter/zipball/2df5f073d4fe245bb295d4a9b3ba831aee5829b7",
+                "reference": "2df5f073d4fe245bb295d4a9b3ba831aee5829b7",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "A dynamic strength meter for password input validation with various configurable options.",
+            "homepage": "https://github.com/kartik-v/strength-meter",
+            "keywords": [
+                "bootstrap",
+                "jquery",
+                "meter",
+                "password",
+                "strength"
+            ],
+            "time": "2015-09-12 20:17:42"
+        },
+        {
             "name": "kartik-v/yii2-krajee-base",
             "version": "1.8.5",
             "source": {
@@ -349,6 +391,57 @@
                 "yii2"
             ],
             "time": "2016-05-07 19:45:52"
+        },
+        {
+            "name": "kartik-v/yii2-password",
+            "version": "v1.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-password.git",
+                "reference": "5413e68cc6d2f3db6374882d4149b575e060fa8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/5413e68cc6d2f3db6374882d4149b575e060fa8a",
+                "reference": "5413e68cc6d2f3db6374882d4149b575e060fa8a",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/strength-meter": "~1.1",
+                "kartik-v/yii2-krajee-base": "~1.7"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\password\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Useful password strength validation utilities for Yii Framework 2.0",
+            "homepage": "https://github.com/kartik-v/yii2-password",
+            "keywords": [
+                "auth",
+                "bootstrap",
+                "extension",
+                "form",
+                "input",
+                "jquery",
+                "password",
+                "strength",
+                "yii",
+                "yii2"
+            ],
+            "time": "2016-01-10 16:56:43"
         },
         {
             "name": "kartik-v/yii2-widget-select2",
