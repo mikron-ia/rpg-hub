@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-lg-12">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
+            'filterPosition' => null,
             'columns' => [
                 [
                     'attribute' => 'key',

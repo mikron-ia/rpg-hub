@@ -20,15 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterPosition' => null,
         'summary' => '',
         'columns' => [
-            [
-                'attribute' => 'key',
-                'format' => 'raw',
-                'value' => function (Epic $model) {
-                    return '<span class="key">' . $model->key . '</span>';
-                },
-            ],
             [
                 'attribute' => 'name',
             ],
