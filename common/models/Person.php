@@ -40,8 +40,20 @@ class Person extends \yii\db\ActiveRecord implements Displayable
             [['data', 'visibility'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name', 'tagline'], 'string', 'max' => 120],
-            [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
-            [['character_id'], 'exist', 'skipOnError' => true, 'targetClass' => Character::className(), 'targetAttribute' => ['character_id' => 'character_id']],
+            [
+                ['epic_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Epic::className(),
+                'targetAttribute' => ['epic_id' => 'epic_id']
+            ],
+            [
+                ['character_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Character::className(),
+                'targetAttribute' => ['character_id' => 'character_id']
+            ],
         ];
     }
 

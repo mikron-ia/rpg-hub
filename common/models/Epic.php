@@ -102,7 +102,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
         $query = new ActiveDataProvider(['query' => $this->getRecaps()->orderBy('time ASC')]);
         $recaps = $query->getModels();
 
-        if($recaps) {
+        if ($recaps) {
             $recap = array_pop($recaps);
         } else {
             $recap = null;

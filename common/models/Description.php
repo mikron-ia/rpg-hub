@@ -39,7 +39,13 @@ class Description extends \yii\db\ActiveRecord
             [['title'], 'string', 'max' => 80],
             [['code'], 'string', 'max' => 40],
             [['lang'], 'string', 'max' => 8],
-            [['description_pack_id'], 'exist', 'skipOnError' => true, 'targetClass' => DescriptionPack::className(), 'targetAttribute' => ['description_pack_id' => 'description_pack_id']],
+            [
+                ['description_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => DescriptionPack::className(),
+                'targetAttribute' => ['description_pack_id' => 'description_pack_id']
+            ],
         ];
     }
 

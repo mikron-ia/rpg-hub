@@ -140,13 +140,15 @@ class StoryParameter extends \yii\db\ActiveRecord
         return new StoryParameterQuery(get_called_class());
     }
 
-    public function getCodeName() {
+    public function getCodeName()
+    {
         $codes = self::codeNames();
-        return isset($codes[$this->code])?$codes[$this->code]:$this->code;
+        return isset($codes[$this->code]) ? $codes[$this->code] : $this->code;
     }
 
-    public function getVisibilityName() {
+    public function getVisibilityName()
+    {
         $visibilities = self::visibilityNames();
-        return isset($visibilities[$this->visibility])?$visibilities[$this->visibility]:$this->visibility;
+        return isset($visibilities[$this->visibility]) ? $visibilities[$this->visibility] : $this->visibility;
     }
 }
