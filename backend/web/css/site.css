@@ -3,6 +3,18 @@ body {
     height: 100%;
 }
 
+@media (min-width: 1600px) {
+    .container {
+        width: 1570px;
+    }
+}
+
+@media (min-width: 1900px) {
+    .container {
+        width: 1870px;
+    }
+}
+
 .wrap {
     min-height: 100%;
     height: auto;
