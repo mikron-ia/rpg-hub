@@ -13,11 +13,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="epic-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p class="pull-right">
+    <div class="buttoned-header">
+        <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(Yii::t('app', 'BUTTON_EPIC_ADD'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    </div>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterPosition' => null,
@@ -28,6 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'system',
+            ],
+            [
+                'label' => Yii::t('app', 'EPIC_COUNT_GROUPS'),
+                'value' => function (Epic $model) {
+                    return $model->getGroups()->count();
+                },
             ],
             [
                 'class' => 'yii\grid\ActionColumn',

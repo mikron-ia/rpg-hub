@@ -70,6 +70,7 @@ return [
     'DESCRIPTION_TEXT_PRIVATE' => 'Tekst niejawny',
     'DESCRIPTION_TEXT_PUBLIC' => 'Tekst jawny',
     'DESCRIPTION_TITLE' => 'Tytuł',
+    'EPIC_COUNT_GROUPS' => 'Liczba grup',
     'EPIC_GAME_SYSTEM' => 'System kampanii',
     'EPIC_HEADER_GROUPS' => 'Grupy',
     'EPIC_HEADER_RECAPS' => 'Streszczenia',

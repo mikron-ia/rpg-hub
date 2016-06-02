@@ -70,6 +70,7 @@ return [
     'DESCRIPTION_TEXT_PRIVATE' => 'Secret text',
     'DESCRIPTION_TEXT_PUBLIC' => 'Open text',
     'DESCRIPTION_TITLE' => 'Title',
+    'EPIC_COUNT_GROUPS' => 'Group count',
     'EPIC_GAME_SYSTEM' => 'Game system',
     'EPIC_HEADER_GROUPS' => 'Groups',
     'EPIC_HEADER_RECAPS' => 'Recaps',
