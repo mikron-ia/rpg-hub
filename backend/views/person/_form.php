@@ -2,6 +2,7 @@
 
 use common\models\CharacterQuery;
 use common\models\EpicQuery;
+use common\models\Person;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -27,11 +28,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-lg-6">
-        <?= $form->field($model, 'visibility')->dropDownList([
-            'none' => 'None',
-            'linked' => 'Linked',
-            'complete' => 'Complete',
-        ], ['prompt' => '']) ?>
+        <?= $form->field($model, 'visibility')->dropDownList(Person::visibilityNames(), ['prompt' => 'PROMPT_VISIBILITY']) ?>
     </div>
 
     <div class="col-lg-6">
@@ -42,6 +39,8 @@ use yii\widgets\ActiveForm;
             ]
         ) ?>
     </div>
+
+    <div class="clearfix"></div>
 
     <div class="form-group">
         <?= Html::submitButton(

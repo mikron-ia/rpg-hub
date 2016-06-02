@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Person;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -28,7 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'epic.name',
             'name',
             'tagline',
-            'visibility',
+            [
+            'attribute' => 'visibility',
+                'value' => function(Person $model) {
+                    return $model->getVisibilityName();
+                }
+                ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

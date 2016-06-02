@@ -14,7 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
-        <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->person_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->person_id],
+            ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->person_id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -49,7 +50,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     Html::a($model->character->name, ['character/view', 'id' => $model->character_id], []) :
                     null,
             ],
-            'visibility',
+            [
+                'attribute' => 'visibility',
+                'value' => $model->getVisibilityName(),
+            ],
             'data:ntext',
         ],
     ]) ?>

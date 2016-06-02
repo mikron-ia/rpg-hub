@@ -21,6 +21,11 @@ use Yii;
  */
 class Person extends \yii\db\ActiveRecord implements Displayable
 {
+    const VISIBILITY_NONE = 'none';
+    const VISIBILITY_LOGGED = 'logged';
+    const VISIBILITY_GM = 'gm';
+    const VISIBILITY_FULL = 'full';
+
     /**
      * @inheritdoc
      */
@@ -35,7 +40,7 @@ class Person extends \yii\db\ActiveRecord implements Displayable
     public function rules()
     {
         return [
-            [['epic_id', 'key', 'name', 'tagline', 'data'], 'required'],
+            [['epic_id', 'key', 'name', 'tagline', 'visibility', 'data'], 'required'],
             [['epic_id', 'character_id'], 'integer'],
             [['data', 'visibility'], 'string'],
             [['key'], 'string', 'max' => 80],
@@ -54,6 +59,13 @@ class Person extends \yii\db\ActiveRecord implements Displayable
                 'targetClass' => Character::className(),
                 'targetAttribute' => ['character_id' => 'character_id']
             ],
+            [
+                ['visibility'],
+                'in',
+                'range' => function () {
+                    return $this->allowedVisibilities();
+                }
+            ]
         ];
     }
 
@@ -72,6 +84,21 @@ class Person extends \yii\db\ActiveRecord implements Displayable
             'visibility' => Yii::t('app', 'PERSON_VISIBILITY'),
             'character_id' => Yii::t('app', 'LABEL_CHARACTER'),
         ];
+    }
+
+    static public function visibilityNames()
+    {
+        return [
+            self::VISIBILITY_NONE => Yii::t('app', 'PERSON_VISIBILITY_NONE'),
+            self::VISIBILITY_LOGGED => Yii::t('app', 'PERSON_VISIBILITY_LOGGED'),
+            self::VISIBILITY_GM => Yii::t('app', 'PERSON_VISIBILITY_GM'),
+            self::VISIBILITY_FULL => Yii::t('app', 'PERSON_VISIBILITY_FULL'),
+        ];
+    }
+
+    public function allowedVisibilities()
+    {
+        return array_keys(self::visibilityNames());
     }
 
     /**
@@ -115,5 +142,18 @@ class Person extends \yii\db\ActiveRecord implements Displayable
         $decodedData['tagline'] = $this->tagline;
 
         return $decodedData;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVisibilityName()
+    {
+        $list = self::visibilityNames();
+        if (isset($list[$this->visibility])) {
+            return $list[$this->visibility];
+        } else {
+            return null;
+        }
     }
 }
