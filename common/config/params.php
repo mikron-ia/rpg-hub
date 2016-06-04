@@ -22,4 +22,12 @@ return [
             'settingsByStrategy' => []
         ],
     ],
+    'keyGeneration' => [
+        'character' => 'character-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
+        'epic' => 'epic-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
+        'group' => 'group-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
+        'person' => 'person-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
+        'recap' => 'recap-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
+        'story' => 'story-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
+    ],
 ];
