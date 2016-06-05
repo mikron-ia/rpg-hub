@@ -27,14 +27,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'summary' => '',
         'columns' => [
             'epic.name',
-            'name',
+            [
+                'attribute' => 'name',
+                'value' => function (Person $model) {
+                    return \yii\helpers\StringHelper::truncateWords($model->name, 6, ' (...)', false);
+                }
+            ],
             'tagline',
             [
-            'attribute' => 'visibility',
-                'value' => function(Person $model) {
+                'attribute' => 'visibility',
+                'value' => function (Person $model) {
                     return $model->getVisibilityName();
                 }
-                ],
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

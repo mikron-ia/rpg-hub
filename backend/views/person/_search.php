@@ -1,6 +1,7 @@
 <?php
 
 use common\models\EpicQuery;
+use common\models\Person;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -35,7 +36,13 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-6">
-        <?php echo $form->field($model, 'visibility') ?>
+        <?php echo $form->field($model, 'visibility')->widget(
+            kartik\select2\Select2::className(),
+            [
+                'data' => Person::visibilityNames(),
+                'options' => ['multiple' => true],
+            ]
+        ) ?>
     </div>
 
     <div class="form-group">

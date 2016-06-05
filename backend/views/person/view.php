@@ -54,7 +54,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'visibility',
                 'value' => $model->getVisibilityName(),
             ],
-            'data:ntext',
         ],
     ]) ?>
 

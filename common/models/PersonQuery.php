@@ -52,8 +52,7 @@ class PersonQuery extends Person
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
         }
 
@@ -68,7 +67,7 @@ class PersonQuery extends Person
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'tagline', $this->tagline])
             ->andFilterWhere(['like', 'data', $this->data])
-            ->andFilterWhere(['like', 'visibility', $this->visibility]);
+            ->andFilterWhere(['in', 'visibility', $this->visibility]);
 
         return $dataProvider;
     }
