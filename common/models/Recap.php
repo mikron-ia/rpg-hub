@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\tools\Tools;
 use Yii;
 use yii\helpers\Markdown;
 
@@ -19,6 +20,8 @@ use yii\helpers\Markdown;
  */
 class Recap extends \yii\db\ActiveRecord implements Displayable
 {
+    use Tools;
+
     /**
      * @inheritdoc
      */
@@ -33,7 +36,7 @@ class Recap extends \yii\db\ActiveRecord implements Displayable
     public function rules()
     {
         return [
-            [['epic_id', 'key', 'name', 'data', 'time'], 'required'],
+            [['epic_id', 'name', 'data', 'time'], 'required'],
             [['epic_id'], 'integer'],
             [['data'], 'string'],
             [['time'], 'safe'],
@@ -62,6 +65,18 @@ class Recap extends \yii\db\ActiveRecord implements Displayable
             'data' => Yii::t('app', 'RECAP_DATA'),
             'time' => Yii::t('app', 'RECAP_TIME'),
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+        }
+
+        return parent::beforeSave($insert);
     }
 
     /**

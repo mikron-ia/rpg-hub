@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\tools\Tools;
 use Yii;
 
 /**
@@ -17,6 +18,8 @@ use Yii;
  */
 class Group extends \yii\db\ActiveRecord implements Displayable
 {
+    use Tools;
+
     /**
      * @inheritdoc
      */
@@ -31,10 +34,8 @@ class Group extends \yii\db\ActiveRecord implements Displayable
     public function rules()
     {
         return [
-            [['epic_id', 'key', 'name', 'data'], 'required'],
+            [['epic_id', 'name'], 'required'],
             [['epic_id'], 'integer'],
-            [['data'], 'string'],
-            [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
             [
                 ['epic_id'],
@@ -58,6 +59,19 @@ class Group extends \yii\db\ActiveRecord implements Displayable
             'name' => Yii::t('app', 'GROUP_NAME'),
             'data' => Yii::t('app', 'GROUP_DATA'),
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+            $this->data = json_encode([]);
+        }
+
+        return parent::beforeSave($insert);
     }
 
     /**

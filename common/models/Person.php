@@ -89,6 +89,9 @@ class Person extends \yii\db\ActiveRecord implements Displayable
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function beforeSave($insert)
     {
         if ($insert) {

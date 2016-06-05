@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\tools\Tools;
 use Yii;
 use yii\data\ActiveDataProvider;
 
@@ -21,6 +22,8 @@ use yii\data\ActiveDataProvider;
  */
 class Character extends \yii\db\ActiveRecord
 {
+    use Tools;
+
     /**
      * @inheritdoc
      */
@@ -35,10 +38,8 @@ class Character extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['epic_id', 'key', 'name', 'data'], 'required'],
+            [['epic_id', 'name'], 'required'],
             [['epic_id', 'currently_delivered_person_id'], 'integer'],
-            [['data'], 'string'],
-            [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
             [
                 ['epic_id'],
@@ -79,6 +80,19 @@ class Character extends \yii\db\ActiveRecord
             'data' => Yii::t('app', 'CHARACTER_DATA'),
             'currently_delivered_person_id' => Yii::t('app', 'CHARACTER_DELIVERED_PERSON_ID'),
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+            $this->data = json_encode([]);
+        }
+
+        return parent::beforeSave($insert);
     }
 
     /**

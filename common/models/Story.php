@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\tools\Tools;
 use Yii;
 use yii\helpers\Markdown;
 
@@ -21,6 +22,8 @@ use yii\helpers\Markdown;
  */
 class Story extends \yii\db\ActiveRecord implements Displayable
 {
+    use Tools;
+
     /**
      * @inheritdoc
      */
@@ -65,6 +68,19 @@ class Story extends \yii\db\ActiveRecord implements Displayable
             'data' => Yii::t('app', 'STORY_DATA'),
             'storyParameters' => Yii::t('app', 'STORY_PARAMETERS'),
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+            $this->data = json_encode([]);
+        }
+
+        return parent::beforeSave($insert);
     }
 
     /**

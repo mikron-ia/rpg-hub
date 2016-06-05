@@ -13,30 +13,30 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-lg-6">
+    <div class="col-md-6">
         <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
     </div>
 
-    <div class="col-lg-6">
-        <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
-    </div>
-
-    <div class="col-lg-6">
+    <div class="col-md-6">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-lg-6">
-        <?= $form->field($model, 'currently_delivered_person_id')->dropDownList(
-            $model->getPeopleAvailableToThisCharacterAsDropDownList(),
-            [
-                'prompt' => ' --- ' . Yii::t('app', 'CHARACTER_FORM_SELECT_CURRENTLY_DELIVERED_PERSON') . ' --- '
-            ]
-        ); ?>
-    </div>
+    <?php if (!$model->isNewRecord): ?>
 
-    <div class="col-lg-12">
-        <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
-    </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'currently_delivered_person_id')->dropDownList(
+                $model->getPeopleAvailableToThisCharacterAsDropDownList(),
+                [
+                    'prompt' => ' --- ' . Yii::t('app', 'CHARACTER_FORM_SELECT_CURRENTLY_DELIVERED_PERSON') . ' --- '
+                ]
+            ); ?>
+        </div>
+
+        <div class="col-md-12">
+            <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
+        </div>
+
+    <?php endif; ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),

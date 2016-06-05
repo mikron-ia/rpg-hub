@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\tools\Tools;
 use Yii;
 use yii\data\ActiveDataProvider;
 
@@ -21,6 +22,8 @@ use yii\data\ActiveDataProvider;
  */
 class Epic extends \yii\db\ActiveRecord implements Displayable
 {
+    use Tools;
+
     /**
      * @inheritdoc
      */
@@ -35,8 +38,8 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
     public function rules()
     {
         return [
-            [['key', 'name', 'system'], 'required'],
-            [['key', 'name'], 'string', 'max' => 80],
+            [['name', 'system'], 'required'],
+            [['name'], 'string', 'max' => 80],
             [['system'], 'string', 'max' => 20],
         ];
     }
@@ -52,6 +55,18 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
             'name' => Yii::t('app', 'EPIC_NAME'),
             'system' => Yii::t('app', 'EPIC_GAME_SYSTEM'),
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+        }
+
+        return parent::beforeSave($insert);
     }
 
     /**
