@@ -3,6 +3,7 @@
 use common\models\Person;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\PersonQuery */
@@ -30,10 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'name',
                 'value' => function (Person $model) {
-                    return \yii\helpers\StringHelper::truncateWords($model->name, 6, ' (...)', false);
+                    return StringHelper::truncateWords($model->name, 4, ' (...)', false);
                 }
             ],
-            'tagline',
+            [
+                'attribute' => 'tagline',
+                'value' => function (Person $model) {
+                    return StringHelper::truncateWords($model->tagline, 5, ' (...)', false);
+                }
+            ],
             [
                 'attribute' => 'visibility',
                 'value' => function (Person $model) {

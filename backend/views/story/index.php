@@ -21,9 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             [
-                'attribute' => 'key',
-            ],
-            [
                 'attribute' => 'name',
             ],
             [

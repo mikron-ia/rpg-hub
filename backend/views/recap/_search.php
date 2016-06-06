@@ -16,10 +16,6 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <div class="form-group col-lg-6">
-        <?= $form->field($model, 'key') ?>
-    </div>
-
-    <div class="form-group col-lg-6">
         <?= $form->field($model, 'name') ?>
     </div>
 

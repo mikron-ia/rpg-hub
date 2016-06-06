@@ -29,13 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'filterPosition' => null,
             'columns' => [
-                [
-                    'attribute' => 'key',
-                    'format' => 'raw',
-                    'value' => function (Recap $model) {
-                        return '<span class="key">' . $model->key . '</span>';
-                    },
-                ],
+                'epic.name',
                 [
                     'attribute' => 'name',
                 ],

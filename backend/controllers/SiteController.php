@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use common\models\LoginForm;
 use common\models\user\PasswordChange;
 use Yii;
 use yii\filters\AccessControl;
@@ -65,7 +66,7 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $model = new PasswordChange();
+        $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
