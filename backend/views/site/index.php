@@ -35,8 +35,6 @@ $this->title = 'RPG hub - control';
 
                 <h2><?= Yii::t('app', 'CONFIGURATION_TITLE_INDEX'); ?></h2>
 
-                <p><?= Yii::t('app', 'CONFIGURATION_FRONT_PAGE_TEXT'); ?></p>
-
                 <p>
                     <?= Html::a(
                         Yii::t('app', 'BUTTON_EPIC_CHANGE') . ' &raquo;',

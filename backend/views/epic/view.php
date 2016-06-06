@@ -113,7 +113,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-lg-6">
         <div class="buttoned-header">
             <h2><?= Yii::t('app', 'EPIC_HEADER_RECAPS'); ?></h2>
-            <?= Html::a(Yii::t('app', 'BUTTON_RECAP_CREATE'), ['story/create'], ['class' => 'btn btn-success']); ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_RECAP_CREATE'), ['recap/create'], ['class' => 'btn btn-success']); ?>
         </div>
         <?= GridView::widget([
             'dataProvider' => new \yii\data\ActiveDataProvider([

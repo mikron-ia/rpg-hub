@@ -110,6 +110,7 @@ return [
     'PERSON_VISIBILITY_GM' => 'Dla MG',
     'PERSON_VISIBILITY_LOGGED' => 'Dla zalogowanych',
     'PERSON_VISIBILITY_NONE' => 'Dla nikogo',
+    'PROMPT_VISIBILITY' => 'Wybierz widoczność ...',
     'RECAP_CREATE_TITLE' => 'Nowe streszczenie',
     'RECAP_DATA' => 'Dane',
     'RECAP_ID' => 'ID streszczenia',

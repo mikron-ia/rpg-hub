@@ -110,6 +110,7 @@ return [
     'PERSON_VISIBILITY_GM' => 'To GM only',
     'PERSON_VISIBILITY_LOGGED' => 'To known users',
     'PERSON_VISIBILITY_NONE' => 'To none',
+    'PROMPT_VISIBILITY' => 'Choose visibility ...',
     'RECAP_CREATE_TITLE' => 'Add recap',
     'RECAP_DATA' => 'Data',
     'RECAP_ID' => 'Recap ID',

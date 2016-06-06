@@ -28,22 +28,23 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-lg-6">
-        <?= $form->field($model, 'visibility')->dropDownList(Person::visibilityNames(), ['prompt' => 'PROMPT_VISIBILITY']) ?>
+        <?= $form->field($model, 'visibility')->dropDownList(
+            Person::visibilityNames(),
+            ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_VISIBILITY') . ' --- ']
+        ) ?>
     </div>
 
     <div class="col-lg-6">
         <?= $form->field($model, 'character_id')->dropDownList(
             CharacterQuery::getListOfCharactersForSelector(),
-            [
-                'prompt' => Yii::t('app', 'CHARACTER_PROMPT')
-            ]
+            ['prompt' => ' --- ' . Yii::t('app', 'CHARACTER_PROMPT') . ' --- ']
         ) ?>
     </div>
 
     <?php if (!$model->isNewRecord): ?>
 
         <div class="col-md-12">
-            <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'data')->textarea(['rows' => 8]) ?>
         </div>
 
     <?php endif; ?>
