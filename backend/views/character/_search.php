@@ -16,19 +16,15 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <div class="col-md-6">
-        <?php echo $form->field($model, 'epic_id')->widget(
-            kartik\select2\Select2::className(),
-            [
-                'data' => EpicQuery::getListOfEpicsForSelector(),
-                'options' => ['multiple' => true],
-            ]
-        ) ?>
-    </div>
+    <?php echo $form->field($model, 'epic_id')->widget(
+        kartik\select2\Select2::className(),
+        [
+            'data' => EpicQuery::getListOfEpicsForSelector(),
+            'options' => ['multiple' => true],
+        ]
+    ) ?>
 
-    <div class="col-md-6">
-        <?php echo $form->field($model, 'name') ?>
-    </div>
+    <?php echo $form->field($model, 'name') ?>
 
     <div class="form-group">
         <?= Html::resetButton(Yii::t('app', 'BUTTON_RESET'), ['class' => 'btn btn-default']) ?>

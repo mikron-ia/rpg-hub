@@ -49,7 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->getVisibilityName();
                     }
                 ],
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{view}',
+                ],
             ],
         ]); ?>
     </div>
