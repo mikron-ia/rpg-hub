@@ -15,19 +15,13 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <div class="form-group col-lg-6">
-        <?= $form->field($model, 'name') ?>
-    </div>
+    <?= $form->field($model, 'name') ?>
 
-    <div class="form-group col-lg-6">
-        <?= $form->field($model, 'data') ?>
-    </div>
+    <?= $form->field($model, 'data') ?>
 
-    <div class="form-group col-lg-6">
-        <?= $form->field($model, 'time') ?>
-    </div>
+    <?= $form->field($model, 'time') ?>
 
-    <div class="form-group col-lg-4">
+    <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'BUTTON_SEARCH'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('app', 'BUTTON_RESET'), ['class' => 'btn btn-default']) ?>
     </div>

@@ -13,18 +13,17 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="recap-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p class="text-right">
+    <div class="buttoned-header">
+        <h1><?= Html::encode($this->title) ?></h1>
+        <?= Html::a(Yii::t('app', 'BUTTON_RECAP_CREATE'), ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a(
-            Yii::t('app', 'BUTTON_RECAP_CREATE'),
-            ['create'],
-            ['class' => 'btn btn-success']);
-        ?>
-    </p>
+            Yii::t('app', 'BUTTON_GOTO_FILTER'),
+            ['#filter'],
+            ['class' => 'btn btn-default hidden-lg hidden-md']
+        ) ?>
+    </div>
 
-    <div class="col-lg-12">
+    <div class="col-md-9">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterPosition' => null,
@@ -41,6 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]); ?>
+    </div>
+
+    <div class="col-md-3" id="filter">
+        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
 
 </div>
