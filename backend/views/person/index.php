@@ -17,10 +17,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(Yii::t('app', 'PERSON_BUTTON_CREATE'), ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a(Yii::t('app', 'BUTTON_GOTO_FILTER'), ['#filter'], ['class' => 'btn btn-default']) ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_GOTO_FILTER'),
+            ['#filter'],
+            ['class' => 'btn btn-default hidden-lg hidden-md']
+        ) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-9">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
@@ -50,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
     </div>
 
-    <div class="col-md-6" id="filter">
+    <div class="col-md-3" id="filter">
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
 </div>

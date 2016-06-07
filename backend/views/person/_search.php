@@ -17,33 +17,25 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <div class="col-md-12">
-        <?php echo $form->field($model, 'epic_id')->widget(
-            kartik\select2\Select2::className(),
-            [
-                'data' => EpicQuery::getListOfEpicsForSelector(),
-                'options' => ['multiple' => true],
-            ]
-        ) ?>
-    </div>
+    <?php echo $form->field($model, 'epic_id')->widget(
+        kartik\select2\Select2::className(),
+        [
+            'data' => EpicQuery::getListOfEpicsForSelector(),
+            'options' => ['multiple' => true],
+        ]
+    ) ?>
 
-    <div class="col-md-12">
-        <?php echo $form->field($model, 'name') ?>
-    </div>
+    <?php echo $form->field($model, 'name') ?>
 
-    <div class="col-md-12">
-        <?php echo $form->field($model, 'tagline') ?>
-    </div>
+    <?php echo $form->field($model, 'tagline') ?>
 
-    <div class="col-md-12">
-        <?php echo $form->field($model, 'visibility')->widget(
-            kartik\select2\Select2::className(),
-            [
-                'data' => Person::visibilityNames(),
-                'options' => ['multiple' => true],
-            ]
-        ) ?>
-    </div>
+    <?php echo $form->field($model, 'visibility')->widget(
+        kartik\select2\Select2::className(),
+        [
+            'data' => Person::visibilityNames(),
+            'options' => ['multiple' => true],
+        ]
+    ) ?>
 
     <div class="form-group">
         <?= Html::resetButton(Yii::t('app', 'BUTTON_RESET'), ['class' => 'btn btn-default']) ?>
