@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <?php echo $form->field($model, 'epic_id')->widget(
             kartik\select2\Select2::className(),
             [
@@ -27,15 +27,15 @@ use yii\widgets\ActiveForm;
         ) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <?php echo $form->field($model, 'name') ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <?php echo $form->field($model, 'tagline') ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <?php echo $form->field($model, 'visibility')->widget(
             kartik\select2\Select2::className(),
             [
