@@ -28,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'filterPosition' => null,
             'columns' => [
-                'epic.name',
                 [
                     'attribute' => 'name',
                 ],

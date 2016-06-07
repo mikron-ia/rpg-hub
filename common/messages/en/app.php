@@ -120,6 +120,7 @@ return [
     'RECAP_TITLE_INDEX' => 'Recaps',
     'RECAP_TITLE_UPDATE' => 'Recap edit',
     'STORY_DATA' => 'Data',
+    'STORY_DESCRIPTIONS' => 'Descriptions',
     'STORY_HEADER_LONG' => 'Long description',
     'STORY_HEADER_SHORT' => 'Short description',
     'STORY_ID' => 'Story ID',

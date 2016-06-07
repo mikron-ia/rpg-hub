@@ -2,10 +2,10 @@
 
 namespace backend\controllers;
 
+use common\models\StoryQuery;
 use Yii;
 use common\models\StoryParameter;
 use common\models\Story;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -55,11 +55,11 @@ class StoryController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Story::find()->orderBy('story_id DESC'),
-        ]);
+        $searchModel = new StoryQuery();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

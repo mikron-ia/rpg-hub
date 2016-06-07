@@ -120,6 +120,7 @@ return [
     'RECAP_TITLE_INDEX' => 'Streszczenia',
     'RECAP_TITLE_UPDATE' => 'Edycja streszczenia',
     'STORY_DATA' => 'Dane',
+    'STORY_DESCRIPTIONS' => 'Opisy',
     'STORY_HEADER_LONG' => 'Długi opis',
     'STORY_HEADER_SHORT' => 'Krótki opis',
     'STORY_ID' => 'ID Historii',
