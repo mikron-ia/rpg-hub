@@ -11,6 +11,7 @@ use Yii;
  * @property string $name
  *
  * @property Description[] $descriptions
+ * @property Person[] $people
  */
 class DescriptionPack extends \yii\db\ActiveRecord
 {
@@ -50,5 +51,13 @@ class DescriptionPack extends \yii\db\ActiveRecord
     public function getDescriptions()
     {
         return $this->hasMany(Description::className(), ['description_pack_id' => 'description_pack_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPeople()
+    {
+        return $this->hasMany(Person::className(), ['description_pack_id' => 'description_pack_id']);
     }
 }

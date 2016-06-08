@@ -19,6 +19,7 @@ use Yii;
  *
  * @property Epic $epic
  * @property Character $character
+ * @property DescriptionPack $descriptionPack
  */
 class Person extends \yii\db\ActiveRecord implements Displayable
 {
@@ -44,7 +45,7 @@ class Person extends \yii\db\ActiveRecord implements Displayable
     {
         return [
             [['epic_id', 'name', 'tagline', 'visibility'], 'required'],
-            [['epic_id', 'character_id'], 'integer'],
+            [['epic_id', 'character_id', 'description_pack_id'], 'integer'],
             [['data', 'visibility'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name', 'tagline'], 'string', 'max' => 120],
@@ -68,7 +69,14 @@ class Person extends \yii\db\ActiveRecord implements Displayable
                 'range' => function () {
                     return $this->allowedVisibilities();
                 }
-            ]
+            ],
+            [
+                ['description_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => DescriptionPack::className(),
+                'targetAttribute' => ['description_pack_id' => 'description_pack_id']
+            ],
         ];
     }
 
@@ -86,6 +94,7 @@ class Person extends \yii\db\ActiveRecord implements Displayable
             'data' => Yii::t('app', 'PERSON_DATA'),
             'visibility' => Yii::t('app', 'PERSON_VISIBILITY'),
             'character_id' => Yii::t('app', 'LABEL_CHARACTER'),
+            'description_pack_id' => Yii::t('app', 'LABEL_DESCRIPTION_PACK'),
         ];
     }
 
@@ -131,6 +140,11 @@ class Person extends \yii\db\ActiveRecord implements Displayable
     public function getCharacter()
     {
         return $this->hasOne(Character::className(), ['character_id' => 'character_id']);
+    }
+
+    public function getDescriptionPack()
+    {
+        return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
     }
 
     /**

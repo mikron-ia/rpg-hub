@@ -33,8 +33,8 @@ class Description extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description_pack_id', 'title', 'code', 'public_text', 'private_text', 'lang'], 'required'],
             [['description_pack_id'], 'integer'],
+            [['description_pack_id', 'title', 'code', 'public_text', 'private_text', 'lang'], 'required'],
             [['public_text', 'private_text'], 'string'],
             [['title'], 'string', 'max' => 80],
             [['code'], 'string', 'max' => 40],
