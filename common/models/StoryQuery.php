@@ -12,6 +12,8 @@ use common\models\Story;
  */
 class StoryQuery extends Story
 {
+    public $descriptions;
+
     /**
      * @inheritdoc
      */
@@ -19,8 +21,21 @@ class StoryQuery extends Story
     {
         return [
             [['story_id'], 'integer'],
+            [['descriptions'], 'string'],
             [['key', 'name', 'short', 'long', 'data'], 'safe'],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        $attributeLabels = parent::attributeLabels();
+
+        $attributeLabels['descriptions'] = Yii::t('app', 'STORY_DESCRIPTIONS');
+
+        return $attributeLabels;
     }
 
     /**
@@ -52,21 +67,16 @@ class StoryQuery extends Story
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'story_id' => $this->story_id,
-        ]);
-
-        $query->andFilterWhere(['like', 'key', $this->key])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'short', $this->short])
-            ->andFilterWhere(['like', 'long', $this->long])
-            ->andFilterWhere(['like', 'data', $this->data]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere([
+                'or',
+                ['like', 'short', $this->descriptions],
+                ['like', 'long', $this->descriptions]
+            ]);
 
         return $dataProvider;
     }
