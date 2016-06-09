@@ -60,4 +60,13 @@ class DescriptionPack extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Person::className(), ['description_pack_id' => 'description_pack_id']);
     }
+
+    static public function create($className, $id)
+    {
+        $pack = new DescriptionPack();
+
+        $pack->name = 'Description for ' . $className . ' #' . $id;
+
+        return $pack;
+    }
 }

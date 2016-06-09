@@ -64,18 +64,18 @@ class Person extends \yii\db\ActiveRecord implements Displayable
                 'targetAttribute' => ['character_id' => 'character_id']
             ],
             [
-                ['visibility'],
-                'in',
-                'range' => function () {
-                    return $this->allowedVisibilities();
-                }
-            ],
-            [
                 ['description_pack_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => DescriptionPack::className(),
                 'targetAttribute' => ['description_pack_id' => 'description_pack_id']
+            ],
+            [
+                ['visibility'],
+                'in',
+                'range' => function () {
+                    return $this->allowedVisibilities();
+                }
             ],
         ];
     }
@@ -94,7 +94,7 @@ class Person extends \yii\db\ActiveRecord implements Displayable
             'data' => Yii::t('app', 'PERSON_DATA'),
             'visibility' => Yii::t('app', 'PERSON_VISIBILITY'),
             'character_id' => Yii::t('app', 'LABEL_CHARACTER'),
-            'description_pack_id' => Yii::t('app', 'LABEL_DESCRIPTION_PACK'),
+            'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
         ];
     }
 
@@ -111,6 +111,9 @@ class Person extends \yii\db\ActiveRecord implements Displayable
         return parent::beforeSave($insert);
     }
 
+    /**
+     * @return string[]
+     */
     static public function visibilityNames()
     {
         return [

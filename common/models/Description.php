@@ -19,6 +19,11 @@ use Yii;
  */
 class Description extends \yii\db\ActiveRecord
 {
+    const TYPE_APPEARANCE = 'appearance';
+    const TYPE_CHARACTER = 'character';
+    const TYPE_PLAYERS_WHO = 'players-who';
+    const TYPE_PLAYERS_HISTORY = 'players-history';
+
     /**
      * @inheritdoc
      */
@@ -46,6 +51,13 @@ class Description extends \yii\db\ActiveRecord
                 'targetClass' => DescriptionPack::className(),
                 'targetAttribute' => ['description_pack_id' => 'description_pack_id']
             ],
+            [
+                ['code'],
+                'in',
+                'range' => function () {
+                    return $this->allowedTypes();
+                }
+            ],
         ];
     }
 
@@ -63,6 +75,27 @@ class Description extends \yii\db\ActiveRecord
             'private_text' => Yii::t('app', 'DESCRIPTION_TEXT_PRIVATE'),
             'lang' => Yii::t('app', 'LABEL_LANGUAGE'),
         ];
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function typeNames()
+    {
+        return [
+            self::TYPE_APPEARANCE => Yii::t('app', 'TYPE_APPEARANCE'),
+            self::TYPE_CHARACTER => Yii::t('app', 'TYPE_CHARACTER'),
+            self::TYPE_PLAYERS_WHO => Yii::t('app', 'TYPE_PLAYERS_WHO'),
+            self::TYPE_PLAYERS_HISTORY => Yii::t('app', 'TYPE_PLAYERS_HISTORY'),
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function allowedTypes()
+    {
+        return array_keys(self::typeNames());
     }
 
     /**
