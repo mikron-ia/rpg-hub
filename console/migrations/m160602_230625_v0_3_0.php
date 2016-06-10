@@ -1,5 +1,6 @@
 <?php
 
+use common\models\tools\Visibility;
 use yii\db\Migration;
 
 /**
@@ -30,6 +31,8 @@ class m160602_230625_v0_3_0 extends Migration
             'public_text' => $this->text()->notNull(),
             'private_text' => $this->text()->notNull(),
             'lang' => $this->string(8)->notNull(),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_NONE),
+            'position' => $this->integer()->defaultValue(0),
         ], $tableOptions);
 
         $this->createTable('{{%description_pack}}', [

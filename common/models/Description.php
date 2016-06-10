@@ -2,7 +2,9 @@
 
 namespace common\models;
 
+use common\models\tools\Visibility;
 use Yii;
+use yii2tech\ar\position\PositionBehavior;
 
 /**
  * This is the model class for table "description".
@@ -14,15 +16,17 @@ use Yii;
  * @property string $public_text
  * @property string $private_text
  * @property string $lang
+ * @property string $visibility
+ * @property integer $position
  *
  * @property DescriptionPack $descriptionPack
  */
 class Description extends \yii\db\ActiveRecord
 {
     const TYPE_APPEARANCE = 'appearance';
-    const TYPE_CHARACTER = 'character';
-    const TYPE_PLAYERS_WHO = 'players-who';
-    const TYPE_PLAYERS_HISTORY = 'players-history';
+    const TYPE_HISTORY = 'history';
+    const TYPE_PERSONALITY = 'personality';
+    const TYPE_WHO = 'who';
 
     /**
      * @inheritdoc
@@ -38,12 +42,13 @@ class Description extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description_pack_id'], 'integer'],
-            [['description_pack_id', 'title', 'code', 'public_text', 'private_text', 'lang'], 'required'],
+            [['description_pack_id', 'position'], 'integer'],
+            [['description_pack_id', 'title', 'code', 'public_text', 'private_text', 'lang', 'visibility'], 'required'],
             [['public_text', 'private_text'], 'string'],
             [['title'], 'string', 'max' => 80],
             [['code'], 'string', 'max' => 40],
             [['lang'], 'string', 'max' => 8],
+            [['visibility'], 'string', 'max' => 20],
             [
                 ['description_pack_id'],
                 'exist',
@@ -56,6 +61,13 @@ class Description extends \yii\db\ActiveRecord
                 'in',
                 'range' => function () {
                     return $this->allowedTypes();
+                }
+            ],
+            [
+                ['visibility'],
+                'in',
+                'range' => function () {
+                    return Visibility::allowedVisibilities();
                 }
             ],
         ];
@@ -74,6 +86,17 @@ class Description extends \yii\db\ActiveRecord
             'public_text' => Yii::t('app', 'DESCRIPTION_TEXT_PUBLIC'),
             'private_text' => Yii::t('app', 'DESCRIPTION_TEXT_PRIVATE'),
             'lang' => Yii::t('app', 'LABEL_LANGUAGE'),
+            'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'positionBehavior' => [
+                'class' => PositionBehavior::className(),
+                'positionAttribute' => 'position',
+            ],
         ];
     }
 
@@ -83,11 +106,21 @@ class Description extends \yii\db\ActiveRecord
     static public function typeNames()
     {
         return [
-            self::TYPE_APPEARANCE => Yii::t('app', 'TYPE_APPEARANCE'),
-            self::TYPE_CHARACTER => Yii::t('app', 'TYPE_CHARACTER'),
-            self::TYPE_PLAYERS_WHO => Yii::t('app', 'TYPE_PLAYERS_WHO'),
-            self::TYPE_PLAYERS_HISTORY => Yii::t('app', 'TYPE_PLAYERS_HISTORY'),
+            self::TYPE_APPEARANCE => Yii::t('app', 'DESCRIPTION_TYPE_APPEARANCE'),
+            self::TYPE_HISTORY => Yii::t('app', 'DESCRIPTION_TYPE_HISTORY'),
+            self::TYPE_PERSONALITY => Yii::t('app', 'DESCRIPTION_TYPE_PERSONALITY'),
+            self::TYPE_WHO => Yii::t('app', 'DESCRIPTION_TYPE_WHO'),
         ];
+    }
+
+    static public function typesForCharacter()
+    {
+        return [self::TYPE_PERSONALITY];
+    }
+
+    static public function typesForPerson()
+    {
+        return [self::TYPE_APPEARANCE, self::TYPE_HISTORY, self::TYPE_WHO];
     }
 
     /**

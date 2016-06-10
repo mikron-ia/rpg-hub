@@ -19,6 +19,8 @@ use yii\data\ActiveDataProvider;
  * @property Person[] $people
  * @property Recap[] $recaps
  * @property Story[] $stories
+ *
+ * @todo: Someday, system field will have to come from a closed list of supported systems
  */
 class Epic extends \yii\db\ActiveRecord implements Displayable
 {
