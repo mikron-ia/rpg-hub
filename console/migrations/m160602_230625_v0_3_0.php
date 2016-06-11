@@ -26,11 +26,10 @@ class m160602_230625_v0_3_0 extends Migration
         $this->createTable('{{%description}}', [
             'description_id' => $this->primaryKey()->unsigned(),
             'description_pack_id' => $this->integer(11)->unsigned(),
-            'title' => $this->string(80)->notNull(),
             'code' => $this->string(40)->notNull(),
             'public_text' => $this->text()->notNull(),
-            'private_text' => $this->text()->notNull(),
-            'lang' => $this->string(8)->notNull(),
+            'private_text' => $this->text(),
+            'lang' => $this->string(5)->notNull()->defaultValue('en'),
             'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_NONE),
             'position' => $this->integer()->defaultValue(0),
         ], $tableOptions);
@@ -104,7 +103,7 @@ class m160602_230625_v0_3_0 extends Migration
             'status' => $this->smallInteger()->notNull()->defaultValue(10),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
-            'language' => $this->char(2)->notNull()->defaultValue('en'),
+            'language' => $this->char(5)->notNull()->defaultValue('en'),
         ], $tableOptions);
 
         $this->execute('SET foreign_key_checks = 0');

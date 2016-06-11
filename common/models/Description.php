@@ -44,9 +44,8 @@ class Description extends \yii\db\ActiveRecord
     {
         return [
             [['description_pack_id', 'position'], 'integer'],
-            [['description_pack_id', 'title', 'code', 'public_text', 'private_text', 'lang', 'visibility'], 'required'],
+            [['description_pack_id', 'code', 'public_text', 'lang', 'visibility'], 'required'],
             [['public_text', 'private_text'], 'string'],
-            [['title'], 'string', 'max' => 80],
             [['code'], 'string', 'max' => 40],
             [['lang'], 'string', 'max' => 8],
             [['visibility'], 'string', 'max' => 20],

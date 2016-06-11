@@ -15,16 +15,14 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'description_pack_id')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'code')->dropDownList(
         Description::typeNames(),
         ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_TYPE') . ' --- ']
     ); ?>
 
-    <?= $form->field($model, 'public_text')->textarea(['rows' => 10]) ?>
+    <?= $form->field($model, 'public_text')->textarea(['rows' => 8]); ?>
 
-    <?= $form->field($model, 'private_text')->textarea(['rows' => 10]) ?>
+    <?= $form->field($model, 'private_text')->textarea(['rows' => 8]); ?>
 
     <?= $form->field($model, 'lang')->dropDownList(Language::languagesLong()); ?>
 

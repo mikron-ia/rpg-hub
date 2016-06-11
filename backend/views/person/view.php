@@ -59,9 +59,14 @@ $this->params['breadcrumbs'][] = $this->title;
             <h2 class="text-center"><?= Yii::t('app', 'LABEL_DESCRIPTIONS'); ?></h2>
 
             <?= Html::a(
-                Yii::t('app', 'DESCRIPTION_BUTTON_CREATE'),
-                ['description/create', 'pack_id' => $model->description_pack_id],
-                ['class' => 'btn btn-success']
+                '<span class="btn btn-success">' . Yii::t('app', 'DESCRIPTION_BUTTON_CREATE') . '</span>',
+                '#',
+                [
+                    'class' => 'create-description-link',
+                    'title' => Yii::t('app', 'DESCRIPTION_BUTTON_CREATE'),
+                    'data-toggle' => 'modal',
+                    'data-target' => '#create-description-modal',
+                ]
             ); ?>
         </div>
     <?php endif; ?>
@@ -82,5 +87,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php else: ?>
         <p><?= Yii::t('app', 'DESCRIPTIONS_NOT_FOUND'); ?></p>
     <?php endif; ?>
+
+    <?php \yii\bootstrap\Modal::begin([
+        'id' => 'create-description-modal',
+        'header' => '<h2 class="modal-title">' . Yii::t('app', 'DESCRIPTION_TITLE_CREATE') . '</h2>',
+    ]); ?>
+
+    <?php \yii\bootstrap\Modal::end(); ?>
+
+    <?php $this->registerJs(
+        "$('.create-description-link').click(function() {
+    $.get(
+        '" . Yii::$app->urlManager->createUrl(['description/create']) . "',
+        {
+            pack_id: " . $model->description_pack_id . "
+        },
+        function (data) {
+            $('.modal-body').html(data);
+            $('#create-description-modal').modal();
+        }
+    );
+});"
+    ); ?>
 
 </div>

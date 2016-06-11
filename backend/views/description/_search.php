@@ -19,11 +19,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description_pack_id') ?>
 
-    <?= $form->field($model, 'code') ?>
+    <?= $form->field($model, 'code')->widget(
+        kartik\select2\Select2::className(),
+        [
+            'data' => \common\models\Description::typeNames(),
+            'options' => ['multiple' => true],
+        ]
+    ) ?>
+
+    <?= $form->field($model, 'text') ?>
 
     <?= $form->field($model, 'public_text') ?>
-
-    <?= $form->field($model, 'private_text') ?>
 
     <?= $form->field($model, 'lang')->widget(
         kartik\select2\Select2::className(),

@@ -5,13 +5,14 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Description;
 
 /**
  * DescriptionQuery represents the model behind the search form about `common\models\Description`.
  */
 class DescriptionQuery extends Description
 {
+    public $text;
+
     /**
      * @inheritdoc
      */
@@ -19,8 +20,20 @@ class DescriptionQuery extends Description
     {
         return [
             [['description_pack_id'], 'integer'],
-            [['title', 'code', 'public_text', 'private_text', 'lang', 'visibility'], 'safe'],
+            [['code', 'public_text', 'private_text', 'lang', 'visibility'], 'safe'],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        $attributeLabels = parent::attributeLabels();
+
+        $attributeLabels['text'] = Yii::t('app', 'DESCRIPTION_TEXTS');
+
+        return $attributeLabels;
     }
 
     /**
@@ -61,11 +74,15 @@ class DescriptionQuery extends Description
             'description_pack_id' => $this->description_pack_id,
         ]);
 
-        $query->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'public_text', $this->public_text])
-            ->andFilterWhere(['like', 'private_text', $this->private_text])
+        $query->andFilterWhere(['in', 'code', $this->code])
             ->andFilterWhere(['in', 'lang', $this->lang])
-            ->andFilterWhere(['in', 'visibility', $this->visibility]);
+            ->andFilterWhere(['in', 'visibility', $this->visibility])
+            ->andFilterWhere([
+                'or',
+                ['like', 'public_text', $this->public_text],
+                ['like', 'public_text', $this->text],
+                ['like', 'private_text', $this->text]
+            ]);;
 
         return $dataProvider;
     }

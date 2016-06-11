@@ -70,11 +70,13 @@ class DescriptionController extends Controller
         $model->description_pack_id = $pack_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->description_id]);
+            return $this->redirect(['index']);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('create', ['model' => $model]);
+            } else {
+                return $this->render('create', ['model' => $model]);
+            }
         }
     }
 
@@ -89,11 +91,13 @@ class DescriptionController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->description_id]);
+            return $this->redirect(['index']);
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('create', ['model' => $model]);
+            } else {
+                return $this->render('create', ['model' => $model]);
+            }
         }
     }
 
