@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\Language;
 use common\models\core\Visibility;
 use Yii;
 use yii\helpers\Markdown;
@@ -150,6 +151,18 @@ class Description extends \yii\db\ActiveRecord
         } else {
             return "?";
         }
+    }
+
+    public function getLanguage()
+    {
+        $language = Language::create($this->lang);
+        return $language->getName();
+    }
+
+    public function getVisibility()
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getName();
     }
 
     /**

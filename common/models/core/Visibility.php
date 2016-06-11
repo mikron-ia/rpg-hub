@@ -16,6 +16,8 @@ class Visibility
     const VISIBILITY_LOGGED = 'logged';
     const VISIBILITY_FULL = 'full';
 
+    public $visibility;
+
     /**
      * @return string[]
      */
@@ -33,5 +35,21 @@ class Visibility
     static public function allowedVisibilities()
     {
         return array_keys(self::visibilityNames());
+    }
+
+    static public function create($code)
+    {
+        $visibility = new Visibility();
+        $visibility->visibility = $code;
+        return $visibility;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        $names = self::visibilityNames();
+        return isset($names[$this->visibility]) ? $names[$this->visibility] : null;
     }
 }

@@ -8,7 +8,10 @@ use yii\helpers\Html;
 <div class="col-md-6">
 
     <div class="buttoned-header">
-        <h3><?= $model->getTypeName(); ?></h3>
+        <h3>
+            <?= $model->getTypeName(); ?>
+            (<?= mb_strtolower($model->getLanguage()); ?>, <?= mb_strtolower($model->getVisibility()); ?>)
+        </h3>
 
         <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),

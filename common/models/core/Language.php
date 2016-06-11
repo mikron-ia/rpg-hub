@@ -28,7 +28,9 @@ class Language
 
     static public function create($code)
     {
-        return new Language(['language' => $code]);
+        $language = new Language();
+        $language->language = $code;
+        return $language;
     }
 
     /**
@@ -36,7 +38,7 @@ class Language
      */
     public function getName()
     {
-        $tradeNames = self::languagesLong();
-        return isset($tradeNames[$this->language]) ? $tradeNames[$this->language] : null;
+        $names = self::languagesLong();
+        return isset($names[$this->language]) ? $names[$this->language] : null;
     }
 }
