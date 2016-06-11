@@ -54,23 +54,33 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-    <h2 class="text-center"><?= Yii::t('app', 'LABEL_DESCRIPTIONS'); ?></h2>
+    <?php if ($model->description_pack_id): ?>
+        <div class="buttoned-header">
+            <h2 class="text-center"><?= Yii::t('app', 'LABEL_DESCRIPTIONS'); ?></h2>
+
+            <?= Html::a(
+                Yii::t('app', 'DESCRIPTION_BUTTON_CREATE'),
+                ['description/create', 'pack_id' => $model->description_pack_id],
+                ['class' => 'btn btn-success']
+            ); ?>
+        </div>
+    <?php endif; ?>
 
     <?php if ($model->descriptionPack): ?>
         <div id="descriptions">
-            <?= \yii\widgets\ListView::widget(
-                [
-                    'dataProvider' => new \yii\data\ActiveDataProvider([
-                        'query' => $model->descriptionPack->getDescriptions()
-                    ]),
-                    'itemOptions' => ['class' => 'item'],
-                    'summary' => '',
-                    'itemView' => function (\common\models\Description $model, $key, $index, $widget) {
-                        return $this->render('_view_descriptions', ['model' => $model]);
-                    },
-                ]
-            ) ?>
+            <?= \yii\widgets\ListView::widget([
+                'dataProvider' => new \yii\data\ActiveDataProvider([
+                    'query' => $model->descriptionPack->getDescriptions()
+                ]),
+                'itemOptions' => ['class' => 'item'],
+                'summary' => '',
+                'itemView' => function (\common\models\Description $model, $key, $index, $widget) {
+                    return $this->render('_view_descriptions', ['model' => $model]);
+                },
+            ]) ?>
         </div>
+    <?php else: ?>
+        <p><?= Yii::t('app', 'DESCRIPTIONS_NOT_FOUND'); ?></p>
     <?php endif; ?>
 
 </div>

@@ -16,6 +16,7 @@ use Yii;
  * @property string $data
  * @property string $visibility
  * @property string $character_id
+ * @property string $description_pack_id
  *
  * @property Epic $epic
  * @property Character $character

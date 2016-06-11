@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\models\tools\Visibility;
+use common\models\core\Visibility;
 use Yii;
 use yii\helpers\Markdown;
 use yii2tech\ar\position\PositionBehavior;

@@ -1,0 +1,40 @@
+<?php
+
+use common\models\core\Language;
+use common\models\core\Visibility;
+use common\models\Description;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
+/* @var $this yii\web\View */
+/* @var $model common\models\Description */
+/* @var $form yii\widgets\ActiveForm */
+?>
+
+<div class="description-form">
+
+    <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'description_pack_id')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'code')->dropDownList(
+        Description::typeNames(),
+        ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_TYPE') . ' --- ']
+    ); ?>
+
+    <?= $form->field($model, 'public_text')->textarea(['rows' => 10]) ?>
+
+    <?= $form->field($model, 'private_text')->textarea(['rows' => 10]) ?>
+
+    <?= $form->field($model, 'lang')->dropDownList(Language::languagesLong()); ?>
+
+    <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames()); ?>
+
+    <div class="form-group">
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
+</div>

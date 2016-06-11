@@ -22,7 +22,7 @@ class StoryQuery extends Story
         return [
             [['story_id'], 'integer'],
             [['descriptions'], 'string'],
-            [['key', 'name', 'short', 'long', 'data'], 'safe'],
+            [['epic_id', 'key', 'name', 'short', 'long', 'data'], 'safe'],
         ];
     }
 
@@ -71,7 +71,9 @@ class StoryQuery extends Story
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['in', 'epic_id', $this->epic_id])
             ->andFilterWhere([
                 'or',
                 ['like', 'short', $this->descriptions],

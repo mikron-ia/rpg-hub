@@ -1,6 +1,6 @@
 <?php
 
-use common\models\tools\Visibility;
+use common\models\core\Visibility;
 use yii\db\Migration;
 
 /**
