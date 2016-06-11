@@ -54,4 +54,23 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+    <h2 class="text-center"><?= Yii::t('app', 'LABEL_DESCRIPTIONS'); ?></h2>
+
+    <?php if ($model->descriptionPack): ?>
+        <div id="descriptions">
+            <?= \yii\widgets\ListView::widget(
+                [
+                    'dataProvider' => new \yii\data\ActiveDataProvider([
+                        'query' => $model->descriptionPack->getDescriptions()
+                    ]),
+                    'itemOptions' => ['class' => 'item'],
+                    'summary' => '',
+                    'itemView' => function (\common\models\Description $model, $key, $index, $widget) {
+                        return $this->render('_view_descriptions', ['model' => $model]);
+                    },
+                ]
+            ) ?>
+        </div>
+    <?php endif; ?>
+
 </div>

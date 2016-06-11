@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\tools\Visibility;
 use Yii;
+use yii\helpers\Markdown;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
@@ -137,5 +138,34 @@ class Description extends \yii\db\ActiveRecord
     public function getDescriptionPack()
     {
         return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTypeName()
+    {
+        $names = self::typeNames();
+        if (isset($names[$this->code])) {
+            return $names[$this->code];
+        } else {
+            return "?";
+        }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPublicFormatted()
+    {
+        return Markdown::process($this->public_text, 'gfm');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPrivateFormatted()
+    {
+        return Markdown::process($this->private_text, 'gfm');
     }
 }

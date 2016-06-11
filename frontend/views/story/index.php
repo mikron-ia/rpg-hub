@@ -9,6 +9,7 @@ use yii\widgets\ListView;
 $this->title = Yii::t('app', 'RECAP_TITLE_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="story-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
