@@ -10,8 +10,16 @@ use yii\helpers\Html;
     <div class="buttoned-header">
         <h3><?= $model->getTypeName(); ?></h3>
 
-        <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['description/update', 'id' => $model->description_id],
-            ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_UPDATE'),
+            '#', [
+                'class' => 'btn btn-primary update-description-link',
+                'title' => Yii::t('app', 'LABEL_UPDATE'),
+                'data-toggle' => 'modal',
+                'data-target' => '#update-description-modal',
+                'data-id' => $model->description_id,
+            ]
+        ); ?>
         <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['description/delete', 'id' => $model->description_id], [
             'class' => 'btn btn-danger',
             'data' => [

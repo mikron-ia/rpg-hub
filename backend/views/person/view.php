@@ -110,4 +110,26 @@ $this->params['breadcrumbs'][] = $this->title;
 });"
     ); ?>
 
+    <?php \yii\bootstrap\Modal::begin([
+        'id' => 'update-description-modal',
+        'header' => '<h2 class="modal-title">' . Yii::t('app', 'DESCRIPTION_TITLE_UPDATE') . '</h2>',
+    ]); ?>
+
+    <?php \yii\bootstrap\Modal::end(); ?>
+
+    <?php $this->registerJs(
+        "$('.update-description-link').click(function() {
+    $.get(
+        '" . Yii::$app->urlManager->createUrl(['description/update']) . "',
+        {
+            id: $(this).data('id')
+        },
+        function (data) {
+            $('.modal-body').html(data);
+            $('#update-description-modal').modal();
+        }
+    );
+});"
+    ); ?>
+
 </div>

@@ -70,7 +70,12 @@ class DescriptionController extends Controller
         $model->description_pack_id = $pack_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            $referrer = Yii::$app->getRequest()->getReferrer();
+            if($referrer) {
+                return Yii::$app->getResponse()->redirect($referrer);
+            } else {
+                return $this->redirect(['index']);
+            }
         } else {
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('create', ['model' => $model]);
@@ -91,7 +96,12 @@ class DescriptionController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            $referrer = Yii::$app->getRequest()->getReferrer();
+            if($referrer) {
+                return Yii::$app->getResponse()->redirect($referrer);
+            } else {
+                return $this->redirect(['index']);
+            }
         } else {
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('create', ['model' => $model]);
