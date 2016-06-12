@@ -188,6 +188,14 @@ class Person extends \yii\db\ActiveRecord implements Displayable
     }
 
     /**
+     * @inheritdoc
+     */
+    public function isVisibleInApi()
+    {
+        return ($this->visibility === self::VISIBILITY_FULL);
+    }
+
+    /**
      * @return string|null
      */
     public function getVisibilityName()
@@ -198,13 +206,5 @@ class Person extends \yii\db\ActiveRecord implements Displayable
         } else {
             return null;
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function isVisibleInApi()
-    {
-        return ($this->visibility === self::VISIBILITY_FULL);
     }
 }

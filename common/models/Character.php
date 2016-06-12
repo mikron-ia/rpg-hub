@@ -147,6 +147,14 @@ class Character extends \yii\db\ActiveRecord implements Displayable
         return $decodedData;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function isVisibleInApi()
+    {
+        return true;
+    }
+
     public function getPeopleAvailableToThisCharacterAsDropDownList()
     {
         $query = new ActiveDataProvider([
@@ -168,13 +176,5 @@ class Character extends \yii\db\ActiveRecord implements Displayable
     public function getPeopleAvailableToThisCharacterAsIdList()
     {
         return array_keys($this->getPeopleAvailableToThisCharacterAsDropDownList());
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function isVisibleInApi()
-    {
-        return true;
     }
 }
