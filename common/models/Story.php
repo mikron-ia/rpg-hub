@@ -137,7 +137,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     /**
      * @inheritdoc
      */
-    public function getSimpleData()
+    public function getSimpleDataForApi()
     {
         return [
             'name' => $this->name,
@@ -150,7 +150,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     /**
      * @inheritdoc
      */
-    public function getCompleteData()
+    public function getCompleteDataForApi()
     {
 
         $basicData = [
@@ -162,5 +162,13 @@ class Story extends \yii\db\ActiveRecord implements Displayable
             'long' => $this->getLongFormatted(),
         ];
         return $basicData;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isVisibleInApi()
+    {
+        return true;
     }
 }

@@ -99,7 +99,7 @@ class Recap extends \yii\db\ActiveRecord implements Displayable
     /**
      * @inheritdoc
      */
-    public function getSimpleData()
+    public function getSimpleDataForApi()
     {
         return [
             'name' => $this->name,
@@ -110,7 +110,7 @@ class Recap extends \yii\db\ActiveRecord implements Displayable
     /**
      * @inheritdoc
      */
-    public function getCompleteData()
+    public function getCompleteDataForApi()
     {
 
         $basicData = [
@@ -120,5 +120,13 @@ class Recap extends \yii\db\ActiveRecord implements Displayable
             'short' => $this->getDataFormatted(),
         ];
         return $basicData;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isVisibleInApi()
+    {
+        return true;
     }
 }

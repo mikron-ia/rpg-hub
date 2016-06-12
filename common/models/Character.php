@@ -20,7 +20,7 @@ use yii\data\ActiveDataProvider;
  * @property Person $currentlyDeliveredPerson
  * @property Person[] $people
  */
-class Character extends \yii\db\ActiveRecord
+class Character extends \yii\db\ActiveRecord implements Displayable
 {
     use Tools;
 
@@ -122,7 +122,7 @@ class Character extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function getSimpleData()
+    public function getSimpleDataForApi()
     {
         return [
             'name' => $this->name,
@@ -133,7 +133,7 @@ class Character extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function getCompleteData()
+    public function getCompleteDataForApi()
     {
         $decodedData = json_decode($this->data, true);
 
@@ -141,7 +141,7 @@ class Character extends \yii\db\ActiveRecord
         $decodedData['key'] = $this->key;
 
         if(isset($this->currently_delivered_person_id)) {
-            $decodedData['person'] = $this->currentlyDeliveredPerson->getCompleteData();
+            $decodedData['person'] = $this->currentlyDeliveredPerson->getCompleteDataForApi();
         }
 
         return $decodedData;
@@ -168,5 +168,13 @@ class Character extends \yii\db\ActiveRecord
     public function getPeopleAvailableToThisCharacterAsIdList()
     {
         return array_keys($this->getPeopleAvailableToThisCharacterAsDropDownList());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isVisibleInApi()
+    {
+        return true;
     }
 }

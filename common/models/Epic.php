@@ -131,7 +131,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
     /**
      * @inheritdoc
      */
-    public function getSimpleData()
+    public function getSimpleDataForApi()
     {
         return [
             'name' => $this->name,
@@ -142,7 +142,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
     /**
      * @inheritdoc
      */
-    public function getCompleteData()
+    public function getCompleteDataForApi()
     {
         $query = new ActiveDataProvider(['query' => $this->getStories()->orderBy('story_id DESC')]);
 
@@ -150,11 +150,11 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
         $stories = $query->getModels();
         $storyData = [];
         foreach ($stories as $story) {
-            $storyData[] = $story->getSimpleData();
+            $storyData[] = $story->getSimpleDataForApi();
         }
 
         $recap = $this->getCurrentRecap();
-        $recapData = ($recap ? $recap->getCompleteData() : null);
+        $recapData = ($recap ? $recap->getCompleteDataForApi() : null);
 
         return [
             'name' => $this->name,
@@ -163,5 +163,13 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
             'current' => $recapData,
             'stories' => $storyData,
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isVisibleInApi()
+    {
+        return true;
     }
 }

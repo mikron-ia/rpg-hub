@@ -73,12 +73,12 @@ class DescriptionPack extends \yii\db\ActiveRecord implements Displayable
     /**
      * @inheritdoc
      */
-    public function getSimpleData()
+    public function getSimpleDataForApi()
     {
         $descriptions = [];
 
         foreach($this->descriptions as $description) {
-            $descriptions[] = $description->getSimpleData();
+            $descriptions[] = $description->getSimpleDataForApi();
         }
 
         return $descriptions;
@@ -87,14 +87,24 @@ class DescriptionPack extends \yii\db\ActiveRecord implements Displayable
     /**
      * @inheritdoc
      */
-    public function getCompleteData()
+    public function getCompleteDataForApi()
     {
         $descriptions = [];
 
         foreach($this->descriptions as $description) {
-            $descriptions[] = $description->getCompleteData();
+            if($description->isVisibleInApi()) {
+                $descriptions[] = $description->getCompleteDataForApi();
+            }
         }
 
         return $descriptions;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isVisibleInApi()
+    {
+        return true;
     }
 }

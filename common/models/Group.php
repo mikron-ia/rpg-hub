@@ -85,7 +85,7 @@ class Group extends \yii\db\ActiveRecord implements Displayable
     /**
      * @inheritdoc
      */
-    public function getSimpleData()
+    public function getSimpleDataForApi()
     {
         return [
             'name' => $this->name,
@@ -96,7 +96,7 @@ class Group extends \yii\db\ActiveRecord implements Displayable
     /**
      * @inheritdoc
      */
-    public function getCompleteData()
+    public function getCompleteDataForApi()
     {
         $decodedData = json_decode($this->data, true);
 
@@ -104,5 +104,13 @@ class Group extends \yii\db\ActiveRecord implements Displayable
         $decodedData['key'] = $this->key;
 
         return $decodedData;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isVisibleInApi()
+    {
+        return true;
     }
 }

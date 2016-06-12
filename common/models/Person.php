@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\Visibility;
 use common\models\tools\Tools;
 use Yii;
 
@@ -154,7 +155,7 @@ class Person extends \yii\db\ActiveRecord implements Displayable
     /**
      * @inheritdoc
      */
-    public function getSimpleData()
+    public function getSimpleDataForApi()
     {
         return [
             'name' => $this->name,
@@ -167,7 +168,7 @@ class Person extends \yii\db\ActiveRecord implements Displayable
     /**
      * @inheritdoc
      */
-    public function getCompleteData()
+    public function getCompleteDataForApi()
     {
         $decodedData = json_decode($this->data, true);
 
@@ -176,7 +177,7 @@ class Person extends \yii\db\ActiveRecord implements Displayable
         $decodedData['tagline'] = $this->tagline;
 
         if ($this->description_pack_id) {
-            $descriptions = $this->descriptionPack->getCompleteData();
+            $descriptions = $this->descriptionPack->getCompleteDataForApi();
             $decodedData['descriptions'] = [];
             foreach ($descriptions as $description) {
                 $decodedData['descriptions'][] = $description;
@@ -197,5 +198,13 @@ class Person extends \yii\db\ActiveRecord implements Displayable
         } else {
             return null;
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isVisibleInApi()
+    {
+        return ($this->visibility === self::VISIBILITY_FULL);
     }
 }

@@ -185,7 +185,7 @@ class Description extends \yii\db\ActiveRecord implements Displayable
      * Provides simple representation of the object content, fit for basic display in an index or a summary
      * @return array
      */
-    public function getSimpleData()
+    public function getSimpleDataForApi()
     {
         return [
             'title' => $this->getTypeName(),
@@ -196,11 +196,19 @@ class Description extends \yii\db\ActiveRecord implements Displayable
      * Provides complete representation of public parts of object content, fit for full card display
      * @return array
      */
-    public function getCompleteData()
+    public function getCompleteDataForApi()
     {
         return [
             'title' => $this->getTypeName(),
             'text' => $this->getPublicFormatted(),
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isVisibleInApi()
+    {
+        return ($this->visibility === Visibility::VISIBILITY_FULL);
     }
 }

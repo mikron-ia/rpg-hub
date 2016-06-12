@@ -148,7 +148,13 @@ class ApiController extends \yii\web\Controller
         }
 
         if ($object) {
-            $content = $object->getCompleteData();
+            if ($object->isVisibleInApi()) {
+                $content = $object->getCompleteDataForApi();
+            } else {
+                $content = [
+                    'errors' => ['Object exists, but is not accessible via API'],
+                ];
+            }
         } else {
             $content = [
                 'errors' => $errors,
@@ -187,7 +193,9 @@ class ApiController extends \yii\web\Controller
             $objects = Person::findAll(['epic_id' => $epicId]);
 
             foreach ($objects as $object) {
-                $peopleList[] = $object->getSimpleData();
+                if($object->isVisibleInApi()) {
+                    $peopleList[] = $object->getSimpleDataForApi();
+                }
             }
         } catch (Exception $e) {
             $errors[] = $e->getMessage();
@@ -229,7 +237,7 @@ class ApiController extends \yii\web\Controller
 
         $parameters = ['key' => $key];
 
-        if($something != 'Epic') {
+        if ($something != 'Epic') {
             $parameters['epic_id'] = $epicId;
         }
 
