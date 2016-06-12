@@ -13,7 +13,7 @@ use Yii;
  * @property Description[] $descriptions
  * @property Person[] $people
  */
-class DescriptionPack extends \yii\db\ActiveRecord
+class DescriptionPack extends \yii\db\ActiveRecord implements Displayable
 {
     /**
      * @inheritdoc
@@ -68,5 +68,33 @@ class DescriptionPack extends \yii\db\ActiveRecord
         $pack->name = 'Description for ' . $className . ' #' . $id;
 
         return $pack;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSimpleData()
+    {
+        $descriptions = [];
+
+        foreach($this->descriptions as $description) {
+            $descriptions[] = $description->getSimpleData();
+        }
+
+        return $descriptions;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCompleteData()
+    {
+        $descriptions = [];
+
+        foreach($this->descriptions as $description) {
+            $descriptions[] = $description->getCompleteData();
+        }
+
+        return $descriptions;
     }
 }

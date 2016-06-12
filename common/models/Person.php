@@ -175,6 +175,14 @@ class Person extends \yii\db\ActiveRecord implements Displayable
         $decodedData['key'] = $this->key;
         $decodedData['tagline'] = $this->tagline;
 
+        if ($this->description_pack_id) {
+            $descriptions = $this->descriptionPack->getCompleteData();
+            $decodedData['descriptions'] = [];
+            foreach ($descriptions as $description) {
+                $decodedData['descriptions'][] = $description;
+            }
+        }
+
         return $decodedData;
     }
 

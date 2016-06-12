@@ -23,7 +23,7 @@ use yii2tech\ar\position\PositionBehavior;
  *
  * @property DescriptionPack $descriptionPack
  */
-class Description extends \yii\db\ActiveRecord
+class Description extends \yii\db\ActiveRecord implements Displayable
 {
     const TYPE_APPEARANCE = 'appearance';
     const TYPE_HISTORY = 'history';
@@ -179,5 +179,28 @@ class Description extends \yii\db\ActiveRecord
     public function getPrivateFormatted()
     {
         return Markdown::process($this->private_text, 'gfm');
+    }
+
+    /**
+     * Provides simple representation of the object content, fit for basic display in an index or a summary
+     * @return array
+     */
+    public function getSimpleData()
+    {
+        return [
+            'title' => $this->getTypeName(),
+        ];
+    }
+
+    /**
+     * Provides complete representation of public parts of object content, fit for full card display
+     * @return array
+     */
+    public function getCompleteData()
+    {
+        return [
+            'title' => $this->getTypeName(),
+            'text' => $this->getPublicFormatted(),
+        ];
     }
 }
