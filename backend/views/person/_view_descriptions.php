@@ -8,14 +8,12 @@ use yii\helpers\Html;
 <div class="col-md-6">
 
     <div class="buttoned-header">
-        <h3>
-            <?= $model->getTypeName(); ?>
-            (<?= mb_strtolower($model->getLanguage()); ?>, <?= mb_strtolower($model->getVisibility()); ?>)
-        </h3>
+        <h3><?= $model->getTypeName(); ?></h3>
 
         <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
-            '#', [
+            '#',
+            [
                 'class' => 'btn btn-primary update-description-link',
                 'title' => Yii::t('app', 'LABEL_UPDATE'),
                 'data-toggle' => 'modal',
@@ -23,14 +21,27 @@ use yii\helpers\Html;
                 'data-id' => $model->description_id,
             ]
         ); ?>
-        <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['description/delete', 'id' => $model->description_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_DELETE'),
+            ['description/delete', 'id' => $model->description_id],
+            [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
+                    'method' => 'post',
+                ],
+            ]
+        ); ?>
     </div>
+
+    <p>
+        <span class="tag-box">
+            <?= $model->getLanguage(); ?>
+        </span>
+        <span class="tag-box">
+            <?= Yii::t('app', 'LABEL_VISIBLE') . ': ' . mb_strtolower($model->getVisibility()); ?>
+        </span>
+    </p>
 
     <div>
         <?= $model->getPublicFormatted(); ?>

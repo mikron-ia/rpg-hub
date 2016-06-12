@@ -145,3 +145,15 @@ p {
     float: right;
     margin: 20px 0 10px 10px;
 }
+
+.subtitle {
+    font-style: italic;
+}
+
+.tag-box {
+    background-color: lightblue;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 5px 10px;
+    margin: 0 5px;
+}

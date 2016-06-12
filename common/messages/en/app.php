@@ -107,6 +107,7 @@ return [
     'LABEL_PASSWORD_REPEAT' => 'Repeat new password',
     'LABEL_UPDATE' => 'Modify',
     'LABEL_VISIBILITY' => 'Visibility',
+    'LABEL_VISIBLE' => 'Visible',
     'LANGUAGE_CODE_ENGLISH' => 'English',
     'LANGUAGE_CODE_POLISH' => 'Polish',
     'LOGIN_TITLE' => 'Login',

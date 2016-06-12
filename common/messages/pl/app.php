@@ -107,6 +107,7 @@ return [
     'LABEL_PASSWORD_REPEAT' => 'Powtórzone hasło',
     'LABEL_UPDATE' => 'Edycja',
     'LABEL_VISIBILITY' => 'Widoczność',
+    'LABEL_VISIBLE' => 'Widoczne',
     'LANGUAGE_CODE_ENGLISH' => 'Angielski',
     'LANGUAGE_CODE_POLISH' => 'Polski',
     'LOGIN_TITLE' => 'Logowanie',
