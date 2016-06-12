@@ -124,6 +124,32 @@ class DescriptionController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionMoveUp($id)
+    {
+        $model = $this->findModel($id);
+        $model->movePrev();
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
+    }
+
+    public function actionMoveDown($id)
+    {
+        $model = $this->findModel($id);
+        $model->moveNext();
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
+    }
+
     /**
      * Finds the Description model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

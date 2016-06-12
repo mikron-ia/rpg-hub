@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\DescriptionQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Descriptions');
+$this->title = Yii::t('app', 'DESCRIPTION_TITLE_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="description-index">
@@ -39,8 +39,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->getTypeName();
                     }
                 ],
-                'lang',
-                'visibility',
+                [
+                    'attribute' => 'lang',
+                    'value' => function (Description $model) {
+                        return $model->getLanguage();
+                    }
+                ],
+                [
+                    'attribute' => 'visibility',
+                    'value' => function (Description $model) {
+                        return $model->getVisibility();
+                    }
+                ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{update}'

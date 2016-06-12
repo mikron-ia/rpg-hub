@@ -165,6 +165,12 @@ class Description extends \yii\db\ActiveRecord implements Displayable
         return $visibility->getName();
     }
 
+    public function getVisibilityLowercase()
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getNameLowercase();
+    }
+
     /**
      * @return string|null
      */

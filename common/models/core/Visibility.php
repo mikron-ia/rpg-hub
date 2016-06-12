@@ -32,6 +32,20 @@ class Visibility
         ];
     }
 
+    /**
+     * @return string[]
+     */
+    static public function visibilityNamesLowercase()
+    {
+        return [
+            Visibility::VISIBILITY_NONE => Yii::t('app', 'VISIBILITY_NONE_LOWERCASE'),
+            Visibility::VISIBILITY_GM => Yii::t('app', 'VISIBILITY_GM_LOWERCASE'),
+            Visibility::VISIBILITY_DESIGNATED => Yii::t('app', 'VISIBILITY_DESIGNATED_LOWERCASE'),
+            Visibility::VISIBILITY_LOGGED => Yii::t('app', 'VISIBILITY_LOGGED_LOWERCASE'),
+            Visibility::VISIBILITY_FULL => Yii::t('app', 'VISIBILITY_FULL_LOWERCASE'),
+        ];
+    }
+
     static public function allowedVisibilities()
     {
         return array_keys(self::visibilityNames());
@@ -50,6 +64,15 @@ class Visibility
     public function getName()
     {
         $names = self::visibilityNames();
+        return isset($names[$this->visibility]) ? $names[$this->visibility] : null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNameLowercase()
+    {
+        $names = self::visibilityNamesLowercase();
         return isset($names[$this->visibility]) ? $names[$this->visibility] : null;
     }
 }

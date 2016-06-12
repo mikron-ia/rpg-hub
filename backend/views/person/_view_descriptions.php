@@ -22,6 +22,26 @@ use yii\helpers\Html;
             ]
         ); ?>
         <?= Html::a(
+            Yii::t('app', 'BUTTON_MOVE_DOWN'),
+            ['description/move-down', 'id' => $model->description_id],
+            [
+                'class' => 'btn btn-default',
+                'data' => [
+                    'method' => 'post',
+                ],
+            ]
+        ); ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_MOVE_UP'),
+            ['description/move-up', 'id' => $model->description_id],
+            [
+                'class' => 'btn btn-default',
+                'data' => [
+                    'method' => 'post',
+                ],
+            ]
+        ); ?>
+        <?= Html::a(
             Yii::t('app', 'BUTTON_DELETE'),
             ['description/delete', 'id' => $model->description_id],
             [
@@ -36,10 +56,13 @@ use yii\helpers\Html;
 
     <p>
         <span class="tag-box">
+            <?= $model->position . '.'; ?>
+        </span>
+        <span class="tag-box">
             <?= $model->getLanguage(); ?>
         </span>
         <span class="tag-box">
-            <?= Yii::t('app', 'LABEL_VISIBLE') . ': ' . mb_strtolower($model->getVisibility()); ?>
+            <?= Yii::t('app', 'LABEL_VISIBLE') . ' ' . $model->getVisibilityLowercase(); ?>
         </span>
     </p>
 

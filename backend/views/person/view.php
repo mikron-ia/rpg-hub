@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </div>
 
-    <p class="note"><?= $model->tagline; ?></p>
+    <p class="subtitle"><?= $model->tagline; ?></p>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -75,7 +75,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div id="descriptions">
             <?= \yii\widgets\ListView::widget([
                 'dataProvider' => new \yii\data\ActiveDataProvider([
-                    'query' => $model->descriptionPack->getDescriptions()
+                    'query' => $model->descriptionPack->getDescriptions(),
+                    'sort' => ['defaultOrder' => ['position' => SORT_ASC]]
                 ]),
                 'itemOptions' => ['class' => 'item'],
                 'summary' => '',
