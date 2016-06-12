@@ -30,4 +30,5 @@ return [
         'recap' => 'recap-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
         'story' => 'story-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
     ],
+    'languagesAvailable' => ['en', 'pl'], // Languages will appear in the order entered here
 ];
