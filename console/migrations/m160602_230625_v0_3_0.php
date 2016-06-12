@@ -120,6 +120,8 @@ class m160602_230625_v0_3_0 extends Migration
         $this->addForeignKey('story_parameter_ibfk_1', '{{%story_parameter}}', 'story_parameter_id', '{{%story}}', 'story_id', 'RESTRICT', 'CASCADE');
 
         $this->execute('SET foreign_key_checks = 1;');
+
+        $this->execute("ALTER TABLE `kyril_morza_epsilon`.`group` CHANGE `data` `data` LONGTEXT NOT NULL;"); // patch for large values stored as story data
     }
 
     public function safeDown()
