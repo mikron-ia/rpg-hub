@@ -110,6 +110,11 @@ class Person extends \yii\db\ActiveRecord implements Displayable
             $this->data = json_encode([]);
         }
 
+        if(empty($this->description_pack_id)) {
+            $pack = DescriptionPack::create('person', $this->person_id);
+            $this->description_pack_id = $pack->description_pack_id;
+        }
+
         return parent::beforeSave($insert);
     }
 

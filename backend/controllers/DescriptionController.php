@@ -121,7 +121,12 @@ class DescriptionController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
     }
 
     public function actionMoveUp($id)

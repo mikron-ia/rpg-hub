@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Language;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -73,17 +74,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php if ($model->descriptionPack): ?>
         <div id="descriptions">
-            <?= \yii\widgets\ListView::widget([
-                'dataProvider' => new \yii\data\ActiveDataProvider([
-                    'query' => $model->descriptionPack->getDescriptions(),
-                    'sort' => ['defaultOrder' => ['position' => SORT_ASC]]
-                ]),
-                'itemOptions' => ['class' => 'item'],
-                'summary' => '',
-                'itemView' => function (\common\models\Description $model, $key, $index, $widget) {
-                    return $this->render('_view_descriptions', ['model' => $model]);
-                },
-            ]) ?>
+            <?php foreach(Language::getLanguagesAsObjects() as $language): ?>
+                <h3><?= $language->getName(); ?></h3>
+                <?= \yii\widgets\ListView::widget([
+                    'dataProvider' => new \yii\data\ActiveDataProvider([
+                        'query' => $model->descriptionPack->getDescriptions()->where(['lang' => $language->language]),
+                        'sort' => ['defaultOrder' => ['position' => SORT_ASC]]
+                    ]),
+                    'itemOptions' => ['class' => 'item'],
+                    'summary' => '',
+                    'itemView' => function (\common\models\Description $model, $key, $index, $widget) {
+                        return $this->render('_view_descriptions', ['model' => $model]);
+                    },
+                ]) ?>
+                <div class="clearfix"></div>
+            <?php endforeach; ?>
         </div>
     <?php else: ?>
         <p><?= Yii::t('app', 'DESCRIPTIONS_NOT_FOUND'); ?></p>

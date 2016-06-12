@@ -97,6 +97,7 @@ class Description extends \yii\db\ActiveRecord implements Displayable
             'positionBehavior' => [
                 'class' => PositionBehavior::className(),
                 'positionAttribute' => 'position',
+                'groupAttributes' => ['description_pack_id', 'lang'],
             ],
         ];
     }

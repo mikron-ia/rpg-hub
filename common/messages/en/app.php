@@ -25,6 +25,7 @@ return [
     'BUTTON_CHARACTER_CREATE' => 'Add character',
     'BUTTON_CREATE' => 'Add',
     'BUTTON_DELETE' => 'Delete',
+    'BUTTON_DESCRIPTION_LIST' => 'List of descriptions',
     'BUTTON_EPIC_ADD' => 'Add Epic',
     'BUTTON_EPIC_CHANGE' => 'Change active Epic',
     'BUTTON_EPIC_LIST' => 'List Epics',

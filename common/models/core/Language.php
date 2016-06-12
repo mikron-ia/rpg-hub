@@ -41,4 +41,18 @@ class Language
         $names = self::languagesLong();
         return isset($names[$this->language]) ? $names[$this->language] : null;
     }
+
+    /**
+     * @return Language[]
+     */
+    static public function getLanguagesAsObjects()
+    {
+        $languages = [];
+
+        foreach (self::$supportedLanguages as $language) {
+            $languages[] = self::create($language);
+        }
+
+        return $languages;
+    }
 }
