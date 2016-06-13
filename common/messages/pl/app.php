@@ -25,7 +25,7 @@ return [
     'BUTTON_CHARACTER_CREATE' => 'Dodaj postać',
     'BUTTON_CREATE' => 'Dodaj',
     'BUTTON_DELETE' => 'Usuń',
-    'BUTTON_DESCRIPTION_LIST' => 'List opisów',
+    'BUTTON_DESCRIPTION_LIST' => 'Lista opisów',
     'BUTTON_EPIC_ADD' => 'Dodaj kampanię',
     'BUTTON_EPIC_CHANGE' => 'Zmień aktywną kampanię',
     'BUTTON_EPIC_LIST' => 'Lista kampanii',

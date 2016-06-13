@@ -89,7 +89,7 @@ class m160602_230625_v0_3_0 extends Migration
             'story_parameter_id' => $this->primaryKey()->unsigned(),
             'story_id' => $this->integer(11)->unsigned(),
             'code' => $this->string(20)->notNull(),
-            'visibility' => 'ENUM(\'full\',\'logged\',\'gm\',\'none\') NOT NULL DEFAULT \'logged\'',
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_NONE),
             'content' => $this->string(80)->notNull(),
         ], $tableOptions);
 
@@ -121,7 +121,7 @@ class m160602_230625_v0_3_0 extends Migration
 
         $this->execute('SET foreign_key_checks = 1;');
 
-        $this->execute("ALTER TABLE `kyril_morza_epsilon`.`group` CHANGE `data` `data` LONGTEXT NOT NULL;"); // patch for large values stored as story data
+        $this->execute("ALTER TABLE `group` CHANGE `data` `data` LONGTEXT NOT NULL;"); // patch for large values stored as story data
     }
 
     public function safeDown()
