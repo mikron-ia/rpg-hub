@@ -1,4 +1,11 @@
 <?php
+
+if(getenv('LANGUAGES_ALLOWED')) {
+    $languages = explode(',',str_replace(' ','',getenv('LANGUAGES_ALLOWED')));
+} else {
+    $languages = ['en', 'pl'];
+}
+
 return [
     'adminEmail' => 'admin@example.com',
     'supportEmail' => 'support@example.com',
@@ -13,7 +20,7 @@ return [
             'allowedStrategies' => ['simple'],
             'settingsByStrategy' => [
                 'simple' => [
-                    'authenticationKey' => '[enter key]'
+                    'authenticationKey' => getenv('AUTHENTICATION_SIMPLE_KEY')
                 ]
             ]
         ],
@@ -23,12 +30,12 @@ return [
         ],
     ],
     'keyGeneration' => [
-        'character' => 'character-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
-        'epic' => 'epic-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
-        'group' => 'group-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
-        'person' => 'person-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
-        'recap' => 'recap-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
-        'story' => 'story-key-base-{number0}-{number1}-{number2}-{number3}-{number4}',
+        'character' => getenv('KEY_GENERATION_CHARACTER'),
+        'epic' => getenv('KEY_GENERATION_EPIC'),
+        'group' => getenv('KEY_GENERATION_GROUP'),
+        'person' => getenv('KEY_GENERATION_PERSON'),
+        'recap' => getenv('KEY_GENERATION_RECAP'),
+        'story' => getenv('KEY_GENERATION_STORY'),
     ],
-    'languagesAvailable' => ['en', 'pl'], // Languages will appear in the order entered here
+    'languagesAvailable' => $languages, // Languages will appear in the order entered here
 ];
