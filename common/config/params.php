@@ -38,4 +38,6 @@ return [
         'story' => getenv('KEY_GENERATION_STORY'),
     ],
     'languagesAvailable' => $languages, // Languages will appear in the order entered here
+    'reputationAccessUri' => getenv('REPUTATION_URI'),
+    'reputationAccessKey' => getenv('AUTHENTICATION_REPUTATION_SIMPLE_KEY'),
 ];

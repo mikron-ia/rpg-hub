@@ -3,9 +3,11 @@
 namespace backend\controllers;
 
 use common\models\EpicQuery;
+use common\models\tools\Retriever;
 use Yii;
 use common\models\Person;
 use common\models\PersonQuery;
+use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -26,7 +28,7 @@ class PersonController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'update', 'view'],
+                        'actions' => ['create', 'delete', 'index', 'update', 'view', 'load-data'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -122,6 +124,64 @@ class PersonController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Loads data from an external source
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param string $id
+     * @return mixed
+     * @todo Replace this with data stored in Epic parameters
+     */
+    public function actionLoadData($id)
+    {
+        $model = $this->findModel($id);
+
+        $baseUrl = Yii::$app->params['reputationAccessUri'];
+        $authKey = Yii::$app->params['reputationAccessKey'];
+
+        $placeholders = ['{modelKey}', '{authKey}'];
+        $data = [$model->key, $authKey];
+
+        $url = str_replace($placeholders, $data, $baseUrl);
+
+        try {
+            $retriever = new Retriever($url);
+            $data = $retriever->getDataAsArray();
+
+            if (!isset($data['content'])) {
+                throw new Exception('EXTERNAL_DATA_MALFORMED_ARRAY');
+            }
+
+            $model->data = json_encode($data['content']);
+
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'EXTERNAL_DATA_LOAD_SUCCESS'));
+            } else {
+                $errors = [];
+
+                foreach ($model->getErrors() as $error) {
+                    $errors[] = implode(', ', $error);
+                }
+
+                Yii::$app->session->setFlash(
+                    'error', Yii::t('app', 'EXTERNAL_DATA_LOAD_ERROR_SAVE') . ': ' . implode(', ', $errors)
+                );
+            }
+
+        } catch (Exception $e) {
+            Yii::$app->session->setFlash(
+                'error',
+                Yii::t('app', 'EXTERNAL_DATA_LOAD_ERROR_JSON') . ': ' . $e->getMessage()
+            );
+        }
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
     }
 
     /**

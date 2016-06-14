@@ -15,6 +15,40 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
+    </div>
+
+    <p class="subtitle"><?= $model->tagline; ?></p>
+
+    <div class="col-md-11">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                [
+                    'attribute' => 'epic_id',
+                    'format' => 'raw',
+                    'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
+                ],
+                [
+                    'label' => Yii::t('app', 'LABEL_DATA_SIZE'),
+                    'format' => 'shortSize',
+                    'value' => strlen($model->data),
+                ],
+                [
+                    'attribute' => 'character_id',
+                    'format' => 'raw',
+                    'value' => $model->character_id ?
+                        Html::a($model->character->name, ['character/view', 'id' => $model->character_id], []) :
+                        null,
+                ],
+                [
+                    'attribute' => 'visibility',
+                    'value' => $model->getVisibilityName(),
+                ],
+            ],
+        ]) ?>
+    </div>
+
+    <div class="col-md-1 text-center">
         <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->person_id],
             ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->person_id], [
@@ -24,36 +58,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a(Yii::t('app', 'BUTTON_LOAD'), ['load-data', 'id' => $model->person_id], [
+            'class' => 'btn btn-primary',
+            'data' => [
+                'confirm' => Yii::t('app', 'CONFIRMATION_LOAD'),
+                'method' => 'post',
+            ],
+        ]) ?>
     </div>
 
-    <p class="subtitle"><?= $model->tagline; ?></p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            [
-                'attribute' => 'epic_id',
-                'format' => 'raw',
-                'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
-            ],
-            [
-                'label' => Yii::t('app', 'LABEL_DATA_SIZE'),
-                'format' => 'shortSize',
-                'value' => strlen($model->data),
-            ],
-            [
-                'attribute' => 'character_id',
-                'format' => 'raw',
-                'value' => $model->character_id ?
-                    Html::a($model->character->name, ['character/view', 'id' => $model->character_id], []) :
-                    null,
-            ],
-            [
-                'attribute' => 'visibility',
-                'value' => $model->getVisibilityName(),
-            ],
-        ],
-    ]) ?>
+    <div class="clearfix"></div>
 
     <?php if ($model->description_pack_id): ?>
         <div class="buttoned-header">
@@ -74,19 +88,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php if ($model->descriptionPack): ?>
         <div id="descriptions">
-            <?php foreach(Language::getLanguagesAsObjects() as $language): ?>
+            <?php foreach (Language::getLanguagesAsObjects() as $language): ?>
                 <h3><?= $language->getName(); ?></h3>
                 <?= \yii\widgets\ListView::widget([
-                    'dataProvider' => new \yii\data\ActiveDataProvider([
-                        'query' => $model->descriptionPack->getDescriptions()->where(['lang' => $language->language]),
-                        'sort' => ['defaultOrder' => ['position' => SORT_ASC]]
-                    ]),
-                    'itemOptions' => ['class' => 'item'],
-                    'summary' => '',
-                    'itemView' => function (\common\models\Description $model, $key, $index, $widget) {
-                        return $this->render('_view_descriptions', ['model' => $model]);
-                    },
-                ]) ?>
+                'dataProvider' => new \yii\data\ActiveDataProvider([
+                    'query' => $model->descriptionPack->getDescriptions()->where(['lang' => $language->language]),
+                    'sort' => ['defaultOrder' => ['position' => SORT_ASC]]
+                ]),
+                'itemOptions' => ['class' => 'item'],
+                'summary' => '',
+                'itemView' => function (\common\models\Description $model, $key, $index, $widget) {
+                    return $this->render('_view_descriptions', ['model' => $model]);
+                },
+            ]) ?>
                 <div class="clearfix"></div>
             <?php endforeach; ?>
         </div>
