@@ -31,7 +31,7 @@ $this->title = 'RPG hub - control';
 
         <div class="row">
 
-            <div class="col-lg-6">
+            <div class="col-md-6">
 
                 <h2><?= Yii::t('app', 'CONFIGURATION_TITLE_INDEX'); ?></h2>
 

@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p class="subtitle"><?= $model->tagline; ?></p>
 
-    <div class="col-md-11">
+    <div class="col-md-12">
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
@@ -48,20 +48,20 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </div>
 
-    <div class="col-md-1 text-center">
+    <div class="col-md-12 text-center">
+        <?= Html::a(Yii::t('app', 'BUTTON_LOAD'), ['load-data', 'id' => $model->person_id], [
+            'class' => 'btn btn-primary',
+            'data' => [
+                'confirm' => Yii::t('app', 'CONFIRMATION_LOAD'),
+                'method' => 'post',
+            ],
+        ]) ?>
         <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->person_id],
             ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->person_id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
-                'method' => 'post',
-            ],
-        ]) ?>
-        <?= Html::a(Yii::t('app', 'BUTTON_LOAD'), ['load-data', 'id' => $model->person_id], [
-            'class' => 'btn btn-primary',
-            'data' => [
-                'confirm' => Yii::t('app', 'CONFIRMATION_LOAD'),
                 'method' => 'post',
             ],
         ]) ?>
