@@ -2,11 +2,11 @@
 
 namespace common\models\tools;
 
+use Yii;
 use yii\base\Exception;
 
 /**
  * Class Retriever - retrieves data from a given source
- * @package Mikron\HubFront\Domain\Service
  */
 class Retriever
 {
@@ -38,7 +38,7 @@ class Retriever
         $this->data = json_decode($this->json, true);
 
         if (empty($this->data)) {
-            throw new Exception("Invalid JSON data, unable to decode");
+            throw new Exception(Yii::t('app', 'JSON_INVALID'));
         }
     }
 
@@ -59,7 +59,7 @@ class Retriever
         curl_close($curl);
 
         if (!empty($error)) {
-            throw new Exception("cURL error: " . $error);
+            throw new Exception(Yii::t('app', 'CURL_ERROR') . ': ' . $error);
         }
 
         return $this->formatInput($result);
