@@ -6,6 +6,12 @@ $params = array_merge(
     require(__DIR__ . '/params-local.php')
 );
 
+if(getenv('LANGUAGES_ALLOWED')) {
+    $languages = explode(',',str_replace(' ','',getenv('LANGUAGES_ALLOWED')));
+} else {
+    $languages = ['en', 'pl'];
+}
+
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
@@ -13,7 +19,7 @@ return [
         'log',
         [
             'class' => 'common\components\LanguageSelector',
-            'supportedLanguages' => ['en', 'pl'],
+            'supportedLanguages' => $languages,
         ],
     ],
     'controllerNamespace' => 'frontend\controllers',
