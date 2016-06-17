@@ -140,7 +140,7 @@ class Character extends \yii\db\ActiveRecord implements Displayable
         $decodedData['name'] = $this->name;
         $decodedData['key'] = $this->key;
 
-        if(isset($this->currently_delivered_person_id)) {
+        if (isset($this->currently_delivered_person_id)) {
             $decodedData['person'] = $this->currentlyDeliveredPerson->getCompleteDataForApi();
         }
 
