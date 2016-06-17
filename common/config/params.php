@@ -7,8 +7,6 @@ if(getenv('LANGUAGES_ALLOWED')) {
 }
 
 return [
-    'adminEmail' => 'admin@example.com',
-    'supportEmail' => 'support@example.com',
     'user.passwordResetTokenExpire' => 3600,
     'authenticationReferences' => [
         'authenticationMethodReference' => [
