@@ -74,10 +74,10 @@ class StoryParameter extends \yii\db\ActiveRecord
     static public function visibilityNames()
     {
         return [
-            self::VISIBILITY_NONE => Yii::t('app', 'ST_PARAM_VISIBILITY_NONE'),
-            self::VISIBILITY_LOGGED => Yii::t('app', 'ST_PARAM_VISIBILITY_LOGGED'),
-            self::VISIBILITY_GM => Yii::t('app', 'ST_PARAM_VISIBILITY_GM'),
-            self::VISIBILITY_FULL => Yii::t('app', 'ST_PARAM_VISIBILITY_FULL'),
+            self::VISIBILITY_NONE => Yii::t('app', 'VISIBILITY_NONE'),
+            self::VISIBILITY_LOGGED => Yii::t('app', 'VISIBILITY_LOGGED'),
+            self::VISIBILITY_GM => Yii::t('app', 'VISIBILITY_GM'),
+            self::VISIBILITY_FULL => Yii::t('app', 'VISIBILITY_FULL'),
         ];
     }
 
