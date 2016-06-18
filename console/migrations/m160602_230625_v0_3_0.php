@@ -117,7 +117,7 @@ class m160602_230625_v0_3_0 extends Migration
         $this->addForeignKey('person_ibfk_3', '{{%person}}', 'description_pack_id', '{{%description_pack}}', 'description_pack_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('recap_ibfk_1', '{{%recap}}', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('story_ibfk_1', '{{%story}}', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('story_parameter_ibfk_1', '{{%story_parameter}}', 'story_parameter_id', '{{%story}}', 'story_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('story_parameter_ibfk_1', '{{%story_parameter}}', 'story_id', '{{%story}}', 'story_id', 'RESTRICT', 'CASCADE');
 
         $this->execute('SET foreign_key_checks = 1;');
 

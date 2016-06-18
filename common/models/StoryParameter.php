@@ -106,6 +106,13 @@ class StoryParameter extends \yii\db\ActiveRecord
                     return $this->allowedCodes;
                 }
             ],
+            [
+                ['visibility'],
+                'in',
+                'range' => function ($model, $attribute) {
+                    return $this->allowedVisibility;
+                }
+            ],
         ];
     }
 
