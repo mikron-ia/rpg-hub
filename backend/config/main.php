@@ -12,7 +12,7 @@ if(getenv('LANGUAGES_ALLOWED')) {
     $languages = ['en', 'pl'];
 }
 
-return [
+$config = [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
@@ -53,3 +53,5 @@ return [
     'name' => 'RPG Hub - control panel',
     'params' => $params,
 ];
+
+return $config;
