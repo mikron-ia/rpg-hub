@@ -1,7 +1,6 @@
 <?php
 
-$config = [
-];
+$config = [];
 
 if (!YII_ENV_TEST) {
     // configuration adjustments for 'dev' environment
