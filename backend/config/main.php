@@ -22,6 +22,9 @@ $config = [
             'class' => common\components\LanguageSelector::class,
             'supportedLanguages' => $languages,
         ],
+        [
+            'class' => common\components\EpicSelector::class,
+        ]
     ],
     'modules' => [],
     'components' => [

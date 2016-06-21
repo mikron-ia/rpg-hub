@@ -32,7 +32,7 @@ AppAsset::register($this);
         'brandLabel' => 'RPG Hub',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-default navbar-fixed-top',
         ],
     ]);
     $menuItems = [
@@ -46,6 +46,26 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        $epics = \common\models\EpicQuery::activeEpicsAsModels();
+
+        $items = [];
+
+        foreach ($epics as $epic) {
+            $items[] = '<li>'
+                . Html::beginForm(['/site/set-epic'], 'post', ['id' => 'epic-switch-' . $epic->key])
+                . Html::input('hidden', 'epic', $epic->key)
+                . Html::submitButton($epic->name, ['class' => 'btn btn-link navbar-option'])
+                . Html::endForm()
+                . '</li>';
+        }
+
+        $menuItems[] = [
+            'label' => empty(Yii::$app->params['activeEpic'])
+                ? Yii::t('app', 'MENU_TOP_CHOOSE_EPIC')
+                : Yii::t('app', 'MENU_TOP_CHANGE_EPIC') . ' (' . Yii::$app->params['activeEpic']->name . ')',
+            'items' => $items,
+        ];
+
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

@@ -21,6 +21,9 @@ return [
             'class' => 'common\components\LanguageSelector',
             'supportedLanguages' => $languages,
         ],
+        [
+            'class' => common\components\EpicSelector::class,
+        ]
     ],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
