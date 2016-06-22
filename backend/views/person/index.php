@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'filterPosition' => null,
-            'summary' => '',
+            'summary' => '<b>{begin}-{end} / {totalCount}</b>',
             'columns' => [
                 [
                     'attribute' => 'name',
