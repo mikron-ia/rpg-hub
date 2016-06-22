@@ -37,14 +37,6 @@ $this->title = 'RPG hub - control';
 
                 <p>
                     <?= Html::a(
-                        Yii::t('app', 'BUTTON_EPIC_CHANGE') . ' &raquo;',
-                        ['epic/index'],
-                        ['class' => 'btn btn-default btn-block']
-                    ); ?>
-                </p>
-
-                <p>
-                    <?= Html::a(
                         Yii::t('app', 'BUTTON_EPIC_LIST') . ' &raquo;',
                         ['epic/index'],
                         ['class' => 'btn btn-default btn-block']
