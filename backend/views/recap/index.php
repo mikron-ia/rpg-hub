@@ -27,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterPosition' => null,
-            'summary' => '<b>{begin}-{end} / {totalCount}</b>',
             'columns' => [
                 [
                     'attribute' => 'name',
