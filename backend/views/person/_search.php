@@ -17,14 +17,6 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?php echo $form->field($model, 'epic_id')->widget(
-        kartik\select2\Select2::className(),
-        [
-            'data' => EpicQuery::getListOfEpicsForSelector(),
-            'options' => ['multiple' => true],
-        ]
-    ) ?>
-
     <?php echo $form->field($model, 'name') ?>
 
     <?php echo $form->field($model, 'tagline') ?>

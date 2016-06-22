@@ -97,6 +97,7 @@ return [
     'EPIC_KEY' => 'Identyfikator kampanii',
     'EPIC_LABEL' => 'Kampania',
     'EPIC_NAME' => 'Tytuł kampanii',
+    'ERROR_NO_EPIC_ACTIVE' => 'Nie wybrano kampanii. Wybierz kampanię z menu górnego.',
     'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Ładowanie zewnętrznych danych nieudane - błąd JSON-a',
     'EXTERNAL_DATA_LOAD_ERROR_SAVE' => 'Ładowanie zewnętrznych danych nieudane - błąd zapisu',
     'EXTERNAL_DATA_LOAD_SUCCESS' => 'Ładowanie zewnętrznych danych udane',

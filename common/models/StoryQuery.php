@@ -22,7 +22,7 @@ class StoryQuery extends Story
         return [
             [['story_id'], 'integer'],
             [['descriptions'], 'string'],
-            [['epic_id', 'key', 'name', 'short', 'long', 'data'], 'safe'],
+            [['key', 'name', 'short', 'long', 'data'], 'safe'],
         ];
     }
 
@@ -60,6 +60,15 @@ class StoryQuery extends Story
 
         // add conditions that should always apply here
 
+        if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+            $query->where('0=1');
+        } else {
+            $query->andWhere([
+                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+            ]);
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -73,7 +82,6 @@ class StoryQuery extends Story
 
         $query
             ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['in', 'epic_id', $this->epic_id])
             ->andFilterWhere([
                 'or',
                 ['like', 'short', $this->descriptions],

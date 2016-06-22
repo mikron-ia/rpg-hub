@@ -97,6 +97,7 @@ return [
     'EPIC_KEY' => 'Key',
     'EPIC_LABEL' => 'Epic',
     'EPIC_NAME' => 'Name',
+    'ERROR_NO_EPIC_ACTIVE' => 'No epic active. Choose epic from the top menu.',
     'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Loading operation failed - JSON issue',
     'EXTERNAL_DATA_LOAD_ERROR_SAVE' => 'Loading operation failed - save failed',
     'EXTERNAL_DATA_LOAD_SUCCESS' => 'Loading operation successful',
