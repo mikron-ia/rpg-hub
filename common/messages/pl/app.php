@@ -20,6 +20,7 @@ return [
     'ABOUT_TITLE' => 'O stronie',
     'BACKEND_FRONT_PAGE_MAIN_TEXT' => 'Witamy w centrum kontroli kampanii. Wybierz dział spośród dostępnych poniżej lub skorzystaj z funkcji pomocniczych.',
     'BACKEND_FRONT_PAGE_TITLE' => 'Centrum kontroli',
+    'BREADCRUMBS_HOME' => 'Hub',
     'BREADCRUMBS_UPDATE' => 'Modyfikacja',
     'BUTTON_CHARACTERS' => 'Postacie',
     'BUTTON_CHARACTER_CREATE' => 'Dodaj postać',
