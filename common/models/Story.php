@@ -5,6 +5,7 @@ namespace common\models;
 use common\models\tools\Tools;
 use Yii;
 use yii\helpers\Markdown;
+use yii2tech\ar\position\PositionBehavior;
 
 /**
  * This is the model class for table "story".
@@ -15,6 +16,7 @@ use yii\helpers\Markdown;
  * @property string $name
  * @property string $short
  * @property string $long
+ * @property int $position
  * @property string $data
  *
  * @property Epic $epic
@@ -39,7 +41,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     {
         return [
             [['epic_id', 'key', 'name', 'short', 'data'], 'required'],
-            [['epic_id'], 'integer'],
+            [['epic_id', 'position'], 'integer'],
             [['short', 'long', 'data'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
@@ -65,6 +67,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable
             'name' => Yii::t('app', 'STORY_NAME'),
             'short' => Yii::t('app', 'STORY_SHORT'),
             'long' => Yii::t('app', 'STORY_LONG'),
+            'position' => Yii::t('app', 'STORY_POSITION'),
             'data' => Yii::t('app', 'STORY_DATA'),
             'storyParameters' => Yii::t('app', 'STORY_PARAMETERS'),
         ];
@@ -81,6 +84,17 @@ class Story extends \yii\db\ActiveRecord implements Displayable
         }
 
         return parent::beforeSave($insert);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'positionBehavior' => [
+                'class' => PositionBehavior::className(),
+                'positionAttribute' => 'position',
+                'groupAttributes' => ['epic_id'],
+            ],
+        ];
     }
 
     /**

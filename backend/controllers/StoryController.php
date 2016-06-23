@@ -30,6 +30,8 @@ class StoryController extends Controller
                             'delete',
                             'update',
                             'view',
+                            'move-down',
+                            'move-up',
                             'parameter-create',
                             'parameter-update',
                             'parameter-delete'
@@ -183,6 +185,32 @@ class StoryController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionMoveUp($id)
+    {
+        $model = $this->findModel($id);
+        $model->movePrev();
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
+    }
+
+    public function actionMoveDown($id)
+    {
+        $model = $this->findModel($id);
+        $model->moveNext();
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
     }
 
     /**

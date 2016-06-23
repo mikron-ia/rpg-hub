@@ -22,6 +22,26 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'btn btn-primary']
         );
         ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_MOVE_DOWN'),
+            ['story/move-up', 'id' => $model->story_id],
+            [
+                'class' => 'btn btn-default',
+                'data' => [
+                    'method' => 'post',
+                ],
+            ]
+        ); ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_MOVE_UP'),
+            ['story/move-down', 'id' => $model->story_id],
+            [
+                'class' => 'btn btn-default',
+                'data' => [
+                    'method' => 'post',
+                ],
+            ]
+        ); ?>
     </div>
 
     <?= DetailView::widget([
@@ -39,6 +59,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => Yii::t('app', 'LABEL_DATA_SIZE'),
                 'format' => 'shortSize',
                 'value' => strlen($model->data),
+            ],
+            [
+                'attribute' => 'position',
             ],
         ],
     ]) ?>

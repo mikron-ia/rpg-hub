@@ -82,6 +82,7 @@ class m160602_230625_v0_3_0 extends Migration
             'name' => $this->string(120)->notNull(),
             'short' => $this->text()->notNull(),
             'long' => $this->text(),
+            'position' => $this->integer()->defaultValue(0),
             'data' => $this->text(), // auxiliary data
         ], $tableOptions);
 
