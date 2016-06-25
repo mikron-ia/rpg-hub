@@ -54,6 +54,21 @@ class m160602_230625_v0_3_0 extends Migration
             'data' => $this->text()->notNull(),
         ], $tableOptions);
 
+        $this->createTable('{{%parameter}}', [
+            'parameter_id' => $this->primaryKey()->unsigned(),
+            'parameter_pack_id' => $this->integer(11)->unsigned(),
+            'code' => $this->string(20)->notNull(),
+            'lang' => $this->string(5),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_NONE),
+            'position' => $this->integer()->defaultValue(0),
+            'content' => $this->string(80)->notNull(),
+        ], $tableOptions);
+
+        $this->createTable('{{%parameter_pack}}', [
+            'parameter_pack_id' => $this->primaryKey()->unsigned(),
+            'name' => $this->string(80)->notNull(),
+        ], $tableOptions);
+
         $this->createTable('{{%person}}', [
             'person_id' => $this->primaryKey()->unsigned(),
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
