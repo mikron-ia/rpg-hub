@@ -51,6 +51,14 @@ $this->title = 'RPG hub - control';
                     ); ?>
                 </p>
 
+                <p>
+                    <?= Html::a(
+                        Yii::t('app', 'BUTTON_PARAMETER_LIST') . ' &raquo;',
+                        ['parameter/index'],
+                        ['class' => 'btn btn-default btn-block']
+                    ); ?>
+                </p>
+
             </div>
 
         </div>
