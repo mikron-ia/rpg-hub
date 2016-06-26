@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\Visibility;
 use common\models\tools\Tools;
 use Yii;
 use yii\helpers\Markdown;
@@ -159,11 +160,11 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     {
         $parameters = [];
 
-        foreach ($this->storyParameters as $storyParameter) {
-            if ($storyParameter->visibility == StoryParameter::VISIBILITY_FULL) {
+        foreach ($this->parameterPack->parameters as $parameter) {
+            if ($parameter->visibility == Visibility::VISIBILITY_FULL) {
                 $parameters[] = [
-                    'name' => $storyParameter->getCodeName(),
-                    'value' => $storyParameter->content,
+                    'name' => $parameter->getCodeName(),
+                    'value' => $parameter->content,
                 ];
             }
         }

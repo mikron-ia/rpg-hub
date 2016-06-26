@@ -12,7 +12,7 @@ use yii\helpers\Html;
         <?php echo Html::a(Html::encode($model->name), ['view', 'id' => $model->story_id]); ?>
     </h2>
 
-    <div class="col-lg-9">
+    <div class="col-lg-9 text-justify">
         <?php echo $model->short; ?>
     </div>
 
@@ -20,9 +20,9 @@ use yii\helpers\Html;
 
         <table class="table table-bordered table-hover">
             <tbody>
-            <?php foreach ($model->storyParameters as $storyParameter): ?>
+            <?php foreach ($model->parameterPack->parameters as $storyParameter): ?>
                 <tr title="<?php echo "NYI" ?>">
-                    <td class="text-left"><?php echo $storyParameter->code; ?></td>
+                    <td class="text-left"><strong><?php echo $storyParameter->getCodeName(); ?></strong></td>
                     <td class="text-center"><?php echo $storyParameter->content; ?></td>
                 </tr>
             <?php endforeach; ?>

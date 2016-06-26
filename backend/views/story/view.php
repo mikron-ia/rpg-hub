@@ -161,7 +161,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php \yii\bootstrap\Modal::begin([
     'id' => 'create-parameter-modal',
-    'header' => '<h2 class="modal-title">' . Yii::t('app', 'STORY_PARAMETER_TITLE_CREATE') . '</h2>',
+    'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_CREATE') . '</h2>',
 ]); ?>
 
 <?php \yii\bootstrap\Modal::end(); ?>
@@ -183,7 +183,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php \yii\bootstrap\Modal::begin([
     'id' => 'update-parameter-modal',
-    'header' => '<h2 class="modal-title">' . Yii::t('app', 'STORY_PARAMETER_TITLE_UPDATE') . '</h2>',
+    'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_UPDATE') . '</h2>',
 ]); ?>
 
 <?php \yii\bootstrap\Modal::end(); ?>
