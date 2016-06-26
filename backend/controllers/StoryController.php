@@ -77,7 +77,7 @@ class StoryController extends Controller
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-        } elseif(Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
         }
 
@@ -131,19 +131,7 @@ class StoryController extends Controller
     public function actionParameterCreate($story_id)
     {
         $story = $this->findModel($story_id);
-        $model = new StoryParameter();
-
-        $model->story_id = $story->story_id;
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->story_id]);
-        } else {
-            if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('story-parameter/create', ['model' => $model]);
-            } else {
-                return $this->render('story-parameter/create', ['model' => $model]);
-            }
-        }
+        return Yii::$app->runAction('parameter/create', ['pack_id' => $story->parameter_pack_id]);
     }
 
     /**
@@ -201,7 +189,7 @@ class StoryController extends Controller
         $model->movePrev();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
-        if($referrer) {
+        if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
         } else {
             return $this->redirect(['index']);
@@ -214,7 +202,7 @@ class StoryController extends Controller
         $model->moveNext();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
-        if($referrer) {
+        if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
         } else {
             return $this->redirect(['index']);

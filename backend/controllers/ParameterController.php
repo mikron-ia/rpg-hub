@@ -67,7 +67,7 @@ class ParameterController extends Controller
     {
         $model = new Parameter();
 
-        $model->Parameter_pack_id = $pack_id;
+        $model->parameter_pack_id = $pack_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $referrer = Yii::$app->getRequest()->getReferrer();

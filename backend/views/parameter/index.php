@@ -8,7 +8,7 @@ use common\models\Parameter;
 /* @var $searchModel common\models\ParameterQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Parameters');
+$this->title = Yii::t('app', 'PARAMETER_TITLE_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="parameter-index">

@@ -18,6 +18,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $long
  * @property int $position
  * @property string $data
+ * @property string $parameter_pack_id
  *
  * @property Epic $epic
  * @property ParameterPack $parameterPack
@@ -90,6 +91,11 @@ class Story extends \yii\db\ActiveRecord implements Displayable
         if ($insert) {
             $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
             $this->data = json_encode([]);
+        }
+
+        if(empty($this->parameter_pack_id)) {
+            $pack = ParameterPack::create('story', $this->story_id);
+            $this->parameter_pack_id = $pack->parameter_pack_id;
         }
 
         return parent::beforeSave($insert);

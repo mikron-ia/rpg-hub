@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Parameter;
 use common\models\StoryParameter;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -71,11 +72,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="buttoned-header">
             <h2><?php echo $model->getAttributeLabel('storyParameters'); ?></h2>
             <?= Html::a(
-                '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_STORY_PARAMETER_CREATE') . '</span>',
+                '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_PARAMETER_CREATE') . '</span>',
                 '#',
                 [
-                    'class' => 'create-story-parameter-link',
-                    'title' => Yii::t('app', 'BUTTON_STORY_PARAMETER_CREATE'),
+                    'class' => 'create-parameter-link',
+                    'title' => Yii::t('app', 'BUTTON_PARAMETER_CREATE'),
                     'data-toggle' => 'modal',
                     'data-target' => '#create-story-parameter-modal'
                 ]
@@ -83,20 +84,20 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <?= GridView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider(['query' => StoryParameter::find()->with('story')->where(['story_id' => $model->story_id])]),
+            'dataProvider' => new \yii\data\ActiveDataProvider(['query' => Parameter::find()->where(['parameter_pack_id' => $model->parameter_pack_id])]),
             'summary' => '',
             'columns' => [
                 [
                     'attribute' => 'code',
                     'enableSorting' => false,
-                    'value' => function (StoryParameter $model) {
+                    'value' => function (Parameter $model) {
                         return $model->getCodeName();
                     },
                 ],
                 [
                     'attribute' => 'visibility',
                     'enableSorting' => false,
-                    'value' => function (StoryParameter $model) {
+                    'value' => function (Parameter $model) {
                         return $model->getVisibilityName();
                     },
                 ],
@@ -108,7 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{parameter-update} {parameter-delete}',
                     'buttons' => [
-                        'parameter-update' => function ($url, StoryParameter $model, $key) {
+                        'parameter-update' => function ($url, Parameter $model, $key) {
                             return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
                                 'class' => 'update-story-parameter-link',
                                 'title' => Yii::t('app', 'LABEL_UPDATE'),
@@ -117,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'data-id' => $key,
                             ]);
                         },
-                        'parameter-delete' => function ($url, StoryParameter $model, $key) {
+                        'parameter-delete' => function ($url, Parameter $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-erase"></span>', $url, [
                                 'title' => Yii::t('app', 'LABEL_DELETE'),
@@ -133,7 +134,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]); ?>
-
     </div>
 
     <div class="col-lg-12">
@@ -166,7 +166,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php \yii\bootstrap\Modal::end(); ?>
 
 <?php $this->registerJs(
-    "$('.create-story-parameter-link').click(function() {
+    "$('.create-parameter-link').click(function() {
     $.get(
         '" . Yii::$app->urlManager->createUrl(['story/parameter-create']) . "',
         {

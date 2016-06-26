@@ -10,9 +10,19 @@ use yii\widgets\ActiveForm;
 
 <div class="parameter-form">
 
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'parameter_pack_id') ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'story-parameter-form',
+        'action' => $model->isNewRecord ?
+            [
+                'parameter/create',
+                'pack_id' => $model->parameter_pack_id
+            ] :
+            [
+                'paramete/update',
+                'id' => $model->parameter_id
+            ],
+        'method' => 'post',
+    ]); ?>
 
     <?= $form->field($model, 'code')->dropDownList(
         \common\models\Parameter::typeNames(),

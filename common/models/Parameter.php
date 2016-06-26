@@ -158,4 +158,16 @@ class Parameter extends \yii\db\ActiveRecord
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();
     }
+
+    public function getCodeName()
+    {
+        $codes = self::typeNames();
+        return isset($codes[$this->code]) ? $codes[$this->code] : $this->code;
+    }
+
+    public function getVisibilityName()
+    {
+        $visibilities = Visibility::visibilityNames();
+        return isset($visibilities[$this->visibility]) ? $visibilities[$this->visibility] : $this->visibility;
+    }
 }
