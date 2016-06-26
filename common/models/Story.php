@@ -20,6 +20,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $data
  *
  * @property Epic $epic
+ * @property ParameterPack $parameterPack
  * @property StoryParameter[] $storyParameters
  */
 class Story extends \yii\db\ActiveRecord implements Displayable
@@ -52,6 +53,13 @@ class Story extends \yii\db\ActiveRecord implements Displayable
                 'targetClass' => Epic::className(),
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
+            [
+                ['parameter_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => ParameterPack::className(),
+                'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id']
+            ],
         ];
     }
 
@@ -69,6 +77,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable
             'long' => Yii::t('app', 'STORY_LONG'),
             'position' => Yii::t('app', 'STORY_POSITION'),
             'data' => Yii::t('app', 'STORY_DATA'),
+            'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
             'storyParameters' => Yii::t('app', 'STORY_PARAMETERS'),
         ];
     }
@@ -103,6 +112,14 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     public function getEpic()
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParameterPack()
+    {
+        return $this->hasOne(ParameterPack::className(), ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
     /**

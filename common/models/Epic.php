@@ -15,6 +15,7 @@ use yii\data\ActiveDataProvider;
  * @property string $system
  *
  * @property Character[] $characters
+ * @property ParameterPack $parameterPack
  * @property Group[] $groups
  * @property Person[] $people
  * @property Recap[] $recaps
@@ -43,6 +44,13 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
             [['name', 'system'], 'required'],
             [['name'], 'string', 'max' => 80],
             [['system'], 'string', 'max' => 20],
+            [
+                ['parameter_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => ParameterPack::className(),
+                'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id']
+            ],
         ];
     }
 
@@ -56,6 +64,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
             'key' => Yii::t('app', 'EPIC_KEY'),
             'name' => Yii::t('app', 'EPIC_NAME'),
             'system' => Yii::t('app', 'EPIC_GAME_SYSTEM'),
+            'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
         ];
     }
 
@@ -77,6 +86,14 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
     public function getCharacters()
     {
         return $this->hasMany(Character::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParameterPack()
+    {
+        return $this->hasOne(ParameterPack::className(), ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
     /**
