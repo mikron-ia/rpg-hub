@@ -77,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => 'create-parameter-link',
                     'title' => Yii::t('app', 'BUTTON_PARAMETER_CREATE'),
                     'data-toggle' => 'modal',
-                    'data-target' => '#create-story-parameter-modal'
+                    'data-target' => '#create-parameter-modal'
                 ]
             ); ?>
         </div>
@@ -160,7 +160,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <?php \yii\bootstrap\Modal::begin([
-    'id' => 'create-story-parameter-modal',
+    'id' => 'create-parameter-modal',
     'header' => '<h2 class="modal-title">' . Yii::t('app', 'STORY_PARAMETER_TITLE_CREATE') . '</h2>',
 ]); ?>
 
@@ -171,11 +171,11 @@ $this->params['breadcrumbs'][] = $this->title;
     $.get(
         '" . Yii::$app->urlManager->createUrl(['parameter/create']) . "',
         {
-            story_id: " . $model->story_id . "
+            pack_id: " . $model->parameterPack->parameter_pack_id . "
         },
         function (data) {
             $('.modal-body').html(data);
-            $('#create-story-parameter-modal').modal();
+            $('#create-parameter-modal').modal();
         }
     );
 });"
