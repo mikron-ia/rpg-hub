@@ -1,7 +1,6 @@
 <?php
 
 use common\models\Parameter;
-use common\models\StoryParameter;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -70,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-lg-12">
 
         <div class="buttoned-header">
-            <h2><?php echo $model->getAttributeLabel('storyParameters'); ?></h2>
+            <h2><?= Yii::t('app', 'PARAMETER_TITLE_INDEX') ?></h2>
             <?= Html::a(
                 '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_PARAMETER_CREATE') . '</span>',
                 '#',
@@ -107,28 +106,30 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{parameter-update} {parameter-delete}',
+                    'template' => '{update} {delete}',
                     'buttons' => [
-                        'parameter-update' => function ($url, Parameter $model, $key) {
+                        'update' => function ($url, Parameter $model, $key) {
                             return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
-                                'class' => 'update-story-parameter-link',
+                                'class' => 'update-parameter-link',
                                 'title' => Yii::t('app', 'LABEL_UPDATE'),
                                 'data-toggle' => 'modal',
-                                'data-target' => '#update-story-parameter-modal',
+                                'data-target' => '#update-parameter-modal',
                                 'data-id' => $key,
                             ]);
                         },
-                        'parameter-delete' => function ($url, Parameter $model, $key) {
+                        'delete' => function ($url, Parameter $model, $key) {
                             return Html::a(
-                                '<span class="glyphicon glyphicon-erase"></span>', $url, [
-                                'title' => Yii::t('app', 'LABEL_DELETE'),
-                                'data-confirm' => Yii::t(
-                                    'app',
-                                    'CONFIRMATION_DELETE {name}',
-                                    ['name' => $model->getCodeName()]
-                                ),
-                                'data-method' => 'post',
-                            ]);
+                                '<span class="glyphicon glyphicon-erase"></span>',
+                                ['parameter/delete', 'id' => $model->parameter_id],
+                                [
+                                    'title' => Yii::t('app', 'LABEL_DELETE'),
+                                    'data-confirm' => Yii::t(
+                                        'app',
+                                        'CONFIRMATION_DELETE {name}',
+                                        ['name' => $model->getCodeName()]
+                                    ),
+                                    'data-method' => 'post',
+                                ]);
                         }
                     ]
                 ],
@@ -168,7 +169,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $this->registerJs(
     "$('.create-parameter-link').click(function() {
     $.get(
-        '" . Yii::$app->urlManager->createUrl(['story/parameter-create']) . "',
+        '" . Yii::$app->urlManager->createUrl(['parameter/create']) . "',
         {
             story_id: " . $model->story_id . "
         },
@@ -181,22 +182,22 @@ $this->params['breadcrumbs'][] = $this->title;
 ); ?>
 
 <?php \yii\bootstrap\Modal::begin([
-    'id' => 'update-story-parameter-modal',
+    'id' => 'update-parameter-modal',
     'header' => '<h2 class="modal-title">' . Yii::t('app', 'STORY_PARAMETER_TITLE_UPDATE') . '</h2>',
 ]); ?>
 
 <?php \yii\bootstrap\Modal::end(); ?>
 
 <?php $this->registerJs(
-    "$('.update-story-parameter-link').click(function() {
+    "$('.update-parameter-link').click(function() {
     $.get(
-        '" . Yii::$app->urlManager->createUrl(['story/parameter-update']) . "',
+        '" . Yii::$app->urlManager->createUrl(['parameter/update']) . "',
         {
             id: $(this).closest('tr').data('key')
         },
         function (data) {
             $('.modal-body').html(data);
-            $('#update-story-parameter-modal').modal();
+            $('#update-parameter-modal').modal();
         }
     );
 });"

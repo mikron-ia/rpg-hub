@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
                 'pack_id' => $model->parameter_pack_id
             ] :
             [
-                'paramete/update',
+                'parameter/update',
                 'id' => $model->parameter_id
             ],
         'method' => 'post',
