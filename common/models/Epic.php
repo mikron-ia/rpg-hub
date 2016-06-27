@@ -13,6 +13,7 @@ use yii\data\ActiveDataProvider;
  * @property string $key
  * @property string $name
  * @property string $system
+ * @property string $parameter_pack_id
  *
  * @property Character[] $characters
  * @property ParameterPack $parameterPack
@@ -75,6 +76,11 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
     {
         if ($insert) {
             $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+        }
+
+        if(empty($this->parameter_pack_id)) {
+            $pack = ParameterPack::create('story', $this->epic_id);
+            $this->parameter_pack_id = $pack->parameter_pack_id;
         }
 
         return parent::beforeSave($insert);
