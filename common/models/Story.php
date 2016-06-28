@@ -94,7 +94,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable
             $this->data = json_encode([]);
         }
 
-        if(empty($this->parameter_pack_id)) {
+        if (empty($this->parameter_pack_id)) {
             $pack = ParameterPack::create('story', $this->story_id);
             $this->parameter_pack_id = $pack->parameter_pack_id;
         }

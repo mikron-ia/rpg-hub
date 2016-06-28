@@ -78,7 +78,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
             $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
         }
 
-        if(empty($this->parameter_pack_id)) {
+        if (empty($this->parameter_pack_id)) {
             $pack = ParameterPack::create('story', $this->epic_id);
             $this->parameter_pack_id = $pack->parameter_pack_id;
         }

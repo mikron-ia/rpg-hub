@@ -71,7 +71,7 @@ class ParameterController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $referrer = Yii::$app->getRequest()->getReferrer();
-            if($referrer) {
+            if ($referrer) {
                 return Yii::$app->getResponse()->redirect($referrer);
             } else {
                 return $this->redirect(['index']);
@@ -97,7 +97,7 @@ class ParameterController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $referrer = Yii::$app->getRequest()->getReferrer();
-            if($referrer) {
+            if ($referrer) {
                 return Yii::$app->getResponse()->redirect($referrer);
             } else {
                 return $this->redirect(['index']);
@@ -122,7 +122,7 @@ class ParameterController extends Controller
         $this->findModel($id)->delete();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
-        if($referrer) {
+        if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
         } else {
             return $this->redirect(['index']);
@@ -135,7 +135,7 @@ class ParameterController extends Controller
         $model->movePrev();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
-        if($referrer) {
+        if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
         } else {
             return $this->redirect(['index']);
@@ -148,7 +148,7 @@ class ParameterController extends Controller
         $model->moveNext();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
-        if($referrer) {
+        if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
         } else {
             return $this->redirect(['index']);
