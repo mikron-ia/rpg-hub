@@ -17,6 +17,7 @@ class m160602_230625_v0_3_0 extends Migration
         /* Descriptions */
         $this->createTable('{{%description_pack}}', [
             'description_pack_id' => $this->primaryKey()->unsigned(),
+            'class' => $this->string(20)->notNull()->comment("Name of class this pack belongs to; necessary for proper type assignment"),
             'name' => $this->string(80)->notNull(),
         ], $tableOptions);
 
@@ -34,6 +35,7 @@ class m160602_230625_v0_3_0 extends Migration
         /* Parameters */
         $this->createTable('{{%parameter_pack}}', [
             'parameter_pack_id' => $this->primaryKey()->unsigned(),
+            'class' => $this->string(20)->notNull()->comment("Name of class this pack belongs to; necessary for proper type assignment"),
             'name' => $this->string(80)->notNull(),
         ], $tableOptions);
 

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\HasParameters;
 use common\models\core\Visibility;
 use common\models\tools\Tools;
 use Yii;
@@ -25,7 +26,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property ParameterPack $parameterPack
  * @property StoryParameter[] $storyParameters
  */
-class Story extends \yii\db\ActiveRecord implements Displayable
+class Story extends \yii\db\ActiveRecord implements Displayable, HasParameters
 {
     use Tools;
 
@@ -208,5 +209,19 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     public function isVisibleInApi()
     {
         return true;
+    }
+
+    public function allowedTypes()
+    {
+        return [
+            Parameter::PARAMETER_STORY_NUMBER,
+            Parameter::PARAMETER_TIME_RANGE,
+            Parameter::PARAMETER_POINT_START,
+            Parameter::PARAMETER_POINT_END,
+            Parameter::PARAMETER_SESSION_COUNT,
+            Parameter::PARAMETER_XP_PARTY,
+            Parameter::PARAMETER_PCS_ACTIVE,
+            Parameter::PARAMETER_CS_ACTIVE,
+        ];
     }
 }
