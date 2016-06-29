@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\models\core\HasParameters;
+use common\models\core\Visibility;
 use common\models\tools\Tools;
 use Yii;
 use yii\helpers\Markdown;
@@ -18,11 +20,13 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $long
  * @property int $position
  * @property string $data
+ * @property string $parameter_pack_id
  *
  * @property Epic $epic
+ * @property ParameterPack $parameterPack
  * @property StoryParameter[] $storyParameters
  */
-class Story extends \yii\db\ActiveRecord implements Displayable
+class Story extends \yii\db\ActiveRecord implements Displayable, HasParameters
 {
     use Tools;
 
@@ -52,6 +56,13 @@ class Story extends \yii\db\ActiveRecord implements Displayable
                 'targetClass' => Epic::className(),
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
+            [
+                ['parameter_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => ParameterPack::className(),
+                'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id']
+            ],
         ];
     }
 
@@ -69,6 +80,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable
             'long' => Yii::t('app', 'STORY_LONG'),
             'position' => Yii::t('app', 'STORY_POSITION'),
             'data' => Yii::t('app', 'STORY_DATA'),
+            'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
             'storyParameters' => Yii::t('app', 'STORY_PARAMETERS'),
         ];
     }
@@ -81,6 +93,11 @@ class Story extends \yii\db\ActiveRecord implements Displayable
         if ($insert) {
             $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
             $this->data = json_encode([]);
+        }
+
+        if (empty($this->parameter_pack_id)) {
+            $pack = ParameterPack::create('Story', $this->story_id);
+            $this->parameter_pack_id = $pack->parameter_pack_id;
         }
 
         return parent::beforeSave($insert);
@@ -103,6 +120,14 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     public function getEpic()
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParameterPack()
+    {
+        return $this->hasOne(ParameterPack::className(), ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
     /**
@@ -136,11 +161,11 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     {
         $parameters = [];
 
-        foreach ($this->storyParameters as $storyParameter) {
-            if ($storyParameter->visibility == StoryParameter::VISIBILITY_FULL) {
+        foreach ($this->parameterPack->parameters as $parameter) {
+            if ($parameter->visibility == Visibility::VISIBILITY_FULL) {
                 $parameters[] = [
-                    'name' => $storyParameter->getCodeName(),
-                    'value' => $storyParameter->content,
+                    'name' => $parameter->getCodeName(),
+                    'value' => $parameter->content,
                 ];
             }
         }
@@ -184,5 +209,19 @@ class Story extends \yii\db\ActiveRecord implements Displayable
     public function isVisibleInApi()
     {
         return true;
+    }
+
+    static public function allowedTypes()
+    {
+        return [
+            Parameter::STORY_NUMBER,
+            Parameter::TIME_RANGE,
+            Parameter::LOCATION_POINT_START,
+            Parameter::LOCATION_POINT_END,
+            Parameter::SESSION_COUNT,
+            Parameter::XP_PARTY,
+            Parameter::PCS_ACTIVE,
+            Parameter::CS_ACTIVE,
+        ];
     }
 }

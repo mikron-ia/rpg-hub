@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\HasParameters;
 use common\models\tools\Tools;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -13,8 +14,10 @@ use yii\data\ActiveDataProvider;
  * @property string $key
  * @property string $name
  * @property string $system
+ * @property string $parameter_pack_id
  *
  * @property Character[] $characters
+ * @property ParameterPack $parameterPack
  * @property Group[] $groups
  * @property Person[] $people
  * @property Recap[] $recaps
@@ -22,7 +25,7 @@ use yii\data\ActiveDataProvider;
  *
  * @todo: Someday, system field will have to come from a closed list of supported systems
  */
-class Epic extends \yii\db\ActiveRecord implements Displayable
+class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
 {
     use Tools;
 
@@ -43,6 +46,13 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
             [['name', 'system'], 'required'],
             [['name'], 'string', 'max' => 80],
             [['system'], 'string', 'max' => 20],
+            [
+                ['parameter_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => ParameterPack::className(),
+                'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id']
+            ],
         ];
     }
 
@@ -56,6 +66,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
             'key' => Yii::t('app', 'EPIC_KEY'),
             'name' => Yii::t('app', 'EPIC_NAME'),
             'system' => Yii::t('app', 'EPIC_GAME_SYSTEM'),
+            'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
         ];
     }
 
@@ -68,6 +79,11 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
             $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
         }
 
+        if (empty($this->parameter_pack_id)) {
+            $pack = ParameterPack::create('Epic', $this->epic_id);
+            $this->parameter_pack_id = $pack->parameter_pack_id;
+        }
+
         return parent::beforeSave($insert);
     }
 
@@ -77,6 +93,14 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
     public function getCharacters()
     {
         return $this->hasMany(Character::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParameterPack()
+    {
+        return $this->hasOne(ParameterPack::className(), ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
     /**
@@ -171,5 +195,19 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
     public function isVisibleInApi()
     {
         return true;
+    }
+
+    /**
+     * Provides list of types allowed by this class
+     * @return string[]
+     */
+    static public function allowedTypes()
+    {
+        return [
+            Parameter::SESSION_COUNT,
+            Parameter::PCS_ACTIVE,
+            Parameter::CS_ACTIVE,
+            Parameter::DATA_SOURCE_FOR_REPUTATION,
+        ];
     }
 }

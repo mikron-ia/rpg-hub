@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "description_pack".
  *
  * @property string $description_pack_id
+ * @property string $class
  * @property string $name
  *
  * @property Description[] $descriptions
@@ -29,7 +30,8 @@ class DescriptionPack extends \yii\db\ActiveRecord implements Displayable
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['class', 'name'], 'required'],
+            [['class'], 'string', 'max' => 20],
             [['name'], 'string', 'max' => 80],
         ];
     }
@@ -41,6 +43,7 @@ class DescriptionPack extends \yii\db\ActiveRecord implements Displayable
     {
         return [
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK_ID'),
+            'class' => Yii::t('app', 'DESCRIPTION_PACK_CLASS'),
             'name' => Yii::t('app', 'DESCRIPTION_PACK_NAME'),
         ];
     }

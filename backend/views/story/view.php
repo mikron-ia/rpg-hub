@@ -1,6 +1,6 @@
 <?php
 
-use common\models\StoryParameter;
+use common\models\Parameter;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -69,34 +69,34 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-lg-12">
 
         <div class="buttoned-header">
-            <h2><?php echo $model->getAttributeLabel('storyParameters'); ?></h2>
+            <h2><?= Yii::t('app', 'PARAMETER_TITLE_INDEX') ?></h2>
             <?= Html::a(
-                '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_STORY_PARAMETER_CREATE') . '</span>',
+                '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_PARAMETER_CREATE') . '</span>',
                 '#',
                 [
-                    'class' => 'create-story-parameter-link',
-                    'title' => Yii::t('app', 'BUTTON_STORY_PARAMETER_CREATE'),
+                    'class' => 'create-parameter-link',
+                    'title' => Yii::t('app', 'BUTTON_PARAMETER_CREATE'),
                     'data-toggle' => 'modal',
-                    'data-target' => '#create-story-parameter-modal'
+                    'data-target' => '#create-parameter-modal'
                 ]
             ); ?>
         </div>
 
         <?= GridView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider(['query' => StoryParameter::find()->with('story')->where(['story_id' => $model->story_id])]),
+            'dataProvider' => new \yii\data\ActiveDataProvider(['query' => Parameter::find()->where(['parameter_pack_id' => $model->parameter_pack_id])]),
             'summary' => '',
             'columns' => [
                 [
                     'attribute' => 'code',
                     'enableSorting' => false,
-                    'value' => function (StoryParameter $model) {
+                    'value' => function (Parameter $model) {
                         return $model->getCodeName();
                     },
                 ],
                 [
                     'attribute' => 'visibility',
                     'enableSorting' => false,
-                    'value' => function (StoryParameter $model) {
+                    'value' => function (Parameter $model) {
                         return $model->getVisibilityName();
                     },
                 ],
@@ -106,34 +106,35 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{parameter-update} {parameter-delete}',
+                    'template' => '{update} {delete}',
                     'buttons' => [
-                        'parameter-update' => function ($url, StoryParameter $model, $key) {
+                        'update' => function ($url, Parameter $model, $key) {
                             return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
-                                'class' => 'update-story-parameter-link',
+                                'class' => 'update-parameter-link',
                                 'title' => Yii::t('app', 'LABEL_UPDATE'),
                                 'data-toggle' => 'modal',
-                                'data-target' => '#update-story-parameter-modal',
+                                'data-target' => '#update-parameter-modal',
                                 'data-id' => $key,
                             ]);
                         },
-                        'parameter-delete' => function ($url, StoryParameter $model, $key) {
+                        'delete' => function ($url, Parameter $model, $key) {
                             return Html::a(
-                                '<span class="glyphicon glyphicon-erase"></span>', $url, [
-                                'title' => Yii::t('app', 'LABEL_DELETE'),
-                                'data-confirm' => Yii::t(
-                                    'app',
-                                    'CONFIRMATION_DELETE {name}',
-                                    ['name' => $model->getCodeName()]
-                                ),
-                                'data-method' => 'post',
-                            ]);
+                                '<span class="glyphicon glyphicon-erase"></span>',
+                                ['parameter/delete', 'id' => $model->parameter_id],
+                                [
+                                    'title' => Yii::t('app', 'LABEL_DELETE'),
+                                    'data-confirm' => Yii::t(
+                                        'app',
+                                        'CONFIRMATION_DELETE {name}',
+                                        ['name' => $model->getCodeName()]
+                                    ),
+                                    'data-method' => 'post',
+                                ]);
                         }
                     ]
                 ],
             ],
         ]); ?>
-
     </div>
 
     <div class="col-lg-12">
@@ -159,44 +160,44 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <?php \yii\bootstrap\Modal::begin([
-    'id' => 'create-story-parameter-modal',
-    'header' => '<h2 class="modal-title">' . Yii::t('app', 'STORY_PARAMETER_TITLE_CREATE') . '</h2>',
+    'id' => 'create-parameter-modal',
+    'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_CREATE') . '</h2>',
 ]); ?>
 
 <?php \yii\bootstrap\Modal::end(); ?>
 
 <?php $this->registerJs(
-    "$('.create-story-parameter-link').click(function() {
+    "$('.create-parameter-link').click(function() {
     $.get(
-        '" . Yii::$app->urlManager->createUrl(['story/parameter-create']) . "',
+        '" . Yii::$app->urlManager->createUrl(['parameter/create']) . "',
         {
-            story_id: " . $model->story_id . "
+            pack_id: " . $model->parameterPack->parameter_pack_id . "
         },
         function (data) {
             $('.modal-body').html(data);
-            $('#create-story-parameter-modal').modal();
+            $('#create-parameter-modal').modal();
         }
     );
 });"
 ); ?>
 
 <?php \yii\bootstrap\Modal::begin([
-    'id' => 'update-story-parameter-modal',
-    'header' => '<h2 class="modal-title">' . Yii::t('app', 'STORY_PARAMETER_TITLE_UPDATE') . '</h2>',
+    'id' => 'update-parameter-modal',
+    'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_UPDATE') . '</h2>',
 ]); ?>
 
 <?php \yii\bootstrap\Modal::end(); ?>
 
 <?php $this->registerJs(
-    "$('.update-story-parameter-link').click(function() {
+    "$('.update-parameter-link').click(function() {
     $.get(
-        '" . Yii::$app->urlManager->createUrl(['story/parameter-update']) . "',
+        '" . Yii::$app->urlManager->createUrl(['parameter/update']) . "',
         {
             id: $(this).closest('tr').data('key')
         },
         function (data) {
             $('.modal-body').html(data);
-            $('#update-story-parameter-modal').modal();
+            $('#update-parameter-modal').modal();
         }
     );
 });"

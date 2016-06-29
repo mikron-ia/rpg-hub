@@ -2,18 +2,18 @@
 
 namespace backend\controllers;
 
-use common\models\DescriptionPack;
+use common\models\Parameter;
 use Yii;
-use common\models\Description;
-use common\models\DescriptionQuery;
+use common\models\ParameterPack;
+use common\models\ParameterQuery;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * DescriptionController implements the CRUD actions for Description model.
+ * ParameterController implements the CRUD actions for Parameter model.
  */
-class DescriptionController extends Controller
+class ParameterController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +31,12 @@ class DescriptionController extends Controller
     }
 
     /**
-     * Lists all Description models.
+     * Lists all Parameter models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new DescriptionQuery();
+        $searchModel = new ParameterQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +46,7 @@ class DescriptionController extends Controller
     }
 
     /**
-     * Displays a single Description model.
+     * Displays a single Parameter model.
      * @param string $id
      * @return mixed
      */
@@ -58,20 +58,20 @@ class DescriptionController extends Controller
     }
 
     /**
-     * Creates a new Description model.
+     * Creates a new Parameter model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @param int $pack_id
      * @return mixed
      */
     public function actionCreate($pack_id)
     {
-        $model = new Description();
+        $model = new Parameter();
 
-        $model->description_pack_id = $pack_id;
+        $model->parameter_pack_id = $pack_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $referrer = Yii::$app->getRequest()->getReferrer();
-            if($referrer) {
+            if ($referrer) {
                 return Yii::$app->getResponse()->redirect($referrer);
             } else {
                 return $this->redirect(['index']);
@@ -86,7 +86,7 @@ class DescriptionController extends Controller
     }
 
     /**
-     * Updates an existing Description model.
+     * Updates an existing Parameter model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -97,7 +97,7 @@ class DescriptionController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $referrer = Yii::$app->getRequest()->getReferrer();
-            if($referrer) {
+            if ($referrer) {
                 return Yii::$app->getResponse()->redirect($referrer);
             } else {
                 return $this->redirect(['index']);
@@ -112,7 +112,7 @@ class DescriptionController extends Controller
     }
 
     /**
-     * Deletes an existing Description model.
+     * Deletes an existing Parameter model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -122,7 +122,7 @@ class DescriptionController extends Controller
         $this->findModel($id)->delete();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
-        if($referrer) {
+        if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
         } else {
             return $this->redirect(['index']);
@@ -135,7 +135,7 @@ class DescriptionController extends Controller
         $model->movePrev();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
-        if($referrer) {
+        if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
         } else {
             return $this->redirect(['index']);
@@ -148,7 +148,7 @@ class DescriptionController extends Controller
         $model->moveNext();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
-        if($referrer) {
+        if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
         } else {
             return $this->redirect(['index']);
@@ -156,15 +156,15 @@ class DescriptionController extends Controller
     }
 
     /**
-     * Finds the Description model based on its primary key value.
+     * Finds the Parameter model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Description the loaded model
+     * @return Parameter the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Description::findOne($id)) !== null) {
+        if (($model = Parameter::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
