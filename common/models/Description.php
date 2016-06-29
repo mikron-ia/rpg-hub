@@ -115,6 +115,31 @@ class Description extends \yii\db\ActiveRecord implements Displayable
         ];
     }
 
+    /**
+     * @return string[]
+     */
+    public function typeNamesForThisClass()
+    {
+        $typeNamesAll = self::typeNames();
+        $typeNamesAccepted = [];
+
+        $class = 'common\models\\';
+
+        if (method_exists($class, 'allowedTypes')) {
+            $typesAllowed = call_user_func([$class . $this->descriptionPack->class, 'allowedTypes']);
+        } else {
+            $typesAllowed = array_keys($typeNamesAll);
+        }
+
+        foreach ($typeNamesAll as $typeKey => $typeName) {
+            if (in_array($typeKey, $typesAllowed, true)) {
+                $typeNamesAccepted[$typeKey] = $typeName;
+            }
+        }
+
+        return $typeNamesAccepted;
+    }
+
     static public function typesForCharacter()
     {
         return [self::TYPE_PERSONALITY];

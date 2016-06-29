@@ -120,7 +120,14 @@ class Parameter extends \yii\db\ActiveRecord
     {
         $typeNamesAll = self::typeNames();
         $typeNamesAccepted = [];
-        $typesAllowed = call_user_func(['common\models\\' . $this->parameterPack->class, 'allowedTypes']);
+
+        $class = 'common\models\\' . $this->parameterPack->class;
+
+        if (method_exists($class, 'allowedTypes')) {
+            $typesAllowed = call_user_func([$class, 'allowedTypes']);
+        } else {
+            $typesAllowed = array_keys($typeNamesAll);
+        }
 
         foreach ($typeNamesAll as $typeKey => $typeName) {
             if (in_array($typeKey, $typesAllowed, true)) {

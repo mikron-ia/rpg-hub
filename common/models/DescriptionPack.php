@@ -67,10 +67,9 @@ class DescriptionPack extends \yii\db\ActiveRecord implements Displayable
     static public function create($className, $id)
     {
         $pack = new DescriptionPack();
-        $pack->name = 'Description for ' . $className . ' #' . $id;
+        $pack->name = $className . ' #' . $id;
 
         $pack->save();
-
         $pack->refresh();
 
         return $pack;

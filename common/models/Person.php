@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\HasDescriptions;
 use common\models\core\Visibility;
 use common\models\tools\Tools;
 use Yii;
@@ -23,7 +24,7 @@ use Yii;
  * @property Character $character
  * @property DescriptionPack $descriptionPack
  */
-class Person extends \yii\db\ActiveRecord implements Displayable
+class Person extends \yii\db\ActiveRecord implements Displayable, HasDescriptions
 {
     use Tools;
 
@@ -111,7 +112,7 @@ class Person extends \yii\db\ActiveRecord implements Displayable
         }
 
         if (empty($this->description_pack_id)) {
-            $pack = DescriptionPack::create('person', $this->person_id);
+            $pack = DescriptionPack::create('Person', $this->person_id);
             $this->description_pack_id = $pack->description_pack_id;
         }
 
@@ -232,5 +233,19 @@ class Person extends \yii\db\ActiveRecord implements Displayable
         } else {
             return null;
         }
+    }
+
+    /**
+     * Provides list of types allowed by this class
+     * @return string[]
+     */
+    static public function allowedTypes()
+    {
+        return [
+            Description::TYPE_HISTORY,
+            Description::TYPE_APPEARANCE,
+            Description::TYPE_PERSONALITY,
+            Description::TYPE_WHO,
+        ];
     }
 }
