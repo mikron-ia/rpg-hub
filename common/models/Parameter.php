@@ -109,6 +109,7 @@ class Parameter extends \yii\db\ActiveRecord
             self::XP_PARTY => Yii::t('app', 'ST_PARAM_XP_PARTY'),
             self::PCS_ACTIVE => Yii::t('app', 'ST_PARAM_PCS_ACTIVE'),
             self::CS_ACTIVE => Yii::t('app', 'ST_PARAM_CS_ACTIVE'),
+            self::DATA_SOURCE_FOR_REPUTATION => Yii::t('app', 'PARAM_DATA_SOURCE_FOR_REPUTATION'),
         ];
     }
 

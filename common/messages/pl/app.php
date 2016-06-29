@@ -142,6 +142,7 @@ return [
     'PARAMETER_TITLE_CREATE' => 'Dodaj parametr',
     'PARAMETER_TITLE_INDEX' => 'Parametry',
     'PARAMETER_TITLE_UPDATE' => 'Zmodyfikuj parametr',
+    'PARAM_DATA_SOURCE_FOR_REPUTATION' => 'Źródło danych dla reputacji',
     'PASSWORD_CHANGE_ERROR_OLD_PASSWORD_INCORRECT' => 'Stare hasło jest niepoprawne',
     'PASSWORD_CHANGE_ERROR_PASSWORDS_DO_NOT_MATCH' => 'Hasła są niezgodne',
     'PASSWORD_CHANGE_FLASH_FAILURE' => 'Zmiana hasła nieudana',

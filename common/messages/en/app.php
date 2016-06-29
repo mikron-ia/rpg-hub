@@ -142,6 +142,7 @@ return [
     'PARAMETER_TITLE_CREATE' => 'Add parameter',
     'PARAMETER_TITLE_INDEX' => 'Parameters',
     'PARAMETER_TITLE_UPDATE' => 'Modify parameter',
+    'PARAM_DATA_SOURCE_FOR_REPUTATION' => 'Data source for reputation',
     'PASSWORD_CHANGE_ERROR_OLD_PASSWORD_INCORRECT' => 'Old password is incorrect',
     'PASSWORD_CHANGE_ERROR_PASSWORDS_DO_NOT_MATCH' => 'Passwords do not match',
     'PASSWORD_CHANGE_FLASH_FAILURE' => 'Password change has failed',
