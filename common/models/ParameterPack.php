@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "parameter_pack".
  *
  * @property string $parameter_pack_id
+ * @property string $class
  * @property string $name
  *
  * @property Epic[] $epics
@@ -30,7 +31,8 @@ class ParameterPack extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['class', 'name'], 'required'],
+            [['class'], 'string', 'max' => 20],
             [['name'], 'string', 'max' => 80],
         ];
     }
@@ -41,18 +43,23 @@ class ParameterPack extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'parameter_pack_id' => Yii::t('app', 'Parameter Pack ID'),
-            'name' => Yii::t('app', 'Name'),
+            'description_pack_id' => Yii::t('app', 'PARAMETER_PACK_ID'),
+            'class' => Yii::t('app', 'PARAMETER_PACK_CLASS'),
+            'name' => Yii::t('app', 'PARAMETER_PACK_NAME'),
         ];
     }
 
+    /**
+     * @param string $className
+     * @param int $id
+     * @return ParameterPack Generated pack
+     */
     static public function create($className, $id)
     {
         $pack = new ParameterPack();
         $pack->name = 'Parameters for ' . $className . ' #' . $id;
 
         $pack->save();
-
         $pack->refresh();
 
         return $pack;
