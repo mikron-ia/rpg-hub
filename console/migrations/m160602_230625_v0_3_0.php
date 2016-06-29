@@ -46,7 +46,7 @@ class m160602_230625_v0_3_0 extends Migration
             'lang' => $this->string(5),
             'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_NONE),
             'position' => $this->integer()->defaultValue(0),
-            'content' => $this->string(80)->notNull(),
+            'content' => $this->string(120)->notNull(),
             'FOREIGN KEY (parameter_pack_id) REFERENCES `parameter_pack` (parameter_pack_id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);
 

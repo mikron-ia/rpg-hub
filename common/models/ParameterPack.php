@@ -89,4 +89,31 @@ class ParameterPack extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Story::className(), ['parameter_pack_id' => 'parameter_pack_id']);
     }
+
+    /**
+     * @param $code
+     * @return null|Parameter
+     */
+    public function getParameterByCode($code)
+    {
+        return Parameter::findOne([
+            'parameter_pack_id' => $this->parameter_pack_id,
+            'code' => $code
+        ]);
+    }
+
+    /**
+     * @param $code
+     * @return null|string
+     */
+    public function getParameterValueByCode($code)
+    {
+        $parameter = $this->getParameterByCode($code);
+
+        if($parameter) {
+            return $parameter->content;
+        } else {
+            return null;
+        }
+    }
 }

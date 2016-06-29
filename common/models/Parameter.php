@@ -50,7 +50,7 @@ class Parameter extends \yii\db\ActiveRecord
             [['code', 'content'], 'required'],
             [['code', 'visibility'], 'string', 'max' => 20],
             [['lang'], 'string', 'max' => 5],
-            [['content'], 'string', 'max' => 80],
+            [['content'], 'string', 'max' => 120],
             [
                 ['parameter_pack_id'],
                 'exist',
