@@ -22,25 +22,15 @@ use yii2tech\ar\position\PositionBehavior;
  */
 class Parameter extends \yii\db\ActiveRecord
 {
-    const PARAMETER_STORY_NUMBER = 'story-number';
-    const PARAMETER_TIME_RANGE = 'time-range';
-    const PARAMETER_POINT_START = 'point-start';
-    const PARAMETER_POINT_END = 'point-end';
-    const PARAMETER_SESSION_COUNT = 'session-count';
-    const PARAMETER_XP_PARTY = 'party-xp';
-    const PARAMETER_PCS_ACTIVE = 'active-pcs';
-    const PARAMETER_CS_ACTIVE = 'active-cs';
-
-    private $allowedCodes = [
-        self::PARAMETER_STORY_NUMBER,
-        self::PARAMETER_TIME_RANGE,
-        self::PARAMETER_POINT_START,
-        self::PARAMETER_POINT_END,
-        self::PARAMETER_SESSION_COUNT,
-        self::PARAMETER_XP_PARTY,
-        self::PARAMETER_PCS_ACTIVE,
-        self::PARAMETER_CS_ACTIVE,
-    ];
+    const STORY_NUMBER = 'story-number';
+    const TIME_RANGE = 'time-range';
+    const LOCATION_POINT_START = 'point-start';
+    const LOCATION_POINT_END = 'point-end';
+    const SESSION_COUNT = 'session-count';
+    const XP_PARTY = 'party-xp';
+    const PCS_ACTIVE = 'active-pcs';
+    const CS_ACTIVE = 'active-cs';
+    const DATA_SOURCE_FOR_REPUTATION = 'source-reputation';
 
     /**
      * @inheritdoc
@@ -111,14 +101,14 @@ class Parameter extends \yii\db\ActiveRecord
     static public function typeNames()
     {
         return [
-            self::PARAMETER_STORY_NUMBER => Yii::t('app', 'ST_PARAM_STORY_NUMBER'),
-            self::PARAMETER_TIME_RANGE => Yii::t('app', 'ST_PARAM_TIME_RANGE'),
-            self::PARAMETER_POINT_START => Yii::t('app', 'ST_PARAM_POINT_START'),
-            self::PARAMETER_POINT_END => Yii::t('app', 'ST_PARAM_POINT_END'),
-            self::PARAMETER_SESSION_COUNT => Yii::t('app', 'ST_PARAM_SESSION_COUNT'),
-            self::PARAMETER_XP_PARTY => Yii::t('app', 'ST_PARAM_XP_PARTY'),
-            self::PARAMETER_PCS_ACTIVE => Yii::t('app', 'ST_PARAM_PCS_ACTIVE'),
-            self::PARAMETER_CS_ACTIVE => Yii::t('app', 'ST_PARAM_CS_ACTIVE'),
+            self::STORY_NUMBER => Yii::t('app', 'ST_PARAM_STORY_NUMBER'),
+            self::TIME_RANGE => Yii::t('app', 'ST_PARAM_TIME_RANGE'),
+            self::LOCATION_POINT_START => Yii::t('app', 'ST_PARAM_POINT_START'),
+            self::LOCATION_POINT_END => Yii::t('app', 'ST_PARAM_POINT_END'),
+            self::SESSION_COUNT => Yii::t('app', 'ST_PARAM_SESSION_COUNT'),
+            self::XP_PARTY => Yii::t('app', 'ST_PARAM_XP_PARTY'),
+            self::PCS_ACTIVE => Yii::t('app', 'ST_PARAM_PCS_ACTIVE'),
+            self::CS_ACTIVE => Yii::t('app', 'ST_PARAM_CS_ACTIVE'),
         ];
     }
 

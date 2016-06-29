@@ -214,14 +214,14 @@ class Story extends \yii\db\ActiveRecord implements Displayable, HasParameters
     public function allowedTypes()
     {
         return [
-            Parameter::PARAMETER_STORY_NUMBER,
-            Parameter::PARAMETER_TIME_RANGE,
-            Parameter::PARAMETER_POINT_START,
-            Parameter::PARAMETER_POINT_END,
-            Parameter::PARAMETER_SESSION_COUNT,
-            Parameter::PARAMETER_XP_PARTY,
-            Parameter::PARAMETER_PCS_ACTIVE,
-            Parameter::PARAMETER_CS_ACTIVE,
+            Parameter::STORY_NUMBER,
+            Parameter::TIME_RANGE,
+            Parameter::LOCATION_POINT_START,
+            Parameter::LOCATION_POINT_END,
+            Parameter::SESSION_COUNT,
+            Parameter::XP_PARTY,
+            Parameter::PCS_ACTIVE,
+            Parameter::CS_ACTIVE,
         ];
     }
 }

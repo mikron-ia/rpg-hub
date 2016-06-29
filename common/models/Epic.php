@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\HasParameters;
 use common\models\tools\Tools;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -24,7 +25,7 @@ use yii\data\ActiveDataProvider;
  *
  * @todo: Someday, system field will have to come from a closed list of supported systems
  */
-class Epic extends \yii\db\ActiveRecord implements Displayable
+class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
 {
     use Tools;
 
@@ -194,5 +195,18 @@ class Epic extends \yii\db\ActiveRecord implements Displayable
     public function isVisibleInApi()
     {
         return true;
+    }
+
+    /**
+     * Provides list of types allowed by this class
+     * @return string[]
+     */
+    public function allowedTypes()
+    {
+        return [
+            Parameter::SESSION_COUNT,
+            Parameter::PCS_ACTIVE,
+            Parameter::CS_ACTIVE,
+        ];
     }
 }
