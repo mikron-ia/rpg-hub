@@ -113,14 +113,34 @@ class Parameter extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return string[]
+     */
+    public function typeNamesForThisClass()
+    {
+        $typeNamesAll = self::typeNames();
+        $typeNamesAccepted = [];
+        $typesAllowed = call_user_func(['common\models\\' . $this->parameterPack->class, 'allowedTypes']);
+
+        foreach ($typeNamesAll as $typeKey => $typeName) {
+            if (in_array($typeKey, $typesAllowed, true)) {
+                $typeNamesAccepted[$typeKey] = $typeName;
+            }
+        }
+
+        return $typeNamesAccepted;
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getParameterPack()
     {
         return $this->hasOne(ParameterPack::className(), ['parameter_pack_id' => 'parameter_pack_id']);
-    }/**
- * @return string|null
- */
+    }
+
+    /**
+     * @return string|null
+     */
     public function getTypeName()
     {
         $names = self::typeNames();

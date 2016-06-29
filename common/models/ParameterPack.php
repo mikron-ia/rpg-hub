@@ -57,7 +57,8 @@ class ParameterPack extends \yii\db\ActiveRecord
     static public function create($className, $id)
     {
         $pack = new ParameterPack();
-        $pack->name = 'Parameters for ' . $className . ' #' . $id;
+        $pack->name = $className . ' #' . $id;
+        $pack->class = $className;
 
         $pack->save();
         $pack->refresh();

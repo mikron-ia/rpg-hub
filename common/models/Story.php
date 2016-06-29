@@ -96,7 +96,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable, HasParameters
         }
 
         if (empty($this->parameter_pack_id)) {
-            $pack = ParameterPack::create('story', $this->story_id);
+            $pack = ParameterPack::create('Story', $this->story_id);
             $this->parameter_pack_id = $pack->parameter_pack_id;
         }
 
@@ -211,7 +211,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable, HasParameters
         return true;
     }
 
-    public function allowedTypes()
+    static public function allowedTypes()
     {
         return [
             Parameter::STORY_NUMBER,

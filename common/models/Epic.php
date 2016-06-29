@@ -80,7 +80,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
         }
 
         if (empty($this->parameter_pack_id)) {
-            $pack = ParameterPack::create('story', $this->epic_id);
+            $pack = ParameterPack::create('Epic', $this->epic_id);
             $this->parameter_pack_id = $pack->parameter_pack_id;
         }
 
@@ -201,7 +201,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
      * Provides list of types allowed by this class
      * @return string[]
      */
-    public function allowedTypes()
+    static public function allowedTypes()
     {
         return [
             Parameter::SESSION_COUNT,
