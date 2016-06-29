@@ -110,7 +110,7 @@ class Person extends \yii\db\ActiveRecord implements Displayable
             $this->data = json_encode([]);
         }
 
-        if(empty($this->description_pack_id)) {
+        if (empty($this->description_pack_id)) {
             $pack = DescriptionPack::create('person', $this->person_id);
             $this->description_pack_id = $pack->description_pack_id;
         }
@@ -208,6 +208,27 @@ class Person extends \yii\db\ActiveRecord implements Displayable
         $list = self::visibilityNames();
         if (isset($list[$this->visibility])) {
             return $list[$this->visibility];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @param Character $character
+     * @return null|Person
+     */
+    static public function createForCharacter(Character $character)
+    {
+        $person = new Person();
+        $person->epic_id = $character->epic_id;
+        $person->name = $character->name;
+        $person->character_id = $character->character_id;
+        $person->tagline = '?';
+        $person->visibility = Visibility::VISIBILITY_NONE;
+
+        if ($person->save()) {
+            $person->refresh();
+            return $person;
         } else {
             return null;
         }

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\Visibility;
 use common\models\tools\Tools;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -90,6 +91,12 @@ class Character extends \yii\db\ActiveRecord implements Displayable
         if ($insert) {
             $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
             $this->data = json_encode([]);
+
+            /* Create and attach person */
+            $person = Person::createForCharacter($this);
+            if ($person) {
+                $this->currently_delivered_person_id = $person->person_id;
+            }
         }
 
         return parent::beforeSave($insert);
