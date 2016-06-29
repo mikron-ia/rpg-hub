@@ -103,6 +103,8 @@ return [
     'ERROR_WRONG_EPIC' => '<b>Warning: </b> object you are displaying does not belong to currently active epic.',
     'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Loading operation failed - JSON issue',
     'EXTERNAL_DATA_LOAD_ERROR_SAVE' => 'Loading operation failed - save failed',
+    'EXTERNAL_DATA_LOAD_MISSING_ADDRESS' => 'URI for data retrieval not entered',
+    'EXTERNAL_DATA_LOAD_MISSING_MODEL_KEY' => 'URI for data retrieval does not contain {modelKey} placeholder',
     'EXTERNAL_DATA_LOAD_SUCCESS' => 'Loading operation successful',
     'GROUP_DATA' => 'Group data',
     'GROUP_ID' => 'Group ID',

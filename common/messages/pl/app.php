@@ -103,6 +103,8 @@ return [
     'ERROR_WRONG_EPIC' => '<b>Uwaga:</b> wyświetlany obiekt nie należy do aktywnej kampanii.',
     'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Ładowanie zewnętrznych danych nieudane - błąd JSON-a',
     'EXTERNAL_DATA_LOAD_ERROR_SAVE' => 'Ładowanie zewnętrznych danych nieudane - błąd zapisu',
+    'EXTERNAL_DATA_LOAD_MISSING_ADDRESS' => 'URI do pobierania danych nie został wprowadzony',
+    'EXTERNAL_DATA_LOAD_MISSING_MODEL_KEY' => 'URI do pobierania danych nie zawiera sekwencji {modelKey}',
     'EXTERNAL_DATA_LOAD_SUCCESS' => 'Ładowanie zewnętrznych danych udane',
     'GROUP_DATA' => 'Dane grupy',
     'GROUP_ID' => 'ID grupy',
