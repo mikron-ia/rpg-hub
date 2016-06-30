@@ -60,7 +60,15 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        if (!isset(Yii::$app->params['activeEpic'])) {
+            return $this->render('epic-selection');
+        }
+
+        $epic = Yii::$app->params['activeEpic'];
+
+        return $this->render('index', [
+            'epic' => $epic,
+        ]);
     }
 
     public function actionLogin()
@@ -90,7 +98,7 @@ class SiteController extends Controller
         $model = new PasswordChange();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if($model->savePassword()) {
+            if ($model->savePassword()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'PASSWORD_CHANGE_FLASH_SUCCESS'));
                 return $this->goHome();
             } else {
