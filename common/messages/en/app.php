@@ -18,6 +18,7 @@
  */
 return [
     'ABOUT_TITLE' => 'About',
+    'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC' => 'Welcome to the epic data hub. Please choose an epic to work with from menu below or from top menu.',
     'BACKEND_FRONT_PAGE_MAIN_TEXT' => 'Welcome to the epic data hub. Please choose an area to access or use one of the auxiliary functions.',
     'BACKEND_FRONT_PAGE_TITLE' => 'RPG Hub Control',
     'BREADCRUMBS_HOME' => 'Hub',
