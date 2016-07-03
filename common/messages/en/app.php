@@ -100,7 +100,7 @@ return [
     'EPIC_KEY' => 'Key',
     'EPIC_LABEL' => 'Epic',
     'EPIC_NAME' => 'Name',
-    'ERROR_NO_EPIC_ACTIVE' => '<b>Warning: </b> no active epic. Choose an epic from the top menu.',
+    'ERROR_NO_EPIC_ACTIVE' => '<b>Warning: </b> no active epic. Choose an epic from the top menu or from the main menu.',
     'ERROR_WRONG_EPIC' => '<b>Warning: </b> object you are displaying does not belong to currently active epic.',
     'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Loading operation failed - JSON issue',
     'EXTERNAL_DATA_LOAD_ERROR_SAVE' => 'Loading operation failed - save failed',

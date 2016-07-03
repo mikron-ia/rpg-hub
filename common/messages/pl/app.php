@@ -100,7 +100,7 @@ return [
     'EPIC_KEY' => 'Identyfikator kampanii',
     'EPIC_LABEL' => 'Kampania',
     'EPIC_NAME' => 'Tytuł kampanii',
-    'ERROR_NO_EPIC_ACTIVE' => '<b>Uwaga:</b> brak aktywnej kampanii. Wybierz kampanię z menu górnego.',
+    'ERROR_NO_EPIC_ACTIVE' => '<b>Uwaga:</b> brak aktywnej kampanii. Wybierz kampanię z menu górnego lub z menu głównego.',
     'ERROR_WRONG_EPIC' => '<b>Uwaga:</b> wyświetlany obiekt nie należy do aktywnej kampanii.',
     'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Ładowanie zewnętrznych danych nieudane - błąd JSON-a',
     'EXTERNAL_DATA_LOAD_ERROR_SAVE' => 'Ładowanie zewnętrznych danych nieudane - błąd zapisu',
