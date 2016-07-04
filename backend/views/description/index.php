@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterModel' => $searchModel,
             'filterPosition' => null,
             'columns' => [
-                'descriptionPack.name',
+                'descriptionPack.class',
                 [
                     'attribute' => 'code',
                     'value' => function (Description $model) {

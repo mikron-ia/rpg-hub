@@ -4,7 +4,6 @@ namespace backend\controllers;
 
 use common\models\Parameter;
 use Yii;
-use common\models\ParameterPack;
 use common\models\ParameterQuery;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

@@ -9,7 +9,6 @@ use Yii;
  *
  * @property string $parameter_pack_id
  * @property string $class
- * @property string $name
  *
  * @property Epic[] $epics
  * @property Parameter[] $parameters
@@ -33,7 +32,6 @@ class ParameterPack extends \yii\db\ActiveRecord
         return [
             [['class', 'name'], 'required'],
             [['class'], 'string', 'max' => 20],
-            [['name'], 'string', 'max' => 80],
         ];
     }
 
@@ -45,19 +43,16 @@ class ParameterPack extends \yii\db\ActiveRecord
         return [
             'description_pack_id' => Yii::t('app', 'PARAMETER_PACK_ID'),
             'class' => Yii::t('app', 'PARAMETER_PACK_CLASS'),
-            'name' => Yii::t('app', 'PARAMETER_PACK_NAME'),
         ];
     }
 
     /**
      * @param string $className
-     * @param int $id
      * @return ParameterPack Generated pack
      */
-    static public function create($className, $id)
+    static public function create($className)
     {
         $pack = new ParameterPack();
-        $pack->name = $className . ' #' . $id;
         $pack->class = $className;
 
         $pack->save();
@@ -91,7 +86,7 @@ class ParameterPack extends \yii\db\ActiveRecord
     }
 
     /**
-     * @param $code
+     * @param string $code
      * @return null|Parameter
      */
     public function getParameterByCode($code)
@@ -110,7 +105,7 @@ class ParameterPack extends \yii\db\ActiveRecord
     {
         $parameter = $this->getParameterByCode($code);
 
-        if($parameter) {
+        if ($parameter) {
             return $parameter->content;
         } else {
             return null;

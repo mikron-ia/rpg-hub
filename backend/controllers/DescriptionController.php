@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use common\models\DescriptionPack;
 use Yii;
 use common\models\Description;
 use common\models\DescriptionQuery;
