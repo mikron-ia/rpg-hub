@@ -201,7 +201,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
      * Provides list of types allowed by this class
      * @return string[]
      */
-    static public function allowedTypes()
+    static public function allowedParameterTypes()
     {
         return [
             Parameter::SESSION_COUNT,

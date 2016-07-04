@@ -211,7 +211,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable, HasParameters
         return true;
     }
 
-    static public function allowedTypes()
+    static public function allowedParameterTypes()
     {
         return [
             Parameter::STORY_NUMBER,

@@ -5,7 +5,6 @@
 
 $this->title = Yii::t('app', 'PARAMETER_TITLE_UPDATE') . ': ' . $model->parameter_id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'PARAMETER_TITLE_INDEX'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $model->parameterPack->name;
 $this->params['breadcrumbs'][] = $model->getTypeName();
 $this->params['breadcrumbs'][] = Yii::t('app', 'LABEL_UPDATE');
 ?>

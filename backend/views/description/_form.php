@@ -16,7 +16,6 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'code')->dropDownList(
-        //Description::typeNames(),
         $model->typeNamesForThisClass(),
         ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_TYPE') . ' --- ']
     ); ?>

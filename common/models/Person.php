@@ -239,7 +239,7 @@ class Person extends \yii\db\ActiveRecord implements Displayable, HasDescription
      * Provides list of types allowed by this class
      * @return string[]
      */
-    static public function allowedTypes()
+    static public function allowedDescriptionTypes()
     {
         return [
             Description::TYPE_HISTORY,
