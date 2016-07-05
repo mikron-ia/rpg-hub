@@ -30,7 +30,7 @@ class ParameterPack extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['class', 'name'], 'required'],
+            [['class'], 'required'],
             [['class'], 'string', 'max' => 20],
         ];
     }

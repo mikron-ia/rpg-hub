@@ -29,7 +29,7 @@ class DescriptionPack extends \yii\db\ActiveRecord implements Displayable
     public function rules()
     {
         return [
-            [['class', 'name'], 'required'],
+            [['class'], 'required'],
             [['class'], 'string', 'max' => 20],
         ];
     }
