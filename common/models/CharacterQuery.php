@@ -3,7 +3,6 @@
 namespace common\models;
 
 use Yii;
-use yii\base\Exception;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -36,7 +35,6 @@ class CharacterQuery extends Character
      * Creates data provider instance with search query applied
      *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -79,15 +77,34 @@ class CharacterQuery extends Character
         return $dataProvider;
     }
 
+    /**
+     * Provides all active characters from the current epic
+     * @return Character[]
+     */
     static public function activeCharactersAsModels()
     {
         $query = Character::find();
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+            $query->where('0=1');
+        } else {
+            $query->andWhere([
+                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+            ]);
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => false,
         ]);
+
         return $dataProvider->getModels();
     }
 
+    /**
+     * @return string[]
+     */
     static public function getListOfCharactersForSelector()
     {
         $characterList = self::activeCharactersAsModels();
@@ -102,6 +119,9 @@ class CharacterQuery extends Character
         return $characterListForSelector;
     }
 
+    /**
+     * @return int[]
+     */
     static public function allowedCharacters()
     {
         return array_keys(self::activeCharactersAsModels());
