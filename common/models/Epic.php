@@ -80,7 +80,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
         }
 
         if (empty($this->parameter_pack_id)) {
-            $pack = ParameterPack::create('Epic', $this->epic_id);
+            $pack = ParameterPack::create('Epic');
             $this->parameter_pack_id = $pack->parameter_pack_id;
         }
 

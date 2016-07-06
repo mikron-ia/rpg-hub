@@ -112,7 +112,7 @@ class Person extends \yii\db\ActiveRecord implements Displayable, HasDescription
         }
 
         if (empty($this->description_pack_id)) {
-            $pack = DescriptionPack::create('Person', $this->person_id);
+            $pack = DescriptionPack::create('Person');
             $this->description_pack_id = $pack->description_pack_id;
         }
 
