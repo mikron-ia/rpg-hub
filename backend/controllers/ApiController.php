@@ -193,7 +193,7 @@ class ApiController extends \yii\web\Controller
             $objects = Person::findAll(['epic_id' => $epicId]);
 
             foreach ($objects as $object) {
-                if($object->isVisibleInApi()) {
+                if ($object->isVisibleInApi()) {
                     $peopleList[] = $object->getSimpleDataForApi();
                 }
             }
