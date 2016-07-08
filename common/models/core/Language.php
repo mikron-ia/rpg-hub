@@ -10,7 +10,7 @@ class Language
 
     static public function supportedLanguages()
     {
-        if(isset(Yii::$app->params['languagesAvailable'])) {
+        if (isset(Yii::$app->params['languagesAvailable'])) {
             return Yii::$app->params['languagesAvailable'];
         } else {
             return ['en'];
@@ -26,8 +26,8 @@ class Language
 
         $languages = [];
 
-        foreach(self::supportedLanguages() as $language) {
-            if(isset($languageData[$language])) {
+        foreach (self::supportedLanguages() as $language) {
+            if (isset($languageData[$language])) {
                 $languages[$language] = $languageData[$language];
             }
         }
@@ -44,7 +44,7 @@ class Language
 
         $languages = [];
 
-        foreach(self::supportedLanguages() as $language) {
+        foreach (self::supportedLanguages() as $language) {
             $languages[$language] = $languageData[$language];
         }
 

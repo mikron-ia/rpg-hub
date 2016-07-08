@@ -12,9 +12,7 @@ class LoaderController extends Controller
 {
     /**
      * Loads data from an external source
-     * If update is successful, the browser will be redirected to the 'view' page.
      * @return mixed
-     * @todo Replace this with data stored in Epic parameters
      */
     public function actionPerson()
     {
