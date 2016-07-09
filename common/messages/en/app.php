@@ -134,7 +134,7 @@ return [
     'MENU_TOP_LOGIN' => 'Login',
     'MENU_TOP_LOGOUT' => 'Logout',
     'MENU_TOP_SETTINGS' => 'Settings',
-    'PAGE_NOT_FOUND' => 'The requested page does not exist',
+    'PAGE_NOT_FOUND' => 'The requested page does not exist.',
     'PARAMETER_CODE' => 'Code',
     'PARAMETER_CONTENT' => 'Content',
     'PARAMETER_ID' => 'Parameter ID',

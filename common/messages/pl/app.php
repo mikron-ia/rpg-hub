@@ -134,7 +134,7 @@ return [
     'MENU_TOP_LOGIN' => 'Zaloguj',
     'MENU_TOP_LOGOUT' => 'Wyloguj',
     'MENU_TOP_SETTINGS' => 'Ustawienia',
-    'PAGE_NOT_FOUND' => 'Poszukiwana strona nie istnieje',
+    'PAGE_NOT_FOUND' => 'Poszukiwana strona nie istnieje.',
     'PARAMETER_CODE' => 'Kod',
     'PARAMETER_CONTENT' => 'Treść',
     'PARAMETER_ID' => 'ID parametru',

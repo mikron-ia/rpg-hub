@@ -130,7 +130,7 @@ class EpicController extends Controller
         if (($model = Epic::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested epic does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));
         }
     }
 }
