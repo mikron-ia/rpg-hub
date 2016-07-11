@@ -31,3 +31,6 @@ phpunit.phar
 
 # environment files
 .env
+
+# SQL data
+console/migrations/data.sql
