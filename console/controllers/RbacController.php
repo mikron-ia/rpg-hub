@@ -18,6 +18,30 @@ class RbacController extends Controller
         $controlEpic->description = 'Able to add, edit, and command an epic';
         $auth->add($controlEpic);
 
+        $controlPerson = $auth->createPermission('controlPerson');
+        $controlPerson->description = 'Able to add, edit, and remove a person';
+        $auth->add($controlPerson);
+
+        $controlCharacter = $auth->createPermission('controlCharacter');
+        $controlCharacter->description = 'Able to add, edit, and remove a character';
+        $auth->add($controlCharacter);
+
+        $controlStory = $auth->createPermission('controlStory');
+        $controlStory->description = 'Able to add, edit, and move a story';
+        $auth->add($controlStory);
+
+        $controlRecap = $auth->createPermission('controlRecap');
+        $controlRecap->description = 'Able to add, edit, and move a recap';
+        $auth->add($controlRecap);
+
+        $controlGroup = $auth->createPermission('controlGroup');
+        $controlGroup->description = 'Able to add, edit, and remove a group; includes rights to add and remove members';
+        $auth->add($controlGroup);
+
+        $controlUser = $auth->createPermission('controlUser');
+        $controlUser->description = 'Able to add, edit, and hide a user';
+        $auth->add($controlUser);
+
         /* Roles */
         $user = $auth->createRole('user'); // person responsible for handling epics
         $auth->add($user);
