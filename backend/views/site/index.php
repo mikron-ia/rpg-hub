@@ -40,34 +40,12 @@ $this->title = 'RPG hub - control';
 
         <div class="row">
 
-            <div class="col-md-6">
+            <div class="col-md-8">
+                <h2>[data]</h2>
+            </div>
 
-                <h2><?= Yii::t('app', 'CONFIGURATION_TITLE_INDEX'); ?></h2>
-
-                <p>
-                    <?= Html::a(
-                        Yii::t('app', 'BUTTON_EPIC_LIST') . ' &raquo;',
-                        ['epic/index'],
-                        ['class' => 'btn btn-default btn-block']
-                    ); ?>
-                </p>
-
-                <p>
-                    <?= Html::a(
-                        Yii::t('app', 'BUTTON_DESCRIPTION_LIST') . ' &raquo;',
-                        ['description/index'],
-                        ['class' => 'btn btn-default btn-block']
-                    ); ?>
-                </p>
-
-                <p>
-                    <?= Html::a(
-                        Yii::t('app', 'BUTTON_PARAMETER_LIST') . ' &raquo;',
-                        ['parameter/index'],
-                        ['class' => 'btn btn-default btn-block']
-                    ); ?>
-                </p>
-
+            <div class="col-md-4">
+                <h2>[details]</h2>
             </div>
 
         </div>

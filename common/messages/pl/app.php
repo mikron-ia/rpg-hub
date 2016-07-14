@@ -64,7 +64,7 @@ return [
     'CHARACTER_TITLE_CREATE' => 'Dodaj postać',
     'CHARACTER_TITLE_INDEX' => 'Postacie',
     'CHARACTER_TITLE_UPDATE' => 'Zmodyfikuj postać',
-    'CONFIGURATION_TITLE_INDEX' => 'Konfiguracja kampanii',
+    'CONFIGURATION_TITLE_INDEX' => 'Dane pomocznicze',
     'CONFIRMATION_DELETE' => 'Potwierdź usunięcie obiektu.',
     'CONFIRMATION_DELETE {name}' => 'Potwierdź usunięcie obiektu "{name}".',
     'CONFIRMATION_LOAD' => 'Potwierdź operację zastąpienia danych nowozaładowanymi.',

@@ -64,7 +64,7 @@ return [
     'CHARACTER_TITLE_CREATE' => 'Add character',
     'CHARACTER_TITLE_INDEX' => 'Characters',
     'CHARACTER_TITLE_UPDATE' => 'Edit character',
-    'CONFIGURATION_TITLE_INDEX' => 'Epic configuration',
+    'CONFIGURATION_TITLE_INDEX' => 'Auxiliary data',
     'CONFIRMATION_DELETE' => 'Please confirm deletion.',
     'CONFIRMATION_DELETE {name}' => 'Please confirm deletion of "{name}".',
     'CONFIRMATION_LOAD' => 'Confirm replacing current data with newly loaded content.',
