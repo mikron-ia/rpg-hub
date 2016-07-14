@@ -19,7 +19,6 @@
 return [
     'ABOUT_TITLE' => 'O stronie',
     'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC' => 'Witamy w centrum kontroli kampanii. Wybierz kampanię do pracy z menu poniżej lub z menu górnego.',
-    'BACKEND_FRONT_PAGE_MAIN_TEXT' => 'Witamy w centrum kontroli kampanii. Wybierz dział spośród dostępnych poniżej lub skorzystaj z funkcji pomocniczych.',
     'BACKEND_FRONT_PAGE_TITLE' => 'Centrum kontroli',
     'BREADCRUMBS_HOME' => 'Hub',
     'BREADCRUMBS_UPDATE' => 'Modyfikacja',
@@ -28,6 +27,7 @@ return [
     'BUTTON_CREATE' => 'Dodaj',
     'BUTTON_DELETE' => 'Usuń',
     'BUTTON_DESCRIPTION_LIST' => 'Lista opisów',
+    'BUTTON_DETAILS' => 'Szczegóły kampanii',
     'BUTTON_EPIC_ADD' => 'Dodaj kampanię',
     'BUTTON_EPIC_LIST' => 'Lista kampanii',
     'BUTTON_GOTO_FILTER' => 'Filtry',

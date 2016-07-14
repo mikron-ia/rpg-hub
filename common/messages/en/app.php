@@ -19,7 +19,6 @@
 return [
     'ABOUT_TITLE' => 'About',
     'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC' => 'Welcome to the epic data hub. Please choose an epic to work with from menu below or from top menu.',
-    'BACKEND_FRONT_PAGE_MAIN_TEXT' => 'Welcome to the epic data hub. Please choose an area to access or use one of the auxiliary functions.',
     'BACKEND_FRONT_PAGE_TITLE' => 'RPG Hub Control',
     'BREADCRUMBS_HOME' => 'Hub',
     'BREADCRUMBS_UPDATE' => 'Update',
@@ -28,6 +27,7 @@ return [
     'BUTTON_CREATE' => 'Add',
     'BUTTON_DELETE' => 'Delete',
     'BUTTON_DESCRIPTION_LIST' => 'List of descriptions',
+    'BUTTON_DETAILS' => 'Epic details',
     'BUTTON_EPIC_ADD' => 'Add Epic',
     'BUTTON_EPIC_LIST' => 'List Epics',
     'BUTTON_GOTO_FILTER' => 'Filters',

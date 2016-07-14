@@ -1,18 +1,26 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $epic Epic */
 
+use common\models\Epic;
 use yii\bootstrap\Html;
 
 $this->title = 'RPG hub - control';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron">
+    <div class="text-center">
 
-        <h1><?= Yii::t('app', 'BACKEND_FRONT_PAGE_TITLE'); ?></h1>
+        <h1><?= $epic->name ?></h1>
 
-        <p class="lead text-center"><?= Yii::t('app', 'BACKEND_FRONT_PAGE_MAIN_TEXT'); ?></p>
+        <div class="btn-group btn-group-lg">
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_DETAILS'),
+                ['epic/view', 'id' => $epic->epic_id],
+                ['class' => 'btn btn-lg btn-success'])
+            ?>
+        </div>
 
         <div class="btn-group btn-group-lg">
             <?= Html::a(Yii::t('app', 'BUTTON_STORIES'), ['story/index'], ['class' => 'btn btn-lg btn-success']); ?>
@@ -21,7 +29,8 @@ $this->title = 'RPG hub - control';
 
         <div class="btn-group btn-group-lg">
             <?= Html::a(Yii::t('app', 'BUTTON_PEOPLE'), ['person/index'], ['class' => 'btn btn-lg btn-success']); ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_CHARACTERS'), ['character/index'], ['class' => 'btn btn-lg btn-success']); ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_CHARACTERS'), ['character/index'],
+                ['class' => 'btn btn-lg btn-success']); ?>
             <?= Html::a(Yii::t('app', 'BUTTON_GROUP'), ['group/index'], ['class' => 'btn btn-lg btn-success']); ?>
         </div>
 
