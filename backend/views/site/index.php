@@ -29,8 +29,7 @@ $this->title = 'RPG hub - control';
 
         <div class="btn-group btn-group-lg">
             <?= Html::a(Yii::t('app', 'BUTTON_PEOPLE'), ['person/index'], ['class' => 'btn btn-lg btn-success']); ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_CHARACTERS'), ['character/index'],
-                ['class' => 'btn btn-lg btn-success']); ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_CHARACTERS'), ['character/index'], ['class' => 'btn btn-lg btn-success']); ?>
             <?= Html::a(Yii::t('app', 'BUTTON_GROUP'), ['group/index'], ['class' => 'btn btn-lg btn-success']); ?>
         </div>
 
@@ -41,11 +40,12 @@ $this->title = 'RPG hub - control';
         <div class="row">
 
             <div class="col-md-8">
-                <h2>[data]</h2>
+                <h2><?= Yii::t('app', 'EPIC_CARD_RECENT_EVENTS'); ?></h2>
             </div>
 
             <div class="col-md-4">
-                <h2>[details]</h2>
+                <p>[attributes]</p>
+                <p>[todo for GM]</p>
             </div>
 
         </div>
