@@ -208,6 +208,8 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
             Parameter::PCS_ACTIVE,
             Parameter::CS_ACTIVE,
             Parameter::DATA_SOURCE_FOR_REPUTATION,
+            Parameter::EPIC_STATUS,
+            Parameter::EPIC_SYSTEM_STATE,
         ];
     }
 }

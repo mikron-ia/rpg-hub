@@ -31,6 +31,8 @@ class Parameter extends \yii\db\ActiveRecord
     const PCS_ACTIVE = 'active-pcs';
     const CS_ACTIVE = 'active-cs';
     const DATA_SOURCE_FOR_REPUTATION = 'source-reputation';
+    const EPIC_STATUS = 'epic-status';
+    const EPIC_SYSTEM_STATE = 'epic-system-state';
 
     /**
      * @inheritdoc
@@ -110,6 +112,8 @@ class Parameter extends \yii\db\ActiveRecord
             self::PCS_ACTIVE => Yii::t('app', 'ST_PARAM_PCS_ACTIVE'),
             self::CS_ACTIVE => Yii::t('app', 'ST_PARAM_CS_ACTIVE'),
             self::DATA_SOURCE_FOR_REPUTATION => Yii::t('app', 'PARAM_DATA_SOURCE_FOR_REPUTATION'),
+            self::EPIC_STATUS => Yii::t('app', 'PARAM_EPIC_STATUS'),
+            self::EPIC_SYSTEM_STATE => Yii::t('app', 'PARAM_EPIC_SYSTEM_STATE'),
         ];
     }
 
