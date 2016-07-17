@@ -20,7 +20,7 @@ use yii2tech\ar\position\PositionBehavior;
  *
  * @property ParameterPack $parameterPack
  */
-class Parameter extends \yii\db\ActiveRecord
+final class Parameter extends \yii\db\ActiveRecord
 {
     const STORY_NUMBER = 'story-number';
     const TIME_RANGE = 'time-range';
@@ -163,6 +163,9 @@ class Parameter extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * @return string Language name
+     */
     public function getLanguage()
     {
         $language = Language::create($this->lang);
@@ -181,12 +184,18 @@ class Parameter extends \yii\db\ActiveRecord
         return $visibility->getNameLowercase();
     }
 
+    /**
+     * @return string Code name in chosen language
+     */
     public function getCodeName()
     {
         $codes = self::typeNames();
         return isset($codes[$this->code]) ? $codes[$this->code] : $this->code;
     }
 
+    /**
+     * @return string Visibility name in chosen language
+     */
     public function getVisibilityName()
     {
         $visibilities = Visibility::visibilityNames();

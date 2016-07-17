@@ -25,7 +25,7 @@ use yii\data\ActiveDataProvider;
  *
  * @todo: Someday, system field will have to come from a closed list of supported systems
  */
-class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
+final class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
 {
     use Tools;
 

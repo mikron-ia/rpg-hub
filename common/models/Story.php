@@ -26,7 +26,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property ParameterPack $parameterPack
  * @property StoryParameter[] $storyParameters
  */
-class Story extends \yii\db\ActiveRecord implements Displayable, HasParameters
+final class Story extends \yii\db\ActiveRecord implements Displayable, HasParameters
 {
     use Tools;
 
