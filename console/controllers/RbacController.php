@@ -14,8 +14,12 @@ class RbacController extends Controller
         $auth->removeAll();
 
         /* Actions */
+        $openEpic = $auth->createPermission('openEpic');
+        $openEpic->description = 'Able to add and open an epic';
+        $auth->add($openEpic);
+
         $controlEpic = $auth->createPermission('controlEpic');
-        $controlEpic->description = 'Able to add, edit, and command an epic';
+        $controlEpic->description = 'Able to edit, and command an epic';
         $auth->add($controlEpic);
 
         $controlPerson = $auth->createPermission('controlPerson');
@@ -46,22 +50,23 @@ class RbacController extends Controller
         $user = $auth->createRole('user'); // person responsible for handling epics
         $auth->add($user);
 
-        $player = $auth->createRole('player');
+        $player = $auth->createRole('player'); // person able to see epics they play in
         $auth->add($player);
         $auth->addChild($player, $user);
 
-        $gm = $auth->createRole('GM');
+        $gm = $auth->createRole('GM'); // person able to handle epics
         $auth->add($gm);
         $auth->addChild($gm, $user);
 
         $manager = $auth->createRole('manager'); // person responsible for management
         $auth->add($manager);
 
-        $handler = $auth->createRole('handler');
+        $handler = $auth->createRole('handler'); // person who handles the users
         $auth->add($handler);
         $auth->addChild($handler, $manager);
+        $auth->addChild($handler, $controlUser);
 
-        $administrator = $auth->createRole('administrator');
+        $administrator = $auth->createRole('administrator'); // person who handles the users and general settings
         $auth->add($administrator);
         $auth->addChild($administrator, $manager);
     }
