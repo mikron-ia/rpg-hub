@@ -21,13 +21,20 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
             'gm_id' => $this->primaryKey()->unsigned(),
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
             'user_id' => $this->integer(11)->unsigned()->notNull(),
+            'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
+            'FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);
 
         $this->createTable('{{%player}}', [
             'player_id' => $this->primaryKey()->unsigned(),
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
             'user_id' => $this->integer(11)->unsigned()->notNull(),
+            'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
+            'FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);
+
+        $this->addColumn('{{%epic}}', 'main_gm_id', $this->integer(11)->unsigned());
+        $this->addForeignKey('epic_fk_gm', '{{%epic}}', 'main_gm_id', '{{%gm}}', 'gm_id', 'RESTRICT', 'CASCADE');
 
         parent::up();
     }
@@ -58,5 +65,8 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
 
         $this->addColumn('description_pack', 'name', $this->string(80)->notNull());
         $this->addColumn('parameter_pack', 'name', $this->string(80)->notNull());
+
+        $this->dropForeignKey('epic_fk_gm', '{{%epic}}');
+        $this->dropColumn('{{%epic}}', 'main_gm_id');
     }
 }
