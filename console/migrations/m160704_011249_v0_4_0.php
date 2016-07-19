@@ -15,6 +15,27 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
             $this->execute($scriptContent);
         }
 
+        $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
+
+        $this->createTable('{{%gm}}', [
+            'gm_id' => $this->primaryKey()->unsigned(),
+            'epic_id' => $this->integer(11)->unsigned()->notNull(),
+            'user_id' => $this->integer(11)->unsigned()->notNull(),
+            'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
+            'FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE RESTRICT ON UPDATE CASCADE',
+        ], $tableOptions);
+
+        $this->createTable('{{%player}}', [
+            'player_id' => $this->primaryKey()->unsigned(),
+            'epic_id' => $this->integer(11)->unsigned()->notNull(),
+            'user_id' => $this->integer(11)->unsigned()->notNull(),
+            'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
+            'FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE RESTRICT ON UPDATE CASCADE',
+        ], $tableOptions);
+
+        $this->addColumn('{{%epic}}', 'main_gm_id', $this->integer(11)->unsigned());
+        $this->addForeignKey('epic_fk_gm', '{{%epic}}', 'main_gm_id', '{{%gm}}', 'gm_id', 'RESTRICT', 'CASCADE');
+
         parent::up();
     }
 
@@ -23,6 +44,7 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         parent::down();
 
         $this->execute('SET foreign_key_checks = 0;');
+
         $this->truncateTable('{{%character}}');
         $this->truncateTable('{{%description}}');
         $this->truncateTable('{{%description_pack}}');
@@ -35,9 +57,16 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         $this->truncateTable('{{%story}}');
         $this->truncateTable('{{%story_parameter}}');
         $this->truncateTable('{{%user}}');
+
+        $this->dropTable('{{%gm}}');
+        $this->dropTable('{{%player}}');
+
         $this->execute('SET foreign_key_checks = 1;');
 
         $this->addColumn('description_pack', 'name', $this->string(80)->notNull());
         $this->addColumn('parameter_pack', 'name', $this->string(80)->notNull());
+
+        $this->dropForeignKey('epic_fk_gm', '{{%epic}}');
+        $this->dropColumn('{{%epic}}', 'main_gm_id');
     }
 }
