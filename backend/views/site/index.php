@@ -1,18 +1,26 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $epic Epic */
 
+use common\models\Epic;
 use yii\bootstrap\Html;
 
 $this->title = 'RPG hub - control';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron">
+    <div class="text-center">
 
-        <h1><?= Yii::t('app', 'BACKEND_FRONT_PAGE_TITLE'); ?></h1>
+        <h1><?= $epic->name ?></h1>
 
-        <p class="lead text-center"><?= Yii::t('app', 'BACKEND_FRONT_PAGE_MAIN_TEXT'); ?></p>
+        <div class="btn-group btn-group-lg">
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_DETAILS'),
+                ['epic/view', 'id' => $epic->epic_id],
+                ['class' => 'btn btn-lg btn-success'])
+            ?>
+        </div>
 
         <div class="btn-group btn-group-lg">
             <?= Html::a(Yii::t('app', 'BUTTON_STORIES'), ['story/index'], ['class' => 'btn btn-lg btn-success']); ?>
@@ -31,34 +39,13 @@ $this->title = 'RPG hub - control';
 
         <div class="row">
 
-            <div class="col-md-6">
+            <div class="col-md-8">
+                <h2><?= Yii::t('app', 'EPIC_CARD_RECENT_EVENTS'); ?></h2>
+            </div>
 
-                <h2><?= Yii::t('app', 'CONFIGURATION_TITLE_INDEX'); ?></h2>
-
-                <p>
-                    <?= Html::a(
-                        Yii::t('app', 'BUTTON_EPIC_LIST') . ' &raquo;',
-                        ['epic/index'],
-                        ['class' => 'btn btn-default btn-block']
-                    ); ?>
-                </p>
-
-                <p>
-                    <?= Html::a(
-                        Yii::t('app', 'BUTTON_DESCRIPTION_LIST') . ' &raquo;',
-                        ['description/index'],
-                        ['class' => 'btn btn-default btn-block']
-                    ); ?>
-                </p>
-
-                <p>
-                    <?= Html::a(
-                        Yii::t('app', 'BUTTON_PARAMETER_LIST') . ' &raquo;',
-                        ['parameter/index'],
-                        ['class' => 'btn btn-default btn-block']
-                    ); ?>
-                </p>
-
+            <div class="col-md-4">
+                <p>[attributes]</p>
+                <p>[todo for GM]</p>
             </div>
 
         </div>

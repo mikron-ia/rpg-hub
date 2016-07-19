@@ -21,7 +21,7 @@ use yii\data\ActiveDataProvider;
  * @property Person $currentlyDeliveredPerson
  * @property Person[] $people
  */
-class Character extends \yii\db\ActiveRecord implements Displayable
+final class Character extends \yii\db\ActiveRecord implements Displayable
 {
     use Tools;
 

@@ -35,7 +35,16 @@ AppAsset::register($this);
             'class' => 'navbar-default navbar-fixed-top',
         ],
     ]);
+
     $menuItems = [
+        [
+            'label' => Yii::t('app', 'CONFIGURATION_TITLE_INDEX'),
+            'items' => [
+                ['label' => Yii::t('app', 'BUTTON_EPIC_LIST'), 'url' => ['/epic/index']],
+                ['label' => Yii::t('app', 'BUTTON_DESCRIPTION_LIST'), 'url' => ['/description/index']],
+                ['label' => Yii::t('app', 'BUTTON_PARAMETER_LIST'), 'url' => ['/parameter/index']],
+            ]
+        ],
         [
             'label' => Yii::t('app', 'MENU_TOP_SETTINGS'),
             'items' => [
@@ -43,6 +52,7 @@ AppAsset::register($this);
             ]
         ],
     ];
+
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => Yii::t('app', 'MENU_TOP_LOGIN'), 'url' => ['/site/login']];
     } else {

@@ -20,7 +20,7 @@ use yii2tech\ar\position\PositionBehavior;
  *
  * @property ParameterPack $parameterPack
  */
-class Parameter extends \yii\db\ActiveRecord
+final class Parameter extends \yii\db\ActiveRecord
 {
     const STORY_NUMBER = 'story-number';
     const TIME_RANGE = 'time-range';
@@ -31,6 +31,8 @@ class Parameter extends \yii\db\ActiveRecord
     const PCS_ACTIVE = 'active-pcs';
     const CS_ACTIVE = 'active-cs';
     const DATA_SOURCE_FOR_REPUTATION = 'source-reputation';
+    const EPIC_STATUS = 'epic-status';
+    const EPIC_SYSTEM_STATE = 'epic-system-state';
 
     /**
      * @inheritdoc
@@ -110,6 +112,8 @@ class Parameter extends \yii\db\ActiveRecord
             self::PCS_ACTIVE => Yii::t('app', 'ST_PARAM_PCS_ACTIVE'),
             self::CS_ACTIVE => Yii::t('app', 'ST_PARAM_CS_ACTIVE'),
             self::DATA_SOURCE_FOR_REPUTATION => Yii::t('app', 'PARAM_DATA_SOURCE_FOR_REPUTATION'),
+            self::EPIC_STATUS => Yii::t('app', 'PARAM_EPIC_STATUS'),
+            self::EPIC_SYSTEM_STATE => Yii::t('app', 'PARAM_EPIC_SYSTEM_STATE'),
         ];
     }
 
@@ -159,6 +163,9 @@ class Parameter extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * @return string Language name
+     */
     public function getLanguage()
     {
         $language = Language::create($this->lang);
@@ -177,12 +184,18 @@ class Parameter extends \yii\db\ActiveRecord
         return $visibility->getNameLowercase();
     }
 
+    /**
+     * @return string Code name in chosen language
+     */
     public function getCodeName()
     {
         $codes = self::typeNames();
         return isset($codes[$this->code]) ? $codes[$this->code] : $this->code;
     }
 
+    /**
+     * @return string Visibility name in chosen language
+     */
     public function getVisibilityName()
     {
         $visibilities = Visibility::visibilityNames();
