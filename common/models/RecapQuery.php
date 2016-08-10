@@ -10,7 +10,7 @@ use common\models\Recap;
 /**
  * RecapQuery represents the model behind the search form about `common\models\Recap`.
  */
-class RecapQuery extends Recap
+final class RecapQuery extends Recap
 {
     /**
      * @inheritdoc

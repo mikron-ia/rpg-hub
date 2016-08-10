@@ -9,7 +9,7 @@ use yii\data\ActiveDataProvider;
 /**
  * DescriptionQuery represents the model behind the search form about `common\models\Description`.
  */
-class DescriptionQuery extends Description
+final class DescriptionQuery extends Description
 {
     public $text;
 

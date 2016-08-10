@@ -20,7 +20,7 @@ use yii2tech\ar\position\PositionBehavior;
  *
  * @property ParameterPack $parameterPack
  */
-final class Parameter extends \yii\db\ActiveRecord
+class Parameter extends \yii\db\ActiveRecord
 {
     const STORY_NUMBER = 'story-number';
     const TIME_RANGE = 'time-range';

@@ -24,7 +24,7 @@ use Yii;
  * @property Character $character
  * @property DescriptionPack $descriptionPack
  */
-final class Person extends \yii\db\ActiveRecord implements Displayable, HasDescriptions
+class Person extends \yii\db\ActiveRecord implements Displayable, HasDescriptions
 {
     use Tools;
 

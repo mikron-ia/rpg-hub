@@ -9,7 +9,7 @@ use yii\data\ActiveDataProvider;
 /**
  * CharacterQuery represents the model behind the search form about `common\models\Character`.
  */
-class CharacterQuery extends Character
+final class CharacterQuery extends Character
 {
     /**
      * @inheritdoc

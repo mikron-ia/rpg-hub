@@ -10,7 +10,7 @@ use common\models\Parameter;
 /**
  * ParameterQuery represents the model behind the search form about `common\models\Parameter`.
  */
-class ParameterQuery extends Parameter
+final class ParameterQuery extends Parameter
 {
     /**
      * @inheritdoc

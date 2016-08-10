@@ -10,7 +10,7 @@ use common\models\Group;
 /**
  * GroupQuery represents the model behind the search form about `common\models\Group`.
  */
-class GroupQuery extends Group
+final class GroupQuery extends Group
 {
     /**
      * @inheritdoc

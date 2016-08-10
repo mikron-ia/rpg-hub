@@ -16,7 +16,7 @@ use Yii;
  *
  * @property Epic $epic
  */
-final class Group extends \yii\db\ActiveRecord implements Displayable
+class Group extends \yii\db\ActiveRecord implements Displayable
 {
     use Tools;
 

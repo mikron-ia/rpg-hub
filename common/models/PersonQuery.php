@@ -10,7 +10,7 @@ use common\models\Person;
 /**
  * PersonQuery represents the model behind the search form about `common\models\Person`.
  */
-class PersonQuery extends Person
+final class PersonQuery extends Person
 {
     /**
      * @inheritdoc

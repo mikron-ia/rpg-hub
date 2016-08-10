@@ -10,7 +10,7 @@ use common\models\Epic;
 /**
  * EpicQuery represents the model behind the search form about `common\models\Epic`.
  */
-class EpicQuery extends Epic
+final class EpicQuery extends Epic
 {
     /**
      * @inheritdoc

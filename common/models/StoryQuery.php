@@ -10,7 +10,7 @@ use common\models\Story;
 /**
  * StoryQuery represents the model behind the search form about `common\models\Story`.
  */
-class StoryQuery extends Story
+final class StoryQuery extends Story
 {
     public $descriptions;
 
