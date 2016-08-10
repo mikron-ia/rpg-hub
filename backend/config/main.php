@@ -44,9 +44,6 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'request' => [
-            'cookieValidationKey' => getenv('COOKIE_VALIDATION_KEY_BACKEND'),
-        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             //'showScriptName' => false,

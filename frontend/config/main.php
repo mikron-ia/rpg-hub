@@ -43,9 +43,6 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'request' => [
-            'cookieValidationKey' => getenv('COOKIE_VALIDATION_KEY_FRONTEND'),
-        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             //'showScriptName' => false,

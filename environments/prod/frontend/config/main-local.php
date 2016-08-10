@@ -1,5 +1,11 @@
 <?php
 
-$config = [];
+$config = [
+    'components' => [
+        'request' => [
+            'cookieValidationKey' => '',
+        ],
+    ],
+];
 
 return $config;

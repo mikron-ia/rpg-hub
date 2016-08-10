@@ -1,6 +1,12 @@
 <?php
 
-$config = [];
+$config = [
+    'components' => [
+        'request' => [
+            'cookieValidationKey' => '',
+        ],
+    ],
+];
 
 if (!YII_ENV_TEST) {
     // configuration adjustments for 'dev' environment
