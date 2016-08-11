@@ -9,6 +9,10 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         $this->dropColumn('description_pack', 'name');
         $this->dropColumn('parameter_pack', 'name');
 
+        /**
+         * Loading up data, if available
+         * This is a stopgap measure that should be moved forward to newest migration and removed no later than in 1.0
+         */
         $scriptName = __DIR__ . '/' . 'data.sql';
         if (file_exists($scriptName)) {
             $scriptContent = file_get_contents($scriptName);
@@ -17,6 +21,9 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
 
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
+        /**
+         * Player & GM tables
+         */
         $this->createTable('{{%gm}}', [
             'gm_id' => $this->primaryKey()->unsigned(),
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
@@ -36,6 +43,9 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         $this->addColumn('{{%epic}}', 'main_gm_id', $this->integer(11)->unsigned());
         $this->addForeignKey('epic_fk_gm', '{{%epic}}', 'main_gm_id', '{{%gm}}', 'gm_id', 'RESTRICT', 'CASCADE');
 
+        /**
+         * Activity log table
+         */
         $this->createTable('{{%user_action}}', [
             'user_action_id' => $this->primaryKey()->unsigned(),
             'user_id' => $this->integer(11)->unsigned()->notNull(),
