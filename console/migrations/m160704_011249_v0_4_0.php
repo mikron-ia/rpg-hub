@@ -24,16 +24,14 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         /**
          * Player & GM tables
          */
-        $this->createTable('{{%gm}}', [
-            'gm_id' => $this->primaryKey()->unsigned(),
+        $this->createTable('{{%epic_gms}}', [
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
             'user_id' => $this->integer(11)->unsigned()->notNull(),
             'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
             'FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);
 
-        $this->createTable('{{%player}}', [
-            'player_id' => $this->primaryKey()->unsigned(),
+        $this->createTable('{{%epic_players}}', [
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
             'user_id' => $this->integer(11)->unsigned()->notNull(),
             'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
@@ -41,7 +39,7 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         ], $tableOptions);
 
         $this->addColumn('{{%epic}}', 'main_gm_id', $this->integer(11)->unsigned());
-        $this->addForeignKey('epic_fk_gm', '{{%epic}}', 'main_gm_id', '{{%gm}}', 'gm_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('epic_fk_gm', '{{%epic}}', 'main_gm_id', '{{%user}}', 'id', 'RESTRICT', 'CASCADE');
 
         /**
          * Activity log table
@@ -77,8 +75,8 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         $this->truncateTable('{{%story_parameter}}');
         $this->truncateTable('{{%user}}');
 
-        $this->dropTable('{{%gm}}');
-        $this->dropTable('{{%player}}');
+        $this->dropTable('{{%epic_gms}}');
+        $this->dropTable('{{%epic_players}}');
 
         $this->dropTable('{{%user_action}}');
 
