@@ -27,6 +27,7 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         $this->createTable('{{%epic_gms}}', [
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
             'user_id' => $this->integer(11)->unsigned()->notNull(),
+            'PRIMARY KEY (epic_id, user_id)',
             'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
             'FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);
@@ -34,6 +35,7 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         $this->createTable('{{%epic_players}}', [
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
             'user_id' => $this->integer(11)->unsigned()->notNull(),
+            'PRIMARY KEY (epic_id, user_id)',
             'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
             'FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);
