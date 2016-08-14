@@ -146,6 +146,22 @@ final class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEpicsForGM()
+    {
+        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable('epic_gms', ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEpicsForPlayer()
+    {
+        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable('epic_players', ['user_id' => 'id']);
+    }
+
+    /**
      * @inheritdoc
      */
     public function validateAuthKey($authKey)

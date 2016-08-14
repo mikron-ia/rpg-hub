@@ -18,6 +18,8 @@ use yii\data\ActiveDataProvider;
  *
  * @property Character[] $characters
  * @property ParameterPack $parameterPack
+ * @property User[] $gms
+ * @property User[] $players
  * @property Group[] $groups
  * @property Person[] $people
  * @property Recap[] $recaps
@@ -109,6 +111,22 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
     public function getGroups()
     {
         return $this->hasMany(Group::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGms()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('epic_gms', ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPlayers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('epic_players', ['epic_id' => 'epic_id']);
     }
 
     /**
