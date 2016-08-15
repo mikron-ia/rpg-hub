@@ -9,16 +9,6 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         $this->dropColumn('description_pack', 'name');
         $this->dropColumn('parameter_pack', 'name');
 
-        /**
-         * Loading up data, if available
-         * This is a stopgap measure that should be moved forward to newest migration and removed no later than in 1.0
-         */
-        $scriptName = __DIR__ . '/' . 'data.sql';
-        if (file_exists($scriptName)) {
-            $scriptContent = file_get_contents($scriptName);
-            $this->execute($scriptContent);
-        }
-
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
         $this->createTable('{{%user_epics}}', [
@@ -46,6 +36,16 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         ], $tableOptions);
 
         parent::up();
+
+        /**
+         * Loading up data, if available
+         * This is a stopgap measure that should be moved forward to newest migration and removed no later than in 1.0
+         */
+        $scriptName = __DIR__ . '/' . 'data.sql';
+        if (file_exists($scriptName)) {
+            $scriptContent = file_get_contents($scriptName);
+            $this->execute($scriptContent);
+        }
     }
 
     public function down()
