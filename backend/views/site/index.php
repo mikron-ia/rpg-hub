@@ -44,8 +44,11 @@ $this->title = 'RPG hub - control';
             </div>
 
             <div class="col-md-4">
+                <h2><?= Yii::t('app', 'EPIC_CARD_EPIC_ATTRIBUTES'); ?></h2>
                 <p>[attributes]</p>
-                <p>[todo for GM]</p>
+
+                <h2><?= Yii::t('app', 'EPIC_CARD_TODO'); ?></h2>
+                <p>[todo for the user]</p>
             </div>
 
         </div>
