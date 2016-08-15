@@ -6,6 +6,7 @@ use common\models\core\HasParameters;
 use common\models\tools\Tools;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "epic".
@@ -118,7 +119,13 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
      */
     public function getGms()
     {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('epic_gms', ['epic_id' => 'epic_id']);
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable(
+            'user_epics',
+            ['epic_id' => 'epic_id'],
+            function (ActiveQuery $query) {
+                return $query->onCondition("role = 'gm'");
+            }
+        );
     }
 
     /**
@@ -126,7 +133,13 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
      */
     public function getPlayers()
     {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('epic_players', ['epic_id' => 'epic_id']);
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable(
+            'user_epics',
+            ['epic_id' => 'epic_id'],
+            function (ActiveQuery $query) {
+                return $query->onCondition("role = 'player'");
+            }
+        );
     }
 
     /**

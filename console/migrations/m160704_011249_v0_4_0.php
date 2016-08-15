@@ -21,23 +21,13 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
 
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
-        /**
-         * Player & GM tables
-         */
-        $this->createTable('{{%epic_gms}}', [
-            'epic_id' => $this->integer(11)->unsigned()->notNull(),
+        $this->createTable('{{%user_epics}}', [
             'user_id' => $this->integer(11)->unsigned()->notNull(),
-            'PRIMARY KEY (epic_id, user_id)',
-            'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
-            'FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE RESTRICT ON UPDATE CASCADE',
-        ], $tableOptions);
-
-        $this->createTable('{{%epic_players}}', [
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
-            'user_id' => $this->integer(11)->unsigned()->notNull(),
-            'PRIMARY KEY (epic_id, user_id)',
-            'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
+            'role' => $this->string(20),
+            'PRIMARY KEY (user_id, epic_id)',
             'FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE RESTRICT ON UPDATE CASCADE',
+            'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);
 
         $this->addColumn('{{%epic}}', 'main_gm_id', $this->integer(11)->unsigned());
@@ -77,8 +67,7 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         $this->truncateTable('{{%story_parameter}}');
         $this->truncateTable('{{%user}}');
 
-        $this->dropTable('{{%epic_gms}}');
-        $this->dropTable('{{%epic_players}}');
+        $this->dropTable('{{%user_epics}}');
 
         $this->dropTable('{{%user_action}}');
 

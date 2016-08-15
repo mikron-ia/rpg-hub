@@ -4,6 +4,7 @@ namespace common\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -21,6 +22,10 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  * @property string $language
+ *
+ * @property Epic[] $epics
+ * @property Epic[] $epicsGameMastered
+ * @property Epic[] $epicsPlayed
  */
 final class User extends ActiveRecord implements IdentityInterface
 {
@@ -124,7 +129,7 @@ final class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
@@ -146,19 +151,39 @@ final class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getEpicsForGM()
+    public function getEpicsGameMastered()
     {
-        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable('epic_gms', ['user_id' => 'id']);
+        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable(
+            'user_epics',
+            ['user_id' => 'id'],
+            function (ActiveQuery $query) {
+                return $query->onCondition("role = 'gm'");
+            }
+        );
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getEpicsForPlayer()
+    public function getEpicsPlayed()
     {
-        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable('epic_players', ['user_id' => 'id']);
+        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable(
+            'user_epics',
+            ['user_id' => 'id'],
+            function (ActiveQuery $query) {
+                return $query->onCondition("role = 'player'");
+            }
+        );
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getEpics()
+    {
+        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable('user_epics', ['user_id' => 'id']);
     }
 
     /**
