@@ -49,8 +49,8 @@ class UserEpic extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => Yii::t('app', 'USER_ID'),
-            'epic_id' => Yii::t('app', 'EPIC_ID'),
+            'user_id' => Yii::t('app', 'USER_LABEL'),
+            'epic_id' => Yii::t('app', 'EPIC_LABEL'),
             'role' => Yii::t('app', 'USER_EPIC_ROLE'),
         ];
     }

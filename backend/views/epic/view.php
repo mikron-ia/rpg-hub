@@ -37,8 +37,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="buttoned-header">
             <h2><?= Yii::t('app', 'EPIC_CARD_PARTICIPANTS'); ?></h2>
-            <?= Html::a(Yii::t('app', 'BUTTON_PARTICIPANT_ADD'), ['epic/participant-add'],
-                ['class' => 'btn btn-success pull-right']); ?>
+            <?= Html::a(
+                '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_PARTICIPANT_ADD') . '</span>',
+                '#',
+                [
+                    'class' => 'add-user-link',
+                    'title' => Yii::t('app', 'BUTTON_PARTICIPANT_ADD'),
+                    'data-toggle' => 'modal',
+                    'data-target' => '#add-user-modal'
+                ]
+            ); ?>
         </div>
 
         <?= GridView::widget([
@@ -63,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php \yii\bootstrap\Modal::begin([
             'id' => 'add-user-modal',
-            'header' => '<h2 class="modal-title">' . Yii::t('app', 'EPIC_PLAYER_ADD') . '</h2>',
+            'header' => '<h2 class="modal-title">' . Yii::t('app', 'EPIC_PARTICIPANT_ADD') . '</h2>',
         ]); ?>
 
         <?php \yii\bootstrap\Modal::end(); ?>
@@ -71,12 +79,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $this->registerJs(
             "$('.add-user-link').click(function() {
     $.get(
-        '" . Yii::$app->urlManager->createUrl(['parameter/create']) . "',
+        '" . Yii::$app->urlManager->createUrl(['epic/participant-add']) . "',
         {
-            pack_id: " . $model->parameterPack->parameter_pack_id . "
+            epic_id: " . $model->epic_id . "
         },
         function (data) {
-            $('.user-modal-body').html(data);
+            $('.modal-body').html(data);
             $('#add-user-modal').modal();
         }
     );

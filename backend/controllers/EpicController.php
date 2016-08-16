@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\UserEpic;
 use Yii;
 use common\models\Epic;
 use common\models\EpicQuery;
@@ -25,7 +26,7 @@ class EpicController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'update', 'view'],
+                        'actions' => ['create', 'delete', 'index', 'update', 'view', 'participant-add'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -123,6 +124,33 @@ class EpicController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Adds a participant
+     * @param string $epic_id
+     * @return mixed
+     */
+    public function actionParticipantAdd($epic_id)
+    {
+        $model = new UserEpic();
+
+        $model->epic_id = $epic_id;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $referrer = Yii::$app->getRequest()->getReferrer();
+            if ($referrer) {
+                return $this->redirect(['view', 'id' => $epic_id]);
+            } else {
+                return $this->redirect(['index']);
+            }
+        } else {
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('participant/add', ['model' => $model]);
+            } else {
+                return $this->render('participant/add', ['model' => $model]);
+            }
+        }
     }
 
     /**
