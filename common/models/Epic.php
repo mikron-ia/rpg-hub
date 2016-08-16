@@ -25,6 +25,7 @@ use yii\db\ActiveQuery;
  * @property Person[] $people
  * @property Recap[] $recaps
  * @property Story[] $stories
+ * @property UserEpic[] $userEpics
  *
  * @todo: Someday, system field will have to come from a closed list of supported systems
  */
@@ -164,6 +165,14 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
     public function getStories()
     {
         return $this->hasMany(Story::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserEpics()
+    {
+        return $this->hasMany(UserEpic::className(), ['epic_id' => 'epic_id']);
     }
 
     /**

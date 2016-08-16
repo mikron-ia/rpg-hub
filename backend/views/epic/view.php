@@ -36,6 +36,58 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-lg-6">
 
         <div class="buttoned-header">
+            <h2><?= Yii::t('app', 'EPIC_CARD_PARTICIPANTS'); ?></h2>
+            <?= Html::a(Yii::t('app', 'BUTTON_PARTICIPANT_ADD'), ['epic/participant-add'],
+                ['class' => 'btn btn-success pull-right']); ?>
+        </div>
+
+        <?= GridView::widget([
+            'dataProvider' => new \yii\data\ActiveDataProvider(['query' => $model->getUserEpics()]),
+            'summary' => '',
+            'columns' => [
+                [
+                    'attribute' => 'user.username',
+                    'label' => Yii::t('app', 'EPIC_CARD_USERNAME'),
+                    'enableSorting' => false,
+                ],
+                [
+                    'attribute' => 'role',
+                    'label' => Yii::t('app', 'EPIC_CARD_ROLE'),
+                    'enableSorting' => false,
+                    'value' => function(\common\models\UserEpic $model) {
+                        return $model->getRoleDescribed();
+                    }
+                ],
+            ],
+        ]); ?>
+
+        <?php \yii\bootstrap\Modal::begin([
+            'id' => 'add-user-modal',
+            'header' => '<h2 class="modal-title">' . Yii::t('app', 'EPIC_PLAYER_ADD') . '</h2>',
+        ]); ?>
+
+        <?php \yii\bootstrap\Modal::end(); ?>
+
+        <?php $this->registerJs(
+            "$('.add-user-link').click(function() {
+    $.get(
+        '" . Yii::$app->urlManager->createUrl(['parameter/create']) . "',
+        {
+            pack_id: " . $model->parameterPack->parameter_pack_id . "
+        },
+        function (data) {
+            $('.user-modal-body').html(data);
+            $('#add-user-modal').modal();
+        }
+    );
+});"
+        ); ?>
+
+    </div>
+
+    <div class="col-lg-6">
+
+        <div class="buttoned-header">
             <h2><?= Yii::t('app', 'EPIC_HEADER_GROUPS'); ?></h2>
             <?= Html::a(Yii::t('app', 'BUTTON_GROUP_CREATE'), ['group/create'],
                 ['class' => 'btn btn-success pull-right']); ?>
@@ -73,6 +125,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]); ?>
+
+    </div>
+
+    <div class="col-lg-6">
 
         <div class="buttoned-header">
             <h2><?= Yii::t('app', 'EPIC_HEADER_STORIES'); ?></h2>
