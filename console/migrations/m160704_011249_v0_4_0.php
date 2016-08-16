@@ -12,10 +12,10 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
         $this->createTable('{{%user_epics}}', [
+            'user_epic_id' => $this->primaryKey(),
             'user_id' => $this->integer(11)->unsigned()->notNull(),
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
             'role' => $this->string(20),
-            'PRIMARY KEY (user_id, epic_id)',
             'FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE RESTRICT ON UPDATE CASCADE',
             'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);

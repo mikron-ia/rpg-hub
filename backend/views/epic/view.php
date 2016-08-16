@@ -3,6 +3,7 @@
 use common\models\Group;
 use common\models\Parameter;
 use common\models\Story;
+use common\models\UserEpic;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -62,9 +63,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'role',
                     'label' => Yii::t('app', 'EPIC_CARD_ROLE'),
                     'enableSorting' => false,
-                    'value' => function(\common\models\UserEpic $model) {
+                    'value' => function(UserEpic $model) {
                         return $model->getRoleDescribed();
                     }
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{update}',
+                    'buttons' => [
+                        'update' => function ($url, UserEpic $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
+                                'class' => 'edit-user-link',
+                                'title' => Yii::t('app', 'LABEL_UPDATE'),
+                                'data-toggle' => 'modal',
+                                'data-target' => '#edit-user-modal',
+                                'data-id' => $key,
+                            ]);
+                        },
+                    ],
                 ],
             ],
         ]); ?>
@@ -86,6 +102,28 @@ $this->params['breadcrumbs'][] = $this->title;
         function (data) {
             $('.modal-body').html(data);
             $('#add-user-modal').modal();
+        }
+    );
+});"
+        ); ?>
+
+        <?php \yii\bootstrap\Modal::begin([
+            'id' => 'update-user-modal',
+            'header' => '<h2 class="modal-title">' . Yii::t('app', 'EPIC_PARTICIPANT_ADD') . '</h2>',
+        ]); ?>
+
+        <?php \yii\bootstrap\Modal::end(); ?>
+
+        <?php $this->registerJs(
+            "$('.edit-user-link').click(function() {
+    $.get(
+        '" . Yii::$app->urlManager->createUrl(['epic/participant-edit']) . "',
+        {
+            user_epic_id: $(this).closest('tr').data('key')
+        },
+        function (data) {
+            $('.modal-body').html(data);
+            $('#update-user-modal').modal();
         }
     );
 });"

@@ -8,25 +8,22 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\UserEpic */
 
 ?>
-<div class="participant-add">
+<div class="participant-edit">
 
     <?php $form = ActiveForm::begin([
         'id' => 'story-parameter-form',
         'action' =>
             [
-                'epic/participant-add',
-                'epic_id' => $model->epic_id
+                'epic/participant-edit',
+                'user_epic_id' => $model->user_epic_id
             ],
         'method' => 'post',
     ]); ?>
-
-    <?= $form->field($model, 'user_id')->dropDownList(\common\models\User::getAllForDropdown()); ?>
 
     <?= $form->field($model, 'role')->dropDownList(
         UserEpic::roleNames(),
         ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_TYPE') . ' --- ']
     ); ?>
-
 
     <div class="form-group">
         <?= Html::submitButton(

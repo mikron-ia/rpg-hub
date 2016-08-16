@@ -26,7 +26,10 @@ class EpicController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'update', 'view', 'participant-add'],
+                        'actions' => [
+                            'create', 'delete', 'index', 'update', 'view',
+                            'participant-add', 'participant-edit'
+                        ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -154,6 +157,31 @@ class EpicController extends Controller
     }
 
     /**
+     * Edits a participant
+     * @param string $user_epic_id
+     * @return mixed
+     */
+    public function actionParticipantEdit($user_epic_id)
+    {
+        $model = $this->findParticipantModel($user_epic_id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $referrer = Yii::$app->getRequest()->getReferrer();
+            if ($referrer) {
+                return $this->redirect(['view', 'id' => $model->epic_id]);
+            } else {
+                return $this->redirect(['index']);
+            }
+        } else {
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('participant/edit', ['model' => $model]);
+            } else {
+                return $this->render('participant/edit', ['model' => $model]);
+            }
+        }
+    }
+
+    /**
      * Finds the Epic model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
@@ -163,6 +191,22 @@ class EpicController extends Controller
     protected function findModel($id)
     {
         if (($model = Epic::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));
+        }
+    }
+
+    /**
+     * Finds the UserEpic model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $id
+     * @return UserEpic the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findParticipantModel($id)
+    {
+        if (($model = UserEpic::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));

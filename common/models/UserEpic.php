@@ -7,6 +7,7 @@ use Yii;
 /**
  * This is the model class for table "user_epics".
  *
+ * @property integer $user_epic_id
  * @property string $user_id
  * @property string $epic_id
  * @property string $role
@@ -49,6 +50,7 @@ class UserEpic extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'user_epic_id' => Yii::t('app', 'USER_EPIC_ID'),
             'user_id' => Yii::t('app', 'USER_LABEL'),
             'epic_id' => Yii::t('app', 'EPIC_LABEL'),
             'role' => Yii::t('app', 'USER_EPIC_ROLE'),
