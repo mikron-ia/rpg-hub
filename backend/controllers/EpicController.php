@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\UserEpic;
+use common\models\Participant;
 use Yii;
 use common\models\Epic;
 use common\models\EpicQuery;
@@ -136,7 +136,7 @@ class EpicController extends Controller
      */
     public function actionParticipantAdd($epic_id)
     {
-        $model = new UserEpic();
+        $model = new Participant();
 
         $model->epic_id = $epic_id;
 
@@ -201,12 +201,12 @@ class EpicController extends Controller
      * Finds the UserEpic model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return UserEpic the loaded model
+     * @return Participant the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findParticipantModel($id)
     {
-        if (($model = UserEpic::findOne($id)) !== null) {
+        if (($model = Participant::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));

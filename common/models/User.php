@@ -156,7 +156,7 @@ final class User extends ActiveRecord implements IdentityInterface
     public function getEpicsGameMastered()
     {
         return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable(
-            'user_epics',
+            'participant',
             ['user_id' => 'id'],
             function (ActiveQuery $query) {
                 return $query->onCondition("role = 'gm'");
@@ -170,7 +170,7 @@ final class User extends ActiveRecord implements IdentityInterface
     public function getEpicsPlayed()
     {
         return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable(
-            'user_epics',
+            'participant',
             ['user_id' => 'id'],
             function (ActiveQuery $query) {
                 return $query->onCondition("role = 'player'");
@@ -183,7 +183,7 @@ final class User extends ActiveRecord implements IdentityInterface
      */
     public function getEpics()
     {
-        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable('user_epics', ['user_id' => 'id']);
+        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable('participant', ['user_id' => 'id']);
     }
 
     /**

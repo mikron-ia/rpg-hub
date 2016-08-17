@@ -3,7 +3,7 @@
 use common\models\Group;
 use common\models\Parameter;
 use common\models\Story;
-use common\models\UserEpic;
+use common\models\Participant;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <?= GridView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider(['query' => $model->getUserEpics()]),
+            'dataProvider' => new \yii\data\ActiveDataProvider(['query' => $model->getParticipants()]),
             'summary' => '',
             'columns' => [
                 [
@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'role',
                     'label' => Yii::t('app', 'EPIC_CARD_ROLE'),
                     'enableSorting' => false,
-                    'value' => function (UserEpic $model) {
+                    'value' => function (Participant $model) {
                         return $model->getRoleDescribed();
                     }
                 ],
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{update}',
                     'buttons' => [
-                        'update' => function ($url, UserEpic $model, $key) {
+                        'update' => function ($url, Participant $model, $key) {
                             return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
                                 'class' => 'edit-user-link',
                                 'title' => Yii::t('app', 'LABEL_UPDATE'),

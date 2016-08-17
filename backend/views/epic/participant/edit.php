@@ -1,11 +1,11 @@
 <?php
 
-use common\models\UserEpic;
+use common\models\Participant;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\UserEpic */
+/* @var $model common\models\Participant */
 
 ?>
 <div class="participant-edit">
@@ -15,13 +15,13 @@ use yii\widgets\ActiveForm;
         'action' =>
             [
                 'epic/participant-edit',
-                'user_epic_id' => $model->user_epic_id
+                'participant_id' => $model->participant_id
             ],
         'method' => 'post',
     ]); ?>
 
     <?= $form->field($model, 'role')->dropDownList(
-        UserEpic::roleNames(),
+        Participant::roleNames(),
         ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_TYPE') . ' --- ']
     ); ?>
 

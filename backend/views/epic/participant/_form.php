@@ -1,11 +1,11 @@
 <?php
 
-use common\models\UserEpic;
+use common\models\Participant;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\UserEpic */
+/* @var $model common\models\Participant */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'user_id')->dropDownList(\common\models\User::getAllForDropdown()); ?>
 
     <?= $form->field($model, 'role')->dropDownList(
-        UserEpic::roleNames(),
+        Participant::roleNames(),
         ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_TYPE') . ' --- ']
     ); ?>
 

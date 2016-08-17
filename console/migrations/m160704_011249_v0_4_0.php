@@ -11,11 +11,11 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
 
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
-        $this->createTable('{{%user_epics}}', [
-            'user_epic_id' => $this->primaryKey(),
+        $this->createTable('{{%participant}}', [
+            'participant_id' => $this->primaryKey()->unsigned(),
             'user_id' => $this->integer(11)->unsigned()->notNull(),
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
-            'role' => $this->string(20),
+            'role' => $this->string(20)->notNull(),
             'FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE RESTRICT ON UPDATE CASCADE',
             'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);
@@ -67,7 +67,7 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         $this->truncateTable('{{%story_parameter}}');
         $this->truncateTable('{{%user}}');
 
-        $this->dropTable('{{%user_epics}}');
+        $this->dropTable('{{%participant}}');
 
         $this->dropTable('{{%user_action}}');
 

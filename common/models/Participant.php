@@ -5,9 +5,9 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "user_epics".
+ * This is the model class for table "participant".
  *
- * @property integer $user_epic_id
+ * @property integer $participant_id
  * @property string $user_id
  * @property string $epic_id
  * @property string $role
@@ -15,7 +15,7 @@ use Yii;
  * @property User $user
  * @property Epic $epic
  */
-class UserEpic extends \yii\db\ActiveRecord
+class Participant extends \yii\db\ActiveRecord
 {
     const ROLE_GM = 'gm';
     const ROLE_PLAYER = 'player';
@@ -27,7 +27,7 @@ class UserEpic extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'user_epics';
+        return 'participant';
     }
 
     /**
@@ -36,7 +36,7 @@ class UserEpic extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'epic_id'], 'required'],
+            [['user_id', 'epic_id', 'role'], 'required'],
             [['user_id', 'epic_id'], 'integer'],
             [['role'], 'string', 'max' => 20],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -50,10 +50,10 @@ class UserEpic extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_epic_id' => Yii::t('app', 'USER_EPIC_ID'),
+            'participant_id' => Yii::t('app', 'PARTICIPANT_ID'),
             'user_id' => Yii::t('app', 'USER_LABEL'),
             'epic_id' => Yii::t('app', 'EPIC_LABEL'),
-            'role' => Yii::t('app', 'USER_EPIC_ROLE'),
+            'role' => Yii::t('app', 'PARTICIPANT_ROLE'),
         ];
     }
 
@@ -63,10 +63,10 @@ class UserEpic extends \yii\db\ActiveRecord
     static public function roleNames()
     {
         return [
-            self::ROLE_GM => Yii::t('app', 'USER_EPIC_ROLE_GM'),
-            self::ROLE_PLAYER => Yii::t('app', 'USER_EPIC_ROLE_PLAYER'),
-            self::ROLE_MEMBER => Yii::t('app', 'USER_EPIC_ROLE_MEMBER'),
-            self::ROLE_WATCHER => Yii::t('app', 'USER_EPIC_ROLE_WATCHER'),
+            self::ROLE_GM => Yii::t('app', 'PARTICIPANT_ROLE_GM'),
+            self::ROLE_PLAYER => Yii::t('app', 'PARTICIPANT_ROLE_PLAYER'),
+            self::ROLE_MEMBER => Yii::t('app', 'PARTICIPANT_ROLE_MEMBER'),
+            self::ROLE_WATCHER => Yii::t('app', 'PARTICIPANT_ROLE_WATCHER'),
         ];
     }
 

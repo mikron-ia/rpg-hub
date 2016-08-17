@@ -22,10 +22,10 @@ use yii\db\ActiveQuery;
  * @property User[] $gms
  * @property User[] $players
  * @property Group[] $groups
+ * @property Participant[] $participants
  * @property Person[] $people
  * @property Recap[] $recaps
  * @property Story[] $stories
- * @property UserEpic[] $userEpics
  *
  * @todo: Someday, system field will have to come from a closed list of supported systems
  */
@@ -120,13 +120,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
      */
     public function getGms()
     {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable(
-            'user_epics',
-            ['epic_id' => 'epic_id'],
-            function (ActiveQuery $query) {
-                return $query->onCondition("role = 'gm'");
-            }
-        );
+        return $this->getParticipants()->onCondition("role = 'gm'");
     }
 
     /**
@@ -134,13 +128,15 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
      */
     public function getPlayers()
     {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable(
-            'user_epics',
-            ['epic_id' => 'epic_id'],
-            function (ActiveQuery $query) {
-                return $query->onCondition("role = 'player'");
-            }
-        );
+        return $this->getParticipants()->onCondition("role = 'player'");
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParticipants()
+    {
+        return $this->hasMany(Participant::className(), ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -165,14 +161,6 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
     public function getStories()
     {
         return $this->hasMany(Story::className(), ['epic_id' => 'epic_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUserEpics()
-    {
-        return $this->hasMany(UserEpic::className(), ['epic_id' => 'epic_id']);
     }
 
     /**
