@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'role',
                     'label' => Yii::t('app', 'EPIC_CARD_ROLE'),
                     'enableSorting' => false,
-                    'value' => function(UserEpic $model) {
+                    'value' => function (UserEpic $model) {
                         return $model->getRoleDescribed();
                     }
                 ],
@@ -99,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
         {
             epic_id: " . $model->epic_id . "
         },
-        function (data) {
+        function (data) {            
             $('.modal-body').html(data);
             $('#add-user-modal').modal();
         }
@@ -109,7 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php \yii\bootstrap\Modal::begin([
             'id' => 'update-user-modal',
-            'header' => '<h2 class="modal-title">' . Yii::t('app', 'EPIC_PARTICIPANT_ADD') . '</h2>',
+            'header' => '<h2 class="modal-title">' . Yii::t('app', 'EPIC_PARTICIPANT_EDIT') . '</h2>',
         ]); ?>
 
         <?php \yii\bootstrap\Modal::end(); ?>
@@ -126,6 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $('#update-user-modal').modal();
         }
     );
+    $('.modal-title').html('" . Yii::t('app', 'EPIC_PARTICIPANT_EDIT') . ": ' + $(this).closest('tr').children().first().text());
 });"
         ); ?>
 
