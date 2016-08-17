@@ -158,12 +158,12 @@ class EpicController extends Controller
 
     /**
      * Edits a participant
-     * @param string $user_epic_id
+     * @param string $participant_id
      * @return mixed
      */
-    public function actionParticipantEdit($user_epic_id)
+    public function actionParticipantEdit($participant_id)
     {
-        $model = $this->findParticipantModel($user_epic_id);
+        $model = $this->findParticipantModel($participant_id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $referrer = Yii::$app->getRequest()->getReferrer();

@@ -119,7 +119,7 @@ $this->params['breadcrumbs'][] = $this->title;
     $.get(
         '" . Yii::$app->urlManager->createUrl(['epic/participant-edit']) . "',
         {
-            user_epic_id: $(this).closest('tr').data('key')
+            participant_id: $(this).closest('tr').data('key')
         },
         function (data) {
             $('.modal-body').html(data);
