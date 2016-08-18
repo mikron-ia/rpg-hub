@@ -161,6 +161,7 @@ return [
     'PARAM_EPIC_SYSTEM_STATE' => 'Stan systemu wg którego prowadzona jest kampania',
     'PARTICIPANT_ID' => 'ID uczestnika',
     'PARTICIPANT_ROLE' => 'Rola',
+    'PARTICIPANT_ROLES' => 'Role',
     'PARTICIPANT_ROLE_GM' => 'Mistrz Gry',
     'PARTICIPANT_ROLE_MEMBER' => 'Uczestnik',
     'PARTICIPANT_ROLE_PLAYER' => 'Gracz',
