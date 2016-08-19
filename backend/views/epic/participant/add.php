@@ -22,7 +22,13 @@ use yii\widgets\ActiveForm;
         'method' => 'post',
     ]); ?>
 
-    <?= $form->field($model, 'user_id')->dropDownList(User::getAllForDropdown()); ?>
+    <?= $form->field($model, 'user_id')->dropDownList(
+        User::getAllForDropdown(),
+        [
+            'prompt' => ' --- ' . Yii::t('app', 'PROMPT_USER') . ' --- '
+        ]
+    );
+    ?>
 
     <?= $form->field($model, 'roleChoices')->checkboxList(ParticipantRole::roleNames()); ?>
 

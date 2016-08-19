@@ -38,8 +38,7 @@ class Participant extends \yii\db\ActiveRecord
             [
                 ['user_id', 'epic_id'],
                 'unique',
-                'targetAttribute' => ['user_id', 'epic_id'],
-                'message' => 'The combination of User ID and Epic ID has already been taken.'
+                'message' => Yii::t('app', 'ERROR_PARTICIPANT_EXISTS')
             ],
             [
                 ['user_id'],
