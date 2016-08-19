@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => Yii::t('app', 'EPIC_CARD_ROLE'),
                     'enableSorting' => false,
                     'value' => function (Participant $model) {
-                        return $model->getRoleDescribed();
+                        return implode(', ', $model->getRolesList());
                     }
                 ],
                 [

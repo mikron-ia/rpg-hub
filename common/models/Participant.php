@@ -10,17 +10,14 @@ use Yii;
  * @property integer $participant_id
  * @property string $user_id
  * @property string $epic_id
- * @property string $role
  *
  * @property User $user
  * @property Epic $epic
+ * @property ParticipantRole[] $participantRoles
  */
 class Participant extends \yii\db\ActiveRecord
 {
-    const ROLE_GM = 'gm';
-    const ROLE_PLAYER = 'player';
-    const ROLE_MEMBER = 'member';
-    const ROLE_WATCHER = 'watcher';
+    public $roleChoices;
 
     /**
      * @inheritdoc
@@ -36,11 +33,23 @@ class Participant extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'epic_id', 'role'], 'required'],
+            [['user_id', 'epic_id'], 'required'],
             [['user_id', 'epic_id'], 'integer'],
-            [['role'], 'string', 'max' => 20],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
-            [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
+            [['roleChoices'], 'safe'],
+            [
+                ['user_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['user_id' => 'id']
+            ],
+            [
+                ['epic_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Epic::className(),
+                'targetAttribute' => ['epic_id' => 'epic_id']
+            ],
         ];
     }
 
@@ -54,20 +63,30 @@ class Participant extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', 'USER_LABEL'),
             'epic_id' => Yii::t('app', 'EPIC_LABEL'),
             'role' => Yii::t('app', 'PARTICIPANT_ROLE'),
+            'roleChoices' => Yii::t('app', 'PARTICIPANT_ROLES'),
         ];
     }
 
     /**
-     * @return string[]
+     * @inheritdoc
      */
-    static public function roleNames()
+    public function afterFind()
     {
-        return [
-            self::ROLE_GM => Yii::t('app', 'PARTICIPANT_ROLE_GM'),
-            self::ROLE_PLAYER => Yii::t('app', 'PARTICIPANT_ROLE_PLAYER'),
-            self::ROLE_MEMBER => Yii::t('app', 'PARTICIPANT_ROLE_MEMBER'),
-            self::ROLE_WATCHER => Yii::t('app', 'PARTICIPANT_ROLE_WATCHER'),
-        ];
+        $this->roleChoices = $this->getRoles();
+        parent::afterFind();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (!$this->roleChoices) {
+            $this->roleChoices = [];
+        }
+
+        $this->setRoles();
+        parent::afterSave($insert, $changedAttributes);
     }
 
     /**
@@ -86,13 +105,44 @@ class Participant extends \yii\db\ActiveRecord
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
 
-    public function getRoleDescribed()
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParticipantRoles()
     {
-        $names = self::roleNames();
-        if (isset($names[$this->role])) {
-            return $names[$this->role];
-        } else {
-            return "?";
+        return $this->hasMany(ParticipantRole::className(), ['participant_id' => 'participant_id']);
+    }
+
+    public function getRolesList()
+    {
+        $roles = [];
+
+        foreach ($this->participantRoles as $participantRole) {
+            $roles[$participantRole->role] = $participantRole->getRoleDescribed();
+        }
+
+        return $roles;
+    }
+
+    public function getRoles()
+    {
+        $roles = [];
+
+        foreach ($this->participantRoles as $participantRole) {
+            $roles[$participantRole->role] = $participantRole->role;
+        }
+        return $roles;
+    }
+
+    public function setRoles()
+    {
+        ParticipantRole::deleteAll(['participant_id' => $this->participant_id]);
+
+        foreach ($this->roleChoices as $roleChoice) {
+            $role = new ParticipantRole(['participant_id' => $this->participant_id, 'role' => $roleChoice]);
+            $role->save();
         }
     }
+
+
 }

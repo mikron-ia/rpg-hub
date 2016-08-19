@@ -157,7 +157,10 @@ final class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable(
             'participant',
-            ['user_id' => 'id'],
+            ['user_id' => 'id']
+        )->viaTable(
+            'participant_role',
+            ['participant_id' => 'participant_id'],
             function (ActiveQuery $query) {
                 return $query->onCondition("role = 'gm'");
             }
@@ -171,7 +174,10 @@ final class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable(
             'participant',
-            ['user_id' => 'id'],
+            ['user_id' => 'id']
+        )->viaTable(
+            'participant_role',
+            ['participant_id' => 'participant_id'],
             function (ActiveQuery $query) {
                 return $query->onCondition("role = 'player'");
             }
@@ -244,7 +250,7 @@ final class User extends ActiveRecord implements IdentityInterface
         $users = User::find()->all();
         $list = [];
 
-        foreach($users as $user) {
+        foreach ($users as $user) {
             $list[$user->id] = $user->username;
         }
 

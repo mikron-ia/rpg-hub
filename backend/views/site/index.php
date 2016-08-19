@@ -4,6 +4,7 @@
 /* @var $epic Epic */
 
 use common\models\Epic;
+use common\models\Participant;
 use yii\bootstrap\Html;
 
 $this->title = 'RPG hub - control';
@@ -58,10 +59,12 @@ $this->title = 'RPG hub - control';
 
                 <?php
                 foreach ($epic->gms as $gm) {
-                    echo '<p>' . $gm->username . ' (' . Yii::t('app', 'LABEL_GM') . ')</p>';
+                    /* @var $gm Participant */
+                    echo '<p>' . $gm->user->username . ' (' . Yii::t('app', 'LABEL_GM') . ')</p>';
                 }
                 foreach ($epic->players as $player) {
-                    echo '<p>' . $player->username . ' (' . Yii::t('app', 'LABEL_PLAYER') . ')</p>';
+                    /* @var $gm Participant */
+                    echo '<p>' . $player->user->username . ' (' . Yii::t('app', 'LABEL_PLAYER') . ')</p>';
                 }
                 ?>
             </div>

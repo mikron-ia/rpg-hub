@@ -1,6 +1,7 @@
 <?php
 
-use common\models\Participant;
+use common\models\ParticipantRole;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -20,10 +21,7 @@ use yii\widgets\ActiveForm;
         'method' => 'post',
     ]); ?>
 
-    <?= $form->field($model, 'role')->dropDownList(
-        Participant::roleNames(),
-        ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_TYPE') . ' --- ']
-    ); ?>
+    <?= $form->field($model, 'roleChoices')->checkboxList(ParticipantRole::roleNames()); ?>
 
     <div class="form-group">
         <?= Html::submitButton(

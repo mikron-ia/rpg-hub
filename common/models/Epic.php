@@ -120,7 +120,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
      */
     public function getGms()
     {
-        return $this->getParticipants()->onCondition("role = 'gm'");
+        return $this->getParticipants()->joinWith('participantRoles')->onCondition("role = 'gm'");
     }
 
     /**
@@ -128,7 +128,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
      */
     public function getPlayers()
     {
-        return $this->getParticipants()->onCondition("role = 'player'");
+        return $this->getParticipants()->joinWith('participantRoles')->onCondition("role = 'player'");
     }
 
     /**
