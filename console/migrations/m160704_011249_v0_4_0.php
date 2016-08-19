@@ -19,6 +19,8 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
             'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);
 
+        $this->createIndex('participant_unique', 'participant', ['user_id', 'epic_id'], true);
+
         $this->createTable('{{%participant_role}}', [
             'participant_id' => $this->integer(11)->unsigned()->notNull(),
             'role' => $this->string(20)->notNull(),

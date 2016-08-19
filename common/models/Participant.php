@@ -35,7 +35,12 @@ class Participant extends \yii\db\ActiveRecord
         return [
             [['user_id', 'epic_id'], 'required'],
             [['user_id', 'epic_id'], 'integer'],
-            [['roleChoices'], 'safe'],
+            [
+                ['user_id', 'epic_id'],
+                'unique',
+                'targetAttribute' => ['user_id', 'epic_id'],
+                'message' => 'The combination of User ID and Epic ID has already been taken.'
+            ],
             [
                 ['user_id'],
                 'exist',
