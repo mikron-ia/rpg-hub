@@ -4,6 +4,7 @@ namespace common\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -21,6 +22,10 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  * @property string $language
+ *
+ * @property Epic[] $epics
+ * @property Epic[] $epicsGameMastered
+ * @property Epic[] $epicsPlayed
  */
 final class User extends ActiveRecord implements IdentityInterface
 {
@@ -124,7 +129,7 @@ final class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
@@ -143,6 +148,48 @@ final class User extends ActiveRecord implements IdentityInterface
     public function getAuthKey()
     {
         return $this->auth_key;
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getEpicsGameMastered()
+    {
+        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable(
+            'participant',
+            ['user_id' => 'id']
+        )->viaTable(
+            'participant_role',
+            ['participant_id' => 'participant_id'],
+            function (ActiveQuery $query) {
+                return $query->onCondition("role = 'gm'");
+            }
+        );
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getEpicsPlayed()
+    {
+        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable(
+            'participant',
+            ['user_id' => 'id']
+        )->viaTable(
+            'participant_role',
+            ['participant_id' => 'participant_id'],
+            function (ActiveQuery $query) {
+                return $query->onCondition("role = 'player'");
+            }
+        );
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getEpics()
+    {
+        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable('participant', ['user_id' => 'id']);
     }
 
     /**
@@ -196,5 +243,17 @@ final class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    static public function getAllForDropdown()
+    {
+        $users = User::find()->all();
+        $list = [];
+
+        foreach ($users as $user) {
+            $list[$user->id] = $user->username;
+        }
+
+        return $list;
     }
 }

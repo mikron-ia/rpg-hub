@@ -6,6 +6,7 @@ use common\models\core\HasParameters;
 use common\models\tools\Tools;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "epic".
@@ -18,7 +19,10 @@ use yii\data\ActiveDataProvider;
  *
  * @property Character[] $characters
  * @property ParameterPack $parameterPack
+ * @property User[] $gms
+ * @property User[] $players
  * @property Group[] $groups
+ * @property Participant[] $participants
  * @property Person[] $people
  * @property Recap[] $recaps
  * @property Story[] $stories
@@ -109,6 +113,30 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
     public function getGroups()
     {
         return $this->hasMany(Group::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGms()
+    {
+        return $this->getParticipants()->joinWith('participantRoles')->onCondition("role = 'gm'");
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPlayers()
+    {
+        return $this->getParticipants()->joinWith('participantRoles')->onCondition("role = 'player'");
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParticipants()
+    {
+        return $this->hasMany(Participant::className(), ['epic_id' => 'epic_id']);
     }
 
     /**

@@ -3,6 +3,7 @@
 use common\models\Group;
 use common\models\Parameter;
 use common\models\Story;
+use common\models\Participant;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -32,6 +33,51 @@ $this->params['breadcrumbs'][] = $this->title;
             'system',
         ],
     ]) ?>
+
+    <div class="col-lg-6">
+
+        <div class="buttoned-header">
+            <h2><?= Yii::t('app', 'EPIC_CARD_PARTICIPANTS'); ?></h2>
+            <?= Html::a(
+                '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_PARTICIPANT_ADD') . '</span>',
+                ['participant-add', 'epic_id' => $model->epic_id],
+                ['title' => Yii::t('app', 'BUTTON_PARTICIPANT_ADD')]
+            ); ?>
+        </div>
+
+        <?= GridView::widget([
+            'dataProvider' => new \yii\data\ActiveDataProvider(['query' => $model->getParticipants()]),
+            'summary' => '',
+            'columns' => [
+                [
+                    'attribute' => 'user.username',
+                    'label' => Yii::t('app', 'EPIC_CARD_USERNAME'),
+                    'enableSorting' => false,
+                ],
+                [
+                    'attribute' => 'role',
+                    'label' => Yii::t('app', 'EPIC_CARD_ROLE'),
+                    'enableSorting' => false,
+                    'value' => function (Participant $model) {
+                        return implode(', ', $model->getRolesList());
+                    }
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{update}',
+                    'buttons' => [
+                        'update' => function ($url, Participant $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-cog"></span>',
+                                ['participant-edit', 'participant_id' => $model->participant_id],
+                                ['title' => Yii::t('app', 'LABEL_UPDATE')]);
+                        },
+                    ],
+                ],
+            ],
+        ]); ?>
+
+    </div>
 
     <div class="col-lg-6">
 
@@ -73,6 +119,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]); ?>
+
+    </div>
+
+    <div class="col-lg-6">
 
         <div class="buttoned-header">
             <h2><?= Yii::t('app', 'EPIC_HEADER_STORIES'); ?></h2>

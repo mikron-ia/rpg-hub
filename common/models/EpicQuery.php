@@ -71,11 +71,14 @@ final class EpicQuery extends Epic
 
     static public function activeEpicsAsModels()
     {
-        $query = Epic::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-        return $dataProvider->getModels();
+        if(Yii::$app->user->isGuest) {
+            return [];
+        }
+
+        /* @var $user User */
+        $user = Yii::$app->user->identity;
+
+        return $user->epics;
     }
 
     static public function getListOfEpicsForSelector()
