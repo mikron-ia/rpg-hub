@@ -18,15 +18,20 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_PARTICIPANT_ADD');
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->dropDownList(
-        User::getAllForDropdown(),
-        [
-            'prompt' => ' --- ' . Yii::t('app', 'PROMPT_USER') . ' --- '
+    <?= $form->field($model, 'user_id')->widget(Select2::className(), [
+        'data' => User::getAllForDropdown(),
+        'options' => [
+            'prompt' => ' --- ' . Yii::t('app', 'PROMPT_USER') . ' --- ',
+            'multiple' => false,
         ]
-    );
-    ?>
+    ]); ?>
 
-    <?= $form->field($model, 'roleChoices')->checkboxList(ParticipantRole::roleNames()); ?>
+    <?= $form->field($model, 'roleChoices')->widget(Select2::className(), [
+        'data' => ParticipantRole::roleNames(),
+        'options' => [
+            'multiple' => true,
+        ]
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton(

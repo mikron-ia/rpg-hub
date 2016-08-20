@@ -21,7 +21,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_PARTICIPANT_UPDATE')
         'enableAjaxValidation' => true,
     ]); ?>
 
-    <?= $form->field($model, 'roleChoices')->checkboxList(ParticipantRole::roleNames()); ?>
+    <?= $form->field($model, 'roleChoices')->widget(Select2::className(), [
+        'data' => ParticipantRole::roleNames(),
+        'options' => [
+            'multiple' => true,
+        ]
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton(
