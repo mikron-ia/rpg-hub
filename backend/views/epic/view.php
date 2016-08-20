@@ -40,13 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <h2><?= Yii::t('app', 'EPIC_CARD_PARTICIPANTS'); ?></h2>
             <?= Html::a(
                 '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_PARTICIPANT_ADD') . '</span>',
-                '#',
-                [
-                    'class' => 'add-user-link',
-                    'title' => Yii::t('app', 'BUTTON_PARTICIPANT_ADD'),
-                    'data-toggle' => 'modal',
-                    'data-target' => '#add-user-modal'
-                ]
+                ['participant-add', 'epic_id' => $model->epic_id],
+                ['title' => Yii::t('app', 'BUTTON_PARTICIPANT_ADD')]
             ); ?>
         </div>
 
@@ -72,63 +67,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     'template' => '{update}',
                     'buttons' => [
                         'update' => function ($url, Participant $model, $key) {
-                            return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
-                                'class' => 'edit-user-link',
-                                'title' => Yii::t('app', 'LABEL_UPDATE'),
-                                'data-toggle' => 'modal',
-                                'data-target' => '#edit-user-modal',
-                                'data-id' => $key,
-                            ]);
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-cog"></span>',
+                                ['participant-edit', 'participant_id' => $model->participant_id],
+                                ['title' => Yii::t('app', 'LABEL_UPDATE')]);
                         },
                     ],
                 ],
             ],
         ]); ?>
-
-        <?php \yii\bootstrap\Modal::begin([
-            'id' => 'add-user-modal',
-            'header' => '<h2 class="modal-title">' . Yii::t('app', 'EPIC_PARTICIPANT_ADD') . '</h2>',
-        ]); ?>
-
-        <?php \yii\bootstrap\Modal::end(); ?>
-
-        <?php $this->registerJs(
-            "$('.add-user-link').click(function() {
-    $.get(
-        '" . Yii::$app->urlManager->createUrl(['epic/participant-add']) . "',
-        {
-            epic_id: " . $model->epic_id . "
-        },
-        function (data) {            
-            $('.modal-body').html(data);
-            $('#add-user-modal').modal();
-        }
-    );
-});"
-        ); ?>
-
-        <?php \yii\bootstrap\Modal::begin([
-            'id' => 'update-user-modal',
-            'header' => '<h2 class="modal-title">' . Yii::t('app', 'EPIC_PARTICIPANT_EDIT') . '</h2>',
-        ]); ?>
-
-        <?php \yii\bootstrap\Modal::end(); ?>
-
-        <?php $this->registerJs(
-            "$('.edit-user-link').click(function() {
-    $.get(
-        '" . Yii::$app->urlManager->createUrl(['epic/participant-edit']) . "',
-        {
-            participant_id: $(this).closest('tr').data('key')
-        },
-        function (data) {
-            $('.modal-body').html(data);
-            $('#update-user-modal').modal();
-        }
-    );
-    $('.modal-title').html('" . Yii::t('app', 'EPIC_PARTICIPANT_EDIT') . ": ' + $(this).closest('tr').children().first().text());
-});"
-        ); ?>
 
     </div>
 

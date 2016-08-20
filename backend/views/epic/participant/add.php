@@ -9,18 +9,14 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Participant */
 
+$this->title = Yii::t('app', 'TITLE_PARTICIPANT_ADD');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_EPICS'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['view', 'id' => $model->epic_id]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_PARTICIPANT_ADD');
 ?>
 <div class="participant-add">
 
-    <?php $form = ActiveForm::begin([
-        'id' => 'story-parameter-form',
-        'action' =>
-            [
-                'epic/participant-add',
-                'epic_id' => $model->epic_id
-            ],
-        'method' => 'post',
-    ]); ?>
+    <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'user_id')->dropDownList(
         User::getAllForDropdown(),

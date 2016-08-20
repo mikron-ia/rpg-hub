@@ -8,17 +8,17 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Participant */
 
+$this->title = Yii::t('app', 'TITLE_PARTICIPANT_EDIT') . ': ' . $model->user->username;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_EPICS'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['view', 'id' => $model->epic_id]];
+$this->params['breadcrumbs'][] = $model->user->username;
+$this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_PARTICIPANT_UPDATE');
 ?>
 <div class="participant-edit">
 
     <?php $form = ActiveForm::begin([
         'id' => 'story-parameter-form',
-        'action' =>
-            [
-                'epic/participant-edit',
-                'participant_id' => $model->participant_id
-            ],
-        'method' => 'post',
+        'enableAjaxValidation' => true,
     ]); ?>
 
     <?= $form->field($model, 'roleChoices')->checkboxList(ParticipantRole::roleNames()); ?>

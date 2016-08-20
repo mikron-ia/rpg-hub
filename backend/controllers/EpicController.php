@@ -27,8 +27,13 @@ class EpicController extends Controller
                 'rules' => [
                     [
                         'actions' => [
-                            'create', 'delete', 'index', 'update', 'view',
-                            'participant-add', 'participant-edit'
+                            'create',
+                            'delete',
+                            'index',
+                            'update',
+                            'view',
+                            'participant-add',
+                            'participant-edit'
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -141,18 +146,11 @@ class EpicController extends Controller
         $model->epic_id = $epic_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $referrer = Yii::$app->getRequest()->getReferrer();
-            if ($referrer) {
-                return $this->redirect(['view', 'id' => $epic_id]);
-            } else {
-                return $this->redirect(['index']);
-            }
+            return $this->redirect(['view', 'id' => $model->epic_id]);
         } else {
-            if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('participant/add', ['model' => $model]);
-            } else {
-                return $this->render('participant/add', ['model' => $model]);
-            }
+            return $this->render('participant/add', [
+                'model' => $model,
+            ]);
         }
     }
 
@@ -166,18 +164,11 @@ class EpicController extends Controller
         $model = $this->findParticipantModel($participant_id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $referrer = Yii::$app->getRequest()->getReferrer();
-            if ($referrer) {
-                return $this->redirect(['view', 'id' => $model->epic_id]);
-            } else {
-                return $this->redirect(['index']);
-            }
+            return $this->redirect(['view', 'id' => $model->epic_id]);
         } else {
-            if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('participant/edit', ['model' => $model]);
-            } else {
-                return $this->render('participant/edit', ['model' => $model]);
-            }
+            return $this->render('participant/edit', [
+                'model' => $model,
+            ]);
         }
     }
 

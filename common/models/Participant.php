@@ -35,10 +35,12 @@ class Participant extends \yii\db\ActiveRecord
         return [
             [['user_id', 'epic_id'], 'required'],
             [['user_id', 'epic_id'], 'integer'],
+            [['roleChoices'], 'safe'],
             [
                 ['user_id', 'epic_id'],
                 'unique',
-                'message' => Yii::t('app', 'ERROR_PARTICIPANT_EXISTS')
+                'targetAttribute' => ['user_id', 'epic_id'],
+                'comboNotUnique' => Yii::t('app', 'ERROR_PARTICIPANT_EXISTS')
             ],
             [
                 ['user_id'],
