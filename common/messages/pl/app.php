@@ -112,6 +112,7 @@ return [
     'ERROR_NO_EPIC_ACTIVE' => '<b>Uwaga:</b> brak aktywnej kampanii. Wybierz kampanię z menu górnego lub z menu głównego.',
     'ERROR_PARTICIPANT_EXISTS' => 'Taki uczestnik kampanii już istnieje. W celu nadania lub zmiany uprawnień, odnajdź uczestnika na liście i poddaj go edycji.',
     'ERROR_WRONG_EPIC' => '<b>Uwaga:</b> wyświetlany obiekt nie należy do aktywnej kampanii.',
+    'ERROR_WRONG_EPIC_ACTION' => '<b>Uwaga:</b> operacja zostanie wykonana na kampanii innej niż aktywna.',
     'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Ładowanie zewnętrznych danych nieudane - błąd JSON-a',
     'EXTERNAL_DATA_LOAD_ERROR_SAVE' => 'Ładowanie zewnętrznych danych nieudane - błąd zapisu',
     'EXTERNAL_DATA_LOAD_MISSING_ADDRESS' => 'URI do pobierania danych nie został wprowadzony',

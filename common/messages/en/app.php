@@ -112,6 +112,7 @@ return [
     'ERROR_NO_EPIC_ACTIVE' => '<b>Warning: </b> no active epic. Choose an epic from the top menu or from the main menu.',
     'ERROR_PARTICIPANT_EXISTS' => 'Such participant already exists. In order to change their settings, seek them out on the list and edit them.',
     'ERROR_WRONG_EPIC' => '<b>Warning: </b> object you are displaying does not belong to currently active epic.',
+    'ERROR_WRONG_EPIC_ACTION' => '<b>Warning: </b> operation will be performed on an epic different than currently active epic.',
     'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Loading operation failed - JSON issue',
     'EXTERNAL_DATA_LOAD_ERROR_SAVE' => 'Loading operation failed - save failed',
     'EXTERNAL_DATA_LOAD_MISSING_ADDRESS' => 'URI for data retrieval not entered',

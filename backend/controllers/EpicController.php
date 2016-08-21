@@ -112,6 +112,12 @@ class EpicController extends Controller
     {
         $model = $this->findModel($id);
 
+        if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->epic_id]);
         } else {
@@ -143,6 +149,12 @@ class EpicController extends Controller
     {
         $model = new Participant();
 
+        if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+        } elseif (Yii::$app->params['activeEpic']->epic_id <> $epic_id) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC_ACTION'));
+        }
+
         $model->epic_id = $epic_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -162,6 +174,12 @@ class EpicController extends Controller
     public function actionParticipantEdit($participant_id)
     {
         $model = $this->findParticipantModel($participant_id);
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->epic_id]);
