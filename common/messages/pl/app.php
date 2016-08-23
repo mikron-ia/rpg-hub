@@ -165,7 +165,7 @@ return [
     'PARTICIPANT_ROLE' => 'Rola',
     'PARTICIPANT_ROLES' => 'Role',
     'PARTICIPANT_ROLE_GM' => 'Mistrz Gry',
-    'PARTICIPANT_ROLE_MEMBER' => 'Uczestnik',
+    'PARTICIPANT_ROLE_MANAGER' => 'Zarządca',
     'PARTICIPANT_ROLE_PLAYER' => 'Gracz',
     'PARTICIPANT_ROLE_WATCHER' => 'Obserwator',
     'PASSWORD_CHANGE_ERROR_OLD_PASSWORD_INCORRECT' => 'Stare hasło jest niepoprawne',

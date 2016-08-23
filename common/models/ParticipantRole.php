@@ -16,7 +16,7 @@ class ParticipantRole extends \yii\db\ActiveRecord
 {
     const ROLE_GM = 'gm';
     const ROLE_PLAYER = 'player';
-    const ROLE_MEMBER = 'member';
+    const ROLE_MANAGER = 'manager';
     const ROLE_WATCHER = 'watcher';
 
     /**
@@ -59,7 +59,7 @@ class ParticipantRole extends \yii\db\ActiveRecord
         return [
             self::ROLE_GM => Yii::t('app', 'PARTICIPANT_ROLE_GM'),
             self::ROLE_PLAYER => Yii::t('app', 'PARTICIPANT_ROLE_PLAYER'),
-            self::ROLE_MEMBER => Yii::t('app', 'PARTICIPANT_ROLE_MEMBER'),
+            self::ROLE_MANAGER => Yii::t('app', 'PARTICIPANT_ROLE_MANAGER'),
             self::ROLE_WATCHER => Yii::t('app', 'PARTICIPANT_ROLE_WATCHER'),
         ];
     }

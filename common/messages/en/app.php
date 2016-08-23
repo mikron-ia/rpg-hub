@@ -165,7 +165,7 @@ return [
     'PARTICIPANT_ROLE' => 'Role',
     'PARTICIPANT_ROLES' => 'Roles',
     'PARTICIPANT_ROLE_GM' => 'Game Master',
-    'PARTICIPANT_ROLE_MEMBER' => 'Member',
+    'PARTICIPANT_ROLE_MANAGER' => 'Manager',
     'PARTICIPANT_ROLE_PLAYER' => 'Player',
     'PARTICIPANT_ROLE_WATCHER' => 'Watcher',
     'PASSWORD_CHANGE_ERROR_OLD_PASSWORD_INCORRECT' => 'Old password is incorrect',
