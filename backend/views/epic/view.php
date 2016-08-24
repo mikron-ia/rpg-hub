@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'buttons' => [
                         'update' => function ($url, Participant $model, $key) {
                             return Html::a(
-                                '<span class="glyphicon glyphicon-cog"></span>',
+                                '<span class="glyphicon glyphicon-pencil"></span>',
                                 ['participant-edit', 'participant_id' => $model->participant_id],
                                 ['title' => Yii::t('app', 'LABEL_UPDATE')]);
                         },
