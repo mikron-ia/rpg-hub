@@ -2,6 +2,7 @@
 
 namespace common\rules;
 
+use common\models\Participant;
 use yii\rbac\Rule;
 
 class EpicParticipant extends Rule
@@ -11,6 +12,12 @@ class EpicParticipant extends Rule
      */
     public function execute($user, $item, $params)
     {
-        return false;
+        /* @var $participant Participant */
+        $participant = Participant::findOne([
+            'epic_id' => $params['epic']->epic_id,
+            'user_id' => $user
+        ]);
+
+        return ($participant !== null);
     }
 }
