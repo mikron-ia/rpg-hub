@@ -2,15 +2,15 @@
 
 namespace common\rules;
 
-use yii\rbac\Rule;
+use common\models\ParticipantRole;
 
-class EpicPlayer extends Rule
+class EpicPlayer extends EpicUser
 {
     /**
      * @inheritdoc
      */
-    public function execute($user, $item, $params)
+    public function requiredRole()
     {
-        return false;
+        return ParticipantRole::ROLE_PLAYER;
     }
 }
