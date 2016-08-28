@@ -31,5 +31,9 @@ abstract class EpicUser extends Rule
         return ($role !== null);
     }
 
+    /**
+     * Provides code for the role to check against
+     * @return string
+     */
     abstract public function requiredRole();
 }
