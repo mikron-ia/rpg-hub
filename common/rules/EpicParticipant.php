@@ -5,7 +5,7 @@ namespace common\rules;
 use common\models\Participant;
 use yii\rbac\Rule;
 
-class EpicParticipant extends Rule
+final class EpicParticipant extends Rule
 {
     /**
      * @inheritdoc

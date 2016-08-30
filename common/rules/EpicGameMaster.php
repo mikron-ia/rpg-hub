@@ -4,7 +4,7 @@ namespace common\rules;
 
 use common\models\ParticipantRole;
 
-class EpicGameMaster extends EpicUser
+final class EpicGameMaster extends EpicUser
 {
     /**
      * @inheritdoc
