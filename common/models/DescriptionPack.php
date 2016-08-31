@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "description_pack".
@@ -13,7 +15,7 @@ use Yii;
  * @property Description[] $descriptions
  * @property Person[] $people
  */
-class DescriptionPack extends \yii\db\ActiveRecord implements Displayable
+class DescriptionPack extends ActiveRecord implements Displayable
 {
     /**
      * @inheritdoc
@@ -46,7 +48,7 @@ class DescriptionPack extends \yii\db\ActiveRecord implements Displayable
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getDescriptions()
     {
@@ -54,7 +56,7 @@ class DescriptionPack extends \yii\db\ActiveRecord implements Displayable
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPeople()
     {

@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "parameter_pack".
@@ -14,7 +16,7 @@ use Yii;
  * @property Parameter[] $parameters
  * @property Story[] $stories
  */
-class ParameterPack extends \yii\db\ActiveRecord
+class ParameterPack extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -62,7 +64,7 @@ class ParameterPack extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getEpics()
     {
@@ -70,7 +72,7 @@ class ParameterPack extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getParameters()
     {
@@ -78,7 +80,7 @@ class ParameterPack extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStories()
     {

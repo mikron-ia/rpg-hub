@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "participant_role".
@@ -12,7 +13,7 @@ use Yii;
  *
  * @property Participant $participant
  */
-class ParticipantRole extends \yii\db\ActiveRecord
+class ParticipantRole extends ActiveRecord
 {
     const ROLE_GM = 'gm';
     const ROLE_PLAYER = 'player';

@@ -2,12 +2,14 @@
 
 namespace common\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[StoryParameter]].
  *
  * @see StoryParameter
  */
-class StoryParameterQuery extends \yii\db\ActiveQuery
+class StoryParameterQuery extends ActiveQuery
 {
     /*public function active()
     {

@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\tools\Tools;
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "group".
@@ -16,7 +17,7 @@ use Yii;
  *
  * @property Epic $epic
  */
-class Group extends \yii\db\ActiveRecord implements Displayable
+class Group extends ActiveRecord implements Displayable
 {
     use Tools;
 

@@ -7,6 +7,7 @@ use common\models\tools\Tools;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "epic".
@@ -29,7 +30,7 @@ use yii\db\ActiveQuery;
  *
  * @todo: Someday, system field will have to come from a closed list of supported systems
  */
-class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
+class Epic extends ActiveRecord implements Displayable, HasParameters
 {
     use Tools;
 
@@ -92,7 +93,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCharacters()
     {
@@ -100,7 +101,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getParameterPack()
     {
@@ -108,7 +109,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getGroups()
     {
@@ -116,7 +117,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getGms()
     {
@@ -124,7 +125,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPlayers()
     {
@@ -132,7 +133,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getParticipants()
     {
@@ -140,7 +141,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPeople()
     {
@@ -148,7 +149,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getRecaps()
     {
@@ -156,7 +157,7 @@ class Epic extends \yii\db\ActiveRecord implements Displayable, HasParameters
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStories()
     {
