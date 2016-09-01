@@ -5,6 +5,8 @@ namespace common\models;
 use common\models\core\Language;
 use common\models\core\Visibility;
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\helpers\Markdown;
 use yii2tech\ar\position\PositionBehavior;
 
@@ -23,7 +25,7 @@ use yii2tech\ar\position\PositionBehavior;
  *
  * @property DescriptionPack $descriptionPack
  */
-class Description extends \yii\db\ActiveRecord implements Displayable
+class Description extends ActiveRecord implements Displayable
 {
     const TYPE_APPEARANCE = 'appearance';
     const TYPE_HISTORY = 'history';
@@ -159,7 +161,7 @@ class Description extends \yii\db\ActiveRecord implements Displayable
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getDescriptionPack()
     {

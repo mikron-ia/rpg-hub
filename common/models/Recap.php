@@ -4,6 +4,8 @@ namespace common\models;
 
 use common\models\tools\Tools;
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\helpers\Markdown;
 
 /**
@@ -18,7 +20,7 @@ use yii\helpers\Markdown;
  *
  * @property Epic $epic
  */
-class Recap extends \yii\db\ActiveRecord implements Displayable
+class Recap extends ActiveRecord implements Displayable
 {
     use Tools;
 
@@ -89,7 +91,7 @@ class Recap extends \yii\db\ActiveRecord implements Displayable
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getEpic()
     {

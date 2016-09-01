@@ -2,10 +2,11 @@
 
 namespace common\models;
 
-use common\models\core\Visibility;
 use common\models\tools\Tools;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "character".
@@ -21,7 +22,7 @@ use yii\data\ActiveDataProvider;
  * @property Person $currentlyDeliveredPerson
  * @property Person[] $people
  */
-class Character extends \yii\db\ActiveRecord implements Displayable
+class Character extends ActiveRecord implements Displayable
 {
     use Tools;
 
@@ -103,7 +104,7 @@ class Character extends \yii\db\ActiveRecord implements Displayable
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getEpic()
     {
@@ -111,7 +112,7 @@ class Character extends \yii\db\ActiveRecord implements Displayable
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCurrentlyDeliveredPerson()
     {
@@ -119,7 +120,7 @@ class Character extends \yii\db\ActiveRecord implements Displayable
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPeople()
     {

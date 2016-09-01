@@ -6,6 +6,8 @@ use common\models\core\HasDescriptions;
 use common\models\core\Visibility;
 use common\models\tools\Tools;
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "person".
@@ -24,7 +26,7 @@ use Yii;
  * @property Character $character
  * @property DescriptionPack $descriptionPack
  */
-class Person extends \yii\db\ActiveRecord implements Displayable, HasDescriptions
+class Person extends ActiveRecord implements Displayable, HasDescriptions
 {
     use Tools;
 
@@ -138,7 +140,7 @@ class Person extends \yii\db\ActiveRecord implements Displayable, HasDescription
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getEpic()
     {
@@ -146,7 +148,7 @@ class Person extends \yii\db\ActiveRecord implements Displayable, HasDescription
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCharacter()
     {

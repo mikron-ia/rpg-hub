@@ -5,7 +5,6 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Story;
 
 /**
  * StoryQuery represents the model behind the search form about `common\models\Story`.

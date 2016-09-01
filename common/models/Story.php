@@ -6,6 +6,8 @@ use common\models\core\HasParameters;
 use common\models\core\Visibility;
 use common\models\tools\Tools;
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\helpers\Markdown;
 use yii2tech\ar\position\PositionBehavior;
 
@@ -26,7 +28,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property ParameterPack $parameterPack
  * @property StoryParameter[] $storyParameters
  */
-class Story extends \yii\db\ActiveRecord implements Displayable, HasParameters
+class Story extends ActiveRecord implements Displayable, HasParameters
 {
     use Tools;
 
@@ -115,7 +117,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable, HasParameters
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getEpic()
     {
@@ -123,7 +125,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable, HasParameters
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getParameterPack()
     {
@@ -131,7 +133,7 @@ class Story extends \yii\db\ActiveRecord implements Displayable, HasParameters
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStoryParameters()
     {

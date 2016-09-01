@@ -5,6 +5,7 @@ namespace common\models;
 use common\models\core\Language;
 use common\models\core\Visibility;
 use Yii;
+use yii\db\ActiveRecord;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
@@ -20,7 +21,7 @@ use yii2tech\ar\position\PositionBehavior;
  *
  * @property ParameterPack $parameterPack
  */
-class Parameter extends \yii\db\ActiveRecord
+class Parameter extends ActiveRecord
 {
     const STORY_NUMBER = 'story-number';
     const TIME_RANGE = 'time-range';

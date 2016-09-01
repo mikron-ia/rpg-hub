@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "participant".
@@ -15,7 +17,7 @@ use Yii;
  * @property Epic $epic
  * @property ParticipantRole[] $participantRoles
  */
-class Participant extends \yii\db\ActiveRecord
+class Participant extends ActiveRecord
 {
     public $roleChoices;
 
@@ -96,7 +98,7 @@ class Participant extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -104,7 +106,7 @@ class Participant extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getEpic()
     {
@@ -112,7 +114,7 @@ class Participant extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getParticipantRoles()
     {
