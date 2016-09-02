@@ -1,6 +1,5 @@
 <?php
 
-use common\models\EpicQuery;
 use common\models\Person;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;

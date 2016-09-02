@@ -2,7 +2,6 @@
 
 use common\models\core\Language;
 use common\models\core\Visibility;
-use common\models\Description;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 

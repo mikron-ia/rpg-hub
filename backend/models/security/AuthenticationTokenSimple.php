@@ -49,6 +49,8 @@ final class AuthenticationTokenSimple implements AuthenticationToken
     {
         if (self::isValid($key, 'received')) {
             return $key === $this->correctKey;
+        } else {
+            return false;
         }
     }
 

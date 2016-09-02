@@ -1,6 +1,5 @@
 <?php
 
-use common\models\Recap;
 use yii\helpers\Html;
 use yii\grid\GridView;
 

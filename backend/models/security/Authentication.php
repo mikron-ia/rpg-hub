@@ -18,7 +18,7 @@ class Authentication
     /**
      * @param array $config Configuration segment responsible for authentication references and constants
      * @param array $parameters Configuration segment responsible for authentication data for local deployment
-     * @param string $direction Who is trying to talk to us and which keyset is used?
+     * @param string $direction Who is trying to talk to us and which key set is used?
      * @param string $authenticationMethodReceived What method are they trying to use?
      * @throws HttpException
      */
