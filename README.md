@@ -10,5 +10,6 @@ A system for role-playing game story/campaign/epic (names vary from system to sy
 1. Clone the project
 1. Run `composer install`
 1. Copy `.env.example` to `.env` and fill it with configuration data
-1. Run `./yii migrate/up` if this is a fresh database installation
-1. Run `./yii rbac/init` if this is fresh database installation
+1. If you wish to add data, create `console/migrations/data.sql` file with SQL inserts be loaded into the database; this is intended for tests on larger data sets and is not needed for normal deployment
+1. Run `./yii migrate/up` if this is a fresh database installation; `data.sql` will be automatically loaded if present
+1. Run `./yii rbac/init` if this is fresh database installation to set up rights
