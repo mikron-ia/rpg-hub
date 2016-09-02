@@ -245,9 +245,15 @@ final class User extends ActiveRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 
+    /**
+     * @return \string[]
+     */
     static public function getAllForDropdown()
     {
+        /** @var User[] $users */
         $users = User::find()->all();
+
+        /** @var string[] $list */
         $list = [];
 
         foreach ($users as $user) {

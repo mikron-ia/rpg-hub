@@ -20,7 +20,7 @@ class SignupFormTest extends DbTestCase
             'password' => 'some_password',
         ]);
 
-        $user = $model->signup();
+        $user = $model->signUp();
 
         $this->assertInstanceOf('common\models\User', $user, 'user should be valid');
 
@@ -37,7 +37,7 @@ class SignupFormTest extends DbTestCase
             'password' => 'some_password',
         ]);
 
-        expect('username and email are in use, user should not be created', $model->signup())->null();
+        expect('username and email are in use, user should not be created', $model->signUp())->null();
     }
 
     public function fixtures()
