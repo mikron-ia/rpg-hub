@@ -7,6 +7,8 @@ use yii\rbac\Rule;
 
 final class EpicParticipant extends Rule
 {
+    public $name = 'epicParticipant';
+
     /**
      * @inheritdoc
      */

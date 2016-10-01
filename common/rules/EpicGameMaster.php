@@ -6,6 +6,8 @@ use common\models\ParticipantRole;
 
 final class EpicGameMaster extends EpicUser
 {
+    public $name = 'epicGameMaster';
+
     /**
      * @inheritdoc
      */
