@@ -33,19 +33,34 @@ class RbacController extends Controller
 
         /* Epic-specific actions */
 
+        /**
+         * Minor technical note: if there is no separate index* right, all view* rights should allow listing,
+         * of course not necessarily complete.
+         */
+
         $openEpic = $auth->createPermission('openEpic');
         $openEpic->description = 'Able to add and open an epic';
         $auth->add($openEpic);
 
         $controlEpic = $auth->createPermission('controlEpic');
-        $controlEpic->description = 'Able to edit, and command an epic';
+        $controlEpic->description = 'Able to edit and command an epic';
         $controlEpic->ruleName = $gameMasterRule->name;
         $auth->add($controlEpic);
+
+        $viewEpic = $auth->createPermission('viewEpic');
+        $viewEpic->description = 'Able to view an epic';
+        $viewEpic->ruleName = $playerRule->name;
+        $auth->add($viewEpic);
 
         $controlPerson = $auth->createPermission('controlPerson');
         $controlPerson->description = 'Able to add, edit, and remove a person';
         $controlPerson->ruleName = $gameMasterRule->name;
         $auth->add($controlPerson);
+
+        $viewPerson = $auth->createPermission('viewPerson');
+        $viewPerson->description = 'Able to view a person';
+        $viewPerson->ruleName = $playerRule->name;
+        $auth->add($viewPerson);
 
         $controlCharacter = $auth->createPermission('controlCharacter');
         $controlCharacter->description = 'Able to add, edit, and remove a character';
@@ -83,31 +98,32 @@ class RbacController extends Controller
         $auth->add($controlManager);
 
         /* Roles */
-        $user = $auth->createRole('user'); // basic user
+        $user = $auth->createRole('user'); // this is the basic user, confined to the front
         $auth->add($user);
+        $auth->addChild($user, $viewEpic);
+        $auth->addChild($user, $viewPerson);
+        $auth->addChild($user, $viewCharacter);
+        $auth->addChild($user, $viewStory);
+        $auth->addChild($user, $viewRecap);
+        $auth->addChild($user, $viewGroup);
 
-        /*
-        $player = $auth->createRole('player'); // person able to see epics they play in
-        $auth->add($player);
-        $auth->addChild($player, $user);
-        */
+        $operator = $auth->createRole('operator'); // this is the back-end user
+        $auth->add($operator);
+        $auth->addChild($operator, $user);
+        $auth->addChild($operator, $openEpic);
+        $auth->addChild($operator, $controlEpic);
+        $auth->addChild($operator, $controlPerson);
+        $auth->addChild($operator, $controlCharacter);
+        $auth->addChild($operator, $controlStory);
+        $auth->addChild($operator, $controlRecap);
+        $auth->addChild($operator, $controlGroup);
 
-        $gm = $auth->createRole('gm'); // person able to handle epics
-        $auth->add($gm);
-        $auth->addChild($gm, $user);
-        $auth->addChild($gm, $openEpic);
-        $auth->addChild($gm, $controlEpic);
-        $auth->addChild($gm, $controlPerson);
-        $auth->addChild($gm, $controlCharacter);
-        $auth->addChild($gm, $controlStory);
-        $auth->addChild($gm, $controlRecap);
-        $auth->addChild($gm, $controlGroup);
-
-        $manager = $auth->createRole('manager'); // person who handles the users and general settings
+        $manager = $auth->createRole('manager'); // this is the person who handles the users and general settings
         $auth->add($manager);
         $auth->addChild($manager, $controlUser);
+        $auth->addChild($manager, $operator);
 
-        $administrator = $auth->createRole('administrator'); // person who handles the users, general settings, and managers
+        $administrator = $auth->createRole('administrator'); // this is the person who handles the users, general settings, and managers
         $auth->add($administrator);
         $auth->addChild($administrator, $controlManager);
         $auth->addChild($administrator, $manager);
