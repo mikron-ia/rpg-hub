@@ -13,13 +13,16 @@ use yii\console\Controller;
 
 class RbacController extends Controller
 {
+    /**
+     * Initiates all rules. NOTE: this will erase all access rights
+     */
     public function actionInit()
     {
         /**
          * Minor technical note: if there is no separate index* right, all view* rights should allow listing,
          * of course not necessarily complete.
          */
-        
+
         $auth = Yii::$app->authManager;
         $auth->removeAll();
 
@@ -141,7 +144,9 @@ class RbacController extends Controller
 
         /* Roles */
 
-        $user = $auth->createRole('user'); // this is the basic user, confined to the front
+        $user = $auth->createRole('user');
+        $user->description = 'The basic user, confined to the front';
+
         $auth->add($user);
 
         $auth->addChild($user, $viewEpic);
@@ -152,11 +157,13 @@ class RbacController extends Controller
         $auth->addChild($user, $viewGroup);
         $auth->addChild($user, $viewSession);
 
-        $operator = $auth->createRole('operator'); // this is the back-end user
+        $operator = $auth->createRole('operator');
+        $user->description = 'The back-end user';
+
         $auth->add($operator);
-        
+
         $auth->addChild($operator, $user);
-        
+
         $auth->addChild($operator, $openEpic);
         $auth->addChild($operator, $controlEpic);
         $auth->addChild($operator, $controlPerson);
@@ -164,19 +171,34 @@ class RbacController extends Controller
         $auth->addChild($operator, $controlStory);
         $auth->addChild($operator, $controlRecap);
         $auth->addChild($operator, $controlGroup);
+        $auth->addChild($operator, $controlSession);
 
-        $manager = $auth->createRole('manager'); // this is the person who handles the users and general settings
+        $manager = $auth->createRole('manager');
+        $user->description = 'The person who handles the users and general settings';
+
         $auth->add($manager);
-        
+
         $auth->addChild($manager, $operator);
 
         $auth->addChild($manager, $controlUser);
 
-        $administrator = $auth->createRole('administrator'); // this is the person who handles the users, general settings, and managers
+        $administrator = $auth->createRole('administrator');
+        $user->description = 'The person who handles the users, general settings, and managers';
+
         $auth->add($administrator);
 
         $auth->addChild($administrator, $manager);
-        
-        $auth->addChild($administrator, $controlManager);        
+
+        $auth->addChild($administrator, $controlManager);
+    }
+
+    /**
+     * Sets administrator role to used with ID == 1. Intended for development and production init
+     */
+    public function actionSetAdmin()
+    {
+        $auth = Yii::$app->authManager;
+        $administrator = $auth->getRole('administrator');
+        $auth->assign($administrator, 1);
     }
 }
