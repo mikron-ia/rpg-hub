@@ -15,6 +15,11 @@ class RbacController extends Controller
 {
     public function actionInit()
     {
+        /**
+         * Minor technical note: if there is no separate index* right, all view* rights should allow listing,
+         * of course not necessarily complete.
+         */
+        
         $auth = Yii::$app->authManager;
         $auth->removeAll();
 
@@ -33,11 +38,6 @@ class RbacController extends Controller
 
         /* Epic-specific actions */
 
-        /**
-         * Minor technical note: if there is no separate index* right, all view* rights should allow listing,
-         * of course not necessarily complete.
-         */
-
         $openEpic = $auth->createPermission('openEpic');
         $openEpic->description = 'Able to add and open an epic';
         $auth->add($openEpic);
@@ -49,7 +49,7 @@ class RbacController extends Controller
 
         $viewEpic = $auth->createPermission('viewEpic');
         $viewEpic->description = 'Able to view an epic';
-        $viewEpic->ruleName = $playerRule->name;
+        $viewEpic->ruleName = $watcherRule->name;
         $auth->add($viewEpic);
 
         $controlPerson = $auth->createPermission('controlPerson');
@@ -59,7 +59,7 @@ class RbacController extends Controller
 
         $viewPerson = $auth->createPermission('viewPerson');
         $viewPerson->description = 'Able to view a person';
-        $viewPerson->ruleName = $playerRule->name;
+        $viewPerson->ruleName = $watcherRule->name;
         $auth->add($viewPerson);
 
         $controlCharacter = $auth->createPermission('controlCharacter');
@@ -67,25 +67,50 @@ class RbacController extends Controller
         $controlCharacter->ruleName = $gameMasterRule->name;
         $auth->add($controlCharacter);
 
+        $viewCharacter = $auth->createPermission('viewCharacter');
+        $viewCharacter->description = 'Able to add, edit, and remove a character';
+        $viewCharacter->ruleName = $playerRule->name;
+        $auth->add($viewCharacter);
+
         $controlStory = $auth->createPermission('controlStory');
         $controlStory->description = 'Able to add, edit, and move a story';
         $controlStory->ruleName = $gameMasterRule->name;
         $auth->add($controlStory);
+
+        $viewStory = $auth->createPermission('viewStory');
+        $viewStory->description = 'Able to view a story';
+        $viewStory->ruleName = $watcherRule->name;
+        $auth->add($viewStory);
 
         $controlRecap = $auth->createPermission('controlRecap');
         $controlRecap->description = 'Able to add, edit, and move a recap';
         $controlRecap->ruleName = $gameMasterRule->name;
         $auth->add($controlRecap);
 
+        $viewRecap = $auth->createPermission('viewRecap');
+        $viewRecap->description = 'Able to view a recap';
+        $viewRecap->ruleName = $watcherRule->name;
+        $auth->add($viewRecap);
+
         $controlGroup = $auth->createPermission('controlGroup');
         $controlGroup->description = 'Able to add, edit, and remove a group; includes rights to add and remove members';
         $controlGroup->ruleName = $gameMasterRule->name;
         $auth->add($controlGroup);
 
+        $viewGroup = $auth->createPermission('viewGroup');
+        $viewGroup->description = 'Able to view group';
+        $viewGroup->ruleName = $watcherRule->name;
+        $auth->add($viewGroup);
+
         $controlSession = $auth->createPermission('controlSession');
         $controlSession->description = 'Able to announce session and control its execution';
         $controlSession->ruleName = $assistantRule->name;
         $auth->add($controlSession);
+
+        $viewSession = $auth->createPermission('viewSession');
+        $viewSession->description = 'Able view sessions';
+        $viewSession->ruleName = $watcherRule->name;
+        $auth->add($viewSession);
 
         /* General actions */
 
@@ -106,10 +131,13 @@ class RbacController extends Controller
         $auth->addChild($user, $viewStory);
         $auth->addChild($user, $viewRecap);
         $auth->addChild($user, $viewGroup);
+        $auth->addChild($user, $viewSession);
 
         $operator = $auth->createRole('operator'); // this is the back-end user
         $auth->add($operator);
+        
         $auth->addChild($operator, $user);
+        
         $auth->addChild($operator, $openEpic);
         $auth->addChild($operator, $controlEpic);
         $auth->addChild($operator, $controlPerson);
@@ -120,12 +148,16 @@ class RbacController extends Controller
 
         $manager = $auth->createRole('manager'); // this is the person who handles the users and general settings
         $auth->add($manager);
-        $auth->addChild($manager, $controlUser);
+        
         $auth->addChild($manager, $operator);
+
+        $auth->addChild($manager, $controlUser);
 
         $administrator = $auth->createRole('administrator'); // this is the person who handles the users, general settings, and managers
         $auth->add($administrator);
-        $auth->addChild($administrator, $controlManager);
+
         $auth->addChild($administrator, $manager);
+        
+        $auth->addChild($administrator, $controlManager);        
     }
 }
