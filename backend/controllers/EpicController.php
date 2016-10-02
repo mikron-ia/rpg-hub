@@ -8,6 +8,7 @@ use common\models\Epic;
 use common\models\EpicQuery;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -73,6 +74,8 @@ class EpicController extends Controller
     {
         $model = $this->findModel($id);
 
+        $model->canUserViewYou();
+
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
         } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
@@ -111,6 +114,8 @@ class EpicController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        $model->canUserControlYou();
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));

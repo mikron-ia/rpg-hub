@@ -8,6 +8,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\HttpException;
 
 /**
  * This is the model class for table "epic".
@@ -240,5 +241,31 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
             Parameter::EPIC_STATUS,
             Parameter::EPIC_SYSTEM_STATE,
         ];
+    }
+
+    /**
+     * @return bool
+     * @throws HttpException
+     */
+    public function canUserControlYou()
+    {
+        if (Yii::$app->user->can('controlEpic', ['epic' => $this])) {
+            return true;
+        } else {
+            throw new HttpException(401, Yii::t('app', 'NO_RIGHT_TO_CONTROL_EPIC'));
+        }
+    }
+
+    /**
+     * @return bool
+     * @throws HttpException
+     */
+    public function canUserViewYou()
+    {
+        if (Yii::$app->user->can('viewEpic', ['epic' => $this])) {
+            return true;
+        } else {
+            throw new HttpException(401, Yii::t('app', 'NO_RIGHT_TO_VIEW_EPIC'));
+        }
     }
 }
