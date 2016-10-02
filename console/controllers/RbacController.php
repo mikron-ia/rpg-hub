@@ -31,7 +31,8 @@ class RbacController extends Controller
         $auth->add($gameMasterRule);
         $auth->add($assistantRule);
 
-        /* Actions */
+        /* Epic-specific actions */
+
         $openEpic = $auth->createPermission('openEpic');
         $openEpic->description = 'Able to add and open an epic';
         $auth->add($openEpic);
@@ -66,32 +67,49 @@ class RbacController extends Controller
         $controlGroup->ruleName = $gameMasterRule->name;
         $auth->add($controlGroup);
 
-        $controlUser = $auth->createPermission('controlSession');
-        $controlUser->description = 'Able to announce session and control its execution';
-        $controlGroup->ruleName = $assistantRule->name;
-        $auth->add($controlUser);
+        $controlSession = $auth->createPermission('controlSession');
+        $controlSession->description = 'Able to announce session and control its execution';
+        $controlSession->ruleName = $assistantRule->name;
+        $auth->add($controlSession);
+
+        /* General actions */
 
         $controlUser = $auth->createPermission('controlUser');
-        $controlUser->description = 'Able to add, edit, and hide a user';
+        $controlUser->description = 'Able to add, edit, and manage a user';
         $auth->add($controlUser);
+
+        $controlManager = $auth->createPermission('controlManager');
+        $controlManager->description = 'Able to add, edit, and manage a manager';
+        $auth->add($controlManager);
 
         /* Roles */
         $user = $auth->createRole('user'); // basic user
         $auth->add($user);
-        $auth->addChild($user, $openEpic);
-        $auth->addChild($user, $controlEpic);
-        $auth->addChild($user, $controlPerson);
-        $auth->addChild($user, $controlCharacter);
-        $auth->addChild($user, $controlStory);
-        $auth->addChild($user, $controlRecap);
-        $auth->addChild($user, $controlGroup);
+
+        /*
+        $player = $auth->createRole('player'); // person able to see epics they play in
+        $auth->add($player);
+        $auth->addChild($player, $user);
+        */
+
+        $gm = $auth->createRole('gm'); // person able to handle epics
+        $auth->add($gm);
+        $auth->addChild($gm, $user);
+        $auth->addChild($gm, $openEpic);
+        $auth->addChild($gm, $controlEpic);
+        $auth->addChild($gm, $controlPerson);
+        $auth->addChild($gm, $controlCharacter);
+        $auth->addChild($gm, $controlStory);
+        $auth->addChild($gm, $controlRecap);
+        $auth->addChild($gm, $controlGroup);
 
         $manager = $auth->createRole('manager'); // person who handles the users and general settings
-        $auth->addChild($user, $controlUser);
         $auth->add($manager);
+        $auth->addChild($manager, $controlUser);
 
         $administrator = $auth->createRole('administrator'); // person who handles the users, general settings, and managers
         $auth->add($administrator);
+        $auth->addChild($administrator, $controlManager);
         $auth->addChild($administrator, $manager);
     }
 }
