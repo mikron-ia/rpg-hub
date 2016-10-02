@@ -38,93 +38,112 @@ class RbacController extends Controller
 
         /* Epic-specific actions */
 
-        $openEpic = $auth->createPermission('openEpic');
-        $openEpic->description = 'Able to add and open an epic';
-        $auth->add($openEpic);
-
         $controlEpic = $auth->createPermission('controlEpic');
         $controlEpic->description = 'Able to edit and command an epic';
         $controlEpic->ruleName = $gameMasterRule->name;
+
         $auth->add($controlEpic);
 
         $viewEpic = $auth->createPermission('viewEpic');
         $viewEpic->description = 'Able to view an epic';
         $viewEpic->ruleName = $watcherRule->name;
+
         $auth->add($viewEpic);
 
         $controlPerson = $auth->createPermission('controlPerson');
         $controlPerson->description = 'Able to add, edit, and remove a person';
         $controlPerson->ruleName = $gameMasterRule->name;
+
         $auth->add($controlPerson);
 
         $viewPerson = $auth->createPermission('viewPerson');
         $viewPerson->description = 'Able to view a person';
         $viewPerson->ruleName = $watcherRule->name;
+
         $auth->add($viewPerson);
 
         $controlCharacter = $auth->createPermission('controlCharacter');
         $controlCharacter->description = 'Able to add, edit, and remove a character';
         $controlCharacter->ruleName = $gameMasterRule->name;
+
         $auth->add($controlCharacter);
 
         $viewCharacter = $auth->createPermission('viewCharacter');
         $viewCharacter->description = 'Able to add, edit, and remove a character';
         $viewCharacter->ruleName = $playerRule->name;
+
         $auth->add($viewCharacter);
 
         $controlStory = $auth->createPermission('controlStory');
         $controlStory->description = 'Able to add, edit, and move a story';
         $controlStory->ruleName = $gameMasterRule->name;
+
         $auth->add($controlStory);
 
         $viewStory = $auth->createPermission('viewStory');
         $viewStory->description = 'Able to view a story';
         $viewStory->ruleName = $watcherRule->name;
+
         $auth->add($viewStory);
 
         $controlRecap = $auth->createPermission('controlRecap');
         $controlRecap->description = 'Able to add, edit, and move a recap';
         $controlRecap->ruleName = $gameMasterRule->name;
+
         $auth->add($controlRecap);
 
         $viewRecap = $auth->createPermission('viewRecap');
         $viewRecap->description = 'Able to view a recap';
         $viewRecap->ruleName = $watcherRule->name;
+
         $auth->add($viewRecap);
 
         $controlGroup = $auth->createPermission('controlGroup');
         $controlGroup->description = 'Able to add, edit, and remove a group; includes rights to add and remove members';
         $controlGroup->ruleName = $gameMasterRule->name;
+
         $auth->add($controlGroup);
 
         $viewGroup = $auth->createPermission('viewGroup');
         $viewGroup->description = 'Able to view group';
         $viewGroup->ruleName = $watcherRule->name;
+
         $auth->add($viewGroup);
 
         $controlSession = $auth->createPermission('controlSession');
         $controlSession->description = 'Able to announce session and control its execution';
         $controlSession->ruleName = $assistantRule->name;
+
         $auth->add($controlSession);
 
         $viewSession = $auth->createPermission('viewSession');
         $viewSession->description = 'Able view sessions';
         $viewSession->ruleName = $watcherRule->name;
+
         $auth->add($viewSession);
 
         /* General actions */
 
+        $openEpic = $auth->createPermission('openEpic');
+        $openEpic->description = 'Able to add and open an epic';
+
+        $auth->add($openEpic);
+
         $controlUser = $auth->createPermission('controlUser');
         $controlUser->description = 'Able to add, edit, and manage a user';
+
         $auth->add($controlUser);
 
         $controlManager = $auth->createPermission('controlManager');
         $controlManager->description = 'Able to add, edit, and manage a manager';
+
         $auth->add($controlManager);
 
         /* Roles */
+
         $user = $auth->createRole('user'); // this is the basic user, confined to the front
         $auth->add($user);
+
         $auth->addChild($user, $viewEpic);
         $auth->addChild($user, $viewPerson);
         $auth->addChild($user, $viewCharacter);
