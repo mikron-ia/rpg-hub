@@ -94,6 +94,8 @@ class EpicController extends Controller
      */
     public function actionCreate()
     {
+        Epic::canUserCreate();
+
         $model = new Epic();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

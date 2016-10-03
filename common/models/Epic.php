@@ -244,6 +244,21 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
     }
 
     /**
+     * Determines whether user can create an epic
+     * @return bool
+     * @throws HttpException
+     */
+    static public function canUserCreate()
+    {
+        if (Yii::$app->user->can('openEpic')) {
+            return true;
+        } else {
+            throw new HttpException(401, Yii::t('app', 'NO_RIGHT_TO_CREATE_EPIC'));
+        }
+    }
+
+    /**
+     * Determines whether user can make changes to this epic
      * @return bool
      * @throws HttpException
      */
@@ -257,6 +272,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
     }
 
     /**
+     * Determines whether user can view this epic
      * @return bool
      * @throws HttpException
      */
