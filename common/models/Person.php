@@ -4,7 +4,7 @@ namespace common\models;
 
 use common\models\core\HasDescriptions;
 use common\models\core\Visibility;
-use common\models\tools\Tools;
+use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -28,7 +28,7 @@ use yii\db\ActiveRecord;
  */
 class Person extends ActiveRecord implements Displayable, HasDescriptions
 {
-    use Tools;
+    use ToolsForEntity;
 
     const VISIBILITY_NONE = 'none';
     const VISIBILITY_LOGGED = 'logged';

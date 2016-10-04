@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\models\tools\Tools;
+use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -19,7 +19,7 @@ use yii\db\ActiveRecord;
  */
 class Group extends ActiveRecord implements Displayable
 {
-    use Tools;
+    use ToolsForEntity;
 
     /**
      * @inheritdoc

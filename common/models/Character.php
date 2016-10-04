@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\models\tools\Tools;
+use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
@@ -24,7 +24,7 @@ use yii\db\ActiveRecord;
  */
 class Character extends ActiveRecord implements Displayable
 {
-    use Tools;
+    use ToolsForEntity;
 
     /**
      * @inheritdoc

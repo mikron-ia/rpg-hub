@@ -3,7 +3,7 @@
 namespace common\models;
 
 use common\models\core\HasParameters;
-use common\models\tools\Tools;
+use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
@@ -33,7 +33,7 @@ use yii\web\HttpException;
  */
 class Epic extends ActiveRecord implements Displayable, HasParameters
 {
-    use Tools;
+    use ToolsForEntity;
 
     /**
      * @inheritdoc

@@ -5,7 +5,7 @@ namespace common\models\tools;
 use Yii;
 use yii\web\HttpException;
 
-trait Tools
+trait ToolsForEntity
 {
     private function generateKey($identifier)
     {

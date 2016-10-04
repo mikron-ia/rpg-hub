@@ -4,7 +4,7 @@ namespace common\models;
 
 use common\models\core\HasParameters;
 use common\models\core\Visibility;
-use common\models\tools\Tools;
+use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -30,7 +30,7 @@ use yii2tech\ar\position\PositionBehavior;
  */
 class Story extends ActiveRecord implements Displayable, HasParameters
 {
-    use Tools;
+    use ToolsForEntity;
 
     /**
      * @inheritdoc
