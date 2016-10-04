@@ -11,22 +11,28 @@ use common\rules\EpicWatcher;
 use Yii;
 use yii\console\Controller;
 
+/**
+ * Class RbacController
+ * Initiates and sets all access rights
+ *
+ * @package console\controllers
+ */
 class RbacController extends Controller
 {
     /**
      * Initiates all rules. NOTE: this will erase all access rights
+     *
+     * Minor technical note: if there is no separate index* right, all view* rights should allow listing,
+     * of course not necessarily complete.
      */
     public function actionInit()
     {
-        /**
-         * Minor technical note: if there is no separate index* right, all view* rights should allow listing,
-         * of course not necessarily complete.
-         */
-
         $auth = Yii::$app->authManager;
+
         $auth->removeAll();
 
         /* Rules */
+
         $participantRule = new EpicParticipant();
         $watcherRule = new EpicWatcher();
         $playerRule = new EpicPlayer();
@@ -193,9 +199,9 @@ class RbacController extends Controller
     }
 
     /**
-     * Sets administrator role to used with ID == 1. Intended for development and production init
+     * Sets administrator role to used with ID == 1. Intended for development and production initialisation.
      */
-    public function actionSetAdmin()
+    public function actionSetAdministrator()
     {
         $auth = Yii::$app->authManager;
         $administrator = $auth->getRole('administrator');
