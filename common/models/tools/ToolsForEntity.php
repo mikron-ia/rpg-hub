@@ -39,7 +39,7 @@ trait ToolsForEntity
      * @return bool
      * @throws HttpException
      */
-    private function canUserControl($epic, $message)
+    static public function canUserControl($epic, $message)
     {
         if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
@@ -54,9 +54,24 @@ trait ToolsForEntity
      * @return bool
      * @throws HttpException
      */
-    private function canUserView($epic, $message)
+    static public function canUserView($epic, $message)
     {
         if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
+            return true;
+        } else {
+            throw new HttpException(401, $message);
+        }
+    }
+
+    /**
+     * @param Epic $epic
+     * @param string $message
+     * @return bool
+     * @throws HttpException
+     */
+    static public function canUserIndex($epic, $message)
+    {
+        if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
         } else {
             throw new HttpException(401, $message);

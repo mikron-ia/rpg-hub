@@ -255,11 +255,11 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
 
     public function canUserControlYou()
     {
-        return $this->canUserControl($this->epic, Yii::t('app', 'NO_RIGHT_TO_CONTROL_PERSON'));
+        return self::canUserControl($this->epic, Yii::t('app', 'NO_RIGHT_TO_CONTROL_PERSON'));
     }
 
     public function canUserViewYou()
     {
-        return $this->canUserView($this->epic, Yii::t('app', 'NO_RIGHT_TO_VIEW_PERSON'));
+        return self::canUserView($this->epic, Yii::t('app', 'NO_RIGHT_TO_VIEW_PERSON'));
     }
 }

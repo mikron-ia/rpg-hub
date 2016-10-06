@@ -4,15 +4,18 @@ namespace common\rules;
 
 use common\models\Participant;
 use common\models\ParticipantRole;
+use Yii;
 use yii\rbac\Rule;
+use yii\web\HttpException;
 
 abstract class EpicUser extends Rule
 {
-    /**
-     * @inheritdoc
-     */
     public function execute($user, $item, $params)
     {
+        if(!$params['epic']) {
+            throw new HttpException(403, Yii::t('app', 'ERROR_UNABLE_TO_CHECK_RIGHTS_MISSING_EPIC'));
+        }
+
         /* @var $participant Participant */
         $participant = Participant::findOne([
             'epic_id' => $params['epic']->epic_id,

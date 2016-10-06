@@ -53,6 +53,8 @@ class PersonController extends Controller
         $searchModel = new PersonQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        Person::canUserIndex(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_LIST_PERSON'));
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
