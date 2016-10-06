@@ -23,13 +23,13 @@ trait ToolsForEntity
         return sha1($string);
     }
 
-    static public function canUserCreate()
+    static public function canUserCreateInEpic($epic, $message)
     {
         /* Use of control* right is intentional; there is no need to separate creation from control at this level */
-        if (Yii::$app->user->can('control' . self::cleanClassName())) {
+        if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
         } else {
-            throw new HttpException(401, Yii::t('app', 'NO_RIGHT_TO_CREATE_OBJECT'));
+            throw new HttpException(401, $message);
         }
     }
 
@@ -39,7 +39,7 @@ trait ToolsForEntity
      * @return bool
      * @throws HttpException
      */
-    static public function canUserControl($epic, $message)
+    static public function canUserControlInEpic($epic, $message)
     {
         if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
@@ -54,7 +54,7 @@ trait ToolsForEntity
      * @return bool
      * @throws HttpException
      */
-    static public function canUserView($epic, $message)
+    static public function canUserViewInEpic($epic, $message)
     {
         if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
@@ -69,7 +69,7 @@ trait ToolsForEntity
      * @return bool
      * @throws HttpException
      */
-    static public function canUserIndex($epic, $message)
+    static public function canUserIndexInEpic($epic, $message)
     {
         if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
             return true;

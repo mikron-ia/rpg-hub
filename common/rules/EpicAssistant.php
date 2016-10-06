@@ -8,11 +8,8 @@ final class EpicAssistant extends EpicUser
 {
     public $name = 'epicAssistant';
 
-    /**
-     * @inheritdoc
-     */
     public function requiredRole()
     {
-        return ParticipantRole::ROLE_ASSISTANT;
+        return [ParticipantRole::ROLE_ASSISTANT, ParticipantRole::ROLE_GM];
     }
 }

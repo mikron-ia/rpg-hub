@@ -11,12 +11,9 @@ final class EpicParticipant extends Rule
 {
     public $name = 'epicParticipant';
 
-    /**
-     * @inheritdoc
-     */
     public function execute($user, $item, $params)
     {
-        if(!$params['epic']) {
+        if(!isset($params['epic'])) {
             throw new HttpException(403, Yii::t('app', 'ERROR_UNABLE_TO_CHECK_RIGHTS_MISSING_EPIC'));
         }
 

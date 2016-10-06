@@ -253,13 +253,18 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
         ];
     }
 
+    static public function canUserCreateMe()
+    {
+        return self::canUserCreateInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_CREATE_PERSON'));
+    }
+
     public function canUserControlYou()
     {
-        return self::canUserControl($this->epic, Yii::t('app', 'NO_RIGHT_TO_CONTROL_PERSON'));
+        return self::canUserControlInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_CONTROL_PERSON'));
     }
 
     public function canUserViewYou()
     {
-        return self::canUserView($this->epic, Yii::t('app', 'NO_RIGHT_TO_VIEW_PERSON'));
+        return self::canUserViewInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_VIEW_PERSON'));
     }
 }

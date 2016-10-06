@@ -15,7 +15,7 @@ interface HasEpicControl
      * @return bool
      * @throws HttpException
      */
-    static public function canUserCreate();
+    static public function canUserCreateMe();
 
     /**
      * Determines whether user can alter or delete the object
