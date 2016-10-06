@@ -3,11 +3,13 @@
 namespace common\models;
 
 use common\models\core\HasDescriptions;
+use common\models\core\HasEpicControl;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\HttpException;
 
 /**
  * This is the model class for table "person".
@@ -26,7 +28,7 @@ use yii\db\ActiveRecord;
  * @property Character $character
  * @property DescriptionPack $descriptionPack
  */
-class Person extends ActiveRecord implements Displayable, HasDescriptions
+class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl
 {
     use ToolsForEntity;
 
@@ -249,5 +251,15 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions
             Description::TYPE_PERSONALITY,
             Description::TYPE_WHO,
         ];
+    }
+
+    public function canUserControlYou()
+    {
+        return $this->canUserControl($this->epic, Yii::t('app', 'NO_RIGHT_TO_CONTROL_PERSON'));
+    }
+
+    public function canUserViewYou()
+    {
+        return $this->canUserView($this->epic, Yii::t('app', 'NO_RIGHT_TO_VIEW_PERSON'));
     }
 }

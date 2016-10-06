@@ -68,6 +68,8 @@ class PersonController extends Controller
     {
         $model = $this->findModel($id);
 
+        $model->canUserViewYou();
+
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
         } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
