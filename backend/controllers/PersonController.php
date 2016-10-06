@@ -88,6 +88,8 @@ class PersonController extends Controller
      */
     public function actionCreate()
     {
+        Person::canUserCreate();
+
         $model = new Person();
 
         $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
@@ -111,6 +113,8 @@ class PersonController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        $model->canUserControlYou();
 
         $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
 
