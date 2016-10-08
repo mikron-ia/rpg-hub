@@ -248,7 +248,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
      * @return bool
      * @throws HttpException
      */
-    static public function canUserCreateInEpic()
+    static public function canUserCreateEpic()
     {
         if (Yii::$app->user->can('openEpic')) {
             return true;

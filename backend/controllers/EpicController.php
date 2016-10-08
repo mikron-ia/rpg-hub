@@ -94,7 +94,7 @@ class EpicController extends Controller
      */
     public function actionCreate()
     {
-        Epic::canUserCreateInEpic();
+        Epic::canUserCreateEpic();
 
         $model = new Epic();
 
