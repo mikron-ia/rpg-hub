@@ -15,7 +15,7 @@ interface HasEpicControl
      * @return bool
      * @throws HttpException
      */
-    static public function canUserCreateMe();
+    static public function canUserCreateThem();
 
     /**
      * Determines whether user can alter or delete the object
@@ -23,6 +23,13 @@ interface HasEpicControl
      * @throws HttpException
      */
     public function canUserControlYou();
+
+    /**
+     * Determines whether user can list the objects
+     * @return bool
+     * @throws HttpException
+     */
+    static public function canUserIndexThem();
 
     /**
      * Determines whether user can view the object

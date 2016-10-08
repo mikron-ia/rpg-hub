@@ -253,7 +253,12 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
         ];
     }
 
-    static public function canUserCreateMe()
+    static public function canUserIndexThem()
+    {
+        return self::canUserIndexInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_LIST_PERSON'));
+    }
+
+    static public function canUserCreateThem()
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_CREATE_PERSON'));
     }
