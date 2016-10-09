@@ -284,4 +284,19 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
             throw new HttpException(401, Yii::t('app', 'NO_RIGHT_TO_VIEW_EPIC'));
         }
     }
+
+    /**
+     * Determines whether user can view active epic
+     * @return bool
+     */
+    static public function canUserViewActiveEpic()
+    {
+        if(isset(Yii::$app->params['activeEpic'])) {
+            /** @var Epic $activeEpic */
+            $activeEpic = Yii::$app->params['activeEpic'];
+            return $activeEpic->canUserViewYou();
+        } else {
+            return false;
+        }
+    }
 }
