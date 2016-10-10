@@ -23,6 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'username',
             'email:email',
             [
+                'attribute' => 'language',
+                'value' => function (\common\models\User $model) {
+                    return (\common\models\core\Language::create($model->language))->getName();
+                }
+            ],
+            [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update}'
             ],

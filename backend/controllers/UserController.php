@@ -23,7 +23,7 @@ class UserController extends Controller
                 'rules' => [
                     [
                         'actions' => ['create', 'delete', 'index', 'update', 'view'],
-                        'allow' => true,
+                        'allow' => Yii::$app->user->can('controlUser'),
                         'roles' => ['@'],
                     ],
                 ],
