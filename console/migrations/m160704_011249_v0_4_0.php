@@ -40,6 +40,12 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
             'FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);
 
+        $this->addColumn('character', 'player_id', $this->integer(10)->unsigned());
+
+        $this->execute('SET foreign_key_checks = 0');
+        $this->addForeignKey('character_ibfk_3', '{{%character}}', 'player_id', '{{%user}}', 'id', 'RESTRICT', 'CASCADE');
+        $this->execute('SET foreign_key_checks = 1');
+
         parent::up();
 
         /**
@@ -79,6 +85,8 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
 
         $this->addColumn('description_pack', 'name', $this->string(80)->notNull());
         $this->addColumn('parameter_pack', 'name', $this->string(80)->notNull());
+
+        $this->dropForeignKey('character_ibfk_3', '{{%character}}');
 
         $this->execute('SET foreign_key_checks = 1;');
     }
