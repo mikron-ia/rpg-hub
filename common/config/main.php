@@ -16,6 +16,10 @@ return [
             'password' => getenv('DB_PASSWORD'),
             'charset' => getenv('DB_CHARSET'),
         ],
+        'formatter' => [
+            'dateFormat' => 'yyyy-MM-dd',
+            'datetimeFormat' => 'yyyy-MM-dd HH:mm:ss',
+        ],
         'i18n' => [
             'translations' => [
                 'app*' => [

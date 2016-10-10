@@ -1,5 +1,6 @@
 <?php
 
+use common\models\User;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -7,14 +8,15 @@ use yii\widgets\DetailView;
 /* @var $model common\models\User */
 
 $this->title = $model->username;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'USER_INDEX_TITLE'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <div class="buttoned-header">
+        <h1><?= Html::encode($this->title) ?></h1>
+
         <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -23,17 +25,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-    </p>
+    </div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'username',
-            'email:email',
-            'status',
-            'created_at',
-            'updated_at',
-        ],
-    ]) ?>
+    <div class="col-md-6>">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'email:email',
+                'created_at:datetime',
+                'updated_at:datetime',
+                [
+                    'attribute' => 'language',
+                    'value' => (\common\models\core\Language::create($model->language))->getName()
+                ]
+            ],
+        ]) ?>
+    </div>
 
 </div>

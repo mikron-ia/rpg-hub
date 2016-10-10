@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\models\core\Language;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -58,6 +59,19 @@ final class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['language', 'in', 'range' => Language::supportedLanguages()],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'email' => Yii::t('app', 'USER_EMAIL'),
+            'created_at' => Yii::t('app', 'USER_CREATED_AT'),
+            'updated_at' => Yii::t('app', 'USER_UPDATED_AT'),
+            'language' => Yii::t('app', 'USER_LANGUAGE'),
+            'status' => Yii::t('app', 'USER_STATUS'),
+            'username' => Yii::t('app', 'USER_USERNAME'),
         ];
     }
 

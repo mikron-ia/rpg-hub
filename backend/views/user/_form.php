@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Language;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,7 +13,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'language')->dropDownList(Language::languagesLong()) ?>
+    </div>
+
+    <div class="clearfix"></div>
 
     <div class="form-group">
         <?php echo Html::submitButton(
