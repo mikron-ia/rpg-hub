@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form->field($model, 'language')->dropDownList(Language::languagesLong()) ?>
     </div>
 

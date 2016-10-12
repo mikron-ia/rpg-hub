@@ -253,6 +253,7 @@ return [
     'USER_UPDATED_AT' => 'Modyfikowano',
     'USER_UPDATE_TITLE {user_name}' => 'Edycja danych użytkownika: {user_name}',
     'USER_USERNAME' => 'Nazwa użytkownika',
+    'USER_VIEW_TITLE {user_name}' => 'Użytkownik {user_name}',
     'VISIBILITY_DESIGNATED' => 'Dla określonych',
     'VISIBILITY_DESIGNATED_LOWERCASE' => 'dla określonych',
     'VISIBILITY_FULL' => 'Dla wszystkich',

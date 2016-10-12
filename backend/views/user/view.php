@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
 
-$this->title = $model->username;
+$this->title = Yii::t('app', 'USER_VIEW_TITLE {user_name}', ['user_name' => $model->username]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'USER_INDEX_TITLE'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

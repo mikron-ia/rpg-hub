@@ -1,5 +1,7 @@
 <?php
 
+use common\models\core\Language;
+use common\models\User;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -24,8 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             [
                 'attribute' => 'language',
-                'value' => function (\common\models\User $model) {
-                    return (\common\models\core\Language::create($model->language))->getName();
+                'value' => function (User $model) {
+                    return (Language::create($model->language))->getName();
                 }
             ],
             [
