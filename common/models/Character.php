@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\HasEpicControl;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -22,21 +23,15 @@ use yii\db\ActiveRecord;
  * @property Person $currentlyDeliveredPerson
  * @property Person[] $people
  */
-class Character extends ActiveRecord implements Displayable
+class Character extends ActiveRecord implements Displayable, HasEpicControl
 {
     use ToolsForEntity;
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'character';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -69,9 +64,6 @@ class Character extends ActiveRecord implements Displayable
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -84,9 +76,6 @@ class Character extends ActiveRecord implements Displayable
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function beforeSave($insert)
     {
         if ($insert) {
@@ -127,9 +116,6 @@ class Character extends ActiveRecord implements Displayable
         return $this->hasMany(Person::className(), ['character_id' => 'character_id']);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getSimpleDataForApi()
     {
         return [
@@ -138,9 +124,6 @@ class Character extends ActiveRecord implements Displayable
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompleteDataForApi()
     {
         $decodedData = json_decode($this->data, true);
@@ -155,9 +138,6 @@ class Character extends ActiveRecord implements Displayable
         return $decodedData;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function isVisibleInApi()
     {
         return true;
@@ -184,5 +164,29 @@ class Character extends ActiveRecord implements Displayable
     public function getPeopleAvailableToThisCharacterAsIdList()
     {
         return array_keys($this->getPeopleAvailableToThisCharacterAsDropDownList());
+    }
+
+    static public function canUserIndexThem()
+    {
+        return self::canUserIndexInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_LIST_CHARACTER'));
+    }
+
+    static public function canUserCreateThem()
+    {
+        return self::canUserCreateInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_CREATE_CHARACTER'));
+    }
+
+    public function canUserControlYou()
+    {
+        return self::canUserControlInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_CONTROL_CHARACTER'));
+    }
+
+    /**
+     * {@inheritDoc}
+     * @todo Add control on player level for front-end use
+     */
+    public function canUserViewYou()
+    {
+        return self::canUserViewInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
     }
 }
