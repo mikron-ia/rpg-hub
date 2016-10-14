@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\HasEpicControl;
 use common\models\core\HasParameters;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
@@ -28,7 +29,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property ParameterPack $parameterPack
  * @property StoryParameter[] $storyParameters
  */
-class Story extends ActiveRecord implements Displayable, HasParameters
+class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl
 {
     use ToolsForEntity;
 
@@ -225,5 +226,25 @@ class Story extends ActiveRecord implements Displayable, HasParameters
             Parameter::PCS_ACTIVE,
             Parameter::CS_ACTIVE,
         ];
+    }
+
+    static public function canUserIndexThem()
+    {
+        return self::canUserIndexInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_LIST_STORY'));
+    }
+
+    static public function canUserCreateThem()
+    {
+        return self::canUserCreateInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_CREATE_STORY'));
+    }
+
+    public function canUserControlYou()
+    {
+        return self::canUserControlInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_CONTROL_STORY'));
+    }
+
+    public function canUserViewYou()
+    {
+        return self::canUserViewInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_VIEW_STORY'));
     }
 }

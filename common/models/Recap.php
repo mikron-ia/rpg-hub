@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\HasEpicControl;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
@@ -20,7 +21,7 @@ use yii\helpers\Markdown;
  *
  * @property Epic $epic
  */
-class Recap extends ActiveRecord implements Displayable
+class Recap extends ActiveRecord implements Displayable, HasEpicControl
 {
     use ToolsForEntity;
 
@@ -130,5 +131,25 @@ class Recap extends ActiveRecord implements Displayable
     public function isVisibleInApi()
     {
         return true;
+    }
+
+    static public function canUserIndexThem()
+    {
+        return self::canUserIndexInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_LIST_RECAP'));
+    }
+
+    static public function canUserCreateThem()
+    {
+        return self::canUserCreateInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_CREATE_RECAP'));
+    }
+
+    public function canUserControlYou()
+    {
+        return self::canUserControlInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_CONTROL_RECAP'));
+    }
+
+    public function canUserViewYou()
+    {
+        return self::canUserViewInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_VIEW_RECAP'));
     }
 }
