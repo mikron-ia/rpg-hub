@@ -25,7 +25,7 @@ class CharacterController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'update', 'view'],
+                        'actions' => ['create', 'index', 'update', 'view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -84,6 +84,8 @@ class CharacterController extends Controller
      */
     public function actionCreate()
     {
+        Character::canUserCreateThem();
+
         $model = new Character();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -105,6 +107,8 @@ class CharacterController extends Controller
     {
         $model = $this->findModel($id);
 
+        $model->canUserControlYou();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->character_id]);
         } else {
@@ -112,19 +116,6 @@ class CharacterController extends Controller
                 'model' => $model,
             ]);
         }
-    }
-
-    /**
-     * Deletes an existing Character model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**
