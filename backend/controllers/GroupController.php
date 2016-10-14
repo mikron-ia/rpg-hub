@@ -25,7 +25,7 @@ class GroupController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'update', 'view'],
+                        'actions' => ['create', 'index', 'update', 'view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -110,19 +110,6 @@ class GroupController extends Controller
                 'model' => $model,
             ]);
         }
-    }
-
-    /**
-     * Deletes an existing Group model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**

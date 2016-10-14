@@ -25,7 +25,6 @@ class StoryController extends Controller
                         'actions' => [
                             'index',
                             'create',
-                            'delete',
                             'update',
                             'view',
                             'move-down',
@@ -115,19 +114,6 @@ class StoryController extends Controller
                 'model' => $model,
             ]);
         }
-    }
-
-    /**
-     * Deletes an existing Story model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     public function actionMoveUp($id)

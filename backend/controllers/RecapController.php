@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use common\models\User;
 use Yii;
 use common\models\Recap;
 use common\models\RecapQuery;

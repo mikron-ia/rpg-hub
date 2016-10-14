@@ -29,7 +29,7 @@ class PersonController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'update', 'view', 'load-data'],
+                        'actions' => ['create', 'index', 'update', 'view', 'load-data'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -128,19 +128,6 @@ class PersonController extends Controller
                 'epicListForSelector' => $epicListForSelector,
             ]);
         }
-    }
-
-    /**
-     * Deletes an existing Person model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**
