@@ -75,17 +75,11 @@ final class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function findIdentity($id)
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function findIdentityByAccessToken($token, $type = null)
     {
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
@@ -148,17 +142,11 @@ final class User extends ActiveRecord implements IdentityInterface
         return $timestamp + $expire >= time();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getId()
     {
         return $this->getPrimaryKey();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getAuthKey()
     {
         return $this->auth_key;
@@ -206,9 +194,6 @@ final class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable('participant', ['user_id' => 'id']);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function validateAuthKey($authKey)
     {
         return $this->getAuthKey() === $authKey;
@@ -275,5 +260,16 @@ final class User extends ActiveRecord implements IdentityInterface
         }
 
         return $list;
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function statusNames()
+    {
+        return [
+            self::STATUS_DELETED => Yii::t('app', 'USER_STATUS_DELETED'),
+            self::STATUS_ACTIVE => Yii::t('app', 'USER_STATUS_ACTIVE'),
+        ];
     }
 }
