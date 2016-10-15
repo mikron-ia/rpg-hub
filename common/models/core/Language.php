@@ -51,6 +51,10 @@ class Language
         return $languages;
     }
 
+    /**
+     * @param string $code
+     * @return Language
+     */
     static public function create($code)
     {
         $language = new Language();

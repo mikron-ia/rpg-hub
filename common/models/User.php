@@ -262,7 +262,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return \string[]
      */
-    static public function getAllForDropdown()
+    static public function getAllForDropDown()
     {
         /** @var User[] $users */
         $users = User::find()->all();
