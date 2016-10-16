@@ -165,6 +165,7 @@ return [
     'NO_RIGHT_TO_CONTROL_RECAP' => 'Brak praw do zmian w tym streszczeniu',
     'NO_RIGHT_TO_CONTROL_STORY' => 'Brak praw do zmian w tej historii',
     'NO_RIGHT_TO_CREATE_EPIC' => 'Brak praw do tworzenia kampanii',
+    'NO_RIGHT_TO_LIST_EPIC' => 'Brak praw do listowania kampanii',
     'NO_RIGHT_TO_VIEW_CHARACTER' => 'Brak praw do przeglądania postaci',
     'NO_RIGHT_TO_VIEW_EPIC' => 'Brak praw wglądu do kampanii',
     'NO_RIGHT_TO_VIEW_GROUP' => 'Brak praw wglądu do grupy',

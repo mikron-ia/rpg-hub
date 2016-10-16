@@ -165,6 +165,7 @@ return [
     'NO_RIGHT_TO_CONTROL_RECAP' => 'You have no rights to make changes in this recap',
     'NO_RIGHT_TO_CONTROL_STORY' => 'You have no rights to make changes in this story',
     'NO_RIGHT_TO_CREATE_EPIC' => 'You have no rights to create epics',
+    'NO_RIGHT_TO_LIST_EPIC' => 'You have no rights to list epics',
     'NO_RIGHT_TO_VIEW_CHARACTER' => 'You have no rights to view this chracter',
     'NO_RIGHT_TO_VIEW_EPIC' => 'You have no rights to view this epic',
     'NO_RIGHT_TO_VIEW_GROUP' => 'You have no rights to view this group',

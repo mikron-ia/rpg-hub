@@ -50,6 +50,8 @@ class StoryController extends Controller
      */
     public function actionIndex()
     {
+        Story::canUserIndexThem();
+
         $searchModel = new StoryQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -67,6 +69,8 @@ class StoryController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+
+        $model->canUserViewYou();
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
@@ -86,6 +90,8 @@ class StoryController extends Controller
      */
     public function actionCreate()
     {
+        Story::canUserCreateThem();
+
         $model = new Story();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -107,6 +113,8 @@ class StoryController extends Controller
     {
         $model = $this->findModel($id);
 
+        $model->canUserControlYou();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->story_id]);
         } else {
@@ -119,6 +127,7 @@ class StoryController extends Controller
     public function actionMoveUp($id)
     {
         $model = $this->findModel($id);
+        $model->canUserControlYou();
         $model->movePrev();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
@@ -132,6 +141,7 @@ class StoryController extends Controller
     public function actionMoveDown($id)
     {
         $model = $this->findModel($id);
+        $model->canUserControlYou();
         $model->moveNext();
 
         $referrer = Yii::$app->getRequest()->getReferrer();

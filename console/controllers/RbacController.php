@@ -53,6 +53,11 @@ class RbacController extends Controller
 
         $auth->add($controlEpic);
 
+        $indexEpic = $auth->createPermission('indexEpic');
+        $indexEpic->description = 'Able to list epics';
+
+        $auth->add($indexEpic);
+
         $viewEpic = $auth->createPermission('viewEpic');
         $viewEpic->description = 'Able to view an epic';
         $viewEpic->ruleName = $watcherRule->name;
@@ -178,6 +183,7 @@ class RbacController extends Controller
         $auth->addChild($operator, $controlRecap);
         $auth->addChild($operator, $controlGroup);
         $auth->addChild($operator, $controlSession);
+        $auth->addChild($operator, $indexEpic);
 
         $manager = $auth->createRole('manager');
         $user->description = 'The person who handles the users and general settings';

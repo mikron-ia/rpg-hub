@@ -55,6 +55,8 @@ class EpicController extends Controller
      */
     public function actionIndex()
     {
+        Epic::canUserIndexEpic();
+
         $searchModel = new EpicQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

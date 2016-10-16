@@ -244,6 +244,20 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
     }
 
     /**
+     * Determines whether user can list epics
+     * @return bool
+     * @throws HttpException
+     */
+    static public function canUserIndexEpic()
+    {
+        if (Yii::$app->user->can('indexEpic')) {
+            return true;
+        } else {
+            throw new HttpException(401, Yii::t('app', 'NO_RIGHT_TO_LIST_EPIC'));
+        }
+    }
+
+    /**
      * Determines whether user can create an epic
      * @return bool
      * @throws HttpException

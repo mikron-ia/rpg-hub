@@ -46,6 +46,8 @@ class GroupController extends Controller
      */
     public function actionIndex()
     {
+        Group::canUserIndexThem();
+
         $searchModel = new GroupQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -63,6 +65,8 @@ class GroupController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+
+        $model->canUserViewYou();
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
@@ -82,6 +86,8 @@ class GroupController extends Controller
      */
     public function actionCreate()
     {
+        Group::canUserCreateThem();
+
         $model = new Group();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -102,6 +108,8 @@ class GroupController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        $model->canUserControlYou();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->group_id]);
