@@ -60,7 +60,7 @@ class ParticipantRole extends ActiveRecord
         return [
             self::ROLE_GM => Yii::t('app', 'PARTICIPANT_ROLE_GM'),
             self::ROLE_PLAYER => Yii::t('app', 'PARTICIPANT_ROLE_PLAYER'),
-            self::ROLE_ASSISTANT => Yii::t('app', 'PARTICIPANT_ROLE_MANAGER'),
+            self::ROLE_ASSISTANT => Yii::t('app', 'PARTICIPANT_ROLE_ASSISTANT'),
             self::ROLE_WATCHER => Yii::t('app', 'PARTICIPANT_ROLE_WATCHER'),
         ];
     }
@@ -79,7 +79,7 @@ class ParticipantRole extends ActiveRecord
         if (isset($names[$this->role])) {
             return $names[$this->role];
         } else {
-            return "?";
+            return Yii::t('app', 'PARTICIPANT_ROLE_UNKNOWN');
         }
     }
 }
