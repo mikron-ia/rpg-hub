@@ -54,6 +54,7 @@ return [
     'BUTTON_SUBMIT' => 'Wyślij',
     'BUTTON_UPDATE' => 'Modyfikuj',
     'BUTTON_USER_CREATE' => 'Zarejestruj użytkownika',
+    'BUTTON_USER_LIST' => 'Zarządzanie użytkownikami',
     'BUTTON_VIEW' => 'Wyświetl',
     'CHARACTER_DATA' => 'Dane postaci',
     'CHARACTER_DELIVERED_PERSON_ID' => 'Aktualnie dostarczana postać',

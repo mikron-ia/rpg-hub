@@ -54,6 +54,7 @@ return [
     'BUTTON_SUBMIT' => 'Submit',
     'BUTTON_UPDATE' => 'Update',
     'BUTTON_USER_CREATE' => 'Add user',
+    'BUTTON_USER_LIST' => 'User management',
     'BUTTON_VIEW' => 'View',
     'CHARACTER_DATA' => 'Character data',
     'CHARACTER_DELIVERED_PERSON_ID' => 'Currently delivered person',

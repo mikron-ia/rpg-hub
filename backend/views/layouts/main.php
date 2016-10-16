@@ -36,14 +36,20 @@ AppAsset::register($this);
         ],
     ]);
 
+    $auxiliaryItems = [
+        ['label' => Yii::t('app', 'BUTTON_EPIC_LIST'), 'url' => ['/epic/index']],
+        ['label' => Yii::t('app', 'BUTTON_DESCRIPTION_LIST'), 'url' => ['/description/index']],
+        ['label' => Yii::t('app', 'BUTTON_PARAMETER_LIST'), 'url' => ['/parameter/index']],
+    ];
+
+    if(Yii::$app->user->can('controlUser')) {
+        $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_USER_LIST'), 'url' => ['/user/index']];
+    }
+
     $menuItems = [
         [
             'label' => Yii::t('app', 'CONFIGURATION_TITLE_INDEX'),
-            'items' => [
-                ['label' => Yii::t('app', 'BUTTON_EPIC_LIST'), 'url' => ['/epic/index']],
-                ['label' => Yii::t('app', 'BUTTON_DESCRIPTION_LIST'), 'url' => ['/description/index']],
-                ['label' => Yii::t('app', 'BUTTON_PARAMETER_LIST'), 'url' => ['/parameter/index']],
-            ]
+            'items' => $auxiliaryItems,
         ],
         [
             'label' => Yii::t('app', 'MENU_TOP_SETTINGS'),
@@ -95,7 +101,7 @@ AppAsset::register($this);
     <div class="container">
         <?= Breadcrumbs::widget([
             'homeLink' => [
-                'label' =>  Yii::t('app', 'BREADCRUMBS_HOME'),
+                'label' => Yii::t('app', 'BREADCRUMBS_HOME'),
                 'url' => Yii::$app->homeUrl
             ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
