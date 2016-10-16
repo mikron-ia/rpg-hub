@@ -27,7 +27,7 @@ class RecapController extends Controller
                     [
                         'actions' => ['create', 'delete', 'index', 'update', 'view'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['operator'],
                     ],
                 ],
             ],

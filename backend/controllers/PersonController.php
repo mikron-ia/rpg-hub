@@ -31,7 +31,7 @@ class PersonController extends Controller
                     [
                         'actions' => ['create', 'index', 'update', 'view', 'load-data'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['operator'],
                     ],
                 ],
             ],

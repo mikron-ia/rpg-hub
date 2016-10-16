@@ -31,9 +31,14 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'password-change', 'set-epic'],
+                        'actions' => ['logout', 'password-change', 'set-epic'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['operator'],
                     ],
                 ],
             ],

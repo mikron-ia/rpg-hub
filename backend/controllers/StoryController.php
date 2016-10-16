@@ -31,7 +31,7 @@ class StoryController extends Controller
                             'move-up',
                         ],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['operator'],
                     ],
                 ],
             ],

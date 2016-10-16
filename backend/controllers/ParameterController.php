@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\Parameter;
 use Yii;
 use common\models\ParameterQuery;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,6 +21,16 @@ final class ParameterController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['create', 'delete', 'index', 'update', 'view', 'move-up', 'move-down'],
+                        'allow' => true,
+                        'roles' => ['operator'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

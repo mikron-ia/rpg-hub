@@ -8,7 +8,6 @@ use common\models\Epic;
 use common\models\EpicQuery;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -37,7 +36,7 @@ class EpicController extends Controller
                             'participant-edit'
                         ],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['operator'],
                     ],
                 ],
             ],

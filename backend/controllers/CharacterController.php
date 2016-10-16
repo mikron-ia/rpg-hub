@@ -27,7 +27,7 @@ class CharacterController extends Controller
                     [
                         'actions' => ['create', 'index', 'update', 'view'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['operator'],
                     ],
                 ],
             ],
