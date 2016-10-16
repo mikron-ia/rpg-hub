@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
 
-
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
 
@@ -37,6 +36,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'language',
                     'value' => (\common\models\core\Language::create($model->language))->getName()
+                ],
+                [
+                    'attribute' => 'role',
+                    'label' => Yii::t('app', 'USER_ROLE_NAME'),
+                    'value' => $model->getUserRoleName()
                 ]
             ],
         ]) ?>

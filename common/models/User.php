@@ -191,7 +191,8 @@ final class User extends ActiveRecord implements IdentityInterface
      */
     public function getEpics()
     {
-        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable('participant', ['user_id' => 'id']);
+        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable('participant',
+            ['user_id' => 'id']);
     }
 
     public function validateAuthKey($authKey)
@@ -271,5 +272,23 @@ final class User extends ActiveRecord implements IdentityInterface
             self::STATUS_DELETED => Yii::t('app', 'USER_STATUS_DELETED'),
             self::STATUS_ACTIVE => Yii::t('app', 'USER_STATUS_ACTIVE'),
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserRoleName()
+    {
+        if (Yii::$app->authManager->checkAccess($this->id, 'administrator')) {
+            return Yii::t('app', 'USER_ROLE_ADMINISTRATOR');
+        } elseif (Yii::$app->authManager->checkAccess($this->id, 'manager')) {
+            return Yii::t('app', 'USER_ROLE_MANAGER');
+        } elseif (Yii::$app->authManager->checkAccess($this->id, 'operator')) {
+            return Yii::t('app', 'USER_ROLE_OPERATOR');
+        } elseif (Yii::$app->authManager->checkAccess($this->id, 'user')) {
+            return Yii::t('app', 'USER_ROLE_USER');
+        } else {
+            return Yii::t('app', 'USER_ROLE_NONE');
+        }
     }
 }

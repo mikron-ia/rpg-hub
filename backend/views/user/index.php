@@ -31,6 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'attribute' => 'role',
+                'label' => Yii::t('app', 'USER_ROLE_NAME'),
+                'value' => function (User $model) {
+                    return $model->getUserRoleName();
+                }
+            ],
+            [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update}'
             ],
