@@ -24,14 +24,8 @@ class StoryController extends Controller
                     [
                         'actions' => ['index', 'view'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['user'],
                     ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
                 ],
             ],
         ];
@@ -43,6 +37,8 @@ class StoryController extends Controller
      */
     public function actionIndex()
     {
+        Story::canUserIndexThem();
+
         $dataProvider = new ActiveDataProvider([
             'query' => Story::find()->orderBy('story_id DESC'),
         ]);
@@ -59,8 +55,18 @@ class StoryController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        $model->canUserViewYou();
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
