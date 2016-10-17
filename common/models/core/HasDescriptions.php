@@ -13,5 +13,5 @@ interface HasDescriptions
      * Provides list of types allowed by this class
      * @return string[]
      */
-    static public function allowedDescriptionTypes();
+    static public function allowedDescriptionTypes():array;
 }

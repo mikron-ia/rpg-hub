@@ -197,9 +197,6 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
         return $decodedData;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function isVisibleInApi()
     {
         return ($this->visibility === self::VISIBILITY_FULL);
@@ -243,7 +240,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
      * Provides list of types allowed by this class
      * @return string[]
      */
-    static public function allowedDescriptionTypes()
+    static public function allowedDescriptionTypes():array
     {
         return [
             Description::TYPE_HISTORY,
