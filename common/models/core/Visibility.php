@@ -8,7 +8,7 @@ use Yii;
  * Class Visibility
  * @package common\models\tools
  */
-class Visibility
+final class Visibility
 {
     const VISIBILITY_NONE = 'none';
     const VISIBILITY_GM = 'gm';
@@ -21,7 +21,7 @@ class Visibility
     /**
      * @return string[]
      */
-    static public function visibilityNames()
+    static public function visibilityNames():array
     {
         return [
             Visibility::VISIBILITY_NONE => Yii::t('app', 'VISIBILITY_NONE'),
@@ -35,7 +35,7 @@ class Visibility
     /**
      * @return string[]
      */
-    static public function visibilityNamesLowercase()
+    static public function visibilityNamesLowercase():array
     {
         return [
             Visibility::VISIBILITY_NONE => Yii::t('app', 'VISIBILITY_NONE_LOWERCASE'),
@@ -46,7 +46,7 @@ class Visibility
         ];
     }
 
-    static public function allowedVisibilities()
+    static public function allowedVisibilities():array
     {
         return array_keys(self::visibilityNames());
     }
@@ -59,7 +59,7 @@ class Visibility
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getName()
     {
@@ -68,7 +68,7 @@ class Visibility
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getNameLowercase()
     {

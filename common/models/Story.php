@@ -214,7 +214,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return true;
     }
 
-    static public function allowedParameterTypes()
+    static public function allowedParameterTypes():array
     {
         return [
             Parameter::STORY_NUMBER,

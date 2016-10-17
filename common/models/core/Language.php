@@ -4,11 +4,14 @@ namespace common\models\core;
 
 use Yii;
 
-class Language
+final class Language
 {
+    /**
+     * @var string
+     */
     public $language;
 
-    static public function supportedLanguages()
+    static public function supportedLanguages():array
     {
         if (isset(Yii::$app->params['languagesAvailable'])) {
             return Yii::$app->params['languagesAvailable'];
@@ -17,7 +20,7 @@ class Language
         }
     }
 
-    static public function languagesShort()
+    static public function languagesShort():array
     {
         $languageData = [
             'en' => 'EN',
@@ -35,7 +38,7 @@ class Language
         return $languages;
     }
 
-    static public function languagesLong()
+    static public function languagesLong():array
     {
         $languageData = [
             'en' => Yii::t('app', 'LANGUAGE_CODE_ENGLISH'),
@@ -55,7 +58,7 @@ class Language
      * @param string $code
      * @return Language
      */
-    static public function create($code)
+    static public function create($code):Language
     {
         $language = new Language();
         $language->language = $code;
@@ -63,7 +66,7 @@ class Language
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getName()
     {
@@ -74,7 +77,7 @@ class Language
     /**
      * @return Language[]
      */
-    static public function getLanguagesAsObjects()
+    static public function getLanguagesAsObjects():array
     {
         $languages = [];
 
