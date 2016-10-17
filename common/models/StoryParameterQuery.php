@@ -9,14 +9,8 @@ use yii\db\ActiveQuery;
  *
  * @see StoryParameter
  */
-class StoryParameterQuery extends ActiveQuery
+final class StoryParameterQuery extends ActiveQuery
 {
-    /*public function active()
-    {
-        $this->andWhere('[[status]]=1');
-        return $this;
-    }*/
-
     /**
      * @inheritdoc
      * @return StoryParameter[]|array

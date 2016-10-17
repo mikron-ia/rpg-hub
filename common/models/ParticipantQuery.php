@@ -9,7 +9,7 @@ use yii\data\ActiveDataProvider;
 /**
  * ParticipantQuery represents the model behind the search form about `common\models\Participant`.
  */
-class ParticipantQuery extends Participant
+final class ParticipantQuery extends Participant
 {
     /**
      * @inheritdoc

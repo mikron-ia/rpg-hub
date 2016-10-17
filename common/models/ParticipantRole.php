@@ -13,7 +13,7 @@ use yii\db\ActiveRecord;
  *
  * @property Participant $participant
  */
-class ParticipantRole extends ActiveRecord
+final class ParticipantRole extends ActiveRecord
 {
     const ROLE_GM = 'gm';
     const ROLE_PLAYER = 'player';

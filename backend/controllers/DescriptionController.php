@@ -13,7 +13,7 @@ use yii\filters\VerbFilter;
 /**
  * DescriptionController implements the CRUD actions for Description model.
  */
-class DescriptionController extends Controller
+final class DescriptionController extends Controller
 {
     /**
      * @inheritdoc

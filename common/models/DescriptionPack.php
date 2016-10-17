@@ -15,7 +15,7 @@ use yii\db\ActiveRecord;
  * @property Description[] $descriptions
  * @property Person[] $people
  */
-class DescriptionPack extends ActiveRecord implements Displayable
+final class DescriptionPack extends ActiveRecord implements Displayable
 {
     /**
      * @inheritdoc
