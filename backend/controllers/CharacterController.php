@@ -13,11 +13,8 @@ use yii\filters\VerbFilter;
 /**
  * CharacterController implements the CRUD actions for Character model.
  */
-class CharacterController extends Controller
+final class CharacterController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [

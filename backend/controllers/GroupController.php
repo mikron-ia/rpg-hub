@@ -13,11 +13,8 @@ use yii\filters\VerbFilter;
 /**
  * GroupController implements the CRUD actions for Group model.
  */
-class GroupController extends Controller
+final class GroupController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [

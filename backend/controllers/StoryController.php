@@ -13,7 +13,7 @@ use yii\web\NotFoundHttpException;
 /**
  * StoryController implements the CRUD actions for Story model.
  */
-class StoryController extends Controller
+final class StoryController extends Controller
 {
     public function behaviors()
     {

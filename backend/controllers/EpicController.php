@@ -14,11 +14,8 @@ use yii\filters\VerbFilter;
 /**
  * EpicController implements the CRUD actions for Epic model.
  */
-class EpicController extends Controller
+final class EpicController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [

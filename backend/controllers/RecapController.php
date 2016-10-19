@@ -13,11 +13,8 @@ use yii\filters\VerbFilter;
 /**
  * RecapController implements the CRUD actions for Recap model.
  */
-class RecapController extends Controller
+final class RecapController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [

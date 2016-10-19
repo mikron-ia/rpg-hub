@@ -15,11 +15,8 @@ use yii\web\Cookie;
 /**
  * Site controller
  */
-class SiteController extends Controller
+final class SiteController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [

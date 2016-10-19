@@ -15,9 +15,6 @@ use yii\filters\VerbFilter;
  */
 final class ParameterController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [

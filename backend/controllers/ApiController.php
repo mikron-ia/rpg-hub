@@ -5,17 +5,15 @@ namespace backend\controllers;
 use common\models\Displayable;
 use common\models\Epic;
 use common\models\Person;
+use yii\web\Controller;
 use yii\web\Response;
 use backend\models\security\Authenticator;
 use Yii;
 use yii\base\Exception;
 use yii\web\HttpException;
 
-class ApiController extends \yii\web\Controller
+final class ApiController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [
