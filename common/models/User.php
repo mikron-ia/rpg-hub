@@ -33,17 +33,11 @@ final class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return '{{%user}}';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [
@@ -51,9 +45,6 @@ final class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -87,7 +78,6 @@ final class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds user by ID
-     *
      * @param int $id
      * @return static|null
      */
@@ -98,7 +88,6 @@ final class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds user by username
-     *
      * @param string $username
      * @return static|null
      */
@@ -109,7 +98,6 @@ final class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds user by password reset token
-     *
      * @param string $token password reset token
      * @return static|null
      */
@@ -127,11 +115,10 @@ final class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds out if password reset token is valid
-     *
      * @param string $token password reset token
      * @return boolean
      */
-    public static function isPasswordResetTokenValid($token)
+    public static function isPasswordResetTokenValid($token):bool
     {
         if (empty($token)) {
             return false;
@@ -155,7 +142,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
-    public function getEpicsGameMastered()
+    public function getEpicsGameMastered():ActiveQuery
     {
         return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable(
             'participant',
@@ -172,7 +159,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
-    public function getEpicsPlayed()
+    public function getEpicsPlayed():ActiveQuery
     {
         return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable(
             'participant',
@@ -189,7 +176,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
-    public function getEpics()
+    public function getEpics():ActiveQuery
     {
         return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable('participant',
             ['user_id' => 'id']);
@@ -248,7 +235,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return \string[]
      */
-    static public function getAllForDropDown()
+    static public function getAllForDropDown():array
     {
         /** @var User[] $users */
         $users = User::find()->all();
@@ -266,7 +253,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return string[]
      */
-    static public function statusNames()
+    static public function statusNames():array
     {
         return [
             self::STATUS_DELETED => Yii::t('app', 'USER_STATUS_DELETED'),
@@ -277,7 +264,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return string
      */
-    public function getUserRoleName()
+    public function getUserRoleName():string
     {
         if (Yii::$app->authManager->checkAccess($this->id, 'administrator')) {
             return Yii::t('app', 'USER_ROLE_ADMINISTRATOR');

@@ -8,7 +8,12 @@ use yii\web\HttpException;
 
 trait ToolsForEntity
 {
-    private function generateKey($identifier)
+    /**
+     * @param $identifier
+     * @return string
+     * @throws HttpException
+     */
+    private function generateKey($identifier):string
     {
         if (!isset(Yii::$app->params['keyGeneration'][$identifier])) {
             throw new HttpException(500, "Missing configuration for key");
@@ -23,7 +28,13 @@ trait ToolsForEntity
         return sha1($string);
     }
 
-    static public function canUserCreateInEpic($epic, $message)
+    /**
+     * @param $epic
+     * @param $message
+     * @return bool
+     * @throws HttpException
+     */
+    static public function canUserCreateInEpic($epic, $message):bool
     {
         /* Use of control* right is intentional; there is no need to separate creation from control at this level */
         if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
@@ -39,7 +50,7 @@ trait ToolsForEntity
      * @return bool
      * @throws HttpException
      */
-    static public function canUserControlInEpic($epic, $message)
+    static public function canUserControlInEpic($epic, $message):bool
     {
         if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
@@ -54,7 +65,7 @@ trait ToolsForEntity
      * @return bool
      * @throws HttpException
      */
-    static public function canUserViewInEpic($epic, $message)
+    static public function canUserViewInEpic($epic, $message):bool
     {
         if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
@@ -69,7 +80,7 @@ trait ToolsForEntity
      * @return bool
      * @throws HttpException
      */
-    static public function canUserIndexInEpic($epic, $message)
+    static public function canUserIndexInEpic($epic, $message):bool
     {
         if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
@@ -82,9 +93,8 @@ trait ToolsForEntity
      * Provides class name that uses the trait
      * Name comes without namespace
      * @return string
-     * @todo Verify if protected or private would not be sufficient, if so, apply most restrictive possible
      */
-    static private function cleanClassName()
+    static private function cleanClassName():string
     {
         $position = strrpos(static::class, '\\');
         if ($position !== null) {

@@ -25,17 +25,11 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
 {
     use ToolsForEntity;
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'recap';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -55,9 +49,6 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -70,9 +61,6 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function beforeSave($insert)
     {
         if ($insert) {
@@ -86,7 +74,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
      * Provides recap content formatted in HTML
      * @return string HTML formatted text
      */
-    public function getDataFormatted()
+    public function getDataFormatted():string
     {
         return Markdown::process($this->data, 'gfm');
     }
@@ -94,14 +82,11 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
     /**
      * @return ActiveQuery
      */
-    public function getEpic()
+    public function getEpic():ActiveQuery
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getSimpleDataForApi()
     {
         return [
@@ -110,12 +95,8 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompleteDataForApi()
     {
-
         $basicData = [
             'name' => $this->name,
             'key' => $this->key,
@@ -125,9 +106,6 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
         return $basicData;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function isVisibleInApi()
     {
         return true;
