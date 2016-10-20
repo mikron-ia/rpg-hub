@@ -28,15 +28,13 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
             'FOREIGN KEY (participant_id) REFERENCES `participant` (participant_id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);
 
-        /**
-         * Activity log table
-         */
-        $this->createTable('{{%user_action}}', [
-            'user_action_id' => $this->primaryKey()->unsigned(),
+        $this->createTable('{{%performed_action}}', [
+            'id' => $this->primaryKey()->unsigned(),
             'user_id' => $this->integer(11)->unsigned()->notNull(),
             'operation' => $this->string(80)->notNull(),
             'class' => $this->string(80)->notNull(),
-            'id' => $this->integer(11)->unsigned()->notNull(),
+            'object_id' => $this->integer(11)->unsigned()->notNull(),
+            'performed_at' => $this->integer()->notNull(),
             'FOREIGN KEY (user_id) REFERENCES `user` (id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);
 
@@ -81,7 +79,7 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         $this->dropTable('{{%participant}}');
         $this->dropTable('{{%participant_role}}');
 
-        $this->dropTable('{{%user_action}}');
+        $this->dropTable('{{%performed_action}}');
 
         $this->addColumn('description_pack', 'name', $this->string(80)->notNull());
         $this->addColumn('parameter_pack', 'name', $this->string(80)->notNull());
