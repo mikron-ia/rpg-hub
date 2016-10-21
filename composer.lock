@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4560706bb3fc3804db7812636f00ab40",
-    "content-hash": "73b2f932ab470b14d46aa347ab3c62e3",
+    "hash": "db58fceb4721b510b6e11aa0cfce7083",
+    "content-hash": "ee0bdc1085779484d43517c97f56e34d",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -650,16 +650,16 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.9",
+            "version": "2.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "2b75151ea60e1fd820046416eee2e89c3dda1133"
+                "reference": "5bfcb7a6dfa9771e2248eb8c4448613330f343ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/2b75151ea60e1fd820046416eee2e89c3dda1133",
-                "reference": "2b75151ea60e1fd820046416eee2e89c3dda1133",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/5bfcb7a6dfa9771e2248eb8c4448613330f343ff",
+                "reference": "5bfcb7a6dfa9771e2248eb8c4448613330f343ff",
                 "shasum": ""
             },
             "require": {
@@ -740,7 +740,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2016-07-11 13:36:42"
+            "time": "2016-10-20 12:02:50"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -1000,16 +1000,16 @@
         },
         {
             "name": "codeception/specify",
-            "version": "0.4.3",
+            "version": "0.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Specify.git",
-                "reference": "8efcd017687ebdae9c4d95bcbc1dc22a28561874"
+                "reference": "5fb1d68a737f31155a0f7410cf47dea479b33415"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Specify/zipball/8efcd017687ebdae9c4d95bcbc1dc22a28561874",
-                "reference": "8efcd017687ebdae9c4d95bcbc1dc22a28561874",
+                "url": "https://api.github.com/repos/Codeception/Specify/zipball/5fb1d68a737f31155a0f7410cf47dea479b33415",
+                "reference": "5fb1d68a737f31155a0f7410cf47dea479b33415",
                 "shasum": ""
             },
             "require": {
@@ -1033,7 +1033,7 @@
                 }
             ],
             "description": "BDD code blocks for PHPUnit and Codeception",
-            "time": "2015-11-26 23:35:52"
+            "time": "2016-10-17 22:28:20"
         },
         {
             "name": "codeception/verify",
@@ -3239,7 +3239,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.5.0"
+        "php": ">=7.0"
     },
     "platform-dev": []
 }
