@@ -3,8 +3,10 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "performed_action".
@@ -20,18 +22,40 @@ use yii\db\ActiveRecord;
  */
 class PerformedAction extends ActiveRecord
 {
+    const PERFORMED_ACTION_CREATE = 'create';
+    const PERFORMED_ACTION_UPDATE = 'update';
+
     public static function tableName()
     {
         return 'performed_action';
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'performed_at',
+                'updatedAtAttribute' => false,
+                'value' => new Expression('NOW()'),
+            ],
+        ];
+    }
+
     public function rules()
     {
         return [
-            [['user_id', 'operation', 'class', 'object_id', 'performed_at'], 'required'],
+            [['user_id', 'operation', 'class', 'object_id'], 'required'],
             [['user_id', 'object_id', 'performed_at'], 'integer'],
             [['operation', 'class'], 'string', 'max' => 80],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            ['operation', 'in', 'range' => [self::PERFORMED_ACTION_CREATE, self::PERFORMED_ACTION_UPDATE]],
+            [
+                ['user_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['user_id' => 'id']
+            ],
         ];
     }
 
@@ -53,5 +77,23 @@ class PerformedAction extends ActiveRecord
     public function getUser():ActiveQuery
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @param string $operation Operation performed
+     * @param string $class Class of the object influenced
+     * @param int $object_id ID of the object
+     * @return bool Success of the operation
+     */
+    static public function createRecord($operation, $class, $object_id):bool
+    {
+        $record = new PerformedAction();
+
+        $record->user_id = Yii::$app->user->identity->getId();
+        $record->operation = $operation;
+        $record->class = $class;
+        $record->object_id = $object_id;
+
+        return $record->save();
     }
 }
