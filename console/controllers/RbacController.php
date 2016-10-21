@@ -2,7 +2,6 @@
 
 namespace console\controllers;
 
-use common\models\User;
 use common\rules\EpicAssistant;
 use common\rules\EpicGameMaster;
 use common\rules\EpicParticipant;

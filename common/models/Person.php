@@ -9,7 +9,6 @@ use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\web\HttpException;
 
 /**
  * This is the model class for table "person".

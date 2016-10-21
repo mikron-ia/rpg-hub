@@ -109,7 +109,7 @@ final class CharacterQuery extends Character
     {
         $characterList = self::activeCharactersAsModels();
 
-        /** @var string $characterListForSelector */
+        /** @var string[] $characterListForSelector */
         $characterListForSelector = [];
 
         foreach ($characterList as $story) {
