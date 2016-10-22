@@ -6,7 +6,6 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\db\Expression;
 
 /**
  * This is the model class for table "performed_action".
@@ -24,6 +23,7 @@ class PerformedAction extends ActiveRecord
 {
     const PERFORMED_ACTION_CREATE = 'create';
     const PERFORMED_ACTION_UPDATE = 'update';
+    const PERFORMED_ACTION_OTHER = 'other';
 
     public static function tableName()
     {
@@ -37,7 +37,6 @@ class PerformedAction extends ActiveRecord
                 'class' => TimestampBehavior::className(),
                 'createdAtAttribute' => 'performed_at',
                 'updatedAtAttribute' => false,
-                'value' => new Expression('NOW()'),
             ],
         ];
     }

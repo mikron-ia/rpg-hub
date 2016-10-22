@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\tools\ToolsForEntity;
 use Yii;
@@ -29,6 +30,18 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
     {
         return 'recap';
     }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => PerformedActionBehavior::className(),
+                'idName' => 'recap_id',
+                'className' => 'Recap',
+            ]
+        ];
+    }
+
 
     public function rules()
     {
