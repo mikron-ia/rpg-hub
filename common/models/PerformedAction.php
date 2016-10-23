@@ -61,12 +61,12 @@ class PerformedAction extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'operation' => Yii::t('app', 'Operation'),
-            'class' => Yii::t('app', 'Class'),
-            'object_id' => Yii::t('app', 'Object ID'),
-            'performed_at' => Yii::t('app', 'Performed At'),
+            'id' => Yii::t('app', 'PERFORMED_ACTION_ID'),
+            'user_id' => Yii::t('app', 'USER_ID'),
+            'operation' => Yii::t('app', 'PERFORMED_ACTION_OPERATION'),
+            'class' => Yii::t('app', 'PERFORMED_ACTION_CLASS'),
+            'object_id' => Yii::t('app', 'PERFORMED_ACTION_OBJECT_ID'),
+            'performed_at' => Yii::t('app', 'PERFORMED_ACTION_PERFORMED_AT'),
         ];
     }
 
