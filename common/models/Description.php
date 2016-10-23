@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviours\PerformedActionBehavior;
 use common\models\core\Language;
 use common\models\core\Visibility;
 use Yii;
@@ -100,6 +101,11 @@ class Description extends ActiveRecord implements Displayable
                 'class' => PositionBehavior::className(),
                 'positionAttribute' => 'position',
                 'groupAttributes' => ['description_pack_id', 'lang'],
+            ],
+            'performedActionBehavior' => [
+                'class' => PerformedActionBehavior::className(),
+                'idName' => 'description_id',
+                'className' => 'Description',
             ],
         ];
     }

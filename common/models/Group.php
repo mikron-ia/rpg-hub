@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\tools\ToolsForEntity;
 use Yii;
@@ -22,17 +23,11 @@ class Group extends ActiveRecord implements Displayable, HasEpicControl
 {
     use ToolsForEntity;
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'group';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -49,9 +44,6 @@ class Group extends ActiveRecord implements Displayable, HasEpicControl
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -63,9 +55,6 @@ class Group extends ActiveRecord implements Displayable, HasEpicControl
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function beforeSave($insert)
     {
         if ($insert) {
@@ -74,6 +63,17 @@ class Group extends ActiveRecord implements Displayable, HasEpicControl
         }
 
         return parent::beforeSave($insert);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'performedActionBehavior' => [
+                'class' => PerformedActionBehavior::className(),
+                'idName' => 'group_id',
+                'className' => 'Group',
+            ]
+        ];
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviours\PerformedActionBehavior;
 use common\models\core\Language;
 use common\models\core\Visibility;
 use Yii;
@@ -86,6 +87,11 @@ class Parameter extends ActiveRecord
                 'class' => PositionBehavior::className(),
                 'positionAttribute' => 'position',
                 'groupAttributes' => ['parameter_pack_id'],
+            ],
+            'performedActionBehavior' => [
+                'class' => PerformedActionBehavior::className(),
+                'idName' => 'parameter_id',
+                'className' => 'Parameter',
             ],
         ];
     }

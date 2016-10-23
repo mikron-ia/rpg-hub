@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasParameters;
 use common\models\tools\ToolsForEntity;
 use Yii;
@@ -35,17 +36,11 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
 {
     use ToolsForEntity;
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'epic';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -62,9 +57,6 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -76,9 +68,6 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function beforeSave($insert)
     {
         if ($insert) {
@@ -91,6 +80,17 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
         }
 
         return parent::beforeSave($insert);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'performedActionBehavior' => [
+                'class' => PerformedActionBehavior::className(),
+                'idName' => 'epic_id',
+                'className' => 'Epic',
+            ]
+        ];
     }
 
     /**
@@ -305,7 +305,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
      */
     static public function canUserViewActiveEpic()
     {
-        if(isset(Yii::$app->params['activeEpic'])) {
+        if (isset(Yii::$app->params['activeEpic'])) {
             /** @var Epic $activeEpic */
             $activeEpic = Yii::$app->params['activeEpic'];
             return $activeEpic->canUserViewYou();

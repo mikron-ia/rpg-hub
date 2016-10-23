@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\tools\ToolsForEntity;
 use Yii;
@@ -92,6 +93,17 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
         return parent::beforeSave($insert);
     }
 
+    public function behaviors()
+    {
+        return [
+            'performedActionBehavior' => [
+                'class' => PerformedActionBehavior::className(),
+                'idName' => 'character_id',
+                'className' => 'Character',
+            ]
+        ];
+    }
+
     /**
      * @return ActiveQuery
      */
@@ -173,7 +185,8 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
 
     static public function canUserCreateThem()
     {
-        return self::canUserCreateInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_CREATE_CHARACTER'));
+        return self::canUserCreateInEpic(Yii::$app->params['activeEpic'],
+            Yii::t('app', 'NO_RIGHTS_TO_CREATE_CHARACTER'));
     }
 
     public function canUserControlYou()

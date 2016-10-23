@@ -31,18 +31,6 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
         return 'recap';
     }
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => PerformedActionBehavior::className(),
-                'idName' => 'recap_id',
-                'className' => 'Recap',
-            ]
-        ];
-    }
-
-
     public function rules()
     {
         return [
@@ -81,6 +69,17 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
         }
 
         return parent::beforeSave($insert);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'performedActionBehavior' => [
+                'class' => PerformedActionBehavior::className(),
+                'idName' => 'recap_id',
+                'className' => 'Recap',
+            ]
+        ];
     }
 
     /**

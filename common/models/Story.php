@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\core\HasParameters;
 use common\models\core\Visibility;
@@ -113,6 +114,11 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
                 'class' => PositionBehavior::className(),
                 'positionAttribute' => 'position',
                 'groupAttributes' => ['epic_id'],
+            ],
+            'performedActionBehavior' => [
+                'class' => PerformedActionBehavior::className(),
+                'idName' => 'story_id',
+                'className' => 'Story',
             ],
         ];
     }
