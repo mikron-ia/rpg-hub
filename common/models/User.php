@@ -278,4 +278,22 @@ final class User extends ActiveRecord implements IdentityInterface
             return Yii::t('app', 'USER_ROLE_NONE');
         }
     }
+
+    /**
+     * @return string[]
+     */
+    static public function getFullUserList():array
+    {
+        /**
+         * @var User[]
+         */
+        $usersUnordered = User::find()->all();
+        $userOrdered = [];
+
+        foreach ($usersUnordered as $user) {
+            $userOrdered[$user->id] = $user->username;
+        }
+
+        return $userOrdered;
+    }
 }

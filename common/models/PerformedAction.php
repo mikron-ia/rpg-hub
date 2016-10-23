@@ -95,4 +95,33 @@ class PerformedAction extends ActiveRecord
 
         return $record->save();
     }
+
+    /**
+     * @return string[]
+     */
+    static public function actionNames():array
+    {
+        return [
+            self::PERFORMED_ACTION_CREATE => Yii::t('app', 'PERFORMED_ACTION_CREATE'),
+            self::PERFORMED_ACTION_UPDATE => Yii::t('app', 'PERFORMED_ACTION_UPDATE'),
+            self::PERFORMED_ACTION_OTHER => Yii::t('app', 'PERFORMED_ACTION_OTHER'),
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function allowedActions():array
+    {
+        return array_keys(self::actionNames());
+    }
+
+    /**
+     * @return string
+     */
+    public function getName():string
+    {
+        $names = self::actionNames();
+        return isset($names[$this->operation]) ? $names[$this->operation] : '?';
+    }
 }

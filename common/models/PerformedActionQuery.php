@@ -18,8 +18,8 @@ class PerformedActionQuery extends PerformedAction
     public function rules()
     {
         return [
-            [['id', 'user_id', 'object_id', 'performed_at'], 'integer'],
-            [['operation', 'class'], 'safe'],
+            [['id', 'object_id', 'performed_at'], 'integer'],
+            [['operation', 'class', 'user_id', ], 'safe'],
         ];
     }
 
@@ -58,13 +58,13 @@ class PerformedActionQuery extends PerformedAction
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
             'object_id' => $this->object_id,
             'performed_at' => $this->performed_at,
         ]);
 
-        $query->andFilterWhere(['like', 'operation', $this->operation])
-            ->andFilterWhere(['like', 'class', $this->class]);
+        $query->andFilterWhere(['in', 'operation', $this->operation])
+            ->andFilterWhere(['like', 'class', $this->class])
+            ->andFilterWhere(['in', 'user_id', $this->user_id]);
 
         return $dataProvider;
     }

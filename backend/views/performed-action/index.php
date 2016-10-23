@@ -1,5 +1,6 @@
 <?php
 
+use common\models\PerformedAction;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -22,7 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 'performed_at:datetime',
                 'user.username',
-                'operation',
+                [
+                    'attribute' => 'operation',
+                    'value' => function (PerformedAction $model) {
+                        return $model->getName();
+                    }
+                ],
                 'class',
                 'object_id',
             ],
