@@ -152,6 +152,11 @@ class RbacController extends Controller
 
         $auth->add($controlManager);
 
+        $listPerformedActions = $auth->createPermission('listPerformedActions');
+        $listPerformedActions->description = 'Able to list performed actions';
+
+        $auth->add($listPerformedActions);
+
         /* Roles */
 
         $user = $auth->createRole('user');
@@ -192,6 +197,7 @@ class RbacController extends Controller
         $auth->addChild($manager, $operator);
 
         $auth->addChild($manager, $controlUser);
+        $auth->addChild($manager, $listPerformedActions);
 
         $administrator = $auth->createRole('administrator');
         $user->description = 'The person who handles the users, general settings, and managers';

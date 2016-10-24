@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\PerformedAction;
 use common\models\PerformedActionQuery;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -17,6 +18,16 @@ final class PerformedActionController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => Yii::$app->user->can('listPerformedActions'),
+                        'roles' => ['operator'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
