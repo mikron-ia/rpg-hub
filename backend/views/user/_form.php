@@ -1,11 +1,12 @@
 <?php
 
 use common\models\core\Language;
+use common\models\User;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\User */
+/* @var $model User */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -15,6 +16,10 @@ use yii\widgets\ActiveForm;
 
     <div class="col-md-3">
         <?= $form->field($model, 'language')->dropDownList(Language::languagesLong()) ?>
+    </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'user_role')->dropDownList(User::userRoleNames()) ?>
     </div>
 
     <div class="clearfix"></div>

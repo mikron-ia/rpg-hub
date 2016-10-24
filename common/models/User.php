@@ -33,9 +33,40 @@ final class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
+    const USER_ROLE_NONE = 'none';
+    const USER_ROLE_USER = 'user';
+    const USER_ROLE_OPERATOR = 'operator';
+    const USER_ROLE_MANAGER = 'manager';
+    const USER_ROLE_ADMINISTRATOR = 'administrator';
+
+    public $user_role;
+
     public static function tableName()
     {
         return '{{%user}}';
+    }
+
+    public function afterFind()
+    {
+        $this->user_role = $this->getUserRoleCode();
+        parent::afterFind();
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (!$this->hasErrors() && isset($changedAttributes['user_role'])) {
+            $roleCode = $this->getUserRoleCode();
+
+            if ($roleCode != self::USER_ROLE_ADMINISTRATOR) {
+                $auth = Yii::$app->authManager;
+
+                if ($auth->checkAccess($this->id, $roleCode)) {
+                    $auth->revoke($auth->getRole($roleCode), $this->id);
+                }
+                $auth->assign($auth->getRole($this->user_role), $this->id);
+            }
+        }
+        parent::afterSave($insert, $changedAttributes);
     }
 
     public function behaviors()
@@ -51,6 +82,7 @@ final class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             ['language', 'in', 'range' => Language::supportedLanguages()],
+            ['user_role', 'in', 'range' => self::allowedUserRoles()]
         ];
     }
 
@@ -63,6 +95,7 @@ final class User extends ActiveRecord implements IdentityInterface
             'language' => Yii::t('app', 'USER_LANGUAGE'),
             'status' => Yii::t('app', 'USER_STATUS'),
             'username' => Yii::t('app', 'USER_USERNAME'),
+            'user_role' => Yii::t('app', 'USER_ROLE'),
         ];
     }
 
@@ -261,21 +294,28 @@ final class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    public function getUserRoleName():string
+    {
+        $names = self::userRoleNames();
+        $code = $this->getUserRoleCode();
+        return isset($names[$code]) ? $names[$code] : '?';
+    }
+
     /**
      * @return string
      */
-    public function getUserRoleName():string
+    public function getUserRoleCode():string
     {
         if (Yii::$app->authManager->checkAccess($this->id, 'administrator')) {
-            return Yii::t('app', 'USER_ROLE_ADMINISTRATOR');
+            return self::USER_ROLE_ADMINISTRATOR;
         } elseif (Yii::$app->authManager->checkAccess($this->id, 'manager')) {
-            return Yii::t('app', 'USER_ROLE_MANAGER');
+            return self::USER_ROLE_MANAGER;
         } elseif (Yii::$app->authManager->checkAccess($this->id, 'operator')) {
-            return Yii::t('app', 'USER_ROLE_OPERATOR');
+            return self::USER_ROLE_OPERATOR;
         } elseif (Yii::$app->authManager->checkAccess($this->id, 'user')) {
-            return Yii::t('app', 'USER_ROLE_USER');
+            return self::USER_ROLE_USER;
         } else {
-            return Yii::t('app', 'USER_ROLE_NONE');
+            return self::USER_ROLE_NONE;
         }
     }
 
@@ -295,5 +335,27 @@ final class User extends ActiveRecord implements IdentityInterface
         }
 
         return $userOrdered;
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function userRoleNames():array
+    {
+        return [
+            self::USER_ROLE_NONE => Yii::t('app', 'USER_ROLE_NONE'),
+            self::USER_ROLE_USER => Yii::t('app', 'USER_ROLE_USER'),
+            self::USER_ROLE_OPERATOR => Yii::t('app', 'USER_ROLE_OPERATOR'),
+            self::USER_ROLE_MANAGER => Yii::t('app', 'USER_ROLE_MANAGER'),
+            self::USER_ROLE_ADMINISTRATOR => Yii::t('app', 'USER_ROLE_ADMINISTRATOR'),
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function allowedUserRoles():array
+    {
+        return array_keys(self::userRoleNames());
     }
 }
