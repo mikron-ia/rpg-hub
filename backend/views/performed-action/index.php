@@ -30,7 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 ],
                 'class',
-                'object_id',
+                [
+                    'attribute' => 'object_id',
+                    'enableSorting' => false,
+                ],
             ],
         ]); ?>
     </div>

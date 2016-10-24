@@ -42,6 +42,10 @@ AppAsset::register($this);
         ['label' => Yii::t('app', 'BUTTON_PARAMETER_LIST'), 'url' => ['/parameter/index']],
     ];
 
+    if(Yii::$app->user->can('listPerformedActions')) {
+        $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_PERFORMED_ACTION_LIST'), 'url' => ['/performed-action/index']];
+    }
+
     if(Yii::$app->user->can('controlUser')) {
         $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_USER_LIST'), 'url' => ['/user/index']];
     }

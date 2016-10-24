@@ -43,6 +43,7 @@ return [
     'BUTTON_PARAMETER_LIST' => 'Parameter list',
     'BUTTON_PARTICIPANT_ADD' => 'Add participant',
     'BUTTON_PEOPLE' => 'People',
+    'BUTTON_PERFORMED_ACTION_LIST' => 'Performed actions',
     'BUTTON_RECAPS' => 'Recaps',
     'BUTTON_RECAP_CREATE' => 'Add recap',
     'BUTTON_RESET' => 'Reset',

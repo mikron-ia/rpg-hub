@@ -43,6 +43,7 @@ return [
     'BUTTON_PARAMETER_LIST' => 'Lista parametrów',
     'BUTTON_PARTICIPANT_ADD' => 'Dodaj uczestnika',
     'BUTTON_PEOPLE' => 'Osoby',
+    'BUTTON_PERFORMED_ACTION_LIST' => 'Wykonane akcje',
     'BUTTON_RECAPS' => 'Streszczenia',
     'BUTTON_RECAP_CREATE' => 'Dodaj streszczenie',
     'BUTTON_RESET' => 'Reset',
