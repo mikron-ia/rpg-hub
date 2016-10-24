@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\core\Visibility;
@@ -36,17 +37,11 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
     const VISIBILITY_GM = 'gm';
     const VISIBILITY_FULL = 'full';
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'person';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -86,9 +81,6 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -104,9 +96,6 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function beforeSave($insert)
     {
         if ($insert) {
@@ -120,6 +109,17 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
         }
 
         return parent::beforeSave($insert);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'performedActionBehavior' => [
+                'class' => PerformedActionBehavior::className(),
+                'idName' => 'person_id',
+                'className' => 'Person',
+            ]
+        ];
     }
 
     /**
