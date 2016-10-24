@@ -48,7 +48,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function rules()
     {
         return [
-            [['epic_id', 'key', 'name', 'short', 'data'], 'required'],
+            [['epic_id', 'name', 'short', 'data'], 'required'],
             [['epic_id', 'position'], 'integer'],
             [['short', 'long', 'data'], 'string'],
             [['key'], 'string', 'max' => 80],

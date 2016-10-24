@@ -18,10 +18,6 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-lg-6">
-        <?= $form->field($model, 'key')->textInput(['maxlength' => true]); ?>
-    </div>
-
-    <div class="col-lg-12">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]); ?>
     </div>
 
