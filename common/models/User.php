@@ -57,7 +57,10 @@ final class User extends ActiveRecord implements IdentityInterface
         if (!$this->hasErrors() && isset($changedAttributes['user_role'])) {
             $roleCode = $this->getUserRoleCode();
 
-            if ($roleCode != self::USER_ROLE_ADMINISTRATOR) {
+            if (
+                /* The check is a security measure if someone re-enables the drop-down */
+                $roleCode != self::USER_ROLE_ADMINISTRATOR
+            ) {
                 $auth = Yii::$app->authManager;
 
                 if ($auth->checkAccess($this->id, $roleCode)) {
