@@ -34,17 +34,11 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
 {
     use ToolsForEntity;
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'story';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -70,9 +64,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -89,9 +80,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function beforeSave($insert)
     {
         if ($insert) {
@@ -126,7 +114,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     /**
      * @return ActiveQuery
      */
-    public function getEpic()
+    public function getEpic():ActiveQuery
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
@@ -134,7 +122,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     /**
      * @return ActiveQuery
      */
-    public function getParameterPack()
+    public function getParameterPack():ActiveQuery
     {
         return $this->hasOne(ParameterPack::className(), ['parameter_pack_id' => 'parameter_pack_id']);
     }
@@ -142,7 +130,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     /**
      * @return ActiveQuery
      */
-    public function getStoryParameters()
+    public function getStoryParameters():ActiveQuery
     {
         return $this->hasMany(StoryParameter::className(), ['story_id' => 'story_id']);
     }
@@ -152,7 +140,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      * Provides story summary formatted in HTML
      * @return string Short summary formatted to HTML
      */
-    public function getShortFormatted()
+    public function getShortFormatted():string
     {
         return Markdown::process($this->short, 'gfm');
     }
@@ -161,12 +149,15 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      * Provides story summary formatted in HTML
      * @return string Long summary formatted to HTML
      */
-    public function getLongFormatted()
+    public function getLongFormatted():string
     {
         return Markdown::process($this->long, 'gfm');
     }
 
-    public function formatParameters()
+    /**
+     * @return array
+     */
+    public function formatParameters():array
     {
         $parameters = [];
 
@@ -182,9 +173,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return $parameters;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getSimpleDataForApi()
     {
         return [
@@ -195,9 +183,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompleteDataForApi()
     {
 
@@ -212,9 +197,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return $basicData;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function isVisibleInApi()
     {
         return true;
