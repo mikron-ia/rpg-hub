@@ -67,7 +67,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        if (!isset(Yii::$app->params['activeEpic'])) {
+            $epic = null;
+        }
+
+        $epic = Yii::$app->params['activeEpic'];
+
+        return $this->render('index', [
+            'epic' => $epic,
+        ]);
     }
 
     /**
