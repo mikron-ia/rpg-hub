@@ -32,29 +32,52 @@ AppAsset::register($this);
         'brandLabel' => 'RPG hub',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-default navbar-fixed-top',
         ],
     ]);
+
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Stories', 'url' => ['/story/index']],
-        //['label' => 'People', 'url' => ['/story/index']],
-        //['label' => 'Party', 'url' => ['/story/index']],
+        [
+            'label' => Yii::t('app', 'MENU_TOP_SETTINGS'),
+            'items' => [
+                ['label' => Yii::t('app', 'MENU_TOP_CHANGE-PASSWORD'), 'url' => ['/site/password-change']]
+            ]
+        ],
     ];
+
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => Yii::t('app', 'MENU_TOP_LOGIN'), 'url' => ['/site/login']];
     } else {
+        $epics = \common\models\EpicQuery::activeEpicsAsModels();
+
+        $items = [];
+
+        foreach ($epics as $epic) {
+            $items[] = '<li>'
+                . Html::beginForm(['/site/set-epic'], 'post', ['id' => 'epic-switch-' . $epic->key])
+                . Html::input('hidden', 'epic', $epic->key)
+                . Html::submitButton($epic->name, ['class' => 'btn btn-link'])
+                . Html::endForm()
+                . '</li>';
+        }
+
+        $menuItems[] = [
+            'label' => empty(Yii::$app->params['activeEpic'])
+                ? Yii::t('app', 'MENU_TOP_CHOOSE_EPIC')
+                : Yii::t('app', 'MENU_TOP_CHANGE_EPIC') . ' (' . Yii::$app->params['activeEpic']->name . ')',
+            'items' => $items,
+        ];
+
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                Yii::t('app', 'MENU_TOP_LOGOUT') . ' (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link']
             )
             . Html::endForm()
             . '</li>';
     }
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,

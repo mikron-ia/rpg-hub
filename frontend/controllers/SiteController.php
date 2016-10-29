@@ -1,17 +1,20 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Epic;
+use common\models\EpicQuery;
+use common\models\user\PasswordChange;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Cookie;
 
 /**
  * Site controller
@@ -29,7 +32,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'logout'],
+                        'actions' => ['index', 'logout', 'password-change', 'set-epic'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -124,13 +127,25 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays about page.
+     * Password change action
      *
      * @return mixed
+     * @throws BadRequestHttpException
      */
-    public function actionAbout()
+    public function actionPasswordChange()
     {
-        return $this->render('about');
+        $model = new PasswordChange();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->savePassword()) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'PASSWORD_CHANGE_FLASH_SUCCESS'));
+                return $this->goHome();
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'PASSWORD_CHANGE_FLASH_FAILURE'));
+            }
+        }
+
+        return $this->render('user/password-change', ['model' => $model]);
     }
 
     /**
@@ -180,5 +195,34 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Selects Epic
+     * @return \yii\web\Response
+     */
+    public function actionSetEpic()
+    {
+        $chosenEpicKey = Yii::$app->request->post('epic');
+
+        /* @var $chosenEpic Epic */
+        $chosenEpic = EpicQuery::findOne(['key' => $chosenEpicKey]);
+        Yii::$app->params['activeEpic'] = $chosenEpic;
+
+        /* Save to cookie */
+        $cookie = new Cookie([
+            'name' => '_epic',
+            'value' => $chosenEpic->key,
+            'expire' => time() + 60 * 60 * 24 * 30, // 30 days
+        ]);
+        Yii::$app->response->cookies->add($cookie);
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->goHome();
+        }
     }
 }
