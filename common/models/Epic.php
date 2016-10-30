@@ -303,7 +303,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
      * Determines whether user can view active epic
      * @return bool
      */
-    static public function canUserViewActiveEpic()
+    static public function canUserViewActiveEpic():bool
     {
         if (isset(Yii::$app->params['activeEpic'])) {
             /** @var Epic $activeEpic */
@@ -315,11 +315,15 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
     }
 
     /**
-     * @param User $user
+     * @param User|null $user
      * @return bool
      */
-    public function isUserYourParticipant(User $user):bool
+    public function isUserYourParticipant($user):bool
     {
+        if(!$user) {
+            return false;
+        }
+
         return Participant::participantExists($user, $this);
     }
 }
