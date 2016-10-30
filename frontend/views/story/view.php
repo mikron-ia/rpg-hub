@@ -14,20 +14,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php if ($model->canUserViewYou()) {
+    <?php if ($model->canUserControlYou()) {
         echo DetailView::widget([
             'model' => $model,
             'attributes' => [
                 'key',
-                'name',
             ],
         ]);
     } ?>
 
-    <h2><?= Yii::t('app', 'STORY_HEADER_SHORT'); ?></h2>
-    <?= $model->short; ?>
+    <div>
+        <h2><?= Yii::t('app', 'STORY_HEADER_SHORT'); ?></h2>
+        <?= $model->getShortFormatted(); ?>
+    </div>
 
-    <h2><?= Yii::t('app', 'STORY_HEADER_LONG'); ?></h2>
-    <?= $model->long; ?>
+    <div>
+        <h2><?= Yii::t('app', 'STORY_HEADER_LONG'); ?></h2>
+        <?= $model->getLongFormatted(); ?>
+    </div>
 
 </div>
