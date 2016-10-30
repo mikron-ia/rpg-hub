@@ -37,17 +37,18 @@ AppAsset::register($this);
     ]);
 
     $menuItems = [
-        [
-            'label' => Yii::t('app', 'MENU_TOP_SETTINGS'),
-            'items' => [
-                ['label' => Yii::t('app', 'MENU_TOP_CHANGE-PASSWORD'), 'url' => ['/site/password-change']]
-            ]
-        ],
     ];
 
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => Yii::t('app', 'MENU_TOP_LOGIN'), 'url' => ['/site/login']];
     } else {
+        $menuItems[] = [
+            'label' => Yii::t('app', 'MENU_TOP_SETTINGS'),
+            'items' => [
+                ['label' => Yii::t('app', 'MENU_TOP_CHANGE-PASSWORD'), 'url' => ['/site/password-change']]
+            ]
+        ];
+
         $epics = \common\models\EpicQuery::activeEpicsAsModels();
 
         $items = [];

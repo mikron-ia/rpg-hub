@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\StoryQuery;
 use Yii;
 use common\models\Story;
 use yii\data\ActiveDataProvider;
@@ -39,9 +40,8 @@ class StoryController extends Controller
     {
         Story::canUserIndexThem();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => Story::find()->orderBy('story_id DESC'),
-        ]);
+        $searchModel = new StoryQuery();
+        $dataProvider = $searchModel->search([]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
