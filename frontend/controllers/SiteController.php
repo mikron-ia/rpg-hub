@@ -15,6 +15,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Cookie;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -61,27 +62,33 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
-     *
-     * @return mixed
+     * Displays front page
+     * @return string
      */
     public function actionIndex()
     {
+        /* Get Epic */
         if (!isset(Yii::$app->params['activeEpic'])) {
             $epic = null;
         }
-
         $epic = Yii::$app->params['activeEpic'];
+
+        /* Get Sessions */
+        $sessions = [];
+
+        /* Get News */
+        $news = [];
 
         return $this->render('index', [
             'epic' => $epic,
+            'sessions' => $sessions,
+            'news' => $news,
         ]);
     }
 
     /**
-     * Logs in a user.
-     *
-     * @return mixed
+     * Logs in a user
+     * @return Response|string
      */
     public function actionLogin()
     {
@@ -121,7 +128,8 @@ class SiteController extends Controller
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
+                Yii::$app->session->setFlash('success',
+                    'Thank you for contacting us. We will respond to you as soon as possible.');
             } else {
                 Yii::$app->session->setFlash('error', 'There was an error sending email.');
             }

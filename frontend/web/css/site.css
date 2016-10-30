@@ -107,3 +107,10 @@ a.desc:after {
 p {
     text-align: justify;
 }
+
+.error-box {
+    color: #a94442;
+    background: #fdf7f7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
