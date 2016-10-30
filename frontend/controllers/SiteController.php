@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\models\Epic;
 use common\models\EpicQuery;
+use common\models\StoryQuery;
 use common\models\user\PasswordChange;
 use Yii;
 use common\models\LoginForm;
@@ -70,8 +71,18 @@ class SiteController extends Controller
         /* Get Epic */
         if (!isset(Yii::$app->params['activeEpic'])) {
             $epic = null;
+            $stories = null;
+            $recap = null;
+        } else {
+            $epic = Yii::$app->params['activeEpic'];
+
+            /* Get Recap */
+            $recap = null;
+
+            /* Get Stories */
+            $searchModel = new StoryQuery();
+            $stories = $searchModel->search(Yii::$app->request->queryParams);
         }
-        $epic = Yii::$app->params['activeEpic'];
 
         /* Get Sessions */
         $sessions = [];
@@ -82,7 +93,9 @@ class SiteController extends Controller
         return $this->render('index', [
             'epic' => $epic,
             'sessions' => $sessions,
+            'stories' => $stories,
             'news' => $news,
+            'recap' => $recap,
         ]);
     }
 

@@ -127,6 +127,8 @@ return [
     'FRONTPAGE_OOC_TITLE_TEXT' => 'Rzeczy ze straszliwego świata rzeczywistego, mające wpływ na kampanie',
     'FRONTPAGE_SESSIONS' => 'Sesje',
     'FRONTPAGE_SESSIONS_TITLE_TEXT' => 'Proponowane i zaplanowane sesje',
+    'FRONTPAGE_STORIES' => 'Historie',
+    'FRONTPAGE_STORIES_TITLE_TEXT' => 'Kilka ostanich historii z kampanii',
     'FRONTPAGE_TITLE' => 'Centrum RPGowe',
     'FRONTPAGE_WHAT_HAPPENED' => 'Wydarzenia w kampanii',
     'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT' => 'Streszczenia wydarzeń i linki do histori',

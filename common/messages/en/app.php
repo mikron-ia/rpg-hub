@@ -127,6 +127,8 @@ return [
     'FRONTPAGE_OOC_TITLE_TEXT' => 'Things from the dreadful real world that influence the epics',
     'FRONTPAGE_SESSIONS' => 'Sessions',
     'FRONTPAGE_SESSIONS_TITLE_TEXT' => 'Information about proposed and incoming sessions',
+    'FRONTPAGE_STORIES' => 'Stories',
+    'FRONTPAGE_STORIES_TITLE_TEXT' => 'Few last stories from the epic',
     'FRONTPAGE_TITLE' => 'RPG Hub',
     'FRONTPAGE_WHAT_HAPPENED' => 'Story and events',
     'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT' => 'Recaps and past stories',

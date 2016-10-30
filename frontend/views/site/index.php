@@ -2,8 +2,10 @@
 
 /* @var $this yii\web\View */
 /* @var $epic \common\models\Epic */
+/* @var $stories \yii\data\ActiveDataProvider */
 
 use yii\bootstrap\Html;
+use yii\widgets\ListView;
 
 $this->title = 'RPG hub - index';
 ?>
@@ -34,8 +36,21 @@ $this->title = 'RPG hub - index';
             <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
                 <?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?>
             </h3>
+            <p><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></p>
+        </div>
+        <div>
+            <h3 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
+                <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
+            </h3>
             <?php if ($epic): ?>
-                <p><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></p>
+                <?= ListView::widget([
+                    'dataProvider' => $stories,
+                    'summary' => '',
+                    'itemOptions' => ['class' => 'item'],
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        return $this->render('story/_index_box', ['model' => $model]);
+                    },
+                ]) ?>
             <?php else: ?>
                 <p class="error-box"><?= Yii::t('app', 'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_IC') ?></p>
             <?php endif; ?>
