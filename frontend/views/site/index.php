@@ -27,18 +27,39 @@ $this->title = 'RPG hub - index';
     </div>
 
     <div class="col-md-6">
-        <h2 class="text-center" title="FRONTPAGE_IC_TITLE_TEXT"><?= Yii::t('app', 'FRONTPAGE_IC') ?></h2>
-        <h3 title="FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT"><?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?></h3>
-        <?php if ($epic): ?>
-            <p>[placeholder for Epic data]</p>
-        <?php else: ?>
-            <p class="error-box"><?= Yii::t('app', 'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_IC') ?></p>
-        <?php endif; ?>
+        <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_IC_TITLE_TEXT') ?>">
+            <?= Yii::t('app', 'FRONTPAGE_IC') ?>
+        </h2>
+        <div>
+            <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
+                <?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?>
+            </h3>
+            <?php if ($epic): ?>
+                <p><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></p>
+            <?php else: ?>
+                <p class="error-box"><?= Yii::t('app', 'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_IC') ?></p>
+            <?php endif; ?>
+        </div>
     </div>
 
     <div class="col-md-6">
-        <h2 class="text-center" title="FRONTPAGE_OOC_TITLE_TEXT"><?= Yii::t('app', 'FRONTPAGE_OOC') ?></h2>
-        <h3 title="FRONTPAGE_SESSIONS_TITLE_TEXT"><?= Yii::t('app', 'FRONTPAGE_SESSIONS') ?></h3>
-        <h3 title="FRONTPAGE_NEWS_TITLE_TEXT"><?= Yii::t('app', 'FRONTPAGE_NEWS') ?></h3>
+        <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_OOC_TITLE_TEXT') ?>">
+            <?= Yii::t('app', 'FRONTPAGE_OOC') ?>
+        </h2>
+        <div>
+            <h3 title="<?= Yii::t('app', 'FRONTPAGE_SESSIONS_TITLE_TEXT') ?>">
+                <?= Yii::t('app', 'FRONTPAGE_SESSIONS') ?>
+            </h3>
+
+            <p><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></p>
+        </div>
+
+        <div>
+            <h3 title="<?= Yii::t('app', 'FRONTPAGE_NEWS_TITLE_TEXT') ?>">
+                <?= Yii::t('app', 'FRONTPAGE_NEWS') ?>
+            </h3>
+            <p><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></p>
+        </div>
+
     </div>
 </div>
