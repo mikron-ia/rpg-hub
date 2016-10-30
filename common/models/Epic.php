@@ -313,4 +313,13 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
             return false;
         }
     }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function isUserYourParticipant(User $user):bool
+    {
+        return Participant::participantExists($user, $this);
+    }
 }

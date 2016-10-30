@@ -14,17 +14,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->story_id], ['class' => 'btn btn-primary']) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'key',
-            'name',
-        ],
-    ]) ?>
+    <?php if ($model->canUserViewYou()) {
+        echo DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'key',
+                'name',
+            ],
+        ]);
+    } ?>
 
     <h2><?= Yii::t('app', 'STORY_HEADER_SHORT'); ?></h2>
     <?= $model->short; ?>

@@ -152,5 +152,17 @@ class Participant extends ActiveRecord
         }
     }
 
-
+    /**
+     * @param User $user
+     * @param Epic $epic
+     * @return bool
+     */
+    static public function participantExists(User $user, Epic $epic):bool
+    {
+        if(Participant::findOne(['user_id' => $user->id, 'epic_id' => $epic->epic_id])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
