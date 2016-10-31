@@ -16,24 +16,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="col-md-9">
 
-    <?php if ($model->canUserControlYou()) {
-        echo DetailView::widget([
-            'model' => $model,
-            'attributes' => [
-                'key',
-            ],
-        ]);
-    } ?>
+        <?php if ($model->canUserControlYou()) {
+            echo DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    'key',
+                ],
+            ]);
+        } ?>
 
-    <div>
-        <h2><?= Yii::t('app', 'STORY_HEADER_SHORT'); ?></h2>
-        <?= $model->getShortFormatted(); ?>
-    </div>
-
-    <div>
-        <h2><?= Yii::t('app', 'STORY_HEADER_LONG'); ?></h2>
-        <?= $model->getLongFormatted(); ?>
-    </div>
+        <div>
+            <h2><?= Yii::t('app', 'STORY_HEADER_SHORT'); ?></h2>
+            <?= $model->getShortFormatted(); ?>
+        </div>
 
     </div>
 
@@ -49,6 +44,12 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php endforeach; ?>
             </tbody>
         </table>
+
+    </div>
+
+    <div class="col-md-12">
+        <h2><?= Yii::t('app', 'STORY_HEADER_LONG'); ?></h2>
+        <?= $model->getLongFormatted(); ?>
     </div>
 
 </div>
