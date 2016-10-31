@@ -68,7 +68,10 @@ if ($epic) {
                     'layout' => '{items}',
                     'itemOptions' => ['class' => 'item'],
                     'itemView' => function ($model, $key, $index, $widget) {
-                        return $this->render('story/_index_box', ['model' => $model]);
+                        return $this->render(
+                            'story/_index_box',
+                            ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                        );
                     },
                 ]) ?>
             </div>
