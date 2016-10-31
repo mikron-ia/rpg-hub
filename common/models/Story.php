@@ -34,6 +34,11 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
 {
     use ToolsForEntity;
 
+    /**
+     * @var string[]
+     */
+    private $parametersFormatted;
+
     public static function tableName()
     {
         return 'story';
@@ -156,21 +161,26 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
 
     /**
      * @return array
+     * @todo Consider parameter visibility based on access rights - vide issue #104
      */
     public function formatParameters():array
     {
-        $parameters = [];
+        if (!$this->parametersFormatted) {
+            $parameters = [];
 
-        foreach ($this->parameterPack->parameters as $parameter) {
-            if ($parameter->visibility == Visibility::VISIBILITY_FULL) {
-                $parameters[] = [
-                    'name' => $parameter->getCodeName(),
-                    'value' => $parameter->content,
-                ];
+            foreach ($this->parameterPack->parameters as $parameter) {
+                if ($parameter->visibility == Visibility::VISIBILITY_FULL) {
+                    $parameters[$parameter->code] = [
+                        'name' => $parameter->getCodeName(),
+                        'value' => $parameter->content,
+                    ];
+                }
             }
+
+            $this->parametersFormatted = $parameters;
         }
 
-        return $parameters;
+        return $this->parametersFormatted;
     }
 
     public function getSimpleDataForApi()
@@ -234,5 +244,22 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function canUserViewYou()
     {
         return self::canUserViewInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_VIEW_STORY'));
+    }
+
+    /**
+     * @param string $parameterName
+     * @return string
+     */
+    public function getParameter(string $parameterName):string
+    {
+        if(!$this->parametersFormatted) {
+            $this->formatParameters();
+        }
+
+        if(isset($this->parametersFormatted[$parameterName])) {
+            return $this->parametersFormatted[$parameterName]['value'];
+        } else {
+            return '';
+        }
     }
 }

@@ -32,17 +32,18 @@ $this->title = 'RPG hub - index';
         <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_IC_TITLE_TEXT') ?>">
             <?= Yii::t('app', 'FRONTPAGE_IC') ?>
         </h2>
-        <div>
-            <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
-                <?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?>
-            </h3>
-            <p><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></p>
-        </div>
-        <div>
-            <h3 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
-                <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
-            </h3>
-            <?php if ($epic): ?>
+
+        <?php if ($epic): ?>
+            <div>
+                <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
+                    <?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?>
+                </h3>
+                <p><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></p>
+            </div>
+            <div>
+                <h3 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
+                    <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
+                </h3>
                 <?= ListView::widget([
                     'dataProvider' => $stories,
                     'summary' => '',
@@ -51,10 +52,10 @@ $this->title = 'RPG hub - index';
                         return $this->render('story/_index_box', ['model' => $model]);
                     },
                 ]) ?>
-            <?php else: ?>
-                <p class="error-box"><?= Yii::t('app', 'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_IC') ?></p>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php else: ?>
+            <p class="error-box"><?= Yii::t('app', 'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_IC') ?></p>
+        <?php endif; ?>
     </div>
 
     <div class="col-md-6">

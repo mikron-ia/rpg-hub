@@ -12,11 +12,11 @@ use yii\helpers\Html;
         <?php echo Html::a(Html::encode($model->name), ['view', 'id' => $model->story_id]); ?>
     </h2>
 
-    <div class="col-lg-9 text-justify">
+    <div class="col-md-7 text-justify">
         <?php echo $model->short; ?>
     </div>
 
-    <div class="col-lg-3">
+    <div class="col-md-5">
 
         <table class="table table-bordered table-hover">
             <tbody>
