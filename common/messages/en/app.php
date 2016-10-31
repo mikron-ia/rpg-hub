@@ -126,6 +126,7 @@ return [
     'FRONTPAGE_NEWS_TITLE_TEXT' => 'Information about events, changes in epics or groups, etc. Can be general or epic-specific.',
     'FRONTPAGE_OOC' => 'Out-of-character section',
     'FRONTPAGE_OOC_TITLE_TEXT' => 'Things from the dreadful real world that influence the epics',
+    'FRONTPAGE_RECAP_NOT_AVAILABLE' => 'Recaps of this epic not found',
     'FRONTPAGE_SESSIONS' => 'Sessions',
     'FRONTPAGE_SESSIONS_TITLE_TEXT' => 'Information about proposed and incoming sessions',
     'FRONTPAGE_STORIES' => 'Stories',

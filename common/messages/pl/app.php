@@ -126,6 +126,7 @@ return [
     'FRONTPAGE_NEWS_TITLE_TEXT' => 'Informacje o istotnych wydarzeniach, zmianach w składach drużyn bądź logice kampanii. Mogą być ogólne lub ograniczone do konkretnych kampanii.',
     'FRONTPAGE_OOC' => 'Sekcja OOC',
     'FRONTPAGE_OOC_TITLE_TEXT' => 'Rzeczy ze straszliwego świata rzeczywistego, mające wpływ na kampanie',
+    'FRONTPAGE_RECAP_NOT_AVAILABLE' => 'Nie znaleziono streszczenia wydarzeń dla tej kampanii',
     'FRONTPAGE_SESSIONS' => 'Sesje',
     'FRONTPAGE_SESSIONS_TITLE_TEXT' => 'Proponowane i zaplanowane sesje',
     'FRONTPAGE_STORIES' => 'Historie',

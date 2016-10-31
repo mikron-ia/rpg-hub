@@ -73,19 +73,18 @@ final class RecapQuery extends Recap
     }
 
     /**
-     * @return Recap|null
+     * @return null|\yii\db\ActiveRecord
      */
     public function mostRecent()
     {
-        $provider = $this->search([]);
-        $provider->query->limit(1);
+        $query = Recap::find();
 
-        $models = $provider->getModels();
-
-        if($models) {
-            return array_pop($models);
-        } else {
+        if (empty(Yii::$app->params['activeEpic'])) {
             return null;
         }
+
+        $query->andWhere(['epic_id' => Yii::$app->params['activeEpic']->epic_id])->orderBy(['time' => SORT_DESC]);
+
+        return $query->one();
     }
 }

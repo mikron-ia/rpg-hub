@@ -46,7 +46,13 @@ if ($epic) {
                 <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
                     <?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?>
                 </h3>
-                <div><?= $recap->getDataFormatted(); ?></div>
+                <div>
+                    <?php if ($recap) {
+                        echo $recap->getDataFormatted();
+                    } else {
+                        echo '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_RECAP_NOT_AVAILABLE') . '</p>';
+                    } ?>
+                </div>
             </div>
 
             <div>
@@ -54,7 +60,8 @@ if ($epic) {
                     <h3 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
                         <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
                     </h3>
-                    <?= Html::a(Yii::t('app', 'BUTTON_STORY_VIEW_ALL'), ['story/index'], ['class' => 'btn btn-primary']); ?>
+                    <?= Html::a(Yii::t('app', 'BUTTON_STORY_VIEW_ALL'), ['story/index'],
+                        ['class' => 'btn btn-primary']); ?>
                 </div>
                 <?= ListView::widget([
                     'dataProvider' => $stories,
