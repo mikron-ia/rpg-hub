@@ -54,7 +54,7 @@ if ($epic) {
                 </h3>
                 <?= ListView::widget([
                     'dataProvider' => $stories,
-                    'summary' => '',
+                    'layout' => '{items}',
                     'itemOptions' => ['class' => 'item'],
                     'itemView' => function ($model, $key, $index, $widget) {
                         return $this->render('story/_index_box', ['model' => $model]);

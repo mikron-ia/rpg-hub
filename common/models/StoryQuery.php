@@ -70,7 +70,8 @@ final class StoryQuery extends Story
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['position' => SORT_DESC]]
+            'sort' => ['defaultOrder' => ['position' => SORT_DESC]],
+            'pagination' => ['pageSize' => 4],
         ]);
 
         $this->load($params);

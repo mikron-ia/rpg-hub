@@ -21,7 +21,7 @@ use yii\helpers\Html;
         <table class="table table-bordered table-hover">
             <tbody>
             <?php foreach ($model->parameterPack->parameters as $storyParameter): ?>
-                <tr title="<?php echo "NYI" ?>">
+                <tr>
                     <td class="text-left"><strong><?php echo $storyParameter->getCodeName(); ?></strong></td>
                     <td class="text-center"><?php echo $storyParameter->content; ?></td>
                 </tr>
