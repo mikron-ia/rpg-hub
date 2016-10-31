@@ -51,6 +51,7 @@ return [
     'BUTTON_SEND' => 'Wyślij',
     'BUTTON_STORIES' => 'Historie',
     'BUTTON_STORY_CREATE' => 'Dodaj Historię',
+    'BUTTON_STORY_VIEW_ALL' => 'Lista Historii',
     'BUTTON_UPDATE' => 'Modyfikuj',
     'BUTTON_USER_CREATE' => 'Zarejestruj użytkownika',
     'BUTTON_USER_LIST' => 'Zarządzanie użytkownikami',

@@ -51,6 +51,7 @@ return [
     'BUTTON_SEND' => 'Send',
     'BUTTON_STORIES' => 'Stories',
     'BUTTON_STORY_CREATE' => 'Add story',
+    'BUTTON_STORY_VIEW_ALL' => 'Full story list',
     'BUTTON_UPDATE' => 'Update',
     'BUTTON_USER_CREATE' => 'Add user',
     'BUTTON_USER_LIST' => 'User management',

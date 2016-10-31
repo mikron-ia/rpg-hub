@@ -49,9 +49,12 @@ if ($epic) {
             </div>
 
             <div>
-                <h3 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
-                    <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
-                </h3>
+                <div class="buttoned-header">
+                    <h3 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
+                        <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
+                    </h3>
+                    <?= Html::a(Yii::t('app', 'BUTTON_STORY_VIEW_ALL'), ['story/index'], ['class' => 'btn btn-primary']); ?>
+                </div>
                 <?= ListView::widget([
                     'dataProvider' => $stories,
                     'layout' => '{items}',
