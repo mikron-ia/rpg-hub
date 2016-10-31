@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\models\Epic;
 use common\models\EpicQuery;
+use common\models\RecapQuery;
 use common\models\StoryQuery;
 use common\models\user\PasswordChange;
 use Yii;
@@ -77,7 +78,8 @@ class SiteController extends Controller
             $epic = Yii::$app->params['activeEpic'];
 
             /* Get Recap */
-            $recap = null;
+            $recapQuery = new RecapQuery();
+            $recap = $recapQuery->mostRecent();
 
             /* Get Stories */
             $searchModel = new StoryQuery();

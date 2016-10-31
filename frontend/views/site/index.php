@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $epic \common\models\Epic */
 /* @var $stories \yii\data\ActiveDataProvider */
+/* @var $recap \common\models\Recap */
 
 use yii\bootstrap\Html;
 use yii\widgets\ListView;
@@ -45,7 +46,7 @@ if ($epic) {
                 <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
                     <?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?>
                 </h3>
-                <p><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></p>
+                <div><?= $recap->getDataFormatted(); ?></div>
             </div>
 
             <div>

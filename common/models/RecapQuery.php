@@ -11,9 +11,6 @@ use yii\data\ActiveDataProvider;
  */
 final class RecapQuery extends Recap
 {
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -22,9 +19,6 @@ final class RecapQuery extends Recap
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
@@ -33,12 +27,10 @@ final class RecapQuery extends Recap
 
     /**
      * Creates data provider instance with search query applied
-     *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params):ActiveDataProvider
     {
         $query = Recap::find();
 
@@ -78,5 +70,22 @@ final class RecapQuery extends Recap
             ->andFilterWhere(['like', 'data', $this->data]);
 
         return $dataProvider;
+    }
+
+    /**
+     * @return Recap|null
+     */
+    public function mostRecent()
+    {
+        $provider = $this->search([]);
+        $provider->query->limit(1);
+
+        $models = $provider->getModels();
+
+        if($models) {
+            return array_pop($models);
+        } else {
+            return null;
+        }
     }
 }
