@@ -11,6 +11,7 @@ use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\ContactForm;
+use yii\base\Exception;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -45,6 +46,7 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'set-epic' => ['post'],
                 ],
             ],
         ];
@@ -230,23 +232,26 @@ class SiteController extends Controller
 
     /**
      * Selects Epic
-     * @return \yii\web\Response
+     * @return Response
      */
-    public function actionSetEpic()
+    public function actionSetEpic():Response
     {
         $chosenEpicKey = Yii::$app->request->post('epic');
 
         /* @var $chosenEpic Epic */
         $chosenEpic = EpicQuery::findOne(['key' => $chosenEpicKey]);
-        Yii::$app->params['activeEpic'] = $chosenEpic;
 
-        /* Save to cookie */
-        $cookie = new Cookie([
-            'name' => '_epic',
-            'value' => $chosenEpic->key,
-            'expire' => time() + 60 * 60 * 24 * 30, // 30 days
-        ]);
-        Yii::$app->response->cookies->add($cookie);
+        if ($chosenEpic) {
+            Yii::$app->params['activeEpic'] = $chosenEpic;
+
+            /* Save to cookie */
+            $cookie = new Cookie([
+                'name' => '_epic',
+                'value' => $chosenEpic->key,
+                'expire' => time() + 60 * 60 * 24 * 30, // 30 days
+            ]);
+            Yii::$app->response->cookies->add($cookie);
+        }
 
         $referrer = Yii::$app->getRequest()->getReferrer();
 
