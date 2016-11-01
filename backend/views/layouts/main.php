@@ -42,11 +42,14 @@ AppAsset::register($this);
         ['label' => Yii::t('app', 'BUTTON_PARAMETER_LIST'), 'url' => ['/parameter/index']],
     ];
 
-    if(Yii::$app->user->can('listPerformedActions')) {
-        $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_PERFORMED_ACTION_LIST'), 'url' => ['/performed-action/index']];
+    if (Yii::$app->user->can('listPerformedActions')) {
+        $auxiliaryItems[] = [
+            'label' => Yii::t('app', 'BUTTON_PERFORMED_ACTION_LIST'),
+            'url' => ['/performed-action/index']
+        ];
     }
 
-    if(Yii::$app->user->can('controlUser')) {
+    if (Yii::$app->user->can('controlUser')) {
         $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_USER_LIST'), 'url' => ['/user/index']];
     }
 
@@ -79,18 +82,36 @@ AppAsset::register($this);
                 . '</li>';
         }
 
-        $menuItems[] = [
+        $epicChoice = [
             'label' => empty(Yii::$app->params['activeEpic'])
                 ? Yii::t('app', 'MENU_TOP_CHOOSE_EPIC')
-                : Yii::t('app', 'MENU_TOP_CHANGE_EPIC') . ' (' . Yii::$app->params['activeEpic']->name . ')',
+                : Yii::t('app', 'MENU_TOP_CHANGE_EPIC'),
             'items' => $items,
+            'options' => [],
         ];
+
+        if (!empty(Yii::$app->params['activeEpic'])) {
+            $epicChoice['options']['title'] = Yii::t(
+                'app',
+                'MENU_TOP_CHANGE_EPIC_TITLE {name}',
+                ['name' => Yii::$app->params['activeEpic']->name]
+            );
+        }
+
+        $menuItems[] = $epicChoice;
 
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                Yii::t('app', 'MENU_TOP_LOGOUT') . ' (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link']
+                Yii::t('app', 'MENU_TOP_LOGOUT'),
+                [
+                    'class' => 'btn btn-link',
+                    'title' => Yii::t(
+                        'app',
+                        'MENU_TOP_LOGOUT_TITLE {name}',
+                        ['name' => Yii::$app->user->identity->username]
+                    ),
+                ]
             )
             . Html::endForm()
             . '</li>';
@@ -105,8 +126,10 @@ AppAsset::register($this);
     <div class="container">
         <?= Breadcrumbs::widget([
             'homeLink' => [
-                'label' => Yii::t('app', 'BREADCRUMBS_HOME'),
-                'url' => Yii::$app->homeUrl
+                'label' => Yii::$app->params['activeEpic']
+                    ? (Yii::$app->params['activeEpic']->name)
+                    : (Yii::t('app', 'BREADCRUMBS_HOME')),
+                'url' => Yii::$app->homeUrl,
             ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
