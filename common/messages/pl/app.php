@@ -236,7 +236,7 @@ return [
     'PERSON_VISIBILITY_GM' => 'Dla MG',
     'PERSON_VISIBILITY_LOGGED' => 'Dla zalogowanych',
     'PERSON_VISIBILITY_NONE' => 'Dla nikogo',
-    'PLACEHOLDER_NOT_YET_IMPLEMENTED' => '<i>Nie zaimplementowano. Ta funkcjonalność pojawi się w jednej z przyszłych wersji.</i>',
+    'PLACEHOLDER_NOT_YET_IMPLEMENTED' => 'Nie zaimplementowano. Ta funkcjonalność pojawi się w jednej z przyszłych wersji.',
     'PROMPT_SELECT_TYPE' => 'Wybierz typ ...',
     'PROMPT_USER' => 'Wybierz użytkownika ...',
     'PROMPT_VISIBILITY' => 'Wybierz widoczność ...',

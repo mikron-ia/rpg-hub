@@ -92,14 +92,14 @@ if ($epic) {
                 <?= Yii::t('app', 'FRONTPAGE_SESSIONS') ?>
             </h3>
 
-            <p><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></p>
+            <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></i></p>
         </div>
 
         <div>
             <h3 title="<?= Yii::t('app', 'FRONTPAGE_NEWS_TITLE_TEXT') ?>">
                 <?= Yii::t('app', 'FRONTPAGE_NEWS') ?>
             </h3>
-            <p><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></p>
+            <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></i></p>
         </div>
 
     </div>

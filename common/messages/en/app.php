@@ -236,7 +236,7 @@ return [
     'PERSON_VISIBILITY_GM' => 'To GM only',
     'PERSON_VISIBILITY_LOGGED' => 'To known users',
     'PERSON_VISIBILITY_NONE' => 'To none',
-    'PLACEHOLDER_NOT_YET_IMPLEMENTED' => '<i>Not yet implemented. This feature will appear in one of the future releases.</i>',
+    'PLACEHOLDER_NOT_YET_IMPLEMENTED' => 'Not yet implemented. This feature will appear in one of the future releases.',
     'PROMPT_SELECT_TYPE' => 'Select type ...',
     'PROMPT_USER' => 'Select user ...',
     'PROMPT_VISIBILITY' => 'Choose visibility ...',
