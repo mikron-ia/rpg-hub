@@ -10,11 +10,11 @@ A system for role-playing game story/campaign/epic (names vary from system to sy
 1. Clone the project
 1. Run `composer install` or your system equivalent (on linux, it usually boils down to `php composer.phar install`; for production, add `--no-dev` option to avoid unnecessary libraries
 1. Copy `.env.example` to `.env` and fill it with configuration data
-    1. Database data are mandatory
-    1. Language data and key generators can be left as they are
-    1. API key must be set up to use the API
+    1. Database data are mandatory; without them, the hub will fail to start
+    1. Language data and key generators can be left as they are, or can be customised as desired
+    1. API key must be set up to make API accessible from outside
 1. If you wish to add data, create `console/migrations/data.sql` file with SQL inserts be loaded into the database; this is intended for tests on larger data sets and is not needed for normal, initial deployment
-1. Initialise
+1. Initialise the project
     1. For tests: `./init --env=Development --overwrite=All`
     1. For production: `./init --env=Production --overwrite=All`
 1. Run `./yii migrate/up` if this is a fresh database installation; `data.sql` will be automatically loaded if present; skip this step if you connect to existing, configured database
