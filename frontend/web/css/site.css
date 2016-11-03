@@ -133,6 +133,23 @@ p {
     margin: 20px 0 10px 10px;
 }
 
+.subtitle {
+    font-style: italic;
+}
+
+.tag-box {
+    background-color: lightblue;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 5px 10px;
+    margin: 0 10px 0 0;
+}
+
+.btn-group {
+    margin-top: 5px;
+}
+
+
 .error-box {
     color: #a94442;
     background: #fdf7f7;
@@ -191,11 +208,11 @@ fieldset[disabled] .btn-primary.active {
 }
 
 a {
-    color: mediumseagreen;
+    color: green;
     text-decoration: none;
 }
 a:hover,
 a:focus {
-    color: green;
+    color: mediumseagreen;
     text-decoration: underline;
 }

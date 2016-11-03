@@ -2,9 +2,12 @@
 
 namespace common\models;
 
+use common\models\core\Language;
 use Yii;
+use yii\base\Exception;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\HttpException;
 
 /**
  * This is the model class for table "description_pack".
@@ -50,7 +53,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable
     /**
      * @return ActiveQuery
      */
-    public function getDescriptions()
+    public function getDescriptions():ActiveQuery
     {
         return $this->hasMany(Description::className(), ['description_pack_id' => 'description_pack_id']);
     }
@@ -58,7 +61,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable
     /**
      * @return ActiveQuery
      */
-    public function getPeople()
+    public function getPeople():ActiveQuery
     {
         return $this->hasMany(Person::className(), ['description_pack_id' => 'description_pack_id']);
     }
@@ -115,5 +118,40 @@ final class DescriptionPack extends ActiveRecord implements Displayable
     public function isVisibleInApi()
     {
         return true;
+    }
+
+    /**
+     * @param Language $language
+     * @return ActiveQuery
+     */
+    public function getDescriptionsInLanguage(Language $language):ActiveQuery
+    {
+        return $this->getDescriptions()->where(['lang' => $language->language]);
+    }
+
+    /**
+     * @param User $user
+     * @return ActiveQuery
+     */
+    public function getDescriptionsInLanguageOfTheUser(User $user):ActiveQuery
+    {
+        $language = Language::create($user->language);
+        return $this->getDescriptionsInLanguage($language);
+    }
+
+    /**
+     * @return ActiveQuery
+     * @throws HttpException
+     */
+    public function getDescriptionsInLanguageOfTheActiveUser():ActiveQuery
+    {
+        if (Yii::$app->user->isGuest) {
+            throw new HttpException(400, Yii::t('app', 'ERROR_NO_ACTIVE_USER'));
+        }
+
+        /** @var $user User */
+        $user = Yii::$app->user->identity;
+
+        return $this->getDescriptionsInLanguageOfTheUser($user);
     }
 }
