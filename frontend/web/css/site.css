@@ -36,6 +36,10 @@ body {
     font-style: italic;
 }
 
+a {
+    color: green;
+}
+
 /* add sorting icons to gridview sort links */
 a.asc:after, a.desc:after {
     position: relative;
@@ -120,11 +124,11 @@ p {
     clear: both;
 }
 
-.buttoned-header > h1, .buttoned-header > h2, .buttoned-header > h3  {
+.buttoned-header > h1, .buttoned-header > h2, .buttoned-header > h3 {
     float: left;
 }
 
-.buttoned-header > a, .buttoned-header > div, .buttoned-header > p  {
+.buttoned-header > a, .buttoned-header > div, .buttoned-header > p {
     float: right;
     margin: 20px 0 10px 10px;
 }
@@ -143,4 +147,55 @@ p {
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
     vertical-align: middle
+}
+
+.btn-primary {
+    background-image: -webkit-linear-gradient(top, forestgreen 0%, green 100%) !important;
+    background-image: -o-linear-gradient(top, forestgreen 0%, green 100%) !important;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(forestgreen), to(green)) !important;
+    background-image: linear-gradient(to bottom, forestgreen 0%, green 100%) !important;
+    background-repeat: repeat-x;
+    border-color: mediumseagreen  !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: mediumseagreen 0 -15px !important;
+}
+
+.btn-primary:active,
+.btn-primary.active {
+    background-color: green !important;
+    border-color: mediumseagreen !important;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary.focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+    background: green none !important;
+}
+
+a {
+    color: forestgreen;
+    text-decoration: none;
+}
+a:hover,
+a:focus {
+    color: green;
+    text-decoration: underline;
 }

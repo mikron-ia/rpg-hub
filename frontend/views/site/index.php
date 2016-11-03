@@ -21,12 +21,13 @@ if ($epic) {
 
         <?php if ($epic): ?>
             <h1><?= $epic->name ?></h1>
+
             <div class="btn-group btn-group-lg">
-                <?= Html::a(Yii::t('app', 'BUTTON_STORIES'), ['story/index'], ['class' => 'btn btn-lg btn-success']); ?>
+                <?= Html::a(Yii::t('app', 'BUTTON_STORIES'), ['story/index'], ['class' => 'btn btn-lg btn-primary']); ?>
             </div>
 
             <div class="btn-group btn-group-lg">
-                <?= Html::a(Yii::t('app', 'BUTTON_PEOPLE'), ['person/index'], ['class' => 'btn btn-lg btn-success']); ?>
+                <?= Html::a(Yii::t('app', 'BUTTON_PEOPLE'), ['person/index'], ['class' => 'btn btn-lg btn-primary']); ?>
             </div>
         <?php else: ?>
             <h1><?= Yii::t('app', 'FRONTPAGE_TITLE') ?></h1>
