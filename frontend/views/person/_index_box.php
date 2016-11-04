@@ -21,5 +21,3 @@ use yii\helpers\StringHelper;
     </p>
 
 </div>
-
-<div class="clearfix"></div>

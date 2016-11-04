@@ -1,9 +1,7 @@
 <?php
 
-use common\models\Person;
+use yii\bootstrap\Tabs;
 use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\PersonQuery */
@@ -11,39 +9,43 @@ use yii\helpers\StringHelper;
 
 $this->title = Yii::t('app', 'TITLE_PEOPLE_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
+
+$labelForMain = isset(Yii::$app->request->queryParams['PersonQuery'])
+    ? Yii::t('app', 'PEOPLE_LABEL_SEARCH_RESULTS')
+    : Yii::t('app', 'PEOPLE_LABEL_ALL');
+
+$mainTab = [
+    'label' => $labelForMain,
+    'content' => $this->render('_index_people', ['dataProvider' => $dataProvider]),
+    'encode' => false,
+    'active' => true,
+];
+
+$searchTab = [
+    'label' => Yii::t('app', 'PEOPLE_LABEL_SEARCH'),
+    'content' => $this->render('_search', ['model' => $searchModel]),
+    'encode' => false,
+    'active' => false,
+];
+
+$allTab = [
+    'label' => Yii::t('app', 'PEOPLE_LABEL_ALL'),
+    'url' => ['person/index'],
+];
+
+if(isset(Yii::$app->request->queryParams['PersonQuery'])) {
+    $items = [$allTab, $searchTab, $mainTab];
+} else {
+    $items = [$mainTab, $searchTab];
+}
+
 ?>
 <div class="person-index">
 
-    <div class="buttoned-header">
-        <h1><?= Html::encode($this->title) ?></h1>
-        <?= Html::a(
-            Yii::t('app', 'BUTTON_GOTO_FILTER'),
-            ['#filter'],
-            ['class' => 'btn btn-default hidden-lg hidden-md']
-        ) ?>
-    </div>
+    <h1><?= Html::encode($this->title) ?></h1>
 
-    <div id="filter">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-    </div>
-
-    <div id="people">
-        <?= \yii\widgets\ListView::widget([
-            'dataProvider' => $dataProvider,
-            'itemOptions' => ['class' => 'index-box'],
-            'layout' => '{summary}{items}<div class="clearfix"></div>{pager}',
-            'itemView' => function (\common\models\Person $model, $key, $index, $widget) {
-                return $this->render(
-                    '_index_box',
-                    [
-                        'model' => $model,
-                        'key' => $key,
-                        'index' => $index,
-                        'widget' => $widget,
-                    ]
-                );
-            },
-        ]) ?>
-    </div>
+    <?= Tabs::widget([
+        'items' => $items
+    ]) ?>
 
 </div>
