@@ -3,6 +3,18 @@ body {
     height: 100%;
 }
 
+@media (min-width: 1600px) {
+    .container {
+        width: 1570px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .container {
+        width: 1870px;
+    }
+}
+
 .wrap {
     min-height: 100%;
     height: auto;
@@ -135,6 +147,7 @@ p {
 
 .subtitle {
     font-style: italic;
+    text-align: left;
 }
 
 .tag-box {
@@ -171,7 +184,7 @@ p {
     background-image: -webkit-gradient(linear, left top, left bottom, from(forestgreen), to(green)) !important;
     background-image: linear-gradient(to bottom, forestgreen 0%, green 100%) !important;
     background-repeat: repeat-x;
-    border-color: mediumseagreen  !important;
+    border-color: mediumseagreen !important;
 }
 
 .btn-primary:hover,
@@ -210,6 +223,7 @@ a {
     color: green;
     text-decoration: none;
 }
+
 a:hover,
 a:focus {
     color: mediumseagreen;
@@ -223,9 +237,6 @@ a:focus {
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
     background-color: green;
     border-color: green;
-    color: #ffffff;
-    cursor: default;
-    z-index: 3;
 }
 
 .private-notes {
@@ -233,4 +244,64 @@ a:focus {
     padding: 10px 15px 0 15px;
     border: 2px solid #EEEEEE;
     border-radius: 15px;
+}
+
+.index-box {
+    border: 3px solid green;
+    border-radius: 5px;
+    float: left;
+    margin: 0.75%;
+    height: 228px;
+    padding: 0 1%;
+    overflow: auto;
+}
+
+@media (max-width: 383px) {
+    .index-box {
+        width: 94%;
+    }
+}
+
+@media (min-width: 384px) {
+    .index-box {
+        width: 47%;
+    }
+}
+
+@media (min-width: 768px) {
+    .index-box {
+        width: 31%;
+    }
+}
+
+@media (min-width: 960px) {
+    .index-box {
+        width: 31%;
+    }
+}
+
+@media (min-width: 1280px) {
+    .index-box {
+        width: 23.5%;
+    }
+}
+
+@media (min-width: 1600px) {
+    .index-box {
+        width: 15%;
+    }
+}
+
+@media (min-width: 2140px) {
+    .index-box {
+        width: 11%;
+    }
+}
+
+.index-box-low {
+    height: 128px;
+}
+
+.index-box-lowest {
+    height: 64px;
 }

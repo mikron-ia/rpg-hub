@@ -16,9 +16,13 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?php echo $form->field($model, 'name') ?>
+    <div class="col-md-6">
+        <?php echo $form->field($model, 'name') ?>
+    </div>
 
-    <?php echo $form->field($model, 'tagline') ?>
+    <div class="col-md-6">
+        <?php echo $form->field($model, 'tagline') ?>
+    </div>
 
     <div class="form-group">
         <?= Html::resetButton(Yii::t('app', 'BUTTON_RESET'), ['class' => 'btn btn-default']) ?>

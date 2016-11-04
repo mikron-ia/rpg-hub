@@ -55,7 +55,7 @@ final class PersonQuery extends Person
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => ['pageSize' => 16],
+            'pagination' => ['pageSize' => 24],
         ]);
 
         $this->load($params);

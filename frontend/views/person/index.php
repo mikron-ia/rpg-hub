@@ -23,33 +23,27 @@ $this->params['breadcrumbs'][] = $this->title;
         ) ?>
     </div>
 
-    <div class="col-md-9">
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'filterPosition' => null,
-            'columns' => [
-                [
-                    'attribute' => 'name',
-                    'value' => function (Person $model) {
-                        return StringHelper::truncateWords($model->name, 5, ' (...)', false);
-                    }
-                ],
-                [
-                    'attribute' => 'tagline',
-                    'value' => function (Person $model) {
-                        return StringHelper::truncateWords($model->tagline, 5, ' (...)', false);
-                    }
-                ],
-                [
-                    'class' => 'yii\grid\ActionColumn',
-                    'template' => '{view}',
-                ],
-            ],
-        ]); ?>
-    </div>
-
-    <div class="col-md-3" id="filter">
+    <div id="filter">
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
+
+    <div id="people">
+        <?= \yii\widgets\ListView::widget([
+            'dataProvider' => $dataProvider,
+            'itemOptions' => ['class' => 'index-box'],
+            'layout' => '{summary}{items}<div class="clearfix"></div>{pager}',
+            'itemView' => function (\common\models\Person $model, $key, $index, $widget) {
+                return $this->render(
+                    '_index_box',
+                    [
+                        'model' => $model,
+                        'key' => $key,
+                        'index' => $index,
+                        'widget' => $widget,
+                    ]
+                );
+            },
+        ]) ?>
+    </div>
+
 </div>
