@@ -149,7 +149,6 @@ p {
     margin-top: 5px;
 }
 
-
 .error-box {
     color: #a94442;
     background: #fdf7f7;
@@ -215,4 +214,23 @@ a:hover,
 a:focus {
     color: mediumseagreen;
     text-decoration: underline;
+}
+
+.pagination > li > a, .pagination > li > span {
+    color: green;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: green;
+    border-color: green;
+    color: #ffffff;
+    cursor: default;
+    z-index: 3;
+}
+
+.private-notes {
+    background-color: #EEEEEE;
+    padding: 10px 15px 0 15px;
+    border: 2px solid #EEEEEE;
+    border-radius: 15px;
 }

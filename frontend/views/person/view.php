@@ -50,10 +50,17 @@ $this->params['showPrivates'] = $model->canUserControlYou();
                 'itemView' => function (\common\models\Description $model, $key, $index, $widget) {
                     return $this->render(
                         '_view_descriptions',
-                        ['model' => $model, 'showPrivates' => $this->params['showPrivates']]
+                        [
+                            'model' => $model,
+                            'key' => $key,
+                            'index' => $index,
+                            'widget' => $widget,
+                            'showPrivates' => $this->params['showPrivates']
+                        ]
                     );
                 },
             ]) ?>
+
             <div class="clearfix"></div>
 
         </div>

@@ -6,16 +6,14 @@
 
 <div class="col-lg-6">
 
-    <h3><?= $model->getTypeName(); ?></h3>
+    <h4><?= $model->getTypeName(); ?></h4>
 
     <div>
         <?= $model->getPublicFormatted(); ?>
     </div>
 
     <?php if ($showPrivates && $model->private_text): ?>
-        <h4><?= Yii::t('app', 'DESCRIPTION_TITLE_PRIVATE'); ?></h4>
-
-        <div>
+        <div class="private-notes">
             <?= $model->getPrivateFormatted(); ?>
         </div>
     <?php endif; ?>
