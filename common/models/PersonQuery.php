@@ -56,6 +56,7 @@ final class PersonQuery extends Person
             )
             ) {
                 $visibilityVector[] = Visibility::VISIBILITY_GM;
+                $visibilityVector[] = Visibility::VISIBILITY_DESIGNATED;
             }
 
             {

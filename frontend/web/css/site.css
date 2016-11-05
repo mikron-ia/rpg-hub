@@ -240,15 +240,15 @@ a:focus {
 }
 
 .private-notes {
-    background-color: #EEEEEE;
+    background-color: #eeeeee;
     padding: 10px 15px 0 15px;
-    border: 2px solid #EEEEEE;
+    border: 2px solid #eeeeee;
     border-radius: 15px;
 }
 
 .index-box {
     border: 3px solid green;
-    border-radius: 5px;
+    border-radius: 15px;
     float: left;
     margin: 0.75%;
     height: 228px;
@@ -304,4 +304,16 @@ a:focus {
 
 .index-box-lowest {
     height: 64px;
+}
+
+.index-box-gm {
+    border: 3px solid gold;
+}
+
+.index-box-designated {
+    border: 3px solid yellowgreen;
+}
+
+.tab-pane {
+    margin-top: 20px;
 }
