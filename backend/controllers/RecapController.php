@@ -43,7 +43,9 @@ final class RecapController extends Controller
      */
     public function actionIndex()
     {
-        Recap::canUserIndexThem();
+        if(!Recap::canUserIndexThem()) {
+            Recap::throwExceptionAboutIndex();
+        }
 
         $searchModel = new RecapQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -63,7 +65,9 @@ final class RecapController extends Controller
     {
         $model = $this->findModel($id);
 
-        $model->canUserViewYou();
+        if(!$model->canUserViewYou()) {
+            Recap::throwExceptionAboutView();
+        }
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
@@ -83,7 +87,9 @@ final class RecapController extends Controller
      */
     public function actionCreate()
     {
-        Recap::canUserCreateThem();
+        if(Recap::canUserCreateThem()) {
+            Recap::throwExceptionAboutCreate();
+        }
 
         $model = new Recap();
 
@@ -106,7 +112,9 @@ final class RecapController extends Controller
     {
         $model = $this->findModel($id);
 
-        $model->canUserControlYou();
+        if(!$model->canUserControlYou()) {
+            Recap::throwExceptionAboutControl();
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->recap_id]);
@@ -127,7 +135,9 @@ final class RecapController extends Controller
     {
         $model = $this->findModel($id);
 
-        $model->canUserControlYou();
+        if(!$model->canUserControlYou()) {
+            Recap::throwExceptionAboutControl();
+        }
 
         $model->delete();
 

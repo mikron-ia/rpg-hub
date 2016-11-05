@@ -123,23 +123,43 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
         return true;
     }
 
-    static public function canUserIndexThem()
+    static public function canUserIndexThem():bool
     {
-        return self::canUserIndexInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_LIST_RECAP'));
+        return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem()
+    static public function canUserCreateThem():bool
     {
-        return self::canUserCreateInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_CREATE_RECAP'));
+        return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
-    public function canUserControlYou()
+    public function canUserControlYou():bool
     {
-        return self::canUserControlInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_CONTROL_RECAP'));
+        return self::canUserControlInEpic($this->epic);
     }
 
-    public function canUserViewYou()
+    public function canUserViewYou():bool
     {
-        return self::canUserViewInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_VIEW_RECAP'));
+        return self::canUserViewInEpic($this->epic);
+    }
+
+    static function throwExceptionAboutCreate()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_RECAP'));
+    }
+
+    static function throwExceptionAboutControl()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_RECAP'));
+    }
+
+    static function throwExceptionAboutIndex()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_RECAP'));
+    }
+
+    static function throwExceptionAboutView()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_RECAP'));
     }
 }

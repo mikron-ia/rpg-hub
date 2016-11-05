@@ -38,7 +38,9 @@ class StoryController extends Controller
      */
     public function actionIndex()
     {
-        Story::canUserIndexThem();
+        if(!Story::canUserIndexThem()) {
+            Story::throwExceptionAboutIndex();
+        }
 
         $searchModel = new StoryQuery();
         $dataProvider = $searchModel->search([]);
@@ -57,7 +59,9 @@ class StoryController extends Controller
     {
         $model = $this->findModel($id);
 
-        $model->canUserViewYou();
+        if(!$model->canUserViewYou()) {
+            Story::throwExceptionAboutView();
+        }
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));

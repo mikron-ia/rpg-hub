@@ -251,25 +251,46 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
         ];
     }
 
-    static public function canUserIndexThem()
+    static public function canUserIndexThem():bool
     {
-        return self::canUserIndexInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_LIST_PERSON'));
+        return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem()
+    static public function canUserCreateThem():bool
     {
-        return self::canUserCreateInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_CREATE_PERSON'));
+        return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
-    public function canUserControlYou()
+    public function canUserControlYou():bool
     {
-        return self::canUserControlInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_CONTROL_PERSON'));
+        return self::canUserControlInEpic($this->epic);
     }
 
-    public function canUserViewYou()
+    public function canUserViewYou():bool
     {
-        return self::canUserViewInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_VIEW_PERSON'));
+        return self::canUserViewInEpic($this->epic);
     }
+
+    static function throwExceptionAboutCreate()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_PERSON'));
+    }
+
+    static function throwExceptionAboutControl()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_PERSON'));
+    }
+
+    static function throwExceptionAboutIndex()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_PERSON'));
+    }
+
+    static function throwExceptionAboutView()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_PERSON'));
+    }
+
 
     public function getVisibility():string
     {

@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\PerformedAction;
 use Yii;
 use common\models\Person;
 use common\models\PersonQuery;
@@ -41,7 +42,9 @@ final class PersonController extends Controller
      */
     public function actionIndex()
     {
-        Person::canUserIndexThem();
+        if(!Person::canUserIndexThem()) {
+            Person::throwExceptionAboutIndex();
+        }
 
         $searchModel = new PersonQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -61,7 +64,9 @@ final class PersonController extends Controller
     {
         $model = $this->findModel($id);
 
-        $model->canUserViewYou();
+        if(!$model->canUserViewYou()) {
+            Person::throwExceptionAboutView();
+        }
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
