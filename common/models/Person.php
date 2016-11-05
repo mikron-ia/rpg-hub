@@ -126,7 +126,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
     /**
      * @return string[]
      */
-    static public function visibilityNames()
+    static public function visibilityNames():array
     {
         return [
             self::VISIBILITY_NONE => Yii::t('app', 'PERSON_VISIBILITY_NONE'),
@@ -136,7 +136,10 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
         ];
     }
 
-    public function allowedVisibilities()
+    /**
+     * @return string[]
+     */
+    public function allowedVisibilities():array
     {
         return array_keys(self::visibilityNames());
     }
@@ -144,7 +147,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
     /**
      * @return ActiveQuery
      */
-    public function getEpic()
+    public function getEpic():ActiveQuery
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
@@ -152,19 +155,19 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
     /**
      * @return ActiveQuery
      */
-    public function getCharacter()
+    public function getCharacter():ActiveQuery
     {
         return $this->hasOne(Character::className(), ['character_id' => 'character_id']);
     }
 
-    public function getDescriptionPack()
+    /**
+     * @return ActiveQuery
+     */
+    public function getDescriptionPack():ActiveQuery
     {
         return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getSimpleDataForApi()
     {
         return [
@@ -175,9 +178,6 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompleteDataForApi()
     {
         $decodedData = json_decode($this->data, true);
@@ -216,6 +216,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
     }
 
     /**
+     * Creates person record for character
      * @param Character $character
      * @return null|Person
      */
@@ -226,7 +227,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
         $person->name = $character->name;
         $person->character_id = $character->character_id;
         $person->tagline = '?';
-        $person->visibility = Visibility::VISIBILITY_NONE;
+        $person->visibility = Visibility::VISIBILITY_GM;
 
         if ($person->save()) {
             $person->refresh();
