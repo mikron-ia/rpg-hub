@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\HasVisibility;
 use common\models\core\Language;
 use common\models\core\Visibility;
 use Yii;
@@ -26,7 +27,7 @@ use yii2tech\ar\position\PositionBehavior;
  *
  * @property DescriptionPack $descriptionPack
  */
-class Description extends ActiveRecord implements Displayable
+class Description extends ActiveRecord implements Displayable, HasVisibility
 {
     const TYPE_APPEARANCE = 'appearance';
     const TYPE_HISTORY = 'history';
@@ -193,13 +194,13 @@ class Description extends ActiveRecord implements Displayable
         return $language->getName();
     }
 
-    public function getVisibility()
+    public function getVisibility():string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getName();
     }
 
-    public function getVisibilityLowercase()
+    public function getVisibilityLowercase():string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();

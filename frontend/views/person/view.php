@@ -1,6 +1,5 @@
 <?php
 
-use common\models\core\Language;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 

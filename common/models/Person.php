@@ -5,6 +5,7 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
+use common\models\core\HasVisibility;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
@@ -28,7 +29,7 @@ use yii\db\ActiveRecord;
  * @property Character $character
  * @property DescriptionPack $descriptionPack
  */
-class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl
+class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasVisibility
 {
     use ToolsForEntity;
 
@@ -267,5 +268,17 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
     public function canUserViewYou()
     {
         return self::canUserViewInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_VIEW_PERSON'));
+    }
+
+    public function getVisibility():string
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getName();
+    }
+
+    public function getVisibilityLowercase():string
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getNameLowercase();
     }
 }

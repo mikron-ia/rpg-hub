@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\Visibility;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -33,12 +34,10 @@ final class PersonQuery extends Person
 
     /**
      * Creates data provider instance with search query applied
-     *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params):ActiveDataProvider
     {
         $query = Person::find();
 
@@ -50,6 +49,7 @@ final class PersonQuery extends Person
         } else {
             $query->andWhere([
                 'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+                'visibility' => [Visibility::VISIBILITY_FULL, Visibility::VISIBILITY_LOGGED],
             ]);
         }
 
