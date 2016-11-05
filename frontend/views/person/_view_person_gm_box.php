@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Person */
 ?>
 
-<div class="col-md-12">
+<div class="col-md-6">
     <?php if ($model->canUserControlYou()) {
         echo DetailView::widget([
             'model' => $model,
@@ -15,6 +15,9 @@ use yii\widgets\DetailView;
                     'attribute' => 'visibility',
                     'value' => $model->getVisibilityName(),
                 ],
+                [
+                    'attribute' => 'tagline',
+                ]
             ],
         ]);
     } ?>

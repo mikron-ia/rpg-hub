@@ -34,17 +34,11 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     const TYPE_PERSONALITY = 'personality';
     const TYPE_WHO = 'who';
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'description';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -78,9 +72,6 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -245,9 +236,6 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function isVisibleInApi()
     {
         return ($this->visibility === Visibility::VISIBILITY_FULL);

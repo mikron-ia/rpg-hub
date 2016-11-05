@@ -28,8 +28,6 @@
             },
         ]) ?>
 
-        <div class="clearfix"></div>
-
     </div>
 <?php else: ?>
     <p><?= Yii::t('app', 'DESCRIPTIONS_NOT_FOUND'); ?></p>

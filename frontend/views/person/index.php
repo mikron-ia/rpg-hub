@@ -40,6 +40,7 @@ if(isset(Yii::$app->request->queryParams['PersonQuery'])) {
 }
 
 ?>
+
 <div class="person-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
