@@ -67,7 +67,7 @@ trait ToolsForEntity
      */
     static public function canUserViewInEpic($epic, $message):bool
     {
-        if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
+        if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
         } else {
             throw new HttpException(401, $message);
