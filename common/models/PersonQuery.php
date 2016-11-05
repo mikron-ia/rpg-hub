@@ -47,10 +47,23 @@ final class PersonQuery extends Person
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
             $query->where('0=1');
         } else {
-            $query->andWhere([
-                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-                'visibility' => [Visibility::VISIBILITY_FULL, Visibility::VISIBILITY_LOGGED],
-            ]);
+            $visibilityVector = [Visibility::VISIBILITY_FULL, Visibility::VISIBILITY_LOGGED];
+
+            if (Participant::participantHasRole(
+                Yii::$app->user->identity,
+                Yii::$app->params['activeEpic'],
+                ParticipantRole::ROLE_GM
+            )
+            ) {
+                $visibilityVector[] = Visibility::VISIBILITY_GM;
+            }
+
+            {
+                $query->andWhere([
+                    'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+                    'visibility' => $visibilityVector,
+                ]);
+            }
         }
 
         $dataProvider = new ActiveDataProvider([
