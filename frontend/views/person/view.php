@@ -14,7 +14,7 @@ $this->params['showPrivates'] = $model->canUserControlYou();
 $items = [
     [
         'label' => Yii::t('app', 'PERSON_DESCRIPTIONS_TAB'),
-        'content' => $this->render('_view_descriptions_widget', ['model' => $model]),
+        'content' => $this->render('_view_descriptions', ['model' => $model]),
         'encode' => false,
         'active' => true,
     ],
@@ -23,7 +23,7 @@ $items = [
 if ($this->params['showPrivates']) {
     $items[] = [
         'label' => Yii::t('app', 'PERSON_GM_TAB'),
-        'content' => $this->render('_view_person_gm_box', ['model' => $model]),
+        'content' => $this->render('_view_gm', ['model' => $model]),
         'encode' => false,
         'active' => false,
     ];
