@@ -178,28 +178,47 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
         return array_keys($this->getPeopleAvailableToThisCharacterAsDropDownList());
     }
 
-    static public function canUserIndexThem()
+    static public function canUserIndexThem():bool
     {
-        return self::canUserIndexInEpic(Yii::$app->params['activeEpic'], Yii::t('app', 'NO_RIGHTS_TO_LIST_CHARACTER'));
+        return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem()
+    static public function canUserCreateThem():bool
     {
-        return self::canUserCreateInEpic(Yii::$app->params['activeEpic'],
-            Yii::t('app', 'NO_RIGHTS_TO_CREATE_CHARACTER'));
+        return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
-    public function canUserControlYou()
+    public function canUserControlYou():bool
     {
-        return self::canUserControlInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_CONTROL_CHARACTER'));
+        return self::canUserControlInEpic($this->epic);
     }
 
     /**
      * {@inheritDoc}
      * @todo Add control on player level for front-end use
      */
-    public function canUserViewYou()
+    public function canUserViewYou():bool
     {
-        return self::canUserViewInEpic($this->epic, Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
+        return self::canUserViewInEpic($this->epic);
+    }
+
+    static function throwExceptionAboutCreate()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_CHARACTER'));
+    }
+
+    static function throwExceptionAboutControl()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_CHARACTER'));
+    }
+
+    static function throwExceptionAboutIndex()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_CHARACTER'));
+    }
+
+    static function throwExceptionAboutView()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
     }
 }

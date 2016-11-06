@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\Visibility;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -33,12 +34,10 @@ final class PersonQuery extends Person
 
     /**
      * Creates data provider instance with search query applied
-     *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params):ActiveDataProvider
     {
         $query = Person::find();
 
@@ -48,14 +47,29 @@ final class PersonQuery extends Person
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
             $query->where('0=1');
         } else {
-            $query->andWhere([
-                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-            ]);
+            $visibilityVector = [Visibility::VISIBILITY_FULL, Visibility::VISIBILITY_LOGGED];
+
+            if (Participant::participantHasRole(
+                Yii::$app->user->identity,
+                Yii::$app->params['activeEpic'],
+                ParticipantRole::ROLE_GM
+            )
+            ) {
+                $visibilityVector[] = Visibility::VISIBILITY_GM;
+                $visibilityVector[] = Visibility::VISIBILITY_DESIGNATED;
+            }
+
+            {
+                $query->andWhere([
+                    'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+                    'visibility' => $visibilityVector,
+                ]);
+            }
         }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => ['pageSize' => 16],
+            'pagination' => ['pageSize' => 24],
         ]);
 
         $this->load($params);

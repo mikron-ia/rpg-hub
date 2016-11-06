@@ -9,7 +9,7 @@ body {
     }
 }
 
-@media (min-width: 1900px) {
+@media (min-width: 1920px) {
     .container {
         width: 1870px;
     }

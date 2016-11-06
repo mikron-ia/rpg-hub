@@ -30,62 +30,62 @@ trait ToolsForEntity
 
     /**
      * @param $epic
-     * @param $message
      * @return bool
      * @throws HttpException
      */
-    static public function canUserCreateInEpic($epic, $message):bool
+    static public function canUserCreateInEpic($epic):bool
     {
         /* Use of control* right is intentional; there is no need to separate creation from control at this level */
         if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
         } else {
-            throw new HttpException(401, $message);
+            if ($disableThrow) {
+                return false;
+            } else {
+                throw new HttpException(401, $message);
+            }
         }
     }
 
     /**
      * @param Epic $epic
-     * @param string $message
      * @return bool
      * @throws HttpException
      */
-    static public function canUserControlInEpic($epic, $message):bool
+    static public function canUserControlInEpic($epic):bool
     {
         if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
         } else {
-            throw new HttpException(401, $message);
+            return false;
         }
     }
 
     /**
      * @param Epic $epic
-     * @param string $message
      * @return bool
      * @throws HttpException
      */
-    static public function canUserViewInEpic($epic, $message):bool
-    {
-        if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
-            return true;
-        } else {
-            throw new HttpException(401, $message);
-        }
-    }
-
-    /**
-     * @param Epic $epic
-     * @param string $message
-     * @return bool
-     * @throws HttpException
-     */
-    static public function canUserIndexInEpic($epic, $message):bool
+    static public function canUserViewInEpic($epic):bool
     {
         if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
         } else {
-            throw new HttpException(401, $message);
+            return false;
+        }
+    }
+
+    /**
+     * @param Epic $epic
+     * @return bool
+     * @throws HttpException
+     */
+    static public function canUserIndexInEpic($epic):bool
+    {
+        if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -102,5 +102,10 @@ trait ToolsForEntity
         } else {
             return '';
         }
+    }
+
+    static private function thrownExceptionAbout($message)
+    {
+        throw new HttpException(401, $message);
     }
 }

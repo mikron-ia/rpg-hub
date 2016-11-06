@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h3><?= $language->getName(); ?></h3>
                 <?= \yii\widgets\ListView::widget([
                 'dataProvider' => new \yii\data\ActiveDataProvider([
-                    'query' => $model->descriptionPack->getDescriptions()->where(['lang' => $language->language]),
+                    'query' => $model->descriptionPack->getDescriptionsInLanguage($language),
                     'sort' => ['defaultOrder' => ['position' => SORT_ASC]]
                 ]),
                 'itemOptions' => ['class' => 'item'],

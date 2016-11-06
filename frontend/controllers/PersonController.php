@@ -2,19 +2,19 @@
 
 namespace frontend\controllers;
 
-use common\models\StoryQuery;
+use common\models\PerformedAction;
 use Yii;
-use common\models\Story;
-use yii\data\ActiveDataProvider;
+use common\models\Person;
+use common\models\PersonQuery;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StoryController implements the CRUD actions for Story model.
+ * PersonController implements the CRUD actions for Person model.
  */
-class StoryController extends Controller
+final class PersonController extends Controller
 {
     public function behaviors()
     {
@@ -25,33 +25,38 @@ class StoryController extends Controller
                     [
                         'actions' => ['index', 'view'],
                         'allow' => true,
-                        'roles' => ['user'],
+                        'roles' => ['@'],
                     ],
                 ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [],
             ],
         ];
     }
 
     /**
-     * Lists all Story models.
+     * Lists all Person models.
      * @return mixed
      */
     public function actionIndex()
     {
-        if(!Story::canUserIndexThem()) {
-            Story::throwExceptionAboutIndex();
+        if(!Person::canUserIndexThem()) {
+            Person::throwExceptionAboutIndex();
         }
 
-        $searchModel = new StoryQuery();
-        $dataProvider = $searchModel->search([]);
+        $searchModel = new PersonQuery();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Story model.
+     * Displays a single Person model.
      * @param string $id
      * @return mixed
      */
@@ -60,7 +65,7 @@ class StoryController extends Controller
         $model = $this->findModel($id);
 
         if(!$model->canUserViewYou()) {
-            Story::throwExceptionAboutView();
+            Person::throwExceptionAboutView();
         }
 
         if (empty(Yii::$app->params['activeEpic'])) {
@@ -75,18 +80,18 @@ class StoryController extends Controller
     }
 
     /**
-     * Finds the Story model based on its primary key value.
+     * Finds the Person model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Story the loaded model
+     * @return Person the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Story::findOne($id)) !== null) {
+        if (($model = Person::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));
         }
     }
 }

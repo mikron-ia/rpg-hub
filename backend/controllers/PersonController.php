@@ -47,7 +47,9 @@ final class PersonController extends Controller
      */
     public function actionIndex()
     {
-        Person::canUserIndexThem();
+        if(!Person::canUserIndexThem()) {
+            Person::throwExceptionAboutIndex();
+        }
 
         $searchModel = new PersonQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -67,7 +69,9 @@ final class PersonController extends Controller
     {
         $model = $this->findModel($id);
 
-        $model->canUserViewYou();
+        if(!$model->canUserViewYou()) {
+            Person::throwExceptionAboutView();
+        }
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
@@ -87,7 +91,9 @@ final class PersonController extends Controller
      */
     public function actionCreate()
     {
-        Person::canUserCreateThem();
+        if(!Person::canUserCreateThem()) {
+            Person::throwExceptionAboutCreate();
+        }
 
         $model = new Person();
 
@@ -113,7 +119,9 @@ final class PersonController extends Controller
     {
         $model = $this->findModel($id);
 
-        $model->canUserControlYou();
+        if(!$model->canUserControlYou()) {
+            Person::throwExceptionAboutControl();
+        }
 
         $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
 
@@ -137,6 +145,10 @@ final class PersonController extends Controller
     public function actionLoadData($id)
     {
         $model = $this->findModel($id);
+
+        if(!$model->canUserControlYou()) {
+            Person::throwExceptionAboutControl();
+        }
 
         $baseUrl = $model->epic->parameterPack->getParameterValueByCode(Parameter::DATA_SOURCE_FOR_REPUTATION);
 

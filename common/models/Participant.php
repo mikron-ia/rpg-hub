@@ -153,13 +153,38 @@ class Participant extends ActiveRecord
     }
 
     /**
+     * Informs whether a given user is a participant of given epic
      * @param User $user
      * @param Epic $epic
      * @return bool
      */
     static public function participantExists(User $user, Epic $epic):bool
     {
-        if(Participant::findOne(['user_id' => $user->id, 'epic_id' => $epic->epic_id])) {
+        if (Participant::findOne(['user_id' => $user->id, 'epic_id' => $epic->epic_id])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Informs whether a given user has a given role in given epic
+     * @param User $user
+     * @param Epic $epic
+     * @param string $role
+     * @return bool
+     */
+    static public function participantHasRole(User $user, Epic $epic, string $role):bool
+    {
+        $participant = Participant::find()
+            ->joinWith('participantRoles')
+            ->andWhere([
+                'user_id' => $user->id,
+                'epic_id' => $epic->epic_id,
+                'role' => $role
+            ]);
+
+        if ($participant->one()) {
             return true;
         } else {
             return false;

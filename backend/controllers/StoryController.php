@@ -50,7 +50,9 @@ final class StoryController extends Controller
      */
     public function actionIndex()
     {
-        Story::canUserIndexThem();
+        if(!Story::canUserIndexThem()) {
+            Story::throwExceptionAboutIndex();
+        }
 
         $searchModel = new StoryQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -70,7 +72,9 @@ final class StoryController extends Controller
     {
         $model = $this->findModel($id);
 
-        $model->canUserViewYou();
+        if(!$model->canUserViewYou()) {
+            Story::throwExceptionAboutView();
+        }
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
@@ -90,7 +94,9 @@ final class StoryController extends Controller
      */
     public function actionCreate()
     {
-        Story::canUserCreateThem();
+        if(!Story::canUserCreateThem()) {
+            Story::throwExceptionAboutCreate();
+        }
 
         $model = new Story();
 
@@ -113,7 +119,9 @@ final class StoryController extends Controller
     {
         $model = $this->findModel($id);
 
-        $model->canUserControlYou();
+        if(!$model->canUserControlYou()) {
+            Story::throwExceptionAboutControl();
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->story_id]);
@@ -127,7 +135,9 @@ final class StoryController extends Controller
     public function actionMoveUp($id)
     {
         $model = $this->findModel($id);
-        $model->canUserControlYou();
+        if(!$model->canUserControlYou()) {
+            Story::throwExceptionAboutControl();
+        }
         $model->movePrev();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
@@ -141,7 +151,9 @@ final class StoryController extends Controller
     public function actionMoveDown($id)
     {
         $model = $this->findModel($id);
-        $model->canUserControlYou();
+        if(!$model->canUserControlYou()) {
+            Story::throwExceptionAboutControl();
+        }
         $model->moveNext();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
