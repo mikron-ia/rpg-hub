@@ -17,13 +17,19 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'NO_DATA' => 'No data available',
+    'NO_DATA' => 'No data for this object found',
     'PERSON_REPUTATIONS_TAB' => 'Reputations',
+    'PERSON_REPUTATION_EVENTS_TAB' => 'Reputation history',
     'REPUTATION_BALANCE' => 'Current<br>balance',
     'REPUTATION_BALANCE_RANGE' => 'Balance<br>range',
+    'REPUTATION_CHANGE' => 'Change',
     'REPUTATION_DICE' => 'Dice',
+    'REPUTATION_EVENT' => 'Event',
+    'REPUTATION_EVENT_NOTE' => '<b>Warning: </b> This is a temporary solution, intended to display data in their simplest form before a better way to display events can be found and implemented.',
     'REPUTATION_NAME' => 'Name of the reputation',
+    'REPUTATION_NOTES' => 'notes',
     'REPUTATION_RECOGNITION_DICE' => 'Recognition',
     'REPUTATION_RECOGNITION_DICE_TITLE' => 'Number of dice used in recognition attempt rolled by person associated with the reputation',
     'REPUTATION_REPUTATION_DICE_TITLE' => 'Dice available for player and GM use for improving or disrupting social situations',
+    'REPUTATION_WHEN' => 'When?',
 ];

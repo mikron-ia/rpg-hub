@@ -25,6 +25,13 @@ $items = [
         'encode' => false,
         'active' => false,
     ],
+    [
+        'label' => Yii::t('external', 'PERSON_REPUTATION_EVENTS_TAB'),
+        'content' => '<div class="reputation-events"></div>',
+        'headerOptions' => ['class' => 'tab-reputation-events'],
+        'encode' => false,
+        'active' => false,
+    ],
 ];
 
 if ($this->params['showPrivates']) {
@@ -57,6 +64,16 @@ if ($this->params['showPrivates']) {
         }
     ).fail(function() {
         $('.tab-reputation').hide();
+    });"); ?>
+
+    <?= $this->registerJs("$.get(
+        '" . Yii::$app->urlManager->createUrl(['person/external-reputation-event']) . "',
+        {id: " . $model->person_id . "},
+        function (data) {
+            $('.reputation-events').html(data);
+        }
+    ).fail(function() {
+        $('.tab-reputation-events').hide();
     });"); ?>
 
 </div>

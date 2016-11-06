@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\external\Reputation;
+use common\models\external\ReputationEvent;
 use common\models\PerformedAction;
 use Yii;
 use common\models\Person;
@@ -25,7 +26,7 @@ final class PersonController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'external-reputation'],
+                        'actions' => ['index', 'view', 'external-reputation', 'external-reputation-event'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -103,6 +104,35 @@ final class PersonController extends Controller
                     return $this->renderAjax('external/reputation', ['reputations' => $reputation]);
                 } else {
                     return $this->render('external/reputation', ['reputations' => $reputation]);
+                }
+            }
+        }
+
+        throw new HttpException(404, Yii::t('external', 'NO_DATA'));
+    }
+
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws HttpException
+     */
+    public function actionExternalReputationEvent($id)
+    {
+        $model = $this->findModel($id);
+
+        if (!$model->canUserViewYou()) {
+            Person::throwExceptionAboutView();
+        }
+
+        $data = json_decode($model->data, true);
+
+        if (isset($data['reputations'])) {
+            $event = ReputationEvent::createFromArray($data['reputationEvents']);
+            if ($event) {
+                if (Yii::$app->request->isAjax) {
+                    return $this->renderAjax('external/reputation_event', ['events' => $event]);
+                } else {
+                    return $this->render('external/reputation_event', ['events' => $event]);
                 }
             }
         }

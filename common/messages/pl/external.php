@@ -17,13 +17,19 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'NO_DATA' => 'Brak danych',
+    'NO_DATA' => 'Brak danych dla obiektu',
     'PERSON_REPUTATIONS_TAB' => 'Reputacje',
+    'PERSON_REPUTATION_EVENTS_TAB' => 'Historia reputacji',
     'REPUTATION_BALANCE' => 'Wartość<br>bieżąca',
     'REPUTATION_BALANCE_RANGE' => 'Zakres<br>wartości',
+    'REPUTATION_CHANGE' => 'Zmiana',
     'REPUTATION_DICE' => 'Kości',
-    'REPUTATION_NAME' => 'Nazwa reputacji',
+    'REPUTATION_EVENT' => 'Wydarzenie',
+    'REPUTATION_EVENT_NOTE' => '<b>Uwaga:</b> To jest tymczasowe rozwiązanie, służące prezentacji danych w najprostszej możliwej postaci dopóki nie powstanie coś sensowniejszego do obsługi wydarzeń.',
+    'REPUTATION_NAME' => 'Nazwa<br>reputacji',
+    'REPUTATION_NOTES' => 'Notes',
     'REPUTATION_RECOGNITION_DICE' => 'Sława',
     'REPUTATION_RECOGNITION_DICE_TITLE' => 'Liczba kości rzucana przy próbie rozpoznania postaci przez osobę powiązaną z daną Reputacją',
     'REPUTATION_REPUTATION_DICE_TITLE' => 'Kości do użytku gracza i MG do wspierania bądź zakłócania interakcji społecznych',
+    'REPUTATION_WHEN' => 'Kiedy?',
 ];
