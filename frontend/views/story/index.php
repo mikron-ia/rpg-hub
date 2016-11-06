@@ -18,7 +18,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
-            return $this->render('_index_box',['model' => $model]);
+            return $this->render(
+                '_index_box',
+                [
+                    'model' => $model,
+                    'key' => $key,
+                    'index' => $index,
+                    'widget' => $widget,
+                ]
+            );
         },
     ]) ?>
 

@@ -1,7 +1,7 @@
 <?php
 
+use yii\bootstrap\Tabs;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Story */
@@ -9,47 +9,39 @@ use yii\widgets\DetailView;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'STORY_TITLE_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['showPrivates'] = $model->canUserControlYou();
+
+$items = [
+    [
+        'label' => Yii::t('app', 'STORY_SHORT_TAB'),
+        'content' => $this->render('_view_short', ['model' => $model]),
+        'encode' => false,
+        'active' => true,
+    ],
+    [
+        'label' => Yii::t('app', 'STORY_LONG_TAB'),
+        'content' => $this->render('_view_long', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ],
+];
+
+if ($this->params['showPrivates']) {
+    $items[] = [
+        'label' => Yii::t('app', 'PERSON_GM_TAB'),
+        'content' => $this->render('_view_gm', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ];
+}
+
 ?>
 <div class="story-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <div class="col-md-9">
-
-        <?php if ($model->canUserControlYou()) {
-            echo DetailView::widget([
-                'model' => $model,
-                'attributes' => [
-                    'key',
-                ],
-            ]);
-        } ?>
-
-        <div>
-            <h2><?= Yii::t('app', 'STORY_HEADER_SHORT'); ?></h2>
-            <?= $model->getShortFormatted(); ?>
-        </div>
-
-    </div>
-
-    <div class="col-md-3">
-
-        <table class="table table-bordered table-hover">
-            <tbody>
-            <?php foreach ($model->parameterPack->parameters as $storyParameter): ?>
-                <tr title="<?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?>">
-                    <td class="text-left"><strong><?php echo $storyParameter->getCodeName(); ?></strong></td>
-                    <td class="text-center"><?php echo $storyParameter->content; ?></td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-
-    </div>
-
-    <div class="col-md-12">
-        <h2><?= Yii::t('app', 'STORY_HEADER_LONG'); ?></h2>
-        <?= $model->getLongFormatted(); ?>
-    </div>
+    <?= Tabs::widget([
+        'items' => $items
+    ]) ?>
 
 </div>
