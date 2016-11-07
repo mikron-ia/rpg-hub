@@ -1,9 +1,5 @@
 <?php
 
-use common\models\core\Visibility;
-use yii\helpers\Html;
-use yii\helpers\StringHelper;
-
 /** @var $model \common\models\Person */
 /** @var $reputations \common\models\external\Reputation[] */
 ?>
@@ -32,7 +28,7 @@ use yii\helpers\StringHelper;
                     if ($reputation->value['positiveMax'] == $reputation->value['negativeMin']) {
                         echo $reputation->value['negativeMin'];
                     } else {
-                        echo $reputation->value['negativeMin'] - $reputation->value['positiveMax'];
+                        echo $reputation->value['negativeMin'] . ' - ' . $reputation->value['positiveMax'];
                     }
                     ?>
                 </td>
