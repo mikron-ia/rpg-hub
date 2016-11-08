@@ -39,11 +39,7 @@ trait ToolsForEntity
         if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
         } else {
-            if ($disableThrow) {
-                return false;
-            } else {
-                throw new HttpException(401, $message);
-            }
+            return false;
         }
     }
 
