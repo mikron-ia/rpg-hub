@@ -2,7 +2,6 @@
 
 namespace frontend\controllers;
 
-use common\models\PerformedAction;
 use Yii;
 use common\models\Person;
 use common\models\PersonQuery;

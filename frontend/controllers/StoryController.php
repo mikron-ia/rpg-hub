@@ -5,11 +5,9 @@ namespace frontend\controllers;
 use common\models\StoryQuery;
 use Yii;
 use common\models\Story;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * StoryController implements the CRUD actions for Story model.
