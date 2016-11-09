@@ -45,16 +45,6 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         $this->execute('SET foreign_key_checks = 1');
 
         parent::up();
-
-        /**
-         * Loading up data, if available
-         * This is a stopgap measure that should be moved forward to newest migration and removed no later than in 1.0
-         */
-        $scriptName = __DIR__ . '/' . 'data.sql';
-        if (file_exists($scriptName)) {
-            $scriptContent = file_get_contents($scriptName);
-            $this->execute($scriptContent);
-        }
     }
 
     public function down()
@@ -62,19 +52,6 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         parent::down();
 
         $this->execute('SET foreign_key_checks = 0;');
-
-        $this->truncateTable('{{%character}}');
-        $this->truncateTable('{{%description}}');
-        $this->truncateTable('{{%description_pack}}');
-        $this->truncateTable('{{%epic}}');
-        $this->truncateTable('{{%group}}');
-        $this->truncateTable('{{%parameter}}');
-        $this->truncateTable('{{%parameter_pack}}');
-        $this->truncateTable('{{%person}}');
-        $this->truncateTable('{{%recap}}');
-        $this->truncateTable('{{%story}}');
-        $this->truncateTable('{{%story_parameter}}');
-        $this->truncateTable('{{%user}}');
 
         $this->dropTable('{{%participant}}');
         $this->dropTable('{{%participant_role}}');
