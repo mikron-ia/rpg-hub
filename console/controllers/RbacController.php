@@ -20,7 +20,6 @@ class RbacController extends Controller
 {
     /**
      * Initiates all rules. NOTE: this will erase all access rights
-     *
      * Minor technical note: if there is no separate index* right, all view* rights should allow listing,
      * of course not necessarily complete.
      */
@@ -29,6 +28,23 @@ class RbacController extends Controller
         $auth = Yii::$app->authManager;
 
         $auth->removeAll();
+
+        /* Load v0.4.0 and older */
+        $this->actionV040();
+
+        /* Load v0.5.0 */
+        $this->actionV050();
+
+        /* Set up the administrator */
+        $this->actionSetAdministrator();
+    }
+
+    /**
+     * Adds rights from v0.4.0 and earlier
+     */
+    public function actionV040()
+    {
+        $auth = Yii::$app->authManager;
 
         /* Rules */
 
@@ -217,5 +233,13 @@ class RbacController extends Controller
         $auth = Yii::$app->authManager;
         $administrator = $auth->getRole('administrator');
         $auth->assign($administrator, 1);
+    }
+
+    /**
+     * Adds rights from v0.5.0
+     */
+    public function actionV050()
+    {
+        $auth = Yii::$app->authManager;
     }
 }
