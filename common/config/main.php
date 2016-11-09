@@ -26,6 +26,10 @@ return [
                     'class' => \yii\i18n\PhpMessageSource::className(),
                     'basePath' => '@common/messages',
                 ],
+                'external*' => [
+                    'class' => \yii\i18n\PhpMessageSource::className(),
+                    'basePath' => '@common/messages',
+                ],
             ],
         ],
     ],
