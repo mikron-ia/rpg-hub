@@ -8,7 +8,7 @@ class m161109_184132_v0_5_0 extends Migration
     {
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
-        /* external_datas */
+        /* External data tables */
         $this->createTable('{{%external_data_pack}}', [
             'external_data_pack_id' => $this->primaryKey()->unsigned(),
             'class' => $this->string(20)->notNull()->comment("Name of class this pack belongs to; necessary for proper type assignment"),
@@ -40,7 +40,6 @@ class m161109_184132_v0_5_0 extends Migration
 
     public function down()
     {
-
         $this->execute('SET foreign_key_checks = 0;');
 
         $this->truncateTable('{{%character}}');
@@ -58,6 +57,8 @@ class m161109_184132_v0_5_0 extends Migration
         $this->truncateTable('{{%story}}');
         $this->truncateTable('{{%story_parameter}}');
         $this->truncateTable('{{%user}}');
+
+        $this->dropForeignKey('person_ibfk_4', '{{%person}}');
 
         $this->dropColumn('person', 'external_data_pack_id');
 
