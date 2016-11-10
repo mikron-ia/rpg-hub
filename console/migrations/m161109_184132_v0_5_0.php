@@ -12,7 +12,6 @@ class m161109_184132_v0_5_0 extends Migration
         $this->createTable('{{%external_data_pack}}', [
             'external_data_pack_id' => $this->primaryKey()->unsigned(),
             'class' => $this->string(20)->notNull()->comment("Name of class this pack belongs to; necessary for proper type assignment"),
-            'name' => $this->string(80)->notNull(),
         ], $tableOptions);
 
         $this->createTable('{{%external_data}}', [
@@ -24,6 +23,9 @@ class m161109_184132_v0_5_0 extends Migration
         ], $tableOptions);
 
         $this->addColumn('person', 'external_data_pack_id', $this->integer(11)->unsigned());
+
+        $this->addForeignKey('external_data_pack_ibfk_1', '{{%external_data}}', 'external_data_pack_id', '{{%external_data_pack}}', 'external_data_pack_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('person_ibfk_4', '{{%person}}', 'external_data_pack_id', '{{%external_data_pack}}', 'external_data_pack_id', 'RESTRICT', 'CASCADE');
 
         /**
          * Loading up data, if available
