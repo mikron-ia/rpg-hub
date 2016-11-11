@@ -240,6 +240,7 @@ return [
     'PERSON_ID' => 'ID postaci',
     'PERSON_KEY' => 'Klucz',
     'PERSON_NAME' => 'Imię osoby',
+    'PERSON_NOT_AVAILABLE' => 'Postać nie istnieje lub nie masz do niej dostępu.',
     'PERSON_TAGLINE' => 'Notka o osobie',
     'PERSON_VISIBILITY' => 'Widoczność',
     'PERSON_VISIBILITY_FULL' => 'Dla wszystkich',

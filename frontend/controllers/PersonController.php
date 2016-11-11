@@ -2,9 +2,9 @@
 
 namespace frontend\controllers;
 
+use common\models\core\Visibility;
 use common\models\external\Reputation;
 use common\models\external\ReputationEvent;
-use common\models\PerformedAction;
 use Yii;
 use common\models\Person;
 use common\models\PersonQuery;
@@ -151,10 +151,14 @@ final class PersonController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Person::findOne($id)) !== null) {
+        if (($model = Person::findOne([
+                'person_id' => $id,
+                'visibility' => Visibility::determineVisibilityVector(),
+            ])) !== null
+        ) {
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));
+            throw new NotFoundHttpException(Yii::t('app', 'PERSON_NOT_AVAILABLE'));
         }
     }
 }

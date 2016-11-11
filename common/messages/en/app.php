@@ -240,6 +240,7 @@ return [
     'PERSON_ID' => 'Person ID',
     'PERSON_KEY' => 'Key',
     'PERSON_NAME' => 'Person name',
+    'PERSON_NOT_AVAILABLE' => 'Person does not exist or you have not right to access it.',
     'PERSON_TAGLINE' => 'Person tagline',
     'PERSON_VISIBILITY' => 'Visibility',
     'PERSON_VISIBILITY_FULL' => 'To all',
