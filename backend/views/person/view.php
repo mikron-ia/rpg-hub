@@ -1,11 +1,13 @@
 <?php
 
 use common\models\core\Language;
+use common\models\ExternalData;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Person */
+/* @var $externalDataDataProvider yii\data\ActiveDataProvider */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_PEOPLE_INDEX'), 'url' => ['index']];
@@ -19,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p class="subtitle"><?= $model->tagline; ?></p>
 
-    <div class="col-md-12">
+    <div class="col-md-6">
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
@@ -46,25 +48,98 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]) ?>
+
+        <div class="text-center">
+            <?= Html::a(Yii::t('app', 'BUTTON_LOAD'), ['load-data', 'id' => $model->person_id], [
+                'class' => 'btn btn-primary',
+                'data' => [
+                    'confirm' => Yii::t('app', 'CONFIRMATION_LOAD'),
+                    'method' => 'post',
+                ],
+            ]) ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->person_id],
+                ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->person_id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
+                    'method' => 'post',
+                ],
+            ]) ?>
+        </div>
     </div>
 
-    <div class="col-md-12 text-center">
-        <?= Html::a(Yii::t('app', 'BUTTON_LOAD'), ['load-data', 'id' => $model->person_id], [
-            'class' => 'btn btn-primary',
-            'data' => [
-                'confirm' => Yii::t('app', 'CONFIRMATION_LOAD'),
-                'method' => 'post',
+    <div class="col-md-6">
+        <h2 class="text-center"><?= Yii::t('app', 'LABEL_EXTERNAL_DATA'); ?></h2>
+        <?= \yii\grid\GridView::widget([
+            'dataProvider' => $externalDataDataProvider,
+            'layout' => '{items}',
+            'columns' => [
+                [
+                    'attribute' => 'code',
+                    'enableSorting' => false,
+                ],
+                [
+                    'attribute' => 'visibility',
+                    'enableSorting' => false,
+                    'value' => function (ExternalData $model) {
+                        return $model->getVisibility();
+                    },
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{update} {delete}',
+                    'buttons' => [
+                        'update' => function ($url, ExternalData $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
+                                'class' => 'update-external-data-link',
+                                'title' => Yii::t('app', 'LABEL_UPDATE'),
+                                'data-toggle' => 'modal',
+                                'data-target' => '#update-external-data-modal',
+                                'data-id' => $key,
+                            ]);
+                        },
+                        'delete' => function ($url, ExternalData $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-erase"></span>',
+                                ['external-data/delete', 'id' => $model->external_data_id],
+                                [
+                                    'title' => Yii::t('app', 'LABEL_DELETE'),
+                                    'data-confirm' => Yii::t(
+                                        'app',
+                                        'CONFIRMATION_DELETE {name}',
+                                        ['name' => $model->code]
+                                    ),
+                                    'data-method' => 'post',
+                                ]);
+                        }
+                    ]
+                ],
             ],
-        ]) ?>
-        <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->person_id],
-            ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->person_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
-                'method' => 'post',
-            ],
-        ]) ?>
+        ]); ?>
+
+        <?php \yii\bootstrap\Modal::begin([
+            'id' => 'update-external-data-modal',
+            'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_UPDATE') . '</h2>',
+        ]); ?>
+
+        <?php \yii\bootstrap\Modal::end(); ?>
+
+        <?php $this->registerJs(
+            "$('.update-external-data-link').click(function() {
+    $.get(
+        '" . Yii::$app->urlManager->createUrl(['external-data/update']) . "',
+        {
+            id: $(this).closest('tr').data('key')
+        },
+        function (data) {
+            $('.modal-body').html(data);
+            $('#update-parameter-modal').modal();
+        }
+    );
+});"
+        );
+        ?>
     </div>
 
     <div class="clearfix"></div>

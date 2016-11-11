@@ -4,6 +4,8 @@ namespace common\models;
 
 use common\models\core\Visibility;
 use Yii;
+use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -50,6 +52,21 @@ class ExternalDataPack extends ActiveRecord
         $pack->refresh();
 
         return $pack;
+    }
+
+    /**
+     * @return ActiveDataProvider
+     */
+    public function getExternalDataAll():ActiveDataProvider
+    {
+        $objectsQuery = ExternalData::find();
+
+        $objectsQuery->where([
+            'external_data_pack_id' => $this->external_data_pack_id,
+            'visibility' => Visibility::determineVisibilityVector(),
+        ]);
+
+        return new ActiveDataProvider(['query' => $objectsQuery]);
     }
 
     /**

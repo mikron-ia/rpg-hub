@@ -62,9 +62,14 @@ final class PersonController extends Controller
      * Displays a single Person model.
      * @param string $id
      * @return mixed
+     * @throws HttpException
      */
     public function actionView($id)
     {
+        if (empty(Yii::$app->params['activeEpic'])) {
+            throw new HttpException(412, strip_tags(Yii::t('app', 'ERROR_NO_EPIC_ACTIVE')));
+        }
+
         $model = $this->findModel($id);
 
         if (!$model->canUserViewYou()) {

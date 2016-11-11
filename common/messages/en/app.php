@@ -149,6 +149,7 @@ return [
     'LABEL_DELETE' => 'Delete',
     'LABEL_DESCRIPTIONS' => 'Descriptions',
     'LABEL_EPIC' => 'Epic',
+    'LABEL_EXTERNAL_DATA' => 'External data',
     'LABEL_GM' => 'GM',
     'LABEL_LANGUAGE' => 'Language',
     'LABEL_PASSWORD_NEW' => 'New password',

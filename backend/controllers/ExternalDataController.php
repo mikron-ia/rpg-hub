@@ -25,7 +25,7 @@ class ExternalDataController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['delete', 'index', 'view'],
+                        'actions' => ['delete', 'index', 'update', 'view'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -68,6 +68,32 @@ class ExternalDataController extends Controller
     }
 
     /**
+     * Updates an existing ExternalData model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $referrer = Yii::$app->getRequest()->getReferrer();
+            if ($referrer) {
+                return Yii::$app->getResponse()->redirect($referrer);
+            } else {
+                return $this->redirect(['index']);
+            }
+        } else {
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('update', ['model' => $model]);
+            } else {
+                return $this->render('update', ['model' => $model]);
+            }
+        }
+    }
+
+    /**
      * Deletes an existing ExternalData model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
@@ -77,7 +103,12 @@ class ExternalDataController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
     }
 
     /**

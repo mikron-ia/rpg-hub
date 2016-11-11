@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Description */
 ?>
 
-<div class="col-lg-6">
+<div class="col-md-6">
 
     <div class="buttoned-header">
         <h3><?= $model->position; ?>. <?= $model->getTypeName(); ?></h3>

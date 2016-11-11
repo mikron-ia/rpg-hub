@@ -30,10 +30,6 @@ class ExternalData extends ActiveRecord
     public function rules()
     {
         return [
-            [['external_data_pack_id'], 'integer'],
-            [['code', 'data'], 'required'],
-            [['data'], 'string'],
-            [['code'], 'string', 'max' => 40],
             [['visibility'], 'string', 'max' => 20],
         ];
     }

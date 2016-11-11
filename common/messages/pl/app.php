@@ -149,6 +149,7 @@ return [
     'LABEL_DELETE' => 'Usuń',
     'LABEL_DESCRIPTIONS' => 'Opisy',
     'LABEL_EPIC' => 'Kampania',
+    'LABEL_EXTERNAL_DATA' => 'Dane zewnętrzne',
     'LABEL_GM' => 'Mistrz Gry',
     'LABEL_LANGUAGE' => 'Język',
     'LABEL_PASSWORD_NEW' => 'Nowe hasło',

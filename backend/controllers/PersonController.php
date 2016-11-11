@@ -12,6 +12,7 @@ use common\models\PersonQuery;
 use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -65,23 +66,33 @@ final class PersonController extends Controller
      * Displays a single Person model.
      * @param string $id
      * @return mixed
+     * @throws HttpException
      */
     public function actionView($id)
     {
         $model = $this->findModel($id);
 
+        if (empty(Yii::$app->params['activeEpic'])) {
+            throw new HttpException(412, strip_tags(Yii::t('app', 'ERROR_NO_EPIC_ACTIVE')));
+        }
+
         if (!$model->canUserViewYou()) {
             Person::throwExceptionAboutView();
         }
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+        if (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
+        }
+
+        if($model->external_data_pack_id) {
+            $externalDataDataProvider = $model->externalDataPack->getExternalDataAll();
+        } else {
+            $externalDataDataProvider = null;
         }
 
         return $this->render('view', [
             'model' => $model,
+            'externalDataDataProvider' => $externalDataDataProvider,
         ]);
     }
 
