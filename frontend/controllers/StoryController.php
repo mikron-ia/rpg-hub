@@ -84,7 +84,7 @@ class StoryController extends Controller
         if (($model = Story::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));
         }
     }
 }

@@ -4,7 +4,7 @@
 /* @var $showPrivates bool */
 ?>
 
-<div class="col-lg-6">
+<div class="col-md-6">
 
     <h4><?= $model->getTypeName(); ?></h4>
 
