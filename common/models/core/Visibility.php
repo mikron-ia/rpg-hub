@@ -2,6 +2,8 @@
 
 namespace common\models\core;
 
+use common\models\Participant;
+use common\models\ParticipantRole;
 use Yii;
 
 /**
@@ -74,5 +76,31 @@ final class Visibility
     {
         $names = self::visibilityNamesLowercase();
         return isset($names[$this->visibility]) ? $names[$this->visibility] : null;
+    }
+
+    /**
+     * Determines range of accessible objects for the user
+     * @return string[]
+     */
+    static public function determineVisibilityVector():array
+    {
+        if (empty(Yii::$app->params['activeEpic']) || Yii::$app->user->isGuest) {
+            /* No epic and no user makes bad business */
+            $visibilityVector = [];
+        } else {
+            $visibilityVector = [Visibility::VISIBILITY_FULL, Visibility::VISIBILITY_LOGGED];
+
+            if (Participant::participantHasRole(
+                Yii::$app->user->identity,
+                Yii::$app->params['activeEpic'],
+                ParticipantRole::ROLE_GM
+            )
+            ) {
+                $visibilityVector[] = Visibility::VISIBILITY_GM;
+                $visibilityVector[] = Visibility::VISIBILITY_DESIGNATED;
+            }
+        }
+
+        return $visibilityVector;
     }
 }

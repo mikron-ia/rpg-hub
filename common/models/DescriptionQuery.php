@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\core\Language;
+use common\models\core\Visibility;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -101,6 +102,7 @@ final class DescriptionQuery extends Description
         $query->andWhere([
             'description_pack_id' => $description_pack_id,
             'lang' => $language->language,
+            'visibility' => Visibility::determineVisibilityVector(),
         ]);
 
         return $query;
