@@ -2,16 +2,15 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use common\models\Parameter;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\ParameterQuery */
+/* @var $searchModel common\models\ExternalDataQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'PARAMETER_TITLE_INDEX');
+$this->title = Yii::t('app', 'EXTERNAL_DATA_INDEX_TITLE');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="parameter-index">
+<div class="external-data-index">
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
@@ -26,24 +25,18 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
-            'filterPosition' => null,
             'columns' => [
-                'parameterPack.class',
-                [
-                    'attribute' => 'code',
-                    'value' => function (Parameter $model) {
-                        return $model->getTypeName();
-                    }
-                ],
+                'externalDataPack.class',
+                'code',
                 [
                     'attribute' => 'visibility',
-                    'value' => function (Parameter $model) {
+                    'value' => function (\common\models\ExternalData $model) {
                         return $model->getVisibility();
                     }
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{update}'
+                    'template' => '{view}',
                 ],
             ],
         ]); ?>
@@ -52,4 +45,5 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-3" id="filter">
         <?= $this->render('_search', ['model' => $searchModel]); ?>
     </div>
+
 </div>

@@ -40,6 +40,7 @@ AppAsset::register($this);
         ['label' => Yii::t('app', 'BUTTON_EPIC_LIST'), 'url' => ['/epic/index']],
         ['label' => Yii::t('app', 'BUTTON_DESCRIPTION_LIST'), 'url' => ['/description/index']],
         ['label' => Yii::t('app', 'BUTTON_PARAMETER_LIST'), 'url' => ['/parameter/index']],
+        ['label' => Yii::t('app', 'BUTTON_EXTERNAL_DATA_LIST'), 'url' => ['/external-data/index']],
     ];
 
     if (Yii::$app->user->can('listPerformedActions')) {
