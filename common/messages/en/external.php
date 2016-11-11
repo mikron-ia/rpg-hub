@@ -17,6 +17,16 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'EXTERNAL_DATA_CODE' => 'Identification code',
+    'EXTERNAL_DATA_DATA' => 'Data',
+    'EXTERNAL_DATA_ID' => 'ID',
+    'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Loading operation failed - JSON issue',
+    'EXTERNAL_DATA_LOAD_ERROR_PARTITION {errors}' => 'Loading operation partially failed - unable to partition data. Problems found in {errors} packs.',
+    'EXTERNAL_DATA_LOAD_ERROR_SAVE' => 'Loading operation failed - save failed',
+    'EXTERNAL_DATA_LOAD_SUCCESS' => 'Loading operation successful',
+    'EXTERNAL_DATA_MALFORMED_ARRAY' => 'Loading operation failed - malformed array',
+    'EXTERNAL_DATA_PACK_CLASS' => 'Class',
+    'EXTERNAL_DATA_PACK_ID' => 'Pack ID',
     'NO_DATA' => 'No data for this object found',
     'PERSON_REPUTATIONS_TAB' => 'Reputations',
     'PERSON_REPUTATION_EVENTS_TAB' => 'Reputation history',

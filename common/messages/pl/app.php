@@ -121,6 +121,7 @@ return [
     'EXTERNAL_DATA_LOAD_MISSING_ADDRESS' => 'URI do pobierania danych nie został wprowadzony',
     'EXTERNAL_DATA_LOAD_MISSING_MODEL_KEY' => 'URI do pobierania danych nie zawiera sekwencji {modelKey}',
     'EXTERNAL_DATA_LOAD_SUCCESS' => 'Ładowanie zewnętrznych danych udane',
+    'EXTERNAL_DATA_PACK' => '',
     'FRONTPAGE_IC' => 'Sekcja IC',
     'FRONTPAGE_IC_TITLE_TEXT' => 'Rzeczy dziejące się w ramach kampanii',
     'FRONTPAGE_NEWS' => 'Wieści',

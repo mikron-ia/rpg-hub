@@ -17,6 +17,16 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'EXTERNAL_DATA_CODE' => 'Kod identyfikacyjny',
+    'EXTERNAL_DATA_DATA' => 'Dane',
+    'EXTERNAL_DATA_ID' => 'ID',
+    'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Ładowanie zewnętrznych danych nieudane - błąd JSON-a',
+    'EXTERNAL_DATA_LOAD_ERROR_PARTITION {errors}' => 'Ładowanie zewnętrznych danych częściowo nieudane - błędy w pakietach: {errors}',
+    'EXTERNAL_DATA_LOAD_ERROR_SAVE' => 'Ładowanie zewnętrznych danych nieudane - błąd zapisu',
+    'EXTERNAL_DATA_LOAD_SUCCESS' => 'Ładowanie zewnętrznych danych udane',
+    'EXTERNAL_DATA_MALFORMED_ARRAY' => 'Ładowanie zewnętrznych danych nieudane - wadliwy format tablicy',
+    'EXTERNAL_DATA_PACK_CLASS' => 'Klasa',
+    'EXTERNAL_DATA_PACK_ID' => 'ID pakietu',
     'NO_DATA' => 'Brak danych dla obiektu',
     'PERSON_REPUTATIONS_TAB' => 'Reputacje',
     'PERSON_REPUTATION_EVENTS_TAB' => 'Historia reputacji',

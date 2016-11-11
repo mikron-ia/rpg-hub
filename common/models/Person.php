@@ -119,6 +119,11 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
             $this->description_pack_id = $pack->description_pack_id;
         }
 
+        if (empty($this->external_data_pack_id)) {
+            $pack = ExternalDataPack::create('Person');
+            $this->external_data_pack_id = $pack->external_data_pack_id;
+        }
+
         return parent::beforeSave($insert);
     }
 

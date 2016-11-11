@@ -121,6 +121,7 @@ return [
     'EXTERNAL_DATA_LOAD_MISSING_ADDRESS' => 'URI for data retrieval not entered',
     'EXTERNAL_DATA_LOAD_MISSING_MODEL_KEY' => 'URI for data retrieval does not contain {modelKey} placeholder',
     'EXTERNAL_DATA_LOAD_SUCCESS' => 'Loading operation successful',
+    'EXTERNAL_DATA_PACK' => '',
     'FRONTPAGE_IC' => 'In-character section',
     'FRONTPAGE_IC_TITLE_TEXT' => 'Things that happened in-epic / in-character',
     'FRONTPAGE_NEWS' => 'News',

@@ -35,11 +35,11 @@ class ExternalData extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'external_data_id' => Yii::t('app', 'EXTERNAL_DATA_ID'),
-            'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK_ID'),
-            'code' => Yii::t('app', 'EXTERNAL_DATA_CODE'),
+            'external_data_id' => Yii::t('external', 'EXTERNAL_DATA_ID'),
+            'external_data_pack_id' => Yii::t('external', 'EXTERNAL_DATA_PACK_ID'),
+            'code' => Yii::t('external', 'EXTERNAL_DATA_CODE'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
-            'data' => Yii::t('app', 'EXTERNAL_DATA_DATA'),
+            'data' => Yii::t('external', 'EXTERNAL_DATA_DATA'),
         ];
     }
 }

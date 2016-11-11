@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\EpicQuery;
+use common\models\ExternalDataPack;
 use common\models\Parameter;
 use common\models\tools\Retriever;
 use Yii;
@@ -47,7 +48,7 @@ final class PersonController extends Controller
      */
     public function actionIndex()
     {
-        if(!Person::canUserIndexThem()) {
+        if (!Person::canUserIndexThem()) {
             Person::throwExceptionAboutIndex();
         }
 
@@ -69,7 +70,7 @@ final class PersonController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(!$model->canUserViewYou()) {
+        if (!$model->canUserViewYou()) {
             Person::throwExceptionAboutView();
         }
 
@@ -91,7 +92,7 @@ final class PersonController extends Controller
      */
     public function actionCreate()
     {
-        if(!Person::canUserCreateThem()) {
+        if (!Person::canUserCreateThem()) {
             Person::throwExceptionAboutCreate();
         }
 
@@ -119,7 +120,7 @@ final class PersonController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(!$model->canUserControlYou()) {
+        if (!$model->canUserControlYou()) {
             Person::throwExceptionAboutControl();
         }
 
@@ -146,7 +147,7 @@ final class PersonController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(!$model->canUserControlYou()) {
+        if (!$model->canUserControlYou()) {
             Person::throwExceptionAboutControl();
         }
 
@@ -167,13 +168,33 @@ final class PersonController extends Controller
                 $data = $retriever->getDataAsArray();
 
                 if (!isset($data['content'])) {
-                    throw new Exception('EXTERNAL_DATA_MALFORMED_ARRAY');
+                    throw new Exception(Yii::t('external', 'EXTERNAL_DATA_MALFORMED_ARRAY'));
                 }
 
+                /* Save external data to `data` field as data blob */
                 $model->data = json_encode($data['content']);
 
                 if ($model->save()) {
-                    Yii::$app->session->setFlash('success', Yii::t('app', 'EXTERNAL_DATA_LOAD_SUCCESS'));
+
+                    $loadingErrors = [];
+
+                    /* Save external data to separate containers */
+                    foreach ($data['content'] as $key => $dataRow) {
+                        $result = $model->externalDataPack->saveExternalData($key, $dataRow);
+                        if (!$result) {
+                            $loadingErrors[] = $key;
+                        }
+                    }
+
+                    if ($loadingErrors) {
+                        Yii::$app->session->setFlash('error', Yii::t(
+                            'external',
+                            'EXTERNAL_DATA_LOAD_ERROR_PARTITION {errors}',
+                            ['errors' => implode(', ', $loadingErrors)]
+                        ));
+                    } else {
+                        Yii::$app->session->setFlash('success', Yii::t('external', 'EXTERNAL_DATA_LOAD_SUCCESS'));
+                    }
                 } else {
                     $errors = [];
 
@@ -182,14 +203,14 @@ final class PersonController extends Controller
                     }
 
                     Yii::$app->session->setFlash(
-                        'error', Yii::t('app', 'EXTERNAL_DATA_LOAD_ERROR_SAVE') . ': ' . implode(', ', $errors)
+                        'error', Yii::t('external', 'EXTERNAL_DATA_LOAD_ERROR_SAVE') . ': ' . implode(', ', $errors)
                     );
                 }
 
             } catch (Exception $e) {
                 Yii::$app->session->setFlash(
                     'error',
-                    Yii::t('app', 'EXTERNAL_DATA_LOAD_ERROR_JSON') . ': ' . $e->getMessage()
+                    Yii::t('external', 'EXTERNAL_DATA_LOAD_ERROR_JSON') . ': ' . $e->getMessage()
                 );
             }
         }
