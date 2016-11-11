@@ -24,10 +24,12 @@ use yii\db\ActiveRecord;
  * @property string $visibility
  * @property string $character_id
  * @property string $description_pack_id
+ * @property string $external_data_pack_id
  *
  * @property Epic $epic
  * @property Character $character
  * @property DescriptionPack $descriptionPack
+ * @property ExternalDataPack $externalDataPack
  */
 class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasVisibility
 {
@@ -73,6 +75,13 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
                 'targetAttribute' => ['description_pack_id' => 'description_pack_id']
             ],
             [
+                ['external_data_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => ExternalDataPack::className(),
+                'targetAttribute' => ['external_data_pack_id' => 'external_data_pack_id']
+            ],
+            [
                 ['visibility'],
                 'in',
                 'range' => function () {
@@ -94,6 +103,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
             'visibility' => Yii::t('app', 'PERSON_VISIBILITY'),
             'character_id' => Yii::t('app', 'LABEL_CHARACTER'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
+            'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
         ];
     }
 
@@ -166,6 +176,14 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
     public function getDescriptionPack():ActiveQuery
     {
         return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getExternalDataPack()
+    {
+        return $this->hasOne(ExternalDataPack::className(), ['external_data_pack_id' => 'external_data_pack_id']);
     }
 
     public function getSimpleDataForApi()
@@ -290,7 +308,6 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_PERSON'));
     }
-
 
     public function getVisibility():string
     {
