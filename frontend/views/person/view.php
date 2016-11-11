@@ -21,14 +21,14 @@ $items = [
     [
         'label' => Yii::t('external', 'PERSON_REPUTATIONS_TAB'),
         'content' => '<div class="reputations"></div>',
-        'headerOptions' => ['class' => 'tab-reputation'],
+        'headerOptions' => ['class' => 'tab-reputation hidden'],
         'encode' => false,
         'active' => false,
     ],
     [
         'label' => Yii::t('external', 'PERSON_REPUTATION_EVENTS_TAB'),
         'content' => '<div class="reputation-events"></div>',
-        'headerOptions' => ['class' => 'tab-reputation-events'],
+        'headerOptions' => ['class' => 'tab-reputation-events hidden'],
         'encode' => false,
         'active' => false,
     ],
@@ -62,8 +62,8 @@ if ($this->params['showPrivates']) {
         function (data) {
             $('.reputations').html(data);
         }
-    ).fail(function() {
-        $('.tab-reputation').hide();
+    ).success(function() {
+        $('.tab-reputation').removeClass('hidden');
     });"); ?>
 
     <?= $this->registerJs("$.get(
@@ -72,8 +72,8 @@ if ($this->params['showPrivates']) {
         function (data) {
             $('.reputation-events').html(data);
         }
-    ).fail(function() {
-        $('.tab-reputation-events').hide();
+    ).success(function() {
+        $('.tab-reputation-events').removeClass('hidden');
     });"); ?>
 
 </div>

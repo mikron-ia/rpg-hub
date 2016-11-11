@@ -51,6 +51,6 @@ class ReputationEvent extends Model
             $objects[] = new ReputationEvent($object);
         }
 
-        return $objects;
+        return array_reverse($objects, true);
     }
 }

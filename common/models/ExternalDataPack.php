@@ -9,6 +9,8 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "external_data_pack".
  *
+ * External data are information pulled from external sources as JSON, with known, but not well-represented structure, intended for simple display only
+ *
  * @property string $external_data_pack_id
  * @property string $class
  */
@@ -51,15 +53,22 @@ class ExternalDataPack extends ActiveRecord
     }
 
     /**
+     * Provides content of the desired ExternalData object in a form of an array
      * @param string $code
-     * @return ExternalData
+     * @return array
      */
-    public function getExternalDataByCode(string $code)
+    public function getExternalDataByCode(string $code):array
     {
-        return ExternalData::findOne([
+        $object = ExternalData::findOne([
             'external_data_pack_id' => $this->external_data_pack_id,
             'code' => $code
         ]);
+
+        if ($object) {
+            return json_decode($object->data, true);
+        } else {
+            return [];
+        }
     }
 
     /**

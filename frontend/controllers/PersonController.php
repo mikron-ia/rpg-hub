@@ -95,15 +95,16 @@ final class PersonController extends Controller
             Person::throwExceptionAboutView();
         }
 
-        $data = json_decode($model->data, true);
-
-        if (isset($data['reputations'])) {
-            $reputation = Reputation::createFromArray($data['reputations']);
-            if ($reputation) {
-                if (Yii::$app->request->isAjax) {
-                    return $this->renderAjax('external/reputation', ['reputations' => $reputation]);
-                } else {
-                    return $this->render('external/reputation', ['reputations' => $reputation]);
+        if ($model->external_data_pack_id) {
+            $data = $model->externalDataPack->getExternalDataByCode('reputations');
+            if (isset($data)) {
+                $reputation = Reputation::createFromArray($data);
+                if ($reputation) {
+                    if (Yii::$app->request->isAjax) {
+                        return $this->renderAjax('external/reputation', ['reputations' => $reputation]);
+                    } else {
+                        return $this->render('external/reputation', ['reputations' => $reputation]);
+                    }
                 }
             }
         }
@@ -124,15 +125,16 @@ final class PersonController extends Controller
             Person::throwExceptionAboutView();
         }
 
-        $data = json_decode($model->data, true);
-
-        if (isset($data['reputations'])) {
-            $event = ReputationEvent::createFromArray($data['reputationEvents']);
-            if ($event) {
-                if (Yii::$app->request->isAjax) {
-                    return $this->renderAjax('external/reputation_event', ['events' => $event]);
-                } else {
-                    return $this->render('external/reputation_event', ['events' => $event]);
+        if ($model->external_data_pack_id) {
+            $data = $model->externalDataPack->getExternalDataByCode('reputationEvents');
+            if (isset($data)) {
+                $event = ReputationEvent::createFromArray($data);
+                if ($event) {
+                    if (Yii::$app->request->isAjax) {
+                        return $this->renderAjax('external/reputation_event', ['events' => $event]);
+                    } else {
+                        return $this->render('external/reputation_event', ['events' => $event]);
+                    }
                 }
             }
         }

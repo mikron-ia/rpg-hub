@@ -8,6 +8,8 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "external_data".
  *
+ * External data are information pulled from external sources as JSON, with known, but not well-represented structure, intended for simple display only
+ *
  * @property string $external_data_id
  * @property string $external_data_pack_id
  * @property string $code
