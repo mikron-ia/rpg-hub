@@ -2,9 +2,11 @@
 
 namespace common\models;
 
+use common\models\core\Language;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 
 /**
  * DescriptionQuery represents the model behind the search form about `common\models\Description`.
@@ -85,5 +87,22 @@ final class DescriptionQuery extends Description
             ]);;
 
         return $dataProvider;
+    }
+
+    /**
+     * @param int $description_pack_id
+     * @param Language $language
+     * @return ActiveQuery
+     */
+    static public function listDescriptionsInLanguage(int $description_pack_id, Language $language):ActiveQuery
+    {
+        $query = Description::find();
+
+        $query->andWhere([
+            'description_pack_id' => $description_pack_id,
+            'lang' => $language->language,
+        ]);
+
+        return $query;
     }
 }

@@ -109,7 +109,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable
      */
     public function getDescriptionsInLanguage(Language $language):ActiveQuery
     {
-        return $this->getDescriptions()->where(['lang' => $language->language]);
+        return DescriptionQuery::listDescriptionsInLanguage($this->description_pack_id, $language);
     }
 
     /**
