@@ -61,7 +61,8 @@ class ExternalDataPack extends ActiveRecord
     {
         $object = ExternalData::findOne([
             'external_data_pack_id' => $this->external_data_pack_id,
-            'code' => $code
+            'code' => $code,
+            'visibility' => Visibility::determineVisibilityVector(),
         ]);
 
         if ($object) {
