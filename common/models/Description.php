@@ -30,8 +30,17 @@ use yii2tech\ar\position\PositionBehavior;
 class Description extends ActiveRecord implements Displayable, HasVisibility
 {
     const TYPE_APPEARANCE = 'appearance';
+    const TYPE_ASPECTS = 'aspects';
+    const TYPE_ATTITUDE = 'attitude';
+    const TYPE_COMMENTARY = 'commentary';
+    const TYPE_DOMAIN = 'domain';
+    const TYPE_FAME = 'fame';
     const TYPE_HISTORY = 'history';
+    const TYPE_INTERACTIONS = 'interactions';
     const TYPE_PERSONALITY = 'personality';
+    const TYPE_RETINUE = 'retinue';
+    const TYPE_RUMOURS = 'rumours';
+    const TYPE_THREADS = 'threads';
     const TYPE_WHO = 'who';
 
     public static function tableName()
@@ -109,8 +118,17 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     {
         return [
             self::TYPE_APPEARANCE => Yii::t('app', 'DESCRIPTION_TYPE_APPEARANCE'),
+            self::TYPE_ASPECTS => Yii::t('app', 'DESCRIPTION_TYPE_ASPECTS'),
+            self::TYPE_ATTITUDE => Yii::t('app', 'DESCRIPTION_TYPE_ATTITUDE'),
+            self::TYPE_COMMENTARY => Yii::t('app', 'DESCRIPTION_TYPE_COMMENTARY'),
+            self::TYPE_DOMAIN => Yii::t('app', 'DESCRIPTION_TYPE_DOMAIN'),
+            self::TYPE_FAME => Yii::t('app', 'DESCRIPTION_TYPE_FAME'),
+            self::TYPE_INTERACTIONS => Yii::t('app', 'DESCRIPTION_TYPE_INTERACTIONS'),
             self::TYPE_HISTORY => Yii::t('app', 'DESCRIPTION_TYPE_HISTORY'),
             self::TYPE_PERSONALITY => Yii::t('app', 'DESCRIPTION_TYPE_PERSONALITY'),
+            self::TYPE_RETINUE => Yii::t('app', 'DESCRIPTION_TYPE_RETINUE'),
+            self::TYPE_RUMOURS => Yii::t('app', 'DESCRIPTION_TYPE_RUMOURS'),
+            self::TYPE_THREADS => Yii::t('app', 'DESCRIPTION_TYPE_THREADS'),
             self::TYPE_WHO => Yii::t('app', 'DESCRIPTION_TYPE_WHO'),
         ];
     }
