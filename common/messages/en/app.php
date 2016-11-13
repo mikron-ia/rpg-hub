@@ -100,6 +100,7 @@ return [
     'DESCRIPTION_TYPE_HISTORY' => 'History',
     'DESCRIPTION_TYPE_INTERACTIONS' => 'Interactions',
     'DESCRIPTION_TYPE_PERSONALITY' => 'Personality',
+    'DESCRIPTION_TYPE_REPUTATION' => 'Reputation',
     'DESCRIPTION_TYPE_RESOURCES' => 'Resources',
     'DESCRIPTION_TYPE_RETINUE' => 'Retinue',
     'DESCRIPTION_TYPE_RUMOURS' => 'Rumours',

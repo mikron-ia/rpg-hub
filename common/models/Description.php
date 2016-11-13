@@ -119,7 +119,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return string[]
      */
-    static public function typeNames()
+    static public function typeNames():array
     {
         return [
             self::TYPE_APPEARANCE => Yii::t('app', 'DESCRIPTION_TYPE_APPEARANCE'),
@@ -146,7 +146,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return string[]
      */
-    public function typeNamesForThisClass()
+    public function typeNamesForThisClass():array
     {
         $typeNamesAll = self::typeNames();
         $typeNamesAccepted = [];
@@ -168,12 +168,12 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         return $typeNamesAccepted;
     }
 
-    static public function typesForCharacter()
+    static public function typesForCharacter():array
     {
         return [self::TYPE_PERSONALITY];
     }
 
-    static public function typesForPerson()
+    static public function typesForPerson():array
     {
         return [self::TYPE_APPEARANCE, self::TYPE_HISTORY, self::TYPE_WHO];
     }
@@ -181,7 +181,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return string[]
      */
-    public function allowedTypes()
+    public function allowedTypes():array
     {
         return array_keys(self::typeNames());
     }
@@ -189,7 +189,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return ActiveQuery
      */
-    public function getDescriptionPack()
+    public function getDescriptionPack():ActiveQuery
     {
         return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
     }

@@ -100,6 +100,7 @@ return [
     'DESCRIPTION_TYPE_HISTORY' => 'Historia',
     'DESCRIPTION_TYPE_INTERACTIONS' => 'Interakcje',
     'DESCRIPTION_TYPE_PERSONALITY' => 'Osobowość',
+    'DESCRIPTION_TYPE_REPUTATION' => 'Reputacja',
     'DESCRIPTION_TYPE_RESOURCES' => 'Zasoby',
     'DESCRIPTION_TYPE_RETINUE' => 'Świta',
     'DESCRIPTION_TYPE_RUMOURS' => 'Plotki',

@@ -48,7 +48,7 @@ class ExternalData extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getExternalDataPack()
+    public function getExternalDataPack():ActiveQuery
     {
         return $this->hasOne(ExternalDataPack::className(), ['external_data_pack_id' => 'external_data_pack_id']);
     }
