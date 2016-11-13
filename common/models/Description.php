@@ -29,19 +29,24 @@ use yii2tech\ar\position\PositionBehavior;
  */
 class Description extends ActiveRecord implements Displayable, HasVisibility
 {
-    const TYPE_APPEARANCE = 'appearance';
-    const TYPE_ASPECTS = 'aspects';
-    const TYPE_ATTITUDE = 'attitude';
-    const TYPE_COMMENTARY = 'commentary';
-    const TYPE_DOMAIN = 'domain';
-    const TYPE_FAME = 'fame';
-    const TYPE_HISTORY = 'history';
-    const TYPE_INTERACTIONS = 'interactions';
-    const TYPE_PERSONALITY = 'personality';
-    const TYPE_RETINUE = 'retinue';
-    const TYPE_RUMOURS = 'rumours';
-    const TYPE_THREADS = 'threads';
-    const TYPE_WHO = 'who';
+    const TYPE_APPEARANCE = 'appearance';       // The looks
+    const TYPE_ASPECTS = 'aspects';             // Aspects - this is for FATE-like games
+    const TYPE_ATTITUDE = 'attitude';           // Attitude towards different people / groups
+    const TYPE_BACKGROUND = 'background';       // Origin, education, the like
+    const TYPE_COMMENTARY = 'commentary';       // GM commentary
+    const TYPE_DOMAIN = 'domain';               // Places where the person reigns, dominates, or frequents
+    const TYPE_FAME = 'fame';                   // Famous deeds or events
+    const TYPE_FACTIONS = 'factions';           // Factions associated with; this includes nations
+    const TYPE_HISTORY = 'history';             // History of the person
+    const TYPE_INTERACTIONS = 'interactions';   // Interactions / encounters with the group or person NAMES
+    const TYPE_PERSONALITY = 'personality';     // Personality, character behaviour, mental issues
+    const TYPE_RESOURCES = 'resources';         // Resources the person wields, flaunts, can offer
+    const TYPE_REPUTATION = 'reputation';       // Person's reputation
+    const TYPE_RETINUE = 'retinue';             // Friends, allies, etc.
+    const TYPE_RUMOURS = 'rumours';             // Unproven rumours collected about character
+    const TYPE_STORIES = 'stories';             // Stories person participated in
+    const TYPE_THREADS = 'threads';             // Threads person was attached to
+    const TYPE_WHO = 'who';                     // Who is this?
 
     public static function tableName()
     {
@@ -120,14 +125,19 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             self::TYPE_APPEARANCE => Yii::t('app', 'DESCRIPTION_TYPE_APPEARANCE'),
             self::TYPE_ASPECTS => Yii::t('app', 'DESCRIPTION_TYPE_ASPECTS'),
             self::TYPE_ATTITUDE => Yii::t('app', 'DESCRIPTION_TYPE_ATTITUDE'),
+            self::TYPE_BACKGROUND => Yii::t('app', 'DESCRIPTION_TYPE_BACKGROUND'),
             self::TYPE_COMMENTARY => Yii::t('app', 'DESCRIPTION_TYPE_COMMENTARY'),
             self::TYPE_DOMAIN => Yii::t('app', 'DESCRIPTION_TYPE_DOMAIN'),
             self::TYPE_FAME => Yii::t('app', 'DESCRIPTION_TYPE_FAME'),
+            self::TYPE_FACTIONS => Yii::t('app', 'DESCRIPTION_TYPE_FACTIONS'),
             self::TYPE_INTERACTIONS => Yii::t('app', 'DESCRIPTION_TYPE_INTERACTIONS'),
             self::TYPE_HISTORY => Yii::t('app', 'DESCRIPTION_TYPE_HISTORY'),
             self::TYPE_PERSONALITY => Yii::t('app', 'DESCRIPTION_TYPE_PERSONALITY'),
+            self::TYPE_RESOURCES => Yii::t('app', 'DESCRIPTION_TYPE_RESOURCES'),
+            self::TYPE_REPUTATION=> Yii::t('app', 'DESCRIPTION_TYPE_REPUTATION'),
             self::TYPE_RETINUE => Yii::t('app', 'DESCRIPTION_TYPE_RETINUE'),
             self::TYPE_RUMOURS => Yii::t('app', 'DESCRIPTION_TYPE_RUMOURS'),
+            self::TYPE_STORIES => Yii::t('app', 'DESCRIPTION_TYPE_STORIES'),
             self::TYPE_THREADS => Yii::t('app', 'DESCRIPTION_TYPE_THREADS'),
             self::TYPE_WHO => Yii::t('app', 'DESCRIPTION_TYPE_WHO'),
         ];
