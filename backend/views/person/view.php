@@ -78,10 +78,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'code',
                     'enableSorting' => false,
+                    'label' => Yii::t('external', 'EXTERNAL_DATA_CODE'),
                 ],
                 [
                     'attribute' => 'visibility',
                     'enableSorting' => false,
+                    'label' => Yii::t('app', 'LABEL_VISIBILITY'),
                     'value' => function (ExternalData $model) {
                         return $model->getVisibility();
                     },

@@ -10,6 +10,7 @@ use Yii;
 use common\models\Person;
 use common\models\PersonQuery;
 use yii\base\Exception;
+use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\HttpException;
@@ -87,7 +88,7 @@ final class PersonController extends Controller
         if($model->external_data_pack_id) {
             $externalDataDataProvider = $model->externalDataPack->getExternalDataAll();
         } else {
-            $externalDataDataProvider = null;
+            $externalDataDataProvider = new ArrayDataProvider([]);
         }
 
         return $this->render('view', [
