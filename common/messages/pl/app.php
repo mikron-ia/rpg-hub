@@ -158,6 +158,7 @@ return [
     'GROUP_KEY' => 'Klucz',
     'GROUP_NAME' => 'Nazwa',
     'JSON_INVALID' => 'JSON jest nieprawidłowy, dekodowanie niemożliwe',
+    'LABEL_BASIC_DATA_AND_OPERATIONS' => 'Podstawowe dane',
     'LABEL_CHARACTER' => 'Postać',
     'LABEL_CONTENT' => 'Treść',
     'LABEL_DATA_SIZE' => 'Rozmiar danych zewnętrznych',

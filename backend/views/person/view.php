@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p class="subtitle"><?= $model->tagline; ?></p>
 
     <div class="col-md-6">
+        <h2 class="text-center"><?= Yii::t('app', 'LABEL_BASIC_DATA_AND_OPERATIONS'); ?></h2>
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
