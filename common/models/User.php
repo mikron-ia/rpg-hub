@@ -54,20 +54,20 @@ final class User extends ActiveRecord implements IdentityInterface
 
     public function afterSave($insert, $changedAttributes)
     {
-        if (!$this->hasErrors() && isset($changedAttributes['user_role'])) {
+        if (!$this->hasErrors()) {
+
             $roleCode = $this->getUserRoleCode();
 
-            if (
-                /* The check is a security measure if someone re-enables the drop-down */
-                $roleCode != self::USER_ROLE_ADMINISTRATOR
-            ) {
+            if ($this->user_role != $roleCode && $roleCode != self::USER_ROLE_ADMINISTRATOR) {
                 $auth = Yii::$app->authManager;
 
                 if ($auth->checkAccess($this->id, $roleCode)) {
                     $auth->revoke($auth->getRole($roleCode), $this->id);
                 }
                 $auth->assign($auth->getRole($this->user_role), $this->id);
+                $this->touch('updated_at');
             }
+
         }
         parent::afterSave($insert, $changedAttributes);
     }
