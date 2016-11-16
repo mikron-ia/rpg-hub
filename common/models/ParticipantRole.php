@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -46,7 +47,7 @@ final class ParticipantRole extends ActiveRecord
     /**
      * @return string[]
      */
-    static public function roleNames()
+    static public function roleNames():array
     {
         return [
             self::ROLE_GM => Yii::t('app', 'PARTICIPANT_ROLE_GM'),
@@ -57,14 +58,18 @@ final class ParticipantRole extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getParticipant()
+    public function getParticipant():ActiveQuery
     {
         return $this->hasOne(Participant::className(), ['participant_id' => 'participant_id']);
     }
 
-    public function getRoleDescribed()
+    /**
+     * Provides description of the role
+     * @return string
+     */
+    public function getRoleDescribed():string
     {
         $names = self::roleNames();
         if (isset($names[$this->role])) {

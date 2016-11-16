@@ -10,9 +10,6 @@ use yii\data\ActiveDataProvider;
  */
 final class ParticipantQuery extends Participant
 {
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -20,9 +17,6 @@ final class ParticipantQuery extends Participant
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
@@ -36,7 +30,7 @@ final class ParticipantQuery extends Participant
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params):ActiveDataProvider
     {
         $query = Participant::find();
 
