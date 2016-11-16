@@ -20,17 +20,11 @@ final class ParticipantRole extends ActiveRecord
     const ROLE_ASSISTANT = 'assistant';
     const ROLE_WATCHER = 'watcher';
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'participant_role';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -41,9 +35,6 @@ final class ParticipantRole extends ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [

@@ -5,7 +5,6 @@ namespace common\models;
 use common\models\core\Visibility;
 use Yii;
 use yii\data\ActiveDataProvider;
-use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
