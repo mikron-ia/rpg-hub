@@ -97,9 +97,9 @@ class UserInvitation extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getCreatedBy()
+    public function getCreatedBy():ActiveQuery
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }

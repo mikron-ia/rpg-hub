@@ -15,22 +15,26 @@ class UserCreateForm extends Model
 {
     public $email;
     public $language;
+    public $message;
+    public $note;
     public $user_role;
 
     public function attributeLabels()
     {
         return [
-            'email' => Yii::t('app', 'USER_EMAIL'),
-            'language' => Yii::t('app', 'USER_LANGUAGE'),
-            'user_role' => Yii::t('app', 'USER_ROLE'),
+            'email' => Yii::t('app', 'USER_INVITATION_EMAIL'),
+            'message' => Yii::t('app', 'USER_INVITATION_MESSAGE'),
+            'user_role' => Yii::t('app', 'USER_INVITATION_ROLE'),
+            'note' => Yii::t('app', 'USER_INVITATION_NOTE'),
+            'language' => Yii::t('app', 'USER_INVITATION_LANGUAGE'),
         ];
     }
 
     public function rules()
     {
         return [
+            [['email', 'message', 'user_role'], 'required'],
             ['email', 'filter', 'filter' => 'trim'],
-            ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             [
@@ -41,6 +45,7 @@ class UserCreateForm extends Model
                 'filter' => ['status' => User::STATUS_ACTIVE],
             ],
             ['language', 'in', 'range' => Language::supportedLanguages()],
+            [['note'], 'string', 'max' => 255],
             ['user_role', 'in', 'range' => User::allowedUserRoles()]
         ];
     }
@@ -49,28 +54,20 @@ class UserCreateForm extends Model
      * Signs user up
      * @return bool
      */
-    public function signUp()
+    public function signUp():bool
     {
         if (!$this->validate()) {
-            return null;
+            return false;
         }
 
         $invitation = new UserInvitation();
 
         $invitation->email = $this->email;
-        $invitation->language = $this->language;
         $invitation->intended_role = $this->user_role;
-        $invitation->message = "Welcome";
+        $invitation->language = $this->language;
+        $invitation->message = $this->message;
+        $invitation->note = $this->note;
 
         return $invitation->save();
-    }
-
-    /**
-     * Stop-gap method that informs that this is a creation
-     * @return bool
-     */
-    public function getIsNewRecord()
-    {
-        return true;
     }
 }

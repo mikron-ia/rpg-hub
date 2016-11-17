@@ -26,14 +26,18 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'user_role')->dropDownList(User::userRoleNames()) ?>
     </div>
 
+    <div class="col-md-12">
+        <?= $form->field($model, 'note') ?>
+    </div>
+
+    <div class="col-md-12">
+        <?= $form->field($model, 'message')->textarea(['rows' => 12]) ?>
+    </div>
+
     <div class="clearfix"></div>
 
     <div class="form-group">
-        <?php echo Html::submitButton(
-            $model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),
-            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
-        );
-        ?>
+        <?= Html::submitButton(Yii::t('app', 'BUTTON_SEND_INVITATION'), ['class' => 'btn btn-success']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

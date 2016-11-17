@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\UserAcceptForm;
 use backend\models\UserCreateForm;
 use Yii;
 use common\models\User;
