@@ -315,6 +315,7 @@ return [
     'TITLE_PASSWORD_RESET_REQUEST' => 'Żądanie resetu hasła',
     'TITLE_PEOPLE_INDEX' => 'Osoby',
     'TITLE_PERSON_CREATE' => 'Dodawanie osoby',
+    'USER_ACCOUNT_CREATE' => '',
     'USER_CREATED_AT' => 'Zarejestrowano',
     'USER_CREATION_EMAIL_TAKEN' => 'Taki adres e-mail jest już używany',
     'USER_CREATION_INVITE_SENT' => 'Zaproszenie wysłane',

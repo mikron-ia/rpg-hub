@@ -315,6 +315,7 @@ return [
     'TITLE_PASSWORD_RESET_REQUEST' => 'Request password reset',
     'TITLE_PEOPLE_INDEX' => 'People',
     'TITLE_PERSON_CREATE' => 'Adding a person',
+    'USER_ACCOUNT_CREATE' => '',
     'USER_CREATED_AT' => 'Created at',
     'USER_CREATION_EMAIL_TAKEN' => 'This e-mail address is already in use',
     'USER_CREATION_INVITE_SENT' => 'Invitation sent',
