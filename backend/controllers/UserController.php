@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\UserCreateForm;
 use Yii;
 use common\models\User;
 use yii\data\ActiveDataProvider;
@@ -71,10 +72,11 @@ final class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
+        $model = new UserCreateForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->signUp()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_INVITE_SENT'));
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
