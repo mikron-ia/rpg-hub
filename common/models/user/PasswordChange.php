@@ -40,6 +40,7 @@ class PasswordChange extends Model
                 'special' => 0,
                 'hasEmail' => true,
                 'hasUser' => true,
+                'allowSpaces' => true,
                 'usernameValue' => $this->user->username,
             ],
             ['password_again', 'required'],

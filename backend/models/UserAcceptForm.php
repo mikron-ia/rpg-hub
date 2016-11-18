@@ -36,6 +36,8 @@ class UserAcceptForm extends Model
         }
 
         $this->email = $this->invitation->email;
+        $this->language = $this->invitation->language;
+
         parent::__construct($config);
     }
 

@@ -6,6 +6,8 @@ use backend\models\UserAcceptForm;
 use backend\models\UserCreateForm;
 use Yii;
 use common\models\User;
+use yii\base\Exception;
+use yii\base\InvalidParamException;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -102,7 +104,15 @@ final class UserController extends Controller
      */
     public function actionAccept($token)
     {
-        $model = new UserAcceptForm($token);
+        try {
+            $model = new UserAcceptForm($token);
+        } catch (InvalidParamException $e) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_WRONG_TOKEN'));
+            return $this->redirect(['index']);
+        } catch (Exception $e) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_NO_IDEA'));
+            return $this->redirect(['index']);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->signUp()) {
             Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_COMPLETED'));

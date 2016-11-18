@@ -58,8 +58,6 @@ final class User extends ActiveRecord implements IdentityInterface
 
             $roleCode = $this->getUserRoleCode();
 
-            var_dump($this->user_role); die;
-
             if ($this->user_role != $roleCode && $roleCode != self::USER_ROLE_ADMINISTRATOR) {
                 $auth = Yii::$app->authManager;
 

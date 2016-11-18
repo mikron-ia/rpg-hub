@@ -23,6 +23,8 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'email') ?>
     </div>
 
+    <div class="clearfix"></div>
+
     <div class="col-md-6">
         <?= $form->field($model, 'password')->widget(
             PasswordInput::className(),
