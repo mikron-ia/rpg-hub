@@ -18,6 +18,7 @@
  */
 return [
     'GREETING' => 'Hello',
+    'INVITATION_EMAIL_SUBJECT' => 'Invitation for account creation',
     'RESET_PASSWORD_BODY' => 'Follow the link below to reset your password:',
     'USER_INVITATION_BODY_TEXT' => 'Follow the link below to set up your account:',
 ];

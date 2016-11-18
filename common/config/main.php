@@ -30,6 +30,10 @@ return [
                     'class' => \yii\i18n\PhpMessageSource::className(),
                     'basePath' => '@common/messages',
                 ],
+                'mail*' => [
+                    'class' => \yii\i18n\PhpMessageSource::className(),
+                    'basePath' => '@common/messages',
+                ],
             ],
         ],
     ],

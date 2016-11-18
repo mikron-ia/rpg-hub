@@ -103,4 +103,27 @@ class UserInvitation extends ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
+
+    /**
+     * Sends an invitation to create an account
+     * @return bool Success of the operation
+     */
+    public function sendEmail()
+    {
+        $oldLanguage = Yii::$app->language;
+        Yii::$app->language = $this->language;
+
+        $mail = Yii::$app->mailer
+            ->compose(
+                ['html' => 'invitation-html', 'text' => 'invitation-text'],
+                ['invitation' => $this]
+            )
+            ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->name])
+            ->setTo($this->email)
+            ->setSubject(Yii::t('mail', 'INVITATION_EMAIL_SUBJECT'));
+
+        $result = $mail->send();
+        Yii::$app->language = $oldLanguage;
+        return $result;
+    }
 }

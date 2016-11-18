@@ -18,6 +18,7 @@
  */
 return [
     'GREETING' => 'Dzień dobry',
+    'INVITATION_EMAIL_SUBJECT' => 'Zaproszenie do założenia konta',
     'RESET_PASSWORD_BODY' => 'Poniższy link umożliwia reset hasła:',
     'USER_INVITATION_BODY_TEXT' => 'Poniższy link umożliwia założenie konta:',
 ];

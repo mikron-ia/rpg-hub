@@ -76,8 +76,13 @@ final class UserController extends Controller
         $model = new UserCreateForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->signUp()) {
-            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_INVITE_SENT'));
-            return $this->redirect(['index']);
+            if($model->sendEmail()) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_INVITE_SENT'));
+                return $this->redirect(['index']);
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_INVITE_SENDING_FAILED'));
+                return $this->redirect(['index']);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,

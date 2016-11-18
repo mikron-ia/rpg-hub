@@ -19,6 +19,11 @@ class UserCreateForm extends Model
     public $note;
     public $user_role;
 
+    /**
+     * @var UserInvitation
+     */
+    private $invitation;
+
     public function attributeLabels()
     {
         return [
@@ -60,14 +65,22 @@ class UserCreateForm extends Model
             return false;
         }
 
-        $invitation = new UserInvitation();
+        $this->invitation = new UserInvitation();
 
-        $invitation->email = $this->email;
-        $invitation->intended_role = $this->user_role;
-        $invitation->language = $this->language;
-        $invitation->message = $this->message;
-        $invitation->note = $this->note;
+        $this->invitation->email = $this->email;
+        $this->invitation->intended_role = $this->user_role;
+        $this->invitation->language = $this->language;
+        $this->invitation->message = $this->message;
+        $this->invitation->note = $this->note;
 
-        return $invitation->save();
+        return $this->invitation->save();
+    }
+
+    /**
+     * @return bool
+     */
+    public function sendEmail():bool
+    {
+        return $this->invitation->sendEmail();
     }
 }
