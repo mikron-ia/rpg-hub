@@ -7,6 +7,8 @@ $link = Yii::$app->urlManager->createAbsoluteUrl(['user/accept', 'token' => $inv
 ?>
 <?= Yii::t('mail', 'GREETING') ?>,
 
+<?= $invitation->message ?>
+
 <?= Yii::t('mail', 'USER_INVITATION_BODY_TEXT') ?>
 
 <?= $link ?>

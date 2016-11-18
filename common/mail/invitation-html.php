@@ -8,6 +8,8 @@ $link = Yii::$app->urlManager->createAbsoluteUrl(['user/accept', 'token' => $inv
 ?>
 <div class="password-reset">
     <p><?= Yii::t('mail', 'GREETING') ?>,</p>
+    
+    <p><?= $invitation->message ?></p>
 
     <p><?= Yii::t('mail', 'USER_INVITATION_BODY_TEXT') ?></p>
 
