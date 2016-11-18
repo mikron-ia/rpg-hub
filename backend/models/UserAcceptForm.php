@@ -3,8 +3,10 @@ namespace backend\models;
 
 use common\models\core\Language;
 use common\models\User;
+use common\models\UserInvitation;
 use kartik\password\StrengthValidator;
 use Yii;
+use yii\base\InvalidParamException;
 use yii\base\Model;
 
 /**
@@ -20,6 +22,23 @@ class UserAcceptForm extends Model
     public $password;
     public $password_again;
 
+    /**
+     * @var UserInvitation
+     */
+    private $invitation;
+
+    public function __construct(string $token, array $config = [])
+    {
+        $this->invitation = UserInvitation::findByToken($token);
+
+        if (!$this->invitation) {
+            throw new InvalidParamException(Yii::t('app', 'USER_INVITATION_NOT_FOUND'));
+        }
+
+        $this->email = $this->invitation->email;
+        parent::__construct($config);
+    }
+
     public function attributeLabels()
     {
         return [
@@ -29,6 +48,9 @@ class UserAcceptForm extends Model
             'language' => Yii::t('app', 'USER_LANGUAGE'),
             'status' => Yii::t('app', 'USER_STATUS'),
             'user_role' => Yii::t('app', 'USER_ROLE'),
+            'username' => Yii::t('app', 'USER_USERNAME'),
+            'password' => Yii::t('app', 'USER_PASSWORD'),
+            'password_again' => Yii::t('app', 'USER_PASSWORD_REPEATED'),
         ];
     }
 
@@ -57,9 +79,9 @@ class UserAcceptForm extends Model
                 'filter' => ['status' => User::STATUS_ACTIVE],
             ],
             ['language', 'in', 'range' => Language::supportedLanguages()],
-            ['password', 'validatePassword'],
+            ['password', 'required'],
             [
-                'password_new',
+                'password',
                 StrengthValidator::className(),
                 'min' => 8,
                 'lower' => 2,
@@ -67,6 +89,7 @@ class UserAcceptForm extends Model
                 'special' => 0,
                 'hasEmail' => true,
                 'hasUser' => true,
+                'allowSpaces' => true,
                 'usernameValue' => $this->username,
             ],
             ['password_again', 'required'],
@@ -92,7 +115,7 @@ class UserAcceptForm extends Model
         $user = $this->setUser();
 
         if ($user) {
-            if(!$user->language) {
+            if (!$user->language) {
                 $user->language = Yii::$app->language;
             }
         }
@@ -110,9 +133,9 @@ class UserAcceptForm extends Model
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
+        $user->user_role = $this->invitation->intended_role;
         $user->setPassword($this->password);
         $user->generateAuthKey();
-        $user->generatePasswordResetToken();
 
         return $user->save() ? $user : null;
     }

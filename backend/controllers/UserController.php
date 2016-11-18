@@ -28,6 +28,10 @@ final class UserController extends Controller
                         'allow' => Yii::$app->user->can('controlUser'),
                         'roles' => ['operator'],
                     ],
+                    [
+                        'actions' => ['accept'],
+                        'allow' => true,
+                    ],
                 ],
             ],
             'verbs' => [
@@ -76,7 +80,7 @@ final class UserController extends Controller
         $model = new UserCreateForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->signUp()) {
-            if($model->sendEmail()) {
+            if ($model->sendEmail()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_INVITE_SENT'));
                 return $this->redirect(['index']);
             } else {
@@ -85,6 +89,26 @@ final class UserController extends Controller
             }
         } else {
             return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * Creates a new User model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param string $token
+     * @return mixed
+     */
+    public function actionAccept($token)
+    {
+        $model = new UserAcceptForm($token);
+
+        if ($model->load(Yii::$app->request->post()) && $model->signUp()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_COMPLETED'));
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('accept', [
                 'model' => $model,
             ]);
         }

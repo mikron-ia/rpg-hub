@@ -39,6 +39,8 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'password_again')->passwordInput() ?>
     </div>
 
+    <div class="clearfix"></div>
+
     <div class="col-md-3">
         <?= $form->field($model, 'language')->dropDownList(Language::languagesLong()) ?>
     </div>

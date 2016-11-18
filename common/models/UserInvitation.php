@@ -126,4 +126,25 @@ class UserInvitation extends ActiveRecord
         Yii::$app->language = $oldLanguage;
         return $result;
     }
+
+    /**
+     * Finds invitation by token
+     * @param string $token password reset token
+     * @return static|null
+     */
+    public static function findByToken($token)
+    {
+        return static::findOne([
+            'token' => $token,
+        ]);
+    }
+
+    /**
+     * Finds out if password reset token is valid
+     * @return bool
+     */
+    public function isInvitationValid():bool
+    {
+        return $this->valid_to >= time();
+    }
 }
