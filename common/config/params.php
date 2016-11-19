@@ -1,7 +1,7 @@
 <?php
 
-if(getenv('LANGUAGES_ALLOWED')) {
-    $languages = explode(',',str_replace(' ','',getenv('LANGUAGES_ALLOWED')));
+if (getenv('LANGUAGES_ALLOWED')) {
+    $languages = explode(',', str_replace(' ', '', getenv('LANGUAGES_ALLOWED')));
 } else {
     $languages = ['en', 'pl'];
 }
@@ -39,4 +39,6 @@ return [
     'reputationAccessUri' => getenv('REPUTATION_URI'),
     'reputationAccessKey' => getenv('AUTHENTICATION_REPUTATION_SIMPLE_KEY'),
     'senderEmail' => getenv('EMAIL'),
+    'uri.front' => rtrim(getenv('URI_FRONT'), '/'),
+    'uri.back' => rtrim(getenv('URI_BACK'), '/'),
 ];

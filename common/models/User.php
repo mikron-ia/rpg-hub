@@ -328,7 +328,7 @@ final class User extends ActiveRecord implements IdentityInterface
     static public function getFullUserList():array
     {
         /**
-         * @var User[]
+         * @var $usersUnordered User[]
          */
         $usersUnordered = User::find()->all();
         $userOrdered = [];
@@ -360,5 +360,13 @@ final class User extends ActiveRecord implements IdentityInterface
     static public function allowedUserRoles():array
     {
         return array_keys(self::userRoleNames());
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function operatorUserRoles():array
+    {
+        return [self::USER_ROLE_OPERATOR, self::USER_ROLE_MANAGER, self::USER_ROLE_ADMINISTRATOR];
     }
 }

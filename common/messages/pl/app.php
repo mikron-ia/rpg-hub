@@ -337,6 +337,7 @@ return [
     'USER_INVITATION_MESSAGE' => 'Wiadomość',
     'USER_INVITATION_NOTE' => 'Notatki zapraszającego',
     'USER_INVITATION_NOT_FOUND' => 'Nie znaleziono zaproszenia.',
+    'USER_INVITATION_NO_BASE_URI' => '',
     'USER_INVITATION_NO_LONGER_VALID' => 'zaproszenie nie jest już ważne.',
     'USER_INVITATION_OPENED_AT' => 'Otwarto',
     'USER_INVITATION_REVOKED_AT' => 'Odwołano',

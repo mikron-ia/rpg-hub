@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\base\Exception;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -107,16 +108,30 @@ class UserInvitation extends ActiveRecord
     /**
      * Sends an invitation to create an account
      * @return bool Success of the operation
+     * @throws Exception
      */
     public function sendEmail()
     {
         $oldLanguage = Yii::$app->language;
         Yii::$app->language = $this->language;
 
+        if (in_array($this->intended_role, User::operatorUserRoles())) {
+            $baseUri = Yii::$app->params['uri.back'];
+        } else {
+            $baseUri = Yii::$app->params['uri.front'];
+        }
+
+        if (empty($baseUri)) {
+            throw new Exception(Yii::t('app', 'USER_INVITATION_NO_BASE_URI'), 500);
+        }
+
         $mail = Yii::$app->mailer
             ->compose(
                 ['html' => 'invitation-html', 'text' => 'invitation-text'],
-                ['invitation' => $this]
+                [
+                    'invitation' => $this,
+                    'link' => $baseUri . Yii::$app->urlManager->createUrl(['user/accept', 'token' => $this->token]),
+                ]
             )
             ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->name])
             ->setTo($this->email)

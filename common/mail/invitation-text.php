@@ -2,8 +2,8 @@
 
 /* @var $this yii\web\View */
 /* @var $invitation common\models\UserInvitation */
+/* @var $link string */
 
-$link = Yii::$app->urlManager->createAbsoluteUrl(['user/accept', 'token' => $invitation->token]);
 ?>
 <?= Yii::t('mail', 'GREETING') ?>,
 

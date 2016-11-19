@@ -337,6 +337,7 @@ return [
     'USER_INVITATION_MESSAGE' => 'Message',
     'USER_INVITATION_NOTE' => 'Inviter note',
     'USER_INVITATION_NOT_FOUND' => 'Invitation not found',
+    'USER_INVITATION_NO_BASE_URI' => '',
     'USER_INVITATION_NO_LONGER_VALID' => 'invitation no longer valid',
     'USER_INVITATION_OPENED_AT' => 'Opened',
     'USER_INVITATION_REVOKED_AT' => 'Revoked',

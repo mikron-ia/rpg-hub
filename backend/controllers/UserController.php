@@ -119,6 +119,8 @@ final class UserController extends Controller
             return $this->redirect(['site/index']);
         }
 
+        Yii::$app->language = $model->language;
+
         if ($model->load(Yii::$app->request->post()) && $model->signUp()) {
             Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_COMPLETED'));
             return $this->redirect(['site/index']);
