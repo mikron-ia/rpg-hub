@@ -140,11 +140,56 @@ class UserInvitation extends ActiveRecord
     }
 
     /**
-     * Finds out if password reset token is valid
+     * Finds out if invitation is valid
      * @return bool
      */
     public function isInvitationValid():bool
     {
         return $this->valid_to >= time();
+    }
+
+    /**
+     * Finds out if invitation has not been used
+     * @return bool
+     */
+    public function isInvitationUnused():bool
+    {
+        return !$this->used_at;
+    }
+
+    /**
+     * Finds out if invitation has not been revoked
+     * @return bool
+     */
+    public function isInvitationUnRevoked():bool
+    {
+        return !$this->revoked_at;
+    }
+
+    /**
+     * Finds out if invitation is still active
+     * @return bool
+     */
+    public function isInvitationActive():bool
+    {
+        return $this->isInvitationValid() && $this->isInvitationUnused() && $this->isInvitationUnRevoked();
+    }
+
+    /**
+     * @return bool
+     */
+    public function markAsRevoked():bool
+    {
+        $this->revoked_at = time();
+        return $this->save();
+    }
+
+    /**
+     * @return bool
+     */
+    public function markAsUsed():bool
+    {
+        $this->used_at = time();
+        return $this->save();
     }
 }

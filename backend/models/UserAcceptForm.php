@@ -35,6 +35,18 @@ class UserAcceptForm extends Model
             throw new InvalidParamException(Yii::t('app', 'USER_INVITATION_NOT_FOUND'));
         }
 
+        if (!$this->invitation->isInvitationUnused()) {
+            throw new InvalidParamException(Yii::t('app', 'USER_INVITATION_USED'));
+        }
+
+        if (!$this->invitation->isInvitationValid()) {
+            throw new InvalidParamException(Yii::t('app', 'USER_INVITATION_NO_LONGER_VALID'));
+        }
+
+        if (!$this->invitation->isInvitationUnRevoked()) {
+            throw new InvalidParamException(Yii::t('app', 'USER_INVITATION_HAS_BEEN_REVOKED'));
+        }
+
         $this->email = $this->invitation->email;
         $this->language = $this->invitation->language;
 
@@ -117,9 +129,7 @@ class UserAcceptForm extends Model
         $user = $this->setUser();
 
         if ($user) {
-            if (!$user->language) {
-                $user->language = Yii::$app->language;
-            }
+            $this->invitation->markAsUsed();
         }
 
         return $user;
@@ -128,13 +138,13 @@ class UserAcceptForm extends Model
     /**
      * Creates user object with data from form and generates keys & passwords
      * @return User|null User object on success, null on failure
-     * @todo Add rights
      */
     private function setUser()
     {
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
+        $user->language = $this->language;
         $user->user_role = $this->invitation->intended_role;
         $user->setPassword($this->password);
         $user->generateAuthKey();
