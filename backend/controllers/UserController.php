@@ -107,10 +107,10 @@ final class UserController extends Controller
         try {
             $model = new UserAcceptForm($token);
         } catch (InvalidParamException $e) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_WRONG_TOKEN') . ' ' . $e->getMessage());
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_WRONG_TOKEN {reason}', ['reason' => $e->getMessage()]));
             return $this->redirect(['site/index']);
         } catch (Exception $e) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_NO_IDEA') . ' ' . $e->getMessage());
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_OTHER {reason}', ['reason' => $e->getMessage()]));
             return $this->redirect(['site/index']);
         }
 
