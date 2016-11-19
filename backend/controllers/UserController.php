@@ -104,6 +104,11 @@ final class UserController extends Controller
      */
     public function actionAccept($token)
     {
+        if (!Yii::$app->user->isGuest) {
+            Yii::$app->user->logout();
+            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_CURRENT_USER_LOGGED_OUT'));
+        }
+
         try {
             $model = new UserAcceptForm($token);
         } catch (InvalidParamException $e) {
