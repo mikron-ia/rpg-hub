@@ -2,8 +2,12 @@
 
 namespace backend\controllers;
 
+use backend\models\UserAcceptForm;
+use backend\models\UserCreateForm;
 use Yii;
 use common\models\User;
+use yii\base\Exception;
+use yii\base\InvalidParamException;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -25,6 +29,10 @@ final class UserController extends Controller
                         'actions' => ['create', 'delete', 'index', 'update', 'view'],
                         'allow' => Yii::$app->user->can('controlUser'),
                         'roles' => ['operator'],
+                    ],
+                    [
+                        'actions' => ['accept'],
+                        'allow' => true,
                     ],
                 ],
             ],
@@ -71,12 +79,51 @@ final class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
+        $model = new UserCreateForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->signUp()) {
+            if ($model->sendEmail()) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_INVITE_SENT'));
+                return $this->redirect(['index']);
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_INVITE_SENDING_FAILED'));
+                return $this->redirect(['index']);
+            }
         } else {
             return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * Creates a new User model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param string $token
+     * @return mixed
+     */
+    public function actionAccept($token)
+    {
+        if (!Yii::$app->user->isGuest) {
+            Yii::$app->user->logout();
+            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_CURRENT_USER_LOGGED_OUT'));
+        }
+
+        try {
+            $model = new UserAcceptForm($token);
+        } catch (InvalidParamException $e) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_WRONG_TOKEN {reason}', ['reason' => $e->getMessage()]));
+            return $this->redirect(['site/index']);
+        } catch (Exception $e) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_OTHER {reason}', ['reason' => $e->getMessage()]));
+            return $this->redirect(['site/index']);
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->signUp()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_COMPLETED'));
+            return $this->redirect(['site/index']);
+        } else {
+            return $this->render('accept', [
                 'model' => $model,
             ]);
         }
