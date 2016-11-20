@@ -27,9 +27,9 @@ final class UserController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'invitations', 'update', 'view'],
+                        'actions' => ['create', 'delete', 'index', 'invitations', 'revoke', 'update', 'view'],
                         'allow' => Yii::$app->user->can('controlUser'),
-                        'roles' => ['operator'],
+                        'roles' => ['manager'],
                     ],
                     [
                         'actions' => ['accept'],
@@ -41,6 +41,7 @@ final class UserController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                    'revoke' => ['post'],
                 ],
             ],
         ];
@@ -178,6 +179,23 @@ final class UserController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionRevoke($id)
+    {
+        $model = UserInvitation::findOne($id);
+
+        if ($model && $model->isInvitationUnRevoked() && $model->markAsRevoked()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_INVITATION_REVOKED'));
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_INVITATION_REVOKE_FAILED'));
+        }
+
+        return $this->redirect(['invitations']);
     }
 
     /**

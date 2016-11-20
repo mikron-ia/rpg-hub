@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'role',
-                'label' => Yii::t('app', 'USER_INVITATION_ROLE_NAME'),
+                'label' => Yii::t('app', 'USER_INVITATION_ROLE'),
                 'value' => function (UserInvitation $model) {
                     return $model->getIntendedRoleName();
                 }
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'revoke' => function ($url, $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-remove-circle"></span>',
-                            'revoke?id=' . $model->id,
+                            ['user/revoke', 'id' => $model->id],
                             [
                                 'title' => Yii::t('app', 'USER_INVITATION_REVOKE'),
                                 'data-confirm' => Yii::t('app', 'USER_INVITATION_REVOKE_CONFIRM'),
