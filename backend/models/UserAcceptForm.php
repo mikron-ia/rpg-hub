@@ -47,6 +47,8 @@ class UserAcceptForm extends Model
             throw new InvalidParamException(Yii::t('app', 'USER_INVITATION_HAS_BEEN_REVOKED'));
         }
 
+        $this->invitation->markAsOpened();
+
         $this->email = $this->invitation->email;
         $this->language = $this->invitation->language;
 

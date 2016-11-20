@@ -193,6 +193,15 @@ class UserInvitation extends ActiveRecord
     /**
      * @return bool
      */
+    public function markAsOpened():bool
+    {
+        $this->opened_at = time();
+        return $this->save();
+    }
+
+    /**
+     * @return bool
+     */
     public function markAsRevoked():bool
     {
         $this->revoked_at = time();
@@ -206,5 +215,12 @@ class UserInvitation extends ActiveRecord
     {
         $this->used_at = time();
         return $this->save();
+    }
+
+    public function getIntendedRoleName():string
+    {
+        $names = User::userRoleNames();
+        $code = $this->intended_role;
+        return isset($names[$code]) ? $names[$code] : '?';
     }
 }

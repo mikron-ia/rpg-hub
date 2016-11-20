@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\UserAcceptForm;
 use backend\models\UserCreateForm;
+use common\models\UserInvitation;
 use Yii;
 use common\models\User;
 use yii\base\Exception;
@@ -26,7 +27,7 @@ final class UserController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'update', 'view'],
+                        'actions' => ['create', 'delete', 'index', 'invitations', 'update', 'view'],
                         'allow' => Yii::$app->user->can('controlUser'),
                         'roles' => ['operator'],
                     ],
@@ -56,6 +57,22 @@ final class UserController extends Controller
         ]);
 
         return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Lists all invitations
+     * @return mixed
+     */
+    public function actionInvitations()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => UserInvitation::find(),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]]
+        ]);
+
+        return $this->render('invitation/index', [
             'dataProvider' => $dataProvider,
         ]);
     }
