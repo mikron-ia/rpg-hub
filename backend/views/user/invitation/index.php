@@ -1,7 +1,6 @@
 <?php
 
 use common\models\core\Language;
-use common\models\User;
 use common\models\UserInvitation;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -9,11 +8,10 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'USER_INDEX_TITLE');
+$this->title = Yii::t('app', 'USER_INVITATION_INDEX_TITLE');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
-
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>

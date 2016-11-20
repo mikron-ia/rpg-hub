@@ -333,6 +333,7 @@ return [
     'USER_INVITATION_EMAIL' => 'E-mail',
     'USER_INVITATION_HAS_BEEN_REVOKED' => 'zaproszenie zostało odwołane',
     'USER_INVITATION_ID' => 'ID',
+    'USER_INVITATION_INDEX_TITLE' => 'Zaproszenia',
     'USER_INVITATION_LANGUAGE' => 'Język',
     'USER_INVITATION_MESSAGE' => 'Wiadomość',
     'USER_INVITATION_NOTE' => 'Notatki zapraszającego',

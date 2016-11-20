@@ -333,6 +333,7 @@ return [
     'USER_INVITATION_EMAIL' => 'E-mail',
     'USER_INVITATION_HAS_BEEN_REVOKED' => 'invitation has been revoked',
     'USER_INVITATION_ID' => 'ID',
+    'USER_INVITATION_INDEX_TITLE' => 'Invites',
     'USER_INVITATION_LANGUAGE' => 'Invitee language',
     'USER_INVITATION_MESSAGE' => 'Message',
     'USER_INVITATION_NOTE' => 'Inviter note',
