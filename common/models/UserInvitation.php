@@ -130,7 +130,7 @@ class UserInvitation extends ActiveRecord
                 ['html' => 'invitation-html', 'text' => 'invitation-text'],
                 [
                     'invitation' => $this,
-                    'link' => $baseUri . Yii::$app->urlManager->createUrl(['user/accept', 'token' => $this->token]),
+                    'link' => $baseUri . Yii::$app->urlManager->createUrl(['site/accept', 'token' => $this->token]),
                 ]
             )
             ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->name])

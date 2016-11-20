@@ -5,7 +5,10 @@ use common\models\Epic;
 use common\models\EpicQuery;
 use common\models\LoginForm;
 use common\models\user\PasswordChange;
+use common\models\user\UserAcceptForm;
 use Yii;
+use yii\base\Exception;
+use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -37,6 +40,10 @@ final class SiteController extends Controller
                         'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['operator'],
+                    ],
+                    [
+                        'actions' => ['accept'],
+                        'allow' => true,
                     ],
                 ],
             ],
@@ -149,6 +156,41 @@ final class SiteController extends Controller
             return Yii::$app->getResponse()->redirect($referrer);
         } else {
             return $this->goHome();
+        }
+    }
+
+    /**
+     * Creates a new User model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param string $token
+     * @return mixed
+     */
+    public function actionAccept($token)
+    {
+        if (!Yii::$app->user->isGuest) {
+            Yii::$app->user->logout();
+            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_CURRENT_USER_LOGGED_OUT'));
+        }
+
+        try {
+            $model = new UserAcceptForm($token);
+        } catch (InvalidParamException $e) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_WRONG_TOKEN {reason}', ['reason' => $e->getMessage()]));
+            return $this->redirect(['site/index']);
+        } catch (Exception $e) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_OTHER {reason}', ['reason' => $e->getMessage()]));
+            return $this->redirect(['site/index']);
+        }
+
+        Yii::$app->language = $model->language;
+
+        if ($model->load(Yii::$app->request->post()) && $model->signUp()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_COMPLETED'));
+            return $this->redirect(['site/index']);
+        } else {
+            return $this->render('accept', [
+                'model' => $model,
+            ]);
         }
     }
 }

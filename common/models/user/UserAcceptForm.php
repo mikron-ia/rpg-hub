@@ -1,5 +1,5 @@
 <?php
-namespace backend\models;
+namespace common\models\user;
 
 use common\models\core\Language;
 use common\models\User;
