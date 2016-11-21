@@ -160,8 +160,7 @@ final class SiteController extends Controller
     }
 
     /**
-     * Creates a new User model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * Creates a new User, based on an invitation
      * @param string $token
      * @return mixed
      */

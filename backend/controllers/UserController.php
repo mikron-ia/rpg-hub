@@ -84,8 +84,7 @@ final class UserController extends Controller
     }
 
     /**
-     * Creates a new User model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * Sends and invitation to a new user
      * @return mixed
      */
     public function actionCreate()
@@ -95,10 +94,10 @@ final class UserController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->signUp()) {
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_INVITE_SENT'));
-                return $this->redirect(['index']);
+                return $this->redirect(['invitations']);
             } else {
                 Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_INVITE_SENDING_FAILED'));
-                return $this->redirect(['index']);
+                return $this->redirect(['invitations']);
             }
         } else {
             return $this->render('create', [

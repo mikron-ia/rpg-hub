@@ -268,7 +268,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new User, based on an invitation
      * @param string $token
      * @return mixed
      */
