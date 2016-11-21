@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'user_role')->dropDownList(User::userRoleNames()) ?>
+        <?= $form->field($model, 'user_role')->dropDownList(User::allowedUserRoleNames()) ?>
     </div>
 
     <div class="col-md-12">

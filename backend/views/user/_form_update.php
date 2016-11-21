@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
 
     <div class="col-md-3">
         <?= $form->field($model, 'user_role')->dropDownList(
-            User::userRoleNames(),
+            User::allowedUserRoleNames(),
             ['disabled' => ($model->getUserRoleCode() === User::USER_ROLE_ADMINISTRATOR)]
         ) ?>
     </div>

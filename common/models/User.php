@@ -357,9 +357,25 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return string[]
      */
+    static public function allowedUserRoleNames():array
+    {
+        $roles = static::userRoleNames();
+        $allowedRoles = static::allowedUserRoles();
+
+        foreach ($roles as $key => $role) {
+            if (!in_array($key, $allowedRoles)) {
+                unset($roles[$key]);
+            }
+        }
+
+        return $roles;
+    }
+    /**
+     * @return string[]
+     */
     static public function allowedUserRoles():array
     {
-        return array_keys(self::userRoleNames());
+        return [self::USER_ROLE_USER, self::USER_ROLE_OPERATOR, self::USER_ROLE_MANAGER];
     }
 
     /**
