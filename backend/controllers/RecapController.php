@@ -87,7 +87,7 @@ final class RecapController extends Controller
      */
     public function actionCreate()
     {
-        if(Recap::canUserCreateThem()) {
+        if(!Recap::canUserCreateThem()) {
             Recap::throwExceptionAboutCreate();
         }
 

@@ -145,17 +145,17 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
 
     static function throwExceptionAboutCreate()
     {
-        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_RECAP'));
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_RECAP'));
     }
 
     static function throwExceptionAboutControl()
     {
-        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_RECAP'));
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_RECAP'));
     }
 
     static function throwExceptionAboutIndex()
     {
-        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_RECAP'));
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_RECAP'));
     }
 
     static function throwExceptionAboutView()

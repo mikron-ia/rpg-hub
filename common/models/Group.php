@@ -138,17 +138,17 @@ class Group extends ActiveRecord implements Displayable, HasEpicControl
 
     static function throwExceptionAboutCreate()
     {
-        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_GROUP'));
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_GROUP'));
     }
 
     static function throwExceptionAboutControl()
     {
-        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_GROUP'));
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_GROUP'));
     }
 
     static function throwExceptionAboutIndex()
     {
-        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_GROUP'));
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_GROUP'));
     }
 
     static function throwExceptionAboutView()

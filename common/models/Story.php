@@ -248,17 +248,17 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
 
     static function throwExceptionAboutCreate()
     {
-        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_STORY'));
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_STORY'));
     }
 
     static function throwExceptionAboutControl()
     {
-        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_STORY'));
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_STORY'));
     }
 
     static function throwExceptionAboutIndex()
     {
-        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_STORY'));
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_STORY'));
     }
 
     static function throwExceptionAboutView()
