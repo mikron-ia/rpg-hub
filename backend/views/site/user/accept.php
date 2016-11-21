@@ -12,6 +12,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <p><?= Yii::t('app', 'USER_ACCEPT_WARNING') ?></p>
+    <p><?= Yii::t('app', 'USER_ACCEPT_TLDR') ?></p>
+
     <?= $this->render('_form_accept', [
         'model' => $model,
     ]) ?>

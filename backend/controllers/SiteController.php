@@ -187,7 +187,7 @@ final class SiteController extends Controller
             Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_COMPLETED'));
             return $this->redirect(['site/index']);
         } else {
-            return $this->render('accept', [
+            return $this->render('user/accept', [
                 'model' => $model,
             ]);
         }
