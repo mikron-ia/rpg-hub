@@ -20,5 +20,7 @@ return [
     'GREETING' => 'Dzień dobry',
     'INVITATION_EMAIL_SUBJECT' => 'Zaproszenie do założenia konta',
     'RESET_PASSWORD_BODY' => 'Poniższy link umożliwia reset hasła:',
+    'SIGNATURE_HTML' => '<p>Mail został wygenerowany przez Centrum RPG</p>',
+    'SIGNATURE_TEXT' => 'Mail został wygenerowany przez Centrum RPG',
     'USER_INVITATION_BODY_TEXT' => 'Poniższy link umożliwia założenie konta:',
 ];

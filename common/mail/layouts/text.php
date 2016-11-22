@@ -8,4 +8,7 @@
 <?php $this->beginBody() ?>
 <?= $content ?>
 <?php $this->endBody() ?>
+--
+<?= Yii::t('mail', 'SIGNATURE_TEXT') ?>
+<?php echo isset(Yii::$app->params['baseUriForMail']) ? Yii::$app->params['baseUriForMail'] : '' ?>
 <?php $this->endPage() ?>

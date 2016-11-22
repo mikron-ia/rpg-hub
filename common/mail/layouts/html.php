@@ -17,6 +17,9 @@ use yii\helpers\Html;
     <?php $this->beginBody() ?>
     <?= $content ?>
     <?php $this->endBody() ?>
+    --
+    <?= Yii::t('mail', 'SIGNATURE_HTML') ?>
+    <?php echo isset(Yii::$app->params['baseUriForMail'])?\yii\helpers\Html::a(Yii::$app->params['baseUriForMail'], Yii::$app->params['baseUriForMail']):'' ?>
 </body>
 </html>
 <?php $this->endPage() ?>
