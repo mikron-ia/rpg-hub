@@ -100,6 +100,10 @@ trait ToolsForEntity
         }
     }
 
+    /**
+     * @param $message
+     * @throws HttpException
+     */
     static private function thrownExceptionAbout($message)
     {
         throw new HttpException(401, $message);

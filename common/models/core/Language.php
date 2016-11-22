@@ -11,6 +11,9 @@ final class Language
      */
     public $language;
 
+    /**
+     * @return array
+     */
     static public function supportedLanguages():array
     {
         if (isset(Yii::$app->params['languagesAvailable'])) {
@@ -20,6 +23,9 @@ final class Language
         }
     }
 
+    /**
+     * @return array
+     */
     static public function languagesShort():array
     {
         $languageData = [
@@ -38,6 +44,9 @@ final class Language
         return $languages;
     }
 
+    /**
+     * @return array
+     */
     static public function languagesLong():array
     {
         $languageData = [
