@@ -366,6 +366,8 @@ return [
     'USER_ROLE_NONE' => 'Nieznana',
     'USER_ROLE_OPERATOR' => 'Operator',
     'USER_ROLE_USER' => 'Użytkownik',
+    'USER_SETTINGS_CHANGED' => 'Dane użytkownika zostały zmienione',
+    'USER_SETTINGS_TITLE' => 'Dane użytkownika',
     'USER_STATUS' => 'Status',
     'USER_STATUS_ACTIVE' => 'Aktywny',
     'USER_STATUS_DELETED' => 'Usunięty',

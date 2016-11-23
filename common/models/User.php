@@ -84,8 +84,7 @@ final class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-            ['language', 'in', 'range' => Language::supportedLanguages()],
-            ['user_role', 'in', 'range' => self::allowedUserRoles()]
+            ['language', 'in', 'range' => Language::supportedLanguages()]
         ];
     }
 

@@ -115,6 +115,7 @@ class UserAcceptForm extends Model
                 'compareAttribute' => 'password',
                 'message' => Yii::t('app', 'PASSWORD_CHANGE_ERROR_PASSWORDS_DO_NOT_MATCH')
             ],
+            ['user_role', 'in', 'range' => User::allowedUserRoles()],
         ];
     }
 

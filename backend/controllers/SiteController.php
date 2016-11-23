@@ -6,6 +6,7 @@ use common\models\EpicQuery;
 use common\models\LoginForm;
 use common\models\user\PasswordChange;
 use common\models\user\UserAcceptForm;
+use common\models\user\UserSettingsForm;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidParamException;
@@ -32,7 +33,7 @@ final class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'password-change', 'set-epic'],
+                        'actions' => ['logout', 'password-change', 'set-epic', 'settings'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -191,5 +192,22 @@ final class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function actionSettings()
+    {
+        $model = new UserSettingsForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_SETTINGS_CHANGED'));
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('user/settings', [
+            'model' => $model,
+        ]);
     }
 }

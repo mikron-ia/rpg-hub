@@ -62,7 +62,8 @@ AppAsset::register($this);
         [
             'label' => Yii::t('app', 'MENU_TOP_SETTINGS'),
             'items' => [
-                ['label' => Yii::t('app', 'MENU_TOP_CHANGE-PASSWORD'), 'url' => ['/site/password-change']]
+                ['label' => Yii::t('app', 'MENU_TOP_SETTINGS'), 'url' => ['/site/settings']],
+                ['label' => Yii::t('app', 'MENU_TOP_CHANGE-PASSWORD'), 'url' => ['/site/password-change']],
             ]
         ],
     ];
