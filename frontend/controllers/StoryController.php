@@ -31,7 +31,7 @@ class StoryController extends Controller
     }
 
     /**
-     * Lists all Story models.
+     * Lists all Story models
      * @return mixed
      */
     public function actionIndex()
@@ -49,7 +49,7 @@ class StoryController extends Controller
     }
 
     /**
-     * Displays a single Story model.
+     * Displays a single Story model
      * @param string $id
      * @return mixed
      */

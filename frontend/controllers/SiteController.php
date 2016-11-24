@@ -12,7 +12,6 @@ use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
-use frontend\models\ContactForm;
 use yii\base\Exception;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -130,8 +129,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Logs out the current user.
-     *
+     * Logs out the current user
      * @return mixed
      */
     public function actionLogout()
@@ -142,32 +140,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays contact page.
-     *
-     * @return mixed
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success',
-                    'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending email.');
-            }
-
-            return $this->refresh();
-        } else {
-            return $this->render('contact', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
      * Password change action
-     *
      * @return mixed
      * @throws BadRequestHttpException
      */
@@ -188,8 +161,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Requests password reset.
-     *
+     * Requests password reset
      * @return mixed
      */
     public function actionRequestPasswordReset()
@@ -211,8 +183,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Resets password.
-     *
+     * Resets password
      * @param string $token
      * @return mixed
      * @throws BadRequestHttpException

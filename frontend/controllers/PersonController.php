@@ -40,7 +40,7 @@ final class PersonController extends Controller
     }
 
     /**
-     * Lists all Person models.
+     * Lists all Person models
      * @return mixed
      */
     public function actionIndex()
@@ -59,7 +59,7 @@ final class PersonController extends Controller
     }
 
     /**
-     * Displays a single Person model.
+     * Displays a single Person model
      * @param string $id
      * @return mixed
      * @throws HttpException
