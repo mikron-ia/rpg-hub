@@ -7,6 +7,7 @@ use common\models\RecapQuery;
 use common\models\StoryQuery;
 use common\models\user\PasswordChange;
 use common\models\user\UserAcceptForm;
+use common\models\user\UserSettingsForm;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -37,7 +38,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'logout', 'password-change', 'set-epic'],
+                        'actions' => ['index', 'logout', 'password-change', 'set-epic', 'settings'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -299,5 +300,22 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function actionSettings()
+    {
+        $model = new UserSettingsForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_SETTINGS_CHANGED'));
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('user/settings', [
+            'model' => $model,
+        ]);
     }
 }
