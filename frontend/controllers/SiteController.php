@@ -24,7 +24,7 @@ use yii\web\Response;
 /**
  * Site controller
  */
-class SiteController extends Controller
+final class SiteController extends Controller
 {
     public function behaviors()
     {

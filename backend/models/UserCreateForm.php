@@ -11,7 +11,7 @@ use yii\base\Model;
  * Class CreateUserForm
  * @package backend\models
  */
-class UserCreateForm extends Model
+final class UserCreateForm extends Model
 {
     public $email;
     public $language;

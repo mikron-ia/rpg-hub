@@ -5,7 +5,7 @@ namespace backend\models\security;
 
 use yii\web\HttpException;
 
-class Authenticator
+final class Authenticator
 {
     /**
      * @param array $config Configuration segment responsible for authentication references and constants
