@@ -13,7 +13,7 @@ use yii\base\Model;
  * Class CreateUserForm
  * @package backend\models
  */
-class UserAcceptForm extends Model
+final class UserAcceptForm extends Model
 {
     public $username;
     public $email;

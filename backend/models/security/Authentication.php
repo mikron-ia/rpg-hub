@@ -8,7 +8,7 @@ use yii\web\HttpException;
  * Class AuthenticationFactory
  * @package Mikron\HubBack\Infrastructure\Security
  */
-class Authentication
+final class Authentication
 {
     /**
      * @var AuthenticationToken

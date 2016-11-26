@@ -6,7 +6,7 @@ use kartik\password\StrengthValidator;
 use Yii;
 use yii\base\Model;
 
-class PasswordChange extends Model
+final class PasswordChange extends Model
 {
     public $password_old;
     public $password_new;
