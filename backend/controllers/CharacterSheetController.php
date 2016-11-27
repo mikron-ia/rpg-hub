@@ -11,9 +11,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CharacterController implements the CRUD actions for Character model.
+ * CharacterSheetController implements the CRUD actions for Character model.
  */
-final class CharacterController extends Controller
+final class CharacterSheetController extends Controller
 {
     public function behaviors()
     {
