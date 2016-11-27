@@ -60,7 +60,7 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
                 'in',
                 'skipOnError' => true,
                 'range' => $this->getPeopleAvailableToThisCharacterAsIdList(),
-                'message' => Yii::t('app', 'CHARACTER_ERROR_PERSON_NOT_CONNECTED'),
+                'message' => Yii::t('app', 'CHARACTER_SHEET_ERROR_PERSON_NOT_CONNECTED'),
             ],
         ];
     }
@@ -68,12 +68,12 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
     public function attributeLabels()
     {
         return [
-            'character_id' => Yii::t('app', 'CHARACTER_ID'),
+            'character_id' => Yii::t('app', 'CHARACTER_SHEET_ID'),
             'epic_id' => Yii::t('app', 'EPIC_LABEL'),
-            'key' => Yii::t('app', 'CHARACTER_KEY'),
-            'name' => Yii::t('app', 'CHARACTER_NAME'),
-            'data' => Yii::t('app', 'CHARACTER_DATA'),
-            'currently_delivered_person_id' => Yii::t('app', 'CHARACTER_DELIVERED_PERSON_ID'),
+            'key' => Yii::t('app', 'CHARACTER_SHEET_KEY'),
+            'name' => Yii::t('app', 'CHARACTER_SHEET_NAME'),
+            'data' => Yii::t('app', 'CHARACTER_SHEET_DATA'),
+            'currently_delivered_person_id' => Yii::t('app', 'CHARACTER_SHEET_DELIVERED_PERSON_ID'),
         ];
     }
 

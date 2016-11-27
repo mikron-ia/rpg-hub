@@ -30,7 +30,7 @@ $this->title = 'RPG hub - control';
 
         <div class="btn-group btn-group-lg">
             <?= Html::a(Yii::t('app', 'BUTTON_PEOPLE'), ['person/index'], ['class' => 'btn btn-lg btn-success']); ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_CHARACTERS'), ['character/index'],
+            <?= Html::a(Yii::t('app', 'BUTTON_CHARACTER_SHEETS'), ['character/index'],
                 ['class' => 'btn btn-lg btn-success']); ?>
             <?= Html::a(Yii::t('app', 'BUTTON_GROUP'), ['group/index'], ['class' => 'btn btn-lg btn-success']); ?>
         </div>
