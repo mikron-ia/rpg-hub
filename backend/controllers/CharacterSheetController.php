@@ -3,15 +3,15 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Character;
-use common\models\CharacterQuery;
+use common\models\CharacterSheet;
+use common\models\CharacterSheetQuery;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CharacterSheetController implements the CRUD actions for Character model.
+ * CharacterSheetController implements the CRUD actions for CharacterSheet model.
  */
 final class CharacterSheetController extends Controller
 {
@@ -38,12 +38,12 @@ final class CharacterSheetController extends Controller
     }
 
     /**
-     * Lists all Character models.
+     * Lists all CharacterSheet models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CharacterQuery();
+        $searchModel = new CharacterSheetQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -53,7 +53,7 @@ final class CharacterSheetController extends Controller
     }
 
     /**
-     * Displays a single Character model.
+     * Displays a single CharacterSheet model.
      * @param string $id
      * @return mixed
      */
@@ -75,15 +75,15 @@ final class CharacterSheetController extends Controller
     }
 
     /**
-     * Creates a new Character model.
+     * Creates a new CharacterSheet model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        Character::canUserCreateThem();
+        CharacterSheet::canUserCreateThem();
 
-        $model = new Character();
+        $model = new CharacterSheet();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->character_id]);
@@ -95,7 +95,7 @@ final class CharacterSheetController extends Controller
     }
 
     /**
-     * Updates an existing Character model.
+     * Updates an existing CharacterSheet model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -116,15 +116,15 @@ final class CharacterSheetController extends Controller
     }
 
     /**
-     * Finds the Character model based on its primary key value.
+     * Finds the CharacterSheet model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Character the loaded model
+     * @return CharacterSheet the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Character::findOne($id)) !== null) {
+        if (($model = CharacterSheet::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));

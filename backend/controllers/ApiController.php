@@ -51,7 +51,7 @@ final class ApiController extends Controller
 
     public function actionCharacter($epicCode, $method, $key, $authMethod, $authKey, $language)
     {
-        return $this->viewAction($epicCode, $method, $key, $authMethod, $authKey, "Character", "Character data",
+        return $this->viewAction($epicCode, $method, $key, $authMethod, $authKey, "CharacterSheet", "CharacterSheet data",
             "Complete data", $language);
     }
 

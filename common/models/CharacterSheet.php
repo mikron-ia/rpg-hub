@@ -24,7 +24,7 @@ use yii\db\ActiveRecord;
  * @property Person $currentlyDeliveredPerson
  * @property Person[] $people
  */
-class Character extends ActiveRecord implements Displayable, HasEpicControl
+class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 {
     use ToolsForEntity;
 
@@ -99,7 +99,7 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
             'performedActionBehavior' => [
                 'class' => PerformedActionBehavior::className(),
                 'idName' => 'character_id',
-                'className' => 'Character',
+                'className' => 'CharacterSheet',
             ]
         ];
     }

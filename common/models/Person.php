@@ -27,7 +27,7 @@ use yii\db\ActiveRecord;
  * @property string $external_data_pack_id
  *
  * @property Epic $epic
- * @property Character $character
+ * @property CharacterSheet $character
  * @property DescriptionPack $descriptionPack
  * @property ExternalDataPack $externalDataPack
  */
@@ -64,7 +64,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
                 ['character_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Character::className(),
+                'targetClass' => CharacterSheet::className(),
                 'targetAttribute' => ['character_id' => 'character_id']
             ],
             [
@@ -172,7 +172,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
      */
     public function getCharacter():ActiveQuery
     {
-        return $this->hasOne(Character::className(), ['character_id' => 'character_id']);
+        return $this->hasOne(CharacterSheet::className(), ['character_id' => 'character_id']);
     }
 
     /**
@@ -240,10 +240,10 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
 
     /**
      * Creates person record for character
-     * @param Character $character
+     * @param CharacterSheet $character
      * @return null|Person
      */
-    static public function createForCharacter(Character $character)
+    static public function createForCharacter(CharacterSheet $character)
     {
         $person = new Person();
         $person->epic_id = $character->epic_id;

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Character */
+/* @var $model common\models\CharacterSheet */
 
 $this->title = Yii::t('app', 'CHARACTER_SHEET_TITLE_CREATE');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'CHARACTER_SHEET_TITLE_INDEX'), 'url' => ['index']];

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\CharacterQuery */
+/* @var $model common\models\CharacterSheetQuery */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 

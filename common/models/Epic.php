@@ -20,7 +20,7 @@ use yii\web\HttpException;
  * @property string $system
  * @property string $parameter_pack_id
  *
- * @property Character[] $characters
+ * @property CharacterSheet[] $characters
  * @property ParameterPack $parameterPack
  * @property User[] $gms
  * @property User[] $players
@@ -98,7 +98,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
      */
     public function getCharacters()
     {
-        return $this->hasMany(Character::className(), ['epic_id' => 'epic_id']);
+        return $this->hasMany(CharacterSheet::className(), ['epic_id' => 'epic_id']);
     }
 
     /**

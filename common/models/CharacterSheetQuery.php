@@ -7,13 +7,10 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * CharacterQuery represents the model behind the search form about `common\models\Character`.
+ * CharacterSheetQuery represents the model behind the search form about `common\models\CharacterSheet`.
  */
-final class CharacterQuery extends Character
+final class CharacterSheetQuery extends CharacterSheet
 {
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -22,9 +19,6 @@ final class CharacterQuery extends Character
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
@@ -33,13 +27,12 @@ final class CharacterQuery extends Character
 
     /**
      * Creates data provider instance with search query applied
-     *
      * @param array $params
      * @return ActiveDataProvider
      */
     public function search($params)
     {
-        $query = Character::find();
+        $query = CharacterSheet::find();
 
         // add conditions that should always apply here
 
@@ -79,11 +72,11 @@ final class CharacterQuery extends Character
 
     /**
      * Provides all active characters from the current epic
-     * @return Character[]
+     * @return CharacterSheet[]
      */
     static public function activeCharactersAsModels()
     {
-        $query = Character::find();
+        $query = CharacterSheet::find();
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
