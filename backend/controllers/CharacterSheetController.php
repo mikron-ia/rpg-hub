@@ -86,7 +86,7 @@ final class CharacterSheetController extends Controller
         $model = new CharacterSheet();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->character_id]);
+            return $this->redirect(['view', 'id' => $model->character_sheet_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -107,7 +107,7 @@ final class CharacterSheetController extends Controller
         $model->canUserControlYou();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->character_id]);
+            return $this->redirect(['view', 'id' => $model->character_sheet_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

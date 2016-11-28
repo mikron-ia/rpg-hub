@@ -14,7 +14,7 @@ final class CharacterSheetQuery extends CharacterSheet
     public function rules()
     {
         return [
-            [['character_id', 'epic_id'], 'integer'],
+            [['character_sheet_id', 'epic_id'], 'integer'],
             [['key', 'name', 'data'], 'safe'],
         ];
     }
@@ -59,7 +59,7 @@ final class CharacterSheetQuery extends CharacterSheet
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'character_id' => $this->character_id,
+            'character_sheet_id' => $this->character_sheet_id,
             'epic_id' => $this->epic_id,
         ]);
 
@@ -106,7 +106,7 @@ final class CharacterSheetQuery extends CharacterSheet
         $characterListForSelector = [];
 
         foreach ($characterList as $story) {
-            $characterListForSelector[$story->character_id] = $story->name;
+            $characterListForSelector[$story->character_sheet_id] = $story->name;
         }
 
         return $characterListForSelector;

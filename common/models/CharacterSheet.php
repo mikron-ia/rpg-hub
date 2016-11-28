@@ -11,9 +11,9 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "character".
+ * This is the model class for table "character_sheet".
  *
- * @property string $character_id
+ * @property string $character_sheet_id
  * @property string $epic_id
  * @property string $key
  * @property string $name
@@ -30,7 +30,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 
     public static function tableName()
     {
-        return 'character';
+        return 'character_sheet';
     }
 
     public function rules()
@@ -68,7 +68,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     public function attributeLabels()
     {
         return [
-            'character_id' => Yii::t('app', 'CHARACTER_SHEET_ID'),
+            'character_sheet_id' => Yii::t('app', 'CHARACTER_SHEET_ID'),
             'epic_id' => Yii::t('app', 'EPIC_LABEL'),
             'key' => Yii::t('app', 'CHARACTER_SHEET_KEY'),
             'name' => Yii::t('app', 'CHARACTER_SHEET_NAME'),
@@ -98,7 +98,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         return [
             'performedActionBehavior' => [
                 'class' => PerformedActionBehavior::className(),
-                'idName' => 'character_id',
+                'idName' => 'character_sheet_id',
                 'className' => 'CharacterSheet',
             ]
         ];
@@ -125,7 +125,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
      */
     public function getPeople()
     {
-        return $this->hasMany(Person::className(), ['character_id' => 'character_id']);
+        return $this->hasMany(Person::className(), ['character_sheet_id' => 'character_sheet_id']);
     }
 
     public function getSimpleDataForApi()

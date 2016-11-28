@@ -22,7 +22,7 @@ use yii\db\ActiveRecord;
  * @property string $tagline
  * @property string $data
  * @property string $visibility
- * @property string $character_id
+ * @property string $character_sheet_id
  * @property string $description_pack_id
  * @property string $external_data_pack_id
  *
@@ -49,7 +49,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
     {
         return [
             [['epic_id', 'name', 'tagline', 'visibility'], 'required'],
-            [['epic_id', 'character_id', 'description_pack_id'], 'integer'],
+            [['epic_id', 'character_sheet_id', 'description_pack_id'], 'integer'],
             [['data', 'visibility'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name', 'tagline'], 'string', 'max' => 120],
@@ -61,11 +61,11 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
             [
-                ['character_id'],
+                ['character_sheet_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => CharacterSheet::className(),
-                'targetAttribute' => ['character_id' => 'character_id']
+                'targetAttribute' => ['character_sheet_id' => 'character_sheet_id']
             ],
             [
                 ['description_pack_id'],
@@ -101,7 +101,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
             'tagline' => Yii::t('app', 'PERSON_TAGLINE'),
             'data' => Yii::t('app', 'PERSON_DATA'),
             'visibility' => Yii::t('app', 'PERSON_VISIBILITY'),
-            'character_id' => Yii::t('app', 'LABEL_CHARACTER'),
+            'character_sheet_id' => Yii::t('app', 'LABEL_CHARACTER'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
         ];
@@ -172,7 +172,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
      */
     public function getCharacter():ActiveQuery
     {
-        return $this->hasOne(CharacterSheet::className(), ['character_id' => 'character_id']);
+        return $this->hasOne(CharacterSheet::className(), ['character_sheet_id' => 'character_sheet_id']);
     }
 
     /**
@@ -248,7 +248,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
         $person = new Person();
         $person->epic_id = $character->epic_id;
         $person->name = $character->name;
-        $person->character_id = $character->character_id;
+        $person->character_sheet_id = $character->character_sheet_id;
         $person->tagline = '?';
         $person->visibility = Visibility::VISIBILITY_GM;
 

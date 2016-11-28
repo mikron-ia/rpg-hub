@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-lg-6">
-        <?= $form->field($model, 'character_id')->dropDownList(
+        <?= $form->field($model, 'character_sheet_id')->dropDownList(
             CharacterSheetQuery::getListOfCharactersForSelector(),
             ['prompt' => ' --- ' . Yii::t('app', 'CHARACTER_SHEET_PROMPT') . ' --- ']
         ) ?>

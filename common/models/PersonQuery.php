@@ -18,7 +18,7 @@ final class PersonQuery extends Person
     public function rules()
     {
         return [
-            [['person_id', 'character_id'], 'integer'],
+            [['person_id', 'character_sheet_id'], 'integer'],
             [['epic_id', 'name', 'tagline', 'visibility'], 'safe'],
         ];
     }
@@ -68,7 +68,7 @@ final class PersonQuery extends Person
         $query->andFilterWhere([
             'person_id' => $this->person_id,
             'epic_id' => $this->epic_id,
-            'character_id' => $this->character_id,
+            'character_sheet_id' => $this->character_sheet_id,
         ]);
 
         $query->andFilterWhere(['like', 'key', $this->key])

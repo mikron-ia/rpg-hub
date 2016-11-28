@@ -37,10 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => strlen($model->data),
                 ],
                 [
-                    'attribute' => 'character_id',
+                    'attribute' => 'character_sheet_id',
                     'format' => 'raw',
-                    'value' => $model->character_id ?
-                        Html::a($model->character->name, ['character-sheet/view', 'id' => $model->character_id], []) :
+                    'value' => $model->character_sheet_id ?
+                        Html::a($model->character->name, ['character-sheet/view', 'id' => $model->character_sheet_id], []) :
                         null,
                 ],
                 [

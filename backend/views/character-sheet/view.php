@@ -17,12 +17,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
-            ['update', 'id' => $model->character_id],
+            ['update', 'id' => $model->character_sheet_id],
             ['class' => 'btn btn-primary']
         ); ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_DELETE'),
-            ['delete', 'id' => $model->character_id],
+            ['delete', 'id' => $model->character_sheet_id],
             [
                 'class' => 'btn btn-danger',
                 'data' => [
