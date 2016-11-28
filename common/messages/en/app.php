@@ -160,7 +160,7 @@ return [
     'GROUP_NAME' => 'Name',
     'JSON_INVALID' => 'Invalid JSON data, unable to decode',
     'LABEL_BASIC_DATA_AND_OPERATIONS' => 'Base data',
-    'LABEL_CHARACTER' => 'CharacterSheet',
+    'LABEL_CHARACTER' => 'Character sheet',
     'LABEL_CONTENT' => 'Content',
     'LABEL_DATA_SIZE' => 'Size of external data',
     'LABEL_DELETE' => 'Delete',

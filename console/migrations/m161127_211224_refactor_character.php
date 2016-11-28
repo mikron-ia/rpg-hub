@@ -57,7 +57,7 @@ class m161127_211224_refactor_character extends Migration
 
         $this->dropForeignKey('person_ibfk_2', '{{%person}}');
 
-        $this->addColumn('person', 'character_id', $this->integer(11)->unsigned()->after('character_sheeet_id'));
+        $this->addColumn('person', 'character_id', $this->integer(11)->unsigned()->after('character_sheet_id'));
         $this->execute('UPDATE `person` SET character_id = character_sheet_id');
         $this->dropColumn('person', 'character_sheet_id');
 
