@@ -32,11 +32,9 @@ use yii\widgets\ActiveForm;
             ); ?>
         </div>
 
-        <div class="col-md-12">
-            <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
-        </div>
-
     <?php endif; ?>
+
+    <div class="clearfix"></div>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),

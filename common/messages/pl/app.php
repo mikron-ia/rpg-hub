@@ -58,7 +58,7 @@ return [
     'BUTTON_USER_INVITE' => 'Zaproś użytkownika',
     'BUTTON_USER_LIST' => 'Zarządzanie użytkownikami',
     'BUTTON_VIEW' => 'Wyświetl',
-    'CHARACTER_SHEET_DATA' => 'Dane postaci',
+    'CHARACTER_SHEET_DATA' => 'Dane zewnętrzne postaci',
     'CHARACTER_SHEET_DELIVERED_PERSON_ID' => 'Aktualnie dostarczana osoba',
     'CHARACTER_SHEET_ERROR_PERSON_NOT_CONNECTED' => 'Ta osoba nie jest powiązana z tą kartą postaci',
     'CHARACTER_SHEET_FORM_SELECT_CURRENTLY_DELIVERED_PERSON' => 'Wybierz aktualnie używaną przez kartę postaci osobę ...',

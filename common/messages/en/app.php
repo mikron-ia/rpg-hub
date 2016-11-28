@@ -58,7 +58,7 @@ return [
     'BUTTON_USER_INVITE' => 'Invite user',
     'BUTTON_USER_LIST' => 'User management',
     'BUTTON_VIEW' => 'View',
-    'CHARACTER_SHEET_DATA' => 'Character data',
+    'CHARACTER_SHEET_DATA' => 'Character external data',
     'CHARACTER_SHEET_DELIVERED_PERSON_ID' => 'Currently delivered person',
     'CHARACTER_SHEET_ERROR_PERSON_NOT_CONNECTED' => 'This person is not connected with this character sheet',
     'CHARACTER_SHEET_FORM_SELECT_CURRENTLY_DELIVERED_PERSON' => 'Select currently delivered person ...',
