@@ -12,9 +12,6 @@ use yii\data\ActiveDataProvider;
  */
 final class PersonQuery extends Person
 {
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -23,9 +20,6 @@ final class PersonQuery extends Person
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
