@@ -61,6 +61,10 @@ class m161127_211224_refactor_character extends Migration
         $this->execute('UPDATE `person` SET character_id = character_sheet_id');
         $this->dropColumn('person', 'character_sheet_id');
 
+        $this->addForeignKey('character_ibfk_1', 'character', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('character_ibfk_2', 'character', 'currently_delivered_person_id', 'person', 'person_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('character_ibfk_3', 'character', 'player_id', '{{%user}}', 'id', 'RESTRICT', 'CASCADE');
+
         $this->addForeignKey('person_ibfk_2', '{{%person}}', 'character_id', '{{%character}}', 'character_id', 'RESTRICT', 'CASCADE');
 
         $this->dropTable('{{%character_sheet}}');
