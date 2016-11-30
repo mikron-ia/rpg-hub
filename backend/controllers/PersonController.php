@@ -113,7 +113,7 @@ final class PersonController extends Controller
         $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->person_id]);
+            return $this->redirect(['view', 'id' => $model->character_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -139,7 +139,7 @@ final class PersonController extends Controller
         $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->person_id]);
+            return $this->redirect(['view', 'id' => $model->character_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

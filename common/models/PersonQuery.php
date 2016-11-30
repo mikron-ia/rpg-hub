@@ -18,7 +18,7 @@ final class PersonQuery extends Person
     public function rules()
     {
         return [
-            [['person_id', 'character_sheet_id'], 'integer'],
+            [['character_id', 'character_sheet_id'], 'integer'],
             [['epic_id', 'name', 'tagline', 'visibility'], 'safe'],
         ];
     }
@@ -66,7 +66,7 @@ final class PersonQuery extends Person
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'person_id' => $this->person_id,
+            'character_id' => $this->character_id,
             'epic_id' => $this->epic_id,
             'character_sheet_id' => $this->character_sheet_id,
         ]);

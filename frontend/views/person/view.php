@@ -58,7 +58,7 @@ if ($this->params['showPrivates']) {
 
     <?= $this->registerJs("$.get(
         '" . Yii::$app->urlManager->createUrl(['person/external-reputation']) . "',
-        {id: " . $model->person_id . "},
+        {id: " . $model->character_id . "},
         function (data) {
             $('.reputations').html(data);
         }
@@ -68,7 +68,7 @@ if ($this->params['showPrivates']) {
 
     <?= $this->registerJs("$.get(
         '" . Yii::$app->urlManager->createUrl(['person/external-reputation-event']) . "',
-        {id: " . $model->person_id . "},
+        {id: " . $model->character_id . "},
         function (data) {
             $('.reputation-events').html(data);
         }

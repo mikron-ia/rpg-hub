@@ -18,7 +18,7 @@ use yii\db\ActiveRecord;
  * @property string $key
  * @property string $name
  * @property string $data
- * @property string $currently_delivered_person_id
+ * @property string $currently_delivered_character_id
  *
  * @property Epic $epic
  * @property Person $currentlyDeliveredPerson
@@ -37,7 +37,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     {
         return [
             [['epic_id', 'name'], 'required'],
-            [['epic_id', 'currently_delivered_person_id'], 'integer'],
+            [['epic_id', 'currently_delivered_character_id'], 'integer'],
             [['name'], 'string', 'max' => 120],
             [
                 ['epic_id'],
@@ -47,16 +47,16 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
             [
-                ['currently_delivered_person_id'],
+                ['currently_delivered_character_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Person::className(),
                 'targetAttribute' => [
-                    'currently_delivered_person_id' => 'person_id'
+                    'currently_delivered_character_id' => 'character_id'
                 ]
             ],
             [
-                ['currently_delivered_person_id'],
+                ['currently_delivered_character_id'],
                 'in',
                 'skipOnError' => true,
                 'range' => $this->getPeopleAvailableToThisCharacterAsIdList(),
@@ -73,7 +73,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             'key' => Yii::t('app', 'CHARACTER_SHEET_KEY'),
             'name' => Yii::t('app', 'CHARACTER_SHEET_NAME'),
             'data' => Yii::t('app', 'CHARACTER_SHEET_DATA'),
-            'currently_delivered_person_id' => Yii::t('app', 'CHARACTER_SHEET_DELIVERED_PERSON_ID'),
+            'currently_delivered_character_id' => Yii::t('app', 'CHARACTER_SHEET_DELIVERED_PERSON_ID'),
         ];
     }
 
@@ -86,7 +86,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             /* Create and attach person */
             $person = Person::createForCharacter($this);
             if ($person) {
-                $this->currently_delivered_person_id = $person->person_id;
+                $this->currently_delivered_character_id = $person->character_id;
             }
         }
 
@@ -117,7 +117,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
      */
     public function getCurrentlyDeliveredPerson()
     {
-        return $this->hasOne(Person::className(), ['person_id' => 'currently_delivered_person_id']);
+        return $this->hasOne(Person::className(), ['character_id' => 'currently_delivered_character_id']);
     }
 
     /**
@@ -143,7 +143,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         $decodedData['name'] = $this->name;
         $decodedData['key'] = $this->key;
 
-        if (isset($this->currently_delivered_person_id)) {
+        if (isset($this->currently_delivered_character_id)) {
             $decodedData['person'] = $this->currentlyDeliveredPerson->getCompleteDataForApi();
         }
 
@@ -166,7 +166,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         $dropDownList = [];
 
         foreach ($peopleList as $person) {
-            $dropDownList[$person->person_id] = $person->name;
+            $dropDownList[$person->character_id] = $person->name;
         }
 
         return $dropDownList;

@@ -157,7 +157,7 @@ final class PersonController extends Controller
     protected function findModel($id)
     {
         if (($model = Person::findOne([
-                'person_id' => $id,
+                'character_id' => $id,
                 'visibility' => Visibility::determineVisibilityVector(),
             ])) !== null
         ) {

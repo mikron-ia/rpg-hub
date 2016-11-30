@@ -50,12 +50,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => strlen($model->data),
             ],
             [
-                'attribute' => 'currently_delivered_person_id',
+                'attribute' => 'currently_delivered_character_id',
                 'format' => 'raw',
-                'value' => isset($model->currently_delivered_person_id) ?
+                'value' => isset($model->currently_delivered_character_id) ?
                     Html::a(
                         $model->currentlyDeliveredPerson->name,
-                        ['person/view', 'id' => $model->currently_delivered_person_id]
+                        ['person/view', 'id' => $model->currently_delivered_character_id]
                     ) :
                     null,
             ],

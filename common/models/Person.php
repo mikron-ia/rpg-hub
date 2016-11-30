@@ -15,7 +15,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "person".
  *
- * @property string $person_id
+ * @property string $character_id
  * @property string $epic_id
  * @property string $key
  * @property string $name
@@ -42,7 +42,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
 
     public static function tableName()
     {
-        return 'person';
+        return 'character';
     }
 
     public function rules()
@@ -94,7 +94,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
     public function attributeLabels()
     {
         return [
-            'person_id' => Yii::t('app', 'PERSON_ID'),
+            'character_id' => Yii::t('app', 'PERSON_ID'),
             'epic_id' => Yii::t('app', 'LABEL_EPIC'),
             'key' => Yii::t('app', 'PERSON_KEY'),
             'name' => Yii::t('app', 'PERSON_NAME'),
@@ -132,7 +132,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
         return [
             'performedActionBehavior' => [
                 'class' => PerformedActionBehavior::className(),
-                'idName' => 'person_id',
+                'idName' => 'character_id',
                 'className' => 'Person',
             ]
         ];
