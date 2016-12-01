@@ -15,7 +15,7 @@ use yii\web\HttpException;
  * @property string $class
  *
  * @property Description[] $descriptions
- * @property Person[] $people
+ * @property Character[] $people
  */
 final class DescriptionPack extends ActiveRecord implements Displayable
 {
@@ -53,7 +53,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable
      */
     public function getPeople():ActiveQuery
     {
-        return $this->hasMany(Person::className(), ['description_pack_id' => 'description_pack_id']);
+        return $this->hasMany(Character::className(), ['description_pack_id' => 'description_pack_id']);
     }
 
 

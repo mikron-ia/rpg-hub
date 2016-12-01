@@ -4,7 +4,7 @@ use common\models\core\Visibility;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 
-/** @var $model \common\models\Person */
+/** @var $model \common\models\Character */
 /** @var $events \common\models\external\ReputationEvent[] */
 ?>
 

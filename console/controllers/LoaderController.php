@@ -2,7 +2,7 @@
 
 namespace console\controllers;
 
-use common\models\Person;
+use common\models\Character;
 use common\models\tools\Retriever;
 use yii\base\Exception;
 use yii\console\Controller;
@@ -16,8 +16,8 @@ class LoaderController extends Controller
      */
     public function actionPerson()
     {
-        /* @var $models Person[] */
-        $models = Person::find()->all();
+        /* @var $models Character[] */
+        $models = Character::find()->all();
 
         foreach ($models as $model) {
             $baseUrl = Yii::$app->params['reputationAccessUri'];

@@ -1,15 +1,14 @@
 <?php
 
-use common\models\Person;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\PersonQuery */
+/* @var $model common\models\CharacterSheetQuery */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="person-search">
+<div class="character-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,16 +16,6 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?php echo $form->field($model, 'name') ?>
-
-    <?php echo $form->field($model, 'tagline') ?>
-
-    <?php echo $form->field($model, 'visibility')->widget(
-        kartik\select2\Select2::className(),
-        [
-            'data' => Person::visibilityNames(),
-            'options' => ['multiple' => true],
-        ]
-    ) ?>
 
     <div class="form-group">
         <?= Html::resetButton(Yii::t('app', 'BUTTON_RESET'), ['class' => 'btn btn-default']) ?>

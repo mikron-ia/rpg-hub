@@ -6,11 +6,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Character */
 
-$this->title = Yii::t('app', 'CHARACTER_TITLE_CREATE');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'CHARACTER_TITLE_INDEX'), 'url' => ['index']];
+$this->title = Yii::t('app', 'TITLE_CHARACTER_CREATE');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_CHARACTER_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="character-create">
+<div class="person-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

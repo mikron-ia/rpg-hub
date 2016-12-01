@@ -28,7 +28,7 @@ $items = [
 
 if ($this->params['showPrivates']) {
     $items[] = [
-        'label' => Yii::t('app', 'PERSON_GM_TAB'),
+        'label' => Yii::t('app', 'CHARACTER_GM_TAB'),
         'content' => $this->render('_view_gm', ['model' => $model]),
         'encode' => false,
         'active' => false,

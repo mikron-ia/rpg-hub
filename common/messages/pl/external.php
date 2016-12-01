@@ -17,6 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'CHARACTER_REPUTATIONS_TAB' => 'Reputacje',
+    'CHARACTER_REPUTATION_EVENTS_TAB' => 'Historia reputacji',
     'EXTERNAL_DATA_CODE' => 'Kod identyfikacyjny',
     'EXTERNAL_DATA_DATA' => 'Dane',
     'EXTERNAL_DATA_ID' => 'ID',
@@ -28,8 +30,6 @@ return [
     'EXTERNAL_DATA_PACK_CLASS' => 'Klasa',
     'EXTERNAL_DATA_PACK_ID' => 'ID pakietu',
     'NO_DATA' => 'Brak danych dla obiektu',
-    'PERSON_REPUTATIONS_TAB' => 'Reputacje',
-    'PERSON_REPUTATION_EVENTS_TAB' => 'Historia reputacji',
     'REPUTATION_BALANCE' => 'Wartość<br>bieżąca',
     'REPUTATION_BALANCE_RANGE' => 'Zakres<br>wartości',
     'REPUTATION_CHANGE' => 'Zmiana',

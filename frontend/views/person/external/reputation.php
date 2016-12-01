@@ -1,6 +1,6 @@
 <?php
 
-/** @var $model \common\models\Person */
+/** @var $model \common\models\Character */
 /** @var $reputations \common\models\external\Reputation[] */
 ?>
 

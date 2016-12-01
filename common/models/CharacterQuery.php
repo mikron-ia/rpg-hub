@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\Visibility;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -11,20 +12,14 @@ use yii\data\ActiveDataProvider;
  */
 final class CharacterQuery extends Character
 {
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
-            [['character_id', 'epic_id'], 'integer'],
-            [['key', 'name', 'data'], 'safe'],
+            [['character_id', 'character_sheet_id'], 'integer'],
+            [['epic_id', 'name', 'tagline', 'visibility'], 'safe'],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
@@ -33,34 +28,33 @@ final class CharacterQuery extends Character
 
     /**
      * Creates data provider instance with search query applied
-     *
      * @param array $params
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params):ActiveDataProvider
     {
         $query = Character::find();
 
         // add conditions that should always apply here
 
         if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
             $query->where('0=1');
-        } else {
-            $query->andWhere([
-                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-            ]);
         }
+
+        $query->andWhere([
+            'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+            'visibility' => Visibility::determineVisibilityVector(),
+        ]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => ['pageSize' => 24],
         ]);
 
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
         }
 
@@ -68,62 +62,15 @@ final class CharacterQuery extends Character
         $query->andFilterWhere([
             'character_id' => $this->character_id,
             'epic_id' => $this->epic_id,
+            'character_sheet_id' => $this->character_sheet_id,
         ]);
 
         $query->andFilterWhere(['like', 'key', $this->key])
             ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'data', $this->data]);
+            ->andFilterWhere(['like', 'tagline', $this->tagline])
+            ->andFilterWhere(['like', 'data', $this->data])
+            ->andFilterWhere(['in', 'visibility', $this->visibility]);
 
         return $dataProvider;
-    }
-
-    /**
-     * Provides all active characters from the current epic
-     * @return Character[]
-     */
-    static public function activeCharactersAsModels()
-    {
-        $query = Character::find();
-
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-            $query->where('0=1');
-        } else {
-            $query->andWhere([
-                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-            ]);
-        }
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => false,
-        ]);
-
-        return $dataProvider->getModels();
-    }
-
-    /**
-     * @return string[]
-     */
-    static public function getListOfCharactersForSelector()
-    {
-        $characterList = self::activeCharactersAsModels();
-
-        /** @var string[] $characterListForSelector */
-        $characterListForSelector = [];
-
-        foreach ($characterList as $story) {
-            $characterListForSelector[$story->character_id] = $story->name;
-        }
-
-        return $characterListForSelector;
-    }
-
-    /**
-     * @return int[]
-     */
-    static public function allowedCharacters()
-    {
-        return array_keys(self::activeCharactersAsModels());
     }
 }

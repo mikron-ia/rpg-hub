@@ -4,7 +4,7 @@ use common\models\core\Visibility;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 
-/** @var $model \common\models\Person */
+/** @var $model \common\models\Character */
 
 switch ($model->visibility) {
     case Visibility::VISIBILITY_GM :
@@ -34,12 +34,12 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
 
 ?>
 
-<div id="person-<?php echo $model->person_id; ?>" class="<?= $classesForBox ?>" title="<?= $titleText ?>">
+<div id="person-<?php echo $model->character_id; ?>" class="<?= $classesForBox ?>" title="<?= $titleText ?>">
 
     <h3 class="center">
         <?= Html::a(
             Html::encode(StringHelper::truncateWords($model->name, 16, ' (...)', false)),
-            ['view', 'id' => $model->person_id]
+            ['view', 'id' => $model->character_id]
         ); ?>
     </h3>
 

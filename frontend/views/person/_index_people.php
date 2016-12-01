@@ -1,6 +1,6 @@
 <?php
 
-/* @var $model \common\models\Person */
+/* @var $model \common\models\Character */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 ?>
@@ -9,7 +9,7 @@
     <?= \yii\widgets\ListView::widget([
         'dataProvider' => $dataProvider,
         'layout' => '{summary}{items}<div class="clearfix"></div>{pager}',
-        'itemView' => function (\common\models\Person $model, $key, $index, $widget) {
+        'itemView' => function (\common\models\Character $model, $key, $index, $widget) {
             return $this->render(
                 '_index_box',
                 [

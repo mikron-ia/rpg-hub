@@ -3,7 +3,7 @@
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Person */
+/* @var $model common\models\Character */
 ?>
 
 <div class="col-md-6">

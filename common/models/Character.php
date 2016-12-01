@@ -3,30 +3,42 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
+use common\models\core\HasVisibility;
+use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "character".
+ * This is the model class for table "person".
  *
  * @property string $character_id
  * @property string $epic_id
  * @property string $key
  * @property string $name
+ * @property string $tagline
  * @property string $data
- * @property string $currently_delivered_person_id
+ * @property string $visibility
+ * @property string $character_sheet_id
+ * @property string $description_pack_id
+ * @property string $external_data_pack_id
  *
  * @property Epic $epic
- * @property Person $currentlyDeliveredPerson
- * @property Person[] $people
+ * @property CharacterSheet $character
+ * @property DescriptionPack $descriptionPack
+ * @property ExternalDataPack $externalDataPack
  */
-class Character extends ActiveRecord implements Displayable, HasEpicControl
+class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasVisibility
 {
     use ToolsForEntity;
+
+    const VISIBILITY_NONE = 'none';
+    const VISIBILITY_LOGGED = 'logged';
+    const VISIBILITY_GM = 'gm';
+    const VISIBILITY_FULL = 'full';
 
     public static function tableName()
     {
@@ -36,9 +48,11 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
     public function rules()
     {
         return [
-            [['epic_id', 'name'], 'required'],
-            [['epic_id', 'currently_delivered_person_id'], 'integer'],
-            [['name'], 'string', 'max' => 120],
+            [['epic_id', 'name', 'tagline', 'visibility'], 'required'],
+            [['epic_id', 'character_sheet_id', 'description_pack_id'], 'integer'],
+            [['data', 'visibility'], 'string'],
+            [['key'], 'string', 'max' => 80],
+            [['name', 'tagline'], 'string', 'max' => 120],
             [
                 ['epic_id'],
                 'exist',
@@ -47,20 +61,32 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
             [
-                ['currently_delivered_person_id'],
+                ['character_sheet_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Person::className(),
-                'targetAttribute' => [
-                    'currently_delivered_person_id' => 'person_id'
-                ]
+                'targetClass' => CharacterSheet::className(),
+                'targetAttribute' => ['character_sheet_id' => 'character_sheet_id']
             ],
             [
-                ['currently_delivered_person_id'],
-                'in',
+                ['description_pack_id'],
+                'exist',
                 'skipOnError' => true,
-                'range' => $this->getPeopleAvailableToThisCharacterAsIdList(),
-                'message' => Yii::t('app', 'CHARACTER_ERROR_PERSON_NOT_CONNECTED'),
+                'targetClass' => DescriptionPack::className(),
+                'targetAttribute' => ['description_pack_id' => 'description_pack_id']
+            ],
+            [
+                ['external_data_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => ExternalDataPack::className(),
+                'targetAttribute' => ['external_data_pack_id' => 'external_data_pack_id']
+            ],
+            [
+                ['visibility'],
+                'in',
+                'range' => function () {
+                    return $this->allowedVisibilities();
+                }
             ],
         ];
     }
@@ -69,11 +95,15 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
     {
         return [
             'character_id' => Yii::t('app', 'CHARACTER_ID'),
-            'epic_id' => Yii::t('app', 'EPIC_LABEL'),
+            'epic_id' => Yii::t('app', 'LABEL_EPIC'),
             'key' => Yii::t('app', 'CHARACTER_KEY'),
             'name' => Yii::t('app', 'CHARACTER_NAME'),
+            'tagline' => Yii::t('app', 'CHARACTER_TAGLINE'),
             'data' => Yii::t('app', 'CHARACTER_DATA'),
-            'currently_delivered_person_id' => Yii::t('app', 'CHARACTER_DELIVERED_PERSON_ID'),
+            'visibility' => Yii::t('app', 'CHARACTER_VISIBILITY'),
+            'character_sheet_id' => Yii::t('app', 'LABEL_CHARACTER'),
+            'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
+            'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
         ];
     }
 
@@ -82,12 +112,16 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
         if ($insert) {
             $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
             $this->data = json_encode([]);
+        }
 
-            /* Create and attach person */
-            $person = Person::createForCharacter($this);
-            if ($person) {
-                $this->currently_delivered_person_id = $person->person_id;
-            }
+        if (empty($this->description_pack_id)) {
+            $pack = DescriptionPack::create('Character');
+            $this->description_pack_id = $pack->description_pack_id;
+        }
+
+        if (empty($this->external_data_pack_id)) {
+            $pack = ExternalDataPack::create('Character');
+            $this->external_data_pack_id = $pack->external_data_pack_id;
         }
 
         return parent::beforeSave($insert);
@@ -105,9 +139,30 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
     }
 
     /**
+     * @return string[]
+     */
+    static public function visibilityNames():array
+    {
+        return [
+            self::VISIBILITY_NONE => Yii::t('app', 'CHARACTER_VISIBILITY_NONE'),
+            self::VISIBILITY_LOGGED => Yii::t('app', 'CHARACTER_VISIBILITY_LOGGED'),
+            self::VISIBILITY_GM => Yii::t('app', 'CHARACTER_VISIBILITY_GM'),
+            self::VISIBILITY_FULL => Yii::t('app', 'CHARACTER_VISIBILITY_FULL'),
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function allowedVisibilities():array
+    {
+        return array_keys(self::visibilityNames());
+    }
+
+    /**
      * @return ActiveQuery
      */
-    public function getEpic()
+    public function getEpic():ActiveQuery
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
@@ -115,17 +170,25 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
     /**
      * @return ActiveQuery
      */
-    public function getCurrentlyDeliveredPerson()
+    public function getCharacter():ActiveQuery
     {
-        return $this->hasOne(Person::className(), ['person_id' => 'currently_delivered_person_id']);
+        return $this->hasOne(CharacterSheet::className(), ['character_sheet_id' => 'character_sheet_id']);
     }
 
     /**
      * @return ActiveQuery
      */
-    public function getPeople()
+    public function getDescriptionPack():ActiveQuery
     {
-        return $this->hasMany(Person::className(), ['character_id' => 'character_id']);
+        return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getExternalDataPack()
+    {
+        return $this->hasOne(ExternalDataPack::className(), ['external_data_pack_id' => 'external_data_pack_id']);
     }
 
     public function getSimpleDataForApi()
@@ -133,6 +196,8 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
         return [
             'name' => $this->name,
             'key' => $this->key,
+            'tagline' => $this->tagline,
+            'tags' => [],
         ];
     }
 
@@ -142,9 +207,14 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
 
         $decodedData['name'] = $this->name;
         $decodedData['key'] = $this->key;
+        $decodedData['tagline'] = $this->tagline;
 
-        if (isset($this->currently_delivered_person_id)) {
-            $decodedData['person'] = $this->currentlyDeliveredPerson->getCompleteDataForApi();
+        if ($this->description_pack_id) {
+            $descriptions = $this->descriptionPack->getCompleteDataForApi();
+            $decodedData['descriptions'] = [];
+            foreach ($descriptions as $description) {
+                $decodedData['descriptions'][] = $description;
+            }
         }
 
         return $decodedData;
@@ -152,30 +222,56 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
 
     public function isVisibleInApi()
     {
-        return true;
+        return ($this->visibility === self::VISIBILITY_FULL);
     }
 
-    public function getPeopleAvailableToThisCharacterAsDropDownList()
+    /**
+     * @return string|null
+     */
+    public function getVisibilityName()
     {
-        $query = new ActiveDataProvider([
-            'query' => $this->getPeople()
-        ]);
-
-        /* @var $peopleList Person[] */
-        $peopleList = $query->getModels();
-        $dropDownList = [];
-
-        foreach ($peopleList as $person) {
-            $dropDownList[$person->person_id] = $person->name;
+        $list = self::visibilityNames();
+        if (isset($list[$this->visibility])) {
+            return $list[$this->visibility];
+        } else {
+            return null;
         }
-
-        return $dropDownList;
-
     }
 
-    public function getPeopleAvailableToThisCharacterAsIdList()
+    /**
+     * Creates person record for character
+     * @param CharacterSheet $character
+     * @return null|Character
+     */
+    static public function createForCharacter(CharacterSheet $character)
     {
-        return array_keys($this->getPeopleAvailableToThisCharacterAsDropDownList());
+        $person = new Character();
+        $person->epic_id = $character->epic_id;
+        $person->name = $character->name;
+        $person->character_sheet_id = $character->character_sheet_id;
+        $person->tagline = '?';
+        $person->visibility = Visibility::VISIBILITY_GM;
+
+        if ($person->save()) {
+            $person->refresh();
+            return $person;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Provides list of types allowed by this class
+     * @return string[]
+     */
+    static public function allowedDescriptionTypes():array
+    {
+        return [
+            Description::TYPE_HISTORY,
+            Description::TYPE_APPEARANCE,
+            Description::TYPE_PERSONALITY,
+            Description::TYPE_WHO,
+        ];
     }
 
     static public function canUserIndexThem():bool
@@ -193,10 +289,6 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
         return self::canUserControlInEpic($this->epic);
     }
 
-    /**
-     * {@inheritDoc}
-     * @todo Add control on player level for front-end use
-     */
     public function canUserViewYou():bool
     {
         return self::canUserViewInEpic($this->epic);
@@ -220,5 +312,17 @@ class Character extends ActiveRecord implements Displayable, HasEpicControl
     static function throwExceptionAboutView()
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
+    }
+
+    public function getVisibility():string
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getName();
+    }
+
+    public function getVisibilityLowercase():string
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getNameLowercase();
     }
 }
