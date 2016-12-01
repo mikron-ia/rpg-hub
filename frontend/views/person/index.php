@@ -30,7 +30,7 @@ $searchTab = [
 
 $allTab = [
     'label' => Yii::t('app', 'PEOPLE_LABEL_ALL'),
-    'url' => ['person/index'],
+    'url' => ['character/index'],
 ];
 
 if(isset(Yii::$app->request->queryParams['PersonQuery'])) {

@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => isset($model->currently_delivered_character_id) ?
                     Html::a(
                         $model->currentlyDeliveredPerson->name,
-                        ['person/view', 'id' => $model->currently_delivered_character_id]
+                        ['character/view', 'id' => $model->currently_delivered_character_id]
                     ) :
                     null,
             ],

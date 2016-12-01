@@ -18,9 +18,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PersonController implements the CRUD actions for Person model.
+ * CharacterController implements the CRUD actions for Person model.
  */
-final class PersonController extends Controller
+final class CharacterController extends Controller
 {
     public function behaviors()
     {
