@@ -60,7 +60,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
                 'in',
                 'skipOnError' => true,
                 'range' => $this->getPeopleAvailableToThisCharacterAsIdList(),
-                'message' => Yii::t('app', 'CHARACTER_SHEET_ERROR_PERSON_NOT_CONNECTED'),
+                'message' => Yii::t('app', 'CHARACTER_SHEET_ERROR_CHARACTER_NOT_CONNECTED'),
             ],
         ];
     }
@@ -73,7 +73,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             'key' => Yii::t('app', 'CHARACTER_SHEET_KEY'),
             'name' => Yii::t('app', 'CHARACTER_SHEET_NAME'),
             'data' => Yii::t('app', 'CHARACTER_SHEET_DATA'),
-            'currently_delivered_character_id' => Yii::t('app', 'CHARACTER_SHEET_DELIVERED_PERSON_ID'),
+            'currently_delivered_character_id' => Yii::t('app', 'CHARACTER_SHEET_DELIVERED_CHARACTER_ID'),
         ];
     }
 

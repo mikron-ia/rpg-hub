@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Character */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_PEOPLE_INDEX'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_CHARACTER_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['showPrivates'] = $model->canUserControlYou();
 

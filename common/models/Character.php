@@ -296,22 +296,22 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
     static function throwExceptionAboutCreate()
     {
-        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_PERSON'));
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_CHARACTER'));
     }
 
     static function throwExceptionAboutControl()
     {
-        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_PERSON'));
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_CHARACTER'));
     }
 
     static function throwExceptionAboutIndex()
     {
-        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_PERSON'));
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_CHARACTER'));
     }
 
     static function throwExceptionAboutView()
     {
-        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_PERSON'));
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
     }
 
     public function getVisibility():string

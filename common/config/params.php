@@ -31,7 +31,7 @@ return [
         'character' => getenv('KEY_GENERATION_CHARACTER'),
         'epic' => getenv('KEY_GENERATION_EPIC'),
         'group' => getenv('KEY_GENERATION_GROUP'),
-        'person' => getenv('KEY_GENERATION_PERSON'),
+        'person' => getenv('KEY_GENERATION_CHARACTER'),
         'recap' => getenv('KEY_GENERATION_RECAP'),
         'story' => getenv('KEY_GENERATION_STORY'),
     ],

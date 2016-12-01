@@ -9,7 +9,7 @@ use yii\helpers\StringHelper;
 /* @var $searchModel common\models\CharacterQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'TITLE_PEOPLE_INDEX');
+$this->title = Yii::t('app', 'TITLE_CHARACTER_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="person-index">

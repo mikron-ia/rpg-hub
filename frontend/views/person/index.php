@@ -7,12 +7,12 @@ use yii\helpers\Html;
 /* @var $searchModel common\models\CharacterQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'TITLE_PEOPLE_INDEX');
+$this->title = Yii::t('app', 'TITLE_CHARACTER_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
 
 $labelForMain = isset(Yii::$app->request->queryParams['CharacterQuery'])
-    ? Yii::t('app', 'PEOPLE_LABEL_SEARCH_RESULTS')
-    : Yii::t('app', 'PEOPLE_LABEL_ALL');
+    ? Yii::t('app', 'CHARACTER_LABEL_SEARCH_RESULTS')
+    : Yii::t('app', 'CHARACTER_LABEL_ALL');
 
 $mainTab = [
     'label' => $labelForMain,
@@ -22,14 +22,14 @@ $mainTab = [
 ];
 
 $searchTab = [
-    'label' => Yii::t('app', 'PEOPLE_LABEL_SEARCH'),
+    'label' => Yii::t('app', 'CHARACTER_LABEL_SEARCH'),
     'content' => $this->render('_search', ['model' => $searchModel]),
     'encode' => false,
     'active' => false,
 ];
 
 $allTab = [
-    'label' => Yii::t('app', 'PEOPLE_LABEL_ALL'),
+    'label' => Yii::t('app', 'CHARACTER_LABEL_ALL'),
     'url' => ['character/index'],
 ];
 
