@@ -31,7 +31,7 @@ use yii\db\ActiveRecord;
  * @property DescriptionPack $descriptionPack
  * @property ExternalDataPack $externalDataPack
  */
-class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasVisibility
+class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasVisibility
 {
     use ToolsForEntity;
 
@@ -115,12 +115,12 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
         }
 
         if (empty($this->description_pack_id)) {
-            $pack = DescriptionPack::create('Person');
+            $pack = DescriptionPack::create('Character');
             $this->description_pack_id = $pack->description_pack_id;
         }
 
         if (empty($this->external_data_pack_id)) {
-            $pack = ExternalDataPack::create('Person');
+            $pack = ExternalDataPack::create('Character');
             $this->external_data_pack_id = $pack->external_data_pack_id;
         }
 
@@ -133,7 +133,7 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
             'performedActionBehavior' => [
                 'class' => PerformedActionBehavior::className(),
                 'idName' => 'character_id',
-                'className' => 'Person',
+                'className' => 'Character',
             ]
         ];
     }
@@ -241,11 +241,11 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
     /**
      * Creates person record for character
      * @param CharacterSheet $character
-     * @return null|Person
+     * @return null|Character
      */
     static public function createForCharacter(CharacterSheet $character)
     {
-        $person = new Person();
+        $person = new Character();
         $person->epic_id = $character->epic_id;
         $person->name = $character->name;
         $person->character_sheet_id = $character->character_sheet_id;

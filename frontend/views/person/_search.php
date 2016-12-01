@@ -1,11 +1,11 @@
 <?php
 
-use common\models\Person;
+use common\models\Character;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\PersonQuery */
+/* @var $model common\models\CharacterQuery */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 

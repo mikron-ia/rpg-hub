@@ -21,8 +21,8 @@ use yii\db\ActiveRecord;
  * @property string $currently_delivered_character_id
  *
  * @property Epic $epic
- * @property Person $currentlyDeliveredPerson
- * @property Person[] $people
+ * @property Character $currentlyDeliveredPerson
+ * @property Character[] $people
  */
 class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 {
@@ -50,7 +50,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
                 ['currently_delivered_character_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Person::className(),
+                'targetClass' => Character::className(),
                 'targetAttribute' => [
                     'currently_delivered_character_id' => 'character_id'
                 ]
@@ -84,7 +84,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             $this->data = json_encode([]);
 
             /* Create and attach person */
-            $person = Person::createForCharacter($this);
+            $person = Character::createForCharacter($this);
             if ($person) {
                 $this->currently_delivered_character_id = $person->character_id;
             }
@@ -117,7 +117,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
      */
     public function getCurrentlyDeliveredPerson()
     {
-        return $this->hasOne(Person::className(), ['character_id' => 'currently_delivered_character_id']);
+        return $this->hasOne(Character::className(), ['character_id' => 'currently_delivered_character_id']);
     }
 
     /**
@@ -125,7 +125,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
      */
     public function getPeople()
     {
-        return $this->hasMany(Person::className(), ['character_sheet_id' => 'character_sheet_id']);
+        return $this->hasMany(Character::className(), ['character_sheet_id' => 'character_sheet_id']);
     }
 
     public function getSimpleDataForApi()
@@ -161,7 +161,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             'query' => $this->getPeople()
         ]);
 
-        /* @var $peopleList Person[] */
+        /* @var $peopleList Character[] */
         $peopleList = $query->getModels();
         $dropDownList = [];
 

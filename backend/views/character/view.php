@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Person */
+/* @var $model common\models\Character */
 /* @var $externalDataDataProvider yii\data\ActiveDataProvider */
 
 $this->title = $model->name;

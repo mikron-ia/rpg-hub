@@ -2,12 +2,12 @@
 
 use common\models\CharacterSheetQuery;
 use common\models\EpicQuery;
-use common\models\Person;
+use common\models\Character;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Person */
+/* @var $model common\models\Character */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
 
     <div class="col-lg-6">
         <?= $form->field($model, 'visibility')->dropDownList(
-            Person::visibilityNames(),
+            Character::visibilityNames(),
             ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_VISIBILITY') . ' --- ']
         ) ?>
     </div>

@@ -4,13 +4,13 @@ use yii\bootstrap\Tabs;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\PersonQuery */
+/* @var $searchModel common\models\CharacterQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_PEOPLE_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
 
-$labelForMain = isset(Yii::$app->request->queryParams['PersonQuery'])
+$labelForMain = isset(Yii::$app->request->queryParams['CharacterQuery'])
     ? Yii::t('app', 'PEOPLE_LABEL_SEARCH_RESULTS')
     : Yii::t('app', 'PEOPLE_LABEL_ALL');
 
@@ -33,7 +33,7 @@ $allTab = [
     'url' => ['character/index'],
 ];
 
-if(isset(Yii::$app->request->queryParams['PersonQuery'])) {
+if(isset(Yii::$app->request->queryParams['CharacterQuery'])) {
     $items = [$allTab, $searchTab, $mainTab];
 } else {
     $items = [$mainTab, $searchTab];

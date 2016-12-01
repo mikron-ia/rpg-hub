@@ -26,7 +26,7 @@ use yii\web\HttpException;
  * @property User[] $players
  * @property Group[] $groups
  * @property Participant[] $participants
- * @property Person[] $people
+ * @property Character[] $people
  * @property Recap[] $recaps
  * @property Story[] $stories
  *
@@ -146,7 +146,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
      */
     public function getPeople()
     {
-        return $this->hasMany(Person::className(), ['epic_id' => 'epic_id']);
+        return $this->hasMany(Character::className(), ['epic_id' => 'epic_id']);
     }
 
     /**

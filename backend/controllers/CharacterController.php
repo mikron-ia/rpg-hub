@@ -7,8 +7,8 @@ use common\models\ExternalDataPack;
 use common\models\Parameter;
 use common\models\tools\Retriever;
 use Yii;
-use common\models\Person;
-use common\models\PersonQuery;
+use common\models\Character;
+use common\models\CharacterQuery;
 use yii\base\Exception;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
@@ -18,7 +18,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CharacterController implements the CRUD actions for Person model.
+ * CharacterController implements the CRUD actions for Character model.
  */
 final class CharacterController extends Controller
 {
@@ -45,16 +45,16 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Lists all Person models.
+     * Lists all Character models.
      * @return mixed
      */
     public function actionIndex()
     {
-        if (!Person::canUserIndexThem()) {
-            Person::throwExceptionAboutIndex();
+        if (!Character::canUserIndexThem()) {
+            Character::throwExceptionAboutIndex();
         }
 
-        $searchModel = new PersonQuery();
+        $searchModel = new CharacterQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -64,7 +64,7 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Displays a single Person model.
+     * Displays a single Character model.
      * @param string $id
      * @return mixed
      * @throws HttpException
@@ -78,7 +78,7 @@ final class CharacterController extends Controller
         }
 
         if (!$model->canUserViewYou()) {
-            Person::throwExceptionAboutView();
+            Character::throwExceptionAboutView();
         }
 
         if (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
@@ -98,17 +98,17 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Creates a new Person model.
+     * Creates a new Character model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        if (!Person::canUserCreateThem()) {
-            Person::throwExceptionAboutCreate();
+        if (!Character::canUserCreateThem()) {
+            Character::throwExceptionAboutCreate();
         }
 
-        $model = new Person();
+        $model = new Character();
 
         $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
 
@@ -123,7 +123,7 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Updates an existing Person model.
+     * Updates an existing Character model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -133,7 +133,7 @@ final class CharacterController extends Controller
         $model = $this->findModel($id);
 
         if (!$model->canUserControlYou()) {
-            Person::throwExceptionAboutControl();
+            Character::throwExceptionAboutControl();
         }
 
         $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
@@ -160,7 +160,7 @@ final class CharacterController extends Controller
         $model = $this->findModel($id);
 
         if (!$model->canUserControlYou()) {
-            Person::throwExceptionAboutControl();
+            Character::throwExceptionAboutControl();
         }
 
         $baseUrl = $model->epic->parameterPack->getParameterValueByCode(Parameter::DATA_SOURCE_FOR_REPUTATION);
@@ -236,15 +236,15 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Finds the Person model based on its primary key value.
+     * Finds the Character model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Person the loaded model
+     * @return Character the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Person::findOne($id)) !== null) {
+        if (($model = Character::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));

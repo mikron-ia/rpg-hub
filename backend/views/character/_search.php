@@ -1,11 +1,11 @@
 <?php
 
-use common\models\Person;
+use common\models\Character;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\PersonQuery */
+/* @var $model common\models\CharacterQuery */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
     <?php echo $form->field($model, 'visibility')->widget(
         kartik\select2\Select2::className(),
         [
-            'data' => Person::visibilityNames(),
+            'data' => Character::visibilityNames(),
             'options' => ['multiple' => true],
         ]
     ) ?>

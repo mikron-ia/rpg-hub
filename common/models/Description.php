@@ -41,7 +41,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     const TYPE_INTERACTIONS = 'interactions';   // Interactions / encounters with the group or person NAMES
     const TYPE_PERSONALITY = 'personality';     // Personality, character behaviour, mental issues
     const TYPE_RESOURCES = 'resources';         // Resources the person wields, flaunts, can offer
-    const TYPE_REPUTATION = 'reputation';       // Person's reputation
+    const TYPE_REPUTATION = 'reputation';       // Character's reputation
     const TYPE_RETINUE = 'retinue';             // Friends, allies, etc.
     const TYPE_RUMOURS = 'rumours';             // Unproven rumours collected about character
     const TYPE_STORIES = 'stories';             // Stories person participated in

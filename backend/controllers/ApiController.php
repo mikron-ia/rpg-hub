@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use common\models\Displayable;
 use common\models\Epic;
-use common\models\Person;
+use common\models\Character;
 use yii\web\Controller;
 use yii\web\Response;
 use backend\models\security\Authenticator;
@@ -69,13 +69,13 @@ final class ApiController extends Controller
 
     public function actionPeople($epicCode, $authMethod, $authKey, $language)
     {
-        return $this->indexAction($epicCode, $authMethod, $authKey, "Person", "People list", "Complete people list",
+        return $this->indexAction($epicCode, $authMethod, $authKey, "Character", "People list", "Complete people list",
             $language);
     }
 
     public function actionPerson($epicCode, $method, $key, $authMethod, $authKey, $language)
     {
-        return $this->viewAction($epicCode, $method, $key, $authMethod, $authKey, "Person", "Person data",
+        return $this->viewAction($epicCode, $method, $key, $authMethod, $authKey, "Character", "Character data",
             "Complete person data", $language);
     }
 
@@ -188,7 +188,7 @@ final class ApiController extends Controller
             $epicId = $this->getEpicId($epicCode);
 
             /* @var $object Displayable */
-            $objects = Person::findAll(['epic_id' => $epicId]);
+            $objects = Character::findAll(['epic_id' => $epicId]);
 
             foreach ($objects as $object) {
                 if ($object->isVisibleInApi()) {

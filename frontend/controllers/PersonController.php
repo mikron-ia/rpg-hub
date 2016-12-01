@@ -6,8 +6,8 @@ use common\models\core\Visibility;
 use common\models\external\Reputation;
 use common\models\external\ReputationEvent;
 use Yii;
-use common\models\Person;
-use common\models\PersonQuery;
+use common\models\Character;
+use common\models\CharacterQuery;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\HttpException;
@@ -15,7 +15,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CharacterController implements the CRUD actions for Person model.
+ * CharacterController implements the CRUD actions for Character model.
  */
 final class PersonController extends Controller
 {
@@ -40,16 +40,16 @@ final class PersonController extends Controller
     }
 
     /**
-     * Lists all Person models
+     * Lists all Character models
      * @return mixed
      */
     public function actionIndex()
     {
-        if (!Person::canUserIndexThem()) {
-            Person::throwExceptionAboutIndex();
+        if (!Character::canUserIndexThem()) {
+            Character::throwExceptionAboutIndex();
         }
 
-        $searchModel = new PersonQuery();
+        $searchModel = new CharacterQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -59,7 +59,7 @@ final class PersonController extends Controller
     }
 
     /**
-     * Displays a single Person model
+     * Displays a single Character model
      * @param string $id
      * @return mixed
      * @throws HttpException
@@ -73,7 +73,7 @@ final class PersonController extends Controller
         $model = $this->findModel($id);
 
         if (!$model->canUserViewYou()) {
-            Person::throwExceptionAboutView();
+            Character::throwExceptionAboutView();
         }
 
         if (empty(Yii::$app->params['activeEpic'])) {
@@ -97,7 +97,7 @@ final class PersonController extends Controller
         $model = $this->findModel($id);
 
         if (!$model->canUserViewYou()) {
-            Person::throwExceptionAboutView();
+            Character::throwExceptionAboutView();
         }
 
         if ($model->external_data_pack_id) {
@@ -127,7 +127,7 @@ final class PersonController extends Controller
         $model = $this->findModel($id);
 
         if (!$model->canUserViewYou()) {
-            Person::throwExceptionAboutView();
+            Character::throwExceptionAboutView();
         }
 
         if ($model->external_data_pack_id) {
@@ -148,15 +148,15 @@ final class PersonController extends Controller
     }
 
     /**
-     * Finds the Person model based on its primary key value.
+     * Finds the Character model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Person the loaded model
+     * @return Character the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Person::findOne([
+        if (($model = Character::findOne([
                 'character_id' => $id,
                 'visibility' => Visibility::determineVisibilityVector(),
             ])) !== null

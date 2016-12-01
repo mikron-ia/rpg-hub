@@ -1,12 +1,12 @@
 <?php
 
-use common\models\Person;
+use common\models\Character;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\PersonQuery */
+/* @var $searchModel common\models\CharacterQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_PEOPLE_INDEX');
@@ -32,19 +32,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 [
                     'attribute' => 'name',
-                    'value' => function (Person $model) {
+                    'value' => function (Character $model) {
                         return StringHelper::truncateWords($model->name, 4, ' (...)', false);
                     }
                 ],
                 [
                     'attribute' => 'tagline',
-                    'value' => function (Person $model) {
+                    'value' => function (Character $model) {
                         return StringHelper::truncateWords($model->tagline, 5, ' (...)', false);
                     }
                 ],
                 [
                     'attribute' => 'visibility',
-                    'value' => function (Person $model) {
+                    'value' => function (Character $model) {
                         return $model->getVisibilityName();
                     }
                 ],

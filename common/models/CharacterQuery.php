@@ -8,9 +8,9 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * PersonQuery represents the model behind the search form about `common\models\Person`.
+ * CharacterQuery represents the model behind the search form about `common\models\Character`.
  */
-final class PersonQuery extends Person
+final class CharacterQuery extends Character
 {
     public function rules()
     {
@@ -33,7 +33,7 @@ final class PersonQuery extends Person
      */
     public function search($params):ActiveDataProvider
     {
-        $query = Person::find();
+        $query = Character::find();
 
         // add conditions that should always apply here
 
