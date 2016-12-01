@@ -96,6 +96,13 @@ class RbacController extends Controller
         $controlCharacter->ruleName = $gameMasterRule->name;
 
         $auth->add($controlCharacter);
+        $auth->add($viewPerson);
+
+        $controlCharacterSheet = $auth->createPermission('controlCharacterSheet');
+        $controlCharacterSheet->description = 'Able to add, edit, and remove a character sheet';
+        $controlCharacterSheet->ruleName = $gameMasterRule->name;
+
+        $auth->add($controlCharacter);
 
         $viewCharacter = $auth->createPermission('viewCharacter');
         $viewCharacter->description = 'Able to add, edit, and remove a character';
@@ -199,6 +206,7 @@ class RbacController extends Controller
         $auth->addChild($operator, $controlEpic);
         $auth->addChild($operator, $controlPerson);
         $auth->addChild($operator, $controlCharacter);
+        $auth->addChild($operator, $controlCharacterSheet);
         $auth->addChild($operator, $controlStory);
         $auth->addChild($operator, $controlRecap);
         $auth->addChild($operator, $controlGroup);
