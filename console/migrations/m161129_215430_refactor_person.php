@@ -29,9 +29,15 @@ class m161129_215430_refactor_person extends Migration
         $this->addForeignKey('character_ibfk_4', 'character', 'external_data_pack_id', 'external_data_pack', 'external_data_pack_id', 'RESTRICT', 'CASCADE');
 
         $this->dropForeignKey('character_sheet_ibfk_2', '{{%character_sheet}}');
-        $this->addForeignKey('character_sheet_ibfk_2', '{{%character_sheet}}', 'currently_delivered_person_id', 'character', 'character_id', 'RESTRICT', 'CASCADE');
+        $this->addColumn('character_sheet', 'currently_delivered_character_id', $this->integer(11)->unsigned()->after('currently_delivered_person_id'));
+        $this->execute('UPDATE `character_sheet` SET currently_delivered_character_id = currently_delivered_person_id');
+        $this->dropColumn('character_sheet', 'currently_delivered_person_id');
+        $this->addForeignKey('character_sheet_ibfk_2', '{{%character_sheet}}', 'currently_delivered_character_id', 'character', 'character_id', 'RESTRICT', 'CASCADE');
 
         $this->dropTable('person');
+
+        $this->execute("UPDATE `description_pack` SET class = 'Character' WHERE class = 'Person'");
+        $this->execute("UPDATE `external_data_pack` SET class = 'Character' WHERE class = 'Person'");
     }
 
     public function down()
@@ -54,6 +60,9 @@ class m161129_215430_refactor_person extends Migration
         $this->execute('INSERT INTO `person` SELECT * FROM `character`');
 
         $this->dropForeignKey('character_sheet_ibfk_2', '{{%character_sheet}}');
+        $this->addColumn('character_sheet', 'currently_delivered_person_id', $this->integer(11)->unsigned()->after('currently_delivered_character_id'));
+        $this->execute('UPDATE `character_sheet` SET currently_delivered_person_id = currently_delivered_character_id');
+        $this->dropColumn('character_sheet', 'currently_delivered_character_id');
         $this->addForeignKey('character_sheet_ibfk_2', '{{%character_sheet}}', 'currently_delivered_person_id', 'person', 'person_id', 'RESTRICT', 'CASCADE');
 
         $this->dropForeignKey('character_ibfk_1', 'character');
@@ -67,5 +76,8 @@ class m161129_215430_refactor_person extends Migration
         $this->addForeignKey('person_ibfk_4', 'person', 'external_data_pack_id', 'external_data_pack', 'external_data_pack_id', 'RESTRICT', 'CASCADE');
 
         $this->dropTable('character');
+
+        $this->execute("UPDATE `description_pack` SET class = 'Person' WHERE class = 'Character'");
+        $this->execute("UPDATE `external_data_pack` SET class = 'Person' WHERE class = 'Character'");
     }
 }
