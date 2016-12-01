@@ -94,13 +94,13 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
     public function attributeLabels()
     {
         return [
-            'character_id' => Yii::t('app', 'PERSON_ID'),
+            'character_id' => Yii::t('app', 'CHARACTER_ID'),
             'epic_id' => Yii::t('app', 'LABEL_EPIC'),
-            'key' => Yii::t('app', 'PERSON_KEY'),
-            'name' => Yii::t('app', 'PERSON_NAME'),
-            'tagline' => Yii::t('app', 'PERSON_TAGLINE'),
-            'data' => Yii::t('app', 'PERSON_DATA'),
-            'visibility' => Yii::t('app', 'PERSON_VISIBILITY'),
+            'key' => Yii::t('app', 'CHARACTER_KEY'),
+            'name' => Yii::t('app', 'CHARACTER_NAME'),
+            'tagline' => Yii::t('app', 'CHARACTER_TAGLINE'),
+            'data' => Yii::t('app', 'CHARACTER_DATA'),
+            'visibility' => Yii::t('app', 'CHARACTER_VISIBILITY'),
             'character_sheet_id' => Yii::t('app', 'LABEL_CHARACTER'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
@@ -144,10 +144,10 @@ class Person extends ActiveRecord implements Displayable, HasDescriptions, HasEp
     static public function visibilityNames():array
     {
         return [
-            self::VISIBILITY_NONE => Yii::t('app', 'PERSON_VISIBILITY_NONE'),
-            self::VISIBILITY_LOGGED => Yii::t('app', 'PERSON_VISIBILITY_LOGGED'),
-            self::VISIBILITY_GM => Yii::t('app', 'PERSON_VISIBILITY_GM'),
-            self::VISIBILITY_FULL => Yii::t('app', 'PERSON_VISIBILITY_FULL'),
+            self::VISIBILITY_NONE => Yii::t('app', 'CHARACTER_VISIBILITY_NONE'),
+            self::VISIBILITY_LOGGED => Yii::t('app', 'CHARACTER_VISIBILITY_LOGGED'),
+            self::VISIBILITY_GM => Yii::t('app', 'CHARACTER_VISIBILITY_GM'),
+            self::VISIBILITY_FULL => Yii::t('app', 'CHARACTER_VISIBILITY_FULL'),
         ];
     }
 

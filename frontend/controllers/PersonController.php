@@ -163,7 +163,7 @@ final class PersonController extends Controller
         ) {
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('app', 'PERSON_NOT_AVAILABLE'));
+            throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));
         }
     }
 }

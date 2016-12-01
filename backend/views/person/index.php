@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
-        <?= Html::a(Yii::t('app', 'PERSON_BUTTON_CREATE'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'CHARACTER_BUTTON_CREATE'), ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_GOTO_FILTER'),
             ['#filter'],
