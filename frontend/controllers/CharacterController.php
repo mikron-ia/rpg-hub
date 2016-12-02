@@ -17,7 +17,7 @@ use yii\filters\VerbFilter;
 /**
  * CharacterController implements the CRUD actions for Character model.
  */
-final class PersonController extends Controller
+final class CharacterController extends Controller
 {
     public function behaviors()
     {
