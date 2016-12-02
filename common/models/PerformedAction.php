@@ -23,6 +23,8 @@ class PerformedAction extends ActiveRecord
 {
     const PERFORMED_ACTION_CREATE = 'create';
     const PERFORMED_ACTION_UPDATE = 'update';
+    const PERFORMED_ACTION_LOGIN = 'login';
+    const PERFORMED_ACTION_LOGOUT = 'logout';
     const PERFORMED_ACTION_OTHER = 'other';
 
     public static function tableName()
@@ -44,7 +46,7 @@ class PerformedAction extends ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'operation', 'class', 'object_id'], 'required'],
+            [['user_id', 'operation'], 'required'],
             [['user_id', 'object_id', 'performed_at'], 'integer'],
             [['operation', 'class'], 'string', 'max' => 80],
             ['operation', 'in', 'range' => [self::PERFORMED_ACTION_CREATE, self::PERFORMED_ACTION_UPDATE]],
@@ -104,6 +106,8 @@ class PerformedAction extends ActiveRecord
         return [
             self::PERFORMED_ACTION_CREATE => Yii::t('app', 'PERFORMED_ACTION_CREATE'),
             self::PERFORMED_ACTION_UPDATE => Yii::t('app', 'PERFORMED_ACTION_UPDATE'),
+            self::PERFORMED_ACTION_LOGIN => Yii::t('app', 'PERFORMED_ACTION_LOGIN'),
+            self::PERFORMED_ACTION_LOGOUT => Yii::t('app', 'PERFORMED_ACTION_LOGOUT'),
             self::PERFORMED_ACTION_OTHER => Yii::t('app', 'PERFORMED_ACTION_OTHER'),
         ];
     }

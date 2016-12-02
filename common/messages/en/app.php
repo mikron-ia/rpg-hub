@@ -256,6 +256,8 @@ return [
     'PERFORMED_ACTION_CLASS' => 'Object class',
     'PERFORMED_ACTION_CREATE' => 'created',
     'PERFORMED_ACTION_ID' => 'Action ID',
+    'PERFORMED_ACTION_LOGIN' => 'logged in',
+    'PERFORMED_ACTION_LOGOUT' => 'logged out',
     'PERFORMED_ACTION_OBJECT_ID' => 'Object ID',
     'PERFORMED_ACTION_OPERATION' => 'Operation',
     'PERFORMED_ACTION_OTHER' => 'did something else',
