@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\models\Epic;
 use common\models\EpicQuery;
+use common\models\PerformedAction;
 use common\models\RecapQuery;
 use common\models\StoryQuery;
 use common\models\user\PasswordChange;
@@ -134,6 +135,8 @@ final class SiteController extends Controller
      */
     public function actionLogout()
     {
+        PerformedAction::createSimplifiedRecord(PerformedAction::PERFORMED_ACTION_LOGOUT);
+
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -254,10 +257,12 @@ final class SiteController extends Controller
         try {
             $model = new UserAcceptForm($token);
         } catch (InvalidParamException $e) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_WRONG_TOKEN {reason}', ['reason' => $e->getMessage()]));
+            Yii::$app->session->setFlash('error',
+                Yii::t('app', 'USER_CREATION_FAILED_WRONG_TOKEN {reason}', ['reason' => $e->getMessage()]));
             return $this->redirect(['site/index']);
         } catch (Exception $e) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_OTHER {reason}', ['reason' => $e->getMessage()]));
+            Yii::$app->session->setFlash('error',
+                Yii::t('app', 'USER_CREATION_FAILED_OTHER {reason}', ['reason' => $e->getMessage()]));
             return $this->redirect(['site/index']);
         }
 

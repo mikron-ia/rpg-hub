@@ -49,7 +49,17 @@ class PerformedAction extends ActiveRecord
             [['user_id', 'operation'], 'required'],
             [['user_id', 'object_id', 'performed_at'], 'integer'],
             [['operation', 'class'], 'string', 'max' => 80],
-            ['operation', 'in', 'range' => [self::PERFORMED_ACTION_CREATE, self::PERFORMED_ACTION_UPDATE]],
+            [
+                'operation',
+                'in',
+                'range' => [
+                    self::PERFORMED_ACTION_CREATE,
+                    self::PERFORMED_ACTION_UPDATE,
+                    self::PERFORMED_ACTION_LOGIN,
+                    self::PERFORMED_ACTION_LOGOUT,
+                    self::PERFORMED_ACTION_OTHER
+                ]
+            ],
             [
                 ['user_id'],
                 'exist',
@@ -96,6 +106,15 @@ class PerformedAction extends ActiveRecord
         $record->object_id = $object_id;
 
         return $record->save();
+    }
+
+    /**
+     * @param string $operation Operation performed
+     * @return bool Success of the operation
+     */
+    static public function createSimplifiedRecord($operation):bool
+    {
+        return self::createRecord($operation, null, null);
     }
 
     /**
