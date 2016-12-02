@@ -49,7 +49,7 @@ final class CharacterController extends Controller
             Character::throwExceptionAboutIndex();
         }
 
-        $searchModel = new CharacterQuery();
+        $searchModel = new CharacterQuery(24);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

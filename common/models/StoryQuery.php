@@ -11,6 +11,16 @@ use yii\data\ActiveDataProvider;
  */
 final class StoryQuery extends Story
 {
+    /**
+     * @var int
+     */
+    private $pageCount;
+
+    public function __construct($pagination = 4, array $config = [])
+    {
+        $this->pageCount = $pagination;
+        parent::__construct($config);
+    }
     public $descriptions;
 
     /**
@@ -71,7 +81,7 @@ final class StoryQuery extends Story
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['position' => SORT_DESC]],
-            'pagination' => ['pageSize' => 4],
+            'pagination' => ['pageSize' => $this->pageCount],
         ]);
 
         $this->load($params);

@@ -12,6 +12,17 @@ use yii\data\ActiveDataProvider;
  */
 final class CharacterQuery extends Character
 {
+    /**
+     * @var int
+     */
+    private $pageCount;
+
+    public function __construct($pagination = 24, array $config = [])
+    {
+        $this->pageCount = $pagination;
+        parent::__construct($config);
+    }
+
     public function rules()
     {
         return [
@@ -48,7 +59,7 @@ final class CharacterQuery extends Character
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => ['pageSize' => 24],
+            'pagination' => ['pageSize' => $this->pageCount],
         ]);
 
         $this->load($params);

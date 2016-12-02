@@ -54,7 +54,7 @@ final class StoryController extends Controller
             Story::throwExceptionAboutIndex();
         }
 
-        $searchModel = new StoryQuery();
+        $searchModel = new StoryQuery(16);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

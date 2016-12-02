@@ -40,7 +40,7 @@ final class StoryController extends Controller
             Story::throwExceptionAboutIndex();
         }
 
-        $searchModel = new StoryQuery();
+        $searchModel = new StoryQuery(4);
         $dataProvider = $searchModel->search([]);
 
         return $this->render('index', [

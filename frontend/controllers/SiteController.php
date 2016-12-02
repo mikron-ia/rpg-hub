@@ -90,7 +90,7 @@ final class SiteController extends Controller
             $recap = $recapQuery->mostRecent();
 
             /* Get Stories */
-            $searchModel = new StoryQuery();
+            $searchModel = new StoryQuery(4);
             $stories = $searchModel->search(Yii::$app->request->queryParams);
         }
 
