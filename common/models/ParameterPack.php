@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -45,6 +46,13 @@ class ParameterPack extends ActiveRecord
         return [
             'description_pack_id' => Yii::t('app', 'PARAMETER_PACK_ID'),
             'class' => Yii::t('app', 'PARAMETER_PACK_CLASS'),
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            ['class' => TimestampBehavior::className()],
         ];
     }
 

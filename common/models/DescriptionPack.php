@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\core\Language;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\HttpException;
@@ -37,6 +38,13 @@ final class DescriptionPack extends ActiveRecord implements Displayable
         return [
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK_ID'),
             'class' => Yii::t('app', 'DESCRIPTION_PACK_CLASS'),
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            ['class' => TimestampBehavior::className()],
         ];
     }
 

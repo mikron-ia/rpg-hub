@@ -6,6 +6,8 @@ use common\behaviours\PerformedActionBehavior;
 use common\models\core\Language;
 use common\models\core\Visibility;
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii2tech\ar\position\PositionBehavior;
 
@@ -80,6 +82,15 @@ class Parameter extends ActiveRecord
         ];
     }
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (!empty($changedAttributes)) {
+            $this->parameterPack->touch('updated_at');
+        }
+
+        parent::afterSave($insert, $changedAttributes);
+    }
+
     public function behaviors()
     {
         return [
@@ -92,6 +103,12 @@ class Parameter extends ActiveRecord
                 'class' => PerformedActionBehavior::className(),
                 'idName' => 'parameter_id',
                 'className' => 'Parameter',
+            ],
+            'timestampBehavior' => [
+                'class' => TimestampBehavior::className(),
+            ],
+            'blameableBehavior' => [
+                'class' => BlameableBehavior::className(),
             ],
         ];
     }

@@ -7,6 +7,8 @@ use common\models\core\HasVisibility;
 use common\models\core\Language;
 use common\models\core\Visibility;
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\Markdown;
@@ -86,6 +88,15 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         ];
     }
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (!empty($changedAttributes)) {
+            $this->descriptionPack->touch('updated_at');
+        }
+
+        parent::afterSave($insert, $changedAttributes);
+    }
+
     public function attributeLabels()
     {
         return [
@@ -113,6 +124,12 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
                 'idName' => 'description_id',
                 'className' => 'Description',
             ],
+            'timestampBehavior' => [
+                'class' => TimestampBehavior::className(),
+            ],
+            'blameableBehavior' => [
+                'class' => BlameableBehavior::className(),
+            ],
         ];
     }
 
@@ -134,7 +151,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             self::TYPE_HISTORY => Yii::t('app', 'DESCRIPTION_TYPE_HISTORY'),
             self::TYPE_PERSONALITY => Yii::t('app', 'DESCRIPTION_TYPE_PERSONALITY'),
             self::TYPE_RESOURCES => Yii::t('app', 'DESCRIPTION_TYPE_RESOURCES'),
-            self::TYPE_REPUTATION=> Yii::t('app', 'DESCRIPTION_TYPE_REPUTATION'),
+            self::TYPE_REPUTATION => Yii::t('app', 'DESCRIPTION_TYPE_REPUTATION'),
             self::TYPE_RETINUE => Yii::t('app', 'DESCRIPTION_TYPE_RETINUE'),
             self::TYPE_RUMOURS => Yii::t('app', 'DESCRIPTION_TYPE_RUMOURS'),
             self::TYPE_STORIES => Yii::t('app', 'DESCRIPTION_TYPE_STORIES'),
