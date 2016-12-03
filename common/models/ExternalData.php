@@ -4,6 +4,8 @@ namespace common\models;
 
 use common\models\core\Visibility;
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -25,6 +27,23 @@ class ExternalData extends ActiveRecord
     public static function tableName()
     {
         return 'external_data';
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (!empty($changedAttributes)) {
+            $this->externalDataPack->touch('updated_at');
+        }
+
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function behaviors()
+    {
+        return [
+            ['class' => TimestampBehavior::className()],
+            ['class' => BlameableBehavior::className()],
+        ];
     }
 
     public function rules()

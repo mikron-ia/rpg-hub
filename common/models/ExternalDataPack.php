@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\core\Visibility;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 
@@ -35,6 +36,13 @@ class ExternalDataPack extends ActiveRecord
         return [
             'external_data_pack_id' => Yii::t('external', 'EXTERNAL_DATA_PACK_ID'),
             'class' => Yii::t('external', 'EXTERNAL_DATA_PACK_CLASS'),
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            ['class' => TimestampBehavior::className()],
         ];
     }
 
