@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\models\tools\IP;
+use common\models\tools\UserAgent;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -16,7 +18,11 @@ use yii\db\ActiveRecord;
  * @property string $class
  * @property string $object_id
  * @property integer $performed_at
+ * @property integer $ip_id
+ * @property integer $user_agent_id
  *
+ * @property IP $ip
+ * @property UserAgent $userAgent
  * @property User $user
  */
 class PerformedAction extends ActiveRecord
@@ -47,7 +53,7 @@ class PerformedAction extends ActiveRecord
     {
         return [
             [['user_id', 'operation'], 'required'],
-            [['user_id', 'object_id', 'performed_at'], 'integer'],
+            [['user_id', 'object_id', 'performed_at', 'ip_id', 'user_agent_id'], 'integer'],
             [['operation', 'class'], 'string', 'max' => 80],
             [
                 'operation',
@@ -91,6 +97,22 @@ class PerformedAction extends ActiveRecord
     }
 
     /**
+     * @return ActiveQuery
+     */
+    public function getIp()
+    {
+        return $this->hasOne(IP::className(), ['id' => 'ip_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getUserAgent()
+    {
+        return $this->hasOne(UserAgent::className(), ['id' => 'user_agent_id']);
+    }
+
+    /**
      * @param string $operation Operation performed
      * @param string $class Class of the object influenced
      * @param int $object_id ID of the object
@@ -100,10 +122,29 @@ class PerformedAction extends ActiveRecord
     {
         $record = new PerformedAction();
 
+        $ipAddress = Yii::$app->request->userIP;
+        $ip = IP::findOne(['content' => $ipAddress]);
+        if (!$ip) {
+            $ip = new IP(['content' => $ipAddress]);
+            $ip->save();
+            $ip->refresh();
+        }
+
+        $userAgentString = Yii::$app->request->getUserAgent();
+
+        $userAgent = UserAgent::findOne(['content' => $userAgentString]);
+        if (!$userAgent) {
+            $userAgent = new UserAgent(['content' => $userAgentString]);
+            $userAgent->save();
+            $userAgent->refresh();
+        }
+
         $record->user_id = Yii::$app->user->identity->getId();
         $record->operation = $operation;
         $record->class = $class;
         $record->object_id = $object_id;
+        $record->ip_id = $ip->id;
+        $record->user_agent_id = $userAgent->id;
 
         return $record->save();
     }
