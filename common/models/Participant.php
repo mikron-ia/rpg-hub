@@ -21,17 +21,11 @@ class Participant extends ActiveRecord
 {
     public $roleChoices;
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'participant';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -61,9 +55,6 @@ class Participant extends ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -75,18 +66,12 @@ class Participant extends ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function afterFind()
     {
         $this->roleChoices = $this->getRoles();
         parent::afterFind();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function afterSave($insert, $changedAttributes)
     {
         if (!$this->roleChoices) {
@@ -121,6 +106,9 @@ class Participant extends ActiveRecord
         return $this->hasMany(ParticipantRole::className(), ['participant_id' => 'participant_id']);
     }
 
+    /**
+     * @return string[]
+     */
     public function getRolesList()
     {
         $roles = [];
@@ -132,6 +120,9 @@ class Participant extends ActiveRecord
         return $roles;
     }
 
+    /**
+     * @return string[]
+     */
     public function getRoles()
     {
         $roles = [];
