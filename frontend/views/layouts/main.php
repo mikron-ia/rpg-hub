@@ -49,7 +49,7 @@ AppAsset::register($this);
             ]
         ];
 
-        $epics = \common\models\EpicQuery::activeEpicsAsModels();
+        $epics = \common\models\EpicQuery::activeEpicsAsModels(false);
 
         $items = [];
 

@@ -71,7 +71,7 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => Yii::t('app', 'MENU_TOP_LOGIN'), 'url' => ['/site/login']];
     } else {
-        $epics = \common\models\EpicQuery::activeEpicsAsModels();
+        $epics = \common\models\EpicQuery::activeEpicsAsModels(true);
 
         $items = [];
 

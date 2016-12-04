@@ -11,9 +11,6 @@ use yii\data\ActiveDataProvider;
  */
 final class EpicQuery extends Epic
 {
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -21,12 +18,8 @@ final class EpicQuery extends Epic
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -68,21 +61,32 @@ final class EpicQuery extends Epic
         return $dataProvider;
     }
 
-    static public function activeEpicsAsModels()
+    static public function activeEpicsAsModels($limitToControlled = true)
     {
-        if(Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest) {
             return [];
         }
 
         /* @var $user User */
         $user = Yii::$app->user->identity;
 
-        return $user->epics;
+        if (Yii::$app->user->can('manager')) {
+            /* Admin and manager need them all */
+            $query = Epic::find();
+        } elseif ($limitToControlled) {
+            /* GM needs those mastered and assisted in */
+            $query = $user->getEpicsGameMastered();
+        } else {
+            /* All you participate in */
+            $query = $user->getEpics();
+        }
+
+        return $query->all();
     }
 
     static public function getListOfEpicsForSelector()
     {
-        $epicList = self::activeEpicsAsModels();
+        $epicList = self::activeEpicsAsModels(true);
 
         /** @var string $epicListForSelector */
         $epicListForSelector = [];

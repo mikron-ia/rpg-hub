@@ -27,6 +27,7 @@ use yii\web\IdentityInterface;
  * @property Epic[] $epics
  * @property Epic[] $epicsGameMastered
  * @property Epic[] $epicsPlayed
+ * @property Participant[] $participants
  */
 final class User extends ActiveRecord implements IdentityInterface
 {
@@ -179,16 +180,20 @@ final class User extends ActiveRecord implements IdentityInterface
      */
     public function getEpicsGameMastered():ActiveQuery
     {
-        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable(
-            'participant',
-            ['user_id' => 'id']
-        )->viaTable(
-            'participant_role',
-            ['participant_id' => 'participant_id'],
-            function (ActiveQuery $query) {
-                return $query->onCondition("role = 'gm'");
-            }
-        );
+        return $this->getEpicsLimitedByRoles([
+            ParticipantRole::ROLE_GM
+        ]);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getEpicsGameOperated():ActiveQuery
+    {
+        return $this->getEpicsLimitedByRoles([
+            ParticipantRole::ROLE_GM,
+            ParticipantRole::ROLE_ASSISTANT
+        ]);
     }
 
     /**
@@ -196,16 +201,22 @@ final class User extends ActiveRecord implements IdentityInterface
      */
     public function getEpicsPlayed():ActiveQuery
     {
-        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable(
-            'participant',
-            ['user_id' => 'id']
-        )->viaTable(
-            'participant_role',
-            ['participant_id' => 'participant_id'],
-            function (ActiveQuery $query) {
-                return $query->onCondition("role = 'player'");
-            }
-        );
+        return $this->getEpicsLimitedByRoles([
+            ParticipantRole::ROLE_PLAYER
+        ]);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getEpicsVisible():ActiveQuery
+    {
+        return $this->getEpicsLimitedByRoles([
+            ParticipantRole::ROLE_GM,
+            ParticipantRole::ROLE_ASSISTANT,
+            ParticipantRole::ROLE_PLAYER,
+            ParticipantRole::ROLE_WATCHER
+        ]);
     }
 
     /**
@@ -213,8 +224,23 @@ final class User extends ActiveRecord implements IdentityInterface
      */
     public function getEpics():ActiveQuery
     {
-        return $this->hasMany(Epic::className(), ['epic_id' => 'epic_id'])->viaTable('participant',
-            ['user_id' => 'id']);
+
+        return Epic::find()
+            ->joinWith('participants')
+            ->joinWith('participants.participantRoles')
+            ->where(['user_id' => $this->id]);
+    }
+
+    /**
+     * @param array $roles
+     * @return ActiveQuery
+     */
+    public function getEpicsLimitedByRoles(array $roles):ActiveQuery
+    {
+        return Epic::find()
+            ->joinWith('participants')
+            ->joinWith('participants.participantRoles')
+            ->where(['user_id' => $this->id, 'role' => $roles]);
     }
 
     public function validateAuthKey($authKey)
@@ -369,6 +395,7 @@ final class User extends ActiveRecord implements IdentityInterface
 
         return $roles;
     }
+
     /**
      * @return string[]
      */
@@ -383,5 +410,13 @@ final class User extends ActiveRecord implements IdentityInterface
     static public function operatorUserRoles():array
     {
         return [self::USER_ROLE_OPERATOR, self::USER_ROLE_MANAGER, self::USER_ROLE_ADMINISTRATOR];
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getParticipants()
+    {
+        return $this->hasMany(Participant::className(), ['user_id' => 'id']);
     }
 }
