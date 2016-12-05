@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 
 /**
  * EpicQuery represents the model behind the search form about `common\models\Epic`.
@@ -61,14 +62,10 @@ final class EpicQuery extends Epic
 
     /**
      * @param bool $limitToControlled
-     * @return \yii\db\ActiveRecord[]
+     * @return ActiveQuery
      */
-    static public function activeEpicsAsModels($limitToControlled = true):array
+    static public function activeEpicsAsActiveRecord($limitToControlled = true):ActiveQuery
     {
-        if (Yii::$app->user->isGuest) {
-            return [];
-        }
-
         /* @var $user User */
         $user = Yii::$app->user->identity;
 
@@ -81,6 +78,37 @@ final class EpicQuery extends Epic
         } else {
             /* All you participate in */
             $query = $user->getEpics();
+        }
+
+        return $query;
+    }
+
+    static public function activeEpicsAsActiveDataProvider($limitToControlled = true):ActiveDataProvider
+    {
+        $query = self::activeEpicsAsActiveRecord($limitToControlled);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => false,
+        ]);
+
+        return $dataProvider;
+    }
+
+    /**
+     * @param bool $limitToControlled
+     * @return \yii\db\ActiveRecord[]
+     */
+    static public function activeEpicsAsModels($limitToControlled = true):array
+    {
+        if (Yii::$app->user->isGuest) {
+            return [];
+        }
+
+        $query = self::activeEpicsAsActiveRecord($limitToControlled);
+
+        if (!$query) {
+            return [];
         }
 
         return $query->all();

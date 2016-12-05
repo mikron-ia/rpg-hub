@@ -55,7 +55,7 @@ final class EpicController extends Controller
         Epic::canUserIndexEpic();
 
         $searchModel = new EpicQuery();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->activeEpicsAsActiveDataProvider();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
