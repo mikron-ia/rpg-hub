@@ -182,9 +182,6 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
         return $recap;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getSimpleDataForApi()
     {
         return [
@@ -193,9 +190,6 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompleteDataForApi()
     {
         $query = new ActiveDataProvider(['query' => $this->getStories()->orderBy('story_id DESC')]);
@@ -219,9 +213,6 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function isVisibleInApi()
     {
         return true;
@@ -248,7 +239,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
      * @return bool
      * @throws HttpException
      */
-    static public function canUserIndexEpic()
+    static public function canUserIndexEpic():bool
     {
         if (Yii::$app->user->can('indexEpic')) {
             return true;
@@ -262,7 +253,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
      * @return bool
      * @throws HttpException
      */
-    static public function canUserCreateEpic()
+    static public function canUserCreateEpic():bool
     {
         if (Yii::$app->user->can('openEpic')) {
             return true;
@@ -276,7 +267,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
      * @return bool
      * @throws HttpException
      */
-    public function canUserControlYou()
+    public function canUserControlYou():bool
     {
         if (Yii::$app->user->can('controlEpic', ['epic' => $this])) {
             return true;
@@ -290,7 +281,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
      * @return bool
      * @throws HttpException
      */
-    public function canUserViewYou()
+    public function canUserViewYou():bool
     {
         if (Yii::$app->user->can('viewEpic', ['epic' => $this])) {
             return true;

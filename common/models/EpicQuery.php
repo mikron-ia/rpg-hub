@@ -25,12 +25,10 @@ final class EpicQuery extends Epic
 
     /**
      * Creates data provider instance with search query applied
-     *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params):ActiveDataProvider
     {
         $query = Epic::find();
 
@@ -61,7 +59,11 @@ final class EpicQuery extends Epic
         return $dataProvider;
     }
 
-    static public function activeEpicsAsModels($limitToControlled = true)
+    /**
+     * @param bool $limitToControlled
+     * @return \yii\db\ActiveRecord[]
+     */
+    static public function activeEpicsAsModels($limitToControlled = true):array
     {
         if (Yii::$app->user->isGuest) {
             return [];
@@ -84,11 +86,14 @@ final class EpicQuery extends Epic
         return $query->all();
     }
 
-    static public function getListOfEpicsForSelector()
+    /**
+     * @return string[]
+     */
+    static public function getListOfEpicsForSelector():array
     {
         $epicList = self::activeEpicsAsModels(true);
 
-        /** @var string $epicListForSelector */
+        /** @var string[] $epicListForSelector */
         $epicListForSelector = [];
 
         foreach ($epicList as $story) {
@@ -98,7 +103,10 @@ final class EpicQuery extends Epic
         return $epicListForSelector;
     }
 
-    static public function allowedEpics()
+    /**
+     * @return string[]
+     */
+    static public function allowedEpics():array
     {
         return array_keys(self::activeEpicsAsModels());
     }
