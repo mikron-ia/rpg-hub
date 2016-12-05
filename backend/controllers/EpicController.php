@@ -25,7 +25,6 @@ final class EpicController extends Controller
                     [
                         'actions' => [
                             'create',
-                            'delete',
                             'index',
                             'update',
                             'view',

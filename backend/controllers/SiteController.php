@@ -139,16 +139,20 @@ final class SiteController extends Controller
         /* @var $chosenEpic Epic */
         $chosenEpic = EpicQuery::findOne(['key' => $chosenEpicKey]);
 
-        if ($chosenEpic) {
-            Yii::$app->params['activeEpic'] = $chosenEpic;
+        if (!in_array((int)$chosenEpic->epic_id, EpicQuery::allowedEpics())) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'EPIC_NOT_ALLOWED'));
+        } else {
+            if ($chosenEpic) {
+                Yii::$app->params['activeEpic'] = $chosenEpic;
 
-            /* Save to cookie */
-            $cookie = new Cookie([
-                'name' => '_epic',
-                'value' => $chosenEpic->key,
-                'expire' => time() + 60 * 60 * 24 * 30, // 30 days
-            ]);
-            Yii::$app->response->cookies->add($cookie);
+                /* Save to cookie */
+                $cookie = new Cookie([
+                    'name' => '_epic',
+                    'value' => $chosenEpic->key,
+                    'expire' => time() + 60 * 60 * 24 * 8,
+                ]);
+                Yii::$app->response->cookies->add($cookie);
+            }
         }
 
         $referrer = Yii::$app->getRequest()->getReferrer();
@@ -175,10 +179,12 @@ final class SiteController extends Controller
         try {
             $model = new UserAcceptForm($token);
         } catch (InvalidParamException $e) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_WRONG_TOKEN {reason}', ['reason' => $e->getMessage()]));
+            Yii::$app->session->setFlash('error',
+                Yii::t('app', 'USER_CREATION_FAILED_WRONG_TOKEN {reason}', ['reason' => $e->getMessage()]));
             return $this->redirect(['site/index']);
         } catch (Exception $e) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_FAILED_OTHER {reason}', ['reason' => $e->getMessage()]));
+            Yii::$app->session->setFlash('error',
+                Yii::t('app', 'USER_CREATION_FAILED_OTHER {reason}', ['reason' => $e->getMessage()]));
             return $this->redirect(['site/index']);
         }
 

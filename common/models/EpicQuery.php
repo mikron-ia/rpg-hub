@@ -43,8 +43,7 @@ final class EpicQuery extends Epic
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
         }
 
@@ -83,6 +82,10 @@ final class EpicQuery extends Epic
         return $query;
     }
 
+    /**
+     * @param bool $limitToControlled
+     * @return ActiveDataProvider
+     */
     static public function activeEpicsAsActiveDataProvider($limitToControlled = true):ActiveDataProvider
     {
         $query = self::activeEpicsAsActiveRecord($limitToControlled);
@@ -136,6 +139,13 @@ final class EpicQuery extends Epic
      */
     static public function allowedEpics():array
     {
-        return array_keys(self::activeEpicsAsModels());
+        $ids = [];
+        $epics = self::activeEpicsAsModels();
+
+        foreach ($epics as $epic) {
+            $ids[] = (int)$epic->epic_id;
+        }
+
+        return $ids;
     }
 }
