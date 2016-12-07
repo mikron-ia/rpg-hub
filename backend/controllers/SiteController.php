@@ -129,7 +129,7 @@ final class SiteController extends Controller
     }
 
     /**
-     * Selects Epic
+     * Selects epic from provided list
      * @return Response
      */
     public function actionSetEpic():Response
@@ -201,6 +201,7 @@ final class SiteController extends Controller
     }
 
     /**
+     * Allows user to manipulate their settings
      * @return mixed
      */
     public function actionSettings()

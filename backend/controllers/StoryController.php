@@ -45,7 +45,7 @@ final class StoryController extends Controller
     }
 
     /**
-     * Lists all Story models.
+     * Lists all stories
      * @return mixed
      */
     public function actionIndex()
@@ -64,7 +64,7 @@ final class StoryController extends Controller
     }
 
     /**
-     * Displays a single Story model.
+     * Displays a single story
      * @param string $id
      * @return mixed
      */
@@ -88,8 +88,7 @@ final class StoryController extends Controller
     }
 
     /**
-     * Creates a new Story model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * Creates a new story
      * @return mixed
      */
     public function actionCreate()
@@ -110,8 +109,7 @@ final class StoryController extends Controller
     }
 
     /**
-     * Updates an existing Story model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * Updates an existing story
      * @param string $id
      * @return mixed
      */
@@ -132,6 +130,10 @@ final class StoryController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     */
     public function actionMoveUp($id)
     {
         $model = $this->findModel($id);
@@ -148,6 +150,10 @@ final class StoryController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     */
     public function actionMoveDown($id)
     {
         $model = $this->findModel($id);

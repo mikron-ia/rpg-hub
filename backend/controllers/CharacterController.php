@@ -45,7 +45,7 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Lists all Character models.
+     * Lists all characters
      * @return mixed
      */
     public function actionIndex()
@@ -64,7 +64,7 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Displays a single Character model.
+     * Displays a single character
      * @param string $id
      * @return mixed
      * @throws HttpException
@@ -98,7 +98,7 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Creates a new Character model.
+     * Creates a new character
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -123,7 +123,7 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Updates an existing Character model.
+     * Updates an existing character
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed

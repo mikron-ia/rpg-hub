@@ -41,7 +41,7 @@ final class UserController extends Controller
     }
 
     /**
-     * Lists all User models.
+     * Lists all users
      * @return mixed
      */
     public function actionIndex()
@@ -72,7 +72,7 @@ final class UserController extends Controller
     }
 
     /**
-     * Displays a single User model.
+     * Displays a single user
      * @param integer $id
      * @return mixed
      */
@@ -84,7 +84,7 @@ final class UserController extends Controller
     }
 
     /**
-     * Sends and invitation to a new user
+     * Sends an invitation to a new user
      * @return mixed
      */
     public function actionCreate()
@@ -107,8 +107,7 @@ final class UserController extends Controller
     }
 
     /**
-     * Updates an existing User model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * Updates an existing user
      * @param integer $id
      * @return mixed
      */
@@ -126,19 +125,19 @@ final class UserController extends Controller
     }
 
     /**
-     * Deletes an existing User model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * Deletes an existing user
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($id)->update(false, ['status' => User::STATUS_DELETED]);
 
         return $this->redirect(['index']);
     }
 
     /**
+     * Revokes an invitation
      * @param integer $id
      * @return mixed
      */
@@ -156,8 +155,8 @@ final class UserController extends Controller
     }
 
     /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
+     * Finds the User model based on its primary key value
+     * If the model is not found, a 404 HTTP exception will be thrown
      * @param integer $id
      * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
