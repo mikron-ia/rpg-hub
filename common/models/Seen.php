@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "seen".
@@ -17,7 +19,7 @@ use Yii;
  *
  * @property SeenPack $seenPack
  */
-class Seen extends \yii\db\ActiveRecord
+class Seen extends ActiveRecord
 {
     public static function tableName()
     {
@@ -47,7 +49,7 @@ class Seen extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getSeenPack()
     {

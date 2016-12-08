@@ -11,9 +11,6 @@ use yii\data\ActiveDataProvider;
  */
 final class GroupQuery extends Group
 {
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -22,9 +19,6 @@ final class GroupQuery extends Group
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
@@ -33,9 +27,7 @@ final class GroupQuery extends Group
 
     /**
      * Creates data provider instance with search query applied
-     *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
     public function search($params)

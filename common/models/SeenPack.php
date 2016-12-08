@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "seen_pack".
@@ -19,7 +21,7 @@ use Yii;
  * @property Seen[] $seens
  * @property Story[] $stories
  */
-class SeenPack extends \yii\db\ActiveRecord
+class SeenPack extends ActiveRecord
 {
     public static function tableName()
     {
@@ -45,7 +47,7 @@ class SeenPack extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCharacters()
     {
@@ -53,7 +55,7 @@ class SeenPack extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCharacterSheets()
     {
@@ -61,7 +63,7 @@ class SeenPack extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getEpics()
     {
@@ -69,7 +71,7 @@ class SeenPack extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getGroups()
     {
@@ -77,7 +79,7 @@ class SeenPack extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getRecaps()
     {
@@ -85,7 +87,7 @@ class SeenPack extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getSeens()
     {
@@ -93,7 +95,7 @@ class SeenPack extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStories()
     {
