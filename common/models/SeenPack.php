@@ -101,4 +101,40 @@ class SeenPack extends ActiveRecord
     {
         return $this->hasMany(Story::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
+
+    /**
+     * @param bool $fullSight Has user seen all data? True for views, false for indexing
+     * @return bool Success of the operation
+     */
+    public function recordSighting(bool $fullSight = true):bool
+    {
+        $userId = Yii::$app->user->identity->getId();
+
+        $foundRecord = Seen::findOne([
+            'seen_pack_id' => $this->seen_pack_id,
+            'user_id' => $userId,
+        ]);
+
+        if ($foundRecord) {
+            $record = $foundRecord;
+        } else {
+            $record = new Seen();
+            $record->user_id = $userId;
+        }
+
+        $record->noted_at = time();
+        if ($fullSight) {
+            $record->seen_at = time();
+        }
+
+        return $record->save();
+    }
+
+    /**
+     * @return bool
+     */
+    public function recordNotification():bool
+    {
+        return $this->recordSighting(false);
+    }
 }

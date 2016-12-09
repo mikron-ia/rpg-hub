@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -31,7 +32,13 @@ class Seen extends ActiveRecord
         return [
             [['seen_pack_id', 'user_id', 'noted_at', 'seen_at', 'alert_threshold'], 'integer'],
             [['status'], 'string', 'max' => 16],
-            [['seen_pack_id'], 'exist', 'skipOnError' => true, 'targetClass' => SeenPack::className(), 'targetAttribute' => ['seen_pack_id' => 'seen_pack_id']],
+            [
+                ['seen_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => SeenPack::className(),
+                'targetAttribute' => ['seen_pack_id' => 'seen_pack_id']
+            ],
         ];
     }
 
