@@ -18,7 +18,7 @@ use yii\db\ActiveRecord;
  * @property Epic[] $epics
  * @property Group[] $groups
  * @property Recap[] $recaps
- * @property Seen[] $seens
+ * @property Seen[] $sightings
  * @property Story[] $stories
  */
 class SeenPack extends ActiveRecord
@@ -89,7 +89,7 @@ class SeenPack extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getSeens()
+    public function getSightings()
     {
         return $this->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
@@ -136,5 +136,19 @@ class SeenPack extends ActiveRecord
     public function recordNotification():bool
     {
         return $this->recordSighting(false);
+    }
+
+    /**
+     * @param string $class
+     * @return SeenPack
+     */
+    public static function createPack(string $class):SeenPack
+    {
+        $pack = new SeenPack(['class' => $class, 'name' => '']);
+
+        $pack->save();
+        $pack->refresh();
+
+        return $pack;
     }
 }

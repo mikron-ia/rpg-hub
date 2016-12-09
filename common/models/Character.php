@@ -30,6 +30,8 @@ use yii\db\ActiveRecord;
  * @property CharacterSheet $character
  * @property DescriptionPack $descriptionPack
  * @property ExternalDataPack $externalDataPack
+ * @property SeenPack $seenPack
+ * @property CharacterSheet[] $characterSheets
  */
 class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasVisibility
 {
@@ -104,8 +106,19 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'character_sheet_id' => Yii::t('app', 'LABEL_CHARACTER'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
+            'seen_pack_id' => Yii::t('app', 'SEEN_PACK_ID'),
         ];
     }
+
+    /**
+     * {@inheritdoc}
+     * @todo Add sighting activation
+     */
+    public function afterFind()
+    {
+        parent::afterFind();
+    }
+
 
     public function beforeSave($insert)
     {
@@ -189,6 +202,22 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public function getExternalDataPack()
     {
         return $this->hasOne(ExternalDataPack::className(), ['external_data_pack_id' => 'external_data_pack_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSeenPack()
+    {
+        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCharacterSheets()
+    {
+        return $this->hasMany(CharacterSheet::className(), ['currently_delivered_character_id' => 'character_id']);
     }
 
     public function getSimpleDataForApi()
