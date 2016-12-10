@@ -3,7 +3,6 @@
 namespace common\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -22,6 +21,10 @@ use yii\db\ActiveRecord;
  */
 class Seen extends ActiveRecord
 {
+    const STATUS_NEW = 'new';
+    const STATUS_UPDATED = 'updated';
+    const STATUS_SEEN = 'seen';
+
     public static function tableName()
     {
         return 'seen';
@@ -32,6 +35,7 @@ class Seen extends ActiveRecord
         return [
             [['seen_pack_id', 'user_id', 'noted_at', 'seen_at', 'alert_threshold'], 'integer'],
             [['status'], 'string', 'max' => 16],
+            [['status'], 'default', 'value' => Seen::STATUS_NEW],
             [
                 ['seen_pack_id'],
                 'exist',
@@ -61,5 +65,47 @@ class Seen extends ActiveRecord
     public function getSeenPack()
     {
         return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function statusNames():array
+    {
+        return [
+            self::STATUS_NEW => Yii::t('app', 'SEEN_STATUS_NEW'),
+            self::STATUS_SEEN => Yii::t('app', 'SEEN_STATUS_SEEN'),
+            self::STATUS_UPDATED => Yii::t('app', 'SEEN_STATUS_UPDATED'),
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function statusCSS():array
+    {
+        return [
+            self::STATUS_NEW => 'seen-tag-new',
+            self::STATUS_UPDATED => 'seen-tag-updated',
+            self::STATUS_SEEN => 'seen-tag-seen',
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getName():string
+    {
+        $names = self::statusNames();
+        return isset($names[$this->status]) ? $names[$this->status] : '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getCSS():string
+    {
+        $names = self::statusCSS();
+        return isset($names[$this->status]) ? $names[$this->status] : '';
     }
 }

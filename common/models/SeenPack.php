@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use phpDocumentor\Reflection\DocBlock\Tags\See;
+use yii\console\Application as ConsoleApplication;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -22,6 +24,11 @@ use yii\db\ActiveRecord;
  */
 class SeenPack extends ActiveRecord
 {
+    /**
+     * @var Seen
+     */
+    private $sightingForCurrentUser;
+
     public static function tableName()
     {
         return 'seen_pack';
@@ -105,6 +112,11 @@ class SeenPack extends ActiveRecord
      */
     public function recordSighting(bool $fullSight = true):bool
     {
+        if (Yii::$app instanceof ConsoleApplication) {
+            /* There is no point to record sighting from a console */
+            return false;
+        }
+
         $userId = Yii::$app->user->identity->getId();
 
         $foundRecord = Seen::findOne([
@@ -124,9 +136,24 @@ class SeenPack extends ActiveRecord
         $record->noted_at = time();
         if ($fullSight) {
             $record->seen_at = time();
+            $record->status = Seen::STATUS_SEEN;
         }
 
         return $record->save();
+    }
+
+    public function updateRecord()
+    {
+        $foundRecords = Seen::findAll([
+            'seen_pack_id' => $this->seen_pack_id,
+        ]);
+
+        foreach ($foundRecords as $record) {
+            if ($record->status != Seen::STATUS_NEW) {
+                $record->status = Seen::STATUS_UPDATED;
+                $record->save();
+            }
+        }
     }
 
     /**
@@ -149,5 +176,47 @@ class SeenPack extends ActiveRecord
         $pack->refresh();
 
         return $pack;
+    }
+
+    private function fillSightingForCurrentUser()
+    {
+        if (!$this->sightingForCurrentUser) {
+            $userId = Yii::$app->user->identity->getId();
+
+            $sighting = Seen::findOne([
+                'seen_pack_id' => $this->seen_pack_id,
+                'user_id' => $userId,
+            ]);
+
+            if ($sighting) {
+                $this->sightingForCurrentUser = $sighting;
+            } else {
+                $this->sightingForCurrentUser = null;
+            }
+        }
+    }
+
+    public function getStatusForCurrentUser():string
+    {
+        $this->fillSightingForCurrentUser();
+
+        if (!$this->sightingForCurrentUser) {
+            $names = Seen::statusNames();
+            return $names[Seen::STATUS_NEW];
+        } else {
+            return $this->sightingForCurrentUser->getName();
+        }
+    }
+
+    public function getCSSForCurrentUser():string
+    {
+        $this->fillSightingForCurrentUser();
+
+        if (!$this->sightingForCurrentUser) {
+            $names = Seen::statusCSS();
+            return $names[Seen::STATUS_NEW];
+        } else {
+            return $this->sightingForCurrentUser->getCSS();
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
+use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
@@ -34,7 +35,7 @@ use yii\db\ActiveRecord;
  * @property SeenPack $seenPack
  * @property CharacterSheet[] $characterSheets
  */
-class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasVisibility
+class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasVisibility, HasSightings
 {
     use ToolsForEntity;
 
@@ -124,7 +125,6 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         parent::afterFind();
     }
 
-
     public function beforeSave($insert)
     {
         if ($insert) {
@@ -149,6 +149,13 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
         return parent::beforeSave($insert);
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->seenPack->updateRecord();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
 
     public function behaviors()
     {
@@ -363,5 +370,25 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();
+    }
+
+    public function recordSighting():bool
+    {
+        return $this->seenPack->recordSighting();
+    }
+
+    public function recordNotification():bool
+    {
+        return $this->seenPack->recordNotification();
+    }
+
+    public function showSightingStatus()
+    {
+        return $this->seenPack->getStatusForCurrentUser();
+    }
+
+    public function showSightingCSS()
+    {
+        return $this->seenPack->getCSSForCurrentUser();
     }
 }

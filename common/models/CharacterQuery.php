@@ -44,7 +44,7 @@ final class CharacterQuery extends Character
      */
     public function search($params):ActiveDataProvider
     {
-        $query = Character::find();
+        $query = Character::find()->joinWith('seenPack', true, 'LEFT JOIN');
 
         // add conditions that should always apply here
 
