@@ -135,12 +135,13 @@ final class EpicQuery extends Epic
     }
 
     /**
-     * @return string[]
+     * @param bool $limitToControlled
+     * @return array|\string[]
      */
-    static public function allowedEpics():array
+    static public function allowedEpics($limitToControlled = true):array
     {
         $ids = [];
-        $epics = self::activeEpicsAsModels();
+        $epics = self::activeEpicsAsModels($limitToControlled);
 
         foreach ($epics as $epic) {
             $ids[] = (int)$epic->epic_id;

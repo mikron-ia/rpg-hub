@@ -221,7 +221,7 @@ final class SiteController extends Controller
         /* @var $chosenEpic Epic */
         $chosenEpic = EpicQuery::findOne(['key' => $chosenEpicKey]);
 
-        if (!in_array($chosenEpic->epic_id, EpicQuery::allowedEpics())) {
+        if (!in_array($chosenEpic->epic_id, EpicQuery::allowedEpics(false))) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'EPIC_NOT_ALLOWED'));
         } else {
             if ($chosenEpic) {
