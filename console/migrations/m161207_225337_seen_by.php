@@ -11,7 +11,6 @@ class m161207_225337_seen_by extends Migration
         $this->createTable('seen_pack', [
             'seen_pack_id' => $this->primaryKey()->unsigned(),
             'class' => $this->string(20)->notNull()->comment("Name of class this pack belongs to; necessary for proper type assignment"),
-            'name' => $this->string(80)->notNull(),
         ], $tableOptions);
 
         $this->createTable('seen', [

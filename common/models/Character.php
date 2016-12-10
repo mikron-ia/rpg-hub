@@ -25,6 +25,7 @@ use yii\db\ActiveRecord;
  * @property string $character_sheet_id
  * @property string $description_pack_id
  * @property string $external_data_pack_id
+ * @property string $seen_pack_id
  *
  * @property Epic $epic
  * @property CharacterSheet $character
@@ -116,6 +117,10 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      */
     public function afterFind()
     {
+        if ($this->seen_pack_id) {
+            $this->seenPack->recordNotification();
+        }
+
         parent::afterFind();
     }
 
@@ -135,6 +140,11 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         if (empty($this->external_data_pack_id)) {
             $pack = ExternalDataPack::create('Character');
             $this->external_data_pack_id = $pack->external_data_pack_id;
+        }
+
+        if (empty($this->seen_pack_id)) {
+            $pack = SeenPack::create('Character');
+            $this->seen_pack_id = $pack->seen_pack_id;
         }
 
         return parent::beforeSave($insert);

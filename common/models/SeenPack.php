@@ -11,7 +11,6 @@ use yii\db\ActiveRecord;
  *
  * @property string $seen_pack_id
  * @property string $class
- * @property string $name
  *
  * @property Character[] $characters
  * @property CharacterSheet[] $characterSheets
@@ -31,9 +30,8 @@ class SeenPack extends ActiveRecord
     public function rules()
     {
         return [
-            [['class', 'name'], 'required'],
+            [['class'], 'required'],
             [['class'], 'string', 'max' => 20],
-            [['name'], 'string', 'max' => 80],
         ];
     }
 
@@ -42,7 +40,6 @@ class SeenPack extends ActiveRecord
         return [
             'seen_pack_id' => Yii::t('app', 'Seen Pack ID'),
             'class' => Yii::t('app', 'Class'),
-            'name' => Yii::t('app', 'Name'),
         ];
     }
 
@@ -120,6 +117,8 @@ class SeenPack extends ActiveRecord
         } else {
             $record = new Seen();
             $record->user_id = $userId;
+            $record->seen_pack_id = $this->seen_pack_id;
+            $record->alert_threshold = 0;
         }
 
         $record->noted_at = time();
@@ -142,9 +141,9 @@ class SeenPack extends ActiveRecord
      * @param string $class
      * @return SeenPack
      */
-    public static function createPack(string $class):SeenPack
+    public static function create(string $class):SeenPack
     {
-        $pack = new SeenPack(['class' => $class, 'name' => '']);
+        $pack = new SeenPack(['class' => $class]);
 
         $pack->save();
         $pack->refresh();
