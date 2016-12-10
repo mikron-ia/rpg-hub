@@ -5,6 +5,7 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
+use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
@@ -25,13 +26,16 @@ use yii\db\ActiveRecord;
  * @property string $character_sheet_id
  * @property string $description_pack_id
  * @property string $external_data_pack_id
+ * @property string $seen_pack_id
  *
  * @property Epic $epic
  * @property CharacterSheet $character
  * @property DescriptionPack $descriptionPack
  * @property ExternalDataPack $externalDataPack
+ * @property SeenPack $seenPack
+ * @property CharacterSheet[] $characterSheets
  */
-class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasVisibility
+class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasVisibility, HasSightings
 {
     use ToolsForEntity;
 
@@ -104,7 +108,21 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'character_sheet_id' => Yii::t('app', 'LABEL_CHARACTER'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
+            'seen_pack_id' => Yii::t('app', 'SEEN_PACK_ID'),
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     * @todo Add sighting activation
+     */
+    public function afterFind()
+    {
+        if ($this->seen_pack_id) {
+            $this->seenPack->recordNotification();
+        }
+
+        parent::afterFind();
     }
 
     public function beforeSave($insert)
@@ -124,8 +142,20 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             $this->external_data_pack_id = $pack->external_data_pack_id;
         }
 
+        if (empty($this->seen_pack_id)) {
+            $pack = SeenPack::create('Character');
+            $this->seen_pack_id = $pack->seen_pack_id;
+        }
+
         return parent::beforeSave($insert);
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->seenPack->updateRecord();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
 
     public function behaviors()
     {
@@ -189,6 +219,22 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public function getExternalDataPack()
     {
         return $this->hasOne(ExternalDataPack::className(), ['external_data_pack_id' => 'external_data_pack_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSeenPack()
+    {
+        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCharacterSheets()
+    {
+        return $this->hasMany(CharacterSheet::className(), ['currently_delivered_character_id' => 'character_id']);
     }
 
     public function getSimpleDataForApi()
@@ -324,5 +370,25 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();
+    }
+
+    public function recordSighting():bool
+    {
+        return $this->seenPack->recordSighting();
+    }
+
+    public function recordNotification():bool
+    {
+        return $this->seenPack->recordNotification();
+    }
+
+    public function showSightingStatus():string
+    {
+        return $this->seenPack->getStatusForCurrentUser();
+    }
+
+    public function showSightingCSS():string
+    {
+        return $this->seenPack->getCSSForCurrentUser();
     }
 }

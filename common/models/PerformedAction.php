@@ -6,6 +6,7 @@ use common\models\tools\IP;
 use common\models\tools\UserAgent;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\console\Application as ConsoleApplication;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -120,6 +121,11 @@ class PerformedAction extends ActiveRecord
      */
     static public function createRecord($operation, $class, $object_id):bool
     {
+        if (Yii::$app instanceof ConsoleApplication) {
+            /* There is no point to record sighting from a console call */
+            return false;
+        }
+
         $record = new PerformedAction();
 
         $ipAddress = Yii::$app->request->userIP;

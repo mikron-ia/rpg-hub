@@ -85,11 +85,13 @@ final class CharacterController extends Controller
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
         }
 
-        if($model->external_data_pack_id) {
+        if ($model->external_data_pack_id) {
             $externalDataDataProvider = $model->externalDataPack->getExternalDataAll();
         } else {
             $externalDataDataProvider = new ArrayDataProvider([]);
         }
+
+        $model->recordSighting();
 
         return $this->render('view', [
             'model' => $model,

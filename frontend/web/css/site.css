@@ -317,3 +317,28 @@ a:focus {
 .tab-pane {
     margin-top: 20px;
 }
+
+.seen-tag-new {
+    color: white;
+    background-color: yellowgreen;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 15px;
+}
+
+.seen-tag-updated {
+    color: white;
+    background-color: goldenrod;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 15px;
+}
+
+.seen-tag-seen {
+    color: white;
+    background-color: lightgrey;
+    display: none;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 15px;
+}
