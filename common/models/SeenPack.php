@@ -101,6 +101,16 @@ class SeenPack extends ActiveRecord
     /**
      * @return ActiveQuery
      */
+    public function getSightingsForCurrentUser()
+    {
+        return $this
+            ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
+            ->where(['user_id' => Yii::$app->user->id]);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
     public function getStories()
     {
         return $this->hasMany(Story::className(), ['seen_pack_id' => 'seen_pack_id']);

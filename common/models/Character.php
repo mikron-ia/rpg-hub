@@ -382,12 +382,12 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return $this->seenPack->recordNotification();
     }
 
-    public function showSightingStatus()
+    public function showSightingStatus():string
     {
         return $this->seenPack->getStatusForCurrentUser();
     }
 
-    public function showSightingCSS()
+    public function showSightingCSS():string
     {
         return $this->seenPack->getCSSForCurrentUser();
     }

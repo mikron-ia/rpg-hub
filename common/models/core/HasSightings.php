@@ -19,4 +19,16 @@ interface HasSightings
      * @return bool
      */
     public function recordNotification():bool;
+
+    /**
+     * Provides status name in appropriate language
+     * @return string
+     */
+    public function showSightingStatus():string;
+
+    /**
+     * Provides class applied to status tag
+     * @return string
+     */
+    public function showSightingCSS():string;
 }
