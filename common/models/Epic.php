@@ -355,6 +355,8 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
             $roles[ParticipantRole::ROLE_MANAGER] = ParticipantRole::ROLE_MANAGER;
             $participant->roleChoices = $roles;
             $participant->setRoles();
+
+            PerformedAction::createRecord(PerformedAction::PERFORMED_ACTION_MANAGER_ATTACH, 'Epic', $this->epic_id);
         } catch (Exception $e) {
             return false;
         }
@@ -384,6 +386,8 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
             if (!$roles) {
                 $participant->delete();
             }
+
+            PerformedAction::createRecord(PerformedAction::PERFORMED_ACTION_MANAGER_DETACH, 'Epic', $this->epic_id);
         } catch (Exception $e) {
             return false;
         }
