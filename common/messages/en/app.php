@@ -32,6 +32,7 @@ return [
     'BUTTON_DETAILS' => 'Epic details',
     'BUTTON_EPIC_ADD' => 'Add Epic',
     'BUTTON_EPIC_LIST' => 'List Epics',
+    'BUTTON_EPIC_MANAGEMENT' => 'Epic management',
     'BUTTON_EXTERNAL_DATA_LIST' => 'External data list',
     'BUTTON_GOTO_FILTER' => 'Filters',
     'BUTTON_GROUP' => 'Groups',

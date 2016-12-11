@@ -32,6 +32,7 @@ return [
     'BUTTON_DETAILS' => 'Szczegóły kampanii',
     'BUTTON_EPIC_ADD' => 'Dodaj kampanię',
     'BUTTON_EPIC_LIST' => 'Lista kampanii',
+    'BUTTON_EPIC_MANAGEMENT' => 'Zarządzanie kampaniami',
     'BUTTON_EXTERNAL_DATA_LIST' => 'Lista danych zewnętrznych',
     'BUTTON_GOTO_FILTER' => 'Filtry',
     'BUTTON_GROUP' => 'Grupy',

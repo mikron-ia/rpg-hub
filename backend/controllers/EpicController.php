@@ -26,13 +26,10 @@ final class EpicController extends Controller
                         'actions' => [
                             'create',
                             'index',
-                            'manage',
                             'update',
                             'view',
                             'participant-add',
                             'participant-edit',
-                            'manager-attach',
-                            'manager-detach'
                         ],
                         'allow' => true,
                         'roles' => ['operator'],
