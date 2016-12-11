@@ -10,6 +10,6 @@ final class EpicPlayer extends EpicUser
 
     public function requiredRole()
     {
-        return [ParticipantRole::ROLE_PLAYER];
+        return [ParticipantRole::ROLE_PLAYER, ParticipantRole::ROLE_MANAGER];
     }
 }

@@ -49,13 +49,13 @@ class Seen extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'seen_id' => Yii::t('app', 'Seen ID'),
-            'seen_pack_id' => Yii::t('app', 'Seen Pack ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'noted_at' => Yii::t('app', 'Noted At'),
-            'seen_at' => Yii::t('app', 'Seen At'),
-            'status' => Yii::t('app', 'Status'),
-            'alert_threshold' => Yii::t('app', 'Alert Threshold'),
+            'seen_id' => Yii::t('app', 'SEEN_ID'),
+            'seen_pack_id' => Yii::t('app', 'SEEN_PACK_ID'),
+            'user_id' => Yii::t('app', 'USER_ID'),
+            'noted_at' => Yii::t('app', 'SEEN_NOTED_AT'),
+            'seen_at' => Yii::t('app', 'SEEN_SEEN_AT'),
+            'status' => Yii::t('app', 'SEEN_STATUS'),
+            'alert_threshold' => Yii::t('app', 'SEEN_ALERT'),
         ];
     }
 

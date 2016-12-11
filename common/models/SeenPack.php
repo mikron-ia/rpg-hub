@@ -45,8 +45,8 @@ class SeenPack extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'seen_pack_id' => Yii::t('app', 'Seen Pack ID'),
-            'class' => Yii::t('app', 'Class'),
+            'seen_pack_id' => Yii::t('app', 'SEEN_PACK_ID'),
+            'class' => Yii::t('app', 'SEEN_PACK_CLASS'),
         ];
     }
 
