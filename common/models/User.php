@@ -178,6 +178,17 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
+    public function getEpicsGameMasteredAndManaged():ActiveQuery
+    {
+        return $this->getEpicsLimitedByRoles([
+            ParticipantRole::ROLE_GM,
+            ParticipantRole::ROLE_MANAGER
+        ]);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
     public function getEpicsGameMastered():ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([

@@ -10,6 +10,6 @@ final class EpicAssistant extends EpicUser
 
     public function requiredRole()
     {
-        return [ParticipantRole::ROLE_ASSISTANT, ParticipantRole::ROLE_GM];
+        return [ParticipantRole::ROLE_ASSISTANT, ParticipantRole::ROLE_GM, ParticipantRole::ROLE_MANAGER];
     }
 }

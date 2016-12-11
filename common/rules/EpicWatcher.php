@@ -10,6 +10,6 @@ final class EpicWatcher extends EpicUser
 
     public function requiredRole()
     {
-        return [ParticipantRole::ROLE_WATCHER, ParticipantRole::ROLE_ASSISTANT, ParticipantRole::ROLE_GM, ParticipantRole::ROLE_PLAYER];
+        return [ParticipantRole::ROLE_WATCHER, ParticipantRole::ROLE_ASSISTANT, ParticipantRole::ROLE_GM, ParticipantRole::ROLE_PLAYER, ParticipantRole::ROLE_MANAGER];
     }
 }

@@ -26,10 +26,13 @@ final class EpicController extends Controller
                         'actions' => [
                             'create',
                             'index',
+                            'manage',
                             'update',
                             'view',
                             'participant-add',
-                            'participant-edit'
+                            'participant-edit',
+                            'manager-attach',
+                            'manager-detach'
                         ],
                         'allow' => true,
                         'roles' => ['operator'],
@@ -46,7 +49,7 @@ final class EpicController extends Controller
     }
 
     /**
-     * Lists all Epic models.
+     * Lists all Epic models user can access
      * @return mixed
      */
     public function actionIndex()
@@ -57,6 +60,23 @@ final class EpicController extends Controller
         $dataProvider = $searchModel->activeEpicsAsActiveDataProvider();
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Lists all Epic models for management purposes
+     * @return mixed
+     */
+    public function actionManage()
+    {
+        Epic::canUserIndexEpic();
+
+        $searchModel = new EpicQuery();
+        $dataProvider = $searchModel->manageableEpicsAsActiveDataProvider();
+
+        return $this->render('manage', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -192,6 +212,32 @@ final class EpicController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionManagerAttach($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->attachCurrentUserAsManager()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'MANAGE_EPIC_ATTACH_SUCCESS'));
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'MANAGE_EPIC_ATTACH_FAILED'));
+        }
+
+        return $this->redirect(['manage']);
+    }
+
+    public function actionManagerDetach($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->detachCurrentUserAsManager()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'MANAGE_EPIC_DETACH_SUCCESS'));
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'MANAGE_EPIC_DETACH_FAILED'));
+        }
+
+        return $this->redirect(['manage']);
     }
 
     /**

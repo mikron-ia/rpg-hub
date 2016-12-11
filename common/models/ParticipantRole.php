@@ -20,6 +20,7 @@ final class ParticipantRole extends ActiveRecord
     const ROLE_PLAYER = 'player';
     const ROLE_ASSISTANT = 'assistant';
     const ROLE_WATCHER = 'watcher';
+    const ROLE_MANAGER = 'manager';
 
     public static function tableName()
     {
@@ -54,6 +55,7 @@ final class ParticipantRole extends ActiveRecord
             self::ROLE_PLAYER => Yii::t('app', 'PARTICIPANT_ROLE_PLAYER'),
             self::ROLE_ASSISTANT => Yii::t('app', 'PARTICIPANT_ROLE_ASSISTANT'),
             self::ROLE_WATCHER => Yii::t('app', 'PARTICIPANT_ROLE_WATCHER'),
+            self::ROLE_MANAGER => Yii::t('app', 'PARTICIPANT_ROLE_MANAGER'),
         ];
     }
 

@@ -10,6 +10,6 @@ final class EpicGameMaster extends EpicUser
 
     public function requiredRole()
     {
-        return [ParticipantRole::ROLE_GM];
+        return [ParticipantRole::ROLE_GM, ParticipantRole::ROLE_MANAGER];
     }
 }

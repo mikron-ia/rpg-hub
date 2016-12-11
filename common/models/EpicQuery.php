@@ -69,8 +69,8 @@ final class EpicQuery extends Epic
         $user = Yii::$app->user->identity;
 
         if (Yii::$app->user->can('manager')) {
-            /* Admin and manager need them all */
-            $query = Epic::find();
+            /* GM needs those mastered and assisted in */
+            $query = $user->getEpicsGameMasteredAndManaged();
         } elseif ($limitToControlled) {
             /* GM needs those mastered and assisted in */
             $query = $user->getEpicsGameMastered();
@@ -148,5 +148,23 @@ final class EpicQuery extends Epic
         }
 
         return $ids;
+    }
+
+    /**
+     * Provides list of all epics, with indication of user's role in them
+     * @return ActiveDataProvider
+     */
+    static public function manageableEpicsAsActiveDataProvider():ActiveDataProvider
+    {
+        $query = Epic::find()
+            ->joinWith('participants', true, 'LEFT JOIN')
+            ->joinWith('participants.participantRoles', true, 'LEFT JOIN');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => false,
+        ]);
+
+        return $dataProvider;
     }
 }

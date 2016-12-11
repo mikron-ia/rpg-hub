@@ -6,6 +6,7 @@ use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasParameters;
 use common\models\tools\ToolsForEntity;
 use Yii;
+use yii\base\Exception;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -311,10 +312,82 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
      */
     public function isUserYourParticipant($user):bool
     {
-        if(!$user) {
+        if (!$user) {
             return false;
         }
 
         return Participant::participantExists($user, $this);
+    }
+
+    /**
+     * @param User|null $user
+     * @return bool
+     */
+    public function isUserYourManager($user):bool
+    {
+        if (!$user) {
+            return false;
+        }
+
+        return Participant::participantHasRole($user, $this, ParticipantRole::ROLE_MANAGER);
+    }
+
+    public function attachCurrentUserAsManager()
+    {
+        try {
+            /** @var User $user */
+            $user = Yii::$app->user->identity;
+
+            if ($this->isUserYourManager($user)) {
+                /* If they are the manager, there is nothing to add */
+                return false;
+            }
+
+            $participant = Participant::findOne(['epic_id' => $this->epic_id, 'user_id' => $user->id]);
+
+            if (!$participant) {
+                $participant = new Participant(['epic_id' => $this->epic_id, 'user_id' => $user->id]);
+                $participant->save();
+                $participant->refresh();
+            }
+
+            $roles = $participant->getRoles();
+            $roles[ParticipantRole::ROLE_MANAGER] = ParticipantRole::ROLE_MANAGER;
+            $participant->roleChoices = $roles;
+            $participant->setRoles();
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function detachCurrentUserAsManager()
+    {
+        try {
+            /** @var User $user */
+            $user = Yii::$app->user->identity;
+
+            if (!$this->isUserYourManager($user)) {
+                /* If they are not the manager, there is nothing to remove */
+                return false;
+            }
+
+            $participant = Participant::findOne(['epic_id' => $this->epic_id, 'user_id' => $user->id]);
+
+            $roles = $participant->getRoles();
+            unset($roles[ParticipantRole::ROLE_MANAGER]);
+            $participant->roleChoices = $roles;
+            $participant->setRoles();
+
+            /* No roles - no need to keep the participant object */
+            if (!$roles) {
+                $participant->delete();
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 }
