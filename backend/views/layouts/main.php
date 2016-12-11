@@ -54,6 +54,10 @@ AppAsset::register($this);
         $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_USER_LIST'), 'url' => ['/user/index']];
     }
 
+    if (Yii::$app->user->can('manager')) {
+        $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_EPIC_MANAGEMENT'), 'url' => ['/epic/manage']];
+    }
+
     $menuItems = [
         [
             'label' => Yii::t('app', 'CONFIGURATION_TITLE_INDEX'),

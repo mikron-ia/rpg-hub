@@ -37,12 +37,23 @@ final class EpicController extends Controller
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
+                    [
+                        'actions' => [
+                            'manage',
+                            'manager-attach',
+                            'manager-detach'
+                        ],
+                        'allow' => true,
+                        'roles' => ['manager'],
+                    ],
                 ],
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'manager-attach' => ['POST'],
+                    'manager-detach' => ['POST'],
                 ],
             ],
         ];

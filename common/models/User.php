@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\behaviours\PerformedActionBehavior;
 use common\models\core\Language;
 use Yii;
 use yii\base\NotSupportedException;
@@ -56,7 +57,6 @@ final class User extends ActiveRecord implements IdentityInterface
     public function afterSave($insert, $changedAttributes)
     {
         if (!$this->hasErrors()) {
-
             $roleCode = $this->getUserRoleCode();
 
             if ($this->user_role != $roleCode && $roleCode != self::USER_ROLE_ADMINISTRATOR) {
@@ -76,7 +76,14 @@ final class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            'performedActionBehavior' => [
+                'class' => PerformedActionBehavior::className(),
+                'idName' => 'id',
+                'className' => 'User',
+            ],
+            'timestampBehavior' => [
+                'class' => TimestampBehavior::className(),
+            ],
         ];
     }
 
@@ -85,6 +92,16 @@ final class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [
+                'user_role',
+                'in',
+                'range' => [
+                    self::USER_ROLE_USER,
+                    self::USER_ROLE_OPERATOR,
+                    self::USER_ROLE_MANAGER,
+                    self::USER_ROLE_ADMINISTRATOR
+                ]
+            ],
             ['language', 'in', 'range' => Language::supportedLanguages()]
         ];
     }

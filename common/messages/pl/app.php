@@ -270,6 +270,8 @@ return [
     'PERFORMED_ACTION_ID' => 'ID akcji',
     'PERFORMED_ACTION_LOGIN' => 'zalogował[a] się',
     'PERFORMED_ACTION_LOGOUT' => 'wylogował[a] się',
+    'PERFORMED_ACTION_MANAGER_ATTACH' => 'został[a] zarządcą kampanii',
+    'PERFORMED_ACTION_MANAGER_DETACH' => 'porzucił[a] zarząd kampanii',
     'PERFORMED_ACTION_OBJECT_ID' => 'ID obiektu',
     'PERFORMED_ACTION_OPERATION' => 'Operacja',
     'PERFORMED_ACTION_OTHER' => 'zrobił[a] coś innego',

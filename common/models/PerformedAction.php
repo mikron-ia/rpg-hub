@@ -32,6 +32,8 @@ class PerformedAction extends ActiveRecord
     const PERFORMED_ACTION_UPDATE = 'update';
     const PERFORMED_ACTION_LOGIN = 'login';
     const PERFORMED_ACTION_LOGOUT = 'logout';
+    const PERFORMED_ACTION_MANAGER_ATTACH = 'manager-attach';
+    const PERFORMED_ACTION_MANAGER_DETACH = 'manager-detach';
     const PERFORMED_ACTION_OTHER = 'other';
 
     public static function tableName()
@@ -64,6 +66,8 @@ class PerformedAction extends ActiveRecord
                     self::PERFORMED_ACTION_UPDATE,
                     self::PERFORMED_ACTION_LOGIN,
                     self::PERFORMED_ACTION_LOGOUT,
+                    self::PERFORMED_ACTION_MANAGER_ATTACH,
+                    self::PERFORMED_ACTION_MANAGER_DETACH,
                     self::PERFORMED_ACTION_OTHER
                 ]
             ],
@@ -174,6 +178,8 @@ class PerformedAction extends ActiveRecord
             self::PERFORMED_ACTION_UPDATE => Yii::t('app', 'PERFORMED_ACTION_UPDATE'),
             self::PERFORMED_ACTION_LOGIN => Yii::t('app', 'PERFORMED_ACTION_LOGIN'),
             self::PERFORMED_ACTION_LOGOUT => Yii::t('app', 'PERFORMED_ACTION_LOGOUT'),
+            self::PERFORMED_ACTION_MANAGER_ATTACH => Yii::t('app', 'PERFORMED_ACTION_MANAGER_ATTACH'),
+            self::PERFORMED_ACTION_MANAGER_DETACH => Yii::t('app', 'PERFORMED_ACTION_MANAGER_DETACH'),
             self::PERFORMED_ACTION_OTHER => Yii::t('app', 'PERFORMED_ACTION_OTHER'),
         ];
     }
