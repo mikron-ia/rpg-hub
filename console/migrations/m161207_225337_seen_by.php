@@ -24,6 +24,7 @@ class m161207_225337_seen_by extends Migration
         ], $tableOptions);
 
         $this->addForeignKey('seen_pack', 'seen', 'seen_pack_id', 'seen_pack', 'seen_pack_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('user', 'seen', 'user_id', 'user', 'id', 'RESTRICT', 'CASCADE');
 
         $this->addColumn('character', 'seen_pack_id', $this->integer(11)->unsigned());
         $this->addColumn('character_sheet', 'seen_pack_id', $this->integer(11)->unsigned());
@@ -43,6 +44,7 @@ class m161207_225337_seen_by extends Migration
     public function down()
     {
         $this->dropForeignKey('seen_pack', '{{%seen}}');
+        $this->dropForeignKey('user', '{{%seen}}');
 
         $this->dropForeignKey('character_seen', '{{%character}}');
         $this->dropForeignKey('character_sheet_seen', '{{%character_sheet}}');

@@ -18,6 +18,7 @@ use yii\db\ActiveRecord;
  * @property integer $alert_threshold
  *
  * @property SeenPack $seenPack
+ * @property User $user
  */
 class Seen extends ActiveRecord
 {
@@ -65,6 +66,14 @@ class Seen extends ActiveRecord
     public function getSeenPack()
     {
         return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
