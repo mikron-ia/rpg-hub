@@ -43,7 +43,7 @@ final class GroupController extends Controller
      */
     public function actionIndex()
     {
-        if(!Group::canUserIndexThem()) {
+        if (!Group::canUserIndexThem()) {
             Group::throwExceptionAboutIndex();
         }
 
@@ -65,7 +65,7 @@ final class GroupController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(!$model->canUserViewYou()) {
+        if (!$model->canUserViewYou()) {
             Group::throwExceptionAboutView();
         }
 
@@ -74,6 +74,8 @@ final class GroupController extends Controller
         } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
         }
+
+        $model->recordSighting();
 
         return $this->render('view', [
             'model' => $model,
@@ -87,7 +89,7 @@ final class GroupController extends Controller
      */
     public function actionCreate()
     {
-        if(!Group::canUserCreateThem()) {
+        if (!Group::canUserCreateThem()) {
             Group::throwExceptionAboutCreate();
         }
 
@@ -112,7 +114,7 @@ final class GroupController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(!$model->canUserControlYou()) {
+        if (!$model->canUserControlYou()) {
             Group::throwExceptionAboutControl();
         }
 
