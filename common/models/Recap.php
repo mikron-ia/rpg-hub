@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
+use common\models\core\HasSightings;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
@@ -19,10 +20,12 @@ use yii\helpers\Markdown;
  * @property string $name
  * @property string $data
  * @property string $time
+ * @property string $seen_pack_id
  *
  * @property Epic $epic
+ * @property SeenPack $seenPack
  */
-class Recap extends ActiveRecord implements Displayable, HasEpicControl
+class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSightings
 {
     use ToolsForEntity;
 
@@ -62,10 +65,27 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
         ];
     }
 
+    public function afterFind()
+    {
+        $this->seenPack->recordNotification();
+        parent::afterFind();
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->seenPack->updateRecord();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
     public function beforeSave($insert)
     {
         if ($insert) {
             $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+        }
+
+        if (empty($this->seen_pack_id)) {
+            $pack = SeenPack::create('Character');
+            $this->seen_pack_id = $pack->seen_pack_id;
         }
 
         return parent::beforeSave($insert);
@@ -161,5 +181,25 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl
     static function throwExceptionAboutView()
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_RECAP'));
+    }
+
+    public function recordSighting():bool
+    {
+        return $this->seenPack->recordSighting();
+    }
+
+    public function recordNotification():bool
+    {
+        return $this->seenPack->recordNotification();
+    }
+
+    public function showSightingStatus():string
+    {
+        return $this->seenPack->getStatusForCurrentUser();
+    }
+
+    public function showSightingCSS():string
+    {
+        return $this->seenPack->getCSSForCurrentUser();
     }
 }

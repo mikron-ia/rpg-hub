@@ -20,6 +20,7 @@ use yii\web\HttpException;
  * @property string $name
  * @property string $system
  * @property string $parameter_pack_id
+ * @property string $seen_pack_id
  *
  * @property CharacterSheet[] $characters
  * @property ParameterPack $parameterPack
@@ -29,6 +30,7 @@ use yii\web\HttpException;
  * @property Participant[] $participants
  * @property Character[] $people
  * @property Recap[] $recaps
+ * @property SeenPack $seenPack
  * @property Story[] $stories
  *
  * @todo: Someday, system field will have to come from a closed list of supported systems
@@ -69,6 +71,18 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
         ];
     }
 
+    public function afterFind()
+    {
+        $this->seenPack->recordNotification();
+        parent::afterFind();
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->seenPack->updateRecord();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
     public function beforeSave($insert)
     {
         if ($insert) {
@@ -78,6 +92,11 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
         if (empty($this->parameter_pack_id)) {
             $pack = ParameterPack::create('Epic');
             $this->parameter_pack_id = $pack->parameter_pack_id;
+        }
+
+        if (empty($this->seen_pack_id)) {
+            $pack = SeenPack::create('Character');
+            $this->seen_pack_id = $pack->seen_pack_id;
         }
 
         return parent::beforeSave($insert);

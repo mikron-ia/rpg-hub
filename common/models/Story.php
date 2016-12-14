@@ -5,6 +5,7 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\core\HasParameters;
+use common\models\core\HasSightings;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
@@ -25,12 +26,14 @@ use yii2tech\ar\position\PositionBehavior;
  * @property int $position
  * @property string $data
  * @property string $parameter_pack_id
+ * @property string $seen_pack_id
  *
  * @property Epic $epic
  * @property ParameterPack $parameterPack
+ * @property SeenPack $seenPack
  * @property StoryParameter[] $storyParameters
  */
-class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl
+class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl, HasSightings
 {
     use ToolsForEntity;
 
@@ -85,6 +88,18 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
+    public function afterFind()
+    {
+        $this->seenPack->recordNotification();
+        parent::afterFind();
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->seenPack->updateRecord();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
     public function beforeSave($insert)
     {
         if ($insert) {
@@ -95,6 +110,11 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         if (empty($this->parameter_pack_id)) {
             $pack = ParameterPack::create('Story');
             $this->parameter_pack_id = $pack->parameter_pack_id;
+        }
+
+        if (empty($this->seen_pack_id)) {
+            $pack = SeenPack::create('Character');
+            $this->seen_pack_id = $pack->seen_pack_id;
         }
 
         return parent::beforeSave($insert);
@@ -139,7 +159,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     {
         return $this->hasMany(StoryParameter::className(), ['story_id' => 'story_id']);
     }
-
 
     /**
      * Provides story summary formatted in HTML
@@ -281,5 +300,25 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         } else {
             return '';
         }
+    }
+
+    public function recordSighting():bool
+    {
+        return $this->seenPack->recordSighting();
+    }
+
+    public function recordNotification():bool
+    {
+        return $this->seenPack->recordNotification();
+    }
+
+    public function showSightingStatus():string
+    {
+        return $this->seenPack->getStatusForCurrentUser();
+    }
+
+    public function showSightingCSS():string
+    {
+        return $this->seenPack->getCSSForCurrentUser();
     }
 }

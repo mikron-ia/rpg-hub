@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
+use common\models\core\HasSightings;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -19,12 +20,14 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property string $data
  * @property string $currently_delivered_character_id
+ * @property string $seen_pack_id
  *
  * @property Epic $epic
  * @property Character $currentlyDeliveredPerson
  * @property Character[] $people
+ * @property SeenPack $seenPack
  */
-class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
+class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl, HasSightings
 {
     use ToolsForEntity;
 
@@ -77,6 +80,18 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         ];
     }
 
+    public function afterFind()
+    {
+        $this->seenPack->recordNotification();
+        parent::afterFind();
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->seenPack->updateRecord();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
     public function beforeSave($insert)
     {
         if ($insert) {
@@ -88,6 +103,11 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             if ($person) {
                 $this->currently_delivered_character_id = $person->character_id;
             }
+        }
+
+        if (empty($this->seen_pack_id)) {
+            $pack = SeenPack::create('Character');
+            $this->seen_pack_id = $pack->seen_pack_id;
         }
 
         return parent::beforeSave($insert);
@@ -220,5 +240,25 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     static function throwExceptionAboutView()
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
+    }
+
+    public function recordSighting():bool
+    {
+        return $this->seenPack->recordSighting();
+    }
+
+    public function recordNotification():bool
+    {
+        return $this->seenPack->recordNotification();
+    }
+
+    public function showSightingStatus():string
+    {
+        return $this->seenPack->getStatusForCurrentUser();
+    }
+
+    public function showSightingCSS():string
+    {
+        return $this->seenPack->getCSSForCurrentUser();
     }
 }
