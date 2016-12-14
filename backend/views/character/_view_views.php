@@ -7,21 +7,19 @@ use common\models\Seen;
 
 <div class="col-md-6">
 
-    <h2 class="text-center"><?= Yii::t('app', 'SEEN_SIGHTINGS_ONLY') ?></h2>
+    <h2 class="text-center"><?= Yii::t('app', 'SEEN_READ') ?></h2>
     <?= \yii\grid\GridView::widget([
         'dataProvider' => new \yii\data\ActiveDataProvider([
-            'query' => $model->seenPack->getSightingsForSightings(),
+            'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_SEEN),
             'pagination' => false,
         ]),
         'layout' => '{items}',
         'columns' => [
             'user.username',
-            'seen_at:datetime',
             [
-                'attribute' => 'status',
-                'value' => function (Seen $model) {
-                    return $model->getName();
-                }
+                'attribute' => 'seen_at',
+                'format' => 'datetime',
+                'enableSorting' => false,
             ],
         ],
     ]) ?>
@@ -30,21 +28,40 @@ use common\models\Seen;
 
 <div class="col-md-6">
 
-    <h2 class="text-center"><?= Yii::t('app', 'SEEN_LISTINGS_ONLY') ?></h2>
+    <h2 class="text-center"><?= Yii::t('app', 'SEEN_BEFORE_UPDATE') ?></h2>
     <?= \yii\grid\GridView::widget([
         'dataProvider' => new \yii\data\ActiveDataProvider([
-            'query' => $model->seenPack->getSightingsForNotices(),
+            'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_UPDATED),
             'pagination' => false,
         ]),
         'layout' => '{items}',
         'columns' => [
             'user.username',
-            'noted_at:datetime',
             [
-                'attribute' => 'status',
-                'value' => function (Seen $model) {
-                    return $model->getName();
-                }
+                'attribute' => 'noted_at',
+                'format' => 'datetime',
+                'enableSorting' => false,
+            ],
+        ],
+    ]) ?>
+
+</div>
+
+<div class="col-md-6">
+
+    <h2 class="text-center"><?= Yii::t('app', 'SEEN_NEW') ?></h2>
+    <?= \yii\grid\GridView::widget([
+        'dataProvider' => new \yii\data\ActiveDataProvider([
+            'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_NEW),
+            'pagination' => false,
+        ]),
+        'layout' => '{items}',
+        'columns' => [
+            'user.username',
+            [
+                'attribute' => 'noted_at',
+                'format' => 'datetime',
+                'enableSorting' => false,
             ],
         ],
     ]) ?>
