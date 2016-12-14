@@ -73,7 +73,9 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
 
     public function afterFind()
     {
-        $this->seenPack->recordNotification();
+        if ($this->seen_pack_id) {
+            $this->seenPack->recordNotification();
+        }
         parent::afterFind();
     }
 
@@ -95,7 +97,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
         }
 
         if (empty($this->seen_pack_id)) {
-            $pack = SeenPack::create('Character');
+            $pack = SeenPack::create('Epic');
             $this->seen_pack_id = $pack->seen_pack_id;
         }
 
@@ -175,6 +177,14 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
     public function getRecaps()
     {
         return $this->hasMany(Recap::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getSeenPack():ActiveQuery
+    {
+        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**

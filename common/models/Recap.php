@@ -67,7 +67,9 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
 
     public function afterFind()
     {
-        $this->seenPack->recordNotification();
+        if ($this->seen_pack_id) {
+            $this->seenPack->recordNotification();
+        }
         parent::afterFind();
     }
 
@@ -84,7 +86,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         }
 
         if (empty($this->seen_pack_id)) {
-            $pack = SeenPack::create('Character');
+            $pack = SeenPack::create('Recap');
             $this->seen_pack_id = $pack->seen_pack_id;
         }
 
@@ -117,6 +119,14 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     public function getEpic():ActiveQuery
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getSeenPack():ActiveQuery
+    {
+        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
 
     public function getSimpleDataForApi()

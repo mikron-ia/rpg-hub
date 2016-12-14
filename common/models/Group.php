@@ -49,7 +49,9 @@ class Group extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
 
     public function afterFind()
     {
-        $this->seenPack->recordNotification();
+        if ($this->seen_pack_id) {
+            $this->seenPack->recordNotification();
+        }
         parent::afterFind();
     }
 

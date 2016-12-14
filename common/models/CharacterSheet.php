@@ -82,7 +82,9 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 
     public function afterFind()
     {
-        $this->seenPack->recordNotification();
+        if ($this->seen_pack_id) {
+            $this->seenPack->recordNotification();
+        }
         parent::afterFind();
     }
 
@@ -106,7 +108,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         }
 
         if (empty($this->seen_pack_id)) {
-            $pack = SeenPack::create('Character');
+            $pack = SeenPack::create('CharacterSheet');
             $this->seen_pack_id = $pack->seen_pack_id;
         }
 
@@ -146,6 +148,14 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     public function getPeople()
     {
         return $this->hasMany(Character::className(), ['character_sheet_id' => 'character_sheet_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getSeenPack():ActiveQuery
+    {
+        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
 
     public function getSimpleDataForApi()
