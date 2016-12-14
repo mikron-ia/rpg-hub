@@ -7,6 +7,7 @@ use yii\console\Application as ConsoleApplication;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "seen_pack".
@@ -96,6 +97,26 @@ class SeenPack extends ActiveRecord
     public function getSightings()
     {
         return $this->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getSightingsForNotices()
+    {
+        return $this
+            ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
+            ->where(new Expression('seen_at IS NULL'));;
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getSightingsForSightings()
+    {
+        return $this
+            ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
+            ->where(new Expression('seen_at IS NOT NULL'));
     }
 
     /**
