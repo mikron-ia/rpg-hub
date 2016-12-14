@@ -11,7 +11,9 @@ use yii\helpers\StringHelper;
 
 $this->title = Yii::t('app', 'TITLE_CHARACTER_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
+
 <div class="person-index">
 
     <div class="buttoned-header">

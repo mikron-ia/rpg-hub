@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\CharacterQuery */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
 <div class="person-search">

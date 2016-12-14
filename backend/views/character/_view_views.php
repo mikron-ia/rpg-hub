@@ -1,8 +1,10 @@
 <?php
+
 use common\models\Seen;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Character */
+
 ?>
 
 <div class="col-md-6">
@@ -38,7 +40,7 @@ use common\models\Seen;
         'columns' => [
             'user.username',
             [
-                'attribute' => 'noted_at',
+                'attribute' => 'seen_at',
                 'format' => 'datetime',
                 'enableSorting' => false,
             ],

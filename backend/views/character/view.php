@@ -1,9 +1,6 @@
 <?php
 
-use common\models\core\Language;
-use common\models\ExternalData;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Character */
