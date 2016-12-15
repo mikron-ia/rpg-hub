@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Parameter;
+use common\models\Seen;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -44,29 +45,29 @@ $this->params['breadcrumbs'][] = $this->title;
         ); ?>
     </div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            [
-                'attribute' => 'key',
-            ],
-            [
-                'attribute' => 'epic_id',
-                'format' => 'raw',
-                'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
-            ],
-            [
-                'label' => Yii::t('app', 'LABEL_DATA_SIZE'),
-                'format' => 'shortSize',
-                'value' => strlen($model->data),
-            ],
-            [
-                'attribute' => 'position',
-            ],
-        ],
-    ]) ?>
+    <div class="col-md-6">
 
-    <div class="col-lg-12">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                [
+                    'attribute' => 'key',
+                ],
+                [
+                    'attribute' => 'epic_id',
+                    'format' => 'raw',
+                    'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
+                ],
+                [
+                    'label' => Yii::t('app', 'LABEL_DATA_SIZE'),
+                    'format' => 'shortSize',
+                    'value' => strlen($model->data),
+                ],
+                [
+                    'attribute' => 'position',
+                ],
+            ],
+        ]) ?>
 
         <div class="buttoned-header">
             <h2><?= Yii::t('app', 'PARAMETER_TITLE_INDEX') ?></h2>
@@ -135,19 +136,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]); ?>
+
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-md-6">
 
         <h2><?php echo $model->getAttributeLabel('short'); ?></h2>
 
         <div>
             <?php echo $model->getShortFormatted(); ?>
         </div>
-
-    </div>
-
-    <div class="col-lg-12">
 
         <h2><?php echo $model->getAttributeLabel('long'); ?></h2>
 
@@ -211,5 +209,72 @@ $this->params['breadcrumbs'][] = $this->title;
     <p class="text-left">
         <?= Html::encode($model->data) ?>
     </p>
+
+</div>
+
+<div class="col-lg-12">
+
+    <div class="col-md-6">
+
+        <h2 class="text-center"><?= Yii::t('app', 'SEEN_READ') ?></h2>
+        <?= \yii\grid\GridView::widget([
+            'dataProvider' => new \yii\data\ActiveDataProvider([
+                'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_SEEN),
+                'pagination' => false,
+            ]),
+            'layout' => '{items}',
+            'columns' => [
+                'user.username',
+                [
+                    'attribute' => 'seen_at',
+                    'format' => 'datetime',
+                    'enableSorting' => false,
+                ],
+            ],
+        ]) ?>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <h2 class="text-center"><?= Yii::t('app', 'SEEN_BEFORE_UPDATE') ?></h2>
+        <?= \yii\grid\GridView::widget([
+            'dataProvider' => new \yii\data\ActiveDataProvider([
+                'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_UPDATED),
+                'pagination' => false,
+            ]),
+            'layout' => '{items}',
+            'columns' => [
+                'user.username',
+                [
+                    'attribute' => 'seen_at',
+                    'format' => 'datetime',
+                    'enableSorting' => false,
+                ],
+            ],
+        ]) ?>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <h2 class="text-center"><?= Yii::t('app', 'SEEN_NEW') ?></h2>
+        <?= \yii\grid\GridView::widget([
+            'dataProvider' => new \yii\data\ActiveDataProvider([
+                'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_NEW),
+                'pagination' => false,
+            ]),
+            'layout' => '{items}',
+            'columns' => [
+                'user.username',
+                [
+                    'attribute' => 'noted_at',
+                    'format' => 'datetime',
+                    'enableSorting' => false,
+                ],
+            ],
+        ]) ?>
+
+    </div>
 
 </div>
