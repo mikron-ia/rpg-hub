@@ -16,8 +16,11 @@ if ($storyNumberRaw) {
 
 <div id="story-<?php echo $model->story_id; ?>">
 
-    <h2 class="center">
+    <h2>
         <?php echo Html::a(Html::encode($storyNumber . $model->name), ['view', 'id' => $model->story_id]); ?>
+        <span class="text-center <?= $model->showSightingCSS() ?> seen-tag-header">
+            <?= $model->showSightingStatus() ?>
+        </span>
     </h2>
 
     <div class="col-md-12 text-justify">

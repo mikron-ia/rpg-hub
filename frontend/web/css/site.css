@@ -322,7 +322,6 @@ a:focus {
     color: white;
     background-color: yellowgreen;
     font-weight: bold;
-    padding: 5px;
     border-radius: 15px;
 }
 
@@ -330,7 +329,6 @@ a:focus {
     color: white;
     background-color: goldenrod;
     font-weight: bold;
-    padding: 5px;
     border-radius: 15px;
 }
 
@@ -339,6 +337,18 @@ a:focus {
     background-color: lightgrey;
     display: none;
     font-weight: bold;
-    padding: 5px;
     border-radius: 15px;
+}
+
+.seen-tag-box {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.25em;
+    padding: 5px;
+}
+
+.seen-tag-header {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.625em;
+    padding: 5px 20px;
+    vertical-align: middle;
 }
