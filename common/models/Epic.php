@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasParameters;
+use common\models\core\HasSightings;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\base\Exception;
@@ -35,7 +36,7 @@ use yii\web\HttpException;
  *
  * @todo: Someday, system field will have to come from a closed list of supported systems
  */
-class Epic extends ActiveRecord implements Displayable, HasParameters
+class Epic extends ActiveRecord implements Displayable, HasParameters, HasSightings
 {
     use ToolsForEntity;
 
@@ -422,5 +423,25 @@ class Epic extends ActiveRecord implements Displayable, HasParameters
         }
 
         return true;
+    }
+
+    public function recordSighting():bool
+    {
+        return $this->seenPack->recordSighting();
+    }
+
+    public function recordNotification():bool
+    {
+        return $this->seenPack->recordNotification();
+    }
+
+    public function showSightingStatus():string
+    {
+        return $this->seenPack->getStatusForCurrentUser();
+    }
+
+    public function showSightingCSS():string
+    {
+        return $this->seenPack->getCSSForCurrentUser();
     }
 }

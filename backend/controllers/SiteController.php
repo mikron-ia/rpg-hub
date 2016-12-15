@@ -76,7 +76,10 @@ final class SiteController extends Controller
             return $this->render('epic-selection');
         }
 
+        /** @var Epic $epic */
         $epic = Yii::$app->params['activeEpic'];
+
+        $epic->recordSighting();
 
         return $this->render('index', [
             'epic' => $epic,

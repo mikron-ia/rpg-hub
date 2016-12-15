@@ -107,6 +107,8 @@ final class EpicController extends Controller
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
         }
 
+        $model->recordSighting();
+
         return $this->render('view', [
             'model' => $model,
         ]);

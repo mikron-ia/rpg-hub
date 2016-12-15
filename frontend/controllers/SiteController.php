@@ -83,7 +83,10 @@ final class SiteController extends Controller
             $stories = null;
             $recap = null;
         } else {
+            /** @var Epic $epic */
             $epic = Yii::$app->params['activeEpic'];
+
+            $epic->recordSighting();
 
             /* Get Recap */
             $recapQuery = new RecapQuery();
