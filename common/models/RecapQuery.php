@@ -73,7 +73,7 @@ final class RecapQuery extends Recap
     }
 
     /**
-     * @return null|\yii\db\ActiveRecord
+     * @return Recap|null
      */
     public function mostRecent()
     {
@@ -85,6 +85,9 @@ final class RecapQuery extends Recap
 
         $query->andWhere(['epic_id' => Yii::$app->params['activeEpic']->epic_id])->orderBy(['time' => SORT_DESC]);
 
-        return $query->one();
+        /** @var Recap|null $recap */
+        $recap = $query->one();
+
+        return $recap;
     }
 }
