@@ -49,13 +49,14 @@ final class CharacterQuery extends Character
         // add conditions that should always apply here
 
         if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
             $query->where('0=1');
+        } else {
+            $query->andWhere([
+                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+                'visibility' => Visibility::determineVisibilityVector(),
+            ]);
         }
-
-        $query->andWhere([
-            'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-            'visibility' => Visibility::determineVisibilityVector(),
-        ]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
