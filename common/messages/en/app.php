@@ -145,6 +145,8 @@ return [
     'EPIC_LABEL' => 'Epic',
     'EPIC_NAME' => 'Name',
     'EPIC_NOT_ALLOWED' => 'You should not access this epic. Moreover, you should not have tried.',
+    'ERROR_DESCRIPTION_ACCESS_DENIED' => 'Description access denied',
+    'ERROR_DESCRIPTION_NO_PACK' => 'Pack identification failed',
     'ERROR_NO_ACTIVE_USER' => 'No active user found',
     'ERROR_NO_EPIC_ACTIVE' => '<b>Warning: </b> no active epic. Choose an epic from the top menu or from the main menu.',
     'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_BUTTONS' => '<b>No active epic.</b> Epic-specific lists not available. Choose an epic from the top menu.',

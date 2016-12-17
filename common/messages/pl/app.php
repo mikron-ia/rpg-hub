@@ -145,6 +145,8 @@ return [
     'EPIC_LABEL' => 'Kampania',
     'EPIC_NAME' => 'Tytuł kampanii',
     'EPIC_NOT_ALLOWED' => 'Nie masz możliwości wybrania tej kampanii. Co więcej, ta próba nie powinna się zdarzyć.',
+    'ERROR_DESCRIPTION_ACCESS_DENIED' => 'Brak dostępu do opisu',
+    'ERROR_DESCRIPTION_NO_PACK' => 'Błędny identyfikator paczki opisów',
     'ERROR_NO_ACTIVE_USER' => 'Brak aktywnego użytkownika',
     'ERROR_NO_EPIC_ACTIVE' => '<b>Uwaga:</b> brak aktywnej kampanii. Wybierz kampanię z menu górnego lub z menu głównego.',
     'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_BUTTONS' => '<b>Brak aktywnej kampanii.</b> Dane specyficzne dla kampanii nie są dostępne. Wybierz kampanię z menu górnego.',

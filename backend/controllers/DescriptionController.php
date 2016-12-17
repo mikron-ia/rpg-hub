@@ -2,13 +2,14 @@
 
 namespace backend\controllers;
 
+use common\models\DescriptionPack;
 use Yii;
 use common\models\Description;
-use common\models\DescriptionQuery;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * DescriptionController implements the CRUD actions for Description model.
@@ -22,7 +23,7 @@ final class DescriptionController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'update', 'view', 'move-up', 'move-down'],
+                        'actions' => ['create', 'delete', 'update', 'view', 'move-up', 'move-down'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -35,21 +36,6 @@ final class DescriptionController extends Controller
                 ],
             ],
         ];
-    }
-
-    /**
-     * Lists all Description models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new DescriptionQuery();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
     }
 
     /**
@@ -74,15 +60,20 @@ final class DescriptionController extends Controller
     {
         $model = new Description();
 
+        $descriptionPack = DescriptionPack::findOne(['description_pack_id' => $pack_id]);
+
+        if (!$descriptionPack) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_NO_PACK'));
+            return $this->returnToReferrer(['site/index']);
+        } elseif (!$descriptionPack->getPermissionToControl()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
+            return $this->returnToReferrer(['site/index']);
+        }
+
         $model->description_pack_id = $pack_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $referrer = Yii::$app->getRequest()->getReferrer();
-            if ($referrer) {
-                return Yii::$app->getResponse()->redirect($referrer);
-            } else {
-                return $this->redirect(['index']);
-            }
+            return $this->returnToReferrer(['site/index']);
         } else {
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('create', ['model' => $model]);
@@ -102,13 +93,13 @@ final class DescriptionController extends Controller
     {
         $model = $this->findModel($id);
 
+        if (!$model->descriptionPack->getPermissionToControl()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
+            return $this->returnToReferrer(['site/index']);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $referrer = Yii::$app->getRequest()->getReferrer();
-            if ($referrer) {
-                return Yii::$app->getResponse()->redirect($referrer);
-            } else {
-                return $this->redirect(['index']);
-            }
+            return $this->returnToReferrer(['site/index']);
         } else {
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('update', ['model' => $model]);
@@ -175,6 +166,21 @@ final class DescriptionController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
+     * @param string[] $default
+     * @return Response
+     */
+    protected function returnToReferrer(array $default):Response
+    {
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect($default);
         }
     }
 }

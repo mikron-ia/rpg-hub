@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\HasEpicControl;
 use common\models\core\Language;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -180,5 +181,21 @@ final class DescriptionPack extends ActiveRecord implements Displayable
         $user = Yii::$app->user->identity;
 
         return $this->getDescriptionInLanguageOfTheUser($user, $code);
+    }
+
+    public function getPermissionToRead()
+    {
+        $className = 'common\models\\' . $this->class;
+        /** @var HasEpicControl $object */
+        $object = ($className)::findOne(['description_pack_id' => $this->description_pack_id]);
+        return $object->canUserViewYou();
+    }
+
+    public function getPermissionToControl()
+    {
+        $className = 'common\models\\' . $this->class;
+        /** @var HasEpicControl $object */
+        $object = ($className)::findOne(['description_pack_id' => $this->description_pack_id]);
+        return $object->canUserControlYou();
     }
 }
