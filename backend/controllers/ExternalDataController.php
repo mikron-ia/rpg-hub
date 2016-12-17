@@ -4,7 +4,6 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\ExternalData;
-use common\models\ExternalDataQuery;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -15,9 +14,6 @@ use yii\filters\VerbFilter;
  */
 class ExternalDataController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [
@@ -25,7 +21,7 @@ class ExternalDataController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['delete', 'index', 'update', 'view'],
+                        'actions' => ['delete', 'update', 'view'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -38,21 +34,6 @@ class ExternalDataController extends Controller
                 ],
             ],
         ];
-    }
-
-    /**
-     * Lists all ExternalData models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new ExternalDataQuery();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
     }
 
     /**

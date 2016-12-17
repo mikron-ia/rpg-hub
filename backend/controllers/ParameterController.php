@@ -4,7 +4,6 @@ namespace backend\controllers;
 
 use common\models\Parameter;
 use Yii;
-use common\models\ParameterQuery;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -22,7 +21,7 @@ final class ParameterController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'update', 'view', 'move-up', 'move-down'],
+                        'actions' => ['create', 'delete', 'update', 'view', 'move-up', 'move-down'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -35,21 +34,6 @@ final class ParameterController extends Controller
                 ],
             ],
         ];
-    }
-
-    /**
-     * Lists all Parameter models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new ParameterQuery();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
     }
 
     /**
