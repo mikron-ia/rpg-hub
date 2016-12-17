@@ -112,10 +112,6 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     * @todo Add sighting activation
-     */
     public function afterFind()
     {
         if ($this->seen_pack_id) {
@@ -214,7 +210,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getExternalDataPack()
     {
@@ -222,7 +218,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getSeenPack()
     {
@@ -230,7 +226,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCharacterSheets()
     {

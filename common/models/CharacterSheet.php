@@ -203,7 +203,10 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 
     }
 
-    public function getPeopleAvailableToThisCharacterAsIdList()
+    /**
+     * @return int[]
+     */
+    public function getPeopleAvailableToThisCharacterAsIdList():array
     {
         return array_keys($this->getPeopleAvailableToThisCharacterAsDropDownList());
     }
