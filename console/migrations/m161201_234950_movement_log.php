@@ -8,6 +8,7 @@ class m161201_234950_movement_log extends Migration
     {
         $this->alterColumn('performed_action', 'class', $this->string(80));
         $this->alterColumn('performed_action', 'object_id', $this->integer(11)->unsigned());
+        $this->alterColumn('performed_action', 'user_id', $this->integer(11)->unsigned());
 
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
@@ -32,6 +33,7 @@ class m161201_234950_movement_log extends Migration
     {
         $this->alterColumn('performed_action', 'class', $this->string(80)->notNull());
         $this->alterColumn('performed_action', 'object_id', $this->integer(11)->unsigned()->notNull());
+        $this->alterColumn('performed_action', 'user_id', $this->integer(11)->unsigned()->notNull());
 
         $this->dropForeignKey('performed_action_ip', 'performed_action');
         $this->dropForeignKey('performed_action_user_agent', 'performed_action');

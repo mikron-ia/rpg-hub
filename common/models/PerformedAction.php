@@ -55,7 +55,7 @@ class PerformedAction extends ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'operation'], 'required'],
+            [['operation'], 'required'],
             [['user_id', 'object_id', 'performed_at', 'ip_id', 'user_agent_id'], 'integer'],
             [['operation', 'class'], 'string', 'max' => 80],
             [
@@ -149,7 +149,15 @@ class PerformedAction extends ActiveRecord
             $userAgent->refresh();
         }
 
-        $record->user_id = Yii::$app->user->identity->getId();
+        if (!Yii::$app->user->isGuest) {
+            /* If there is an user to act, get their ID */
+            $userId = Yii::$app->user->identity->getId();
+        } else {
+            /* If not - for example, in case of registering a new user - assume non-entity */
+            $userId = null;
+        }
+
+        $record->user_id = $userId;
         $record->operation = $operation;
         $record->class = $class;
         $record->object_id = $object_id;
