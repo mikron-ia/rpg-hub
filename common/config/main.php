@@ -13,7 +13,7 @@ if (getenv('MAIL_SMTP')) {
             'username' => getenv('MAIL_USER'),
             'password' => getenv('MAIL_PASS'),
             'port' => getenv('MAIL_PORT'),
-            'encryption' => getenv('MAIL_ENCRYPT'),
+            'encryption' => getenv('MAIL_ENCRYPTION'),
         ];
 } else {
     $mailer['useFileTransport'] = true;
