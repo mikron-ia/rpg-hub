@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\models\core\HasEpicControl;
+use common\models\core\IsPack;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -17,7 +19,7 @@ use yii\db\ActiveRecord;
  * @property Parameter[] $parameters
  * @property Story[] $stories
  */
-class ParameterPack extends ActiveRecord
+class ParameterPack extends ActiveRecord implements IsPack
 {
     /**
      * @inheritdoc
@@ -120,5 +122,21 @@ class ParameterPack extends ActiveRecord
         } else {
             return null;
         }
+    }
+
+    public function canUserReadYou():bool
+    {
+        $className = 'common\models\\' . $this->class;
+        /** @var HasEpicControl $object */
+        $object = ($className)::findOne(['parameter_pack_id' => $this->parameter_pack_id]);
+        return $object->canUserViewYou();
+    }
+
+    public function canUserControlYou():bool
+    {
+        $className = 'common\models\\' . $this->class;
+        /** @var HasEpicControl $object */
+        $object = ($className)::findOne(['parameter_pack_id' => $this->parameter_pack_id]);
+        return $object->canUserControlYou();
     }
 }

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\core\HasEpicControl;
+use common\models\core\IsPack;
 use common\models\core\Language;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -19,7 +20,7 @@ use yii\web\HttpException;
  * @property Description[] $descriptions
  * @property Character[] $people
  */
-final class DescriptionPack extends ActiveRecord implements Displayable
+final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
 {
     public static function tableName()
     {
@@ -183,7 +184,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable
         return $this->getDescriptionInLanguageOfTheUser($user, $code);
     }
 
-    public function getPermissionToRead()
+    public function canUserReadYou():bool
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */
@@ -191,7 +192,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable
         return $object->canUserViewYou();
     }
 
-    public function getPermissionToControl()
+    public function canUserControlYou():bool
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */

@@ -8,6 +8,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ExternalDataController implements the CRUD actions for ExternalData model.
@@ -58,6 +59,11 @@ class ExternalDataController extends Controller
     {
         $model = $this->findModel($id);
 
+        if (!$model->externalDataPack->canUserControlYou()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_EXTERNAL_DATA_ACCESS_DENIED'));
+            return $this->returnToReferrer(['site/index']);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $referrer = Yii::$app->getRequest()->getReferrer();
             if ($referrer) {
@@ -105,6 +111,21 @@ class ExternalDataController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
+     * @param string[] $default
+     * @return Response
+     */
+    protected function returnToReferrer(array $default):Response
+    {
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect($default);
         }
     }
 }

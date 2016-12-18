@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\models\core\HasEpicControl;
+use common\models\core\IsPack;
 use common\models\core\Visibility;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -16,7 +18,7 @@ use yii\db\ActiveRecord;
  * @property string $external_data_pack_id
  * @property string $class
  */
-class ExternalDataPack extends ActiveRecord
+class ExternalDataPack extends ActiveRecord implements IsPack
 {
     public static function tableName()
     {
@@ -126,5 +128,21 @@ class ExternalDataPack extends ActiveRecord
             $externalData->data = $dataFormatted;
             return $externalData->save();
         }
+    }
+
+    public function canUserReadYou():bool
+    {
+        $className = 'common\models\\' . $this->class;
+        /** @var HasEpicControl $object */
+        $object = ($className)::findOne(['external_data_pack_id' => $this->external_data_pack_id]);
+        return $object->canUserViewYou();
+    }
+
+    public function canUserControlYou():bool
+    {
+        $className = 'common\models\\' . $this->class;
+        /** @var HasEpicControl $object */
+        $object = ($className)::findOne(['external_data_pack_id' => $this->external_data_pack_id]);
+        return $object->canUserControlYou();
     }
 }

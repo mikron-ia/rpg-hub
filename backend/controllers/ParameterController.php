@@ -8,6 +8,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ParameterController implements the CRUD actions for Parameter model.
@@ -86,6 +87,11 @@ final class ParameterController extends Controller
     {
         $model = $this->findModel($id);
 
+        if (!$model->parameterPack->canUserControlYou()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_PARAMETER_ACCESS_DENIED'));
+            return $this->returnToReferrer(['site/index']);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $referrer = Yii::$app->getRequest()->getReferrer();
             if ($referrer) {
@@ -159,6 +165,21 @@ final class ParameterController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
+     * @param string[] $default
+     * @return Response
+     */
+    protected function returnToReferrer(array $default):Response
+    {
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect($default);
         }
     }
 }

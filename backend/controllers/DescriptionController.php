@@ -65,7 +65,7 @@ final class DescriptionController extends Controller
         if (!$descriptionPack) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_NO_PACK'));
             return $this->returnToReferrer(['site/index']);
-        } elseif (!$descriptionPack->getPermissionToControl()) {
+        } elseif (!$descriptionPack->canUserControlYou()) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
             return $this->returnToReferrer(['site/index']);
         }
@@ -93,7 +93,7 @@ final class DescriptionController extends Controller
     {
         $model = $this->findModel($id);
 
-        if (!$model->descriptionPack->getPermissionToControl()) {
+        if (!$model->descriptionPack->canUserControlYou()) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
             return $this->returnToReferrer(['site/index']);
         }
