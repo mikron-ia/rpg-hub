@@ -25,18 +25,32 @@ class RbacController extends Controller
      */
     public function actionInit()
     {
-        $auth = Yii::$app->authManager;
-
-        $auth->removeAll();
-
         /* Load v0.4.0 and older */
         $this->actionV040();
 
-        /* Load v0.5.0 */
-        $this->actionV050();
+        /* Load v0.7.0 */
+        $this->actionV070();
 
         /* Set up the administrator */
         $this->actionSetAdministrator();
+    }
+
+    /**
+     * Clears all rights and rules
+     */
+    public function actionClear()
+    {
+        $auth = Yii::$app->authManager;
+        $auth->removeAll();
+    }
+
+    /**
+     * Clears all rights and rules and sets them again
+     */
+    public function actionReset()
+    {
+        $this->actionClear();
+        $this->actionInit();
     }
 
     /**
@@ -236,9 +250,9 @@ class RbacController extends Controller
     }
 
     /**
-     * Adds rights from v0.5.0
+     * Adds rights from v0.7.0
      */
-    public function actionV050()
+    public function actionV070()
     {
         $auth = Yii::$app->authManager;
     }
