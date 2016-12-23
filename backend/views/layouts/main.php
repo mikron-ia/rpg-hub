@@ -48,6 +48,7 @@ AppAsset::register($this);
     }
 
     if (Yii::$app->user->can('controlUser')) {
+        $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_USER_INVITATIONS'), 'url' => ['/user/invitations']];
         $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_USER_LIST'), 'url' => ['/user/index']];
     }
 
@@ -55,18 +56,21 @@ AppAsset::register($this);
         $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_EPIC_MANAGEMENT'), 'url' => ['/epic/manage']];
     }
 
-    $menuItems = [
-        [
+    $menuItems = [];
+
+    if (!Yii::$app->user->isGuest) {
+        $menuItems[] = [
             'label' => Yii::t('app', 'CONFIGURATION_TITLE_INDEX'),
             'items' => $auxiliaryItems,
-        ],
-        [
-            'label' => Yii::t('app', 'MENU_TOP_SETTINGS'),
-            'items' => [
-                ['label' => Yii::t('app', 'MENU_TOP_SETTINGS'), 'url' => ['/site/settings']],
-                ['label' => Yii::t('app', 'MENU_TOP_CHANGE-PASSWORD'), 'url' => ['/site/password-change']],
-            ]
-        ],
+        ];
+    }
+
+    $menuItems[] = [
+        'label' => Yii::t('app', 'MENU_TOP_SETTINGS'),
+        'items' => [
+            ['label' => Yii::t('app', 'MENU_TOP_SETTINGS'), 'url' => ['/site/settings']],
+            ['label' => Yii::t('app', 'MENU_TOP_CHANGE-PASSWORD'), 'url' => ['/site/password-change']],
+        ]
     ];
 
     if (Yii::$app->user->isGuest) {

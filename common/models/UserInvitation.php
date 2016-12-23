@@ -191,15 +191,21 @@ class UserInvitation extends ActiveRecord
     }
 
     /**
+     * Marks the invitation as opened if it was not already marked so
      * @return bool
      */
     public function markAsOpened():bool
     {
-        $this->opened_at = time();
-        return $this->save();
+        if(!$this->opened_at) {
+            $this->opened_at = time();
+            return $this->save();
+        } else {
+            return true;
+        }
     }
 
     /**
+     * Marks invitation as revoked
      * @return bool
      */
     public function markAsRevoked():bool
@@ -209,6 +215,7 @@ class UserInvitation extends ActiveRecord
     }
 
     /**
+     * Marks invitation as used
      * @return bool
      */
     public function markAsUsed():bool
@@ -217,6 +224,10 @@ class UserInvitation extends ActiveRecord
         return $this->save();
     }
 
+    /**
+     * Provides readable name for role intended for the user
+     * @return string
+     */
     public function getIntendedRoleName():string
     {
         $names = User::userRoleNames();
