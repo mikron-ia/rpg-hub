@@ -159,7 +159,11 @@ class SeenPack extends ActiveRecord
             return false;
         }
 
-        $userId = Yii::$app->user->identity->getId();
+        if (Yii::$app->user->isGuest) {
+            $userId = null;
+        } else {
+            $userId = Yii::$app->user->identity->getId();
+        }
 
         $foundRecord = Seen::findOne([
             'seen_pack_id' => $this->seen_pack_id,
