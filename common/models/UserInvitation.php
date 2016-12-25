@@ -46,7 +46,13 @@ class UserInvitation extends ActiveRecord
             ['intended_role', 'in', 'range' => User::allowedUserRoles()],
             [['language'], 'string', 'max' => 5],
             [['token'], 'unique'],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+            [
+                ['created_by'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['created_by' => 'id']
+            ],
         ];
     }
 
@@ -89,7 +95,7 @@ class UserInvitation extends ActiveRecord
     public function beforeSave($insert)
     {
         if ($insert) {
-            $this->valid_to = time() + 86400;
+            $this->valid_to = time() + Yii::$app->params['invitation.isValidFor'];
             $this->token = Yii::$app->security->generateRandomString() . '_' . time();
             $this->status = 'new';
         }
@@ -196,7 +202,7 @@ class UserInvitation extends ActiveRecord
      */
     public function markAsOpened():bool
     {
-        if(!$this->opened_at) {
+        if (!$this->opened_at) {
             $this->opened_at = time();
             return $this->save();
         } else {
@@ -221,6 +227,18 @@ class UserInvitation extends ActiveRecord
     public function markAsUsed():bool
     {
         $this->used_at = time();
+        return $this->save();
+    }
+
+    public function isRenewable():bool
+    {
+        return $this->isInvitationUnused() && !$this->isInvitationValid();
+    }
+
+    public function renew():bool
+    {
+        $this->valid_to = time() + Yii::$app->params['invitation.isValidFor'];
+        $this->revoked_at = null;
         return $this->save();
     }
 
