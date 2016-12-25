@@ -42,7 +42,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'valid_to:datetime',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{revoke}',
+                'template' => '{revoke} {renew} {resend}',
+                'contentOptions' => ['class' => 'text-center'],
                 'buttons' => [
                     'revoke' => function ($url, $model, $key) {
                         return Html::a(
@@ -51,6 +52,28 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'title' => Yii::t('app', 'USER_INVITATION_REVOKE'),
                                 'data-confirm' => Yii::t('app', 'USER_INVITATION_REVOKE_CONFIRM'),
+                                'data-method' => 'post',
+                            ]
+                        );
+                    },
+                    'resend' => function ($url, $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-share"></span>',
+                            ['user/resend', 'id' => $model->id],
+                            [
+                                'title' => Yii::t('app', 'USER_INVITATION_RESEND'),
+                                'data-confirm' => Yii::t('app', 'USER_INVITATION_RESENDING_CONFIRM'),
+                                'data-method' => 'post',
+                            ]
+                        );
+                    },
+                    'renew' => function ($url, $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-repeat"></span>',
+                            ['user/renew', 'id' => $model->id],
+                            [
+                                'title' => Yii::t('app', 'USER_INVITATION_RENEW'),
+                                'data-confirm' => Yii::t('app', 'USER_INVITATION_RENEWAL_CONFIRM'),
                                 'data-method' => 'post',
                             ]
                         );

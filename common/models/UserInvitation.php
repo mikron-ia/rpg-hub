@@ -232,7 +232,7 @@ class UserInvitation extends ActiveRecord
 
     public function isRenewable():bool
     {
-        return $this->isInvitationUnused() && !$this->isInvitationValid();
+        return $this->isInvitationUnused();
     }
 
     public function renew():bool

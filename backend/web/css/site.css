@@ -161,3 +161,7 @@ p {
 .btn-group {
     margin-top: 5px;
 }
+
+.glyphicon {
+    margin: 0 8px;
+}

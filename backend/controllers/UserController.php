@@ -24,7 +24,17 @@ final class UserController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'invitations', 'revoke', 'update', 'view'],
+                        'actions' => [
+                            'create',
+                            'delete',
+                            'index',
+                            'invitations',
+                            'renew',
+                            'resend',
+                            'revoke',
+                            'update',
+                            'view'
+                        ],
                         'allow' => Yii::$app->user->can('controlUser'),
                         'roles' => ['manager'],
                     ],
@@ -34,6 +44,7 @@ final class UserController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                    'renew' => ['post'],
                     'revoke' => ['post'],
                 ],
             ],
@@ -149,6 +160,50 @@ final class UserController extends Controller
             Yii::$app->session->setFlash('success', Yii::t('app', 'USER_INVITATION_REVOKED'));
         } else {
             Yii::$app->session->setFlash('error', Yii::t('app', 'USER_INVITATION_REVOKE_FAILED'));
+        }
+
+        return $this->redirect(['invitations']);
+    }
+
+    /**
+     * Renews an invitation
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionRenew($id)
+    {
+        $model = UserInvitation::findOne($id);
+
+        if ($model && $model->isRenewable()) {
+            if ($model->renew()) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'USER_INVITATION_RENEWED'));
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'USER_INVITATION_RENEWAL_FAILED'));
+            }
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_INVITATION_RENEWAL_IMPOSSIBLE_USED'));
+        }
+
+        return $this->redirect(['invitations']);
+    }
+
+    /**
+     * Re-sends an invitation
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionResend($id)
+    {
+        $model = UserInvitation::findOne($id);
+
+        if ($model && $model->isInvitationValid()) {
+            if ($model->sendEmail()) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'USER_INVITATION_SENT'));
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_INVITE_SENDING_FAILED'));
+            }
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_INVITE_OVERDUE'));
         }
 
         return $this->redirect(['invitations']);
