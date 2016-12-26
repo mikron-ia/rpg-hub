@@ -23,4 +23,5 @@ return [
     'SIGNATURE_HTML' => '<p>Mail został wygenerowany przez Centrum RPG</p>',
     'SIGNATURE_TEXT' => 'Mail został wygenerowany przez Centrum RPG',
     'USER_INVITATION_BODY_TEXT' => 'Poniższy link umożliwia założenie konta:',
+    'USER_INVITATION_EXPIRATION_WARNING {when}' => 'Ważność zaproszenia kończy się {when}. Jeżeli termin ten już upłynął, skontaktuj się z nadawcą.',
 ];

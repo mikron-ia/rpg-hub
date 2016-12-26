@@ -342,6 +342,7 @@ return [
     'TITLE_PARTICIPANT_EDIT {epic}' => 'Modyfikacja uczestnika kampanii {epic}',
     'TITLE_PASSWORD_RESET' => 'Reset hasła',
     'TITLE_PASSWORD_RESET_REQUEST' => 'Żądanie resetu hasła',
+    'USER_ACCEPT_EXPIRATION_WARNING {when}' => 'Ważność zaproszenia kończy się {when}.',
     'USER_ACCEPT_TLDR' => '<b>tl;dr:</b> nie używaj imienia i nazwiska (ani niczego co jest danymi osobowymi) jako nazwy użytkownika; hasło jest w miarę bezpieczne; adres e-mail będzie dostępny dla ograniczonej liczby osób.',
     'USER_ACCEPT_WARNING' => '<b>Uwaga:</b> rejestracja nie wymaga podania danych osobowych w rozumieniu prawnym, a system nie jest przystosowany do ich obsługi. Podczas rejestracji nie należy podawać danych wrażliwych, gdyż system nie gwarantuje ich bezpieczeństwa. Hasła są szyfrowane funkcją jednokierunkową, nazwa użytkownika jest używana publicznie, adres e-mail pozostaje ukryty i jest widoczny jedynie dla zarządzających systemem i samego użytkownika.',
     'USER_ACCOUNT_CREATE' => 'Tworzenie konta użytkownika',

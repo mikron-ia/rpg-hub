@@ -342,6 +342,7 @@ return [
     'TITLE_PARTICIPANT_EDIT {epic}' => 'Edit participant {epic} epic',
     'TITLE_PASSWORD_RESET' => 'Password reset',
     'TITLE_PASSWORD_RESET_REQUEST' => 'Request password reset',
+    'USER_ACCEPT_EXPIRATION_WARNING {when}' => 'This invitation expires {when}.',
     'USER_ACCEPT_TLDR' => 'tl;dr: do not use your real name (or anything that is considered personal information) as username; your password is reasonably safe; your e-mail will be known to limited amount of people.',
     'USER_ACCEPT_WARNING' => '<b>Warning:</b> registration does not require you to provide personal data, and the system is not designed to process them. Do not provide any sensitive data during the registration process, as the system does not guaraante their safety. Passwords are hashed, username is used publicly, e-mail will be visible to site managers and you only.',
     'USER_ACCOUNT_CREATE' => 'Account creation',

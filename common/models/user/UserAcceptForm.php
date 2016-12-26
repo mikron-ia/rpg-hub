@@ -139,6 +139,14 @@ final class UserAcceptForm extends Model
     }
 
     /**
+     * @return int
+     */
+    public function getExpirationTime():int
+    {
+        return $this->invitation->valid_to;
+    }
+
+    /**
      * Creates user object with data from form and generates keys & passwords
      * @return User|null User object on success, null on failure
      */
