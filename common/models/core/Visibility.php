@@ -48,12 +48,19 @@ final class Visibility
         ];
     }
 
+    /**
+     * @return string[]
+     */
     static public function allowedVisibilities():array
     {
         return array_keys(self::visibilityNames());
     }
 
-    static public function create($code)
+    /**
+     * @param $code
+     * @return Visibility
+     */
+    static public function create($code):Visibility
     {
         $visibility = new Visibility();
         $visibility->visibility = $code;

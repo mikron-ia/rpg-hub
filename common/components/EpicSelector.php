@@ -3,14 +3,13 @@
 namespace common\components;
 
 use common\models\EpicQuery;
-use common\models\Participant;
-use common\models\User;
+use yii\base\Application;
 use yii\base\BootstrapInterface;
 
 class EpicSelector implements BootstrapInterface
 {
     /**
-     * @param \yii\base\Application $app
+     * @param Application $app
      */
     public function bootstrap($app)
     {

@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use phpDocumentor\Reflection\DocBlock\Tags\See;
 use yii\console\Application as ConsoleApplication;
 use Yii;
 use yii\db\ActiveQuery;
@@ -106,7 +105,7 @@ class SeenPack extends ActiveRecord
     {
         return $this
             ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
-            ->where(new Expression('seen_at IS NULL'));;
+            ->where(new Expression('seen_at IS NULL'));
     }
 
     /**
