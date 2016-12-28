@@ -2,6 +2,7 @@
 
 use common\models\Parameter;
 use common\models\Seen;
+use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -84,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <?= GridView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider(['query' => Parameter::find()->where(['parameter_pack_id' => $model->parameter_pack_id])]),
+            'dataProvider' => new ActiveDataProvider(['query' => $model->parameterPack->getParametersOrdered()]),
             'summary' => '',
             'columns' => [
                 [
@@ -107,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{update} {delete}',
+                    'template' => '{update} {delete} {up} {down}',
                     'buttons' => [
                         'update' => function ($url, Parameter $model, $key) {
                             return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
@@ -131,7 +132,25 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ),
                                     'data-method' => 'post',
                                 ]);
-                        }
+                        },
+                        'up' => function ($url, Parameter $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-arrow-up"></span>',
+                                ['parameter/move-up', 'id' => $model->parameter_id],
+                                [
+                                    'title' => Yii::t('app', 'LABEL_MOVE_UP'),
+                                ]
+                            );
+                        },
+                        'down' => function ($url, Parameter $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-arrow-down"></span>',
+                                ['parameter/move-down', 'id' => $model->parameter_id],
+                                [
+                                    'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
+                                ]
+                            );
+                        },
                     ]
                 ],
             ],
@@ -218,7 +237,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_READ') ?></h2>
         <?= \yii\grid\GridView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider([
+            'dataProvider' => new ActiveDataProvider([
                 'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_SEEN),
                 'pagination' => false,
             ]),
@@ -239,7 +258,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_BEFORE_UPDATE') ?></h2>
         <?= \yii\grid\GridView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider([
+            'dataProvider' => new ActiveDataProvider([
                 'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_UPDATED),
                 'pagination' => false,
             ]),
@@ -260,7 +279,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_NEW') ?></h2>
         <?= \yii\grid\GridView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider([
+            'dataProvider' => new ActiveDataProvider([
                 'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_NEW),
                 'pagination' => false,
             ]),

@@ -10,9 +10,6 @@ use yii\data\ActiveDataProvider;
  */
 final class ParameterQuery extends Parameter
 {
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -21,12 +18,8 @@ final class ParameterQuery extends Parameter
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -41,17 +34,15 @@ final class ParameterQuery extends Parameter
     {
         $query = Parameter::find();
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['position' => SORT_DESC]],
         ]);
 
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
         }
 

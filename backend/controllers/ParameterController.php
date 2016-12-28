@@ -126,6 +126,11 @@ final class ParameterController extends Controller
         }
     }
 
+    /**
+     * Moves parameter up in order
+     * @param int $id Story ID
+     * @return Response
+     */
     public function actionMoveUp($id)
     {
         $model = $this->findModel($id);

@@ -133,7 +133,8 @@ final class StoryController extends Controller
     }
 
     /**
-     * @param $id
+     * Moves story up in order; this means lower position on the list
+     * @param int $id Story ID
      * @return \yii\web\Response
      */
     public function actionMoveUp($id)
@@ -153,7 +154,8 @@ final class StoryController extends Controller
     }
 
     /**
-     * @param $id
+     * Moves story down in order; this means higher position on the list
+     * @param int $id Story ID
      * @return \yii\web\Response
      */
     public function actionMoveDown($id)

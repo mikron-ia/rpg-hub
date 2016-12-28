@@ -17,6 +17,7 @@ use yii\db\ActiveRecord;
  *
  * @property Epic[] $epics
  * @property Parameter[] $parameters
+ * @property Parameter[] $parametersOrdered
  * @property Story[] $stories
  */
 class ParameterPack extends ActiveRecord implements IsPack
@@ -87,6 +88,16 @@ class ParameterPack extends ActiveRecord implements IsPack
     public function getParameters()
     {
         return $this->hasMany(Parameter::className(), ['parameter_pack_id' => 'parameter_pack_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getParametersOrdered()
+    {
+        return $this
+            ->hasMany(Parameter::className(), ['parameter_pack_id' => 'parameter_pack_id'])
+            ->orderBy(['position' => SORT_ASC]);
     }
 
     /**

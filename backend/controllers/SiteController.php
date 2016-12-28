@@ -58,9 +58,6 @@ final class SiteController extends Controller
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [
@@ -70,6 +67,10 @@ final class SiteController extends Controller
         ];
     }
 
+    /**
+     * Displays the main page
+     * @return string
+     */
     public function actionIndex()
     {
         if (!isset(Yii::$app->params['activeEpic'])) {
@@ -86,6 +87,10 @@ final class SiteController extends Controller
         ]);
     }
 
+    /**
+     * Displays login form or logs in the user
+     * @return string|Response
+     */
     public function actionLogin()
     {
         if (!\Yii::$app->user->isGuest) {
@@ -124,6 +129,10 @@ final class SiteController extends Controller
         return $this->render('user/password-change', ['model' => $model]);
     }
 
+    /**
+     * Logs out the user
+     * @return Response
+     */
     public function actionLogout()
     {
         Yii::$app->user->logout();
