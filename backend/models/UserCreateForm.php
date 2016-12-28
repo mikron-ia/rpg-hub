@@ -13,10 +13,29 @@ use yii\base\Model;
  */
 final class UserCreateForm extends Model
 {
+    /**
+     * @var string
+     */
     public $email;
+
+    /**
+     * @var string
+     */
     public $language;
+
+    /**
+     * @var string
+     */
     public $message;
+
+    /**
+     * @var string
+     */
     public $note;
+
+    /**
+     * @var string
+     */
     public $user_role;
 
     /**
@@ -77,6 +96,7 @@ final class UserCreateForm extends Model
     }
 
     /**
+     * Sends e-mail with the invitation
      * @return bool
      */
     public function sendEmail():bool

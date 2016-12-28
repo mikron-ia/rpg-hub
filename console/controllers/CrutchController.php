@@ -30,7 +30,7 @@ class CrutchController extends Controller
         }
     }
     /**
-     * Saves all characters
+     * Saves all character sheets
      * @return void
      */
     public function actionSaveCharacterSheets()
@@ -56,7 +56,7 @@ class CrutchController extends Controller
     }
 
     /**
-     * Saves all groups
+     * Saves all epics
      * @return void
      */
     public function actionSaveEpics()
@@ -69,7 +69,7 @@ class CrutchController extends Controller
     }
 
     /**
-     * Saves all groups
+     * Saves all recaps
      * @return void
      */
     public function actionSaveRecaps()
@@ -82,7 +82,7 @@ class CrutchController extends Controller
     }
 
     /**
-     * Saves all groups
+     * Saves all stories
      * @return void
      */
     public function actionSaveStories()
