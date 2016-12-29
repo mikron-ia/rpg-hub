@@ -10,6 +10,7 @@ use yii\widgets\DetailView;
 $this->title = Yii::t('app', 'USER_VIEW_TITLE {user_name}', ['user_name' => $model->username]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'USER_INDEX_TITLE'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="user-view">
 
@@ -41,7 +42,32 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'role',
                     'label' => Yii::t('app', 'USER_ROLE_NAME'),
                     'value' => $model->getUserRoleName()
-                ]
+                ],
+                [
+                    'label' => Yii::t('app', 'USER_EPICS_PLAYED'),
+                    'format' => 'raw',
+                    'value' => implode(', ', $model->getEpicsPlayed()->orderBy(['name' => SORT_ASC])->all()),
+                ],
+                [
+                    'label' => Yii::t('app', 'USER_EPICS_MASTERED'),
+                    'format' => 'raw',
+                    'value' => implode(', ', $model->getEpicsGameMastered()->orderBy(['name' => SORT_ASC])->all()),
+                ],
+                [
+                    'label' => Yii::t('app', 'USER_EPICS_MANAGED'),
+                    'format' => 'raw',
+                    'value' => implode(', ', $model->getEpicsManaged()->orderBy(['name' => SORT_ASC])->all()),
+                ],
+                [
+                    'label' => Yii::t('app', 'USER_EPICS_ASSISTED_IN'),
+                    'format' => 'raw',
+                    'value' => implode(', ', $model->getEpicsAssisted()->orderBy(['name' => SORT_ASC])->all()),
+                ],
+                [
+                    'label' => Yii::t('app', 'USER_EPICS_TOTAL'),
+                    'format' => 'raw',
+                    'value' => implode(', ', $model->getEpics()->orderBy(['name' => SORT_ASC])->all()),
+                ],
             ],
         ]) ?>
     </div>

@@ -26,8 +26,13 @@ use yii\web\IdentityInterface;
  * @property string $language
  *
  * @property Epic[] $epics
+ * @property Epic[] $epicsAssisted
+ * @property Epic[] $epicsManaged
  * @property Epic[] $epicsGameMastered
+ * @property Epic[] $epicsGameMasteredAndManaged
+ * @property Epic[] $epicsOperated
  * @property Epic[] $epicsPlayed
+ * @property Epic[] $epicsVisible
  * @property Participant[] $participants
  */
 final class User extends ActiveRecord implements IdentityInterface
@@ -195,6 +200,26 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
+    public function getEpicsAssisted():ActiveQuery
+    {
+        return $this->getEpicsLimitedByRoles([
+            ParticipantRole::ROLE_ASSISTANT
+        ]);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getEpicsManaged():ActiveQuery
+    {
+        return $this->getEpicsLimitedByRoles([
+            ParticipantRole::ROLE_MANAGER
+        ]);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
     public function getEpicsGameMasteredAndManaged():ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
@@ -216,14 +241,13 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
-    public function getEpicsGameOperated():ActiveQuery
+    public function getEpicsOperated():ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
             ParticipantRole::ROLE_GM,
             ParticipantRole::ROLE_ASSISTANT
         ]);
     }
-
     /**
      * @return ActiveQuery
      */

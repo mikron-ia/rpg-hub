@@ -109,6 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{update} {delete} {up} {down}',
+                    'contentOptions' => ['class' => 'text-center'],
                     'buttons' => [
                         'update' => function ($url, Parameter $model, $key) {
                             return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [

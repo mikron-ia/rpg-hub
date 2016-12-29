@@ -11,6 +11,7 @@ use yii\base\Exception;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 use yii\web\HttpException;
 
 /**
@@ -443,5 +444,10 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     public function showSightingCSS():string
     {
         return $this->seenPack->getCSSForCurrentUser();
+    }
+
+    function __toString()
+    {
+        return Html::a($this->name, ['epic/view', 'id' => $this->epic_id]);
     }
 }
