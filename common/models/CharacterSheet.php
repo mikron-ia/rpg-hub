@@ -99,12 +99,6 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         if ($insert) {
             $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
             $this->data = json_encode([]);
-
-            /* Create and attach person */
-            $person = Character::createForCharacter($this);
-            if ($person) {
-                $this->currently_delivered_character_id = $person->character_id;
-            }
         }
 
         if (empty($this->seen_pack_id)) {

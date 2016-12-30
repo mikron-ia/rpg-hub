@@ -285,7 +285,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      * @param CharacterSheet $character
      * @return null|Character
      */
-    static public function createForCharacter(CharacterSheet $character)
+    static public function createForCharacterSheet(CharacterSheet $character)
     {
         $person = new Character();
         $person->epic_id = $character->epic_id;
