@@ -5,6 +5,7 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\core\HasSightings;
+use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -194,7 +195,26 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         }
 
         return $dropDownList;
+    }
 
+    /**
+     * Creates character sheet record for character
+     * @param Character $character
+     * @return null|CharacterSheet
+     */
+    static public function createForCharacter(Character $character)
+    {
+        $characterSheet = new CharacterSheet();
+        $characterSheet->epic_id = $character->epic_id;
+        $characterSheet->name = $character->name;
+        $characterSheet->currently_delivered_character_id = $character->character_id;
+
+        if ($characterSheet->save()) {
+            $characterSheet->refresh();
+            return $characterSheet;
+        } else {
+            return null;
+        }
     }
 
     /**

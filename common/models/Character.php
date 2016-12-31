@@ -281,22 +281,22 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     }
 
     /**
-     * Creates person record for character
-     * @param CharacterSheet $character
+     * Creates character record for character sheet
+     * @param CharacterSheet $characterSheet
      * @return null|Character
      */
-    static public function createForCharacterSheet(CharacterSheet $character)
+    static public function createForCharacterSheet(CharacterSheet $characterSheet)
     {
-        $person = new Character();
-        $person->epic_id = $character->epic_id;
-        $person->name = $character->name;
-        $person->character_sheet_id = $character->character_sheet_id;
-        $person->tagline = '?';
-        $person->visibility = Visibility::VISIBILITY_GM;
+        $character = new Character();
+        $character->epic_id = $characterSheet->epic_id;
+        $character->name = $characterSheet->name;
+        $character->character_sheet_id = $characterSheet->character_sheet_id;
+        $character->tagline = '?';
+        $character->visibility = Visibility::VISIBILITY_GM;
 
-        if ($person->save()) {
-            $person->refresh();
-            return $person;
+        if ($character->save()) {
+            $character->refresh();
+            return $character;
         } else {
             return null;
         }
