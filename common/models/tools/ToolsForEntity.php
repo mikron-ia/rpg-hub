@@ -16,7 +16,7 @@ trait ToolsForEntity
     private function generateKey($identifier):string
     {
         if (!isset(Yii::$app->params['keyGeneration'][$identifier])) {
-            throw new HttpException(500, "Missing configuration for key");
+            throw new HttpException(500, "Missing configuration for key $identifier");
         }
 
         $pattern = Yii::$app->params['keyGeneration'][$identifier];

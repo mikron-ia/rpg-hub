@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\CharacterSheet;
 use common\models\EpicQuery;
 use common\models\ExternalDataPack;
 use common\models\Parameter;
@@ -29,7 +30,7 @@ final class CharacterController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'update', 'view', 'load-data'],
+                        'actions' => ['create', 'create-sheet', 'index', 'update', 'view', 'load-data'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -122,6 +123,41 @@ final class CharacterController extends Controller
                 'epicListForSelector' => $epicListForSelector,
             ]);
         }
+    }
+
+    /**
+     * Creates a new character
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param $id
+     * @return mixed
+     */
+    public function actionCreateSheet($id)
+    {
+        if (!CharacterSheet::canUserCreateThem()) {
+            CharacterSheet::throwExceptionAboutCreate();
+        }
+
+        $model = $this->findModel($id);
+
+        if (!$model->canUserViewYou()) {
+            Character::throwExceptionAboutView();
+        }
+
+        $sheet = CharacterSheet::createForCharacter($model);
+
+        if ($sheet) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'CHARACTER_SHEET_CREATE_FROM_CHARACTER_SUCCESS'));
+            if (!$model->character_sheet_id) {
+                $model->character_sheet_id = $sheet->character_sheet_id;
+                $model->save();
+            }
+            $sheet->currently_delivered_character_id = $model->character_id;
+            $sheet->save();
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'CHARACTER_SHEET_CREATE_FROM_CHARACTER_FAILURE'));
+        }
+
+        return $this->redirect(['view', 'id' => $model->character_id]);
     }
 
     /**

@@ -98,7 +98,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     public function beforeSave($insert)
     {
         if ($insert) {
-            $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+            $this->key = $this->generateKey('characterSheet');
             $this->data = json_encode([]);
         }
 
@@ -207,7 +207,6 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         $characterSheet = new CharacterSheet();
         $characterSheet->epic_id = $character->epic_id;
         $characterSheet->name = $character->name;
-        $characterSheet->currently_delivered_character_id = $character->character_id;
 
         if ($characterSheet->save()) {
             $characterSheet->refresh();

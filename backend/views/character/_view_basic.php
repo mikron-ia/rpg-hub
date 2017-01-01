@@ -31,7 +31,8 @@ use yii\widgets\DetailView;
                     'attribute' => 'character_sheet_id',
                     'format' => 'raw',
                     'value' => $model->character_sheet_id ?
-                        Html::a($model->character->name, ['character-sheet/view', 'id' => $model->character_sheet_id], []) :
+                        Html::a($model->character->name, ['character-sheet/view', 'id' => $model->character_sheet_id],
+                            []) :
                         null,
                 ],
                 [
@@ -49,8 +50,16 @@ use yii\widgets\DetailView;
                     'method' => 'post',
                 ],
             ]) ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->character_id],
-                ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_CREATE_CHARACTER_SHEET'),
+                ['create-sheet', 'id' => $model->character_id],
+                ['class' => 'btn btn-primary']
+            ) ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_UPDATE'),
+                ['update', 'id' => $model->character_id],
+                ['class' => 'btn btn-primary']
+            ) ?>
             <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->character_id], [
                 'class' => 'btn btn-danger',
                 'data' => [
