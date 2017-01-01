@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Character;
 use Yii;
 use common\models\CharacterSheet;
 use common\models\CharacterSheetQuery;
@@ -22,7 +23,7 @@ final class CharacterSheetController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'update', 'view'],
+                        'actions' => ['create', 'create-character', 'index', 'update', 'view'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -97,13 +98,48 @@ final class CharacterSheetController extends Controller
     }
 
     /**
+     * Creates a new character
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param $id
+     * @return mixed
+     */
+    public function actionCreateCharacter($id)
+    {
+        if (!Character::canUserCreateThem()) {
+            Character::throwExceptionAboutCreate();
+        }
+
+        $model = $this->findModel($id);
+
+        if (!$model->canUserViewYou()) {
+            CharacterSheet::throwExceptionAboutView();
+        }
+
+        $character = Character::createForCharacterSheet($model);
+
+        if ($character) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'CHARACTER_CREATE_FROM_CHARACTER_SHEET_SUCCESS'));
+            if (!$model->currently_delivered_character_id) {
+                $model->currently_delivered_character_id = $character->character_id;
+                $model->save();
+            }
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'CHARACTER_CREATE_FROM_CHARACTER_SHEET_FAILURE'));
+        }
+
+        return $this->redirect(['view', 'id' => $model->character_sheet_id]);
+    }
+
+    /**
      * Updates an existing CharacterSheet model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public
+    function actionUpdate(
+        $id
+    ) {
         $model = $this->findModel($id);
 
         $model->canUserControlYou();
@@ -124,8 +160,10 @@ final class CharacterSheetController extends Controller
      * @return CharacterSheet the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected
+    function findModel(
+        $id
+    ) {
         if (($model = CharacterSheet::findOne($id)) !== null) {
             return $model;
         } else {

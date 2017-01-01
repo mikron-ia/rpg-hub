@@ -22,6 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'btn btn-primary']
         ); ?>
         <?= Html::a(
+            Yii::t('app', 'BUTTON_CREATE_CHARACTER'),
+            ['create-character', 'id' => $model->character_sheet_id],
+            ['class' => 'btn btn-primary']
+        ) ?>
+        <?= Html::a(
             Yii::t('app', 'BUTTON_DELETE'),
             ['delete', 'id' => $model->character_sheet_id],
             [
