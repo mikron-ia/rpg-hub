@@ -4,7 +4,6 @@ namespace backend\controllers;
 
 use common\models\CharacterSheet;
 use common\models\EpicQuery;
-use common\models\ExternalDataPack;
 use common\models\Parameter;
 use common\models\tools\Retriever;
 use Yii;
@@ -39,6 +38,7 @@ final class CharacterController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
+                    'create-sheet' => ['POST'],
                     'delete' => ['POST'],
                 ],
             ],

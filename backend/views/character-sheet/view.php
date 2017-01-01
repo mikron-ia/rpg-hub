@@ -24,7 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(
             Yii::t('app', 'BUTTON_CREATE_CHARACTER'),
             ['create-character', 'id' => $model->character_sheet_id],
-            ['class' => 'btn btn-primary']
+            [
+                'class' => 'btn btn-primary',
+                'data' => [
+                    'confirm' => Yii::t('app', 'CONFIRMATION_CREATE_CHARACTER'),
+                    'method' => 'post',
+                ],
+            ]
         ) ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_DELETE'),

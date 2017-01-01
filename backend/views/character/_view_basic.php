@@ -53,7 +53,13 @@ use yii\widgets\DetailView;
             <?= Html::a(
                 Yii::t('app', 'BUTTON_CREATE_CHARACTER_SHEET'),
                 ['create-sheet', 'id' => $model->character_id],
-                ['class' => 'btn btn-primary']
+                [
+                    'class' => 'btn btn-primary',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'CONFIRMATION_CREATE_CHARACTER_SHEET'),
+                        'method' => 'post',
+                    ],
+                ]
             ) ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_UPDATE'),

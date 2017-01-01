@@ -32,6 +32,7 @@ final class CharacterSheetController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
+                    'create-character' => ['POST'],
                     'delete' => ['POST'],
                 ],
             ],
