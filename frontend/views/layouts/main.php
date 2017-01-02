@@ -38,6 +38,10 @@ AppAsset::register($this);
 
     $menuItems = [];
 
+    if (Yii::$app->user->can('operator')) {
+        $menuItems[] = ['label' => Yii::t('app', 'BUTTON_GOTO_BACKEND'), 'url' => Yii::$app->params['uri.back']];
+    }
+
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => Yii::t('app', 'MENU_TOP_LOGIN'), 'url' => ['/site/login']];
     } else {

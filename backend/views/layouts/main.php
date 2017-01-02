@@ -56,6 +56,8 @@ AppAsset::register($this);
         $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_EPIC_MANAGEMENT'), 'url' => ['/epic/manage']];
     }
 
+    $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_GOTO_FRONTEND'), 'url' => Yii::$app->params['uri.front']];
+
     $menuItems = [];
 
     if (!Yii::$app->user->isGuest) {
