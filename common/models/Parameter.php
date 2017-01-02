@@ -151,8 +151,8 @@ class Parameter extends ActiveRecord
 
         $class = 'common\models\\' . $this->parameterPack->class;
 
-        if (method_exists($class, 'allowedTypes')) {
-            $typesAllowed = call_user_func([$class, 'allowedTypes']);
+        if (method_exists($class, 'allowedParameterTypes')) {
+            $typesAllowed = call_user_func([$class, 'allowedParameterTypes']);
         } else {
             $typesAllowed = array_keys($typeNamesAll);
         }
