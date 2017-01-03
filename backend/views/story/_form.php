@@ -21,10 +21,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]); ?>
     </div>
 
-    <div class="col-lg-6">
-        <?= $form->field($model, 'data')->textarea(['rows' => 10]); ?>
-    </div>
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <?= $form->field($model, 'short')->textarea(['rows' => 10]); ?>
     </div>
 
