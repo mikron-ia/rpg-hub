@@ -2,6 +2,7 @@
 
 use common\models\Parameter;
 use common\models\Seen;
+use yii\bootstrap\Modal;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -177,12 +178,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 
-<?php \yii\bootstrap\Modal::begin([
+<?php Modal::begin([
     'id' => 'create-parameter-modal',
     'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_CREATE') . '</h2>',
+    'clientOptions' => ['backdrop' => 'static'],
+    'size' => Modal::SIZE_LARGE,
 ]); ?>
 
-<?php \yii\bootstrap\Modal::end(); ?>
+<?php Modal::end(); ?>
 
 <?php $this->registerJs(
     "$('.create-parameter-link').click(function() {
@@ -199,12 +202,14 @@ $this->params['breadcrumbs'][] = $this->title;
 });"
 ); ?>
 
-<?php \yii\bootstrap\Modal::begin([
+<?php Modal::begin([
     'id' => 'update-parameter-modal',
     'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_UPDATE') . '</h2>',
+    'clientOptions' => ['backdrop' => 'static'],
+    'size' => Modal::SIZE_LARGE,
 ]); ?>
 
-<?php \yii\bootstrap\Modal::end(); ?>
+<?php Modal::end(); ?>
 
 <?php $this->registerJs(
     "$('.update-parameter-link').click(function() {

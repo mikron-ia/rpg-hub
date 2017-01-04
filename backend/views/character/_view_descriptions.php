@@ -1,6 +1,7 @@
 <?php
 
 use common\models\core\Language;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -56,12 +57,14 @@ use yii\helpers\Html;
         <p><?= Yii::t('app', 'DESCRIPTIONS_NOT_FOUND'); ?></p>
     <?php endif; ?>
 
-    <?php \yii\bootstrap\Modal::begin([
+    <?php Modal::begin([
         'id' => 'create-description-modal',
         'header' => '<h2 class="modal-title">' . Yii::t('app', 'DESCRIPTION_TITLE_CREATE') . '</h2>',
+        'clientOptions' => ['backdrop' => 'static'],
+        'size' => Modal::SIZE_LARGE,
     ]); ?>
 
-    <?php \yii\bootstrap\Modal::end(); ?>
+    <?php Modal::end(); ?>
 
     <?php $this->registerJs(
         "$('.create-description-link').click(function() {
@@ -78,12 +81,14 @@ use yii\helpers\Html;
 });"
     ); ?>
 
-    <?php \yii\bootstrap\Modal::begin([
+    <?php Modal::begin([
         'id' => 'update-description-modal',
         'header' => '<h2 class="modal-title">' . Yii::t('app', 'DESCRIPTION_TITLE_UPDATE') . '</h2>',
+        'clientOptions' => ['backdrop' => 'static'],
+        'size' => Modal::SIZE_LARGE,
     ]); ?>
 
-    <?php \yii\bootstrap\Modal::end(); ?>
+    <?php Modal::end(); ?>
 
     <?php $this->registerJs(
         "$('.update-description-link').click(function() {

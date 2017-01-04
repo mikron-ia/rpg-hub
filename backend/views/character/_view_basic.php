@@ -1,6 +1,7 @@
 <?php
 
 use common\models\ExternalData;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -127,12 +128,14 @@ use yii\widgets\DetailView;
             ],
         ]); ?>
 
-        <?php \yii\bootstrap\Modal::begin([
+        <?php Modal::begin([
             'id' => 'update-external-data-modal',
             'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_UPDATE') . '</h2>',
+            'clientOptions' => ['backdrop' => 'static'],
+            'size' => Modal::SIZE_LARGE,
         ]); ?>
 
-        <?php \yii\bootstrap\Modal::end(); ?>
+        <?php Modal::end(); ?>
 
         <?php $this->registerJs(
             "$('.update-external-data-link').click(function() {
