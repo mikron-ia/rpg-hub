@@ -108,4 +108,11 @@ trait ToolsForEntity
     {
         throw new HttpException(401, $message);
     }
+
+    public function setCurrentEpicOnEmpty()
+    {
+        if(isset(Yii::$app->params['activeEpic']) && $this->epic_id === null) {
+            $this->epic_id = Yii::$app->params['activeEpic']->epic_id;
+        }
+    }
 }

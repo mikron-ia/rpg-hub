@@ -95,6 +95,8 @@ final class GroupController extends Controller
 
         $model = new Group();
 
+        $model->setCurrentEpicOnEmpty();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->group_id]);
         } else {

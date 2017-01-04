@@ -101,6 +101,8 @@ final class StoryController extends Controller
 
         $model = new Story();
 
+        $model->setCurrentEpicOnEmpty();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->story_id]);
         } else {

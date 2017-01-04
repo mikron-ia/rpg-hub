@@ -115,6 +115,8 @@ final class CharacterController extends Controller
 
         $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
 
+        $model->setCurrentEpicOnEmpty();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->character_id]);
         } else {

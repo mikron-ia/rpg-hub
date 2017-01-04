@@ -95,6 +95,8 @@ final class RecapController extends Controller
 
         $model = new Recap();
 
+        $model->setCurrentEpicOnEmpty();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->recap_id]);
         } else {
