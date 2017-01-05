@@ -168,12 +168,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php echo $model->getShortFormatted(); ?>
         </div>
 
-        <h2><?php echo $model->getAttributeLabel('long'); ?></h2>
-
-        <div>
-            <?php echo $model->getLongFormatted(); ?>
-        </div>
-
     </div>
 
 </div>
@@ -226,6 +220,16 @@ $this->params['breadcrumbs'][] = $this->title;
 });"
 );
 ?>
+
+<div class="col-md-12">
+
+    <h2><?php echo $model->getAttributeLabel('long'); ?></h2>
+
+    <div>
+        <?php echo $model->getLongFormatted(); ?>
+    </div>
+
+</div>
 
 <div class="col-md-12">
 

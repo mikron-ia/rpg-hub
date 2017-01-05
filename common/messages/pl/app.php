@@ -329,7 +329,7 @@ return [
     'STORY_PARAMETER_CONTENT' => 'Treść',
     'STORY_PARAMETER_ID' => 'ID parametru historii',
     'STORY_PARAMETER_VISIBILITY' => 'Widoczność',
-    'STORY_POSITION' => 'Pozycja na liście (sortowanie od najwyższej)',
+    'STORY_POSITION' => 'Pozycja na liście (od dołu)',
     'STORY_SHORT' => 'Krótki opis',
     'STORY_SHORT_TAB' => 'Podstawowy opis',
     'STORY_TITLE_CREATE' => 'Dodaj historię',

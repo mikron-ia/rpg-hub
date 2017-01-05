@@ -329,7 +329,7 @@ return [
     'STORY_PARAMETER_CONTENT' => 'Content',
     'STORY_PARAMETER_ID' => 'Story parameter ID',
     'STORY_PARAMETER_VISIBILITY' => 'Visibility',
-    'STORY_POSITION' => 'Position on the list (sorted descending)',
+    'STORY_POSITION' => 'Position on the list (from the bottom)',
     'STORY_SHORT' => 'Short description',
     'STORY_SHORT_TAB' => 'Short description',
     'STORY_TITLE_CREATE' => 'Add story',
