@@ -16,26 +16,26 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-lg-6">
+    <div class="col-md-6">
         <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
     </div>
 
-    <div class="col-lg-6">
+    <div class="col-md-6">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-md-12">
         <?= $form->field($model, 'tagline')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-lg-6">
+    <div class="col-md-6">
         <?= $form->field($model, 'visibility')->dropDownList(
             Character::visibilityNames(),
             ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_VISIBILITY') . ' --- ']
         ) ?>
     </div>
 
-    <div class="col-lg-6">
+    <div class="col-md-6">
         <?= $form->field($model, 'character_sheet_id')->dropDownList(
             CharacterSheetQuery::getListOfCharactersForSelector(),
             ['prompt' => ' --- ' . Yii::t('app', 'CHARACTER_SHEET_PROMPT') . ' --- ']
@@ -43,11 +43,9 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php if (!$model->isNewRecord): ?>
-
         <div class="col-md-12">
             <?= $form->field($model, 'data')->textarea(['rows' => 8]) ?>
         </div>
-
     <?php endif; ?>
 
     <div class="clearfix"></div>

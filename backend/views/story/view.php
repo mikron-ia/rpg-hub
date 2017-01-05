@@ -227,7 +227,7 @@ $this->params['breadcrumbs'][] = $this->title;
 );
 ?>
 
-<div class="col-lg-12">
+<div class="col-md-12">
 
     <h2>JSON</h2>
 
@@ -237,7 +237,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 
-<div class="col-lg-12">
+<div class="col-md-12">
 
     <div class="col-md-6">
 

@@ -25,11 +25,11 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-md-12">
         <?= $form->field($model, 'data')->textarea(['rows' => 8]) ?>
     </div>
 
-    <div class="form-group col-lg-2">
+    <div class="form-group col-md-2">
         <?= Html::submitButton(
             $model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
