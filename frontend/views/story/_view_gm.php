@@ -7,6 +7,7 @@ use yii\widgets\DetailView;
 ?>
 
 <div class="col-md-6">
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -15,4 +16,13 @@ use yii\widgets\DetailView;
             ]
         ],
     ]) ?>
+
+    <div class="text-center">
+        <?= \yii\helpers\Html::a(
+            Yii::t('app', 'BUTTON_SEE_BACKEND'),
+            Yii::$app->params['uri.back'] . Yii::$app->urlManager->createUrl(['character/update', 'id' => $model->story_id]),
+            ['class' => 'btn btn-primary']
+        ) ?>
+    </div>
+
 </div>

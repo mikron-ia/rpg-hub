@@ -51,6 +51,7 @@ return [
     'BUTTON_RESET' => 'Reset',
     'BUTTON_SAVE' => 'Save',
     'BUTTON_SEARCH' => 'Search',
+    'BUTTON_SEE_BACKEND' => 'See in management panel',
     'BUTTON_SEND' => 'Send',
     'BUTTON_SEND_INVITATION' => 'Send invitation',
     'BUTTON_STORIES' => 'Stories',
