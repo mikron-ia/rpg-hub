@@ -30,7 +30,7 @@ use yii\widgets\DetailView;
                 'character/update',
                 'id' => $model->character_id
             ]),
-            ['class' => 'btn btn-primary']
+            ['class' => 'btn btn-default']
         ) ?>
     </div>
 

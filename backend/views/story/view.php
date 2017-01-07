@@ -45,6 +45,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]
         ); ?>
+        <?= \yii\helpers\Html::a(
+            Yii::t('app', 'BUTTON_SEE_FRONTEND'),
+            Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
+                'character/update',
+                'id' => $model->story_id
+            ]),
+            ['class' => 'btn btn-default']
+        ) ?>
     </div>
 
     <div class="col-md-6">

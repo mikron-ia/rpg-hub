@@ -21,7 +21,7 @@ use yii\widgets\DetailView;
         <?= \yii\helpers\Html::a(
             Yii::t('app', 'BUTTON_SEE_BACKEND'),
             Yii::$app->params['uri.back'] . Yii::$app->urlManager->createUrl(['character/update', 'id' => $model->story_id]),
-            ['class' => 'btn btn-primary']
+            ['class' => 'btn btn-default']
         ) ?>
     </div>
 
