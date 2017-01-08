@@ -167,22 +167,9 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     /**
      * @return string[]
      */
-    static public function visibilityNames():array
-    {
-        return [
-            self::VISIBILITY_NONE => Yii::t('app', 'CHARACTER_VISIBILITY_NONE'),
-            self::VISIBILITY_LOGGED => Yii::t('app', 'CHARACTER_VISIBILITY_LOGGED'),
-            self::VISIBILITY_GM => Yii::t('app', 'CHARACTER_VISIBILITY_GM'),
-            self::VISIBILITY_FULL => Yii::t('app', 'CHARACTER_VISIBILITY_FULL'),
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
     public function allowedVisibilities():array
     {
-        return array_keys(self::visibilityNames());
+        return Visibility::allowedVisibilities();
     }
 
     /**
@@ -272,7 +259,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      */
     public function getVisibilityName()
     {
-        $list = self::visibilityNames();
+        $list = Visibility::visibilityNames();
         if (isset($list[$this->visibility])) {
             return $list[$this->visibility];
         } else {

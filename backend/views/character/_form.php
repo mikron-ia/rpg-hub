@@ -1,6 +1,7 @@
 <?php
 
 use common\models\CharacterSheetQuery;
+use common\models\core\Visibility;
 use common\models\EpicQuery;
 use common\models\Character;
 use yii\helpers\Html;
@@ -30,7 +31,7 @@ use yii\widgets\ActiveForm;
 
     <div class="col-md-6">
         <?= $form->field($model, 'visibility')->dropDownList(
-            Character::visibilityNames(),
+            Visibility::visibilityNames(),
             ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_VISIBILITY') . ' --- ']
         ) ?>
     </div>

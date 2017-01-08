@@ -25,13 +25,23 @@ final class Visibility
      */
     static public function visibilityNames():array
     {
-        return [
+        $names = [
             Visibility::VISIBILITY_NONE => Yii::t('app', 'VISIBILITY_NONE'),
             Visibility::VISIBILITY_GM => Yii::t('app', 'VISIBILITY_GM'),
             Visibility::VISIBILITY_DESIGNATED => Yii::t('app', 'VISIBILITY_DESIGNATED'),
             Visibility::VISIBILITY_LOGGED => Yii::t('app', 'VISIBILITY_LOGGED'),
             Visibility::VISIBILITY_FULL => Yii::t('app', 'VISIBILITY_FULL'),
         ];
+
+        $allowed = self::allowedVisibilities();
+
+        foreach ($names as $key => $name) {
+            if (!in_array($key, $allowed)) {
+                unset($names[$key]);
+            }
+        }
+
+        return $names;
     }
 
     /**
@@ -53,7 +63,13 @@ final class Visibility
      */
     static public function allowedVisibilities():array
     {
-        return array_keys(self::visibilityNames());
+        return [
+            //Visibility::VISIBILITY_NONE,
+            Visibility::VISIBILITY_GM,
+            //Visibility::VISIBILITY_DESIGNATED,
+            //Visibility::VISIBILITY_LOGGED,
+            Visibility::VISIBILITY_FULL
+        ];
     }
 
     /**

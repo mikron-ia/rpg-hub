@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Character;
+use common\models\core\Visibility;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -24,7 +25,7 @@ use yii\widgets\ActiveForm;
     <?php echo $form->field($model, 'visibility')->widget(
         kartik\select2\Select2::className(),
         [
-            'data' => Character::visibilityNames(),
+            'data' => Visibility::visibilityNames(),
             'options' => ['multiple' => true],
         ]
     ) ?>
