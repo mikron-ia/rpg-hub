@@ -1,4 +1,4 @@
 <?php
 return [
-    'baseUriForMail' => rtrim(getenv('URI_BACK'), '/'),
+    'baseUriForMail' => rtrim(getenv('URI_FRONT'), '/'),
 ];
