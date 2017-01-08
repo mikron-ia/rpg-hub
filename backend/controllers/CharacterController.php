@@ -92,8 +92,6 @@ final class CharacterController extends Controller
             $externalDataDataProvider = new ArrayDataProvider([]);
         }
 
-        $model->recordSighting();
-
         return $this->render('view', [
             'model' => $model,
             'externalDataDataProvider' => $externalDataDataProvider,
