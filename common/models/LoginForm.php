@@ -15,26 +15,20 @@ class LoginForm extends Model
 
     private $_user;
 
+    const REMEMBER_TIME_IN_SECONDS = 2592000;
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
-            // username and password are both required
             [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
     }
 
     /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
-     *
+     * Validates the password
+     * This method serves as the inline validation for password
      * @param string $attribute the attribute currently being validated
      * @param array $params the additional name-value pairs given in the rule
      */
@@ -49,14 +43,13 @@ class LoginForm extends Model
     }
 
     /**
-     * Logs in a user using the provided username and password.
-     *
+     * Logs in a user using the provided username and password
      * @return boolean whether the user is logged in successfully
      */
     public function login()
     {
         if ($this->validate()) {
-            $result = Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            $result = Yii::$app->user->login($this->getUser(), $this->rememberMe ? self::REMEMBER_TIME_IN_SECONDS : 0);
 
             if($result) {
                 PerformedAction::createSimplifiedRecord(PerformedAction::PERFORMED_ACTION_LOGIN);
@@ -70,7 +63,6 @@ class LoginForm extends Model
 
     /**
      * Finds user by [[username]]
-     *
      * @return User|null
      */
     protected function getUser()

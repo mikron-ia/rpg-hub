@@ -21,6 +21,7 @@ final class Visibility
     public $visibility;
 
     /**
+     * Provides visibilities names
      * @return string[]
      */
     static public function visibilityNames():array
@@ -45,6 +46,7 @@ final class Visibility
     }
 
     /**
+     * Provides visibilities names in lowercase
      * @return string[]
      */
     static public function visibilityNamesLowercase():array
@@ -59,6 +61,7 @@ final class Visibility
     }
 
     /**
+     * Lists allowed visibilities
      * @return string[]
      */
     static public function allowedVisibilities():array
@@ -84,6 +87,7 @@ final class Visibility
     }
 
     /**
+     * Provides visibility name
      * @return string|null
      */
     public function getName()
@@ -93,6 +97,7 @@ final class Visibility
     }
 
     /**
+     * Provides visibility name in lowercase
      * @return string|null
      */
     public function getNameLowercase()
