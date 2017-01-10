@@ -6,7 +6,10 @@ use yii\helpers\Html;
 /* @var $model common\models\ExternalData */
 
 $this->title = Yii::t('app', 'EXTERNAL_DATA_UPDATE_TITLE');
-$this->params['breadcrumbs'][] = ['label' => $model->external_data_id, 'url' => ['view', 'id' => $model->external_data_id]];
+$this->params['breadcrumbs'][] = [
+    'label' => $model->external_data_id,
+    'url' => ['view', 'id' => $model->external_data_id]
+];
 $this->params['breadcrumbs'][] = Yii::t('app', 'LABEL_UPDATE');
 ?>
 <div class="external-data-update">

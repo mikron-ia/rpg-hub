@@ -6,8 +6,8 @@ $params = array_merge(
     require(__DIR__ . '/params-local.php')
 );
 
-if(getenv('LANGUAGES_ALLOWED')) {
-    $languages = explode(',',str_replace(' ','',getenv('LANGUAGES_ALLOWED')));
+if (getenv('LANGUAGES_ALLOWED')) {
+    $languages = explode(',', str_replace(' ', '', getenv('LANGUAGES_ALLOWED')));
 } else {
     $languages = ['en', 'pl'];
 }

@@ -27,7 +27,9 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'currently_delivered_character_id')->dropDownList(
                 $model->getPeopleAvailableToThisCharacterAsDropDownList(),
                 [
-                    'prompt' => ' --- ' . Yii::t('app', 'CHARACTER_SHEET_FORM_SELECT_CURRENTLY_DELIVERED_CHARACTER') . ' --- '
+                    'prompt' => ' --- '
+                        . Yii::t('app', 'CHARACTER_SHEET_FORM_SELECT_CURRENTLY_DELIVERED_CHARACTER')
+                        . ' --- ',
                 ]
             ); ?>
         </div>

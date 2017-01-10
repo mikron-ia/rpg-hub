@@ -24,7 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="clearfix"></div>
 
         <div class="form-group pull-right">
-            <?php echo Html::submitButton(Yii::t('app', 'BUTTON_SAVE'), ['class' => 'btn btn-primary ', 'name' => 'save-button']) ?>
+            <?= Html::submitButton(
+                Yii::t('app', 'BUTTON_SAVE'),
+                ['class' => 'btn btn-primary ', 'name' => 'save-button']
+            ) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

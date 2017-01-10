@@ -29,6 +29,7 @@ class CrutchController extends Controller
             $object->save();
         }
     }
+
     /**
      * Saves all character sheets
      * @return void
@@ -94,6 +95,10 @@ class CrutchController extends Controller
         }
     }
 
+    /**
+     * Saves everything - to be used to trigger beforeSave() or afterSave() on all
+     * @return void
+     */
     public function actionSaveAll()
     {
         $this->runAction('save-epics');
