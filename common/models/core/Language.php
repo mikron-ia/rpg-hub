@@ -4,14 +4,19 @@ namespace common\models\core;
 
 use Yii;
 
+/**
+ * Class Language - wraps language support
+ * @package common\models\core
+ */
 final class Language
 {
     /**
-     * @var string
+     * @var string Language code
      */
     public $language;
 
     /**
+     * Lists supported languages
      * @return array
      */
     static public function supportedLanguages():array
@@ -24,6 +29,7 @@ final class Language
     }
 
     /**
+     * Provides short names for languages
      * @return array
      */
     static public function languagesShort():array
@@ -45,6 +51,7 @@ final class Language
     }
 
     /**
+     * Provides long names for languages
      * @return array
      */
     static public function languagesLong():array
@@ -64,6 +71,7 @@ final class Language
     }
 
     /**
+     * Factory method
      * @param string $code
      * @return Language
      */
@@ -75,6 +83,7 @@ final class Language
     }
 
     /**
+     * Provides language name
      * @return string|null
      */
     public function getName()
@@ -84,6 +93,7 @@ final class Language
     }
 
     /**
+     * Provides languages as objects
      * @return Language[]
      */
     static public function getLanguagesAsObjects():array
