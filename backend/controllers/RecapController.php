@@ -43,7 +43,7 @@ final class RecapController extends Controller
      */
     public function actionIndex()
     {
-        if(!Recap::canUserIndexThem()) {
+        if (!Recap::canUserIndexThem()) {
             Recap::throwExceptionAboutIndex();
         }
 
@@ -65,7 +65,7 @@ final class RecapController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(!$model->canUserViewYou()) {
+        if (!$model->canUserViewYou()) {
             Recap::throwExceptionAboutView();
         }
 
@@ -87,7 +87,7 @@ final class RecapController extends Controller
      */
     public function actionCreate()
     {
-        if(!Recap::canUserCreateThem()) {
+        if (!Recap::canUserCreateThem()) {
             Recap::throwExceptionAboutCreate();
         }
 
@@ -114,7 +114,7 @@ final class RecapController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(!$model->canUserControlYou()) {
+        if (!$model->canUserControlYou()) {
             Recap::throwExceptionAboutControl();
         }
 
@@ -137,7 +137,7 @@ final class RecapController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(!$model->canUserControlYou()) {
+        if (!$model->canUserControlYou()) {
             Recap::throwExceptionAboutControl();
         }
 

@@ -36,7 +36,7 @@ final class StoryController extends Controller
      */
     public function actionIndex()
     {
-        if(!Story::canUserIndexThem()) {
+        if (!Story::canUserIndexThem()) {
             Story::throwExceptionAboutIndex();
         }
 
@@ -57,7 +57,7 @@ final class StoryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(!$model->canUserViewYou()) {
+        if (!$model->canUserViewYou()) {
             Story::throwExceptionAboutView();
         }
 

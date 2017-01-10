@@ -50,7 +50,7 @@ final class StoryController extends Controller
      */
     public function actionIndex()
     {
-        if(!Story::canUserIndexThem()) {
+        if (!Story::canUserIndexThem()) {
             Story::throwExceptionAboutIndex();
         }
 
@@ -72,7 +72,7 @@ final class StoryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(!$model->canUserViewYou()) {
+        if (!$model->canUserViewYou()) {
             Story::throwExceptionAboutView();
         }
 
@@ -93,7 +93,7 @@ final class StoryController extends Controller
      */
     public function actionCreate()
     {
-        if(!Story::canUserCreateThem()) {
+        if (!Story::canUserCreateThem()) {
             Story::throwExceptionAboutCreate();
         }
 
@@ -119,7 +119,7 @@ final class StoryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(!$model->canUserControlYou()) {
+        if (!$model->canUserControlYou()) {
             Story::throwExceptionAboutControl();
         }
 
@@ -140,7 +140,7 @@ final class StoryController extends Controller
     public function actionMoveUp($id)
     {
         $model = $this->findModel($id);
-        if(!$model->canUserControlYou()) {
+        if (!$model->canUserControlYou()) {
             Story::throwExceptionAboutControl();
         }
         $model->movePrev();
@@ -161,7 +161,7 @@ final class StoryController extends Controller
     public function actionMoveDown($id)
     {
         $model = $this->findModel($id);
-        if(!$model->canUserControlYou()) {
+        if (!$model->canUserControlYou()) {
             Story::throwExceptionAboutControl();
         }
         $model->moveNext();
