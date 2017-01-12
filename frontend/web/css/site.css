@@ -250,10 +250,11 @@ a:focus {
     border: 3px solid green;
     border-radius: 15px;
     float: left;
-    margin: 0.75%;
-    height: 228px;
-    padding: 0 1%;
+    margin: 1% 0.75%;
+    height: 192px;
+    padding: 0 10px;
     overflow: auto;
+    position: relative;
 }
 
 @media (max-width: 383px) {
@@ -321,34 +322,36 @@ a:focus {
 .seen-tag-new {
     color: white;
     background-color: yellowgreen;
-    font-weight: bold;
-    border-radius: 15px;
 }
 
 .seen-tag-updated {
     color: white;
     background-color: goldenrod;
-    font-weight: bold;
-    border-radius: 15px;
 }
 
 .seen-tag-seen {
     color: white;
     background-color: lightgrey;
     display: none;
-    font-weight: bold;
-    border-radius: 15px;
 }
 
 .seen-tag-box {
     font-family: "Courier New", Courier, monospace;
     font-size: 1.25em;
+    font-weight: bold;
+    border-radius: 15px;
     padding: 5px;
+    position: absolute;
+    bottom: 1%;
+    right: 5%;
+    width: 64%;
 }
 
 .seen-tag-header {
     font-family: "Courier New", Courier, monospace;
     font-size: 0.625em;
+    font-weight: bold;
+    border-radius: 15px;
     padding: 5px 20px;
     vertical-align: middle;
 }

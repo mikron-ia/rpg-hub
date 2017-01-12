@@ -47,7 +47,7 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
         <?= StringHelper::truncateWords($model->tagline, 16, ' (...)', false) ?>
     </p>
 
-    <p class="text-center <?= $model->showSightingCSS() ?> seen-tag-box">
+    <p class="text-center seen-tag-common <?= $model->showSightingCSS() ?> seen-tag-box">
         <?= $model->showSightingStatus() ?>
     </p>
 

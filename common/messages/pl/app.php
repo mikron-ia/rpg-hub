@@ -317,7 +317,7 @@ return [
     'SEEN_STATUS' => 'Aktualny status',
     'SEEN_STATUS_NEW' => 'Nowa',
     'SEEN_STATUS_SEEN' => 'Bez zmian',
-    'SEEN_STATUS_UPDATED' => 'Zmodyfikowana',
+    'SEEN_STATUS_UPDATED' => 'Zmieniona',
     'STORY_DATA' => 'Dane',
     'STORY_DESCRIPTIONS' => 'Opisy',
     'STORY_ID' => 'ID Historii',
