@@ -31,6 +31,8 @@ class m161201_234950_movement_log extends Migration
 
     public function down()
     {
+        $this->execute('SET foreign_key_checks = 0;');
+
         $this->alterColumn('performed_action', 'class', $this->string(80)->notNull());
         $this->alterColumn('performed_action', 'object_id', $this->integer(11)->unsigned()->notNull());
         $this->alterColumn('performed_action', 'user_id', $this->integer(11)->unsigned()->notNull());
@@ -43,5 +45,7 @@ class m161201_234950_movement_log extends Migration
 
         $this->dropTable('ip');
         $this->dropTable('user_agent');
+
+        $this->execute('SET foreign_key_checks = 1;');
     }
 }
