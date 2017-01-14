@@ -251,7 +251,7 @@ a:focus {
     border-radius: 15px;
     float: left;
     margin: 1% 0.75%;
-    height: 192px;
+    height: 180px;
     padding: 0 10px;
     overflow: auto;
     position: relative;
@@ -260,6 +260,7 @@ a:focus {
 @media (max-width: 383px) {
     .index-box {
         width: 94%;
+        margin: 2% 0;
     }
 }
 
@@ -271,7 +272,7 @@ a:focus {
 
 @media (min-width: 768px) {
     .index-box {
-        width: 31%;
+        width: 47%;
     }
 }
 
@@ -290,6 +291,7 @@ a:focus {
 @media (min-width: 1600px) {
     .index-box {
         width: 15%;
+        margin: 0.5% 0.5%;
     }
 }
 
