@@ -2495,16 +2495,16 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v2.8.15",
+            "version": "v2.8.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
-                "reference": "165bf6d1e72cd72f2fe170a070aa2a1f17f2d744"
+                "reference": "d2a5de15c8341a470a66becf4597bc675686a72b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/165bf6d1e72cd72f2fe170a070aa2a1f17f2d744",
-                "reference": "165bf6d1e72cd72f2fe170a070aa2a1f17f2d744",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/d2a5de15c8341a470a66becf4597bc675686a72b",
+                "reference": "d2a5de15c8341a470a66becf4597bc675686a72b",
                 "shasum": ""
             },
             "require": {
@@ -2548,20 +2548,20 @@
             ],
             "description": "Symfony BrowserKit Component",
             "homepage": "https://symfony.com",
-            "time": "2016-09-06 10:55:00"
+            "time": "2017-01-02 20:30:24"
         },
         {
             "name": "symfony/console",
-            "version": "v2.8.15",
+            "version": "v2.8.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "d5643cd095e5e37d31e004bb2606b5dd7e96602f"
+                "reference": "2e18b8903d9c498ba02e1dfa73f64d4894bb6912"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/d5643cd095e5e37d31e004bb2606b5dd7e96602f",
-                "reference": "d5643cd095e5e37d31e004bb2606b5dd7e96602f",
+                "url": "https://api.github.com/repos/symfony/console/zipball/2e18b8903d9c498ba02e1dfa73f64d4894bb6912",
+                "reference": "2e18b8903d9c498ba02e1dfa73f64d4894bb6912",
                 "shasum": ""
             },
             "require": {
@@ -2609,20 +2609,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-12-06 11:59:35"
+            "time": "2017-01-08 20:43:03"
         },
         {
             "name": "symfony/css-selector",
-            "version": "v2.8.15",
+            "version": "v2.8.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "981abbbd6ba49af338a98490cbe29e7f39ca9fa9"
+                "reference": "f45daea42232d9ca5cf561ec64f0d4aea820877f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/981abbbd6ba49af338a98490cbe29e7f39ca9fa9",
-                "reference": "981abbbd6ba49af338a98490cbe29e7f39ca9fa9",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/f45daea42232d9ca5cf561ec64f0d4aea820877f",
+                "reference": "f45daea42232d9ca5cf561ec64f0d4aea820877f",
                 "shasum": ""
             },
             "require": {
@@ -2662,7 +2662,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-03 07:52:58"
+            "time": "2017-01-02 20:30:24"
         },
         {
             "name": "symfony/debug",
@@ -2723,16 +2723,16 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v2.8.15",
+            "version": "v2.8.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "adb9f190b13884d6a70ec094a487363675575c1a"
+                "reference": "52cc211afa9458c0a54c478010a55f44892c1c02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/adb9f190b13884d6a70ec094a487363675575c1a",
-                "reference": "adb9f190b13884d6a70ec094a487363675575c1a",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/52cc211afa9458c0a54c478010a55f44892c1c02",
+                "reference": "52cc211afa9458c0a54c478010a55f44892c1c02",
                 "shasum": ""
             },
             "require": {
@@ -2775,20 +2775,20 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2016-12-10 14:24:35"
+            "time": "2017-01-02 20:30:24"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.15",
+            "version": "v2.8.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "25c576abd4e0f212e678fe8b2bd9a9a98c7ea934"
+                "reference": "74877977f90fb9c3e46378d5764217c55f32df34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/25c576abd4e0f212e678fe8b2bd9a9a98c7ea934",
-                "reference": "25c576abd4e0f212e678fe8b2bd9a9a98c7ea934",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/74877977f90fb9c3e46378d5764217c55f32df34",
+                "reference": "74877977f90fb9c3e46378d5764217c55f32df34",
                 "shasum": ""
             },
             "require": {
@@ -2835,20 +2835,20 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-10-13 01:43:15"
+            "time": "2017-01-02 20:30:24"
         },
         {
             "name": "symfony/finder",
-            "version": "v2.8.15",
+            "version": "v2.8.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "c0f10576335743b881ac1ed39d18c0fa66048775"
+                "reference": "355fccac526522dc5fca8ecf0e62749a149f3b8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/c0f10576335743b881ac1ed39d18c0fa66048775",
-                "reference": "c0f10576335743b881ac1ed39d18c0fa66048775",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/355fccac526522dc5fca8ecf0e62749a149f3b8b",
+                "reference": "355fccac526522dc5fca8ecf0e62749a149f3b8b",
                 "shasum": ""
             },
             "require": {
@@ -2884,7 +2884,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2016-12-13 09:38:12"
+            "time": "2017-01-02 20:30:24"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2947,16 +2947,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.15",
+            "version": "v2.8.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "befb26a3713c97af90d25dd12e75621ef14d91ff"
+                "reference": "dbe61fed9cd4a44c5b1d14e5e7b1a8640cfb2bf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/befb26a3713c97af90d25dd12e75621ef14d91ff",
-                "reference": "befb26a3713c97af90d25dd12e75621ef14d91ff",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/dbe61fed9cd4a44c5b1d14e5e7b1a8640cfb2bf2",
+                "reference": "dbe61fed9cd4a44c5b1d14e5e7b1a8640cfb2bf2",
                 "shasum": ""
             },
             "require": {
@@ -2992,7 +2992,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-14 16:15:57"
+            "time": "2017-01-03 13:49:52"
         },
         {
             "name": "webmozart/assert",
