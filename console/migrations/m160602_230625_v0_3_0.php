@@ -51,14 +51,6 @@ class m160602_230625_v0_3_0 extends Migration
         ], $tableOptions);
 
         /* Objects */
-        $this->createTable('{{%character}}', [
-            'character_id' => $this->primaryKey()->unsigned(),
-            'epic_id' => $this->integer(11)->unsigned()->notNull(),
-            'key' => $this->string(80)->notNull(),
-            'name' => $this->string(120)->notNull(),
-            'data' => $this->text()->notNull(),
-            'currently_delivered_person_id' => $this->integer(11)->unsigned(),
-        ], $tableOptions);
 
         $this->createTable('{{%epic}}', [
             'epic_id' => $this->primaryKey()->unsigned(),
@@ -75,18 +67,6 @@ class m160602_230625_v0_3_0 extends Migration
             'key' => $this->string(80)->notNull(),
             'name' => $this->string(120)->notNull(),
             'data' => $this->text()->notNull(),
-        ], $tableOptions);
-
-        $this->createTable('{{%person}}', [
-            'person_id' => $this->primaryKey()->unsigned(),
-            'epic_id' => $this->integer(11)->unsigned()->notNull(),
-            'key' => $this->string(80)->notNull(),
-            'name' => $this->string(120)->notNull(),
-            'tagline' => $this->string(120)->notNull(),
-            'data' => $this->text()->notNull(),
-            'visibility' => $this->string(20)->notNull(),
-            'character_id' => $this->integer(11)->unsigned(),
-            'description_pack_id' => $this->integer(11)->unsigned(),
         ], $tableOptions);
 
         $this->createTable('{{%recap}}', [
@@ -135,13 +115,8 @@ class m160602_230625_v0_3_0 extends Migration
 
         $this->execute('SET foreign_key_checks = 0');
 
-        $this->addForeignKey('character_ibfk_1', '{{%character}}', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('character_ibfk_2', '{{%character}}', 'currently_delivered_person_id', 'person', 'person_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('description_ibfk_1', '{{%description}}', 'description_pack_id', '{{%description_pack}}', 'description_pack_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('group_ibfk_1', '{{%group}}', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('person_ibfk_1', '{{%person}}', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('person_ibfk_2', '{{%person}}', 'character_id', '{{%character}}', 'character_id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('person_ibfk_3', '{{%person}}', 'description_pack_id', '{{%description_pack}}', 'description_pack_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('recap_ibfk_1', '{{%recap}}', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('story_parameter_ibfk_1', '{{%story_parameter}}', 'story_id', '{{%story}}', 'story_id', 'RESTRICT', 'CASCADE');
 
@@ -153,14 +128,12 @@ class m160602_230625_v0_3_0 extends Migration
     public function safeDown()
     {
         $this->execute('SET foreign_key_checks = 0;');
-        $this->dropTable('{{%character}}');
         $this->dropTable('{{%description}}');
         $this->dropTable('{{%description_pack}}');
         $this->dropTable('{{%epic}}');
         $this->dropTable('{{%group}}');
         $this->dropTable('{{%parameter}}');
         $this->dropTable('{{%parameter_pack}}');
-        $this->dropTable('{{%person}}');
         $this->dropTable('{{%recap}}');
         $this->dropTable('{{%story}}');
         $this->dropTable('{{%story_parameter}}');

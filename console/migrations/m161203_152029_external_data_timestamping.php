@@ -14,14 +14,6 @@ class m161203_152029_external_data_timestamping extends Migration
         $this->addColumn('external_data_pack', 'created_at', $this->integer()->notNull());
         $this->addColumn('external_data_pack', 'updated_at', $this->integer()->notNull());
 
-        $this->execute('UPDATE external_data SET `created_at` = ' . time());
-        $this->execute('UPDATE external_data SET `updated_at` = ' . time());
-        $this->execute('UPDATE external_data_pack SET `created_at` = ' . time());
-        $this->execute('UPDATE external_data_pack SET `updated_at` = ' . time());
-
-        $this->execute('UPDATE external_data SET `created_by` = 1');
-        $this->execute('UPDATE external_data SET `updated_by` = 1');
-
         $this->addForeignKey('external_data_creator', 'external_data', 'created_by', 'user', 'id');
         $this->addForeignKey('external_data_updater', 'external_data', 'updated_by', 'user', 'id');
 
@@ -33,14 +25,6 @@ class m161203_152029_external_data_timestamping extends Migration
         $this->addColumn('description_pack', 'created_at', $this->integer()->notNull());
         $this->addColumn('description_pack', 'updated_at', $this->integer()->notNull());
 
-        $this->execute('UPDATE description SET `created_at` = ' . time());
-        $this->execute('UPDATE description SET `updated_at` = ' . time());
-        $this->execute('UPDATE description_pack SET `created_at` = ' . time());
-        $this->execute('UPDATE description_pack SET `updated_at` = ' . time());
-
-        $this->execute('UPDATE description SET `created_by` = 1');
-        $this->execute('UPDATE description SET `updated_by` = 1');
-
         $this->addForeignKey('description_creator', 'description', 'created_by', 'user', 'id');
         $this->addForeignKey('description_updater', 'description', 'updated_by', 'user', 'id');
 
@@ -51,14 +35,6 @@ class m161203_152029_external_data_timestamping extends Migration
 
         $this->addColumn('parameter_pack', 'created_at', $this->integer()->notNull());
         $this->addColumn('parameter_pack', 'updated_at', $this->integer()->notNull());
-
-        $this->execute('UPDATE parameter SET `created_at` = ' . time());
-        $this->execute('UPDATE parameter SET `updated_at` = ' . time());
-        $this->execute('UPDATE parameter_pack SET `created_at` = ' . time());
-        $this->execute('UPDATE parameter_pack SET `updated_at` = ' . time());
-
-        $this->execute('UPDATE parameter SET `created_by` = 1');
-        $this->execute('UPDATE parameter SET `updated_by` = 1');
 
         $this->addForeignKey('parameter_creator', 'parameter', 'created_by', 'user', 'id');
         $this->addForeignKey('parameter_updater', 'parameter', 'updated_by', 'user', 'id');
