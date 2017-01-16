@@ -22,7 +22,15 @@ final class RecapController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'update', 'view'],
+                        'actions' => [
+                            'create',
+                            'delete',
+                            'index',
+                            'update',
+                            'view',
+                            'move-down',
+                            'move-up',
+                        ],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -144,6 +152,48 @@ final class RecapController extends Controller
         $model->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Moves recap up in order; this means lower position on the list
+     * @param int $id Story ID
+     * @return \yii\web\Response
+     */
+    public function actionMoveUp($id)
+    {
+        $model = $this->findModel($id);
+        if (!$model->canUserControlYou()) {
+            Recap::throwExceptionAboutControl();
+        }
+        $model->movePrev();
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
+    }
+
+    /**
+     * Moves recap down in order; this means higher position on the list
+     * @param int $id Story ID
+     * @return \yii\web\Response
+     */
+    public function actionMoveDown($id)
+    {
+        $model = $this->findModel($id);
+        if (!$model->canUserControlYou()) {
+            Recap::throwExceptionAboutControl();
+        }
+        $model->moveNext();
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
     }
 
     /**

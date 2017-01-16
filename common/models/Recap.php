@@ -10,6 +10,7 @@ use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\Markdown;
+use yii2tech\ar\position\PositionBehavior;
 
 /**
  * This is the model class for table "recap".
@@ -21,6 +22,7 @@ use yii\helpers\Markdown;
  * @property string $data
  * @property string $time
  * @property string $seen_pack_id
+ * @property int $position
  *
  * @property Epic $epic
  * @property SeenPack $seenPack
@@ -62,6 +64,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
             'name' => Yii::t('app', 'RECAP_NAME'),
             'data' => Yii::t('app', 'RECAP_DATA'),
             'time' => Yii::t('app', 'RECAP_TIME'),
+            'position' => Yii::t('app', 'RECAP_POSITION'),
         ];
     }
 
@@ -96,6 +99,11 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     public function behaviors()
     {
         return [
+            'positionBehavior' => [
+                'class' => PositionBehavior::className(),
+                'positionAttribute' => 'position',
+                'groupAttributes' => ['epic_id'],
+            ],
             'performedActionBehavior' => [
                 'class' => PerformedActionBehavior::className(),
                 'idName' => 'recap_id',

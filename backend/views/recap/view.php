@@ -21,6 +21,26 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'btn btn-primary']
         ) ?>
         <?= Html::a(
+            Yii::t('app', 'BUTTON_MOVE_DOWN'),
+            ['recap/move-up', 'id' => $model->recap_id],
+            [
+                'class' => 'btn btn-default',
+                'data' => [
+                    'method' => 'post',
+                ],
+            ]
+        ); ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_MOVE_UP'),
+            ['recap/move-down', 'id' => $model->recap_id],
+            [
+                'class' => 'btn btn-default',
+                'data' => [
+                    'method' => 'post',
+                ],
+            ]
+        ); ?>
+        <?= Html::a(
             Yii::t('app', 'BUTTON_DELETE'),
             ['delete', 'id' => $model->recap_id],
             [
@@ -48,6 +68,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'time',
                 'format' => 'raw',
                 'value' => (new DateTime($model->time))->format("l, Y-m-d H:i:s")
+            ],
+            [
+                'attribute' => 'position',
             ],
         ],
     ]) ?>

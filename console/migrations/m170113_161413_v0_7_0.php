@@ -15,10 +15,18 @@ class m170113_161413_v0_7_0 extends Migration
             $scriptContent = file_get_contents($scriptName);
             $this->execute($scriptContent);
         }
+
+        $this->addColumn('recap', 'position', $this->integer()->unsigned());
+        $this->alterColumn('recap', 'time', $this->dateTime());
+
+        $this->execute('UPDATE recap position = recap_id');
     }
 
     public function down()
     {
+        $this->dropColumn('recap', 'position');
+        $this->alterColumn('recap', 'time', $this->dateTime()->notNull());
+
         $this->execute('SET foreign_key_checks = 0;');
 
         $this->truncateTable('{{%auth_assignment}}');
@@ -40,6 +48,8 @@ class m170113_161413_v0_7_0 extends Migration
         $this->truncateTable('{{%participant_role}}');
         $this->truncateTable('{{%performed_action}}');
         $this->truncateTable('{{%recap}}');
+        $this->truncateTable('{{%seen}}');
+        $this->truncateTable('{{%seen_pack}}');
         $this->truncateTable('{{%story}}');
         $this->truncateTable('{{%story_parameter}}');
         $this->truncateTable('{{%user}}');

@@ -48,7 +48,7 @@ final class RecapQuery extends Recap
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => ['pageSize' => 20],
-            'sort' => ['defaultOrder' => ['time' => SORT_DESC]]
+            'sort' => ['defaultOrder' => ['position' => SORT_DESC]]
         ]);
 
         $this->load($params);
@@ -83,7 +83,7 @@ final class RecapQuery extends Recap
             return null;
         }
 
-        $query->andWhere(['epic_id' => Yii::$app->params['activeEpic']->epic_id])->orderBy(['time' => SORT_DESC]);
+        $query->andWhere(['epic_id' => Yii::$app->params['activeEpic']->epic_id])->orderBy(['position' => SORT_DESC]);
 
         /** @var Recap|null $recap */
         $recap = $query->one();

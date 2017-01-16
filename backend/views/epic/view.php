@@ -172,7 +172,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <?= GridView::widget([
             'dataProvider' => new \yii\data\ActiveDataProvider([
-                'query' => $model->getRecaps()->orderBy('time DESC'),
+                'query' => $model->getRecaps()->orderBy('position DESC'),
                 'sort' => false,
             ]),
             'summary' => '',
