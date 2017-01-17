@@ -27,7 +27,8 @@ if ($epic) {
             </div>
 
             <div class="btn-group btn-group-lg">
-                <?= Html::a(Yii::t('app', 'BUTTON_CHARACTERS'), ['character/index'], ['class' => 'btn btn-lg btn-primary']); ?>
+                <?= Html::a(Yii::t('app', 'BUTTON_CHARACTERS'), ['character/index'],
+                    ['class' => 'btn btn-lg btn-primary']); ?>
             </div>
         <?php else: ?>
             <h1><?= Yii::t('app', 'FRONTPAGE_TITLE') ?></h1>
@@ -49,6 +50,9 @@ if ($epic) {
                 </h3>
                 <div>
                     <?php if ($recap) {
+                        if ($recap->time) {
+                            echo '<p class="recap-box-time">' . $recap->time . '</p>';
+                        }
                         echo $recap->getDataFormatted();
                     } else {
                         echo '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_RECAP_NOT_AVAILABLE') . '</p>';

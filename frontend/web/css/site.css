@@ -357,3 +357,10 @@ a:focus {
     padding: 5px 20px;
     vertical-align: middle;
 }
+
+.recap-box-time {
+    text-align: right;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.2em;
+    font-weight: bold;
+}

@@ -17,9 +17,7 @@ class m170113_161413_v0_7_0 extends Migration
         }
 
         $this->addColumn('recap', 'position', $this->integer()->unsigned());
-        $this->alterColumn('recap', 'time', $this->dateTime());
-
-        $this->execute('UPDATE recap position = recap_id');
+        $this->alterColumn('recap', 'time', $this->string());
     }
 
     public function down()

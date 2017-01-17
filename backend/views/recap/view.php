@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'time',
                 'format' => 'raw',
-                'value' => $model->time?(new DateTime($model->time))->format("l, Y-m-d H:i:s"):null,
+                'value' => $model->time,
             ],
             [
                 'attribute' => 'position',
