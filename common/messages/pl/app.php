@@ -298,6 +298,7 @@ return [
     'RECAP_ID' => 'ID streszczenia',
     'RECAP_KEY' => 'Klucz',
     'RECAP_NAME' => 'Tytuł',
+    'RECAP_ORDER' => 'Lp.',
     'RECAP_POSITION' => 'Pozycja na liście (od dołu)',
     'RECAP_TIME' => 'Czas',
     'RECAP_TITLE_INDEX' => 'Streszczenia',

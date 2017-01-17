@@ -298,6 +298,7 @@ return [
     'RECAP_ID' => 'Recap ID',
     'RECAP_KEY' => 'Key',
     'RECAP_NAME' => 'Recap title',
+    'RECAP_ORDER' => 'Pos.',
     'RECAP_POSITION' => 'Position on the list (from the bottom)',
     'RECAP_TIME' => 'Time ',
     'RECAP_TITLE_INDEX' => 'Recaps',

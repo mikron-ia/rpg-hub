@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'RECAP_TITLE_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
+$mostRecent = $searchModel->mostRecent();
 ?>
 <div class="recap-index">
 
@@ -28,10 +29,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterPosition' => null,
             'columns' => [
                 [
+                    'attribute' => 'position',
+                    'contentOptions' => ['class' => 'text-center'],
+                    'label' => Yii::t('app', 'RECAP_ORDER'),
+                ],
+                [
                     'attribute' => 'name',
                 ],
                 [
                     'attribute' => 'time',
+                    'contentOptions' => ['class' => 'text-center text-nowrap'],
+
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',

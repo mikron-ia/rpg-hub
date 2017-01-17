@@ -39,10 +39,10 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     public function rules()
     {
         return [
-            [['epic_id', 'name', 'data', 'time'], 'required'],
+            [['epic_id', 'name', 'data'], 'required'],
             [['epic_id'], 'integer'],
             [['data'], 'string'],
-            [['time'], 'safe'],
+            [['time'], 'default', 'value' => null],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
             [
