@@ -61,6 +61,9 @@ use yii\helpers\Html;
             <?= Yii::t('app', 'LABEL_VISIBLE') . ' ' . $model->getVisibilityLowercase(); ?>
         </span>
         <span class="tag-box">
+            <?= $model->getLanguage(); ?>
+        </span>
+        <span class="tag-box">
             <?= Yii::t('app', 'DESCRIPTION_UPDATED {when} {who}', [
                 'when' => Yii::$app->formatter->asDatetime($model->updated_at),
                 'who' => $model->updatedBy->username,
@@ -72,12 +75,8 @@ use yii\helpers\Html;
         <?= $model->getPublicFormatted(); ?>
     </div>
 
-    <?php if ($model->private_text): ?>
-        <h4><?= Yii::t('app', 'DESCRIPTION_TITLE_PRIVATE'); ?></h4>
-
-        <div>
-            <?= $model->getPrivateFormatted(); ?>
-        </div>
-    <?php endif; ?>
+    <div class="private-notes">
+        <?= $model->getPrivateFormatted(); ?>
+    </div>
 
 </div>

@@ -146,6 +146,13 @@ p {
     margin: 20px 0 10px 10px;
 }
 
+.private-notes {
+    background-color: #eeeeee;
+    padding: 10px 15px 0 15px;
+    border: 2px solid #eeeeee;
+    border-radius: 15px;
+}
+
 .subtitle {
     font-style: italic;
 }
@@ -153,9 +160,10 @@ p {
 .tag-box {
     background-color: lightblue;
     border-radius: 5px;
+    display: inline-block;
     font-weight: bold;
     padding: 5px 10px;
-    margin: 0 10px 0 0;
+    margin: 0 5px 5px 0;
 }
 
 .btn-group {
