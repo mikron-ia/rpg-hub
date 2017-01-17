@@ -26,8 +26,14 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $lang
  * @property string $visibility
  * @property integer $position
+ * @property integer $created_at
+ * @property integer $updated_at
+ * @property string $created_by
+ * @property string $updated_by
  *
+ * @property User $createdBy
  * @property DescriptionPack $descriptionPack
+ * @property User $updatedBy
  */
 class Description extends ActiveRecord implements Displayable, HasVisibility
 {
@@ -206,9 +212,25 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return ActiveQuery
      */
+    public function getCreatedBy():ActiveQuery
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
     public function getDescriptionPack():ActiveQuery
     {
         return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getUpdatedBy():ActiveQuery
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 
     /**

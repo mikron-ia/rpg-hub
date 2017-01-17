@@ -133,6 +133,7 @@ return [
     'DESCRIPTION_TYPE_STORIES' => 'Stories participated in',
     'DESCRIPTION_TYPE_THREADS' => 'Threads',
     'DESCRIPTION_TYPE_WHO' => 'Who is this?',
+    'DESCRIPTION_UPDATED {when} {who}' => 'Changed {when}, by {who}',
     'EPIC_CARD_ANNOUNCEMENTS' => 'Announcements',
     'EPIC_CARD_EPIC_ATTRIBUTES' => 'Epic attributes',
     'EPIC_CARD_PARTICIPANTS' => 'Participants',

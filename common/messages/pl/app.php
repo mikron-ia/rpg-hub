@@ -133,6 +133,7 @@ return [
     'DESCRIPTION_TYPE_STORIES' => 'Historie z udziałem',
     'DESCRIPTION_TYPE_THREADS' => 'Wątki',
     'DESCRIPTION_TYPE_WHO' => 'Kim jest?',
+    'DESCRIPTION_UPDATED {when} {who}' => 'Zmienione przez {who}, {when}',
     'EPIC_CARD_ANNOUNCEMENTS' => 'Ogłoszenia',
     'EPIC_CARD_EPIC_ATTRIBUTES' => 'Atrybuty kampanii',
     'EPIC_CARD_PARTICIPANTS' => 'Uczestnicy',

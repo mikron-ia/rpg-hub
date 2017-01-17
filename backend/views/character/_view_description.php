@@ -60,6 +60,12 @@ use yii\helpers\Html;
         <span class="tag-box">
             <?= Yii::t('app', 'LABEL_VISIBLE') . ' ' . $model->getVisibilityLowercase(); ?>
         </span>
+        <span class="tag-box">
+            <?= Yii::t('app', 'DESCRIPTION_UPDATED {when} {who}', [
+                'when' => Yii::$app->formatter->asDatetime($model->updated_at),
+                'who' => $model->updatedBy->username,
+            ]); ?>
+        </span>
     </p>
 
     <div>
