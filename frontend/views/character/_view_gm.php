@@ -18,7 +18,11 @@ use yii\widgets\DetailView;
                 ],
                 [
                     'attribute' => 'tagline',
-                ]
+                ],
+                [
+                    'attribute' => 'importance',
+                    'value' => $model->getImportance(),
+                ],
             ],
         ]);
     } ?>

@@ -5,8 +5,10 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
+use common\models\core\HasImportance;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
+use common\models\core\Importance;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
@@ -23,6 +25,7 @@ use yii\db\ActiveRecord;
  * @property string $tagline
  * @property string $data
  * @property string $visibility
+ * @property string $importance
  * @property string $character_sheet_id
  * @property string $description_pack_id
  * @property string $external_data_pack_id
@@ -35,7 +38,7 @@ use yii\db\ActiveRecord;
  * @property SeenPack $seenPack
  * @property CharacterSheet[] $characterSheets
  */
-class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasVisibility, HasSightings
+class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasVisibility, HasSightings
 {
     use ToolsForEntity;
 
@@ -52,9 +55,9 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public function rules()
     {
         return [
-            [['epic_id', 'name', 'tagline', 'visibility'], 'required'],
+            [['epic_id', 'name', 'tagline', 'visibility', 'importance'], 'required'],
             [['epic_id', 'character_sheet_id', 'description_pack_id'], 'integer'],
-            [['data', 'visibility'], 'string'],
+            [['data', 'visibility', 'importance'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name', 'tagline'], 'string', 'max' => 120],
             [
@@ -105,6 +108,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'tagline' => Yii::t('app', 'CHARACTER_TAGLINE'),
             'data' => Yii::t('app', 'CHARACTER_DATA'),
             'visibility' => Yii::t('app', 'CHARACTER_VISIBILITY'),
+            'importance' => Yii::t('app', 'CHARACTER_IMPORTANCE'),
             'character_sheet_id' => Yii::t('app', 'LABEL_CHARACTER'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
@@ -280,6 +284,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         $character->character_sheet_id = $characterSheet->character_sheet_id;
         $character->tagline = '?';
         $character->visibility = Visibility::VISIBILITY_GM;
+        $character->importance = Importance::IMPORTANCE_MEDIUM;
 
         if ($character->save()) {
             $character->refresh();
@@ -341,6 +346,18 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     static function throwExceptionAboutView()
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
+    }
+
+    public function getImportance():string
+    {
+        $importance = Importance::create($this->importance);
+        return $importance->getName();
+    }
+
+    public function getImportanceLowercase():string
+    {
+        $importance = Importance::create($this->importance);
+        return $importance->getNameLowercase();
     }
 
     public function getVisibility():string

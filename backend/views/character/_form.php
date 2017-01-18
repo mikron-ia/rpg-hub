@@ -1,6 +1,7 @@
 <?php
 
 use common\models\CharacterSheetQuery;
+use common\models\core\Importance;
 use common\models\core\Visibility;
 use common\models\EpicQuery;
 use common\models\Character;
@@ -29,11 +30,12 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'tagline')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-6">
-        <?= $form->field($model, 'visibility')->dropDownList(
-            Visibility::visibilityNames(),
-            ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_VISIBILITY') . ' --- ']
-        ) ?>
+    <div class="col-md-3">
+        <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames()) ?>
+    </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'importance')->dropDownList(Importance::importanceNames()) ?>
     </div>
 
     <div class="col-md-6">

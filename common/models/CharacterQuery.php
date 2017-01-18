@@ -60,6 +60,7 @@ final class CharacterQuery extends Character
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['importance' => SORT_ASC]],
             'pagination' => ['pageSize' => $this->pageCount],
         ]);
 

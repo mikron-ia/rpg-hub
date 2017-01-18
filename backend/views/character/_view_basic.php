@@ -40,6 +40,10 @@ use yii\widgets\DetailView;
                     'attribute' => 'visibility',
                     'value' => $model->getVisibilityName(),
                 ],
+                [
+                    'attribute' => 'importance',
+                    'value' => $model->getImportance(),
+                ],
             ],
         ]) ?>
 

@@ -10,11 +10,11 @@ use Yii;
  */
 final class Importance
 {
-    const IMPORTANCE_NONE = 'none';
-    const IMPORTANCE_LOW = 'low';
-    const IMPORTANCE_MEDIUM = 'medium';
-    const IMPORTANCE_HIGH = 'high';
-    const IMPORTANCE_EXTREME = 'extreme';
+    const IMPORTANCE_NONE = '4-none';
+    const IMPORTANCE_LOW = '3-low';
+    const IMPORTANCE_MEDIUM = '2-medium';
+    const IMPORTANCE_HIGH = '1-high';
+    const IMPORTANCE_EXTREME = '0-extreme';
 
     public $importance;
 
@@ -26,10 +26,10 @@ final class Importance
     {
         $names = [
             self::IMPORTANCE_NONE => Yii::t('app', 'IMPORTANCE_NONE'),
-            self::IMPORTANCE_LOW => Yii::t('app', 'IMPORTANCE_GM'),
-            self::IMPORTANCE_MEDIUM => Yii::t('app', 'IMPORTANCE_DESIGNATED'),
-            self::IMPORTANCE_HIGH => Yii::t('app', 'IMPORTANCE_LOGGED'),
-            self::IMPORTANCE_EXTREME => Yii::t('app', 'IMPORTANCE_FULL'),
+            self::IMPORTANCE_LOW => Yii::t('app', 'IMPORTANCE_LOW'),
+            self::IMPORTANCE_MEDIUM => Yii::t('app', 'IMPORTANCE_MEDIUM'),
+            self::IMPORTANCE_HIGH => Yii::t('app', 'IMPORTANCE_HIGH'),
+            self::IMPORTANCE_EXTREME => Yii::t('app', 'IMPORTANCE_EXTREME'),
         ];
 
         $allowed = self::allowedImportance();
@@ -51,10 +51,10 @@ final class Importance
     {
         return [
             self::IMPORTANCE_NONE => Yii::t('app', 'IMPORTANCE_NONE_LOWERCASE'),
-            self::IMPORTANCE_LOW => Yii::t('app', 'IMPORTANCE_GM_LOWERCASE'),
-            self::IMPORTANCE_MEDIUM => Yii::t('app', 'IMPORTANCE_DESIGNATED_LOWERCASE'),
-            self::IMPORTANCE_HIGH => Yii::t('app', 'IMPORTANCE_LOGGED_LOWERCASE'),
-            self::IMPORTANCE_EXTREME => Yii::t('app', 'IMPORTANCE_FULL_LOWERCASE'),
+            self::IMPORTANCE_LOW => Yii::t('app', 'IMPORTANCE_LOW_LOWERCASE'),
+            self::IMPORTANCE_MEDIUM => Yii::t('app', 'IMPORTANCE_MEDIUM_LOWERCASE'),
+            self::IMPORTANCE_HIGH => Yii::t('app', 'IMPORTANCE_HIGH_LOWERCASE'),
+            self::IMPORTANCE_EXTREME => Yii::t('app', 'IMPORTANCE_EXTREME_LOWERCASE'),
         ];
     }
 
