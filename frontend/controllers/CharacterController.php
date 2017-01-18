@@ -45,6 +45,10 @@ final class CharacterController extends Controller
      */
     public function actionIndex()
     {
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection');
+        }
+
         if (!Character::canUserIndexThem()) {
             Character::throwExceptionAboutIndex();
         }
@@ -67,7 +71,7 @@ final class CharacterController extends Controller
     public function actionView($id)
     {
         if (empty(Yii::$app->params['activeEpic'])) {
-            throw new HttpException(412, strip_tags(Yii::t('app', 'ERROR_NO_EPIC_ACTIVE')));
+            return $this->render('../epic-selection');
         }
 
         $model = $this->findModel($id);

@@ -51,6 +51,10 @@ final class RecapController extends Controller
      */
     public function actionIndex()
     {
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection');
+        }
+
         if (!Recap::canUserIndexThem()) {
             Recap::throwExceptionAboutIndex();
         }
@@ -72,6 +76,10 @@ final class RecapController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
+        }
 
         if (!$model->canUserViewYou()) {
             Recap::throwExceptionAboutView();

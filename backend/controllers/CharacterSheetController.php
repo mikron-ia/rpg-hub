@@ -45,6 +45,10 @@ final class CharacterSheetController extends Controller
      */
     public function actionIndex()
     {
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection');
+        }
+
         $searchModel = new CharacterSheetQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -62,6 +66,10 @@ final class CharacterSheetController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
+        }
 
         $model->canUserViewYou();
 

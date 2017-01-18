@@ -74,7 +74,7 @@ final class SiteController extends Controller
     public function actionIndex()
     {
         if (!isset(Yii::$app->params['activeEpic'])) {
-            return $this->render('epic-selection');
+            return $this->render('../epic-selection');
         }
 
         /** @var Epic $epic */

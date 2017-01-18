@@ -17,6 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'BACKEND_FRONT_PAGE_MAIN_EPIC_LIST' => 'Pozostałe kampanie',
+    'BACKEND_FRONT_PAGE_MAIN_EPIC_SUGGESTED' => 'Kampania sugerowana na podstawie aktywnego obiektu',
     'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC' => 'Witamy w centrum kontroli kampanii. Wybierz kampanię do pracy z menu poniżej lub z menu górnego.',
     'BACKEND_FRONT_PAGE_TITLE' => 'Centrum kontroli',
     'BREADCRUMBS_HOME' => 'Hub',
@@ -113,7 +115,6 @@ return [
     'DESCRIPTION_TEXT_PUBLIC' => 'Tekst jawny',
     'DESCRIPTION_TITLE' => 'Tytuł',
     'DESCRIPTION_TITLE_CREATE' => 'Dodaj opis',
-    'DESCRIPTION_TITLE_PRIVATE' => 'Notatki wewnętrzne',
     'DESCRIPTION_TITLE_UPDATE' => 'Modyfikacja',
     'DESCRIPTION_TYPE_APPEARANCE' => 'Wygląd',
     'DESCRIPTION_TYPE_ASPECTS' => 'Aspekty',

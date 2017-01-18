@@ -17,6 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'BACKEND_FRONT_PAGE_MAIN_EPIC_LIST' => 'Other epics',
+    'BACKEND_FRONT_PAGE_MAIN_EPIC_SUGGESTED' => 'Epic suggested according to accessed object',
     'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC' => 'Welcome to the epic data hub. Please choose an epic to work with from menu below or from top menu.',
     'BACKEND_FRONT_PAGE_TITLE' => 'RPG Hub Control',
     'BREADCRUMBS_HOME' => 'Hub',
@@ -113,7 +115,6 @@ return [
     'DESCRIPTION_TEXT_PUBLIC' => 'Open text',
     'DESCRIPTION_TITLE' => 'Title',
     'DESCRIPTION_TITLE_CREATE' => 'Add description',
-    'DESCRIPTION_TITLE_PRIVATE' => 'Private text',
     'DESCRIPTION_TITLE_UPDATE' => 'Update',
     'DESCRIPTION_TYPE_APPEARANCE' => 'Appearance',
     'DESCRIPTION_TYPE_ASPECTS' => 'Aspects',

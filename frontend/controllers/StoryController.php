@@ -36,6 +36,10 @@ final class StoryController extends Controller
      */
     public function actionIndex()
     {
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection');
+        }
+
         if (!Story::canUserIndexThem()) {
             Story::throwExceptionAboutIndex();
         }
@@ -56,6 +60,10 @@ final class StoryController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
+        }
 
         if (!$model->canUserViewYou()) {
             Story::throwExceptionAboutView();

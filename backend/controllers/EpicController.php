@@ -99,6 +99,10 @@ final class EpicController extends Controller
     {
         $model = $this->findModel($id);
 
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection', ['objectEpic' => $model]);
+        }
+
         $model->canUserViewYou();
 
         if (empty(Yii::$app->params['activeEpic'])) {
