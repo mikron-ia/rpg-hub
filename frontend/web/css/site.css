@@ -266,38 +266,40 @@ a:focus {
 
 @media (min-width: 384px) {
     .index-box {
-        width: 47%;
+        width: 48%;
     }
 }
 
 @media (min-width: 768px) {
     .index-box {
-        width: 47%;
+        width: 48%;
     }
 }
 
 @media (min-width: 960px) {
     .index-box {
-        width: 31%;
+        width: 32%;
+        margin: 0.5% 0.5%;
     }
 }
 
 @media (min-width: 1280px) {
     .index-box {
-        width: 23.5%;
+        width: 24%;
     }
 }
 
 @media (min-width: 1600px) {
     .index-box {
         width: 15%;
-        margin: 0.5% 0.5%;
+        margin: 0.75% 0.75%;
     }
 }
 
 @media (min-width: 2140px) {
     .index-box {
-        width: 11%;
+        width: 12%;
+        margin: 0.2% 0.2%;
     }
 }
 
