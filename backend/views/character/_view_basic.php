@@ -81,7 +81,7 @@ use yii\widgets\DetailView;
             <?= \yii\helpers\Html::a(
                 Yii::t('app', 'BUTTON_SEE_FRONTEND'),
                 Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
-                    'character/update',
+                    'character/view',
                     'id' => $model->character_id
                 ]),
                 ['class' => 'btn btn-default']
