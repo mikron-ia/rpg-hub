@@ -11,6 +11,7 @@ use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 use yii\helpers\Markdown;
 use yii2tech\ar\position\PositionBehavior;
 
@@ -269,7 +270,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      */
     public function getPublicFormatted()
     {
-        return Markdown::process($this->public_text, 'gfm');
+        return Markdown::process(Html::encode($this->public_text), 'gfm');
     }
 
     /**
@@ -277,7 +278,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      */
     public function getPrivateFormatted()
     {
-        return Markdown::process($this->private_text, 'gfm');
+        return Markdown::process(Html::encode($this->private_text), 'gfm');
     }
 
     /**
