@@ -12,6 +12,7 @@ use common\models\core\Importance;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -30,6 +31,7 @@ use yii\db\ActiveRecord;
  * @property string $description_pack_id
  * @property string $external_data_pack_id
  * @property string $seen_pack_id
+ * @property string $updated_at
  *
  * @property Epic $epic
  * @property CharacterSheet $character
@@ -109,6 +111,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'data' => Yii::t('app', 'CHARACTER_DATA'),
             'visibility' => Yii::t('app', 'CHARACTER_VISIBILITY'),
             'importance' => Yii::t('app', 'CHARACTER_IMPORTANCE'),
+            'updated_at' => Yii::t('app', 'CHARACTER_UPDATED_AT'),
             'character_sheet_id' => Yii::t('app', 'LABEL_CHARACTER'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
@@ -164,7 +167,11 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
                 'class' => PerformedActionBehavior::className(),
                 'idName' => 'character_id',
                 'className' => 'Character',
-            ]
+            ],
+            'timestampBehavior' => [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => null,
+            ],
         ];
     }
 

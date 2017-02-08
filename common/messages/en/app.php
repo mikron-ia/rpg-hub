@@ -96,6 +96,7 @@ return [
     'CHARACTER_SHEET_TITLE_UPDATE' => 'Edit character sheet',
     'CHARACTER_SIGHTINGS' => 'Character sightings',
     'CHARACTER_TAGLINE' => 'Character tagline',
+    'CHARACTER_UPDATED_AT' => 'Changed',
     'CHARACTER_VISIBILITY' => 'Visibility',
     'CONFIGURATION_TITLE_INDEX' => 'Auxiliary data',
     'CONFIRMATION_CREATE_CHARACTER' => 'Please confirm character creation based on this character sheet.',

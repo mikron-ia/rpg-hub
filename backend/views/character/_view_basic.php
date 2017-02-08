@@ -44,6 +44,10 @@ use yii\widgets\DetailView;
                     'attribute' => 'importance',
                     'value' => $model->getImportance(),
                 ],
+                [
+                    'attribute' => 'updated_at',
+                    'format' => 'datetime',
+                ],
             ],
         ]) ?>
 

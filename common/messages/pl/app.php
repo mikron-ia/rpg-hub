@@ -96,6 +96,7 @@ return [
     'CHARACTER_SHEET_TITLE_UPDATE' => 'Zmodyfikuj kartę postaci',
     'CHARACTER_SIGHTINGS' => 'Dane o widoczności',
     'CHARACTER_TAGLINE' => 'Notka o postaci',
+    'CHARACTER_UPDATED_AT' => 'Zmieniano',
     'CHARACTER_VISIBILITY' => 'Widoczność',
     'CONFIGURATION_TITLE_INDEX' => 'Akcje pomocznicze',
     'CONFIRMATION_CREATE_CHARACTER' => 'Potwierdź tworzenie postaci na podstawie karty postaci.',

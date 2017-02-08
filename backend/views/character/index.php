@@ -31,18 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'filterPosition' => null,
+            'rowOptions' => function (Character $model, $key, $index, $grid) {
+                return [
+                    'data-toggle' => 'tooltip',
+                    'title' => StringHelper::truncateWords($model->tagline, 5, ' (...)', false),
+                ];
+            },
             'columns' => [
                 [
                     'attribute' => 'name',
                     'value' => function (Character $model) {
                         return StringHelper::truncateWords($model->name, 4, ' (...)', false);
-                    }
-                ],
-                [
-                    'attribute' => 'tagline',
-                    'value' => function (Character $model) {
-                        return StringHelper::truncateWords($model->tagline, 5, ' (...)', false);
-                    }
+                    },
                 ],
                 [
                     'attribute' => 'visibility',
@@ -51,11 +51,21 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 ],
                 [
+                    'attribute' => 'importance',
+                    'value' => function (Character $model) {
+                        return $model->getImportance();
+                    }
+                ],
+                [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view}',
                 ],
             ],
         ]); ?>
+
+        <?php $this->registerJs("$(document).ready(function(){
+                $('[data-toggle=\"tooltip\"]').tooltip();
+            });"); ?>
     </div>
 
     <div class="col-md-3" id="filter">

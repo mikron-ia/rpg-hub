@@ -86,4 +86,32 @@ final class CharacterQuery extends Character
 
         return $dataProvider;
     }
+
+    /**
+     * Creates data provider instance with search query applied
+     * @param array $params
+     * @return ActiveDataProvider
+     */
+    public function searchForFront($params):ActiveDataProvider
+    {
+        $search = $this->search($params);
+
+        $search->sort = ['defaultOrder' => ['importance' => SORT_ASC]];
+
+        return $search;
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     * @param array $params
+     * @return ActiveDataProvider
+     */
+    public function searchForBack($params):ActiveDataProvider
+    {
+        $search = $this->search($params);
+
+        $search->sort = ['defaultOrder' => ['updated_at' => SORT_DESC]];
+
+        return $search;
+    }
 }
