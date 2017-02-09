@@ -34,14 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'rowOptions' => function (Character $model, $key, $index, $grid) {
                 return [
                     'data-toggle' => 'tooltip',
-                    'title' => StringHelper::truncateWords($model->tagline, 5, ' (...)', false),
+                    'title' => $model->tagline,
                 ];
             },
             'columns' => [
                 [
                     'attribute' => 'name',
                     'value' => function (Character $model) {
-                        return StringHelper::truncateWords($model->name, 4, ' (...)', false);
+                        return StringHelper::truncateWords($model->name, 7, ' (...)', false);
                     },
                 ],
                 [
