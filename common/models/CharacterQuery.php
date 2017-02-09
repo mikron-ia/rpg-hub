@@ -33,7 +33,6 @@ final class CharacterQuery extends Character
 
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -45,8 +44,6 @@ final class CharacterQuery extends Character
     public function search($params):ActiveDataProvider
     {
         $query = Character::find()->joinWith('seenPack', true, 'LEFT JOIN');
-
-        // add conditions that should always apply here
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
@@ -71,28 +68,20 @@ final class CharacterQuery extends Character
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'character_id' => $this->character_id,
-            'epic_id' => $this->epic_id,
-            'character_sheet_id' => $this->character_sheet_id,
-        ]);
-
-        $query->andFilterWhere(['like', 'key', $this->key])
-            ->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'tagline', $this->tagline])
-            ->andFilterWhere(['like', 'data', $this->data])
             ->andFilterWhere(['in', 'visibility', $this->visibility]);
 
         return $dataProvider;
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates data provider instance with search query applied and applies default order according to importance
+     * This list is more suitable for front section
      * @param array $params
      * @return ActiveDataProvider
      */
-    public function searchForFront($params):ActiveDataProvider
+    public function searchForUser($params):ActiveDataProvider
     {
         $search = $this->search($params);
 
@@ -102,11 +91,12 @@ final class CharacterQuery extends Character
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates data provider instance with search query applied and applies default order according to time of the last modification
+     * This list is more suitable for operator section
      * @param array $params
      * @return ActiveDataProvider
      */
-    public function searchForBack($params):ActiveDataProvider
+    public function searchForOperator($params):ActiveDataProvider
     {
         $search = $this->search($params);
 

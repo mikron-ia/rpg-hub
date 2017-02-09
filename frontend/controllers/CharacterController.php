@@ -54,7 +54,7 @@ final class CharacterController extends Controller
         }
 
         $searchModel = new CharacterQuery(24);
-        $dataProvider = $searchModel->searchForFront(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchForUser(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
