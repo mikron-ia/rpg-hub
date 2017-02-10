@@ -5,7 +5,6 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\core\HasSightings;
-use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\data\ActiveDataProvider;

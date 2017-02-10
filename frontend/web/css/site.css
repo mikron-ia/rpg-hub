@@ -324,24 +324,24 @@ a:focus {
 }
 
 .seen-tag-new {
-    color: white;
     background-color: yellowgreen;
+    color: white;
 }
 
 .seen-tag-updated {
-    color: white;
     background-color: goldenrod;
+    color: white;
 }
 
 .seen-tag-seen {
-    color: white;
     background-color: lightgrey;
+    color: white;
     display: none;
 }
 
 .seen-tag-box {
     font-family: "Courier New", Courier, monospace;
-    font-size: 1.25em;
+    font-size: 1.75rem;
     font-weight: bold;
     border-radius: 15px;
     padding: 5px;
@@ -352,10 +352,10 @@ a:focus {
 }
 
 .seen-tag-header {
-    font-family: "Courier New", Courier, monospace;
-    font-size: 0.625em;
-    font-weight: bold;
     border-radius: 15px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 2rem;
+    font-weight: bold;
     padding: 5px 20px;
     vertical-align: middle;
 }
@@ -363,6 +363,6 @@ a:focus {
 .recap-box-time {
     text-align: right;
     font-family: "Courier New", Courier, monospace;
-    font-size: 1.2em;
+    font-size: 2rem;
     font-weight: bold;
 }

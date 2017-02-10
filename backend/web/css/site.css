@@ -137,20 +137,20 @@ p {
     clear: both;
 }
 
-.buttoned-header > h1, .buttoned-header > h2, .buttoned-header > h3  {
+.buttoned-header > h1, .buttoned-header > h2, .buttoned-header > h3 {
     float: left;
 }
 
-.buttoned-header > a, .buttoned-header > div, .buttoned-header > p  {
+.buttoned-header > a, .buttoned-header > div, .buttoned-header > p {
     float: right;
     margin: 20px 0 10px 10px;
 }
 
 .private-notes {
     background-color: #eeeeee;
-    padding: 10px 15px 0 15px;
     border: 2px solid #eeeeee;
     border-radius: 15px;
+    padding: 10px 15px 0 15px;
 }
 
 .subtitle {
@@ -162,8 +162,8 @@ p {
     border-radius: 5px;
     display: inline-block;
     font-weight: bold;
-    padding: 5px 10px;
     margin: 0 5px 5px 0;
+    padding: 5px 10px;
 }
 
 .btn-group {
