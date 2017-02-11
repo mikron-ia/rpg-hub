@@ -95,6 +95,15 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if (!$insert) {
+            $this->createHistoryRecord();
+        }
+
+        return parent::beforeSave($insert);
+    }
+
     public function afterSave($insert, $changedAttributes)
     {
         if (!empty($changedAttributes)) {
@@ -314,6 +323,12 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      */
     public function createHistoryRecord()
     {
-        return DescriptionHistory::createFromDescription($this);
+        $description = Description::findOne(['description_id' => $this->description_id]);
+
+        if (($description->public_text === $this->public_text) && ($description->private_text === $this->private_text)) {
+            return null;
+        }
+
+        return DescriptionHistory::createFromDescription($description);
     }
 }

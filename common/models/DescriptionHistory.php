@@ -15,6 +15,8 @@ use yii\db\ActiveRecord;
  * @property string $public_text
  * @property string $private_text
  * @property string $visibility
+ *
+ * @property Description $description
  */
 class DescriptionHistory extends ActiveRecord implements HasVisibility
 {
@@ -30,6 +32,13 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
             [['public_text'], 'required'],
             [['public_text', 'private_text'], 'string'],
             [['visibility'], 'string', 'max' => 20],
+            [
+                ['description_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Description::className(),
+                'targetAttribute' => ['description_id' => 'description_id']
+            ],
         ];
     }
 
@@ -75,5 +84,13 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         } else {
             return null;
         }
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDescription()
+    {
+        return $this->hasOne(Description::className(), ['description_id' => 'description_id']);
     }
 }

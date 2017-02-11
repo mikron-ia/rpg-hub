@@ -19,6 +19,14 @@ class m170205_123244_v0_8_0 extends Migration
             'private_text' => $this->text(),
             'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM),
         ], $tableOptions);
+
+        $this->addForeignKey(
+            'description_history_description',
+            'description_history',
+            'description_id',
+            'description',
+            'description_id'
+        );
     }
 
     public function down()
