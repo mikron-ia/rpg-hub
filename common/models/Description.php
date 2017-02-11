@@ -308,4 +308,12 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     {
         return ($this->visibility === Visibility::VISIBILITY_FULL);
     }
+
+    /**
+     * @return DescriptionHistory|null
+     */
+    public function createHistoryRecord()
+    {
+        return DescriptionHistory::createFromDescription($this);
+    }
 }
