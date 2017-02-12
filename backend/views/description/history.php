@@ -17,27 +17,27 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'LABEL_UPDATE');
         'dataProvider' => new \yii\data\ActiveDataProvider([
             'query' => $historyRecords,
             'sort' => false,
+            'pagination' => false,
         ]),
         'filterPosition' => null,
+        'rowOptions' => function (DescriptionHistory $model, $key, $index, $grid) {
+            return [
+                'title' => Yii::$app->formatter->asDatetime($model->created_at),
+                'data-toggle' => 'popover',
+                'data-content' => $model->getPublicFormatted() . '<hr>' . $model->getPrivateFormatted(),
+                'data-html' => 'true',
+                'data-placement' => 'auto bottom',
+                'data-trigger' => 'click hover',
+            ];
+        },
+        'summary' => '',
         'columns' => [
             'created_at:datetime',
             [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{view}',
-                'buttons' => [
-                    'view' => function ($url, DescriptionHistory $model, $key) {
-                        return Html::a(
-                            '<span class="glyphicon glyphicon-eye-open"></span>',
-                            '#',
-                            [
-                                'title' => Yii::$app->formatter->asDatetime($model->created_at),
-                                'data-toggle' => 'popover',
-                                'data-content' => $model->getPublicFormatted() . '<hr>' . $model->getPrivateFormatted(),
-                                'data-html' => 'true',
-                            ]
-                        );
-                    },
-                ],
+                'attribute' => 'visibility',
+                'value' => function (DescriptionHistory $model) {
+                    return $model->getVisibility();
+                }
             ],
         ],
     ]); ?>
