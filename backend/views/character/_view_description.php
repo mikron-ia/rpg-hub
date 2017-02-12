@@ -13,6 +13,16 @@ use yii\helpers\Html;
         <h3><?= $model->position; ?>. <?= $model->getTypeName(); ?></h3>
 
         <?= Html::a(
+            Yii::t('app', 'BUTTON_SHOW_HISTORY'),
+            '#',
+            [
+                'class' => 'btn btn-default description-history-link',
+                'data-toggle' => 'modal',
+                'data-target' => '#description-history-modal',
+                'data-id' => $model->description_id,
+            ]
+        ); ?>
+        <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
             '#',
             [

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\DescriptionHistory;
 use common\models\DescriptionPack;
 use Yii;
 use common\models\Description;
@@ -23,7 +24,7 @@ final class DescriptionController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'update', 'view', 'move-up', 'move-down'],
+                        'actions' => ['create', 'delete', 'update', 'view', 'move-up', 'move-down', 'history'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -106,6 +107,30 @@ final class DescriptionController extends Controller
             } else {
                 return $this->render('update', ['model' => $model]);
             }
+        }
+    }
+
+    /**
+     * @param string $id
+     * @return mixed
+     */
+    public function actionHistory($id)
+    {
+        $model = $this->findModel($id);
+
+        if (!$model->descriptionPack->canUserControlYou()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
+            return $this->returnToReferrer(['site/index']);
+        }
+
+        $historyRecords = DescriptionHistory::find()
+            ->where(['description_id' => $model->description_id])
+            ->orderBy(['created_at' => SORT_DESC]);
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('history', ['model' => $model, 'historyRecords' => $historyRecords]);
+        } else {
+            return $this->render('history', ['model' => $model, 'historyRecords' => $historyRecords]);
         }
     }
 

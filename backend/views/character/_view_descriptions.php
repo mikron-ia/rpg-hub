@@ -105,4 +105,27 @@ use yii\helpers\Html;
 });"
     ); ?>
 
+    <?php Modal::begin([
+        'id' => 'description-history-modal',
+        'header' => '<h2 class="modal-title">' . Yii::t('app', 'DESCRIPTION_TITLE_HISTORY') . '</h2>',
+        'size' => Modal::SIZE_LARGE,
+    ]); ?>
+
+    <?php Modal::end(); ?>
+
+    <?php $this->registerJs(
+        "$('.description-history-link').click(function() {
+    $.get(
+        '" . Yii::$app->urlManager->createUrl(['description/history']) . "',
+        {
+            id: $(this).data('id')
+        },
+        function (data) {
+            $('.modal-body').html(data);
+            $('#description-history-modal').modal();
+        }
+    );
+});"
+    ); ?>
+
 <?php endif; ?>

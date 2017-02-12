@@ -7,6 +7,8 @@ use common\models\core\Visibility;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
+use yii\helpers\Markdown;
 
 /**
  * This is the model class for table "description_history".
@@ -105,5 +107,21 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
     public function getDescription()
     {
         return $this->hasOne(Description::className(), ['description_id' => 'description_id']);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPublicFormatted()
+    {
+        return Markdown::process(Html::encode($this->public_text), 'gfm');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPrivateFormatted()
+    {
+        return Markdown::process(Html::encode($this->private_text), 'gfm');
     }
 }
