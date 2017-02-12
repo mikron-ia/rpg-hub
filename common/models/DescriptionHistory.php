@@ -5,6 +5,7 @@ namespace common\models;
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
@@ -12,6 +13,7 @@ use yii\db\ActiveRecord;
  *
  * @property string $description_history_id
  * @property string $description_id
+ * @property string $created_at
  * @property string $public_text
  * @property string $private_text
  * @property string $visibility
@@ -45,11 +47,22 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
     public function attributeLabels()
     {
         return [
-            'description_history_id' => Yii::t('app', 'DESCRIPTION_HISTORY__ID'),
+            'description_history_id' => Yii::t('app', 'DESCRIPTION_HISTORY_ID'),
             'description_id' => Yii::t('app', 'DESCRIPTION_HISTORY_DESCRIPTION_ID'),
+            'created_at' => Yii::t('app', 'DESCRIPTION_HISTORY_CREATED'),
             'public_text' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PUBLIC'),
             'private_text' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PRIVATE'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'timestampBehavior' => [
+                'class' => TimestampBehavior::className(),
+                'updatedAtAttribute' => null,
+            ],
         ];
     }
 
