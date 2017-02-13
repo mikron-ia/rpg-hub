@@ -173,3 +173,10 @@ p {
 .glyphicon {
     margin: 0 8px;
 }
+
+.recap-box-time {
+    text-align: right;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 2rem;
+    font-weight: bold;
+}

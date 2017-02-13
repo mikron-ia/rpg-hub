@@ -4,6 +4,8 @@ namespace backend\controllers;
 use common\models\Epic;
 use common\models\EpicQuery;
 use common\models\LoginForm;
+use common\models\RecapQuery;
+use common\models\StoryQuery;
 use common\models\user\PasswordChange;
 use common\models\user\UserAcceptForm;
 use common\models\user\UserSettingsForm;
@@ -74,16 +76,42 @@ final class SiteController extends Controller
     public function actionIndex()
     {
         if (!isset(Yii::$app->params['activeEpic'])) {
+        }
+        if (!isset(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection');
+        } else {
+            /** @var Epic $epic */
+            $epic = Yii::$app->params['activeEpic'];
+
+            $epic->recordSighting();
+
+            /* Get Recap */
+            $recapQuery = new RecapQuery();
+            $recap = $recapQuery->mostRecent();
+
+            if ($recap) {
+                $recap->recordSighting();
+            }
+
+            /* Get Stories */
+            $searchModel = new StoryQuery(4);
+            $stories = $searchModel->search(Yii::$app->request->queryParams);
         }
 
-        /** @var Epic $epic */
-        $epic = Yii::$app->params['activeEpic'];
+        /* Get Sessions */
+        $sessions = [];
+
+        /* Get News */
+        $news = [];
 
         $epic->recordSighting();
 
         return $this->render('index', [
             'epic' => $epic,
+            'sessions' => $sessions,
+            'stories' => $stories,
+            'news' => $news,
+            'recap' => $recap,
         ]);
     }
 
