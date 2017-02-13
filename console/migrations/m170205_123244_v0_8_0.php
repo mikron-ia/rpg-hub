@@ -12,6 +12,7 @@ class m170205_123244_v0_8_0 extends Migration
 
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
+        /* Description history mechanism */
         $this->createTable('{{%description_history}}', [
             'description_history_id' => $this->primaryKey()->unsigned(),
             'description_id' => $this->integer(11)->unsigned(),

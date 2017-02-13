@@ -174,12 +174,12 @@ final class ParameterController extends Controller
     }
 
     /**
+     * Provides return to referrer page; if referrer is empty, default value is used
      * @param string[] $default
      * @return Response
      */
     protected function returnToReferrer(array $default):Response
     {
-
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
