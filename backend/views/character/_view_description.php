@@ -10,7 +10,9 @@ use yii\helpers\Html;
 <div class="col-md-12">
 
     <div class="buttoned-header">
+
         <h3><?= $model->position; ?>. <?= $model->getTypeName(); ?></h3>
+
         <div>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_MOVE_DOWN'),
@@ -66,21 +68,26 @@ use yii\helpers\Html;
                 ]
             ); ?>
         </div>
+
     </div>
 
     <div>
+
         <span class="tag-box">
             <?= Yii::t('app', 'DESCRIPTION_UPDATED {when} {who}', [
                 'when' => Yii::$app->formatter->asDatetime($model->updated_at),
                 'who' => $model->updatedBy->username,
             ]); ?>
         </span>
+
         <span class="tag-box">
             <?= Yii::t('app', 'LABEL_VISIBLE') . ' ' . $model->getVisibilityLowercase(); ?>
         </span>
+
         <span class="tag-box">
             <?= $model->getLanguage(); ?>
         </span>
+
     </div>
 
     <div class="col-md-6">

@@ -6,7 +6,7 @@
 
 <div class="col-md-6">
 
-    <h4><?= $model->getTypeName(); ?></h4>
+    <h3><?= $model->getTypeName(); ?></h3>
 
     <div>
         <?= $model->getPublicFormatted(); ?>
