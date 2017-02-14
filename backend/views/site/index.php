@@ -55,46 +55,28 @@ $this->title = 'RPG hub - control';
 
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-8">
 
                 <h2><?= Yii::t('app', 'EPIC_CARD_ANNOUNCEMENTS'); ?></h2>
                 <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></i></p>
 
                 <h2><?= Yii::t('app', 'EPIC_CARD_RECENT_EVENTS'); ?></h2>
-                <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></i></p>
+                <div>
+                    <?php if ($recap) {
+                        if ($recap->time) {
+                            echo '<p class="recap-box-time">' . $recap->time . '</p>';
+                        }
+                        echo $recap->getDataFormatted();
+                    } else {
+                        echo '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_RECAP_NOT_AVAILABLE') . '</p>';
+                    } ?>
+                </div>
 
-            </div>
-
-            <div class="col-md-4">
-
-                <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_IC_TITLE_TEXT') ?>">
-                    <?= Yii::t('app', 'FRONTPAGE_IC') ?>
+                <h2 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
+                    <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
                 </h2>
 
                 <div>
-                    <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
-                        <?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?>
-                    </h3>
-                    <div>
-                        <?php if ($recap) {
-                            if ($recap->time) {
-                                echo '<p class="recap-box-time">' . $recap->time . '</p>';
-                            }
-                            echo $recap->getDataFormatted();
-                        } else {
-                            echo '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_RECAP_NOT_AVAILABLE') . '</p>';
-                        } ?>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="buttoned-header">
-                        <h3 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
-                            <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
-                        </h3>
-                        <?= Html::a(Yii::t('app', 'BUTTON_STORY_VIEW_ALL'), ['story/index'],
-                            ['class' => 'btn btn-primary']); ?>
-                    </div>
                     <?= ListView::widget([
                         'dataProvider' => $stories,
                         'layout' => '{items}',
