@@ -46,6 +46,11 @@ final class SiteController extends Controller
                         'actions' => ['accept'],
                         'allow' => true,
                     ],
+                    [
+                        'actions' => ['request-password-reset', 'reset-password'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
                 ],
             ],
             'verbs' => [

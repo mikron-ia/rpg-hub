@@ -297,6 +297,8 @@ return [
     'PASSWORD_CHANGE_FLASH_FAILURE' => 'Zmiana hasła nieudana',
     'PASSWORD_CHANGE_FLASH_SUCCESS' => 'Zmiana hasła dokonana',
     'PASSWORD_CHANGE_TITLE' => 'Zmiana hasła',
+    'PASSWORD_RESET_NO_USER' => 'Brak użytkownika o takim e-mailu.',
+    'PASSWORD_RESET_SUBJECT {name}' => 'Reset hasła dla uzytkownika {name}',
     'PERFORMED_ACTIONS_TITLE_INDEX' => 'Wykonane akcje',
     'PERFORMED_ACTION_CLASS' => 'Klasa obiektu',
     'PERFORMED_ACTION_CREATE' => 'stworzył[a]',

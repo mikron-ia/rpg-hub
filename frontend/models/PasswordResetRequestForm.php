@@ -12,9 +12,6 @@ final class PasswordResetRequestForm extends Model
 {
     public $email;
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -26,14 +23,13 @@ final class PasswordResetRequestForm extends Model
                 'exist',
                 'targetClass' => '\common\models\User',
                 'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => 'There is no user with such email.'
+                'message' => Yii::t('app', 'PASSWORD_RESET_NO_USER'),
             ],
         ];
     }
 
     /**
      * Sends an email with a link, for resetting the password.
-     *
      * @return boolean whether the email was send
      */
     public function sendEmail()
@@ -62,9 +58,9 @@ final class PasswordResetRequestForm extends Model
                 ['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'],
                 ['user' => $user]
             )
-            ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+            ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->name])
             ->setTo($this->email)
-            ->setSubject('Password reset for ' . \Yii::$app->name)
+            ->setSubject(Yii::t('app', 'PASSWORD_RESET_SUBJECT {name}', ['name' => \Yii::$app->name]))
             ->send();
     }
 }

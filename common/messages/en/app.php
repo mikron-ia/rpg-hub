@@ -297,6 +297,8 @@ return [
     'PASSWORD_CHANGE_FLASH_FAILURE' => 'Password change has failed.',
     'PASSWORD_CHANGE_FLASH_SUCCESS' => 'Password change was successful.',
     'PASSWORD_CHANGE_TITLE' => 'Password change',
+    'PASSWORD_RESET_NO_USER' => 'There is no user with such email.',
+    'PASSWORD_RESET_SUBJECT {name}' => 'Password reset for {name}',
     'PERFORMED_ACTIONS_TITLE_INDEX' => 'Performed actions',
     'PERFORMED_ACTION_CLASS' => 'Object class',
     'PERFORMED_ACTION_CREATE' => 'created',
