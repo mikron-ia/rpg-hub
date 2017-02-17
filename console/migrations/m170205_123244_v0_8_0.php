@@ -29,6 +29,15 @@ class m170205_123244_v0_8_0 extends Migration
             'description',
             'description_id'
         );
+
+        /* Scenarios */
+        $this->createTable('{{%scenario}}', [
+            'scenario_id' => $this->primaryKey()->unsigned(),
+            'epic_id' => $this->integer(11)->unsigned()->notNull(),
+            'name' => $this->string(120)->notNull(),
+            'tag_line' => $this->string(),
+            'description_pack_id' => $this->integer(11)->unsigned(),
+        ], $tableOptions);
     }
 
     public function down()
@@ -36,5 +45,7 @@ class m170205_123244_v0_8_0 extends Migration
         $this->dropColumn('character', 'updated_at');
 
         $this->dropTable('description_history');
+
+        $this->dropTable('scenario');
     }
 }
