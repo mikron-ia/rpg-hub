@@ -22,11 +22,16 @@ $this->params['breadcrumbs'][] = $this->title;
         ) ?>
     </div>
 
+    <div class="col-md-12">
+        <p><?= Yii::t('app', 'SCENARIOS_EXPLANATION') ?></p>
+    </div>
+
     <div class="col-md-9">
 
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'filterPosition' => null,
             'columns' => [
                 'scenario_id',
                 'epic_id',

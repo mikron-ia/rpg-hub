@@ -32,19 +32,31 @@ class Scenario extends ActiveRecord implements HasDescriptions
             [['epic_id', 'description_pack_id'], 'integer'],
             [['name'], 'string', 'max' => 120],
             [['tag_line'], 'string', 'max' => 255],
-            [['description_pack_id'], 'exist', 'skipOnError' => true, 'targetClass' => DescriptionPack::className(), 'targetAttribute' => ['description_pack_id' => 'description_pack_id']],
-            [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
+            [
+                ['description_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => DescriptionPack::className(),
+                'targetAttribute' => ['description_pack_id' => 'description_pack_id']
+            ],
+            [
+                ['epic_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Epic::className(),
+                'targetAttribute' => ['epic_id' => 'epic_id']
+            ],
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'scenario_id' => Yii::t('app', 'Scenario ID'),
-            'epic_id' => Yii::t('app', 'Epic ID'),
-            'name' => Yii::t('app', 'Name'),
-            'tag_line' => Yii::t('app', 'Tag Line'),
-            'description_pack_id' => Yii::t('app', 'Description Pack ID'),
+            'scenario_id' => Yii::t('app', 'SCENARIO_ID'),
+            'epic_id' => Yii::t('app', 'EPIC_ID'),
+            'name' => Yii::t('app', 'SCENARIO_NAME'),
+            'tag_line' => Yii::t('app', 'SCENARIO_TAGLINE'),
+            'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK_ID'),
         ];
     }
 
