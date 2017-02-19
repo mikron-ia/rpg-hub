@@ -12,28 +12,41 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="scenario-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="buttoned-header">
+        <h1><?= Html::encode($this->title) ?></h1>
+        <div>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_DELETE'),
+                ['delete', 'id' => $model->scenario_id],
+                [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
+                        'method' => 'post',
+                    ],
+                ]
+            ) ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_UPDATE'),
+                ['update', 'id' => $model->scenario_id],
+                ['class' => 'btn btn-primary']
+            ) ?>
+        </div>
+    </div>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->scenario_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->scenario_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
-                'method' => 'post',
+    <div class="col-md-6">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                [
+                    'attribute' => 'epic_id',
+                    'format' => 'raw',
+                    'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
+                ],
+                'name',
+                'tag_line',
             ],
         ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'scenario_id',
-            'epic_id',
-            'name',
-            'tag_line',
-            'description_pack_id',
-        ],
-    ]) ?>
+    </div>
 
 </div>

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\tools\ToolsForEntity;
 use Yii;
 use common\models\Scenario;
 use common\ScenarioQuery;
@@ -15,6 +16,8 @@ use yii\filters\VerbFilter;
  */
 class ScenarioController extends Controller
 {
+    use ToolsForEntity;
+
     public function behaviors()
     {
         return [
@@ -68,6 +71,8 @@ class ScenarioController extends Controller
     public function actionCreate()
     {
         $model = new Scenario();
+
+        $model->setCurrentEpicOnEmpty();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->scenario_id]);

@@ -3,7 +3,9 @@
 namespace common\models;
 
 use common\models\core\HasDescriptions;
+use common\models\tools\ToolsForEntity;
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -20,6 +22,8 @@ use yii\db\ActiveRecord;
  */
 class Scenario extends ActiveRecord implements HasDescriptions
 {
+    use ToolsForEntity;
+
     public static function tableName()
     {
         return 'scenario';
@@ -49,6 +53,17 @@ class Scenario extends ActiveRecord implements HasDescriptions
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if (empty($this->description_pack_id)) {
+            $pack = DescriptionPack::create('Scenario');
+            $this->description_pack_id = $pack->description_pack_id;
+        }
+
+        return parent::beforeSave($insert);
+    }
+
+
     public function attributeLabels()
     {
         return [
@@ -61,17 +76,17 @@ class Scenario extends ActiveRecord implements HasDescriptions
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getDescriptionPack()
+    public function getDescriptionPack():ActiveQuery
     {
         return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getEpic()
+    public function getEpic():ActiveQuery
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
