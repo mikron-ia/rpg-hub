@@ -43,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
                 ],
+                'key',
                 'name',
                 'tag_line',
             ],

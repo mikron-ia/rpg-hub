@@ -12,8 +12,8 @@ use yii\db\ActiveRecord;
  * This is the model class for table "scenario".
  *
  * @property string $scenario_id
- * @property string $key
  * @property string $epic_id
+ * @property string $key
  * @property string $name
  * @property string $tag_line
  * @property string $description_pack_id
@@ -57,7 +57,7 @@ class Scenario extends ActiveRecord implements HasDescriptions
     public function beforeSave($insert)
     {
         if ($insert) {
-            $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+            $this->key = $this->generateKey('scenario');
         }
 
         if (empty($this->description_pack_id)) {
@@ -73,6 +73,7 @@ class Scenario extends ActiveRecord implements HasDescriptions
     {
         return [
             'scenario_id' => Yii::t('app', 'SCENARIO_ID'),
+            'key' => Yii::t('app', 'SCENARIO_KEY'),
             'epic_id' => Yii::t('app', 'EPIC_ID'),
             'name' => Yii::t('app', 'SCENARIO_NAME'),
             'tag_line' => Yii::t('app', 'SCENARIO_TAGLINE'),
