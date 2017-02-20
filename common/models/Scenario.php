@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "scenario".
  *
  * @property string $scenario_id
+ * @property string $key
  * @property string $epic_id
  * @property string $name
  * @property string $tag_line
@@ -55,6 +56,10 @@ class Scenario extends ActiveRecord implements HasDescriptions
 
     public function beforeSave($insert)
     {
+        if ($insert) {
+            $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+        }
+
         if (empty($this->description_pack_id)) {
             $pack = DescriptionPack::create('Scenario');
             $this->description_pack_id = $pack->description_pack_id;

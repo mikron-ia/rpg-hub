@@ -33,6 +33,7 @@ class m170205_123244_v0_8_0 extends Migration
         /* Scenarios */
         $this->createTable('{{%scenario}}', [
             'scenario_id' => $this->primaryKey()->unsigned(),
+            'key' => $this->string(),
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
             'name' => $this->string(120)->notNull(),
             'tag_line' => $this->string(),
