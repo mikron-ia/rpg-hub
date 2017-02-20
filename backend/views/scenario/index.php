@@ -33,11 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterModel' => $searchModel,
             'filterPosition' => null,
             'columns' => [
-                'scenario_id',
-                'epic_id',
                 'name',
                 'tag_line',
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{view} {update}',
+                ],
             ],
         ]); ?>
 
