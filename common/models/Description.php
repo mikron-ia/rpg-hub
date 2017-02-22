@@ -38,24 +38,35 @@ use yii2tech\ar\position\PositionBehavior;
  */
 class Description extends ActiveRecord implements Displayable, HasVisibility
 {
-    const TYPE_APPEARANCE = 'appearance';       // The looks
-    const TYPE_ASPECTS = 'aspects';             // Aspects - this is for FATE-like games
-    const TYPE_ATTITUDE = 'attitude';           // Attitude towards different people / groups
-    const TYPE_BACKGROUND = 'background';       // Origin, education, the like
-    const TYPE_COMMENTARY = 'commentary';       // GM commentary
-    const TYPE_DOMAIN = 'domain';               // Places where the person reigns, dominates, or frequents
-    const TYPE_FAME = 'fame';                   // Famous deeds or events
-    const TYPE_FACTIONS = 'factions';           // Factions associated with; this includes nations
-    const TYPE_HISTORY = 'history';             // History of the person
-    const TYPE_INTERACTIONS = 'interactions';   // Interactions / encounters with the group or person NAMES
-    const TYPE_PERSONALITY = 'personality';     // Personality, character behaviour, mental issues
-    const TYPE_RESOURCES = 'resources';         // Resources the person wields, flaunts, can offer
-    const TYPE_REPUTATION = 'reputation';       // Character's reputation
-    const TYPE_RETINUE = 'retinue';             // Friends, allies, etc.
-    const TYPE_RUMOURS = 'rumours';             // Unproven rumours collected about character
-    const TYPE_STORIES = 'stories';             // Stories person participated in
-    const TYPE_THREADS = 'threads';             // Threads person was attached to
-    const TYPE_WHO = 'who';                     // Who is this?
+    const TYPE_APPEARANCE = 'appearance';       // For Character; The looks
+    const TYPE_ASPECTS = 'aspects';             // For Character, Scenario, Story; Aspects - this is for FATE-like games
+    const TYPE_ATTITUDE = 'attitude';           // For Character; Attitude towards different people / groups
+    const TYPE_BACKGROUND = 'background';       // For Character; Origin, education, the like
+    const TYPE_COMMENTARY = 'commentary';       // For Character, Story; GM commentary
+    const TYPE_DOMAIN = 'domain';               // For Character; Places where the person reigns, dominates, or frequents
+    const TYPE_FAME = 'fame';                   // For Character; Famous deeds or events
+    const TYPE_FACTIONS = 'factions';           // For Character; Factions associated with; this includes nations
+    const TYPE_HISTORY = 'history';             // For Character; History of the person
+    const TYPE_INTERACTIONS = 'interactions';   // For Character; Interactions / encounters with the group or person NAMES
+    const TYPE_PERSONALITY = 'personality';     // For Character; Personality, character behaviour, mental issues
+    const TYPE_RESOURCES = 'resources';         // For Character; Resources the person wields, flaunts, can offer
+    const TYPE_REPUTATION = 'reputation';       // For Character; Character's reputation
+    const TYPE_RETINUE = 'retinue';             // For Character; Friends, allies, etc.
+    const TYPE_RUMOURS = 'rumours';             // For Character; Unproven rumours collected about character
+    const TYPE_STORIES = 'stories';             // For Character; Stories person participated in
+    const TYPE_THREADS = 'threads';             // For Character, Scenario, Story; Threads attached
+    const TYPE_WHO = 'who';                     // For Character; Who is this?
+
+    const TYPE_PREMISE = 'premise';             // For Scenario, Story; what is the main concept?
+    const TYPE_ACTORS = 'actors';               // For Scenario, Story; who is going to participate?
+    const TYPE_PLAN = 'plan';                   // For Scenario; what is going to happen?
+    const TYPE_SCENE = 'scene';                 // For Scenario, Story; a particular scene
+    const TYPE_ACT = 'act';                     // For Scenario, Story; a particular act
+    const TYPE_BRIEFING = 'briefing';           // For Scenario, Story; briefing scene
+    const TYPE_DEBRIEFING = 'debriefing';       // For Scenario, Story; debriefing scene
+    const TYPE_PRELUDE = 'prelude';             // For Scenario, Story; events leading to or introducing
+    const TYPE_INTERLUDE = 'interlude';         // For Scenario, Story; events in-between
+    const TYPE_POSTLUDE = 'postlude';           // For Scenario, Story; events following
 
     public static function tableName()
     {
