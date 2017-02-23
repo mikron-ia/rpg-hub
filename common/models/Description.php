@@ -41,7 +41,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     const TYPE_APPEARANCE = 'appearance';       // For Character; The looks
     const TYPE_ASPECTS = 'aspects';             // For Character, Scenario, Story; Aspects - this is for FATE-like games
     const TYPE_ATTITUDE = 'attitude';           // For Character; Attitude towards different people / groups
-    const TYPE_BACKGROUND = 'background';       // For Character; Origin, education, the like
+    const TYPE_BACKGROUND = 'background';       // For Character, Story; Origin, education, the like
     const TYPE_COMMENTARY = 'commentary';       // For Character, Story; GM commentary
     const TYPE_DOMAIN = 'domain';               // For Character; Places where the person reigns, dominates, or frequents
     const TYPE_FAME = 'fame';                   // For Character; Famous deeds or events

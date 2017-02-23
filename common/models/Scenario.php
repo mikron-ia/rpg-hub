@@ -99,6 +99,21 @@ class Scenario extends ActiveRecord implements HasDescriptions
 
     static public function allowedDescriptionTypes():array
     {
-        return [];
+        return [
+            Description::TYPE_PREMISE,
+            Description::TYPE_ACTORS,
+            Description::TYPE_PLAN,
+            Description::TYPE_SCENE,
+            Description::TYPE_ACT,
+            Description::TYPE_BRIEFING,
+            Description::TYPE_DEBRIEFING,
+            Description::TYPE_PRELUDE,
+            Description::TYPE_INTERLUDE,
+            Description::TYPE_POSTLUDE,
+            Description::TYPE_ASPECTS,
+            Description::TYPE_COMMENTARY,
+            Description::TYPE_THREADS,
+            Description::TYPE_BACKGROUND,
+        ];
     }
 }
