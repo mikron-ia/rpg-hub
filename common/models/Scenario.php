@@ -68,7 +68,6 @@ class Scenario extends ActiveRecord implements HasDescriptions
         return parent::beforeSave($insert);
     }
 
-
     public function attributeLabels()
     {
         return [

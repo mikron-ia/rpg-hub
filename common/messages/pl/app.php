@@ -330,6 +330,7 @@ return [
     'SCENARIO_BUTTON_CREATE' => 'Dodaj scenariusz',
     'SCENARIO_ID' => 'ID',
     'SCENARIO_INDEX_TITLE' => 'Scenariusze',
+    'SCENARIO_KEY' => 'Klucz',
     'SCENARIO_NAME' => 'Tytuł',
     'SCENARIO_TAGLINE' => 'Skrót',
     'SCENARIO_TITLE_CREATE' => 'Dodaj scenariusz',

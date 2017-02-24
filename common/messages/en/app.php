@@ -330,6 +330,7 @@ return [
     'SCENARIO_BUTTON_CREATE' => 'Create scenario',
     'SCENARIO_ID' => 'ID',
     'SCENARIO_INDEX_TITLE' => 'Scenarios',
+    'SCENARIO_KEY' => 'Klucz',
     'SCENARIO_NAME' => 'Title',
     'SCENARIO_TAGLINE' => 'Short note',
     'SCENARIO_TITLE_CREATE' => 'Create scenario',

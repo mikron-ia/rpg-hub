@@ -62,8 +62,8 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     const TYPE_PLAN = 'plan';                   // For Scenario; what is going to happen?
     const TYPE_SCENE = 'scene';                 // For Scenario, Story; a particular scene
     const TYPE_ACT = 'act';                     // For Scenario, Story; a particular act
-    const TYPE_BRIEFING = 'briefing';           // For Scenario, Story; briefing scene
-    const TYPE_DEBRIEFING = 'debriefing';       // For Scenario, Story; debriefing scene
+    const TYPE_BRIEFING = 'briefing';           // For Scenario, Story; briefing / introduction scene
+    const TYPE_DEBRIEFING = 'debriefing';       // For Scenario, Story; debriefing / aftermath scene
     const TYPE_PRELUDE = 'prelude';             // For Scenario, Story; events leading to or introducing
     const TYPE_INTERLUDE = 'interlude';         // For Scenario, Story; events in-between
     const TYPE_POSTLUDE = 'postlude';           // For Scenario, Story; events following
