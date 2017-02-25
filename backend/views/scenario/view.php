@@ -9,6 +9,23 @@ use yii\widgets\DetailView;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'SCENARIO_INDEX_TITLE'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$items = [
+    [
+        'label' => Yii::t('app', 'SCENARIO_DESCRIPTIONS_TAB'),
+        'content' => $this->render('_view_descriptions', ['model' => $model]),
+        'encode' => false,
+        'active' => true,
+    ],
+    [
+        'label' => Yii::t('app', 'SCENARIO_TECHNICAL_DETAILS'),
+        'content' => $this->render('_view_details', [
+            'model' => $model,
+        ]),
+        'encode' => false,
+        'active' => false,
+    ],
+];
 ?>
 <div class="scenario-view">
 
@@ -34,20 +51,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="col-md-6">
-        <?= DetailView::widget([
-            'model' => $model,
-            'attributes' => [
-                [
-                    'attribute' => 'epic_id',
-                    'format' => 'raw',
-                    'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
-                ],
-                'key',
-                'name',
-                'tag_line',
-            ],
-        ]) ?>
-    </div>
+    <p class="subtitle"><?= $model->tag_line; ?></p>
+
+    <?= \yii\bootstrap\Tabs::widget([
+        'items' => $items
+    ]) ?>
 
 </div>
