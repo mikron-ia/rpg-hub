@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\core\HasDescriptions;
+use common\models\core\HasEpicControl;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
@@ -21,7 +22,7 @@ use yii\db\ActiveRecord;
  * @property DescriptionPack $descriptionPack
  * @property Epic $epic
  */
-class Scenario extends ActiveRecord implements HasDescriptions
+class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
 {
     use ToolsForEntity;
 
@@ -114,5 +115,45 @@ class Scenario extends ActiveRecord implements HasDescriptions
             Description::TYPE_THREADS,
             Description::TYPE_BACKGROUND,
         ];
+    }
+
+    static public function canUserIndexThem():bool
+    {
+        return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
+    }
+
+    static public function canUserCreateThem():bool
+    {
+        return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
+    }
+
+    public function canUserControlYou():bool
+    {
+        return self::canUserControlInEpic($this->epic);
+    }
+
+    public function canUserViewYou():bool
+    {
+        return self::canUserViewInEpic($this->epic);
+    }
+
+    static function throwExceptionAboutCreate()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_SCENARIO'));
+    }
+
+    static function throwExceptionAboutControl()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_SCENARIO'));
+    }
+
+    static function throwExceptionAboutIndex()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_SCENARIO'));
+    }
+
+    static function throwExceptionAboutView()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_SCENARIO'));
     }
 }
