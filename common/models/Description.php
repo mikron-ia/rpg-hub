@@ -205,10 +205,10 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         $typeNamesAll = self::typeNames();
         $typeNamesAccepted = [];
 
-        $class = 'common\models\\';
+        $class = 'common\models\\' . $this->descriptionPack->class;
 
-        if (method_exists($class, 'allowedTypes')) {
-            $typesAllowed = call_user_func([$class . $this->descriptionPack->class, 'allowedTypes']);
+        if (method_exists($class, 'allowedDescriptionTypes')) {
+            $typesAllowed = call_user_func([$class, 'allowedDescriptionTypes']);
         } else {
             $typesAllowed = array_keys($typeNamesAll);
         }
