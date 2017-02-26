@@ -29,7 +29,7 @@ class RbacController extends Controller
         $this->actionV040();
 
         /* Load v0.7.0 */
-        $this->actionV070();
+        $this->actionV080();
 
         /* Set up the administrator */
         $this->actionSetAdministrator();
@@ -250,10 +250,30 @@ class RbacController extends Controller
     }
 
     /**
-     * Adds rights from v0.7.0
+     * Adds rights from v0.8.0
      */
-    public function actionV070()
+    public function actionV080()
     {
         $auth = Yii::$app->authManager;
+
+        $gameMasterRule = $auth->getRule('epicGameMaster');
+        $watcherRule = $auth->getRule('epicWatcher');
+
+        $controlScenario = $auth->createPermission('controlScenario');
+        $controlScenario->description = 'Able to add, edit, and move a scenario';
+        $controlScenario->ruleName = $gameMasterRule->name;
+
+        $auth->add($controlScenario);
+
+        $viewScenario = $auth->createPermission('viewScenario');
+        $viewScenario->description = 'Able to view a scenario';
+        $viewScenario->ruleName = $watcherRule->name;
+
+        $auth->add($viewScenario);
+
+        $operator = $auth->getRole('operator');
+
+        $auth->addChild($operator, $controlScenario);
+        $auth->addChild($operator, $viewScenario);
     }
 }

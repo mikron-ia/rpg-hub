@@ -29,6 +29,30 @@ class m170205_123244_v0_8_0 extends Migration
             'description',
             'description_id'
         );
+
+        /* Scenarios */
+        $this->createTable('{{%scenario}}', [
+            'scenario_id' => $this->primaryKey()->unsigned(),
+            'epic_id' => $this->integer(11)->unsigned()->notNull(),
+            'key' => $this->string(80)->notNull(),
+            'name' => $this->string(120)->notNull(),
+            'tag_line' => $this->string(),
+            'description_pack_id' => $this->integer(11)->unsigned(),
+        ], $tableOptions);
+
+
+        $this->addForeignKey(
+            'scenario_epic',
+            'scenario', 'epic_id',
+            '{{%epic}}', 'epic_id',
+            'RESTRICT', 'CASCADE'
+        );
+        $this->addForeignKey(
+            'scenario_description_pack',
+            'scenario', 'description_pack_id',
+            '{{%description_pack}}', 'description_pack_id',
+            'RESTRICT', 'CASCADE'
+        );
     }
 
     public function down()
@@ -36,5 +60,7 @@ class m170205_123244_v0_8_0 extends Migration
         $this->dropColumn('character', 'updated_at');
 
         $this->dropTable('description_history');
+
+        $this->dropTable('scenario');
     }
 }

@@ -37,6 +37,7 @@ return [
         'group' => getenv('KEY_GENERATION_GROUP'),
         'person' => getenv('KEY_GENERATION_CHARACTER'),
         'recap' => getenv('KEY_GENERATION_RECAP'),
+        'scenario' => getenv('KEY_GENERATION_SCENARIO'),
         'story' => getenv('KEY_GENERATION_STORY'),
     ],
     'languagesAvailable' => $languages, // Languages will appear in the order entered here
