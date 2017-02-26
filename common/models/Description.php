@@ -184,6 +184,16 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             self::TYPE_STORIES => Yii::t('app', 'DESCRIPTION_TYPE_STORIES'),
             self::TYPE_THREADS => Yii::t('app', 'DESCRIPTION_TYPE_THREADS'),
             self::TYPE_WHO => Yii::t('app', 'DESCRIPTION_TYPE_WHO'),
+            self::TYPE_PREMISE => Yii::t('app', 'DESCRIPTION_TYPE_PREMISE'),
+            self::TYPE_ACTORS => Yii::t('app', 'DESCRIPTION_TYPE_ACTORS'),
+            self::TYPE_PLAN => Yii::t('app', 'DESCRIPTION_TYPE_PLAN'),
+            self::TYPE_SCENE => Yii::t('app', 'DESCRIPTION_TYPE_SCENE'),
+            self::TYPE_ACT => Yii::t('app', 'DESCRIPTION_TYPE_ACT'),
+            self::TYPE_BRIEFING => Yii::t('app', 'DESCRIPTION_TYPE_BRIEFING'),
+            self::TYPE_DEBRIEFING => Yii::t('app', 'DESCRIPTION_TYPE_DEBRIEFING'),
+            self::TYPE_PRELUDE => Yii::t('app', 'DESCRIPTION_TYPE_PRELUDE'),
+            self::TYPE_INTERLUDE => Yii::t('app', 'DESCRIPTION_TYPE_INTERLUDE'),
+            self::TYPE_POSTLUDE => Yii::t('app', 'DESCRIPTION_TYPE_POSTLUDE'),
         ];
     }
 
