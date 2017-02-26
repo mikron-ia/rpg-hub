@@ -2,10 +2,10 @@
 
 namespace backend\controllers;
 
+use common\models\ScenarioQuery;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use common\models\Scenario;
-use common\ScenarioQuery;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -42,6 +42,14 @@ class ScenarioController extends Controller
 
     public function actionIndex()
     {
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection');
+        }
+
+        if (!Scenario::canUserIndexThem()) {
+            Scenario::throwExceptionAboutIndex();
+        }
+
         $searchModel = new ScenarioQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -86,6 +94,10 @@ class ScenarioController extends Controller
      */
     public function actionCreate()
     {
+        if (!Scenario::canUserCreateThem()) {
+            Scenario::throwExceptionAboutCreate();
+        }
+
         $model = new Scenario();
 
         $model->setCurrentEpicOnEmpty();
@@ -108,6 +120,10 @@ class ScenarioController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        if (!$model->canUserControlYou()) {
+            Scenario::throwExceptionAboutControl();
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->scenario_id]);

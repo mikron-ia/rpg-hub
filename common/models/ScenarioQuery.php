@@ -1,20 +1,16 @@
 <?php
 
-namespace common;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Scenario;
 
 /**
  * ScenarioQuery represents the model behind the search form about `common\models\Scenario`.
  */
 class ScenarioQuery extends Scenario
 {
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -23,12 +19,8 @@ class ScenarioQuery extends Scenario
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -43,7 +35,14 @@ class ScenarioQuery extends Scenario
     {
         $query = Scenario::find();
 
-        // add conditions that should always apply here
+        if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+            $query->where('0=1');
+        } else {
+            $query->andWhere([
+                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+            ]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -52,12 +51,10 @@ class ScenarioQuery extends Scenario
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'scenario_id' => $this->scenario_id,
             'epic_id' => $this->epic_id,
