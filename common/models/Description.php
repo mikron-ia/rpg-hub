@@ -222,16 +222,6 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         return $typeNamesAccepted;
     }
 
-    static public function typesForCharacter():array
-    {
-        return [self::TYPE_PERSONALITY];
-    }
-
-    static public function typesForPerson():array
-    {
-        return [self::TYPE_APPEARANCE, self::TYPE_HISTORY, self::TYPE_WHO];
-    }
-
     /**
      * @return string[]
      */
@@ -277,6 +267,9 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         }
     }
 
+    /**
+     * @return null|string
+     */
     public function getLanguage()
     {
         $language = Language::create($this->lang);
