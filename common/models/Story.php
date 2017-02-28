@@ -31,7 +31,6 @@ use yii2tech\ar\position\PositionBehavior;
  * @property Epic $epic
  * @property ParameterPack $parameterPack
  * @property SeenPack $seenPack
- * @property StoryParameter[] $storyParameters
  */
 class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl, HasSightings
 {
@@ -84,7 +83,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             'position' => Yii::t('app', 'STORY_POSITION'),
             'data' => Yii::t('app', 'STORY_DATA'),
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
-            'storyParameters' => Yii::t('app', 'STORY_PARAMETERS'),
         ];
     }
 
@@ -160,14 +158,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function getSeenPack():ActiveQuery
     {
         return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
-    }
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getStoryParameters():ActiveQuery
-    {
-        return $this->hasMany(StoryParameter::className(), ['story_id' => 'story_id']);
     }
 
     /**
