@@ -213,9 +213,9 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             $typesAllowed = array_keys($typeNamesAll);
         }
 
-        foreach ($typeNamesAll as $typeKey => $typeName) {
-            if (in_array($typeKey, $typesAllowed, true)) {
-                $typeNamesAccepted[$typeKey] = $typeName;
+        foreach ($typesAllowed as $typeKey => $typeName) {
+            if (isset($typeNamesAll[$typeKey])) {
+                $typeNamesAccepted[$typeKey] = $typeNamesAll[$typeKey];
             }
         }
 

@@ -308,14 +308,13 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     static public function allowedDescriptionTypes():array
     {
         return [
-            Description::TYPE_HISTORY,
+            Description::TYPE_WHO,
             Description::TYPE_APPEARANCE,
             Description::TYPE_PERSONALITY,
-            Description::TYPE_WHO,
+            Description::TYPE_HISTORY,
             Description::TYPE_ASPECTS,
             Description::TYPE_ATTITUDE,
             Description::TYPE_BACKGROUND,
-            Description::TYPE_COMMENTARY,
             Description::TYPE_DOMAIN,
             Description::TYPE_FAME,
             Description::TYPE_FACTIONS,
@@ -327,7 +326,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             Description::TYPE_RUMOURS,
             Description::TYPE_STORIES,
             Description::TYPE_THREADS,
-            Description::TYPE_WHO,
+            Description::TYPE_COMMENTARY,
         ];
     }
 
