@@ -10,6 +10,7 @@ interface HasDescriptions
 {
     /**
      * Provides list of types allowed by this class
+     * Types should be listed in order desired in select
      * @return string[]
      */
     static public function allowedDescriptionTypes():array;

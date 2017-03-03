@@ -198,6 +198,12 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     }
 
     /**
+     * Provides list of allowed description types for the class the object belongs to
+     * List is provided as full names in current language keyed by codes
+     *
+     * Fallback mechanism: if the method is not implemented, a full list is provided, which will allow the object to be
+     * used, but will reduce the user experience.
+     *
      * @return string[]
      */
     public function typeNamesForThisClass():array
