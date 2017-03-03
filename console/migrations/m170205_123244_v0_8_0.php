@@ -53,6 +53,10 @@ class m170205_123244_v0_8_0 extends Migration
             '{{%description_pack}}', 'description_pack_id',
             'RESTRICT', 'CASCADE'
         );
+
+        /* Visibility & descriptions for groups */
+        $this->addColumn('group', 'visibility', $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM));
+        $this->addColumn('group', 'description_pack_id', $this->integer(11)->unsigned());
     }
 
     public function down()
@@ -62,5 +66,9 @@ class m170205_123244_v0_8_0 extends Migration
         $this->dropTable('description_history');
 
         $this->dropTable('scenario');
+
+        $this->dropColumn('group', 'visibility');
+
+        $this->dropColumn('group', 'description_pack_id');
     }
 }
