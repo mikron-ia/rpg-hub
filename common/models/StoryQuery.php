@@ -23,9 +23,6 @@ final class StoryQuery extends Story
     }
     public $descriptions;
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -35,9 +32,6 @@ final class StoryQuery extends Story
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         $attributeLabels = parent::attributeLabels();
@@ -47,12 +41,8 @@ final class StoryQuery extends Story
         return $attributeLabels;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -66,8 +56,6 @@ final class StoryQuery extends Story
     public function search($params)
     {
         $query = Story::find();
-
-        // add conditions that should always apply here
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));

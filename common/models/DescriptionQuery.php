@@ -14,11 +14,11 @@ use yii\db\ActiveQuery;
  */
 final class DescriptionQuery extends Description
 {
+    /**
+     * @var string
+     */
     public $text;
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -27,9 +27,6 @@ final class DescriptionQuery extends Description
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         $attributeLabels = parent::attributeLabels();
@@ -39,12 +36,8 @@ final class DescriptionQuery extends Description
         return $attributeLabels;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -59,8 +52,6 @@ final class DescriptionQuery extends Description
     {
         $query = Description::find();
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -72,7 +63,6 @@ final class DescriptionQuery extends Description
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'description_pack_id' => $this->description_pack_id,
         ]);
