@@ -57,6 +57,12 @@ class m170205_123244_v0_8_0 extends Migration
         /* Visibility & descriptions for groups */
         $this->addColumn('group', 'visibility', $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM));
         $this->addColumn('group', 'description_pack_id', $this->integer(11)->unsigned());
+        $this->addForeignKey(
+            'group_description_pack',
+            'group', 'description_pack_id',
+            '{{%description_pack}}', 'description_pack_id',
+            'RESTRICT', 'CASCADE'
+        );
     }
 
     public function down()
@@ -68,7 +74,7 @@ class m170205_123244_v0_8_0 extends Migration
         $this->dropTable('scenario');
 
         $this->dropColumn('group', 'visibility');
-
+        $this->dropForeignKey('group_description_pack', 'group');
         $this->dropColumn('group', 'description_pack_id');
     }
 }
