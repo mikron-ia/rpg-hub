@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use common\models\EpicQuery;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -14,13 +15,19 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
+    </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames()) ?>
     </div>
 
     <div class="col-md-6">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
+
+    <div class="clearfix"></div>
 
     <div class="form-group">
         <?= Html::submitButton(
