@@ -6,6 +6,8 @@ use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\core\HasSightings;
+use common\models\core\HasVisibility;
+use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveRecord;
@@ -26,7 +28,7 @@ use yii\db\ActiveRecord;
  * @property Epic $epic
  * @property SeenPack $seenPack
  */
-class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasSightings
+class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasSightings, HasVisibility
 {
     use ToolsForEntity;
 
@@ -67,6 +69,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             'key' => Yii::t('app', 'GROUP_KEY'),
             'name' => Yii::t('app', 'GROUP_NAME'),
             'data' => Yii::t('app', 'GROUP_DATA'),
+            'visibility' => Yii::t('app', 'GROUP_VISIBILITY'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
         ];
     }
@@ -235,5 +238,17 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public function showSightingCSS():string
     {
         return $this->seenPack->getCSSForCurrentUser();
+    }
+
+    public function getVisibility():string
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getName();
+    }
+
+    public function getVisibilityLowercase():string
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getNameLowercase();
     }
 }

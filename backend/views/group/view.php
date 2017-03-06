@@ -39,6 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
             ],
             [
+                'attribute' => 'visibility',
+                'value' => $model->getVisibility(),
+            ],
+            [
                 'label' => Yii::t('app', 'LABEL_DATA_SIZE'),
                 'format' => 'shortSize',
                 'value' => strlen($model->data),
