@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames()) ?>
+        <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(Character::allowedVisibilities())) ?>
     </div>
 
     <div class="col-md-3">

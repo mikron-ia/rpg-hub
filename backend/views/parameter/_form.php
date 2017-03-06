@@ -1,5 +1,7 @@
 <?php
 
+use common\models\core\Visibility;
+use common\models\Parameter;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -29,7 +31,7 @@ use yii\widgets\ActiveForm;
         ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_TYPE') . ' --- ']
     ); ?>
 
-    <?= $form->field($model, 'visibility')->dropDownList(\common\models\core\Visibility::visibilityNames()); ?>
+    <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(Parameter::allowedVisibilities())); ?>
 
     <?= $form->field($model, 'content')->textInput(['maxlength' => true]) ?>
 

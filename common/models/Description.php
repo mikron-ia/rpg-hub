@@ -100,7 +100,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
                 ['visibility'],
                 'in',
                 'range' => function () {
-                    return Visibility::allowedVisibilities();
+                    return $this->allowedVisibilities();
                 }
             ],
         ];
@@ -280,6 +280,14 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     {
         $language = Language::create($this->lang);
         return $language->getName();
+    }
+
+    static public function allowedVisibilities():array
+    {
+        return [
+            Visibility::VISIBILITY_GM,
+            Visibility::VISIBILITY_FULL
+        ];
     }
 
     public function getVisibility():string

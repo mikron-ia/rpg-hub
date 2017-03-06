@@ -68,6 +68,14 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         ];
     }
 
+    static public function allowedVisibilities():array
+    {
+        return [
+            Visibility::VISIBILITY_GM,
+            Visibility::VISIBILITY_FULL
+        ];
+    }
+
     public function getVisibility():string
     {
         $visibility = Visibility::create($this->visibility);

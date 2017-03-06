@@ -2,6 +2,7 @@
 
 use common\models\core\Visibility;
 use common\models\EpicQuery;
+use common\models\Group;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -20,7 +21,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames()) ?>
+        <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(Group::allowedVisibilities())) ?>
     </div>
 
     <div class="col-md-6">

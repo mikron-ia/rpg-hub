@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\HasVisibility;
 use common\models\core\Language;
 use common\models\core\Visibility;
 use Yii;
@@ -24,7 +25,7 @@ use yii2tech\ar\position\PositionBehavior;
  *
  * @property ParameterPack $parameterPack
  */
-class Parameter extends ActiveRecord
+class Parameter extends ActiveRecord implements HasVisibility
 {
     const STORY_NUMBER = 'story-number';
     const TIME_RANGE = 'time-range';
@@ -196,13 +197,21 @@ class Parameter extends ActiveRecord
         return $language->getName();
     }
 
-    public function getVisibility()
+    static public function allowedVisibilities():array
+    {
+        return [
+            Visibility::VISIBILITY_GM,
+            Visibility::VISIBILITY_FULL
+        ];
+    }
+
+    public function getVisibility():string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getName();
     }
 
-    public function getVisibilityLowercase()
+    public function getVisibilityLowercase():string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();
@@ -222,7 +231,7 @@ class Parameter extends ActiveRecord
      */
     public function getVisibilityName()
     {
-        $visibilities = Visibility::visibilityNames();
+        $visibilities = Visibility::visibilityNames(self::allowedVisibilities());
         return isset($visibilities[$this->visibility]) ? $visibilities[$this->visibility] : $this->visibility;
     }
 }

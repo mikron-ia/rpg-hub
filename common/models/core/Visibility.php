@@ -22,9 +22,10 @@ final class Visibility
 
     /**
      * Provides visibilities names
+     * @param array $allowed
      * @return string[]
      */
-    static public function visibilityNames():array
+    static public function visibilityNames($allowed):array
     {
         $names = [
             Visibility::VISIBILITY_NONE => Yii::t('app', 'VISIBILITY_NONE'),
@@ -33,8 +34,6 @@ final class Visibility
             Visibility::VISIBILITY_LOGGED => Yii::t('app', 'VISIBILITY_LOGGED'),
             Visibility::VISIBILITY_FULL => Yii::t('app', 'VISIBILITY_FULL'),
         ];
-
-        $allowed = self::allowedVisibilities();
 
         foreach ($names as $key => $name) {
             if (!in_array($key, $allowed)) {
@@ -92,7 +91,7 @@ final class Visibility
      */
     public function getName()
     {
-        $names = self::visibilityNames();
+        $names = self::visibilityNames(self::allowedVisibilities());
         return isset($names[$this->visibility]) ? $names[$this->visibility] : null;
     }
 

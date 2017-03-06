@@ -2,6 +2,7 @@
 
 use common\models\core\Language;
 use common\models\core\Visibility;
+use common\models\Description;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -25,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'lang')->dropDownList(Language::languagesLong()); ?>
 
-    <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames()); ?>
+    <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(Description::allowedVisibilities())); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),

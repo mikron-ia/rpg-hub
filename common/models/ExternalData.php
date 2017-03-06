@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\HasVisibility;
 use common\models\core\Visibility;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -22,7 +23,7 @@ use yii\db\ActiveRecord;
  *
  * @property ExternalDataPack $externalDataPack
  */
-class ExternalData extends ActiveRecord
+class ExternalData extends ActiveRecord implements HasVisibility
 {
     public static function tableName()
     {
@@ -72,12 +73,23 @@ class ExternalData extends ActiveRecord
         return $this->hasOne(ExternalDataPack::className(), ['external_data_pack_id' => 'external_data_pack_id']);
     }
 
-    /**
-     * @return string
-     */
+    static public function allowedVisibilities():array
+    {
+        return [
+            Visibility::VISIBILITY_GM,
+            Visibility::VISIBILITY_FULL
+        ];
+    }
+
     public function getVisibility():string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getName();
+    }
+
+    public function getVisibilityLowercase():string
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getNameLowercase();
     }
 }

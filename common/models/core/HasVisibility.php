@@ -9,6 +9,12 @@ namespace common\models\core;
 interface HasVisibility
 {
     /**
+     * Provides list of all types of visibilities applicable to this class
+     * @return array
+     */
+    static public function allowedVisibilities():array;
+
+    /**
      * Provides name of visibility category for the object as it is
      * @return string
      */

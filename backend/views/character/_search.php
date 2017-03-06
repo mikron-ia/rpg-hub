@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
     <?php echo $form->field($model, 'visibility')->widget(
         kartik\select2\Select2::className(),
         [
-            'data' => Visibility::visibilityNames(),
+            'data' => Visibility::visibilityNames(Character::allowedVisibilities()),
             'options' => ['multiple' => true],
         ]
     ) ?>

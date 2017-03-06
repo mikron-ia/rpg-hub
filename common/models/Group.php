@@ -54,7 +54,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
                 ['visibility'],
                 'in',
                 'range' => function () {
-                    return Visibility::allowedVisibilities();
+                    return $this->allowedVisibilities();
                 }
             ],
         ];
@@ -245,6 +245,14 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public function showSightingCSS():string
     {
         return $this->seenPack->getCSSForCurrentUser();
+    }
+
+    static public function allowedVisibilities():array
+    {
+        return [
+            Visibility::VISIBILITY_GM,
+            Visibility::VISIBILITY_FULL
+        ];
     }
 
     public function getVisibility():string

@@ -175,12 +175,12 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ];
     }
 
-    /**
-     * @return string[]
-     */
-    public function allowedVisibilities():array
+    static public function allowedVisibilities():array
     {
-        return Visibility::allowedVisibilities();
+        return [
+            Visibility::VISIBILITY_GM,
+            Visibility::VISIBILITY_FULL
+        ];
     }
 
     /**
@@ -270,7 +270,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      */
     public function getVisibilityName()
     {
-        $list = Visibility::visibilityNames();
+        $list = Visibility::visibilityNames(self::allowedVisibilities());
         if (isset($list[$this->visibility])) {
             return $list[$this->visibility];
         } else {

@@ -2,6 +2,7 @@
 
 use common\models\core\Language;
 use common\models\core\Visibility;
+use common\models\Description;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -22,7 +23,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'code')->widget(
         kartik\select2\Select2::className(),
         [
-            'data' => \common\models\Description::typeNames(),
+            'data' => Description::typeNames(),
             'options' => ['multiple' => true],
         ]
     ) ?>
@@ -42,7 +43,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'visibility')->widget(
         kartik\select2\Select2::className(),
         [
-            'data' => Visibility::visibilityNames(),
+            'data' => Visibility::visibilityNames(Description::allowedVisibilities()),
             'options' => ['multiple' => true],
         ]
     ) ?>
