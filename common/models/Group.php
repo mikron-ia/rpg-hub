@@ -50,6 +50,13 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
                 'targetClass' => Epic::className(),
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
+            [
+                ['visibility'],
+                'in',
+                'range' => function () {
+                    return Visibility::allowedVisibilities();
+                }
+            ],
         ];
     }
 
