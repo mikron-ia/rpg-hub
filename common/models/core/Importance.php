@@ -86,21 +86,21 @@ final class Importance
 
     /**
      * Provides importance name
-     * @return string|null
+     * @return string
      */
-    public function getName()
+    public function getName():string
     {
         $names = self::importanceNames();
-        return isset($names[$this->importance]) ? $names[$this->importance] : null;
+        return isset($names[$this->importance]) ? $names[$this->importance] : '?';
     }
 
     /**
      * Provides importance name in lowercase
-     * @return string|null
+     * @return string
      */
-    public function getNameLowercase()
+    public function getNameLowercase():string
     {
         $names = self::importanceNamesLowercase();
-        return isset($names[$this->importance]) ? $names[$this->importance] : null;
+        return isset($names[$this->importance]) ? $names[$this->importance] : '?';
     }
 }
