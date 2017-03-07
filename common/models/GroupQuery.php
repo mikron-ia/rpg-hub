@@ -22,7 +22,6 @@ final class GroupQuery extends Group
 
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 

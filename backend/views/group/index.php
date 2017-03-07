@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Group;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -29,6 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterPosition' => null,
             'columns' => [
                 'name',
+                [
+                    'attribute' => 'visibility',
+                    'value' => function (Group $model) {
+                        return $model->getVisibility();
+                    }
+                ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view}',
