@@ -34,7 +34,7 @@ $items = [
     ],
 ];
 ?>
-<div class="person-view">
+<div class="character-view">
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
