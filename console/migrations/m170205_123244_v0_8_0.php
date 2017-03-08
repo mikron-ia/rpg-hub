@@ -40,7 +40,6 @@ class m170205_123244_v0_8_0 extends Migration
             'description_pack_id' => $this->integer(11)->unsigned(),
         ], $tableOptions);
 
-
         $this->addForeignKey(
             'scenario_epic',
             'scenario', 'epic_id',
@@ -63,6 +62,24 @@ class m170205_123244_v0_8_0 extends Migration
             '{{%description_pack}}', 'description_pack_id',
             'RESTRICT', 'CASCADE'
         );
+
+        /* Sessions */
+        $this->createTable('{{%game}}', [
+            'game_id' => $this->primaryKey()->unsigned(),
+            'epic_id' => $this->integer(11)->unsigned()->notNull(),
+            'time' => $this->string(),
+            'status' => $this->string(20),
+            'position' => $this->integer()->defaultValue(0),
+            'details' => $this->text(),
+            'note' => $this->text(),
+        ], $tableOptions);
+
+        $this->addForeignKey(
+            'game_epic',
+            'game', 'epic_id',
+            '{{%epic}}', 'epic_id',
+            'RESTRICT', 'CASCADE'
+        );
     }
 
     public function down()
@@ -76,5 +93,7 @@ class m170205_123244_v0_8_0 extends Migration
         $this->dropColumn('group', 'visibility');
         $this->dropForeignKey('group_description_pack', 'group');
         $this->dropColumn('group', 'description_pack_id');
+
+        $this->dropTable('game');
     }
 }
