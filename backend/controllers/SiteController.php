@@ -3,6 +3,7 @@ namespace backend\controllers;
 
 use common\models\Epic;
 use common\models\EpicQuery;
+use common\models\GameQuery;
 use common\models\LoginForm;
 use common\models\RecapQuery;
 use common\models\StoryQuery;
@@ -96,10 +97,11 @@ final class SiteController extends Controller
             /* Get Stories */
             $searchModel = new StoryQuery(4);
             $stories = $searchModel->search(Yii::$app->request->queryParams);
-        }
 
-        /* Get Sessions */
-        $sessions = [];
+            /* Get Sessions */
+            $sessionQuery = new GameQuery();
+            $sessions = $sessionQuery->mostRecentDataProvider();
+        }
 
         /* Get News */
         $news = [];

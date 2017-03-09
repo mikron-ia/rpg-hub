@@ -162,6 +162,7 @@ return [
     'EPIC_CARD_PARTICIPANTS' => 'Participants',
     'EPIC_CARD_RECENT_EVENTS' => 'Recent events',
     'EPIC_CARD_ROLE' => 'Role',
+    'EPIC_CARD_SESSIONS' => 'Sessions',
     'EPIC_CARD_TODO' => 'Things to do',
     'EPIC_CARD_USERNAME' => 'User',
     'EPIC_COUNT_GROUPS' => 'Group count',

@@ -30,10 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status',
                 'format' => 'raw',
                 'value' => function (Game $model) {
-                    return Html::tag('span', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass()]]);
+                    return $model->getStatus();
                 }
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update}',
+            ],
         ],
     ]); ?>
 </div>

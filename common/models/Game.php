@@ -2,9 +2,11 @@
 
 namespace common\models;
 
+use common\behaviours\PerformedActionBehavior;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii2tech\ar\position\PositionBehavior;
 
 /**
  * This is the model class for table "game".
@@ -58,6 +60,22 @@ class Game extends ActiveRecord
             'position' => Yii::t('app', 'GAME_POSITION'),
             'details' => Yii::t('app', 'GAME_DETAILS'),
             'note' => Yii::t('app', 'GAME_POSITION'),
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'positionBehavior' => [
+                'class' => PositionBehavior::className(),
+                'positionAttribute' => 'position',
+                'groupAttributes' => ['epic_id'],
+            ],
+            'performedActionBehavior' => [
+                'class' => PerformedActionBehavior::className(),
+                'idName' => 'game_id',
+                'className' => 'Game',
+            ],
         ];
     }
 

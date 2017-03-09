@@ -190,11 +190,12 @@ p {
 
 .game-status {
     font-family: "Courier New", Courier, monospace;
-    font-size: 1.75rem;
+    font-size: 1em;
     font-weight: bold;
     border-radius: 15px;
-    padding: 5px;
+    padding: 7px;
     color: black;
+    margin-left: 10px;
 }
 
 .game-status-proposed {

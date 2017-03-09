@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $epic \common\models\Epic */
+/* @var $sessions \yii\data\ActiveDataProvider */
 /* @var $stories \yii\data\ActiveDataProvider */
 /* @var $recap \common\models\Recap */
 
@@ -102,6 +103,22 @@ $this->title = 'RPG hub - control';
                 <h2><?= Yii::t('app', 'EPIC_CARD_EPIC_ATTRIBUTES'); ?></h2>
 
                 <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></i></p>
+
+                <h2><?= Yii::t('app', 'EPIC_CARD_SESSIONS'); ?></h2>
+
+                <div>
+                    <?= ListView::widget([
+                        'dataProvider' => $sessions,
+                        'layout' => '{items}',
+                        'itemOptions' => ['class' => 'item'],
+                        'itemView' => function ($model, $key, $index, $widget) {
+                            return $this->render(
+                                'session/_index_box',
+                                ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                            );
+                        },
+                    ]) ?>
+                </div>
 
                 <h2><?= Yii::t('app', 'EPIC_CARD_TODO'); ?></h2>
 

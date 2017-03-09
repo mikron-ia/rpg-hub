@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\models\Epic;
 use common\models\EpicQuery;
+use common\models\GameQuery;
 use common\models\PerformedAction;
 use common\models\RecapQuery;
 use common\models\StoryQuery;
@@ -87,6 +88,7 @@ final class SiteController extends Controller
             $epic = null;
             $stories = null;
             $recap = null;
+            $sessions = null;
         } else {
             /** @var Epic $epic */
             $epic = Yii::$app->params['activeEpic'];
@@ -104,10 +106,15 @@ final class SiteController extends Controller
             /* Get Stories */
             $searchModel = new StoryQuery(4);
             $stories = $searchModel->search(Yii::$app->request->queryParams);
-        }
 
-        /* Get Sessions */
-        $sessions = [];
+            /* Get Sessions */
+            $sessionQuery = new GameQuery();
+            $sessions = $sessionQuery->mostRecentDataProvider();
+
+            if ($recap) {
+                $recap->recordSighting();
+            }
+        }
 
         /* Get News */
         $news = [];

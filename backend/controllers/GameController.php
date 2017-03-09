@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\GameQuery;
 use Yii;
 use common\models\Game;
 use yii\data\ActiveDataProvider;
@@ -32,11 +33,11 @@ class GameController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Game::find(),
-        ]);
+        $searchModel = new GameQuery();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
