@@ -180,3 +180,59 @@ p {
     font-size: 2rem;
     font-weight: bold;
 }
+
+.game-time {
+    text-align: right;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.game-status {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.75rem;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 5px;
+    color: black;
+}
+
+.game-status-proposed {
+    background-color: lightskyblue;
+}
+
+.game-status-announced {
+    background-color: deepskyblue;
+}
+
+.game-status-unplanned {
+    background-color: pink;
+}
+
+.game-status-planned {
+    background-color: greenyellow;
+}
+
+.game-status-cancelled {
+    background-color: red;
+    color: white;
+}
+
+.game-status-progressing {
+    background-color: yellow;
+}
+
+.game-status-aborted {
+    background-color: orangered;
+    color: white;
+}
+
+.game-status-completed {
+    background-color: green;
+    color: white;
+}
+
+.game-status-closed {
+    background-color: darkgreen;
+    color: white;
+}

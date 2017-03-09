@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Game;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -25,7 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             'time',
-            'status',
+            [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function (Game $model) {
+                    return Html::tag('span', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass()]]);
+                }
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

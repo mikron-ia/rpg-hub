@@ -12,16 +12,16 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="game-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="buttoned-header">
+        <h1><?= Html::encode($this->title) ?></h1>
+        <p>
+            <?= Html::tag('span', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass()]]) ?>
+        </p>
+    </div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'epic_id',
-            'time',
-            'status',
-        ],
-    ]) ?>
+    <div class="game-time">
+        <?= $model->time ?>
+    </div>
 
     <div class="text-center">
         <?= Html::a(

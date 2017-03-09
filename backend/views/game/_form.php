@@ -1,6 +1,7 @@
 <?php
 
 use common\models\EpicQuery;
+use common\models\Game;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -13,15 +14,27 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
+    <div class="col-md-3">
+        <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
+    </div>
 
-    <?= $form->field($model, 'time')->textInput(['maxlength' => true]) ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'time')->textInput(['maxlength' => true]) ?>
+    </div>
 
-    <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
+    <div class="col-md-3">
+        <?= $form->field($model, 'status')->dropDownList(Game::statusNames()) ?>
+    </div>
 
-    <?= $form->field($model, 'details')->textarea(['rows' => 8]) ?>
+    <div class="col-md-12">
+        <?= $form->field($model, 'details')->textarea(['rows' => 8]) ?>
+    </div>
 
-    <?= $form->field($model, 'note')->textarea(['rows' => 8]) ?>
+    <div class="col-md-12">
+        <?= $form->field($model, 'note')->textarea(['rows' => 8]) ?>
+    </div>
+
+    <div class="clearfix"></div>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord
