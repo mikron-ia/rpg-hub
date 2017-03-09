@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "game".
@@ -17,19 +19,13 @@ use Yii;
  *
  * @property Epic $epic
  */
-class Game extends \yii\db\ActiveRecord
+class Game extends ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'game';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -42,24 +38,21 @@ class Game extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
-            'game_id' => Yii::t('app', 'Game ID'),
-            'epic_id' => Yii::t('app', 'Epic ID'),
-            'time' => Yii::t('app', 'Time'),
-            'status' => Yii::t('app', 'Status'),
-            'position' => Yii::t('app', 'Position'),
-            'details' => Yii::t('app', 'Details'),
-            'note' => Yii::t('app', 'Note'),
+            'game_id' => Yii::t('app', 'GAME_ID'),
+            'epic_id' => Yii::t('app', 'LABEL_EPIC'),
+            'time' => Yii::t('app', 'GAME_TIME'),
+            'status' => Yii::t('app', 'GAME_STATUS'),
+            'position' => Yii::t('app', 'GAME_POSITION'),
+            'details' => Yii::t('app', 'GAME_DETAILS'),
+            'note' => Yii::t('app', 'GAME_POSITION'),
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getEpic()
     {
