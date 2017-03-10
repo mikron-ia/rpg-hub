@@ -63,6 +63,8 @@ class GameController extends Controller
     {
         $model = new Game();
 
+        $model->setCurrentEpicOnEmpty();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->game_id]);
         } else {

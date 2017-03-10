@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -13,16 +14,17 @@ use yii2tech\ar\position\PositionBehavior;
  *
  * @property string $game_id
  * @property string $epic_id
- * @property string $time
+ * @property string $basics
  * @property string $status
  * @property integer $position
- * @property string $details
- * @property string $note
+ * @property string $notes
  *
  * @property Epic $epic
  */
 class Game extends ActiveRecord
 {
+    use ToolsForEntity;
+
     const STATUS_PROPOSED = 'proposed';       // game was entered on page; next: ANNOUNCED, PLANNED, UNPLANNED
     const STATUS_ANNOUNCED = 'announced';     // information was propagated; next: PLANNED, UNPLANNED
     const STATUS_UNPLANNED = 'unplanned';     // game failed to achieve planning stage; next: none
@@ -43,8 +45,8 @@ class Game extends ActiveRecord
         return [
             [['epic_id'], 'required'],
             [['epic_id', 'position'], 'integer'],
-            [['details', 'note'], 'string'],
-            [['time'], 'string', 'max' => 255],
+            [['notes'], 'string'],
+            [['basics'], 'string', 'max' => 255],
             [['status'], 'string', 'max' => 20],
             [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
         ];
@@ -58,8 +60,7 @@ class Game extends ActiveRecord
             'time' => Yii::t('app', 'GAME_TIME'),
             'status' => Yii::t('app', 'GAME_STATUS'),
             'position' => Yii::t('app', 'GAME_POSITION'),
-            'details' => Yii::t('app', 'GAME_DETAILS'),
-            'note' => Yii::t('app', 'GAME_POSITION'),
+            'notes' => Yii::t('app', 'GAME_NOTES'),
         ];
     }
 

@@ -67,11 +67,10 @@ class m170205_123244_v0_8_0 extends Migration
         $this->createTable('{{%game}}', [
             'game_id' => $this->primaryKey()->unsigned(),
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
-            'time' => $this->string(),
-            'status' => $this->string(20),
+            'basics' => $this->string()->notNull(),
+            'status' => $this->string(20)->notNull()->defaultValue(\common\models\Game::STATUS_PROPOSED),
             'position' => $this->integer()->defaultValue(0),
-            'details' => $this->text(),
-            'note' => $this->text(),
+            'notes' => $this->text(),
         ], $tableOptions);
 
         $this->addForeignKey(

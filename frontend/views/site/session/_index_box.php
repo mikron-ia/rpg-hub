@@ -8,9 +8,9 @@ use yii\helpers\Html;
 
 <div id="story-<?= $model->game_id; ?>">
 
-    <p class="session-box" data-toggle="tooltip"  data-placement="auto left" title="<?= $model->details; ?>">
+    <p class="session-box">
         <?= Html::tag('span', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass()]]) ?>
-        <?php echo Html::tag('span', Html::encode($model->time), []); ?>
+        <?php echo Html::tag('span', Html::encode($model->basics), []); ?>
     </p>
 
 </div>

@@ -10,7 +10,7 @@ use yii\helpers\Html;
 
     <p class="session-box" data-toggle="tooltip"  data-placement="auto left" title="<?= $model->details; ?>">
         <?= Html::tag('span', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass()]]) ?>
-        <?php echo Html::a(Html::encode($model->time), ['game/view', 'id' => $model->game_id]); ?>
+        <?php echo Html::a(Html::encode($model->basics), ['game/view', 'id' => $model->game_id]); ?>
     </p>
 
 </div>

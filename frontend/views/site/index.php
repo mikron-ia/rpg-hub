@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $epic \common\models\Epic */
+/* @var $sessions \yii\data\ActiveDataProvider */
 /* @var $stories \yii\data\ActiveDataProvider */
 /* @var $recap \common\models\Recap */
 
@@ -92,22 +93,27 @@ if ($epic) {
             <?= Yii::t('app', 'FRONTPAGE_OOC') ?>
         </h2>
 
+
         <div>
             <h3 title="<?= Yii::t('app', 'FRONTPAGE_SESSIONS_TITLE_TEXT') ?>">
                 <?= Yii::t('app', 'FRONTPAGE_SESSIONS') ?>
             </h3>
-
-            <?= ListView::widget([
-                'dataProvider' => $sessions,
-                'layout' => '{items}',
-                'itemOptions' => ['class' => 'item'],
-                'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render(
-                        'session/_index_box',
-                        ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
-                    );
-                },
-            ]) ?>
+            <?php if ($epic): ?>
+                <?= ListView::widget([
+                    'dataProvider' => $sessions,
+                    'emptyText' => '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_SESSION_NOT_AVAILABLE') . '</p>',
+                    'layout' => '{items}',
+                    'itemOptions' => ['class' => 'item'],
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        return $this->render(
+                            'session/_index_box',
+                            ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                        );
+                    },
+                ]) ?>
+            <?php else: ?>
+                <p class="error-box"><?= Yii::t('app', 'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_BUTTONS') ?></p>
+            <?php endif; ?>
         </div>
 
         <div>

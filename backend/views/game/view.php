@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Game */
 
-$this->title = 'Session: ' . Html::encode($model->time);
+$this->title = 'Session: ' . Html::encode($model->basics);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_GAME_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -34,10 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </div>
 
-    <h2>Details</h2>
-    <?= $model->details; ?>
-
     <h2>Notes</h2>
-    <?= $model->note; ?>
+    <?= $model->notes; ?>
 
 </div>

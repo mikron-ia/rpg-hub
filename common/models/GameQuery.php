@@ -59,10 +59,9 @@ class GameQuery extends Game
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', 'time', $this->time])
+        $query->andFilterWhere(['like', 'basics', $this->basics])
             ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'details', $this->details])
-            ->andFilterWhere(['like', 'note', $this->note]);
+            ->andFilterWhere(['like', 'notes', $this->notes]);
 
         return $dataProvider;
     }

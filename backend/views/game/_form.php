@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'time')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'basics')->textInput(['maxlength' => true]) ?>
     </div>
 
     <div class="col-md-3">
@@ -27,11 +27,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-12">
-        <?= $form->field($model, 'details')->textarea(['rows' => 8]) ?>
-    </div>
-
-    <div class="col-md-12">
-        <?= $form->field($model, 'note')->textarea(['rows' => 8]) ?>
+        <?= $form->field($model, 'notes')->textarea(['rows' => 8]) ?>
     </div>
 
     <div class="clearfix"></div>
