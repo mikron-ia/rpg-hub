@@ -5,7 +5,6 @@ namespace backend\controllers;
 use common\models\GameQuery;
 use Yii;
 use common\models\Game;
-use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -33,6 +32,14 @@ class GameController extends Controller
      */
     public function actionIndex()
     {
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection');
+        }
+
+        if (!Game::canUserIndexThem()) {
+            Game::throwExceptionAboutIndex();
+        }
+
         $searchModel = new GameQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -49,8 +56,22 @@ class GameController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
+        }
+
+        if (!$model->canUserViewYou()) {
+            Game::throwExceptionAboutView();
+        }
+
+        if (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -61,6 +82,10 @@ class GameController extends Controller
      */
     public function actionCreate()
     {
+        if (!Game::canUserCreateThem()) {
+            Game::throwExceptionAboutCreate();
+        }
+
         $model = new Game();
 
         $model->setCurrentEpicOnEmpty();
@@ -84,6 +109,10 @@ class GameController extends Controller
     {
         $model = $this->findModel($id);
 
+        if (!$model->canUserControlYou()) {
+            Game::throwExceptionAboutControl();
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->game_id]);
         } else {
@@ -101,7 +130,13 @@ class GameController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if (!$model->canUserControlYou()) {
+            Game::throwExceptionAboutControl();
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }

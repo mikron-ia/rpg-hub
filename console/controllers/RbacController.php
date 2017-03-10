@@ -271,9 +271,25 @@ class RbacController extends Controller
 
         $auth->add($viewScenario);
 
+        $controlGame = $auth->createPermission('controlGame');
+        $controlGame->description = 'Able to add, edit, and move a game';
+        $controlGame->ruleName = $gameMasterRule->name;
+
+        $auth->add($controlGame);
+
+        $viewGame = $auth->createPermission('viewGame');
+        $viewGame->description = 'Able to view a game';
+        $viewGame->ruleName = $watcherRule->name;
+
+        $auth->add($viewGame);
+
+        $user = $auth->getRole('user');
         $operator = $auth->getRole('operator');
 
         $auth->addChild($operator, $controlScenario);
         $auth->addChild($operator, $viewScenario);
+
+        $auth->addChild($operator, $controlGame);
+        $auth->addChild($user, $viewGame);
     }
 }
