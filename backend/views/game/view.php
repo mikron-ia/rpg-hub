@@ -19,10 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
     </div>
 
-    <div class="game-time">
-        <?= $model->time ?>
-    </div>
-
     <div class="text-center">
         <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
