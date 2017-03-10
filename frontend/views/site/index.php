@@ -97,7 +97,17 @@ if ($epic) {
                 <?= Yii::t('app', 'FRONTPAGE_SESSIONS') ?>
             </h3>
 
-            <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></i></p>
+            <?= ListView::widget([
+                'dataProvider' => $sessions,
+                'layout' => '{items}',
+                'itemOptions' => ['class' => 'item'],
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render(
+                        'session/_index_box',
+                        ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                    );
+                },
+            ]) ?>
         </div>
 
         <div>

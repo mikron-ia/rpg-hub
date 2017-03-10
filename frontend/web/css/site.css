@@ -367,14 +367,23 @@ a:focus {
     font-weight: bold;
 }
 
+.session-box {
+    font-size: 1.8rem;
+}
+
 .game-status {
-    font-family: "Courier New", Courier, monospace;
-    font-size: 1.75rem;
+    display: inline-block;
+    font-family: "Arial Narrow", Arial, monospace;
+    font-size: 0.5em;
     font-weight: bold;
     border-radius: 15px;
-    padding: 5px;
+    padding: 7px;
     color: black;
-    max-width: 50%;
+    min-width: 170px;
+    margin-right: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
 }
 
 .game-status-proposed {
