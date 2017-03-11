@@ -8,7 +8,8 @@ use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\web\HttpException;
+use yii\helpers\Html;
+use yii\helpers\Markdown;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
@@ -20,6 +21,8 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $status
  * @property integer $position
  * @property string $notes
+ *
+ * @property string $notesFormatted
  *
  * @property Epic $epic
  */
@@ -182,5 +185,13 @@ class Game extends ActiveRecord implements HasEpicControl
     static function throwExceptionAboutView()
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_SESSION'));
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNotesFormatted()
+    {
+        return Markdown::process(Html::encode($this->notes), 'gfm');
     }
 }
