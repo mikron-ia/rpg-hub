@@ -109,6 +109,7 @@ $this->title = 'RPG hub - control';
                 <div>
                     <?= ListView::widget([
                         'dataProvider' => $sessions,
+                        'emptyText' => '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_SESSION_NOT_AVAILABLE') . '</p>',
                         'layout' => '{items}',
                         'itemOptions' => ['class' => 'item'],
                         'itemView' => function ($model, $key, $index, $widget) {

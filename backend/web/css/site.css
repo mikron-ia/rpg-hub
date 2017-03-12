@@ -170,6 +170,13 @@ p {
     margin-top: 5px;
 }
 
+.error-box {
+    color: #a94442;
+    background: #fdf7f7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
 .glyphicon {
     margin: 0 8px;
 }
