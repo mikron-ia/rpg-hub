@@ -25,7 +25,7 @@ class ScenarioController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'update', 'view'],
+                        'actions' => ['create', 'index', 'update', 'view', 'delete'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -142,7 +142,13 @@ class ScenarioController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if (!$model->canUserControlYou()) {
+            Scenario::throwExceptionAboutControl();
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }

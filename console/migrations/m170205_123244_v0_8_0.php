@@ -36,6 +36,7 @@ class m170205_123244_v0_8_0 extends Migration
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
             'key' => $this->string(80)->notNull(),
             'name' => $this->string(120)->notNull(),
+            'status' => $this->string(20)->notNull()->defaultValue(\common\models\Scenario::STATUS_NEW),
             'tag_line' => $this->string(),
             'description_pack_id' => $this->integer(11)->unsigned(),
         ], $tableOptions);

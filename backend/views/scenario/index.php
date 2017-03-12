@@ -1,10 +1,11 @@
 <?php
 
+use common\models\Scenario;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\ScenarioQuery */
+/* @var $searchModel \common\models\ScenarioQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'SCENARIO_INDEX_TITLE');
@@ -32,15 +33,31 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'filterPosition' => null,
+            'rowOptions' => function (Scenario $model, $key, $index, $grid) {
+                return [
+                    'data-toggle' => 'tooltip',
+                    'title' => $model->tag_line,
+                ];
+            },
             'columns' => [
                 'name',
-                'tag_line',
+                [
+                    'attribute' => 'status',
+                    'format' => 'raw',
+                    'value' => function (Scenario $model) {
+                        return $model->getStatus();
+                    }
+                ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {update}',
                 ],
             ],
         ]); ?>
+
+        <?php $this->registerJs("$(document).ready(function(){
+                $('[data-toggle=\"tooltip\"]').tooltip();
+            });"); ?>
 
     </div>
 

@@ -15,7 +15,7 @@ class ScenarioQuery extends Scenario
     {
         return [
             [['scenario_id', 'epic_id', 'description_pack_id'], 'integer'],
-            [['name', 'tag_line'], 'safe'],
+            [['name', 'tag_line', 'status'], 'safe'],
         ];
     }
 
@@ -58,10 +58,10 @@ class ScenarioQuery extends Scenario
         $query->andFilterWhere([
             'scenario_id' => $this->scenario_id,
             'epic_id' => $this->epic_id,
-            'description_pack_id' => $this->description_pack_id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['in', 'status', $this->status])
             ->andFilterWhere(['like', 'tag_line', $this->tag_line]);
 
         return $dataProvider;

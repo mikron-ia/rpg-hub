@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\ScenarioQuery */
+/* @var $model \common\models\ScenarioQuery */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -19,9 +19,16 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tag_line') ?>
 
+    <?php echo $form->field($model, 'status')->widget(
+        kartik\select2\Select2::className(),
+        [
+            'data' => \common\models\Scenario::statusNames(),
+            'options' => ['multiple' => true],
+        ]
+    ) ?>
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'BUTTON_SEARCH'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'BUTTON_RESET'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

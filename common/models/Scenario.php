@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  * @property string $epic_id
  * @property string $key
  * @property string $name
+ * @property string $status
  * @property string $tag_line
  * @property string $description_pack_id
  *
@@ -25,6 +26,10 @@ use yii\db\ActiveRecord;
 class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
 {
     use ToolsForEntity;
+
+    const STATUS_NEW = 'new';
+    const STATUS_DISCARDED = 'discarded';
+    const STATUS_USED = 'used';
 
     public static function tableName()
     {
@@ -36,7 +41,14 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
         return [
             [['epic_id', 'name'], 'required'],
             [['epic_id', 'description_pack_id'], 'integer'],
-            [['name'], 'string', 'max' => 120],
+            [['name', 'status'], 'string', 'max' => 120],
+            [
+                ['status'],
+                'in',
+                'range' => function () {
+                    return $this->allowedStatuses();
+                }
+            ],
             [['tag_line'], 'string', 'max' => 255],
             [
                 ['description_pack_id'],
@@ -155,5 +167,52 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     static function throwExceptionAboutView()
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_SCENARIO'));
+    }
+
+    static public function allowedStatuses():array
+    {
+        return [self::STATUS_NEW, self::STATUS_DISCARDED, self::STATUS_USED];
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function statusNames():array
+    {
+        return [
+            self::STATUS_NEW => Yii::t('app', 'SCENARIO_STATUS_NEW'),
+            self::STATUS_DISCARDED => Yii::t('app', 'SCENARIO_STATUS_DISCARDED'),
+            self::STATUS_USED => Yii::t('app', 'SCENARIO_STATUS_USED'),
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function statusClasses():array
+    {
+        return [
+            self::STATUS_NEW => 'scenario-status-proposed',
+            self::STATUS_DISCARDED => 'scenario-status-announced',
+            self::STATUS_USED => 'scenario-status-unplanned',
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus():string
+    {
+        $names = self::statusNames();
+        return isset($names[$this->status]) ? $names[$this->status] : '?';
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusClass():string
+    {
+        $names = self::statusClasses();
+        return isset($names[$this->status]) ? $names[$this->status] : '';
     }
 }

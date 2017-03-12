@@ -1,6 +1,7 @@
 <?php
 
 use common\models\EpicQuery;
+use common\models\Scenario;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -21,7 +22,11 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-3">
+        <?= $form->field($model, 'status')->dropDownList(Scenario::statusNames()) ?>
+    </div>
+
+    <div class="col-md-9">
         <?= $form->field($model, 'tag_line')->textInput(['maxlength' => true]) ?>
     </div>
 
