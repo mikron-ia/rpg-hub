@@ -87,6 +87,8 @@ class m170205_123244_v0_8_0 extends Migration
             'character_id' => $this->integer(11)->unsigned()->notNull(),
             'group_id' => $this->integer(11)->unsigned()->notNull(),
             'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM),
+            'public_text' => $this->text(),
+            'private_text' => $this->text(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -99,6 +101,22 @@ class m170205_123244_v0_8_0 extends Migration
             'group_character_membership_group',
             'group_character_membership', 'group_id',
             '{{%group}}', 'group_id',
+            'RESTRICT', 'CASCADE'
+        );
+
+        /* Membership history */
+        $this->createTable('{{%group_character_membership_history}}', [
+            'group_character_membership_history_id' => $this->primaryKey()->unsigned(),
+            'group_character_membership_id' => $this->integer(11)->unsigned()->notNull(),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM),
+            'public_text' => $this->text(),
+            'private_text' => $this->text(),
+        ], $tableOptions);
+
+        $this->addForeignKey(
+            'group_character_membership_history_base',
+            'group_character_membership_history', 'group_character_membership_id',
+            'group_character_membership', 'group_character_membership_id',
             'RESTRICT', 'CASCADE'
         );
     }
@@ -117,6 +135,7 @@ class m170205_123244_v0_8_0 extends Migration
 
         $this->dropTable('game');
 
+        $this->dropTable('group_character_membership_history');
         $this->dropTable('group_character_membership');
     }
 }
