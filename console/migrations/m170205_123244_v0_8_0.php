@@ -80,6 +80,27 @@ class m170205_123244_v0_8_0 extends Migration
             '{{%epic}}', 'epic_id',
             'RESTRICT', 'CASCADE'
         );
+
+        /* Membership */
+        $this->createTable('{{%group_character_membership}}', [
+            'group_character_membership_id' => $this->primaryKey()->unsigned(),
+            'character_id' => $this->integer(11)->unsigned()->notNull(),
+            'group_id' => $this->integer(11)->unsigned()->notNull(),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM),
+        ], $tableOptions);
+
+        $this->addForeignKey(
+            'group_character_membership_character',
+            'group_character_membership', 'character_id',
+            '{{%character}}', 'character_id',
+            'RESTRICT', 'CASCADE'
+        );
+        $this->addForeignKey(
+            'group_character_membership_group',
+            'group_character_membership', 'group_id',
+            '{{%group}}', 'group_id',
+            'RESTRICT', 'CASCADE'
+        );
     }
 
     public function down()
@@ -95,5 +116,7 @@ class m170205_123244_v0_8_0 extends Migration
         $this->dropColumn('group', 'description_pack_id');
 
         $this->dropTable('game');
+
+        $this->dropTable('group_character_membership');
     }
 }
