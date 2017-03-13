@@ -16,13 +16,13 @@ use Yii;
  *
  * @property Character $character
  * @property Group $group
- * @property GroupCharacterMembershipHistory[] $groupCharacterMembershipHistories
+ * @property GroupMembershipHistory[] $groupMembershipHistories
  */
-class GroupCharacterMembership extends \yii\db\ActiveRecord
+class GroupMembership extends \yii\db\ActiveRecord
 {
     public static function tableName()
     {
-        return 'group_character_membership';
+        return 'group_membership';
     }
 
     public function rules()
@@ -40,12 +40,12 @@ class GroupCharacterMembership extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'group_character_membership_id' => Yii::t('app', 'Group Character Membership ID'),
-            'character_id' => Yii::t('app', 'Character ID'),
-            'group_id' => Yii::t('app', 'Group ID'),
-            'visibility' => Yii::t('app', 'Visibility'),
-            'public_text' => Yii::t('app', 'Public Text'),
-            'private_text' => Yii::t('app', 'Private Text'),
+            'group_character_membership_id' => Yii::t('app', 'GROUP_MEMBERSHIP_ID'),
+            'character_id' => Yii::t('app', 'LABEL_CHARACTER'),
+            'group_id' => Yii::t('app', 'LABEL_GROUP'),
+            'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
+            'public_text' => Yii::t('app', 'GROUP_MEMBERSHIP_PUBLIC_TEXT'),
+            'private_text' => Yii::t('app', 'GROUP_MEMBERSHIP_PRIVATE_TEXT'),
         ];
     }
 
@@ -68,8 +68,8 @@ class GroupCharacterMembership extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getGroupCharacterMembershipHistories()
+    public function getGroupMembershipHistories()
     {
-        return $this->hasMany(GroupCharacterMembershipHistory::className(), ['group_character_membership_id' => 'group_character_membership_id']);
+        return $this->hasMany(GroupMembershipHistory::className(), ['group_membership_id' => 'group_membership_id']);
     }
 }

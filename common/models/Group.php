@@ -27,6 +27,7 @@ use yii\db\ActiveRecord;
  * @property DescriptionPack $descriptionPack
  * @property Epic $epic
  * @property SeenPack $seenPack
+ * @property GroupMembership[] $groupCharacterMemberships
  */
 class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasSightings, HasVisibility
 {
@@ -162,6 +163,14 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public function getSeenPack()
     {
         return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroupCharacterMemberships()
+    {
+        return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id']);
     }
 
     public function getSimpleDataForApi()

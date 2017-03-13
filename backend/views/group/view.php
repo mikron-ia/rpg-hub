@@ -27,6 +27,14 @@ $items = [
         'active' => false,
     ],
     [
+        'label' => Yii::t('app', 'GROUP_MEMBERSHIPS'),
+        'content' => $this->render('_view_members', [
+            'model' => $model,
+        ]),
+        'encode' => false,
+        'active' => false,
+    ],
+    [
         'label' => Yii::t('app', 'CHARACTER_SIGHTINGS'),
         'content' => $this->render('_view_views', ['model' => $model]),
         'encode' => false,
