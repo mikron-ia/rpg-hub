@@ -3,9 +3,11 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "group_character_membership".
+ * This is the model class for table "group_membership".
  *
  * @property string $group_character_membership_id
  * @property string $character_id
@@ -18,7 +20,7 @@ use Yii;
  * @property Group $group
  * @property GroupMembershipHistory[] $groupMembershipHistories
  */
-class GroupMembership extends \yii\db\ActiveRecord
+class GroupMembership extends ActiveRecord
 {
     public static function tableName()
     {
@@ -50,7 +52,7 @@ class GroupMembership extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCharacter()
     {
@@ -58,7 +60,7 @@ class GroupMembership extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getGroup()
     {
@@ -66,7 +68,7 @@ class GroupMembership extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getGroupMembershipHistories()
     {
