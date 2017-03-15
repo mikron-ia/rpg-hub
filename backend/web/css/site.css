@@ -253,3 +253,33 @@ p {
     background-color: darkgreen;
     color: white;
 }
+
+.scenario-status {
+    display: inline-block;
+    font-family: "Arial Narrow", Arial, monospace;
+    font-size: 0.8em;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 7px;
+    color: black;
+    min-width: 170px;
+    margin-right: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.scenario-status-discarded {
+    background-color: darkred;
+    color: white;
+}
+
+.scenario-status-proposed {
+    background-color: navy;
+    color: white;
+}
+
+.scenario-status-unplanned {
+    background-color: grey;
+    color: white;
+}

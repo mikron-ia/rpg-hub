@@ -193,8 +193,8 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     {
         return [
             self::STATUS_NEW => 'scenario-status-proposed',
-            self::STATUS_DISCARDED => 'scenario-status-announced',
-            self::STATUS_USED => 'scenario-status-unplanned',
+            self::STATUS_DISCARDED => 'scenario-status-discarded',
+            self::STATUS_USED => 'scenario-status-used',
         ];
     }
 
