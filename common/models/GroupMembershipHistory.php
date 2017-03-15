@@ -31,7 +31,13 @@ class GroupMembershipHistory extends ActiveRecord
             [['group_character_membership_id'], 'integer'],
             [['public_text', 'private_text'], 'string'],
             [['visibility'], 'string', 'max' => 20],
-            [['group_membership_id'], 'exist', 'skipOnError' => true, 'targetClass' => GroupMembership::className(), 'targetAttribute' => ['group_membership_id' => 'group_character_membership_id']],
+            [
+                ['group_membership_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => GroupMembership::className(),
+                'targetAttribute' => ['group_membership_id' => 'group_character_membership_id']
+            ],
         ];
     }
 

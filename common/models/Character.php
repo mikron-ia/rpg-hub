@@ -44,11 +44,6 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 {
     use ToolsForEntity;
 
-    const VISIBILITY_NONE = 'none';
-    const VISIBILITY_LOGGED = 'logged';
-    const VISIBILITY_GM = 'gm';
-    const VISIBILITY_FULL = 'full';
-
     public static function tableName()
     {
         return 'character';
@@ -262,7 +257,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
     public function isVisibleInApi()
     {
-        return ($this->visibility === self::VISIBILITY_FULL);
+        return ($this->visibility === Visibility::VISIBILITY_FULL);
     }
 
     /**

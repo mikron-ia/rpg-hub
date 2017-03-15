@@ -10,9 +10,6 @@ use yii\data\ActiveDataProvider;
  */
 class PerformedActionQuery extends PerformedAction
 {
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -21,9 +18,6 @@ class PerformedActionQuery extends PerformedAction
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
@@ -38,8 +32,6 @@ class PerformedActionQuery extends PerformedAction
     public function search($params):ActiveDataProvider
     {
         $query = PerformedAction::find();
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

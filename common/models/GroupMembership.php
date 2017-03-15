@@ -34,8 +34,20 @@ class GroupMembership extends ActiveRecord
             [['character_id', 'group_id'], 'integer'],
             [['public_text', 'private_text'], 'string'],
             [['visibility'], 'string', 'max' => 20],
-            [['character_id'], 'exist', 'skipOnError' => true, 'targetClass' => Character::className(), 'targetAttribute' => ['character_id' => 'character_id']],
-            [['group_id'], 'exist', 'skipOnError' => true, 'targetClass' => Group::className(), 'targetAttribute' => ['group_id' => 'group_id']],
+            [
+                ['character_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Character::className(),
+                'targetAttribute' => ['character_id' => 'character_id']
+            ],
+            [
+                ['group_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Group::className(),
+                'targetAttribute' => ['group_id' => 'group_id']
+            ],
         ];
     }
 
