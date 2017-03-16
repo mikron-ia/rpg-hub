@@ -13,18 +13,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $items = [
     [
-        'label' => Yii::t('app', 'GROUP_DESCRIPTIONS_TAB'),
-        'content' => $this->render('_view_descriptions', ['model' => $model]),
-        'encode' => false,
-        'active' => true,
-    ],
-    [
         'label' => Yii::t('app', 'GROUP_BASIC'),
         'content' => $this->render('_view_basic', [
             'model' => $model,
         ]),
         'encode' => false,
         'active' => false,
+    ],
+    [
+        'label' => Yii::t('app', 'GROUP_DESCRIPTIONS_TAB'),
+        'content' => $this->render('_view_descriptions', ['model' => $model]),
+        'encode' => false,
+        'active' => true,
     ],
     [
         'label' => Yii::t('app', 'GROUP_MEMBERSHIPS'),

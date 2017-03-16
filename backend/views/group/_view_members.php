@@ -39,7 +39,7 @@ use yii\helpers\Html;
             [
                 'attribute' => 'visibility',
                 'value' => function (\common\models\GroupMembership $model) {
-                    return $model->visibility;
+                    return $model->getVisibility();
                 }
             ],
             [

@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\models\core\HasVisibility;
+use common\models\core\Visibility;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -20,7 +22,7 @@ use yii\db\ActiveRecord;
  * @property Group $group
  * @property GroupMembershipHistory[] $groupMembershipHistories
  */
-class GroupMembership extends ActiveRecord
+class GroupMembership extends ActiveRecord implements HasVisibility
 {
     public static function tableName()
     {
@@ -85,5 +87,25 @@ class GroupMembership extends ActiveRecord
     public function getGroupMembershipHistories()
     {
         return $this->hasMany(GroupMembershipHistory::className(), ['group_membership_id' => 'group_membership_id']);
+    }
+
+    static public function allowedVisibilities():array
+    {
+        return [
+            Visibility::VISIBILITY_GM,
+            Visibility::VISIBILITY_FULL
+        ];
+    }
+
+    public function getVisibility():string
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getName();
+    }
+
+    public function getVisibilityLowercase():string
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getNameLowercase();
     }
 }
