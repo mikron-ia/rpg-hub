@@ -87,6 +87,8 @@ class m170205_123244_v0_8_0 extends Migration
             'character_id' => $this->integer(11)->unsigned()->notNull(),
             'group_id' => $this->integer(11)->unsigned()->notNull(),
             'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM),
+            'position' => $this->integer()->defaultValue(0),
+            'short_text' => $this->string(80),
             'public_text' => $this->text(),
             'private_text' => $this->text(),
         ], $tableOptions);

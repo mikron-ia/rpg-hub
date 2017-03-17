@@ -10,10 +10,7 @@ use yii\helpers\Html;
 
 ?>
 
-
 <div class="buttoned-header">
-
-
     <?= Html::a(
         '<span class="btn btn-success">' . Yii::t('app', 'MEMBERSHIP_BUTTON_ADD') . '</span>',
         '#',
