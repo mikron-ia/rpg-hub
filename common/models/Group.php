@@ -10,6 +10,7 @@ use common\models\core\HasVisibility;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -28,6 +29,7 @@ use yii\db\ActiveRecord;
  * @property Epic $epic
  * @property SeenPack $seenPack
  * @property GroupMembership[] $groupCharacterMemberships
+ * @property GroupMembership[] $groupCharacterMembershipsOrderedByPosition
  */
 class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasSightings, HasVisibility
 {
@@ -142,7 +144,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getDescriptionPack()
     {
@@ -150,7 +152,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getEpic()
     {
@@ -158,7 +160,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getSeenPack()
     {
@@ -166,11 +168,19 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getGroupCharacterMemberships()
     {
         return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getGroupCharacterMembershipsOrderedByPosition()
+    {
+        return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id'])->orderBy('position ASC');
     }
 
     public function getSimpleDataForApi()

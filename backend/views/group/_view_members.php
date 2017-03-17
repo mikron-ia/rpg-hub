@@ -27,7 +27,7 @@ use yii\helpers\Html;
 <div id="memberships">
     <?= \yii\grid\GridView::widget([
         'dataProvider' => new \yii\data\ActiveDataProvider([
-            'query' => $model->getGroupCharacterMemberships(),
+            'query' => $model->getGroupCharacterMembershipsOrderedByPosition(),
         ]),
         'summary' => '',
         'filterPosition' => null,
