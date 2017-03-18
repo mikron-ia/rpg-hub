@@ -13,7 +13,7 @@ use yii2tech\ar\position\PositionBehavior;
 /**
  * This is the model class for table "group_membership".
  *
- * @property string $group_character_membership_id
+ * @property string $group_membership_id
  * @property string $character_id
  * @property string $group_id
  * @property string $visibility

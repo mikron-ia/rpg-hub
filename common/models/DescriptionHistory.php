@@ -35,6 +35,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
             [['description_id'], 'integer'],
             [['public_text'], 'required'],
             [['public_text', 'private_text'], 'string'],
+            [['time_ic'], 'string', 'max' => 255],
             [['visibility'], 'string', 'max' => 20],
             [
                 ['description_id'],
@@ -52,6 +53,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
             'description_history_id' => Yii::t('app', 'DESCRIPTION_HISTORY_ID'),
             'description_id' => Yii::t('app', 'DESCRIPTION_HISTORY_DESCRIPTION_ID'),
             'created_at' => Yii::t('app', 'DESCRIPTION_HISTORY_CREATED'),
+            'time_ic' => Yii::t('app', 'LABEL_TIME_IC'),
             'public_text' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PUBLIC'),
             'private_text' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PRIVATE'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),

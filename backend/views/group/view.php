@@ -52,4 +52,8 @@ $items = [
         'items' => $items
     ]) ?>
 
+    <?php $this->registerJs("$(document).ready(function(){
+                $('[data-toggle=\"tooltip\"]').tooltip();
+            });"); ?>
+
 </div>

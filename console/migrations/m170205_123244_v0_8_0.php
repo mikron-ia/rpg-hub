@@ -17,6 +17,7 @@ class m170205_123244_v0_8_0 extends Migration
             'description_history_id' => $this->primaryKey()->unsigned(),
             'description_id' => $this->integer(11)->unsigned(),
             'created_at' => $this->integer(11)->unsigned(),
+            'time_ic' => $this->string(),
             'public_text' => $this->text()->notNull(),
             'private_text' => $this->text(),
             'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM),
@@ -110,7 +111,10 @@ class m170205_123244_v0_8_0 extends Migration
         $this->createTable('{{%group_membership_history}}', [
             'group_membership_history_id' => $this->primaryKey()->unsigned(),
             'group_membership_id' => $this->integer(11)->unsigned()->notNull(),
+            'created_at' => $this->integer(11)->unsigned(),
+            'time_ic' => $this->string(),
             'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM),
+            'short_text' => $this->string(80),
             'public_text' => $this->text(),
             'private_text' => $this->text(),
         ], $tableOptions);
