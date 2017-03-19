@@ -48,14 +48,23 @@ use yii\helpers\Html;
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {detach} {up} {down}',
+                'template' => '{view} {update} {detach} {up} {down}',
                 'buttons' => [
-                    'update' => function ($url, GroupMembership $model, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
-                            'class' => 'update-parameter-link',
+                    'view' => function ($url, GroupMembership $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', '#', [
+                            'class' => 'view-membership-link',
                             'title' => Yii::t('app', 'LABEL_UPDATE'),
                             'data-toggle' => 'modal',
-                            'data-target' => '#update-parameter-modal',
+                            'data-target' => '#view-membership-modal',
+                            'data-id' => $key,
+                        ]);
+                    },
+                    'update' => function ($url, GroupMembership $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
+                            'class' => 'update-membership-link',
+                            'title' => Yii::t('app', 'LABEL_UPDATE'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#update-membership-modal',
                             'data-id' => $key,
                         ]);
                     },
@@ -116,6 +125,30 @@ use yii\helpers\Html;
         function (data) {
             $('.modal-body').html(data);
             $('#add-membership-modal').modal();
+        }
+    );
+});"
+); ?>
+
+<?php Modal::begin([
+    'id' => 'view-membership-modal',
+    'header' => '<h2 class="modal-title">' . Yii::t('app', 'MEMBERSHIP_TITLE_VIEW') . '</h2>',
+    'clientOptions' => ['backdrop' => 'static'],
+    'size' => Modal::SIZE_LARGE,
+]); ?>
+
+<?php Modal::end(); ?>
+
+<?php $this->registerJs(
+    "$('.view-membership-link').click(function() {
+    $.get(
+        '" . Yii::$app->urlManager->createUrl(['group-membership/view']) . "',
+        {
+            id: $(this).data('id')
+        },
+        function (data) {
+            $('.modal-body').html(data);
+            $('#view-membership-modal').modal();
         }
     );
 });"
