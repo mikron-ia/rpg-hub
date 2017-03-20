@@ -14,21 +14,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Group Membership'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'MEMBERSHIP_BUTTON_ADD'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
-            'group_membership_id',
-            'character_id',
-            'group_id',
+            'group.name',
+            'character.name',
             'visibility',
-            'position',
-            // 'short_text',
-            // 'public_text:ntext',
-            // 'private_text:ntext',
+            'short_text',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

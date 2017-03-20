@@ -24,7 +24,6 @@ use yii\helpers\Html;
     ); ?>
 </div>
 
-
 <div id="memberships">
     <?= \yii\grid\GridView::widget([
         'dataProvider' => new \yii\data\ActiveDataProvider([
@@ -48,14 +47,23 @@ use yii\helpers\Html;
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {detach} {up} {down}',
+                'template' => '{view} {history} {update} {up} {down}',
                 'buttons' => [
                     'view' => function ($url, GroupMembership $model, $key) {
                         return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', '#', [
                             'class' => 'view-membership-link',
-                            'title' => Yii::t('app', 'LABEL_UPDATE'),
+                            'title' => Yii::t('app', 'LABEL_VIEW'),
                             'data-toggle' => 'modal',
                             'data-target' => '#view-membership-modal',
+                            'data-id' => $key,
+                        ]);
+                    },
+                    'history' => function ($url, GroupMembership $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-eye-close"></span>', '#', [
+                            'class' => 'membership-history-link',
+                            'title' => Yii::t('app', 'LABEL_VIEW'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#membership-history-modal',
                             'data-id' => $key,
                         ]);
                     },
@@ -67,20 +75,6 @@ use yii\helpers\Html;
                             'data-target' => '#update-membership-modal',
                             'data-id' => $key,
                         ]);
-                    },
-                    'detach' => function ($url, GroupMembership $model, $key) {
-                        return Html::a(
-                            '<span class="glyphicon glyphicon-remove"></span>',
-                            ['group-membership/detach', 'id' => $model->group_membership_id],
-                            [
-                                'title' => Yii::t('app', 'LABEL_DETACH'),
-                                'data-confirm' => Yii::t(
-                                    'app',
-                                    'GROUP_MEMBERSHIP_CONFIRMATION_DETACH {name}',
-                                    ['name' => $model->character->name]
-                                ),
-                                'data-method' => 'post',
-                            ]);
                     },
                     'up' => function ($url, GroupMembership $model, $key) {
                         return Html::a(
@@ -133,7 +127,6 @@ use yii\helpers\Html;
 <?php Modal::begin([
     'id' => 'view-membership-modal',
     'header' => '<h2 class="modal-title">' . Yii::t('app', 'MEMBERSHIP_TITLE_VIEW') . '</h2>',
-    'clientOptions' => ['backdrop' => 'static'],
     'size' => Modal::SIZE_LARGE,
 ]); ?>
 
@@ -155,7 +148,7 @@ use yii\helpers\Html;
 ); ?>
 
 <?php Modal::begin([
-    'id' => 'modify-membership-modal',
+    'id' => 'update-membership-modal',
     'header' => '<h2 class="modal-title">' . Yii::t('app', 'MEMBERSHIP_TITLE_MODIFY') . '</h2>',
     'clientOptions' => ['backdrop' => 'static'],
     'size' => Modal::SIZE_LARGE,
@@ -164,7 +157,7 @@ use yii\helpers\Html;
 <?php Modal::end(); ?>
 
 <?php $this->registerJs(
-    "$('.modify-membership-link').click(function() {
+    "$('.update-membership-link').click(function() {
     $.get(
         '" . Yii::$app->urlManager->createUrl(['group-membership/update']) . "',
         {
@@ -172,7 +165,7 @@ use yii\helpers\Html;
         },
         function (data) {
             $('.modal-body').html(data);
-            $('#modify-membership-modal').modal();
+            $('#update-membership-modal').modal();
         }
     );
 });"

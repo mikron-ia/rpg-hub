@@ -8,6 +8,8 @@ use common\models\core\Visibility;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
+use yii\helpers\Markdown;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
@@ -72,6 +74,15 @@ class GroupMembership extends ActiveRecord implements HasVisibility
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if (!$insert) {
+            $this->createHistoryRecord();
+        }
+
+        return parent::beforeSave($insert);
+    }
+
     public function behaviors()
     {
         return [
@@ -130,5 +141,39 @@ class GroupMembership extends ActiveRecord implements HasVisibility
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPublicFormatted()
+    {
+        return Markdown::process(Html::encode($this->public_text), 'gfm');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPrivateFormatted()
+    {
+        return Markdown::process(Html::encode($this->private_text), 'gfm');
+    }
+
+    /**
+     * @return DescriptionHistory|null
+     */
+    public function createHistoryRecord()
+    {
+        $membership = GroupMembership::findOne(['group_membership_id' => $this->group_membership_id]);
+
+        if (
+            ($membership->short_text === $this->short_text) &&
+            ($membership->public_text === $this->public_text) &&
+            ($membership->private_text === $this->private_text)
+        ) {
+            return null;
+        }
+
+        return GroupMembershipHistory::createFromMembership($membership);
     }
 }

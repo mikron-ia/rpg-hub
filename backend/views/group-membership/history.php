@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 use common\models\DescriptionHistory;
+use common\models\GroupMembershipHistory;
 use yii\helpers\Html;
 
 /* @var $model common\models\GroupMembership */
@@ -18,13 +19,13 @@ $this->title = Yii::t('app', 'GROUP_MEMBERSHIP_HISTORY_TITLE_INDEX');
             'pagination' => false,
         ]),
         'filterPosition' => null,
-        'rowOptions' => function (DescriptionHistory $model, $key, $index, $grid) {
+        'rowOptions' => function (GroupMembershipHistory $model, $key, $index, $grid) {
             return [
                 'title' => Yii::$app->formatter->asDatetime($model->created_at),
                 'data-toggle' => 'popover',
                 'data-content' => $model->getPublicFormatted() . '<hr>' . $model->getPrivateFormatted(),
                 'data-html' => 'true',
-                'data-placement' => 'auto bottom',
+                'data-placement' => 'auto left',
                 'data-trigger' => 'click hover',
             ];
         },
@@ -33,7 +34,7 @@ $this->title = Yii::t('app', 'GROUP_MEMBERSHIP_HISTORY_TITLE_INDEX');
             'created_at:datetime',
             [
                 'attribute' => 'visibility',
-                'value' => function (DescriptionHistory $model) {
+                'value' => function (GroupMembershipHistory $model) {
                     return $model->getVisibility();
                 }
             ],

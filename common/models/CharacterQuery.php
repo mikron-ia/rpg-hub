@@ -104,4 +104,33 @@ final class CharacterQuery extends Character
 
         return $search;
     }
+
+    /**
+     * @return string[]
+     */
+    static public function listEpicCharactersAsArray():array
+    {
+        $query = Character::find();
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+            $query->where('0=1');
+        } else {
+            $query->andWhere([
+                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+                'visibility' => Visibility::determineVisibilityVector(),
+            ]);
+        }
+
+        $characters = $query->all();
+
+        $arrayOfNames = [];
+
+        foreach ($characters as $character) {
+            /* @var $character Character */
+            $arrayOfNames[$character->character_id] = $character->name;
+        }
+
+        return $arrayOfNames;
+    }
 }

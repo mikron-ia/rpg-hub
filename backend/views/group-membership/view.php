@@ -15,13 +15,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'character.name',
             'group.name',
-            'visibility',
+            'character.name',
             'short_text',
-            'public_text:ntext',
-            'private_text:ntext',
         ],
     ]) ?>
+
+    <div>
+        <?= $model->getPublicFormatted(); ?>
+    </div>
+
+    <div class="private-notes">
+        <?= $model->getPrivateFormatted(); ?>
+    </div>
 
 </div>
