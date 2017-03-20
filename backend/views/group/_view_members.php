@@ -59,9 +59,9 @@ use yii\helpers\Html;
                         ]);
                     },
                     'history' => function ($url, GroupMembership $model, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-eye-close"></span>', '#', [
+                        return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', '#', [
                             'class' => 'membership-history-link',
-                            'title' => Yii::t('app', 'LABEL_VIEW'),
+                            'title' => Yii::t('app', 'LABEL_HISTORY'),
                             'data-toggle' => 'modal',
                             'data-target' => '#membership-history-modal',
                             'data-id' => $key,

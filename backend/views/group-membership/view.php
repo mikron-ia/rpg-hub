@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-membership-view">
 
-    <div class="subtitle"><?= $model->short_text ?></div>
+    <p class="subtitle"><?= $model->short_text ?></p>
 
     <div><?= $model->getPublicFormatted(); ?></div>
 

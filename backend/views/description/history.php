@@ -20,16 +20,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'LABEL_UPDATE');
             'pagination' => false,
         ]),
         'filterPosition' => null,
-        'rowOptions' => function (DescriptionHistory $model, $key, $index, $grid) {
-            return [
-                'title' => Yii::$app->formatter->asDatetime($model->created_at),
-                'data-toggle' => 'popover',
-                'data-content' => $model->getPublicFormatted() . '<hr>' . $model->getPrivateFormatted(),
-                'data-html' => 'true',
-                'data-placement' => 'auto bottom',
-                'data-trigger' => 'click hover',
-            ];
-        },
         'summary' => '',
         'columns' => [
             'created_at:datetime',
@@ -38,6 +28,32 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'LABEL_UPDATE');
                 'value' => function (DescriptionHistory $model) {
                     return $model->getVisibility();
                 }
+            ],
+            [
+                'value' => function (DescriptionHistory $model) {
+                    $public = Html::tag('span', '', [
+                        'title' => $model->getAttributeLabel('public_text'),
+                        'data-toggle' => 'popover',
+                        'data-content' => $model->getPublicFormatted(),
+                        'data-html' => 'true',
+                        'data-placement' => 'auto top',
+                        'data-trigger' => 'click hover',
+                        'class' => ['glyphicon', 'glyphicon-eye-open'],
+                    ]);
+
+                    $private = Html::tag('span', '', [
+                        'title' => $model->getAttributeLabel('private_text'),
+                        'data-toggle' => 'popover',
+                        'data-content' => $model->getPrivateFormatted(),
+                        'data-html' => 'true',
+                        'data-placement' => 'auto top',
+                        'data-trigger' => 'click hover',
+                        'class' => ['glyphicon', 'glyphicon-eye-close'],
+                    ]);
+
+                    return $public . $private;
+                },
+                'format' => 'raw',
             ],
         ],
     ]); ?>
