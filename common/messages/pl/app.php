@@ -241,6 +241,8 @@ return [
     'GROUP_MEMBERSHIP_PUBLIC_TEXT' => 'Tekst publiczny',
     'GROUP_MEMBERSHIP_SHORT_TEXT' => 'Skrót',
     'GROUP_MEMBERSHIP_TITLE_INDEX' => 'Członkostwa',
+    'GROUP_MEMBERSHIP_TITLE_UPDATE {name}' => 'Zmiany w członkostwie: {name}',
+    'GROUP_MEMBERSHIP_TITLE_VIEW {name}' => 'Szczegóły członkostwa: {name}',
     'GROUP_NAME' => 'Nazwa',
     'GROUP_VISIBILITY' => 'Widoczność',
     'IMPORTANCE_EXTREME' => 'Ekstremalna',

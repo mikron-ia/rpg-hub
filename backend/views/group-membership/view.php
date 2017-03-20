@@ -6,27 +6,18 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\GroupMembership */
 
-$this->title = $model->group_membership_id;
+$this->title = Yii::t('app', 'GROUP_MEMBERSHIP_TITLE_VIEW {name}', ['name' => $model->character->name]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'GROUP_MEMBERSHIP_TITLE_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-membership-view">
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'group.name',
-            'character.name',
-            'short_text',
-        ],
-    ]) ?>
+    <div class="subtitle"><?= $model->short_text ?></div>
 
-    <div>
-        <?= $model->getPublicFormatted(); ?>
-    </div>
+    <div><?= $model->getPublicFormatted(); ?></div>
 
-    <div class="private-notes">
-        <?= $model->getPrivateFormatted(); ?>
-    </div>
+    <div class="private-notes"><?= $model->getPrivateFormatted(); ?></div>
+
+    <?php $this->registerJs("$('#membership-view-modal-title').html('" . $this->title . "');"); ?>
 
 </div>

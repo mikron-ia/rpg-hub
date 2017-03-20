@@ -241,6 +241,8 @@ return [
     'GROUP_MEMBERSHIP_PUBLIC_TEXT' => 'Public text',
     'GROUP_MEMBERSHIP_SHORT_TEXT' => 'Synopsis',
     'GROUP_MEMBERSHIP_TITLE_INDEX' => 'Memberships',
+    'GROUP_MEMBERSHIP_TITLE_UPDATE {name}' => 'Modify membership: {name}',
+    'GROUP_MEMBERSHIP_TITLE_VIEW {name}' => 'Membership details: {name}',
     'GROUP_NAME' => 'Name',
     'GROUP_VISIBILITY' => 'Visibility',
     'IMPORTANCE_EXTREME' => 'Exterme',

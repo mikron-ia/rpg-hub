@@ -45,4 +45,6 @@ $this->title = Yii::t('app', 'GROUP_MEMBERSHIP_HISTORY_TITLE_INDEX');
                 $('[data-toggle=\"popover\"]').popover();
             });"); ?>
 
+    <?php $this->registerJs("$('#membership-history-modal-title').html('" . $this->title . ": " . $model->character->name . "');"); ?>
+
 </div>
