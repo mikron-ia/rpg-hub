@@ -111,6 +111,7 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
         $history->public_text = $membership->public_text;
         $history->private_text = $membership->private_text;
         $history->visibility = $membership->visibility;
+        $history->status = $membership->status;
 
         if ($history->save()) {
             $history->refresh();
@@ -138,6 +139,40 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function statusNames():array
+    {
+        return GroupMembership::statusNames();
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function statusClasses():array
+    {
+        return GroupMembership::statusClasses();
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus():string
+    {
+        $names = self::statusNames();
+        return isset($names[$this->status]) ? $names[$this->status] : '?';
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusClass():string
+    {
+        $names = self::statusClasses();
+        return isset($names[$this->status]) ? $names[$this->status] : '';
     }
 
 }

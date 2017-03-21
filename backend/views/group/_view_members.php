@@ -51,6 +51,12 @@ use yii\helpers\Html;
                 }
             ],
             [
+                'attribute' => 'status',
+                'value' => function (GroupMembership $model) {
+                    return $model->getStatus();
+                }
+            ],
+            [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {history} {update} {up} {down}',
                 'buttons' => [

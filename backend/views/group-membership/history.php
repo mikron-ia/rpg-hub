@@ -29,6 +29,12 @@ $this->title = Yii::t('app', 'GROUP_MEMBERSHIP_HISTORY_TITLE_INDEX');
                 }
             ],
             [
+                'attribute' => 'status',
+                'value' => function (GroupMembershipHistory $model) {
+                    return $model->getStatus();
+                }
+            ],
+            [
                 'value' => function (GroupMembershipHistory $model) {
                     $public = Html::tag('span', '', [
                         'title' => $model->getAttributeLabel('public_text'),

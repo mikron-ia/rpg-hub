@@ -174,9 +174,11 @@ class GroupMembership extends ActiveRecord implements HasVisibility
         $membership = GroupMembership::findOne(['group_membership_id' => $this->group_membership_id]);
 
         if (
-            ($membership->short_text === $this->short_text) &&
+            ($membership->private_text === $this->private_text) &&
             ($membership->public_text === $this->public_text) &&
-            ($membership->private_text === $this->private_text)
+            ($membership->status === $this->status) &&
+            ($membership->visibility === $this->visibility) &&
+            ($membership->short_text === $this->short_text)
         ) {
             return null;
         }
