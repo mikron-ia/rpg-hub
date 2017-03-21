@@ -33,9 +33,9 @@ use yii\widgets\ActiveForm;
     <div class="clearfix"></div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord
-            ? Yii::t('app', 'LABEL_CREATE')
-            : Yii::t('app', 'BUTTON_UPDATE'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+        <?= Html::submitButton(
+            $model->isNewRecord ? Yii::t('app', 'LABEL_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
         ) ?>
     </div>
 

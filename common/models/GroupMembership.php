@@ -47,7 +47,7 @@ class GroupMembership extends ActiveRecord implements HasVisibility
             [['character_id', 'group_id'], 'required'],
             [['character_id', 'group_id'], 'integer'],
             [['public_text', 'private_text'], 'string'],
-            [['visibility'], 'string', 'max' => 20],
+            [['status', 'visibility'], 'string', 'max' => 20],
             [['short_text'], 'string', 'max' => 80],
             [
                 ['character_id'],
