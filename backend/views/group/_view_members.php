@@ -38,7 +38,12 @@ use yii\helpers\Html;
             ];
         },
         'columns' => [
-            'character.name',
+            [
+                'attribute' => 'character_id',
+                'value' => function (GroupMembership $model) {
+                    return \yii\helpers\StringHelper::truncateWords($model->character->name, 5, ' (...)', false);
+                }
+            ],
             [
                 'attribute' => 'visibility',
                 'value' => function (GroupMembership $model) {
