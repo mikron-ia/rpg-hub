@@ -15,15 +15,29 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'character_id')->dropDownList($charactersForMembership) ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'character_id')->dropDownList($charactersForMembership) ?>
+    </div>
 
-    <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(GroupMembership::allowedVisibilities())); ?>
+    <div class="col-md-3">
+        <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(GroupMembership::allowedVisibilities())); ?>
+    </div>
 
-    <?= $form->field($model, 'short_text')->textInput(['maxlength' => true]) ?>
+    <div class="col-md-3">
+        <?= $form->field($model, 'status')->dropDownList(GroupMembership::statusNames()) ?>
+    </div>
 
-    <?= $form->field($model, 'public_text')->textarea(['rows' => 8]) ?>
+    <div class="col-md-12">
+        <?= $form->field($model, 'short_text')->textInput(['maxlength' => true]) ?>
+    </div>
 
-    <?= $form->field($model, 'private_text')->textarea(['rows' => 8]) ?>
+    <div class="col-md-12">
+        <?= $form->field($model, 'public_text')->textarea(['rows' => 8]) ?>
+    </div>
+
+    <div class="col-md-12">
+        <?= $form->field($model, 'private_text')->textarea(['rows' => 8]) ?>
+    </div>
 
     <div class="form-group text-right">
         <?= Html::submitButton(
