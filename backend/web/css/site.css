@@ -283,3 +283,38 @@ p {
     background-color: grey;
     color: white;
 }
+
+.membership-status {
+    display: inline-block;
+    font-family: "Arial Narrow", Arial, monospace;
+    font-size: 0.8em;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 7px;
+    color: black;
+    min-width: 170px;
+    margin-right: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.membership-status-deleted {
+    background-color: darkred;
+    color: white;
+}
+
+.membership-status-active {
+    background-color: darkgreen;
+    color: white;
+}
+
+.membership-status-passive {
+    background-color: palegreen;
+    color: white;
+}
+
+.membership-status-past {
+    background-color: grey;
+    color: white;
+}

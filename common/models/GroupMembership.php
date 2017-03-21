@@ -19,6 +19,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $character_id
  * @property string $group_id
  * @property string $visibility
+ * @property string $status
  * @property int $position
  * @property string $short_text
  * @property string $public_text
@@ -30,6 +31,11 @@ use yii2tech\ar\position\PositionBehavior;
  */
 class GroupMembership extends ActiveRecord implements HasVisibility
 {
+    const STATUS_ACTIVE = 'active';
+    const STATUS_PASSIVE = 'passive';
+    const STATUS_PAST = 'past';
+    const STATUS_DELETED = 'deleted';
+
     public static function tableName()
     {
         return 'group_membership';
@@ -67,6 +73,7 @@ class GroupMembership extends ActiveRecord implements HasVisibility
             'character_id' => Yii::t('app', 'LABEL_CHARACTER'),
             'group_id' => Yii::t('app', 'LABEL_GROUP'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
+            'status' => Yii::t('app', 'LABEL_STATUS'),
             'position' => Yii::t('app', 'LABEL_POSITION'),
             'short_text' => Yii::t('app', 'GROUP_MEMBERSHIP_SHORT_TEXT'),
             'public_text' => Yii::t('app', 'GROUP_MEMBERSHIP_PUBLIC_TEXT'),
@@ -175,5 +182,49 @@ class GroupMembership extends ActiveRecord implements HasVisibility
         }
 
         return GroupMembershipHistory::createFromMembership($membership);
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function statusNames():array
+    {
+        return [
+            self::STATUS_ACTIVE => Yii::t('app', 'MEMBERSHIP_STATUS_ACTIVE'),
+            self::STATUS_PASSIVE => Yii::t('app', 'MEMBERSHIP_STATUS_PASSIVE'),
+            self::STATUS_PAST => Yii::t('app', 'MEMBERSHIP_STATUS_PAST'),
+            self::STATUS_DELETED => Yii::t('app', 'MEMBERSHIP_STATUS_DELETED'),
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function statusClasses():array
+    {
+        return [
+            self::STATUS_ACTIVE => 'membership-status-active',
+            self::STATUS_PASSIVE => 'membership-status-passive',
+            self::STATUS_PAST => 'membership-status-past',
+            self::STATUS_DELETED => 'membership-status-deleted',
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus():string
+    {
+        $names = self::statusNames();
+        return isset($names[$this->status]) ? $names[$this->status] : '?';
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusClass():string
+    {
+        $names = self::statusClasses();
+        return isset($names[$this->status]) ? $names[$this->status] : '';
     }
 }

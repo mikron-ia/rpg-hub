@@ -17,6 +17,7 @@ use yii\helpers\Markdown;
  * @property string $group_membership_history_id
  * @property string $group_membership_id
  * @property string $visibility
+ * @property string $status
  * @property string $created_at
  * @property string $short_text
  * @property string $public_text
@@ -56,6 +57,7 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
             'created_at' => Yii::t('app', 'LABEL_CREATED_AT'),
             'time_ic' => Yii::t('app', 'LABEL_TIME_IC'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
+            'status' => Yii::t('app', 'LABEL_STATUS'),
             'short_text' => Yii::t('app', 'GROUP_MEMBERSHIP_SHORT_TEXT'),
             'public_text' => Yii::t('app', 'GROUP_MEMBERSHIP_PUBLIC_TEXT'),
             'private_text' => Yii::t('app', 'GROUP_MEMBERSHIP_PRIVATE_TEXT'),

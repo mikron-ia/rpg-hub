@@ -12,6 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-membership-view">
 
+    <p class="pull-right"><?= Html::tag('span', $model->getStatus(), ['class' => ['membership-status', 'pull-left', $model->getStatusClass()]]) ?></p>
     <p class="subtitle"><?= $model->short_text ?></p>
 
     <div><?= $model->getPublicFormatted(); ?></div>
