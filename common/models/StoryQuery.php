@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\Visibility;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -63,6 +64,7 @@ final class StoryQuery extends Story
         } else {
             $query->andWhere([
                 'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+                'visibility' => Visibility::determineVisibilityVector(),
             ]);
         }
 
