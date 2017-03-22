@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\core\Visibility;
 use common\models\StoryQuery;
 use Yii;
 use common\models\Story;
@@ -91,7 +92,11 @@ final class StoryController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Story::findOne($id)) !== null) {
+        if (($model = Story::findOne([
+                'story_id' => $id,
+                'visibility' => Visibility::determineVisibilityVector(),
+            ])) !== null
+        ) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));

@@ -76,6 +76,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'position',
                 ],
+                [
+                    'attribute' => 'visibility',
+                    'value' => $model->getVisibility(),
+                ],
             ],
         ]) ?>
 
