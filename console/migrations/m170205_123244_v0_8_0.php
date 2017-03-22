@@ -127,6 +127,9 @@ class m170205_123244_v0_8_0 extends Migration
             'group_membership', 'group_membership_id',
             'RESTRICT', 'CASCADE'
         );
+
+        /* Visibility for story */
+        $this->addColumn('story', 'visibility', $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM)->after('position'));
     }
 
     public function down()
@@ -145,5 +148,7 @@ class m170205_123244_v0_8_0 extends Migration
 
         $this->dropTable('group_membership_history');
         $this->dropTable('group_membership');
+
+        $this->dropColumn('story', 'visibility');
     }
 }

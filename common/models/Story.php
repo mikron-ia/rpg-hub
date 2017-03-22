@@ -6,6 +6,7 @@ use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\core\HasParameters;
 use common\models\core\HasSightings;
+use common\models\core\HasVisibility;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
@@ -24,6 +25,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $short
  * @property string $long
  * @property int $position
+ * @property string $visibility
  * @property string $data
  * @property string $parameter_pack_id
  * @property string $seen_pack_id
@@ -32,7 +34,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property ParameterPack $parameterPack
  * @property SeenPack $seenPack
  */
-class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl, HasSightings
+class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl, HasSightings, HasVisibility
 {
     use ToolsForEntity;
 
@@ -54,6 +56,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             [['short', 'long'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
+            [['visibility'], 'string', 'max' => 20],
             [
                 ['epic_id'],
                 'exist',
@@ -320,5 +323,25 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function showSightingCSS():string
     {
         return $this->seenPack->getCSSForCurrentUser();
+    }
+
+    static public function allowedVisibilities():array
+    {
+        return [
+            Visibility::VISIBILITY_GM,
+            Visibility::VISIBILITY_FULL
+        ];
+    }
+
+    public function getVisibility():string
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getName();
+    }
+
+    public function getVisibilityLowercase():string
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getNameLowercase();
     }
 }

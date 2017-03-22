@@ -1,6 +1,8 @@
 <?php
 
+use common\models\core\Visibility;
 use common\models\EpicQuery;
+use common\models\Story;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -15,6 +17,10 @@ use yii\widgets\ActiveForm;
 
     <div class="col-md-6">
         <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
+    </div>
+
+    <div class="col-md-6">
+        <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(Story::allowedVisibilities())) ?>
     </div>
 
     <div class="col-md-6">
