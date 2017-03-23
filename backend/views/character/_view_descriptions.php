@@ -12,8 +12,6 @@ use yii\helpers\Html;
 
 <?php if ($model->description_pack_id): ?>
     <div class="buttoned-header">
-        <h2 class="text-center"><?= Yii::t('app', 'LABEL_DESCRIPTIONS'); ?></h2>
-
         <?= Html::a(
             '<span class="btn btn-success">' . Yii::t('app', 'DESCRIPTION_BUTTON_CREATE') . '</span>',
             '#',
@@ -28,11 +26,9 @@ use yii\helpers\Html;
 
     <?php if ($model->descriptionPack): ?>
         <div id="descriptions">
-            <?php foreach (Language::getLanguagesAsObjects() as $language): ?>
-                <h3><?= $language->getName(); ?></h3>
-                <?= \yii\widgets\ListView::widget([
+            <?= \yii\widgets\ListView::widget([
                 'dataProvider' => new \yii\data\ActiveDataProvider([
-                    'query' => $model->descriptionPack->getDescriptionsInLanguage($language),
+                    'query' => $model->descriptionPack->getDescriptions(),
                     'sort' => ['defaultOrder' => ['position' => SORT_ASC]]
                 ]),
                 'itemOptions' => ['class' => 'item'],
@@ -49,8 +45,6 @@ use yii\helpers\Html;
                     );
                 },
             ]) ?>
-                <div class="clearfix"></div>
-            <?php endforeach; ?>
         </div>
     <?php else: ?>
         <p><?= Yii::t('app', 'DESCRIPTIONS_NOT_FOUND'); ?></p>
