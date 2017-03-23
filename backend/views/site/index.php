@@ -20,14 +20,6 @@ $this->title = 'RPG hub - control';
         <h1><?= $epic->name ?></h1>
 
         <div class="btn-group btn-group-lg">
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_DETAILS'),
-                ['epic/view', 'id' => $epic->epic_id],
-                ['class' => 'btn btn-lg btn-primary'])
-            ?>
-        </div>
-
-        <div class="btn-group btn-group-lg">
             <?= Html::a(Yii::t('app', 'BUTTON_STORIES'), ['story/index'], ['class' => 'btn btn-lg btn-primary']); ?>
             <?= Html::a(Yii::t('app', 'BUTTON_RECAPS'), ['recap/index'], ['class' => 'btn btn-lg btn-primary']); ?>
         </div>
@@ -49,10 +41,14 @@ $this->title = 'RPG hub - control';
                 ['class' => 'btn btn-lg btn-primary']
             ); ?>
         </div>
+
         <div class="btn-group btn-group-lg">
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_DETAILS'),
+                ['epic/view', 'id' => $epic->epic_id],
+                ['class' => 'btn btn-lg btn-primary'])
+            ?>
             <?= Html::a(Yii::t('app', 'BUTTON_SESSIONS'), ['game/index'], ['class' => 'btn btn-lg btn-primary']); ?>
-        </div>
-        <div class="btn-group btn-group-lg">
             <?= Html::a(Yii::t('app', 'BUTTON_SCENARIOS'), ['scenario/index'], ['class' => 'btn btn-lg btn-primary']); ?>
         </div>
 
