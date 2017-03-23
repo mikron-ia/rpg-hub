@@ -24,7 +24,7 @@ if ($storyNumberRaw) {
     </h2>
 
     <div class="col-md-12 text-justify">
-        <?php echo $model->short; ?>
+        <?php echo $model->getShortFormatted(); ?>
     </div>
 
 </div>
