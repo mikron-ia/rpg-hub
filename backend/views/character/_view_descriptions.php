@@ -10,7 +10,6 @@ use yii\helpers\Html;
 
 ?>
 
-
 <?php if ($model->description_pack_id): ?>
     <div class="buttoned-header">
         <h2 class="text-center"><?= Yii::t('app', 'LABEL_DESCRIPTIONS'); ?></h2>

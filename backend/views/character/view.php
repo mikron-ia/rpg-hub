@@ -18,13 +18,13 @@ $items = [
             'externalDataDataProvider' => $externalDataDataProvider
         ]),
         'encode' => false,
-        'active' => true,
+        'active' => false,
     ],
     [
         'label' => Yii::t('app', 'CHARACTER_DESCRIPTIONS_TAB'),
         'content' => $this->render('_view_descriptions', ['model' => $model]),
         'encode' => false,
-        'active' => false,
+        'active' => true,
     ],
     [
         'label' => Yii::t('app', 'CHARACTER_SIGHTINGS'),
