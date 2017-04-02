@@ -23,3 +23,9 @@ A system for role-playing game story/campaign/epic (names vary from system to sy
 1. Enjoy the hub! Entry points are:
     1. `backend/web` for back end
     1. `frontend/web` for front end
+
+## Upgrading between versions
+1. Run `composer install`
+1. Ensure your `.env` file is up to date, based on `.env.example` 
+1. Run migrations
+
