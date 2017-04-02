@@ -58,7 +58,6 @@ final class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
-                    'set-epic' => ['post'],
                 ],
             ],
         ];
