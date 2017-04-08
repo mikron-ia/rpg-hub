@@ -39,7 +39,14 @@ final class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'logout', 'password-change', 'set-epic', 'settings'],
+                        'actions' => [
+                            'index',
+                            'logout',
+                            'password-change',
+                            'set-epic',
+                            'set-epic-in-silence',
+                            'settings'
+                        ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -236,8 +243,21 @@ final class SiteController extends Controller
     {
         $chosenEpicKey = Yii::$app->request->post('epic');
 
+        $this->run('site/set-epic-in-silence', ['epicKey' => $chosenEpicKey]);
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->goHome();
+        }
+    }
+
+    public function actionSetEpicInSilence($epicKey)
+    {
         /* @var $chosenEpic Epic */
-        $chosenEpic = EpicQuery::findOne(['key' => $chosenEpicKey]);
+        $chosenEpic = EpicQuery::findOne(['key' => $epicKey]);
 
         if (!in_array($chosenEpic->epic_id, EpicQuery::allowedEpics(false))) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'EPIC_NOT_ALLOWED'));
@@ -253,14 +273,6 @@ final class SiteController extends Controller
                 ]);
                 Yii::$app->response->cookies->add($cookie);
             }
-        }
-
-        $referrer = Yii::$app->getRequest()->getReferrer();
-
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->goHome();
         }
     }
 

@@ -17,6 +17,8 @@ use yii\db\ActiveRecord;
  *
  * @property string $external_data_pack_id
  * @property string $class
+ *
+ * @property Epic $epic
  */
 class ExternalDataPack extends ActiveRecord implements IsPack
 {
@@ -72,7 +74,7 @@ class ExternalDataPack extends ActiveRecord implements IsPack
 
         $objectsQuery->where([
             'external_data_pack_id' => $this->external_data_pack_id,
-            'visibility' => Visibility::determineVisibilityVector(),
+            'visibility' => Visibility::determineVisibilityVector($this->epic),
         ]);
 
         return new ActiveDataProvider(['query' => $objectsQuery]);
@@ -88,7 +90,7 @@ class ExternalDataPack extends ActiveRecord implements IsPack
         $object = ExternalData::findOne([
             'external_data_pack_id' => $this->external_data_pack_id,
             'code' => $code,
-            'visibility' => Visibility::determineVisibilityVector(),
+            'visibility' => Visibility::determineVisibilityVector($this->epic),
         ]);
 
         if ($object) {
@@ -128,6 +130,24 @@ class ExternalDataPack extends ActiveRecord implements IsPack
             $externalData->data = $dataFormatted;
             return $externalData->save();
         }
+    }
+
+    /**
+     * @return HasEpicControl
+     */
+    public function getControllingObject():HasEpicControl
+    {
+        $className = 'common\models\\' . $this->class;
+        /** @var HasEpicControl $object */
+        return ($className)::findOne(['description_pack_id' => $this->external_data_pack_id]);
+    }
+
+    /**
+     * @return Epic
+     */
+    public function getEpic():Epic
+    {
+        return $this->getControllingObject()->epic;
     }
 
     public function canUserReadYou():bool

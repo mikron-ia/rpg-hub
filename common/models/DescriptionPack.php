@@ -19,6 +19,7 @@ use yii\web\HttpException;
  *
  * @property Description[] $descriptions
  * @property Character[] $people
+ * @property Epic $epic
  */
 final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
 {
@@ -117,7 +118,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
      */
     public function getDescriptionsInLanguage(Language $language):ActiveQuery
     {
-        return DescriptionQuery::listDescriptionsInLanguage($this->description_pack_id, $language);
+        return DescriptionQuery::listDescriptionsInLanguage($this, $language);
     }
 
     /**
@@ -182,6 +183,24 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
         $user = Yii::$app->user->identity;
 
         return $this->getDescriptionInLanguageOfTheUser($user, $code);
+    }
+
+    /**
+     * @return HasEpicControl
+     */
+    public function getControllingObject():HasEpicControl
+    {
+        $className = 'common\models\\' . $this->class;
+        /** @var HasEpicControl $object */
+        return ($className)::findOne(['description_pack_id' => $this->description_pack_id]);
+    }
+
+    /**
+     * @return Epic
+     */
+    public function getEpic():Epic
+    {
+        return $this->getControllingObject()->epic;
     }
 
     public function canUserReadYou():bool

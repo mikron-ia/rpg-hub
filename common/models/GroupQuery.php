@@ -42,7 +42,7 @@ final class GroupQuery extends Group
         } else {
             $query->andWhere([
                 'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-                'visibility' => Visibility::determineVisibilityVector(),
+                'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
             ]);
         }
 

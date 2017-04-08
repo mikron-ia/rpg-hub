@@ -81,18 +81,18 @@ final class DescriptionQuery extends Description
     }
 
     /**
-     * @param int $description_pack_id
+     * @param DescriptionPack $descriptionPack
      * @param Language $language
      * @return ActiveQuery
      */
-    static public function listDescriptionsInLanguage(int $description_pack_id, Language $language):ActiveQuery
+    static public function listDescriptionsInLanguage(DescriptionPack $descriptionPack, Language $language):ActiveQuery
     {
         $query = Description::find();
 
         $query->andWhere([
-            'description_pack_id' => $description_pack_id,
+            'description_pack_id' => $descriptionPack->description_pack_id,
             'lang' => $language->language,
-            'visibility' => Visibility::determineVisibilityVector(),
+            'visibility' => Visibility::determineVisibilityVector($descriptionPack->epic),
         ]);
 
         return $query;

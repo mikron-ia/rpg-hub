@@ -62,18 +62,16 @@ final class StoryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
-        }
-
         if (!$model->canUserViewYou()) {
             Story::throwExceptionAboutView();
         }
 
         if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
+            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
         } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
+            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
+            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
         }
 
         $model->recordSighting();
@@ -92,14 +90,16 @@ final class StoryController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Story::findOne([
-                'story_id' => $id,
-                'visibility' => Visibility::determineVisibilityVector(),
-            ])) !== null
-        ) {
-            return $model;
-        } else {
+        $model = Story::findOne(['story_id' => $id]);
+
+        if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));
         }
+
+        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
+            throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));
+        }
+
+        return $model;
     }
 }

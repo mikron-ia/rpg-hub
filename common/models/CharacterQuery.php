@@ -51,7 +51,7 @@ final class CharacterQuery extends Character
         } else {
             $query->andWhere([
                 'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-                'visibility' => Visibility::determineVisibilityVector(),
+                'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
             ]);
         }
 
@@ -118,7 +118,7 @@ final class CharacterQuery extends Character
         } else {
             $query->andWhere([
                 'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-                'visibility' => Visibility::determineVisibilityVector(),
+                'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
             ]);
         }
 
