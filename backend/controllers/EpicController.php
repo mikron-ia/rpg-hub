@@ -262,6 +262,13 @@ final class EpicController extends Controller
     protected function findModel($id)
     {
         if (($model = Epic::findOne($id)) !== null) {
+            if (empty(Yii::$app->params['activeEpic'])) {
+                $this->run('site/set-epic-in-silence', ['epicKey' => $model->key]);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
+            } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+                $this->run('site/set-epic-in-silence', ['epicKey' => $model->key]);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
+            }
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));
