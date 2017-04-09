@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\GameQuery;
 use Yii;
 use common\models\Game;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -17,6 +18,16 @@ class GameController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['create', 'index', 'update', 'view', 'delete'],
+                        'allow' => true,
+                        'roles' => ['operator'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
