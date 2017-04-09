@@ -145,10 +145,8 @@ final class CharacterSheetController extends Controller
      * @param string $id
      * @return mixed
      */
-    public
-    function actionUpdate(
-        $id
-    ) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
 
         $model->canUserControlYou();
@@ -169,11 +167,16 @@ final class CharacterSheetController extends Controller
      * @return CharacterSheet the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected
-    function findModel(
-        $id
-    ) {
+    protected function findModel($id)
+    {
         if (($model = CharacterSheet::findOne($id)) !== null) {
+            if (empty(Yii::$app->params['activeEpic'])) {
+                $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
+            } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+                $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
+            }
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));
