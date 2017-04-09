@@ -18,6 +18,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\Cookie;
+use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 
 /**
@@ -36,7 +37,7 @@ final class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'password-change', 'set-epic', 'settings'],
+                        'actions' => ['logout', 'password-change', 'set-epic', 'set-epic-in-silence', 'settings'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -170,18 +171,31 @@ final class SiteController extends Controller
     }
 
     /**
-     * Selects epic from provided list
+     * Selects Epic
      * @return Response
      */
     public function actionSetEpic():Response
     {
         $chosenEpicKey = Yii::$app->request->post('epic');
 
-        /* @var $chosenEpic Epic */
-        $chosenEpic = EpicQuery::findOne(['key' => $chosenEpicKey]);
+        $this->run('site/set-epic-in-silence', ['epicKey' => $chosenEpicKey]);
 
-        if (!in_array((int)$chosenEpic->epic_id, EpicQuery::allowedEpics(true))) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'EPIC_NOT_ALLOWED'));
+        $referrer = Yii::$app->getRequest()->getReferrer();
+
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->goHome();
+        }
+    }
+
+    public function actionSetEpicInSilence($epicKey)
+    {
+        /* @var $chosenEpic Epic */
+        $chosenEpic = EpicQuery::findOne(['key' => $epicKey]);
+
+        if (!in_array($chosenEpic->epic_id, EpicQuery::allowedEpics(true))) {
+            throw new ForbiddenHttpException(Yii::t('app', 'EPIC_NOT_ALLOWED_AUTOSELECT'));
         } else {
             if ($chosenEpic) {
                 Yii::$app->params['activeEpic'] = $chosenEpic;
@@ -194,14 +208,6 @@ final class SiteController extends Controller
                 ]);
                 Yii::$app->response->cookies->add($cookie);
             }
-        }
-
-        $referrer = Yii::$app->getRequest()->getReferrer();
-
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->goHome();
         }
     }
 

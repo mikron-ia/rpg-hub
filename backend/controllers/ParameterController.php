@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\core\Visibility;
 use common\models\Parameter;
 use Yii;
 use yii\filters\AccessControl;
@@ -166,11 +167,17 @@ final class ParameterController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Parameter::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+        $model = Parameter::findOne(['group_id' => $id]);
+
+        if ($model === null) {
+            throw new NotFoundHttpException(Yii::t('app', 'GROUP_NOT_AVAILABLE'));
         }
+
+        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->parameterPack->epic))) {
+            throw new NotFoundHttpException(Yii::t('app', 'GROUP_NOT_AVAILABLE'));
+        }
+
+        return $model;
     }
 
     /**

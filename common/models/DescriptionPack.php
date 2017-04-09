@@ -200,7 +200,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
      */
     public function getEpic():Epic
     {
-        return $this->getControllingObject()->epic;
+        return $this->getControllingObject()->getEpic()->one();
     }
 
     public function canUserReadYou():bool

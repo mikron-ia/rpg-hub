@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\core\Visibility;
 use Yii;
 use common\models\Group;
 use common\models\GroupQuery;
@@ -144,10 +145,16 @@ final class GroupController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Group::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));
+        $model = Group::findOne(['group_id' => $id]);
+
+        if ($model === null) {
+            throw new NotFoundHttpException(Yii::t('app', 'GROUP_NOT_AVAILABLE'));
         }
+
+        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
+            throw new NotFoundHttpException(Yii::t('app', 'GROUP_NOT_AVAILABLE'));
+        }
+
+        return $model;
     }
 }

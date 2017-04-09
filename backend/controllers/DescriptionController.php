@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\core\Visibility;
 use common\models\DescriptionHistory;
 use common\models\DescriptionPack;
 use Yii;
@@ -187,11 +188,17 @@ final class DescriptionController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Description::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+        $model = Description::findOne(['description_id' => $id]);
+
+        if ($model === null) {
+            throw new NotFoundHttpException(Yii::t('app', 'DESCRIPTION_NOT_AVAILABLE'));
         }
+
+        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->descriptionPack->epic))) {
+            throw new NotFoundHttpException(Yii::t('app', 'DESCRIPTION_NOT_AVAILABLE'));
+        }
+
+        return $model;
     }
 
     /**
@@ -200,7 +207,6 @@ final class DescriptionController extends Controller
      */
     protected function returnToReferrer(array $default):Response
     {
-
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);

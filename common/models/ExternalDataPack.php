@@ -147,7 +147,7 @@ class ExternalDataPack extends ActiveRecord implements IsPack
      */
     public function getEpic():Epic
     {
-        return $this->getControllingObject()->epic;
+        return $this->getControllingObject()->getEpic()->one();
     }
 
     public function canUserReadYou():bool

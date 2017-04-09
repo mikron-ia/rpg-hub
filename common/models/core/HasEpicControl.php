@@ -57,4 +57,9 @@ interface HasEpicControl
      * Throws a 401 exception if user cannot view
      */
     static function throwExceptionAboutView();
+
+    /**
+     * Provides Epic
+     */
+    public function getEpic();
 }

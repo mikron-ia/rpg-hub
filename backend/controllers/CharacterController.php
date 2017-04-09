@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\CharacterSheet;
+use common\models\core\Visibility;
 use common\models\EpicQuery;
 use common\models\Parameter;
 use common\models\tools\Retriever;
@@ -286,10 +287,16 @@ final class CharacterController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Character::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));
+        $model = Character::findOne(['character_id' => $id]);
+
+        if ($model === null) {
+            throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));
         }
+
+        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
+            throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));
+        }
+
+        return $model;
     }
 }

@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  * @property Parameter[] $parameters
  * @property Parameter[] $parametersOrdered
  * @property Story[] $stories
+ * @property Epic $epic
  */
 class ParameterPack extends ActiveRecord implements IsPack
 {
@@ -106,6 +107,24 @@ class ParameterPack extends ActiveRecord implements IsPack
     public function getStories()
     {
         return $this->hasMany(Story::className(), ['parameter_pack_id' => 'parameter_pack_id']);
+    }
+
+    /**
+     * @return HasEpicControl
+     */
+    public function getControllingObject():HasEpicControl
+    {
+        $className = 'common\models\\' . $this->class;
+        /** @var HasEpicControl $object */
+        return ($className)::findOne(['description_pack_id' => $this->parameter_pack_id]);
+    }
+
+    /**
+     * @return Epic
+     */
+    public function getEpic():Epic
+    {
+        return $this->getControllingObject()->getEpic()->one();
     }
 
     /**
