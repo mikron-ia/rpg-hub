@@ -172,7 +172,7 @@ class ScenarioController extends Controller
             }
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'SCENARIO_NOT_AVAILABLE'));
         }
     }
 }

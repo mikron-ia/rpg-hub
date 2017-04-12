@@ -171,7 +171,7 @@ class GameController extends Controller
             }
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'GAME_SESSION_NOT_AVAILABLE'));
         }
     }
 }

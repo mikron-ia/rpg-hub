@@ -179,7 +179,7 @@ final class CharacterSheetController extends Controller
             }
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));
+            throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_SHEET_NOT_AVAILABLE'));
         }
     }
 }
