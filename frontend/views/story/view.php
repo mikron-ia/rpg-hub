@@ -13,14 +13,14 @@ $this->params['showPrivates'] = $model->canUserControlYou();
 
 $items = [
     [
-        'label' => Yii::t('app', 'STORY_SHORT_TAB'),
-        'content' => $this->render('_view_short', ['model' => $model]),
+        'label' => Yii::t('app', 'STORY_LONG_TAB'),
+        'content' => $this->render('_view_long', ['model' => $model]),
         'encode' => false,
         'active' => true,
     ],
     [
-        'label' => Yii::t('app', 'STORY_LONG_TAB'),
-        'content' => $this->render('_view_long', ['model' => $model]),
+        'label' => Yii::t('app', 'STORY_SHORT_TAB'),
+        'content' => $this->render('_view_short', ['model' => $model]),
         'encode' => false,
         'active' => false,
     ],
