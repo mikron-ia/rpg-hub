@@ -232,7 +232,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
 
     public function isVisibleInApi()
     {
-        return true;
+        return ($this->visibility === Visibility::VISIBILITY_FULL);
     }
 
     static public function allowedParameterTypes():array
