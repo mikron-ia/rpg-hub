@@ -34,12 +34,12 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
 
 ?>
 
-<div id="person-<?php echo $model->character_id; ?>" class="<?= $classesForBox ?>" title="<?= $titleText ?>">
+<div id="character-<?php echo $model->key; ?>" class="<?= $classesForBox ?>" title="<?= $titleText ?>">
 
     <h3 class="center">
         <?= Html::a(
             Html::encode(StringHelper::truncateWords($model->name, 16, ' (...)', false)),
-            ['view', 'id' => $model->character_id]
+            ['view', 'key' => $model->key]
         ); ?>
     </h3>
 

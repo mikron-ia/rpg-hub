@@ -55,12 +55,12 @@ final class StoryController extends Controller
 
     /**
      * Displays a single Story model
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelByKey($key);
 
         if (!$model->canUserViewYou()) {
             Story::throwExceptionAboutView();
@@ -88,9 +88,31 @@ final class StoryController extends Controller
      * @return Story the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModelById($id)
     {
         $model = Story::findOne(['story_id' => $id]);
+
+        if ($model === null) {
+            throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));
+        }
+
+        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
+            throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));
+        }
+
+        return $model;
+    }
+
+    /**
+     * Finds the Story model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $key
+     * @return Story the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModelByKey($key)
+    {
+        $model = Story::findOne(['key' => $key]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));

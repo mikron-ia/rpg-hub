@@ -64,17 +64,17 @@ final class CharacterController extends Controller
 
     /**
      * Displays a single Character model
-     * @param string $id
+     * @param string $key
      * @return mixed
      * @throws HttpException
      */
-    public function actionView($id)
+    public function actionView($key)
     {
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection');
         }
 
-        $model = $this->findModel($id);
+        $model = $this->findModelByKey($key);
 
         if (!$model->canUserViewYou()) {
             Character::throwExceptionAboutView();
@@ -96,13 +96,13 @@ final class CharacterController extends Controller
     }
 
     /**
-     * @param $id
+     * @param $key
      * @return string|\yii\web\Response
      * @throws HttpException
      */
-    public function actionExternalReputation($id)
+    public function actionExternalReputation($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelByKey($key);
 
         if (!$model->canUserViewYou()) {
             Character::throwExceptionAboutView();
@@ -126,13 +126,13 @@ final class CharacterController extends Controller
     }
 
     /**
-     * @param $id
+     * @param $key
      * @return string|\yii\web\Response
      * @throws HttpException
      */
-    public function actionExternalReputationEvent($id)
+    public function actionExternalReputationEvent($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelByKey($key);
 
         if (!$model->canUserViewYou()) {
             Character::throwExceptionAboutView();
@@ -162,9 +162,31 @@ final class CharacterController extends Controller
      * @return Character the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModelById($id)
     {
         $model = Character::findOne(['character_id' => $id]);
+
+        if ($model === null) {
+            throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));
+        }
+
+        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
+            throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));
+        }
+
+        return $model;
+    }
+
+    /**
+     * Finds the Story model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $key
+     * @return Character the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModelByKey($key)
+    {
+        $model = Character::findOne(['key' => $key]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));
