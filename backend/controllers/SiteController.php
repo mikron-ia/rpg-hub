@@ -177,16 +177,9 @@ final class SiteController extends Controller
     public function actionSetEpic():Response
     {
         $chosenEpicKey = Yii::$app->request->post('epic');
-
         $this->run('site/set-epic-in-silence', ['epicKey' => $chosenEpicKey]);
+        return $this->goHome();
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->goHome();
-        }
     }
 
     public function actionSetEpicInSilence($epicKey)
