@@ -230,7 +230,9 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         $stories = $query->getModels();
         $storyData = [];
         foreach ($stories as $story) {
-            $storyData[] = $story->getSimpleDataForApi();
+            if ($story->isVisibleInApi()) {
+                $storyData[] = $story->getSimpleDataForApi();
+            }
         }
 
         $recap = $this->getCurrentRecap();
