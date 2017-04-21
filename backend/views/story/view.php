@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             Yii::t('app', 'BUTTON_SEE_FRONTEND'),
             Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
                 'story/view',
-                'id' => $model->story_id
+                'key' => $model->key
             ]),
             ['class' => 'btn btn-default']
         ) ?>
