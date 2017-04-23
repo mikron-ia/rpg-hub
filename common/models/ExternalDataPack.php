@@ -139,7 +139,7 @@ class ExternalDataPack extends ActiveRecord implements IsPack
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */
-        return ($className)::findOne(['description_pack_id' => $this->external_data_pack_id]);
+        return ($className)::findOne(['external_data_pack_id' => $this->external_data_pack_id]);
     }
 
     /**
