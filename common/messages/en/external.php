@@ -29,6 +29,8 @@ return [
     'EXTERNAL_DATA_MALFORMED_ARRAY' => 'Loading operation failed - malformed array',
     'EXTERNAL_DATA_PACK_CLASS' => 'Class',
     'EXTERNAL_DATA_PACK_ID' => 'Pack ID',
+    'GROUP_REPUTATIONS_TAB' => 'Reputations',
+    'GROUP_REPUTATION_EVENTS_TAB' => 'Reputation history',
     'NO_DATA' => 'No data for this object found',
     'REPUTATION_BALANCE' => 'Current<br>balance',
     'REPUTATION_BALANCE_RANGE' => 'Balance<br>range',

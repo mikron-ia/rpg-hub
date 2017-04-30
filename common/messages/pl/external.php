@@ -29,6 +29,8 @@ return [
     'EXTERNAL_DATA_MALFORMED_ARRAY' => 'Ładowanie zewnętrznych danych nieudane - wadliwy format tablicy',
     'EXTERNAL_DATA_PACK_CLASS' => 'Klasa',
     'EXTERNAL_DATA_PACK_ID' => 'ID pakietu',
+    'GROUP_REPUTATIONS_TAB' => 'Reputacje',
+    'GROUP_REPUTATION_EVENTS_TAB' => 'Historia reputacji',
     'NO_DATA' => 'Brak danych dla obiektu',
     'REPUTATION_BALANCE' => 'Wartość<br>bieżąca',
     'REPUTATION_BALANCE_RANGE' => 'Zakres<br>wartości',

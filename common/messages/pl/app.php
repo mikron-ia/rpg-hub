@@ -236,6 +236,7 @@ return [
     'GROUP_BASIC' => 'Szczegóły',
     'GROUP_DATA' => 'Dane grupy',
     'GROUP_DESCRIPTIONS_TAB' => 'Opisy',
+    'GROUP_GM_TAB' => 'Dane MG',
     'GROUP_ID' => 'ID grupy',
     'GROUP_KEY' => 'Klucz',
     'GROUP_MEMBERSHIP' => 'Członkostwo',
