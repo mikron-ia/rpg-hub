@@ -4,7 +4,7 @@
 /* @var $showPrivates bool */
 ?>
 
-<div class="col-md-9">
+<div class="col-md-8">
     <?php if ($model->descriptionPack): ?>
         <div id="descriptions">
 
@@ -35,8 +35,8 @@
     <?php endif; ?>
 </div>
 
-<div class="col-md-3">
-    <h3 class="center">Members</h3>
+<div class="col-md-4">
+    <h3><?= Yii::t('app', 'GROUP_MEMBERSHIP_LIST'); ?></h3>
     <?php if ($model->groupCharacterMemberships): ?>
         <div id="memberships">
 
