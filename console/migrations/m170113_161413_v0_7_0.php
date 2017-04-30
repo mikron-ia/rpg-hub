@@ -7,16 +7,6 @@ class m170113_161413_v0_7_0 extends Migration
 {
     public function up()
     {
-        /**
-         * Loading up data, if available
-         * This is a stopgap measure that should be moved forward to newest migration and removed no later than in 1.0
-         */
-        $scriptName = __DIR__ . '/' . 'data.sql';
-        if (file_exists($scriptName)) {
-            $scriptContent = file_get_contents($scriptName);
-            $this->execute($scriptContent);
-        }
-
         $this->addColumn('character', 'importance', $this->string(20)->notNull()->defaultValue(Importance::IMPORTANCE_MEDIUM)->after('visibility'));
 
         $this->addColumn('recap', 'position', $this->integer()->unsigned());
