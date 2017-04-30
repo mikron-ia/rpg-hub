@@ -12,6 +12,17 @@ use yii\data\ActiveDataProvider;
  */
 final class GroupQuery extends Group
 {
+    /**
+     * @var int
+     */
+    private $pageCount;
+
+    public function __construct($pagination = 24, array $config = [])
+    {
+        $this->pageCount = $pagination;
+        parent::__construct($config);
+    }
+
     public function rules()
     {
         return [
@@ -32,9 +43,7 @@ final class GroupQuery extends Group
      */
     public function search($params)
     {
-        $query = Group::find();
-
-        // add conditions that should always apply here
+        $query = Group::find()->joinWith('seenPack', true, 'LEFT JOIN');
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
@@ -48,6 +57,7 @@ final class GroupQuery extends Group
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => ['pageSize' => $this->pageCount],
         ]);
 
         $this->load($params);

@@ -6,7 +6,6 @@ use common\models\core\Visibility;
 use common\models\GroupQuery;
 use Yii;
 use common\models\Group;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -17,9 +16,6 @@ use yii\filters\VerbFilter;
  */
 class GroupController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [
@@ -46,10 +42,19 @@ class GroupController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new GroupQuery();
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection');
+        }
+
+        if (!Group::canUserIndexThem()) {
+            Group::throwExceptionAboutIndex();
+        }
+
+        $searchModel = new GroupQuery(24);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -61,8 +66,28 @@ class GroupController extends Controller
      */
     public function actionView($key)
     {
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection');
+        }
+
+        $model = $this->findModelByKey($key);
+
+        if (!$model->canUserViewYou()) {
+            Group::throwExceptionAboutView();
+        }
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
+            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
+        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
+            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
+        }
+
+        $model->recordSighting();
+
         return $this->render('view', [
-            'model' => $this->findModelByKey($key),
+            'model' => $model,
         ]);
     }
 

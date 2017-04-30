@@ -52,7 +52,7 @@ final class GroupController extends Controller
             Group::throwExceptionAboutIndex();
         }
 
-        $searchModel = new GroupQuery();
+        $searchModel = new GroupQuery(24);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
