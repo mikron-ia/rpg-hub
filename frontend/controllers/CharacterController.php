@@ -70,10 +70,6 @@ final class CharacterController extends Controller
      */
     public function actionView($key)
     {
-        if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection');
-        }
-
         $model = $this->findModelByKey($key);
 
         if (!$model->canUserViewYou()) {
