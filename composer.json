@@ -7,13 +7,13 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.0",
-        "yiisoft/yii2": ">=2.0.10",
+        "yiisoft/yii2": "^2.0.10",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "kartik-v/yii2-krajee-base": "~1.7",
+        "kartik-v/yii2-krajee-base": "^1.7",
         "kartik-v/yii2-widget-select2": "^2.0",
         "kartik-v/yii2-password": "^1.5",
-        "kartik-v/strength-meter": "~1.1",
+        "kartik-v/strength-meter": "^1.1",
         "yii2tech/ar-position": "^1.0",
         "vlucas/phpdotenv": "^2.4"
     },
