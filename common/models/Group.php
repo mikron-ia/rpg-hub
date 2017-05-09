@@ -30,6 +30,9 @@ use yii\db\ActiveRecord;
  * @property SeenPack $seenPack
  * @property GroupMembership[] $groupCharacterMemberships
  * @property GroupMembership[] $groupCharacterMembershipsOrderedByPosition
+ * @property GroupMembership[] $groupCharacterMembershipsActive
+ * @property GroupMembership[] $groupCharacterMembershipsPassive
+ * @property GroupMembership[] $groupCharacterMembershipsPast
  */
 class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasSightings, HasVisibility
 {
@@ -181,6 +184,39 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public function getGroupCharacterMembershipsOrderedByPosition()
     {
         return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id'])->orderBy('position ASC');
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getGroupCharacterMembershipsActive()
+    {
+        return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id'])->where([
+            'status' => GroupMembership::STATUS_ACTIVE,
+            'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
+        ]);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getGroupCharacterMembershipsPast()
+    {
+        return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id'])->where([
+            'status' => GroupMembership::STATUS_PAST,
+            'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
+        ]);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getGroupCharacterMembershipsPassive()
+    {
+        return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id'])->where([
+            'status' => GroupMembership::STATUS_PASSIVE,
+            'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
+        ]);
     }
 
     public function getSimpleDataForApi()
