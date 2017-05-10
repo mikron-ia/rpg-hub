@@ -54,6 +54,19 @@ if ($this->params['showPrivates']) {
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
+        <?php if ($this->params['showPrivates']): ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_SECRETS_SHOW'), '#', [
+                'class' => 'btn btn-default',
+                'onclick' => '$(".secret").show(); $("#secrets-show").hide(); $("#secrets-hide").show();',
+                'id' => 'secrets-show',
+            ]) ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_SECRETS_HIDE'), '#', [
+                'class' => 'btn btn-default',
+                'onclick' => '$(".secret").hide(); $("#secrets-show").show(); $("#secrets-hide").hide();',
+                'id' => 'secrets-hide',
+                'style' => 'display: none;'
+            ]) ?>
+        <?php endif; ?>
     </div>
 
     <?= Tabs::widget([
@@ -79,5 +92,9 @@ if ($this->params['showPrivates']) {
     ).success(function() {
         $('.tab-reputation-events').removeClass('hidden');
     });"); ?>
+
+    <?php if ($this->params['showPrivates']): ?>
+        <?= $this->registerJs('$(".secret").hide();'); ?>
+    <?php endif; ?>
 
 </div>

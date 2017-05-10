@@ -55,6 +55,8 @@ return [
     'BUTTON_SAVE' => 'Save',
     'BUTTON_SCENARIOS' => 'Scenarios',
     'BUTTON_SEARCH' => 'Search',
+    'BUTTON_SECRETS_HIDE' => 'Hide secrets',
+    'BUTTON_SECRETS_SHOW' => 'Show secrets',
     'BUTTON_SEE_BACKEND' => 'See in management panel',
     'BUTTON_SEE_FRONTEND' => 'See in front panel',
     'BUTTON_SEND' => 'Send',

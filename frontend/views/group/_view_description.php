@@ -13,7 +13,7 @@
     </div>
 
     <?php if ($showPrivates && $model->private_text): ?>
-        <div class="private-notes">
+        <div class="private-notes secret">
             <?= $model->getPrivateFormatted(); ?>
         </div>
     <?php endif; ?>

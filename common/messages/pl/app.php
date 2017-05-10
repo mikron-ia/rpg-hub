@@ -55,6 +55,8 @@ return [
     'BUTTON_SAVE' => 'Zapisz',
     'BUTTON_SCENARIOS' => 'Scenariusze',
     'BUTTON_SEARCH' => 'Szukaj',
+    'BUTTON_SECRETS_HIDE' => 'Ukryj tajemnice',
+    'BUTTON_SECRETS_SHOW' => 'Pokaż tajemnice',
     'BUTTON_SEE_BACKEND' => 'Obejrzyj w panelu kontrolnym',
     'BUTTON_SEE_FRONTEND' => 'Obejrzyj w panelu głównym',
     'BUTTON_SEND' => 'Wyślij',

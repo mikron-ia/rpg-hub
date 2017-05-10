@@ -11,7 +11,7 @@
         'rowOptions' => function (\common\models\GroupMembership $model, $key, $index, $grid) {
             $options = [];
             if ($model->visibility === \common\models\core\Visibility::VISIBILITY_GM) {
-                $options['class'] = 'table-row-hidden';
+                $options['class'] = 'table-row-hidden secret';
             }
             return $options;
         },

@@ -8,6 +8,13 @@
     <?= \yii\grid\GridView::widget([
         'dataProvider' => new \yii\data\ArrayDataProvider(['allModels' => $models]),
         'summary' => '',
+        'rowOptions' => function (\common\models\GroupMembership $model, $key, $index, $grid) {
+            $options = [];
+            if ($model->visibility === \common\models\core\Visibility::VISIBILITY_GM) {
+                $options['class'] = 'table-row-hidden secret';
+            }
+            return $options;
+        },
         'columns' => [
             [
                 'attribute' => 'character.name',
