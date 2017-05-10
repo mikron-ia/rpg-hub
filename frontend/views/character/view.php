@@ -19,6 +19,12 @@ $items = [
         'active' => true,
     ],
     [
+        'label' => Yii::t('app', 'CHARACTER_GROUPS_TAB'),
+        'content' => $this->render('_view_groups', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ],
+    [
         'label' => Yii::t('external', 'CHARACTER_REPUTATIONS_TAB'),
         'content' => '<div class="reputations"></div>',
         'headerOptions' => ['class' => 'tab-reputation hidden'],

@@ -39,6 +39,8 @@ use yii\db\ActiveRecord;
  * @property ExternalDataPack $externalDataPack
  * @property SeenPack $seenPack
  * @property CharacterSheet[] $characterSheets
+ * @property GroupMembership[] $groupMemberships
+ * @property GroupMembership[] $groupMembershipsVisibleToUser
  */
 class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasVisibility, HasSightings
 {
@@ -224,6 +226,24 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public function getCharacterSheets()
     {
         return $this->hasMany(CharacterSheet::className(), ['currently_delivered_character_id' => 'character_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroupMemberships()
+    {
+        return $this->hasMany(GroupMembership::className(), ['character_id' => 'character_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroupMembershipsVisibleToUser()
+    {
+        return $this->hasMany(GroupMembership::className(), ['character_id' => 'character_id'])->where([
+            'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
+        ])->orderBy('status');
     }
 
     public function getSimpleDataForApi()

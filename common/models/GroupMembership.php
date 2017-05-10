@@ -73,7 +73,7 @@ class GroupMembership extends ActiveRecord implements HasVisibility
             'character_id' => Yii::t('app', 'LABEL_CHARACTER'),
             'group_id' => Yii::t('app', 'LABEL_GROUP'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
-            'status' => Yii::t('app', 'LABEL_STATUS'),
+            'status' => Yii::t('app', 'GROUP_MEMBERSHIP_STATUS'),
             'position' => Yii::t('app', 'LABEL_POSITION'),
             'short_text' => Yii::t('app', 'GROUP_MEMBERSHIP_SHORT_TEXT'),
             'public_text' => Yii::t('app', 'GROUP_MEMBERSHIP_PUBLIC_TEXT'),
