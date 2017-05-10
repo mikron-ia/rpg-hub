@@ -234,6 +234,7 @@ return [
     'GAME_STATUS_PROPOSED' => 'Proposed',
     'GAME_STATUS_UNPLANNED' => 'Not organised',
     'GAME_TIME' => 'Date & time',
+    'GROUPS_NOT_FOUND' => 'Groups not found',
     'GROUP_BASIC' => 'Details',
     'GROUP_DATA' => 'Group data',
     'GROUP_DESCRIPTIONS_TAB' => 'Descriptions',

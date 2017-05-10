@@ -439,3 +439,8 @@ a:focus {
     background-color: darkgreen;
     color: white;
 }
+
+tr.table-row-hidden > td {
+    font-style: italic;
+    background-color: lightgoldenrodyellow;
+}
