@@ -19,6 +19,10 @@
             [
                 'attribute' => 'character.name',
                 'label' => Yii::t('app', 'CHARACTER_NAME'),
+                'format' => 'raw',
+                'value' => function (\common\models\GroupMembership $model, $key, $index, $widget) {
+                    return \yii\helpers\Html::a($model->character->name, ['character/view', 'key' => $model->character->key]);
+                },
             ],
             [
                 'attribute' => 'short_text',
