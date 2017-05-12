@@ -21,21 +21,30 @@ if ($epic) {
     <div class="jumbotron">
 
         <?php if ($epic): ?>
+
             <h1><?= $epic->name ?></h1>
 
             <div class="btn-group btn-group-lg">
-                <?= Html::a(Yii::t('app', 'BUTTON_STORIES'), ['story/index'], ['class' => 'btn btn-lg btn-primary']); ?>
+                <?= Html::a(
+                    Yii::t('app', 'BUTTON_STORIES'),
+                    ['story/index'],
+                    ['class' => 'btn btn-lg btn-primary']
+                ); ?>
             </div>
 
             <div class="btn-group btn-group-lg">
-                <?= Html::a(Yii::t('app', 'BUTTON_CHARACTERS'), ['character/index'],
-                    ['class' => 'btn btn-lg btn-primary']); ?>
+                <?= Html::a(
+                    Yii::t('app', 'BUTTON_CHARACTERS'),
+                    ['character/index'],
+                    ['class' => 'btn btn-lg btn-primary']
+                ); ?>
+                <?= Html::a(
+                    Yii::t('app', 'BUTTON_GROUP'),
+                    ['group/index'],
+                    ['class' => 'btn btn-lg btn-primary']
+                ); ?>
             </div>
 
-            <div class="btn-group btn-group-lg">
-                <?= Html::a(Yii::t('app', 'BUTTON_GROUP'), ['group/index'],
-                    ['class' => 'btn btn-lg btn-primary']); ?>
-            </div>
         <?php else: ?>
             <h1><?= Yii::t('app', 'FRONTPAGE_TITLE') ?></h1>
             <p class="error-box"><?= Yii::t('app', 'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_BUTTONS') ?></p>
