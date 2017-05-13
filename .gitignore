@@ -34,4 +34,4 @@ phpunit.phar
 .env
 
 # SQL data
-console/migrations/data.sql
+console/migrations/*.sql
