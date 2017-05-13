@@ -4,6 +4,7 @@ use common\models\core\Language;
 use common\models\GroupMembership;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
+use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Group */
@@ -40,8 +41,12 @@ use yii\helpers\Html;
         'columns' => [
             [
                 'attribute' => 'character_id',
+                'format' => 'raw',
                 'value' => function (GroupMembership $model) {
-                    return \yii\helpers\StringHelper::truncateWords($model->character->name, 5, ' (...)', false);
+                    return Html::a(
+                        StringHelper::truncateWords($model->character->name, 5, ' (...)', false),
+                        ['character/view', 'id' => $model->character->character_id]
+                    );
                 }
             ],
             [

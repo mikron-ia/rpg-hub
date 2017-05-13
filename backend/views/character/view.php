@@ -27,6 +27,12 @@ $items = [
         'active' => true,
     ],
     [
+        'label' => Yii::t('app', 'CHARACTER_GROUPS_TAB'),
+        'content' => $this->render('_view_groups', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ],
+    [
         'label' => Yii::t('app', 'CHARACTER_SIGHTINGS'),
         'content' => $this->render('_view_views', ['model' => $model]),
         'encode' => false,

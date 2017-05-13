@@ -1,14 +1,18 @@
 <?php
 /* @var $this yii\web\View */
+use common\models\GroupMembership;
+use yii\data\ArrayDataProvider;
+use yii\helpers\Html;
+
 /* @var $header string */
 /* @var $models \common\models\Group[] */
 ?>
 
 <?php if ($models): ?>
     <?= \yii\grid\GridView::widget([
-        'dataProvider' => new \yii\data\ArrayDataProvider(['allModels' => $models]),
+        'dataProvider' => new ArrayDataProvider(['allModels' => $models]),
         'summary' => '',
-        'rowOptions' => function (\common\models\GroupMembership $model, $key, $index, $grid) {
+        'rowOptions' => function (GroupMembership $model, $key, $index, $grid) {
             $options = [];
             if ($model->visibility === \common\models\core\Visibility::VISIBILITY_GM) {
                 $options['class'] = 'table-row-hidden secret';
@@ -20,8 +24,8 @@
                 'attribute' => 'character.name',
                 'label' => Yii::t('app', 'CHARACTER_NAME'),
                 'format' => 'raw',
-                'value' => function (\common\models\GroupMembership $model, $key, $index, $widget) {
-                    return \yii\helpers\Html::a($model->character->name, ['character/view', 'key' => $model->character->key]);
+                'value' => function (GroupMembership $model, $key, $index, $widget) {
+                    return Html::a($model->character->name, ['character/view', 'key' => $model->character->key]);
                 },
             ],
             [
