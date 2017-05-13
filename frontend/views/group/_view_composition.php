@@ -1,9 +1,10 @@
 <?php
-/* @var $this yii\web\View */
+
 use common\models\GroupMembership;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 
+/* @var $this yii\web\View */
 /* @var $header string */
 /* @var $models \common\models\Group[] */
 ?>

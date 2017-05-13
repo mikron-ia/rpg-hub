@@ -1,6 +1,5 @@
 <?php
 
-use common\models\Character;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 

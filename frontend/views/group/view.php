@@ -73,7 +73,7 @@ if ($this->params['showPrivates']) {
         'items' => $items
     ]) ?>
 
-    <?= $this->registerJs("$.get(
+    <?php $this->registerJs("$.get(
         '" . Yii::$app->urlManager->createUrl(['group/external-reputation']) . "',
         {key: '" . $model->key . "'},
         function (data) {
@@ -83,7 +83,7 @@ if ($this->params['showPrivates']) {
         $('.tab-reputation').removeClass('hidden');
     });"); ?>
 
-    <?= $this->registerJs("$.get(
+    <?php $this->registerJs("$.get(
         '" . Yii::$app->urlManager->createUrl(['group/external-reputation-event']) . "',
         {key: '" . $model->key . "'},
         function (data) {
