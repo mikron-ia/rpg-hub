@@ -155,6 +155,7 @@ p {
 
 .subtitle {
     font-style: italic;
+    padding: 5px;
 }
 
 .tag-box {
@@ -200,13 +201,13 @@ p {
 }
 
 .game-status {
+    color: white;
     display: inline-block;
-    font-family: "Arial Narrow", Arial, monospace;
+    font-family: "Courier New", Courier, monospace;
     font-size: 0.8em;
     font-weight: bold;
     border-radius: 15px;
-    padding: 7px;
-    color: black;
+    padding: 5px 7px;
     min-width: 170px;
     margin-right: 10px;
     text-align: center;
@@ -215,43 +216,39 @@ p {
 }
 
 .game-status-proposed {
-    background-color: lightskyblue;
+    background-color: blueviolet;
 }
 
 .game-status-announced {
-    background-color: deepskyblue;
+    background-color: blueviolet;
 }
 
 .game-status-unplanned {
-    background-color: pink;
+    background-color: red;
 }
 
 .game-status-planned {
-    background-color: greenyellow;
+    background-color: green;
 }
 
 .game-status-cancelled {
     background-color: red;
-    color: white;
 }
 
 .game-status-progressing {
-    background-color: yellow;
+    background-color: green;
 }
 
 .game-status-aborted {
-    background-color: orangered;
-    color: white;
+    background-color: red;
 }
 
 .game-status-completed {
     background-color: green;
-    color: white;
 }
 
 .game-status-closed {
-    background-color: darkgreen;
-    color: white;
+    background-color: black;
 }
 
 .scenario-status {
