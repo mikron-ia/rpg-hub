@@ -194,7 +194,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id'])->where([
             'status' => GroupMembership::STATUS_ACTIVE,
             'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
-        ]);
+        ])->orderBy('position ASC');
     }
 
     /**
@@ -205,7 +205,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id'])->where([
             'status' => GroupMembership::STATUS_PAST,
             'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
-        ]);
+        ])->orderBy('position ASC');
     }
 
     /**
@@ -216,7 +216,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id'])->where([
             'status' => GroupMembership::STATUS_PASSIVE,
             'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
-        ]);
+        ])->orderBy('position ASC');
     }
 
     public function getSimpleDataForApi()
