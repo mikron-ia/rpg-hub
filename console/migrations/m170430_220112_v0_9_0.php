@@ -17,10 +17,25 @@ class m170430_220112_v0_9_0 extends Migration
             $scriptContent = file_get_contents($scriptName);
             $this->execute($scriptContent);
         }
+
+        $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
+
+        $this->createTable('article', [
+            'article_id' => $this->primaryKey()->unsigned(),
+            'epic_id' => $this->integer(11)->unsigned(),
+            'key' => $this->string(80)->notNull(),
+            'title' => $this->string(120)->notNull(),
+            'subtitle' => $this->string(120),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM),
+            'text_raw' => $this->text()->notNull(),
+            'text_ready' => $this->text()->notNull(),
+        ], $tableOptions);
     }
 
     public function down()
     {
+        $this->dropTable('article');
+
         $this->execute('SET foreign_key_checks = 0;');
 
         $this->truncateTable('{{%auth_assignment}}');
