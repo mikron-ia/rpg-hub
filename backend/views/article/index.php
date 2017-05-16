@@ -7,31 +7,30 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\ArticleQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Articles');
+$this->title = Yii::t('app', 'ARTICLE_TITLE_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="buttoned-header">
+        <h1><?= Html::encode($this->title) ?></h1>
+        <?= Html::a(Yii::t('app', 'ARTICLE_BUTTON_CREATE'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_GOTO_FILTER'),
+            ['#filter'],
+            ['class' => 'btn btn-default hidden-lg hidden-md']
+        ) ?>
+    </div>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Article'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'filterPosition' => null,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'article_id',
             'epic_id',
             'key',
             'title',
-            'subtitle',
-            // 'visibility',
-            // 'text_raw:ntext',
-            // 'text_ready:ntext',
+            'visibility',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

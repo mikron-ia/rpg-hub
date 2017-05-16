@@ -12,9 +12,6 @@ use common\models\Article;
  */
 class ArticleQuery extends Article
 {
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -23,12 +20,8 @@ class ArticleQuery extends Article
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 

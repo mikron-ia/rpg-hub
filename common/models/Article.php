@@ -2,7 +2,10 @@
 
 namespace common\models;
 
+use common\models\core\HasVisibility;
+use common\models\core\Visibility;
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "article".
@@ -16,19 +19,13 @@ use Yii;
  * @property string $text_raw
  * @property string $text_ready
  */
-class Article extends \yii\db\ActiveRecord
+class Article extends ActiveRecord implements HasVisibility
 {
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'article';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -41,20 +38,37 @@ class Article extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
-            'article_id' => Yii::t('app', 'Article ID'),
-            'epic_id' => Yii::t('app', 'Epic ID'),
-            'key' => Yii::t('app', 'Key'),
-            'title' => Yii::t('app', 'Title'),
-            'subtitle' => Yii::t('app', 'Subtitle'),
-            'visibility' => Yii::t('app', 'Visibility'),
-            'text_raw' => Yii::t('app', 'Text Raw'),
-            'text_ready' => Yii::t('app', 'Text Ready'),
+            'article_id' => Yii::t('app', 'ARTICLE_ID'),
+            'epic_id' => Yii::t('app', 'ARTICLE_EPIC_ID'),
+            'key' => Yii::t('app', 'ARTICLE_KEY'),
+            'title' => Yii::t('app', 'ARTICLE_TITLE'),
+            'subtitle' => Yii::t('app', 'ARTICLE_SUBTITLE'),
+            'visibility' => Yii::t('app', 'ARTICLE_VISIBILITY'),
+            'text_raw' => Yii::t('app', 'ARTICLE_TEXT'),
+            'text_ready' => Yii::t('app', 'ARTICLE_TEXT'),
         ];
+    }
+
+    static public function allowedVisibilities():array
+    {
+        return [
+            Visibility::VISIBILITY_GM,
+            Visibility::VISIBILITY_FULL
+        ];
+    }
+
+    public function getVisibility():string
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getName();
+    }
+
+    public function getVisibilityLowercase():string
+    {
+        $visibility = Visibility::create($this->visibility);
+        return $visibility->getNameLowercase();
     }
 }

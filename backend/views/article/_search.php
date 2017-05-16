@@ -15,8 +15,6 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'article_id') ?>
-
     <?= $form->field($model, 'epic_id') ?>
 
     <?= $form->field($model, 'key') ?>
@@ -24,8 +22,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'title') ?>
 
     <?= $form->field($model, 'subtitle') ?>
-
-    <?php // echo $form->field($model, 'visibility') ?>
 
     <?php // echo $form->field($model, 'text_raw') ?>
 
