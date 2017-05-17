@@ -30,6 +30,8 @@ class m170430_220112_v0_9_0 extends Migration
             'text_raw' => $this->text()->notNull(),
             'text_ready' => $this->text()->notNull(),
         ], $tableOptions);
+
+        $this->addForeignKey('article_epic', 'article', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
     }
 
     public function down()
@@ -49,7 +51,10 @@ class m170430_220112_v0_9_0 extends Migration
         $this->truncateTable('{{%epic}}');
         $this->truncateTable('{{%external_data}}');
         $this->truncateTable('{{%external_data_pack}}');
+        $this->truncateTable('{{%game}}');
         $this->truncateTable('{{%group}}');
+        $this->truncateTable('{{%group_membership}}');
+        $this->truncateTable('{{%group_membership_history}}');
         $this->truncateTable('{{%ip}}');
         $this->truncateTable('{{%parameter}}');
         $this->truncateTable('{{%parameter_pack}}');
