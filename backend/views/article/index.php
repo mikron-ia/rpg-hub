@@ -30,7 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'epic_id',
             'key',
-            'title',
             [
                 'attribute' => 'visibility',
                 'value' => function (Article $model) {

@@ -14,15 +14,26 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'epic_id')->textInput(['maxlength' => true]) ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'epic_id')->dropDownList(\common\models\EpicQuery::getListOfEpicsForSelector()); ?>
+    </div>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    </div>
 
-    <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
+    </div>
 
-    <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(Article::allowedVisibilities())) ?>
+    <div class="col-md-6">
+        <?= $form->field($model,
+            'visibility')->dropDownList(Visibility::visibilityNames(Article::allowedVisibilities())) ?>
+    </div>
 
-    <?= $form->field($model, 'text_raw')->textarea(['rows' => 8]) ?>
+    <div class="col-md-12">
+        <?= $form->field($model, 'text_raw')->textarea(['rows' => 8]) ?>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton(

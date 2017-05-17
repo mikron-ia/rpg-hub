@@ -30,7 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'article_id',
-            'epic.name',
+            [
+                'attribute' => 'epic_id',
+                'format' => 'raw',
+                'value' => $model->epic_id
+                    ? (Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []))
+                    : Yii::t('app', 'ARTICLE_NO_EPIC'),
+            ],
             'key',
             'title',
             'subtitle',

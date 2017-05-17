@@ -18,6 +18,8 @@ use yii\db\ActiveRecord;
  * @property string $visibility
  * @property string $text_raw
  * @property string $text_ready
+ *
+ * @property Epic $epic
  */
 class Article extends ActiveRecord implements HasVisibility
 {
@@ -30,11 +32,11 @@ class Article extends ActiveRecord implements HasVisibility
     {
         return [
             [['epic_id'], 'integer'],
-            [['key', 'title', 'text_raw', 'text_ready'], 'required'],
-            [['text_raw', 'text_ready'], 'string'],
-            [['key'], 'string', 'max' => 80],
+            [['title', 'text_raw'], 'required'],
+            [['text_raw'], 'string'],
             [['title', 'subtitle'], 'string', 'max' => 120],
             [['visibility'], 'string', 'max' => 20],
+            [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
         ];
     }
 
@@ -50,6 +52,14 @@ class Article extends ActiveRecord implements HasVisibility
             'text_raw' => Yii::t('app', 'ARTICLE_TEXT'),
             'text_ready' => Yii::t('app', 'ARTICLE_TEXT'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEpic()
+    {
+        return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
 
     static public function allowedVisibilities():array
