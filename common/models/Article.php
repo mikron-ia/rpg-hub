@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
+use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -18,11 +19,15 @@ use yii\db\ActiveRecord;
  * @property string $visibility
  * @property string $text_raw
  * @property string $text_ready
+ * @property string $seen_pack_id
  *
  * @property Epic $epic
+ * @property SeenPack $seenPack
  */
 class Article extends ActiveRecord implements HasVisibility
 {
+    use ToolsForEntity;
+
     public static function tableName()
     {
         return 'article';
@@ -54,6 +59,25 @@ class Article extends ActiveRecord implements HasVisibility
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->key = $this->generateKey('article');
+        }
+
+        if (empty($this->seen_pack_id)) {
+            $pack = SeenPack::create('Article');
+            $this->seen_pack_id = $pack->seen_pack_id;
+        }
+
+        /**
+         * @todo: Write parsing routine that works the text over
+         */
+        $this->text_ready = $this->text_raw;
+
+        return parent::beforeSave($insert);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -68,6 +92,14 @@ class Article extends ActiveRecord implements HasVisibility
             Visibility::VISIBILITY_GM,
             Visibility::VISIBILITY_FULL
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSeenPack()
+    {
+        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
 
     public function getVisibility():string
