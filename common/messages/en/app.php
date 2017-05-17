@@ -17,6 +17,16 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'ARTICLE_BUTTON_CREATE' => 'Add article',
+    'ARTICLE_EPIC_ID' => 'Epic',
+    'ARTICLE_ID' => 'ID',
+    'ARTICLE_KEY' => 'Key',
+    'ARTICLE_NOT_AVAILABLE' => 'Article not found.',
+    'ARTICLE_SUBTITLE' => 'Subtitle',
+    'ARTICLE_TEXT' => 'Text',
+    'ARTICLE_TITLE' => 'Title',
+    'ARTICLE_TITLE_INDEX' => 'Articles',
+    'ARTICLE_VISIBILITY' => 'Visibility',
     'BACKEND_FRONT_PAGE_MAIN_EPIC_LIST' => 'Other epics',
     'BACKEND_FRONT_PAGE_MAIN_EPIC_SUGGESTED' => 'Epic suggested according to accessed object',
     'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC' => 'Welcome to the epic data hub. Please choose an epic to work with from menu below or from top menu.',
@@ -162,6 +172,7 @@ return [
     'DESCRIPTION_TYPE_THREADS' => 'Threads',
     'DESCRIPTION_TYPE_WHO' => 'Who is this?',
     'DESCRIPTION_UPDATED {when} {who}' => 'Changed {when}, by {who}',
+    'Delete' => '',
     'EPIC_CARD_ANNOUNCEMENTS' => 'Announcements',
     'EPIC_CARD_EPIC_ATTRIBUTES' => 'Epic attributes',
     'EPIC_CARD_PARTICIPANTS' => 'Participants',
@@ -558,6 +569,7 @@ return [
     'USER_UPDATE_TITLE {user_name}' => 'User data edit: {user_name}',
     'USER_USERNAME' => 'Username',
     'USER_VIEW_TITLE {user_name}' => 'User {user_name}',
+    'Update' => '',
     'VISIBILITY_DESIGNATED' => 'Designated only',
     'VISIBILITY_DESIGNATED_LOWERCASE' => 'Designated only',
     'VISIBILITY_FULL' => 'To all',

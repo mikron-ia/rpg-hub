@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Article */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Articles'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ARTICLE_TITLE_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-view">
@@ -15,11 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->article_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->article_id], [
+        <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->article_id],
+            ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->article_id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,14 +30,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'article_id',
-            'epic_id',
+            'epic.name',
             'key',
             'title',
             'subtitle',
-            'visibility',
-            'text_raw:ntext',
-            'text_ready:ntext',
+            [
+                'attribute' => 'visibility',
+                'value' => $model->getVisibility()
+            ],
         ],
     ]) ?>
+
+    <div>
+        <?= $model->text_ready ?>
+    </div>
 
 </div>

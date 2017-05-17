@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Article;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -30,8 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'epic_id',
             'key',
             'title',
-            'visibility',
-
+            [
+                'attribute' => 'visibility',
+                'value' => function (Article $model) {
+                    return $model->getVisibility();
+                }
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

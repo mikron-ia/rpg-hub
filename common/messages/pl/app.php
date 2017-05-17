@@ -17,6 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'ARTICLE_BUTTON_CREATE' => 'Dodaj artykuł',
+    'ARTICLE_EPIC_ID' => 'Kampania',
+    'ARTICLE_ID' => 'ID',
+    'ARTICLE_KEY' => 'Klucz',
+    'ARTICLE_NOT_AVAILABLE' => 'Nie znaleziono artykułu.',
+    'ARTICLE_SUBTITLE' => 'Podtytuł',
+    'ARTICLE_TEXT' => 'Tekst',
+    'ARTICLE_VISIBILITY' => 'Widoczność',
     'BACKEND_FRONT_PAGE_MAIN_EPIC_LIST' => 'Pozostałe kampanie',
     'BACKEND_FRONT_PAGE_MAIN_EPIC_SUGGESTED' => 'Kampania sugerowana na podstawie aktywnego obiektu',
     'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC' => 'Witamy w centrum kontroli kampanii. Wybierz kampanię do pracy z menu poniżej lub z menu górnego.',
@@ -162,6 +170,7 @@ return [
     'DESCRIPTION_TYPE_THREADS' => 'Wątki',
     'DESCRIPTION_TYPE_WHO' => 'Kim jest?',
     'DESCRIPTION_UPDATED {when} {who}' => 'Zmienione przez {who}, {when}',
+    'Delete' => '',
     'EPIC_CARD_ANNOUNCEMENTS' => 'Ogłoszenia',
     'EPIC_CARD_EPIC_ATTRIBUTES' => 'Atrybuty kampanii',
     'EPIC_CARD_PARTICIPANTS' => 'Uczestnicy',
@@ -558,6 +567,7 @@ return [
     'USER_UPDATE_TITLE {user_name}' => 'Edycja danych użytkownika: {user_name}',
     'USER_USERNAME' => 'Nazwa użytkownika',
     'USER_VIEW_TITLE {user_name}' => 'Użytkownik {user_name}',
+    'Update' => '',
     'VISIBILITY_DESIGNATED' => 'Dla określonych',
     'VISIBILITY_DESIGNATED_LOWERCASE' => 'dla określonych',
     'VISIBILITY_FULL' => 'Dla wszystkich',
