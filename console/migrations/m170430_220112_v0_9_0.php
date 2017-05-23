@@ -49,6 +49,7 @@ class m170430_220112_v0_9_0 extends Migration
         $this->truncateTable('{{%character}}');
         $this->truncateTable('{{%character_sheet}}');
         $this->truncateTable('{{%description}}');
+        $this->truncateTable('{{%description_history}}');
         $this->truncateTable('{{%description_pack}}');
         $this->truncateTable('{{%epic}}');
         $this->truncateTable('{{%external_data}}');
@@ -64,6 +65,7 @@ class m170430_220112_v0_9_0 extends Migration
         $this->truncateTable('{{%participant_role}}');
         $this->truncateTable('{{%performed_action}}');
         $this->truncateTable('{{%recap}}');
+        $this->truncateTable('{{%scenario}}');
         $this->truncateTable('{{%seen}}');
         $this->truncateTable('{{%seen_pack}}');
         $this->truncateTable('{{%story}}');
