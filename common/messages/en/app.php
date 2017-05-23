@@ -23,6 +23,7 @@ return [
     'ARTICLE_KEY' => 'Key',
     'ARTICLE_NOT_AVAILABLE' => 'Article not found.',
     'ARTICLE_NO_EPIC' => '[unattached]',
+    'ARTICLE_POSITION' => 'Position',
     'ARTICLE_SUBTITLE' => 'Subtitle',
     'ARTICLE_TEXT' => 'Text',
     'ARTICLE_TITLE' => 'Title',

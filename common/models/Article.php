@@ -7,6 +7,9 @@ use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
+use yii\helpers\Markdown;
+use yii2tech\ar\position\PositionBehavior;
 
 /**
  * This is the model class for table "article".
@@ -17,9 +20,10 @@ use yii\db\ActiveRecord;
  * @property string $title
  * @property string $subtitle
  * @property string $visibility
+ * @property string $seen_pack_id
+ * @property integer $position
  * @property string $text_raw
  * @property string $text_ready
- * @property string $seen_pack_id
  *
  * @property Epic $epic
  * @property SeenPack $seenPack
@@ -42,6 +46,7 @@ class Article extends ActiveRecord implements HasVisibility
             [['title', 'subtitle'], 'string', 'max' => 120],
             [['visibility'], 'string', 'max' => 20],
             [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
+            [['seen_pack_id'], 'exist', 'skipOnError' => true, 'targetClass' => SeenPack::className(), 'targetAttribute' => ['seen_pack_id' => 'seen_pack_id']],
         ];
     }
 
@@ -54,8 +59,20 @@ class Article extends ActiveRecord implements HasVisibility
             'title' => Yii::t('app', 'ARTICLE_TITLE'),
             'subtitle' => Yii::t('app', 'ARTICLE_SUBTITLE'),
             'visibility' => Yii::t('app', 'ARTICLE_VISIBILITY'),
+            'position' => Yii::t('app', 'ARTICLE_POSITION'),
             'text_raw' => Yii::t('app', 'ARTICLE_TEXT'),
             'text_ready' => Yii::t('app', 'ARTICLE_TEXT'),
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'positionBehavior' => [
+                'class' => PositionBehavior::className(),
+                'positionAttribute' => 'position',
+                'groupAttributes' => ['epic_id'],
+            ],
         ];
     }
 
@@ -71,9 +88,9 @@ class Article extends ActiveRecord implements HasVisibility
         }
 
         /**
-         * @todo: Write parsing routine that works the text over
+         * @todo: Improve parsing routine that works the text over
          */
-        $this->text_ready = $this->text_raw;
+        $this->text_ready =  Markdown::process(Html::encode($this->text_raw), 'gfm');
 
         return parent::beforeSave($insert);
     }

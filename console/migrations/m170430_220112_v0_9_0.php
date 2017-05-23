@@ -27,9 +27,10 @@ class m170430_220112_v0_9_0 extends Migration
             'title' => $this->string(120)->notNull(),
             'subtitle' => $this->string(120),
             'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM),
+            'seen_pack_id' => $this->integer(11)->unsigned(),
+            'position' => $this->integer()->defaultValue(0),
             'text_raw' => $this->text()->notNull(),
             'text_ready' => $this->text()->notNull(),
-            'seen_pack_id' => $this->integer(11)->unsigned(),
         ], $tableOptions);
 
         $this->addForeignKey('article_epic', 'article', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
