@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * GameController implements the CRUD actions for Game model.
@@ -22,7 +23,7 @@ class GameController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'update', 'view', 'delete'],
+                        'actions' => ['create', 'index', 'update', 'view', 'delete', 'move-up', 'move-down'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -150,6 +151,48 @@ class GameController extends Controller
         $model->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Moves game up in order; this means lower position on the list
+     * @param int $id Story ID
+     * @return \yii\web\Response
+     */
+    public function actionMoveUp($id)
+    {
+        $model = $this->findModel($id);
+        if (!$model->canUserControlYou()) {
+            Game::throwExceptionAboutControl();
+        }
+        $model->movePrev();
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
+    }
+
+    /**
+     * Moves game down in order; this means higher position on the list
+     * @param int $id Story ID
+     * @return \yii\web\Response
+     */
+    public function actionMoveDown($id)
+    {
+        $model = $this->findModel($id);
+        if (!$model->canUserControlYou()) {
+            Game::throwExceptionAboutControl();
+        }
+        $model->moveNext();
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
     }
 
     /**

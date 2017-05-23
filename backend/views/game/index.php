@@ -25,6 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
+            [
+                'attribute' => 'position',
+                'contentOptions' => ['class' => 'text-center'],
+                'label' => Yii::t('app', 'GAME_POSITION'),
+            ],
             'basics',
             [
                 'attribute' => 'status',
@@ -35,7 +40,27 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update}',
+                'template' => '{view} {update} {up} {down}',
+                'buttons' => [
+                    'up' => function ($url, Game $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-arrow-up"></span>',
+                            ['game/move-down', 'id' => $model->game_id],
+                            [
+                                'title' => Yii::t('app', 'LABEL_MOVE_UP'),
+                            ]
+                        );
+                    },
+                    'down' => function ($url, Game $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-arrow-down"></span>',
+                            ['game/move-up', 'id' => $model->game_id],
+                            [
+                                'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
+                            ]
+                        );
+                    },
+                ]
             ],
         ],
     ]); ?>
