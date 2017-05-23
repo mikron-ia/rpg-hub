@@ -52,6 +52,10 @@ $this->title = 'RPG hub - control';
             <?= Html::a(Yii::t('app', 'BUTTON_SCENARIOS'), ['scenario/index'], ['class' => 'btn btn-lg btn-primary']); ?>
         </div>
 
+        <div class="btn-group btn-group-lg">
+            <?= Html::a(Yii::t('app', 'BUTTON_ARTICLES'), ['article/index'], ['class' => 'btn btn-lg btn-primary']); ?>
+        </div>
+
     </div>
 
     <div class="body-content">

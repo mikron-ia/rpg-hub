@@ -28,15 +28,37 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'filterPosition' => null,
         'columns' => [
-            'epic_id',
-            'key',
+            'title',
             [
                 'attribute' => 'visibility',
                 'value' => function (Article $model) {
                     return $model->getVisibility();
                 }
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {up} {down}',
+                'buttons' => [
+                    'up' => function ($url, Article $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-arrow-up"></span>',
+                            ['article/move-down', 'id' => $model->article_id],
+                            [
+                                'title' => Yii::t('app', 'LABEL_MOVE_UP'),
+                            ]
+                        );
+                    },
+                    'down' => function ($url, Article $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-arrow-down"></span>',
+                            ['article/move-up', 'id' => $model->article_id],
+                            [
+                                'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
+                            ]
+                        );
+                    },
+                ]
+            ],
         ],
     ]); ?>
 </div>

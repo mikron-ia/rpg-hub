@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\HasEpicControl;
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
@@ -28,7 +29,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property Epic $epic
  * @property SeenPack $seenPack
  */
-class Article extends ActiveRecord implements HasVisibility
+class Article extends ActiveRecord implements HasEpicControl, HasVisibility
 {
     use ToolsForEntity;
 
@@ -129,5 +130,45 @@ class Article extends ActiveRecord implements HasVisibility
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();
+    }
+
+    static public function canUserIndexThem():bool
+    {
+        return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
+    }
+
+    static public function canUserCreateThem():bool
+    {
+        return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
+    }
+
+    public function canUserControlYou():bool
+    {
+        return self::canUserControlInEpic($this->epic);
+    }
+
+    public function canUserViewYou():bool
+    {
+        return self::canUserViewInEpic($this->epic);
+    }
+
+    static function throwExceptionAboutCreate()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_ARTICLE'));
+    }
+
+    static function throwExceptionAboutControl()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_ARTICLE'));
+    }
+
+    static function throwExceptionAboutIndex()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_ARTICLE'));
+    }
+
+    static function throwExceptionAboutView()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_ARTICLE'));
     }
 }

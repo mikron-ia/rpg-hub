@@ -18,6 +18,16 @@ class ArticleController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['create', 'index', 'update', 'view', 'delete', 'move-up', 'move-down'],
+                        'allow' => true,
+                        'roles' => ['operator'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -102,6 +112,48 @@ class ArticleController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Moves game up in order; this means lower position on the list
+     * @param int $id Story ID
+     * @return \yii\web\Response
+     */
+    public function actionMoveUp($id)
+    {
+        $model = $this->findModel($id);
+        if (!$model->canUserControlYou()) {
+            Article::throwExceptionAboutControl();
+        }
+        $model->movePrev();
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
+    }
+
+    /**
+     * Moves game down in order; this means higher position on the list
+     * @param int $id Story ID
+     * @return \yii\web\Response
+     */
+    public function actionMoveDown($id)
+    {
+        $model = $this->findModel($id);
+        if (!$model->canUserControlYou()) {
+            Article::throwExceptionAboutControl();
+        }
+        $model->moveNext();
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
     }
 
     /**
