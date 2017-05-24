@@ -14,25 +14,25 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form->field($model, 'epic_id')->dropDownList(\common\models\EpicQuery::getListOfEpicsForSelector()); ?>
+    </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model,
+            'visibility')->dropDownList(Visibility::visibilityNames(Article::allowedVisibilities())) ?>
     </div>
 
     <div class="col-md-6">
         <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-6">
-        <?= $form->field($model,
-            'visibility')->dropDownList(Visibility::visibilityNames(Article::allowedVisibilities())) ?>
-    </div>
-
     <div class="col-md-12">
-        <?= $form->field($model, 'text_raw')->textarea(['rows' => 8]) ?>
+        <?= $form->field($model, 'text_raw')->textarea(['rows' => 12]) ?>
     </div>
 
     <div class="form-group">

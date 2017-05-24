@@ -15,10 +15,6 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'epic_id') ?>
-
-    <?= $form->field($model, 'key') ?>
-
     <?= $form->field($model, 'title') ?>
 
     <?= $form->field($model, 'subtitle') ?>

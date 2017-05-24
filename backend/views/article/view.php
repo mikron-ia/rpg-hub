@@ -29,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'article_id',
             [
                 'attribute' => 'epic_id',
                 'format' => 'raw',
@@ -38,7 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     : Yii::t('app', 'ARTICLE_NO_EPIC'),
             ],
             'key',
-            'title',
             'subtitle',
             [
                 'attribute' => 'visibility',
