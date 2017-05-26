@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\core\HasEpicControl;
+use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
@@ -31,7 +32,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property Epic $epic
  * @property SeenPack $seenPack
  */
-class Article extends ActiveRecord implements HasEpicControl, HasVisibility
+class Article extends ActiveRecord implements HasEpicControl, HasVisibility, HasSightings
 {
     use ToolsForEntity;
 
@@ -118,6 +119,26 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility
     public function getEpic()
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+    }
+
+    public function recordSighting():bool
+    {
+        return $this->seenPack->recordSighting();
+    }
+
+    public function recordNotification():bool
+    {
+        return $this->seenPack->recordNotification();
+    }
+
+    public function showSightingStatus():string
+    {
+        return $this->seenPack->getStatusForCurrentUser();
+    }
+
+    public function showSightingCSS():string
+    {
+        return $this->seenPack->getCSSForCurrentUser();
     }
 
     static public function allowedVisibilities():array
