@@ -22,10 +22,12 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $subtitle
  * @property string $visibility
  * @property string $seen_pack_id
+ * @property string $description_pack_id
  * @property integer $position
  * @property string $text_raw
  * @property string $text_ready
  *
+ * @property DescriptionPack $descriptionPack
  * @property Epic $epic
  * @property SeenPack $seenPack
  */
@@ -46,6 +48,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility
             [['text_raw'], 'string'],
             [['title', 'subtitle'], 'string', 'max' => 120],
             [['visibility'], 'string', 'max' => 20],
+            [['description_pack_id'], 'exist', 'skipOnError' => true, 'targetClass' => DescriptionPack::className(), 'targetAttribute' => ['description_pack_id' => 'description_pack_id']],
             [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
             [['seen_pack_id'], 'exist', 'skipOnError' => true, 'targetClass' => SeenPack::className(), 'targetAttribute' => ['seen_pack_id' => 'seen_pack_id']],
         ];
@@ -88,12 +91,25 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility
             $this->seen_pack_id = $pack->seen_pack_id;
         }
 
+        if (empty($this->description_pack_id)) {
+            $pack = DescriptionPack::create('Article');
+            $this->description_pack_id = $pack->description_pack_id;
+        }
+
         /**
          * @todo: Improve parsing routine that works the text over
          */
         $this->text_ready =  Markdown::process(Html::encode($this->text_raw), 'gfm');
 
         return parent::beforeSave($insert);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDescriptionPack()
+    {
+        return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
     }
 
     /**

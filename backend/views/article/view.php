@@ -59,11 +59,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'model' => $model,
             'attributes' => [
                 [
-                    'label' => 'ARTICLE_CHARACTER_COUNT',
+                    'label' => Yii::t('app', 'ARTICLE_CHARACTER_COUNT'),
                     'value' => '?'
                 ],
                 [
-                    'label' => 'ARTICLE_WORD_COUNT',
+                    'label' => Yii::t('app', 'ARTICLE_WORD_COUNT'),
                     'value' => '?'
                 ],
             ],

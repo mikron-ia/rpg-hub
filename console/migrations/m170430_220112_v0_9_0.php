@@ -28,6 +28,7 @@ class m170430_220112_v0_9_0 extends Migration
             'subtitle' => $this->string(120),
             'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM),
             'seen_pack_id' => $this->integer(11)->unsigned(),
+            'description_pack_id' => $this->integer(11)->unsigned(),
             'position' => $this->integer()->defaultValue(0),
             'text_raw' => $this->text()->notNull(),
             'text_ready' => $this->text()->notNull(),
@@ -35,6 +36,7 @@ class m170430_220112_v0_9_0 extends Migration
 
         $this->addForeignKey('article_epic', 'article', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('article_seen', 'article', 'seen_pack_id', 'seen_pack', 'seen_pack_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('article_description', 'article', 'description_pack_id', 'description_pack', 'description_pack_id', 'RESTRICT', 'CASCADE');
     }
 
     public function down()
