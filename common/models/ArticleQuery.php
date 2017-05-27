@@ -27,9 +27,7 @@ class ArticleQuery extends Article
 
     /**
      * Creates data provider instance with search query applied
-     *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -48,7 +46,7 @@ class ArticleQuery extends Article
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['position' => SORT_DESC]],
-            'pagination' => false,
+            'pagination' => ['pageSize' => 8],
         ]);
 
         $this->load($params);

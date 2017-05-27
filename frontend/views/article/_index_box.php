@@ -14,6 +14,8 @@ use yii\helpers\Html;
         </span>
     </h2>
 
+    <p class="subtitle"><?= $model->subtitle ?></p>
+
 </div>
 
 <div class="clearfix"></div>
