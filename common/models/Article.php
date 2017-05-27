@@ -70,6 +70,14 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         ];
     }
 
+    public function afterFind()
+    {
+        if ($this->seen_pack_id) {
+            $this->seenPack->recordNotification();
+        }
+        parent::afterFind();
+    }
+
     public function behaviors()
     {
         return [
