@@ -28,7 +28,7 @@ return [
     'ARTICLE_SUBTITLE' => 'Podtytuł',
     'ARTICLE_TEXT' => 'Tekst',
     'ARTICLE_TITLE' => 'Tytuł',
-    'ARTICLE_TITLE_INDEX' => 'Artykuły',
+    'ARTICLE_TITLE_INDEX' => 'Teksty',
     'ARTICLE_VISIBILITY' => 'Widoczność',
     'ARTICLE_WORD_COUNT' => 'Słów',
     'BACKEND_FRONT_PAGE_MAIN_EPIC_LIST' => 'Pozostałe kampanie',

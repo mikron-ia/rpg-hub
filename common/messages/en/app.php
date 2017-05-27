@@ -28,7 +28,7 @@ return [
     'ARTICLE_SUBTITLE' => 'Subtitle',
     'ARTICLE_TEXT' => 'Text',
     'ARTICLE_TITLE' => 'Title',
-    'ARTICLE_TITLE_INDEX' => 'Articles',
+    'ARTICLE_TITLE_INDEX' => 'Texts',
     'ARTICLE_VISIBILITY' => 'Visibility',
     'ARTICLE_WORD_COUNT' => 'Word count',
     'BACKEND_FRONT_PAGE_MAIN_EPIC_LIST' => 'Other epics',

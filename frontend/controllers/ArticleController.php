@@ -25,7 +25,7 @@ class ArticleController extends Controller
                     [
                         'actions' => ['index', 'view'],
                         'allow' => true,
-                        'roles' => ['operator'],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -44,6 +44,10 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection');
+        }
+
         $searchModel = new ArticleQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -60,8 +64,20 @@ class ArticleController extends Controller
      */
     public function actionView($key)
     {
+        $model = $this->findModelByKey($key);
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
+            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
+        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
+            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
+        }
+
+        $model->recordSighting();
+
         return $this->render('view', [
-            'model' => $this->findModelByKey($key),
+            'model' => $model,
         ]);
     }
 
