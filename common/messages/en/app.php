@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'ARTICLE_BASICS' => 'Article basic data',
     'ARTICLE_BUTTON_CREATE' => 'Add article',
     'ARTICLE_CHARACTER_COUNT' => 'Character count',
     'ARTICLE_EPIC_ID' => 'Epic',
@@ -484,6 +485,8 @@ return [
     'ST_PARAM_STORY_NUMBER' => 'Story number',
     'ST_PARAM_TIME_RANGE' => 'Time range',
     'ST_PARAM_XP_PARTY' => 'Party experience',
+    'TAG_UNPUBLISHED_F' => 'Unpublished',
+    'TAG_UNPUBLISHED_M' => 'Unpublished',
     'TITLE_ARTICLE_CREATE' => 'Adding an article',
     'TITLE_CHARACTER_CREATE' => 'Adding a character',
     'TITLE_CHARACTER_INDEX' => 'Characters',

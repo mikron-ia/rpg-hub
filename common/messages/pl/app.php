@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'ARTICLE_BASICS' => 'Podstawowe dane',
     'ARTICLE_BUTTON_CREATE' => 'Dodaj artykuł',
     'ARTICLE_CHARACTER_COUNT' => 'Znaków',
     'ARTICLE_EPIC_ID' => 'Kampania',
@@ -484,6 +485,8 @@ return [
     'ST_PARAM_STORY_NUMBER' => 'Numer Historii',
     'ST_PARAM_TIME_RANGE' => 'Zakres czasowy',
     'ST_PARAM_XP_PARTY' => 'PD drużynowe',
+    'TAG_UNPUBLISHED_F' => 'Nieopublikowana',
+    'TAG_UNPUBLISHED_M' => 'Nieopublikowany',
     'TITLE_ARTICLE_CREATE' => 'Dodawanie tekstu',
     'TITLE_CHARACTER_CREATE' => 'Dodawanie postaci',
     'TITLE_CHARACTER_INDEX' => 'Postacie',
