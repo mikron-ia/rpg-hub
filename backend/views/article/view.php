@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p class="subtitle"><?= $model->subtitle ?></p>
 
     <div class="col-md-6">
+        <h2 class="text-center"><?= Yii::t('app', 'ARTICLE_BASICS') ?></h2>
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
@@ -52,14 +53,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'visibility',
                     'value' => $model->getVisibility()
                 ],
-            ],
-        ]) ?>
-    </div>
-
-    <div class="col-md-6">
-        <?= DetailView::widget([
-            'model' => $model,
-            'attributes' => [
                 [
                     'label' => Yii::t('app', 'ARTICLE_CHARACTER_COUNT'),
                     'value' => '?'
@@ -72,12 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </div>
 
-    <div class="col-md-12">
-        <?= $model->text_ready ?>
-    </div>
-
     <div class="col-md-6">
-
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_READ') ?></h2>
         <?= \yii\grid\GridView::widget([
             'dataProvider' => new ActiveDataProvider([
@@ -94,11 +82,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]) ?>
-
     </div>
 
-    <div class="col-md-6">
+    <div class="clearfix"></div>
 
+    <div class="col-md-6">
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_BEFORE_UPDATE') ?></h2>
         <?= \yii\grid\GridView::widget([
             'dataProvider' => new ActiveDataProvider([
@@ -115,11 +103,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]) ?>
-
     </div>
 
     <div class="col-md-6">
-
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_NEW') ?></h2>
         <?= \yii\grid\GridView::widget([
             'dataProvider' => new ActiveDataProvider([
@@ -136,7 +122,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]) ?>
+    </div>
 
+    <div class="clearfix"></div>
+
+    <div class="col-md-12">
+        <?= $model->text_ready ?>
     </div>
 
 </div>
