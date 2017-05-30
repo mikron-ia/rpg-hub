@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'importance')->dropDownList(ImportanceCategory::importanceNames()) ?>
+        <?= $form->field($model, 'importance_category')->dropDownList(ImportanceCategory::importanceNames()) ?>
     </div>
 
     <div class="col-md-6">
