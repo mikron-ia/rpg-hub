@@ -67,10 +67,14 @@ class m170430_220112_v0_9_0 extends Migration
 
         $this->addForeignKey('character_importance_pack', '{{%character}}', 'importance_pack_id', '{{%importance_pack}}', 'importance_pack_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('group_importance_pack', '{{%group}}', 'importance_pack_id', '{{%importance_pack}}', 'importance_pack_id', 'RESTRICT', 'CASCADE');
+
+        $this->addColumn('group', 'importance_category', $this->string(20)->notNull()->defaultValue(ImportanceCategory::IMPORTANCE_MEDIUM)->after('visibility'));
     }
 
     public function down()
     {
+        $this->dropColumn('group', 'importance_category');
+
         $this->dropForeignKey('group_importance_pack', '{{%group}}');
         $this->dropForeignKey('character_importance_pack', '{{%character}}');
 
