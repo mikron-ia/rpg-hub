@@ -25,9 +25,11 @@ use yii\db\ActiveRecord;
  * @property string $visibility
  * @property string $description_pack_id
  * @property string $external_data_pack_id
+ * @property string $importance_pack_id
  *
  * @property DescriptionPack $descriptionPack
  * @property ExternalDataPack $externalDataPack
+ * @property ImportancePack $importancePack
  * @property Epic $epic
  * @property SeenPack $seenPack
  * @property GroupMembership[] $groupCharacterMemberships
@@ -87,6 +89,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             'visibility' => Yii::t('app', 'GROUP_VISIBILITY'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
+            'importance_pack_id' => Yii::t('app', 'IMPORTANCE_PACK'),
         ];
     }
 
@@ -116,6 +119,11 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         if (empty($this->seen_pack_id)) {
             $pack = SeenPack::create('Group');
             $this->seen_pack_id = $pack->seen_pack_id;
+        }
+
+        if (empty($this->importance_pack_id)) {
+            $pack = ImportancePack::create('Group');
+            $this->importance_pack_id = $pack->importance_pack_id;
         }
 
         return parent::beforeSave($insert);
@@ -176,6 +184,14 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public function getEpic()
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImportancePack()
+    {
+        return $this->hasOne(ImportancePack::className(), ['importance_pack_id' => 'importance_pack_id']);
     }
 
     /**

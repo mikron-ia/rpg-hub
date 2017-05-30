@@ -27,16 +27,18 @@ use yii\db\ActiveRecord;
  * @property string $data
  * @property string $visibility
  * @property string $importance_category
+ * @property string $updated_at
  * @property string $character_sheet_id
  * @property string $description_pack_id
  * @property string $external_data_pack_id
  * @property string $seen_pack_id
- * @property string $updated_at
+ * @property string $importance_pack_id
  *
  * @property Epic $epic
  * @property CharacterSheet $character
  * @property DescriptionPack $descriptionPack
  * @property ExternalDataPack $externalDataPack
+ * @property ImportancePack $importancePack
  * @property SeenPack $seenPack
  * @property CharacterSheet[] $characterSheets
  * @property GroupMembership[] $groupMemberships
@@ -113,6 +115,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
             'seen_pack_id' => Yii::t('app', 'SEEN_PACK_ID'),
+            'importance_pack_id' => Yii::t('app', 'IMPORTANCE_PACK'),
         ];
     }
 
@@ -145,6 +148,11 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         if (empty($this->seen_pack_id)) {
             $pack = SeenPack::create('Character');
             $this->seen_pack_id = $pack->seen_pack_id;
+        }
+
+        if (empty($this->importance_pack_id)) {
+            $pack = ImportancePack::create('Character');
+            $this->importance_pack_id = $pack->importance_pack_id;
         }
 
         return parent::beforeSave($insert);
@@ -210,6 +218,14 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public function getExternalDataPack()
     {
         return $this->hasOne(ExternalDataPack::className(), ['external_data_pack_id' => 'external_data_pack_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImportancePack()
+    {
+        return $this->hasOne(ImportancePack::className(), ['importance_pack_id' => 'importance_pack_id']);
     }
 
     /**
