@@ -21,7 +21,7 @@ use yii\widgets\DetailView;
                 ],
                 [
                     'attribute' => 'importance',
-                    'value' => $model->getImportance(),
+                    'value' => $model->getImportanceCategory(),
                 ],
             ],
         ]);

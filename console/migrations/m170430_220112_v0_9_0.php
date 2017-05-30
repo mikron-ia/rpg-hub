@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
 use yii\db\Migration;
 
@@ -37,10 +38,18 @@ class m170430_220112_v0_9_0 extends Migration
         $this->addForeignKey('article_epic', 'article', 'epic_id', '{{%epic}}', 'epic_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('article_seen', 'article', 'seen_pack_id', 'seen_pack', 'seen_pack_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('article_description', 'article', 'description_pack_id', 'description_pack', 'description_pack_id', 'RESTRICT', 'CASCADE');
+
+        $this->addColumn('character', 'importance_category', $this->string(20)->notNull()->defaultValue(ImportanceCategory::IMPORTANCE_MEDIUM)->after('importance'));
+        $this->execute("UPDATE `character` SET importance_category = importance");
+        $this->dropColumn('character', 'importance');
     }
 
     public function down()
     {
+        $this->addColumn('character', 'importance', $this->string(20)->notNull()->defaultValue(ImportanceCategory::IMPORTANCE_MEDIUM)->after('visibility'));
+        $this->execute("UPDATE `character` SET importance = importance_category");
+        $this->dropColumn('character', 'importance_category');
+
         $this->dropTable('article');
 
         $this->execute('SET foreign_key_checks = 0;');

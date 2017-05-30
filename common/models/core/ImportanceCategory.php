@@ -8,7 +8,7 @@ use Yii;
  * Class Importance
  * @package common\models\core
  */
-final class Importance
+final class ImportanceCategory
 {
     const IMPORTANCE_NONE = '4-none';
     const IMPORTANCE_LOW = '3-low';
@@ -75,11 +75,11 @@ final class Importance
 
     /**
      * @param $code
-     * @return Importance
+     * @return ImportanceCategory
      */
-    static public function create($code):Importance
+    static public function create($code):ImportanceCategory
     {
-        $importance = new Importance();
+        $importance = new ImportanceCategory();
         $importance->importance = $code;
         return $importance;
     }

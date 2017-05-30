@@ -5,10 +5,10 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
-use common\models\core\HasImportance;
+use common\models\core\HasImportanceCategory;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
-use common\models\core\Importance;
+use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
@@ -26,7 +26,7 @@ use yii\db\ActiveRecord;
  * @property string $tagline
  * @property string $data
  * @property string $visibility
- * @property string $importance
+ * @property string $importance_category
  * @property string $character_sheet_id
  * @property string $description_pack_id
  * @property string $external_data_pack_id
@@ -42,7 +42,7 @@ use yii\db\ActiveRecord;
  * @property GroupMembership[] $groupMemberships
  * @property GroupMembership[] $groupMembershipsVisibleToUser
  */
-class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasVisibility, HasSightings
+class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportanceCategory, HasVisibility, HasSightings
 {
     use ToolsForEntity;
 
@@ -54,9 +54,9 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public function rules()
     {
         return [
-            [['epic_id', 'name', 'tagline', 'visibility', 'importance'], 'required'],
+            [['epic_id', 'name', 'tagline', 'visibility', 'importance_category'], 'required'],
             [['epic_id', 'character_sheet_id', 'description_pack_id'], 'integer'],
-            [['data', 'visibility', 'importance'], 'string'],
+            [['data', 'visibility', 'importance_category'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name', 'tagline'], 'string', 'max' => 120],
             [
@@ -107,7 +107,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'tagline' => Yii::t('app', 'CHARACTER_TAGLINE'),
             'data' => Yii::t('app', 'CHARACTER_DATA'),
             'visibility' => Yii::t('app', 'CHARACTER_VISIBILITY'),
-            'importance' => Yii::t('app', 'CHARACTER_IMPORTANCE'),
+            'importance_category' => Yii::t('app', 'CHARACTER_IMPORTANCE'),
             'updated_at' => Yii::t('app', 'CHARACTER_UPDATED_AT'),
             'character_sheet_id' => Yii::t('app', 'LABEL_CHARACTER'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
@@ -306,7 +306,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         $character->character_sheet_id = $characterSheet->character_sheet_id;
         $character->tagline = '?';
         $character->visibility = Visibility::VISIBILITY_GM;
-        $character->importance = Importance::IMPORTANCE_MEDIUM;
+        $character->importance_category = ImportanceCategory::IMPORTANCE_MEDIUM;
 
         if ($character->save()) {
             $character->refresh();
@@ -385,15 +385,15 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
     }
 
-    public function getImportance():string
+    public function getImportanceCategory():string
     {
-        $importance = Importance::create($this->importance);
+        $importance = ImportanceCategory::create($this->importance_category);
         return $importance->getName();
     }
 
-    public function getImportanceLowercase():string
+    public function getImportanceCategoryLowercase():string
     {
-        $importance = Importance::create($this->importance);
+        $importance = ImportanceCategory::create($this->importance_category);
         return $importance->getNameLowercase();
     }
 

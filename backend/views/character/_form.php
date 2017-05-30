@@ -1,7 +1,7 @@
 <?php
 
 use common\models\CharacterSheetQuery;
-use common\models\core\Importance;
+use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
 use common\models\EpicQuery;
 use common\models\Character;
@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'importance')->dropDownList(Importance::importanceNames()) ?>
+        <?= $form->field($model, 'importance')->dropDownList(ImportanceCategory::importanceNames()) ?>
     </div>
 
     <div class="col-md-6">

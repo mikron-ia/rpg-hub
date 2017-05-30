@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'importance',
                     'value' => function (Character $model) {
-                        return $model->getImportance();
+                        return $model->getImportanceCategory();
                     }
                 ],
                 [

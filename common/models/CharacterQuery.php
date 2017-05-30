@@ -57,7 +57,7 @@ final class CharacterQuery extends Character
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['importance' => SORT_ASC]],
+            'sort' => ['defaultOrder' => ['importance_category' => SORT_ASC]],
             'pagination' => ['pageSize' => $this->pageCount],
         ]);
 
@@ -85,7 +85,7 @@ final class CharacterQuery extends Character
     {
         $search = $this->search($params);
 
-        $search->sort = ['defaultOrder' => ['importance' => SORT_ASC]];
+        $search->sort = ['defaultOrder' => ['importance_category' => SORT_ASC]];
 
         return $search;
     }
