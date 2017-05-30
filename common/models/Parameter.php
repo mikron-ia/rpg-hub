@@ -38,18 +38,13 @@ class Parameter extends ActiveRecord implements HasVisibility
     const DATA_SOURCE_FOR_REPUTATION = 'source-reputation';
     const EPIC_STATUS = 'epic-status';
     const EPIC_SYSTEM_STATE = 'epic-system-state';
+    const LANGUAGE = 'language';
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'parameter';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -139,6 +134,7 @@ class Parameter extends ActiveRecord implements HasVisibility
             self::DATA_SOURCE_FOR_REPUTATION => Yii::t('app', 'PARAM_DATA_SOURCE_FOR_REPUTATION'),
             self::EPIC_STATUS => Yii::t('app', 'PARAM_EPIC_STATUS'),
             self::EPIC_SYSTEM_STATE => Yii::t('app', 'PARAM_EPIC_SYSTEM_STATE'),
+            self::LANGUAGE => Yii::t('app', 'PARAM_LANGUAGE'),
         ];
     }
 

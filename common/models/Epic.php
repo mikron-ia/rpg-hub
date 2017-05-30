@@ -265,6 +265,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             Parameter::DATA_SOURCE_FOR_REPUTATION,
             Parameter::EPIC_STATUS,
             Parameter::EPIC_SYSTEM_STATE,
+            Parameter::LANGUAGE,
         ];
     }
 
@@ -448,8 +449,19 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return $this->seenPack->getCSSForCurrentUser();
     }
 
-    function __toString()
+    public function __toString()
     {
         return Html::a($this->name, ['epic/view', 'id' => $this->epic_id]);
+    }
+
+    /**
+     * Provides this object's ActiveQuery
+     * NOTE: this is a workaround for `Parameter` class to work on Epic without giving it HasEpic control
+     *
+     * @return ActiveQuery
+     */
+    public function getEpic()
+    {
+        return Epic::find()->where(['epic_id' => $this->epic_id]);
     }
 }

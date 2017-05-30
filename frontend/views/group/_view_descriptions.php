@@ -9,7 +9,7 @@
 
         <?= \yii\widgets\ListView::widget([
             'dataProvider' => new \yii\data\ActiveDataProvider([
-                'query' => $model->descriptionPack->getDescriptionsInLanguageOfTheActiveUser(),
+                'query' => $model->descriptionPack->getDescriptionsVisible(),
                 'sort' => ['defaultOrder' => ['position' => SORT_ASC]]
             ]),
             'itemOptions' => ['class' => 'item'],

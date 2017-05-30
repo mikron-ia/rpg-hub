@@ -23,7 +23,7 @@ final class DescriptionQuery extends Description
     {
         return [
             [['description_pack_id'], 'integer'],
-            [['code', 'public_text', 'private_text', 'lang', 'visibility'], 'safe'],
+            [['code', 'public_text', 'private_text', 'visibility'], 'safe'],
         ];
     }
 
@@ -68,7 +68,6 @@ final class DescriptionQuery extends Description
         ]);
 
         $query->andFilterWhere(['in', 'code', $this->code])
-            ->andFilterWhere(['in', 'lang', $this->lang])
             ->andFilterWhere(['in', 'visibility', $this->visibility])
             ->andFilterWhere([
                 'or',
@@ -92,6 +91,22 @@ final class DescriptionQuery extends Description
         $query->andWhere([
             'description_pack_id' => $descriptionPack->description_pack_id,
             'lang' => $language->language,
+            'visibility' => Visibility::determineVisibilityVector($descriptionPack->epic),
+        ]);
+
+        return $query;
+    }
+
+    /**
+     * @param DescriptionPack $descriptionPack
+     * @return ActiveQuery
+     */
+    static public function listDescriptions(DescriptionPack $descriptionPack):ActiveQuery
+    {
+        $query = Description::find();
+
+        $query->andWhere([
+            'description_pack_id' => $descriptionPack->description_pack_id,
             'visibility' => Visibility::determineVisibilityVector($descriptionPack->epic),
         ]);
 

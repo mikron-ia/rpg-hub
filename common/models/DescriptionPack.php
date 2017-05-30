@@ -122,6 +122,14 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
     }
 
     /**
+     * @return ActiveQuery
+     */
+    public function getDescriptionsVisible():ActiveQuery
+    {
+        return DescriptionQuery::listDescriptions($this);
+    }
+
+    /**
      * @param User $user
      * @return ActiveQuery
      */

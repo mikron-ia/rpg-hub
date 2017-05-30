@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\core\Visibility;
 use common\models\DescriptionHistory;
 use common\models\DescriptionPack;
+use common\models\Parameter;
 use Yii;
 use common\models\Description;
 use yii\filters\AccessControl;
@@ -73,6 +74,13 @@ final class DescriptionController extends Controller
         }
 
         $model->description_pack_id = $pack_id;
+
+        $language = $descriptionPack->getEpic()->parameterPack->getParameterValueByCode(Parameter::LANGUAGE);
+        if(in_array($language, Yii::$app->params['languagesAvailable'])) {
+            $model->lang = $language;
+        } else {
+            $model->lang = 'en';
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->returnToReferrer(['site/index']);

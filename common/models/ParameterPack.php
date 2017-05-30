@@ -48,7 +48,7 @@ class ParameterPack extends ActiveRecord implements IsPack
     public function attributeLabels()
     {
         return [
-            'description_pack_id' => Yii::t('app', 'PARAMETER_PACK_ID'),
+            'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK_ID'),
             'class' => Yii::t('app', 'PARAMETER_PACK_CLASS'),
         ];
     }
@@ -112,11 +112,11 @@ class ParameterPack extends ActiveRecord implements IsPack
     /**
      * @return HasEpicControl
      */
-    public function getControllingObject():HasEpicControl
+    public function getControllingObject()
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */
-        return ($className)::findOne(['description_pack_id' => $this->parameter_pack_id]);
+        return ($className)::findOne(['parameter_pack_id' => $this->parameter_pack_id]);
     }
 
     /**

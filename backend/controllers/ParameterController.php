@@ -167,14 +167,14 @@ final class ParameterController extends Controller
      */
     protected function findModel($id)
     {
-        $model = Parameter::findOne(['group_id' => $id]);
+        $model = Parameter::findOne(['parameter_id' => $id]);
 
         if ($model === null) {
-            throw new NotFoundHttpException(Yii::t('app', 'GROUP_NOT_AVAILABLE'));
+            throw new NotFoundHttpException(Yii::t('app', 'PARAMETER_NOT_AVAILABLE'));
         }
 
         if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->parameterPack->epic))) {
-            throw new NotFoundHttpException(Yii::t('app', 'GROUP_NOT_AVAILABLE'));
+            throw new NotFoundHttpException(Yii::t('app', 'PARAMETER_NOT_AVAILABLE'));
         }
 
         return $model;

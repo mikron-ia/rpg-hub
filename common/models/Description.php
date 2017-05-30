@@ -144,7 +144,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             'positionBehavior' => [
                 'class' => PositionBehavior::className(),
                 'positionAttribute' => 'position',
-                'groupAttributes' => ['description_pack_id', 'lang'],
+                'groupAttributes' => ['description_pack_id'],
             ],
             'performedActionBehavior' => [
                 'class' => PerformedActionBehavior::className(),
