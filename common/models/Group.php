@@ -5,8 +5,10 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
+use common\models\core\HasImportanceCategory;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
+use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
@@ -39,7 +41,7 @@ use yii\db\ActiveRecord;
  * @property GroupMembership[] $groupCharacterMembershipsPassive
  * @property GroupMembership[] $groupCharacterMembershipsPast
  */
-class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasSightings, HasVisibility
+class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportanceCategory, HasSightings, HasVisibility
 {
     use ToolsForEntity;
 
@@ -342,6 +344,18 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             Visibility::VISIBILITY_GM,
             Visibility::VISIBILITY_FULL
         ];
+    }
+
+    public function getImportanceCategory():string
+    {
+        $importance = ImportanceCategory::create($this->importance_category);
+        return $importance->getName();
+    }
+
+    public function getImportanceCategoryLowercase():string
+    {
+        $importance = ImportanceCategory::create($this->importance_category);
+        return $importance->getNameLowercase();
     }
 
     public function getVisibility():string

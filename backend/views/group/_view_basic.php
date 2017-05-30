@@ -33,6 +33,10 @@ use yii\widgets\DetailView;
                     'attribute' => 'visibility',
                     'value' => $model->getVisibility(),
                 ],
+                [
+                    'attribute' => 'importance_category',
+                    'value' => $model->getImportanceCategory(),
+                ],
             ],
         ]) ?>
 
