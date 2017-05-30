@@ -2528,7 +2528,7 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v2.8.20",
+            "version": "v2.8.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
@@ -2585,16 +2585,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.8.20",
+            "version": "v2.8.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "2cfcbced8e39e2313ed4da8896fc8c59a56c0d7e"
+                "reference": "efa4d466b67c2fc9bf9419a981e683e1f99fa029"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/2cfcbced8e39e2313ed4da8896fc8c59a56c0d7e",
-                "reference": "2cfcbced8e39e2313ed4da8896fc8c59a56c0d7e",
+                "url": "https://api.github.com/repos/symfony/console/zipball/efa4d466b67c2fc9bf9419a981e683e1f99fa029",
+                "reference": "efa4d466b67c2fc9bf9419a981e683e1f99fa029",
                 "shasum": ""
             },
             "require": {
@@ -2642,11 +2642,11 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-26 01:38:53"
+            "time": "2017-05-28 14:07:33"
         },
         {
             "name": "symfony/css-selector",
-            "version": "v2.8.20",
+            "version": "v2.8.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -2756,16 +2756,16 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v2.8.20",
+            "version": "v2.8.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "dd2fc76e011cb480b2d163c3b2deebd3de4471c8"
+                "reference": "b19d01ec41c704497b0bee78bce8bf97619c0649"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/dd2fc76e011cb480b2d163c3b2deebd3de4471c8",
-                "reference": "dd2fc76e011cb480b2d163c3b2deebd3de4471c8",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/b19d01ec41c704497b0bee78bce8bf97619c0649",
+                "reference": "b19d01ec41c704497b0bee78bce8bf97619c0649",
                 "shasum": ""
             },
             "require": {
@@ -2808,11 +2808,11 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-12 14:07:15"
+            "time": "2017-05-25 22:57:22"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.20",
+            "version": "v2.8.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -2872,16 +2872,16 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v2.8.20",
+            "version": "v2.8.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "16d55394b31547e4a8494551b85c9b9915545347"
+                "reference": "b058a6f0cb6ee9b6b727aae03d5a62474a308528"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/16d55394b31547e4a8494551b85c9b9915545347",
-                "reference": "16d55394b31547e4a8494551b85c9b9915545347",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/b058a6f0cb6ee9b6b727aae03d5a62474a308528",
+                "reference": "b058a6f0cb6ee9b6b727aae03d5a62474a308528",
                 "shasum": ""
             },
             "require": {
@@ -2917,7 +2917,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-12 14:07:15"
+            "time": "2017-05-25 22:57:22"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2980,7 +2980,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.20",
+            "version": "v2.8.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
