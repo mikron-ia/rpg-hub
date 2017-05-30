@@ -24,8 +24,10 @@ use yii\db\ActiveRecord;
  * @property string $seen_pack_id
  * @property string $visibility
  * @property string $description_pack_id
+ * @property string $external_data_pack_id
  *
  * @property DescriptionPack $descriptionPack
+ * @property ExternalDataPack $externalDataPack
  * @property Epic $epic
  * @property SeenPack $seenPack
  * @property GroupMembership[] $groupCharacterMemberships
@@ -84,6 +86,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             'data' => Yii::t('app', 'GROUP_DATA'),
             'visibility' => Yii::t('app', 'GROUP_VISIBILITY'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
+            'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
         ];
     }
 
@@ -103,6 +106,11 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         if (empty($this->description_pack_id)) {
             $pack = DescriptionPack::create('Group');
             $this->description_pack_id = $pack->description_pack_id;
+        }
+
+        if (empty($this->external_data_pack_id)) {
+            $pack = ExternalDataPack::create('Group');
+            $this->external_data_pack_id = $pack->external_data_pack_id;
         }
 
         if (empty($this->seen_pack_id)) {
@@ -152,6 +160,14 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public function getDescriptionPack()
     {
         return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getExternalDataPack()
+    {
+        return $this->hasOne(ExternalDataPack::className(), ['external_data_pack_id' => 'external_data_pack_id']);
     }
 
     /**

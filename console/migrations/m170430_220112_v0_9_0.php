@@ -42,10 +42,16 @@ class m170430_220112_v0_9_0 extends Migration
         $this->addColumn('character', 'importance_category', $this->string(20)->notNull()->defaultValue(ImportanceCategory::IMPORTANCE_MEDIUM)->after('importance'));
         $this->execute("UPDATE `character` SET importance_category = importance");
         $this->dropColumn('character', 'importance');
+
+        $this->addColumn('group', 'external_data_pack_id', $this->integer(11)->unsigned());
+        $this->addForeignKey('group_external_data', 'group', 'external_data_pack_id', 'external_data_pack', 'external_data_pack_id', 'RESTRICT', 'CASCADE');
     }
 
     public function down()
     {
+        $this->dropForeignKey('group_external_data', 'group');
+        $this->dropColumn('group', 'external_data_pack_id');
+
         $this->addColumn('character', 'importance', $this->string(20)->notNull()->defaultValue(ImportanceCategory::IMPORTANCE_MEDIUM)->after('visibility'));
         $this->execute("UPDATE `character` SET importance = importance_category");
         $this->dropColumn('character', 'importance_category');
