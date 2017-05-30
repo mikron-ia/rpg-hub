@@ -250,6 +250,27 @@ class RbacController extends Controller
     }
 
     /**
+     * Adds rights from v0.5.0
+     */
+    public function actionV050()
+    {
+    }
+
+    /**
+     * Adds rights from v0.6.0
+     */
+    public function actionV060()
+    {
+    }
+
+    /**
+     * Adds rights from v0.7.0
+     */
+    public function actionV070()
+    {
+    }
+
+    /**
      * Adds rights from v0.8.0
      */
     public function actionV080()
@@ -291,5 +312,12 @@ class RbacController extends Controller
 
         $auth->addChild($operator, $controlGame);
         $auth->addChild($user, $viewGame);
+    }
+
+    /**
+     * Adds rights from v0.9.0
+     */
+    public function actionV090()
+    {
     }
 }
