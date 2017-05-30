@@ -45,10 +45,41 @@ class m170430_220112_v0_9_0 extends Migration
 
         $this->addColumn('group', 'external_data_pack_id', $this->integer(11)->unsigned());
         $this->addForeignKey('group_external_data', 'group', 'external_data_pack_id', 'external_data_pack', 'external_data_pack_id', 'RESTRICT', 'CASCADE');
+
+        /* Descriptions */
+        $this->createTable('{{%importance_pack}}', [
+            'importance_pack_id' => $this->primaryKey()->unsigned(),
+            'class' => $this->string(20)->notNull()->comment("Name of class this pack belongs to; necessary for proper type assignment"),
+        ], $tableOptions);
+
+        $this->createTable('{{%importance}}', [
+            'importance_id' => $this->primaryKey()->unsigned(),
+            'importance_pack_id' => $this->integer(11)->unsigned(),
+            'user_id' => $this->integer(10)->unsigned(),
+            'importance' => $this->integer(11),
+        ], $tableOptions);
+
+        $this->addForeignKey('importance_pack', '{{%importance}}', 'importance_pack_id', '{{%importance_pack}}', 'importance_pack_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('importance_user', '{{%importance}}', 'user_id', '{{%user}}', 'id', 'RESTRICT', 'CASCADE');
+
+        $this->addColumn('character', 'importance_pack_id', $this->integer(11)->unsigned());
+        $this->addColumn('group', 'importance_pack_id', $this->integer(11)->unsigned());
+
+        $this->addForeignKey('character_importance_pack', '{{%character}}', 'importance_pack_id', '{{%importance_pack}}', 'importance_pack_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('group_importance_pack', '{{%group}}', 'importance_pack_id', '{{%importance_pack}}', 'importance_pack_id', 'RESTRICT', 'CASCADE');
     }
 
     public function down()
     {
+        $this->dropForeignKey('group_importance_pack', '{{%group}}');
+        $this->dropForeignKey('character_importance_pack', '{{%character}}');
+
+        $this->dropColumn('group', 'importance_pack_id');
+        $this->dropColumn('character', 'importance_pack_id');
+
+        $this->dropTable('{{%importance}}');
+        $this->dropTable('{{%importance_pack}}');
+
         $this->dropForeignKey('group_external_data', 'group');
         $this->dropColumn('group', 'external_data_pack_id');
 
