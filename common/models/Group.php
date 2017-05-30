@@ -23,6 +23,7 @@ use yii\db\ActiveRecord;
  * @property string $data
  * @property string $seen_pack_id
  * @property string $visibility
+ * @property string $importance_category
  * @property string $description_pack_id
  * @property string $external_data_pack_id
  * @property string $importance_pack_id
@@ -87,6 +88,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             'name' => Yii::t('app', 'GROUP_NAME'),
             'data' => Yii::t('app', 'GROUP_DATA'),
             'visibility' => Yii::t('app', 'GROUP_VISIBILITY'),
+            'importance_category' => Yii::t('app', 'GROUP_IMPORTANCE'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
             'importance_pack_id' => Yii::t('app', 'IMPORTANCE_PACK'),

@@ -258,6 +258,7 @@ return [
     'GROUP_DESCRIPTIONS_TAB' => 'Opisy',
     'GROUP_GM_TAB' => 'Dane MG',
     'GROUP_ID' => 'ID grupy',
+    'GROUP_IMPORTANCE' => 'Ważność',
     'GROUP_KEY' => 'Klucz',
     'GROUP_MEMBERSHIP' => 'Członkostwo',
     'GROUP_MEMBERSHIPS' => 'Skład grupy',
