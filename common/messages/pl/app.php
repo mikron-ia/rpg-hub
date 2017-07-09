@@ -239,6 +239,7 @@ return [
     'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT' => 'Ogólne streszczenie niedawnych wydarzeń, przeznaczone do szybkiego odzyskania orientacji w kampanii. Po szczegóły wydarzeń należy zwrócić się do streszczeń poszczególnych historii.',
     'GAME_ID' => 'ID',
     'GAME_NOTES' => 'Notatki',
+    'GAME_NOTES_MISSING' => 'Brak notatek dotyczących sesji',
     'GAME_POSITION' => 'Pozycja',
     'GAME_SESSION_NOT_AVAILABLE' => 'Sesja niedostępna',
     'GAME_STATUS' => 'Status',

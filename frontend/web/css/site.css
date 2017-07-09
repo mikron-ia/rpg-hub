@@ -454,3 +454,15 @@ tr.table-row-hidden > td {
     font-style: italic;
     background-color: lightgoldenrodyellow;
 }
+
+.session-box-closed:after {
+    content: '+';
+    color: green;
+    float: right;
+}
+
+.session-box-open:after {
+    content: '-';
+    color: green;
+    float: right;
+}

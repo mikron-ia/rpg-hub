@@ -239,6 +239,7 @@ return [
     'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT' => 'General recap of the recent events. For details, please turn to descriptions of specific stories.',
     'GAME_ID' => 'ID',
     'GAME_NOTES' => 'Notes',
+    'GAME_NOTES_MISSING' => 'No game session notes found',
     'GAME_POSITION' => 'Position',
     'GAME_SESSION_NOT_AVAILABLE' => 'Session not available',
     'GAME_STATUS' => 'Status',
