@@ -13,6 +13,7 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
+use yii\helpers\StringHelper;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
@@ -358,5 +359,32 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         }
 
         return DescriptionHistory::createFromDescription($description);
+    }
+
+    /**
+     * Provides word count that player can see
+     * @return int
+     */
+    public function getWordCount():int
+    {
+        return $this->getWordCountForPublic();
+    }
+
+    /**
+     * Provides word count for public part
+     * @return int
+     */
+    public function getWordCountForPublic():int
+    {
+        return StringHelper::countWords($this->public_text);
+    }
+
+    /**
+     * Provides word count for private part
+     * @return int
+     */
+    public function getWordCountForPrivate():int
+    {
+        return StringHelper::countWords($this->private_text);
     }
 }
