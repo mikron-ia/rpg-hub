@@ -178,6 +178,20 @@ p {
     margin: 0 0 15px 0;
 }
 
+.warning-box {
+    color: #c8c864;
+    background: #fdfdf7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+.info-box {
+    color: #4545a9;
+    background: #f7f7fd;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
 .glyphicon {
     margin: 0 8px;
 }
