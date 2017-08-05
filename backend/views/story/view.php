@@ -80,6 +80,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'visibility',
                     'value' => $model->getVisibility(),
                 ],
+                [
+                    'label' => Yii::t('app', 'STORY_SHORT_SIZE'),
+                    'format' => 'shortSize',
+                    'value' => strlen($model->short),
+                ],
+                [
+                    'label' => Yii::t('app', 'STORY_LONG_SIZE'),
+                    'format' => 'shortSize',
+                    'value' => strlen($model->long),
+                ],
+                [
+                    'label' => Yii::t('app', 'STORY_WORD_COUNT'),
+                    'value' => $model->getLongDescriptionWordCount(),
+                ],
             ],
         ]) ?>
 

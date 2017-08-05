@@ -13,6 +13,7 @@ use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\Markdown;
+use yii\helpers\StringHelper;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
@@ -344,5 +345,10 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();
+    }
+
+    public function getLongDescriptionWordCount()
+    {
+        return StringHelper::countWords($this->long);
     }
 }
