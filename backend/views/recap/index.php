@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Recap;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -44,6 +45,16 @@ $mostRecent = $searchModel->mostRecent();
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view}',
+                    'contentOptions' => ['class' => 'text-center'],
+                    'buttons' => [
+                        'view' => function ($url, Recap $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-eye-open"></span>',
+                                Yii::$app->urlManager->createUrl(['recap/view', 'key' => $model->key]),
+                                ['title' => Yii::t('app', 'BUTTON_VIEW')]
+                            );
+                        },
+                    ],
                 ],
             ],
         ]); ?>

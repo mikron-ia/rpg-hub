@@ -19,8 +19,8 @@ use yii\widgets\DetailView;
             'model' => $model,
             'attributes' => [
                 [
-                    'attribute' => 'epic_id',
                     'format' => 'raw',
+                    'label' => Yii::t('app', 'LABEL_EPIC'),
                     'value' => Html::a($model->epic->name, ['epic/view', 'key' => $model->epic->key], []),
                 ],
                 'key',
@@ -37,7 +37,7 @@ use yii\widgets\DetailView;
         <div class="text-center">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_UPDATE'),
-                ['update', 'id' => $model->scenario_id],
+                ['update', 'key' => $model->key],
                 ['class' => 'btn btn-primary']
             ) ?>
         </div>
