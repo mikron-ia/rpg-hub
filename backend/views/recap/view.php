@@ -17,12 +17,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
-            ['update', 'id' => $model->recap_id],
+            ['update', 'key' => $model->key],
             ['class' => 'btn btn-primary']
         ) ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_MOVE_DOWN'),
-            ['recap/move-up', 'id' => $model->recap_id],
+            ['recap/move-up', 'key' => $model->key],
             [
                 'class' => 'btn btn-default',
                 'data' => [
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ); ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_MOVE_UP'),
-            ['recap/move-down', 'id' => $model->recap_id],
+            ['recap/move-down', 'key' => $model->key],
             [
                 'class' => 'btn btn-default',
                 'data' => [
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ); ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_DELETE'),
-            ['delete', 'id' => $model->recap_id],
+            ['delete', 'key' => $model->key],
             [
                 'class' => 'btn btn-danger',
                 'data' => [
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'epic_id',
                 'format' => 'raw',
-                'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
+                'value' => Html::a($model->epic->name, ['epic/view', 'key' => $model->epic->key], []),
             ],
             [
                 'attribute' => 'time',

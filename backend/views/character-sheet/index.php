@@ -1,5 +1,6 @@
 <?php
 
+use common\models\CharacterSheet;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -34,6 +35,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view}',
+                    'buttons' => [
+                        'view' => function ($url, CharacterSheet $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-eye-open"></span>',
+                                Yii::$app->urlManager->createUrl(['character-sheet/view', 'key' => $model->key]),
+                                ['title' => Yii::t('app', 'BUTTON_VIEW')]
+                            );
+                        },
+                    ],
                 ],
             ],
         ]); ?>

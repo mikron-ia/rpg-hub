@@ -70,12 +70,12 @@ final class RecapController extends Controller
 
     /**
      * Displays a single Recap model.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
@@ -123,12 +123,12 @@ final class RecapController extends Controller
     /**
      * Updates an existing Recap model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->canUserControlYou()) {
             Recap::throwExceptionAboutControl();
@@ -146,12 +146,12 @@ final class RecapController extends Controller
     /**
      * Deletes an existing Recap model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->canUserControlYou()) {
             Recap::throwExceptionAboutControl();
@@ -164,12 +164,12 @@ final class RecapController extends Controller
 
     /**
      * Moves recap up in order; this means lower position on the list
-     * @param int $id Story ID
+     * @param int $key Story ID
      * @return \yii\web\Response
      */
-    public function actionMoveUp($id)
+    public function actionMoveUp($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
         if (!$model->canUserControlYou()) {
             Recap::throwExceptionAboutControl();
         }
@@ -185,12 +185,12 @@ final class RecapController extends Controller
 
     /**
      * Moves recap down in order; this means higher position on the list
-     * @param int $id Story ID
+     * @param int $key Story ID
      * @return \yii\web\Response
      */
-    public function actionMoveDown($id)
+    public function actionMoveDown($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
         if (!$model->canUserControlYou()) {
             Recap::throwExceptionAboutControl();
         }
@@ -207,13 +207,13 @@ final class RecapController extends Controller
     /**
      * Finds the Recap model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
+     * @param string $key
      * @return Recap the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($key)
     {
-        if (($model = Recap::findOne($id)) !== null) {
+        if (($model = Recap::findOne(['key' => $key])) !== null) {
             if (empty(Yii::$app->params['activeEpic'])) {
                 $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
                 Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));

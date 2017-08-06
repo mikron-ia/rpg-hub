@@ -60,12 +60,12 @@ final class CharacterSheetController extends Controller
 
     /**
      * Displays a single CharacterSheet model.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelByKey($key);
 
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
@@ -109,16 +109,16 @@ final class CharacterSheetController extends Controller
     /**
      * Creates a new character
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @param $id
+     * @param $key
      * @return mixed
      */
-    public function actionCreateCharacter($id)
+    public function actionCreateCharacter($key)
     {
         if (!Character::canUserCreateThem()) {
             Character::throwExceptionAboutCreate();
         }
 
-        $model = $this->findModel($id);
+        $model = $this->findModelByKey($key);
 
         if (!$model->canUserViewYou()) {
             CharacterSheet::throwExceptionAboutView();
@@ -142,12 +142,12 @@ final class CharacterSheetController extends Controller
     /**
      * Updates an existing CharacterSheet model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelByKey($key);
 
         $model->canUserControlYou();
 
@@ -163,13 +163,13 @@ final class CharacterSheetController extends Controller
     /**
      * Finds the CharacterSheet model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
+     * @param string $key
      * @return CharacterSheet the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModelByKey($key)
     {
-        if (($model = CharacterSheet::findOne($id)) !== null) {
+        if (($model = CharacterSheet::findOne(['key' => $key])) !== null) {
             if (empty(Yii::$app->params['activeEpic'])) {
                 $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
                 Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));

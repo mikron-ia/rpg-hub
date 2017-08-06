@@ -61,12 +61,12 @@ class ScenarioController extends Controller
 
     /**
      * Displays a single Scenario model.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
@@ -83,7 +83,7 @@ class ScenarioController extends Controller
         }
 
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($key),
         ]);
     }
 
@@ -114,12 +114,12 @@ class ScenarioController extends Controller
     /**
      * Updates an existing Scenario model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->canUserControlYou()) {
             Scenario::throwExceptionAboutControl();
@@ -137,12 +137,12 @@ class ScenarioController extends Controller
     /**
      * Deletes an existing Scenario model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->canUserControlYou()) {
             Scenario::throwExceptionAboutControl();
@@ -156,13 +156,13 @@ class ScenarioController extends Controller
     /**
      * Finds the Scenario model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
+     * @param string $key
      * @return Scenario the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($key)
     {
-        if (($model = Scenario::findOne($id)) !== null) {
+        if (($model = Scenario::findOne(['key' => $key])) !== null) {
             if (empty(Yii::$app->params['activeEpic'])) {
                 $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
                 Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));

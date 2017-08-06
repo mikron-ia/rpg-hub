@@ -18,12 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
-            ['update', 'id' => $model->character_sheet_id],
+            ['update', 'key' => $model->key],
             ['class' => 'btn btn-primary']
         ); ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_CREATE_CHARACTER'),
-            ['create-character', 'id' => $model->character_sheet_id],
+            ['create-character', 'key' => $model->key],
             [
                 'class' => 'btn btn-primary',
                 'data' => [
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ) ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_DELETE'),
-            ['delete', 'id' => $model->character_sheet_id],
+            ['delete', 'key' => $model->key],
             [
                 'class' => 'btn btn-danger',
                 'data' => [
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'epic_id',
                 'format' => 'raw',
-                'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
+                'value' => Html::a($model->epic->name, ['epic/view', 'key' => $model->epic->key], []),
             ],
             [
                 'label' => Yii::t('app', 'LABEL_DATA_SIZE'),
@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => isset($model->currently_delivered_character_id) ?
                     Html::a(
                         $model->currentlyDeliveredPerson->name,
-                        ['character/view', 'id' => $model->currently_delivered_character_id]
+                        ['character/view', 'key' => $model->currentlyDeliveredPerson->key]
                     ) :
                     null,
             ],

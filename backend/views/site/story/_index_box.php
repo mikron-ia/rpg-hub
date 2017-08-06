@@ -17,7 +17,7 @@ if ($storyNumberRaw) {
 <div id="story-<?php echo $model->story_id; ?>">
 
     <h4 class="center">
-        <?php echo Html::a(Html::encode($storyNumber . $model->name), ['story/view', 'id' => $model->story_id]); ?>
+        <?php echo Html::a(Html::encode($storyNumber . $model->name), ['story/view', 'key' => $model->key]); ?>
     </h4>
 
 </div>

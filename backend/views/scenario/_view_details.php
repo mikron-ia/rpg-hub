@@ -21,7 +21,7 @@ use yii\widgets\DetailView;
                 [
                     'attribute' => 'epic_id',
                     'format' => 'raw',
-                    'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
+                    'value' => Html::a($model->epic->name, ['epic/view', 'key' => $model->epic->key], []),
                 ],
                 'key',
                 'name',

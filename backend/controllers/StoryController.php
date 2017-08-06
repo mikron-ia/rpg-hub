@@ -70,12 +70,12 @@ final class StoryController extends Controller
 
     /**
      * Displays a single story
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
@@ -121,12 +121,12 @@ final class StoryController extends Controller
 
     /**
      * Updates an existing story
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->canUserControlYou()) {
             Story::throwExceptionAboutControl();
@@ -143,12 +143,12 @@ final class StoryController extends Controller
 
     /**
      * Moves story up in order; this means lower position on the list
-     * @param int $id Story ID
+     * @param int $key Story ID
      * @return \yii\web\Response
      */
-    public function actionMoveUp($id)
+    public function actionMoveUp($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
         if (!$model->canUserControlYou()) {
             Story::throwExceptionAboutControl();
         }
@@ -164,12 +164,12 @@ final class StoryController extends Controller
 
     /**
      * Moves story down in order; this means higher position on the list
-     * @param int $id Story ID
+     * @param int $key Story ID
      * @return \yii\web\Response
      */
-    public function actionMoveDown($id)
+    public function actionMoveDown($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
         if (!$model->canUserControlYou()) {
             Story::throwExceptionAboutControl();
         }
@@ -186,13 +186,13 @@ final class StoryController extends Controller
     /**
      * Finds the Story model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
+     * @param string $key
      * @return Story the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($key)
     {
-        $model = Story::findOne(['story_id' => $id]);
+        $model = Story::findOne(['key' => $key]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));

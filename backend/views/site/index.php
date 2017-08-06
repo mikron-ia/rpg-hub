@@ -45,7 +45,7 @@ $this->title = 'RPG hub - control';
         <div class="btn-group btn-group-lg">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_DETAILS'),
-                ['epic/view', 'id' => $epic->epic_id],
+                ['epic/view', 'key' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'])
             ?>
             <?= Html::a(Yii::t('app', 'BUTTON_SESSIONS'), ['game/index'], ['class' => 'btn btn-lg btn-primary']); ?>

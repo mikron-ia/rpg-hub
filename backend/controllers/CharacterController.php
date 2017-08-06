@@ -71,13 +71,13 @@ final class CharacterController extends Controller
 
     /**
      * Displays a single character
-     * @param string $id
+     * @param string $key
      * @return mixed
      * @throws HttpException
      */
-    public function actionView($id)
+    public function actionView($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelByKey($key);
 
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
@@ -121,7 +121,7 @@ final class CharacterController extends Controller
         $model->setCurrentEpicOnEmpty();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->character_id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -133,16 +133,16 @@ final class CharacterController extends Controller
     /**
      * Creates a new character
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @param $id
+     * @param $key
      * @return mixed
      */
-    public function actionCreateSheet($id)
+    public function actionCreateSheet($key)
     {
         if (!CharacterSheet::canUserCreateThem()) {
             CharacterSheet::throwExceptionAboutCreate();
         }
 
-        $model = $this->findModel($id);
+        $model = $this->findModelByKey($key);
 
         if (!$model->canUserViewYou()) {
             Character::throwExceptionAboutView();
@@ -162,18 +162,18 @@ final class CharacterController extends Controller
             Yii::$app->session->setFlash('error', Yii::t('app', 'CHARACTER_SHEET_CREATE_FROM_CHARACTER_FAILURE'));
         }
 
-        return $this->redirect(['view', 'id' => $model->character_id]);
+        return $this->redirect(['view', 'key' => $model->key]);
     }
 
     /**
      * Updates an existing character
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelByKey($key);
 
         if (!$model->canUserControlYou()) {
             Character::throwExceptionAboutControl();
@@ -182,7 +182,7 @@ final class CharacterController extends Controller
         $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->character_id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -195,12 +195,12 @@ final class CharacterController extends Controller
      * Loads data from an external source
      * If update is successful, the browser will be redirected to the 'view' page.
      *
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionLoadData($id)
+    public function actionLoadData($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelByKey($key);
 
         if (!$model->canUserControlYou()) {
             Character::throwExceptionAboutControl();
@@ -234,10 +234,10 @@ final class CharacterController extends Controller
                     $loadingErrors = [];
 
                     /* Save external data to separate containers */
-                    foreach ($data['content'] as $key => $dataRow) {
-                        $result = $model->externalDataPack->saveExternalData($key, $dataRow);
+                    foreach ($data['content'] as $externalDataKey => $dataRow) {
+                        $result = $model->externalDataPack->saveExternalData($externalDataKey, $dataRow);
                         if (!$result) {
-                            $loadingErrors[] = $key;
+                            $loadingErrors[] = $externalDataKey;
                         }
                     }
 
@@ -281,13 +281,13 @@ final class CharacterController extends Controller
     /**
      * Finds the Character model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
+     * @param string $key
      * @return Character the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModelByKey($key)
     {
-        $model = Character::findOne(['character_id' => $id]);
+        $model = Character::findOne(['key' => $key]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));

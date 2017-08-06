@@ -21,7 +21,7 @@ use yii\widgets\DetailView;
                 [
                     'attribute' => 'epic_id',
                     'format' => 'raw',
-                    'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
+                    'value' => Html::a($model->epic->name, ['epic/view', 'key' => $model->key], []),
                 ],
                 [
                     'label' => Yii::t('app', 'LABEL_DATA_SIZE'),
@@ -32,7 +32,7 @@ use yii\widgets\DetailView;
                     'attribute' => 'character_sheet_id',
                     'format' => 'raw',
                     'value' => $model->character_sheet_id ?
-                        Html::a($model->character->name, ['character-sheet/view', 'id' => $model->character_sheet_id],
+                        Html::a($model->character->name, ['character-sheet/view', 'key' => $model->character->key],
                             []) :
                         null,
                 ],
@@ -52,7 +52,7 @@ use yii\widgets\DetailView;
         ]) ?>
 
         <div class="text-center">
-            <?= Html::a(Yii::t('app', 'BUTTON_LOAD'), ['load-data', 'id' => $model->character_id], [
+            <?= Html::a(Yii::t('app', 'BUTTON_LOAD'), ['load-data', 'key' => $model->key], [
                 'class' => 'btn btn-primary',
                 'data' => [
                     'confirm' => Yii::t('app', 'CONFIRMATION_LOAD'),
@@ -61,7 +61,7 @@ use yii\widgets\DetailView;
             ]) ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_CREATE_CHARACTER_SHEET'),
-                ['create-sheet', 'id' => $model->character_id],
+                ['create-sheet', 'key' => $model->key],
                 [
                     'class' => 'btn btn-primary',
                     'data' => [
@@ -72,10 +72,10 @@ use yii\widgets\DetailView;
             ) ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_UPDATE'),
-                ['update', 'id' => $model->character_id],
+                ['update', 'key' => $model->key],
                 ['class' => 'btn btn-primary']
             ) ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->character_id], [
+            <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'key' => $model->key], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),

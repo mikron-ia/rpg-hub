@@ -116,12 +116,12 @@ final class GroupController extends Controller
     /**
      * Updates an existing Group model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($key)
     {
-        $model = $this->findModelByKey($id);
+        $model = $this->findModelByKey($key);
 
         if (!$model->canUserControlYou()) {
             Group::throwExceptionAboutControl();

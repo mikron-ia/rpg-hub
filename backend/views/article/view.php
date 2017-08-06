@@ -18,12 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
-            ['update', 'id' => $model->article_id],
+            ['update', 'key' => $model->key],
             ['class' => 'btn btn-primary']
         ) ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_DELETE'),
-            ['delete', 'id' => $model->article_id],
+            ['delete', 'key' => $model->key],
             [
                 'class' => 'btn btn-danger',
                 'data' => [
@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'epic_id',
                     'format' => 'raw',
                     'value' => $model->epic_id
-                        ? (Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []))
+                        ? (Html::a($model->epic->name, ['epic/view', 'key' => $model->key], []))
                         : Yii::t('app', 'ARTICLE_NO_EPIC'),
                 ],
                 'key',

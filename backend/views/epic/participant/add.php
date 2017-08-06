@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 $this->title = Yii::t('app', 'TITLE_PARTICIPANT_ADD {epic}', ['epic' => $model->epic->name]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_EPICS'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['view', 'id' => $model->epic_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['view', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_PARTICIPANT_ADD');
 ?>
 <div class="participant-add">

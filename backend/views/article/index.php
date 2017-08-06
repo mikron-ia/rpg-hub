@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'up' => function ($url, Article $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-arrow-up"></span>',
-                            ['article/move-down', 'id' => $model->article_id],
+                            ['article/move-down', 'key' => $model->key],
                             [
                                 'title' => Yii::t('app', 'LABEL_MOVE_UP'),
                             ]
@@ -51,10 +51,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     'down' => function ($url, Article $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-arrow-down"></span>',
-                            ['article/move-up', 'id' => $model->article_id],
+                            ['article/move-up', 'key' => $model->key],
                             [
                                 'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
                             ]
+                        );
+                    },
+                    'view' => function ($url, Article $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-eye-open"></span>',
+                            Yii::$app->urlManager->createUrl(['article/view', 'key' => $model->key]),
+                            ['title' => Yii::t('app', 'BUTTON_VIEW')]
+                        );
+                    },
+                    'update' => function ($url, Article $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-pencil"></span>',
+                            Yii::$app->urlManager->createUrl(['article/update', 'key' => $model->key]),
+                            ['title' => Yii::t('app', 'BUTTON_UPDATE')]
                         );
                     },
                 ]

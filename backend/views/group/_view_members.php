@@ -40,12 +40,12 @@ use yii\helpers\StringHelper;
         },
         'columns' => [
             [
-                'attribute' => 'character_id',
+                'attribute' => 'name',
                 'format' => 'raw',
                 'value' => function (GroupMembership $model) {
                     return Html::a(
                         StringHelper::truncateWords($model->character->name, 5, ' (...)', false),
-                        ['character/view', 'id' => $model->character->character_id]
+                        ['character/view', 'key' => $model->character->key]
                     );
                 }
             ],

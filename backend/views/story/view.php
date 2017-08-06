@@ -21,13 +21,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
-            ['update', 'id' => $model->story_id],
+            ['update', 'key' => $model->key],
             ['class' => 'btn btn-primary']
         );
         ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_MOVE_DOWN'),
-            ['story/move-up', 'id' => $model->story_id],
+            ['story/move-up', 'key' => $model->key],
             [
                 'class' => 'btn btn-default',
                 'data' => [
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ); ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_MOVE_UP'),
-            ['story/move-down', 'id' => $model->story_id],
+            ['story/move-down', 'key' => $model->key],
             [
                 'class' => 'btn btn-default',
                 'data' => [
@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'epic_id',
                     'format' => 'raw',
-                    'value' => Html::a($model->epic->name, ['epic/view', 'id' => $model->epic_id], []),
+                    'value' => Html::a($model->epic->name, ['epic/view', 'key' => $model->epic->key], []),
                 ],
                 [
                     'label' => Yii::t('app', 'LABEL_DATA_SIZE'),

@@ -92,12 +92,12 @@ final class EpicController extends Controller
 
     /**
      * Displays a single Epic model.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection', ['objectEpic' => $model]);
@@ -128,7 +128,7 @@ final class EpicController extends Controller
         $model = new Epic();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->epic_id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -139,12 +139,12 @@ final class EpicController extends Controller
     /**
      * Updates an existing Epic model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         $model->canUserControlYou();
 
@@ -155,7 +155,7 @@ final class EpicController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->epic_id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -166,12 +166,12 @@ final class EpicController extends Controller
     /**
      * Deletes an existing Epic model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($key)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($key)->delete();
 
         return $this->redirect(['index']);
     }
@@ -194,7 +194,7 @@ final class EpicController extends Controller
         $model->epic_id = $epic_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->epic_id]);
+            return $this->redirect(['view', 'key' => $model->epic->epic_id]);
         } else {
             return $this->render('participant/add', [
                 'model' => $model,
@@ -218,7 +218,7 @@ final class EpicController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->epic_id]);
+            return $this->redirect(['view', 'key' => $model->epic->key]);
         } else {
             return $this->render('participant/edit', [
                 'model' => $model,
@@ -226,9 +226,9 @@ final class EpicController extends Controller
         }
     }
 
-    public function actionManagerAttach($id)
+    public function actionManagerAttach($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if ($model->attachCurrentUserAsManager()) {
             Yii::$app->session->setFlash('success', Yii::t('app', 'MANAGE_EPIC_ATTACH_SUCCESS'));
@@ -239,9 +239,9 @@ final class EpicController extends Controller
         return $this->redirect(['manage']);
     }
 
-    public function actionManagerDetach($id)
+    public function actionManagerDetach($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if ($model->detachCurrentUserAsManager()) {
             Yii::$app->session->setFlash('success', Yii::t('app', 'MANAGE_EPIC_DETACH_SUCCESS'));
@@ -255,13 +255,13 @@ final class EpicController extends Controller
     /**
      * Finds the Epic model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
+     * @param string $key
      * @return Epic the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($key)
     {
-        if (($model = Epic::findOne($id)) !== null) {
+        if (($model = Epic::findOne(['key' => $key])) !== null) {
             if (empty(Yii::$app->params['activeEpic'])) {
                 $this->run('site/set-epic-in-silence', ['epicKey' => $model->key]);
                 Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));

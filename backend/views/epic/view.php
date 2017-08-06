@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
-            ['update', 'id' => $model->epic_id],
+            ['update', 'key' => $model->key],
             ['class' => 'btn btn-primary']);
         ?>
     </div>
@@ -148,14 +148,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'view' => function ($url, Story $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-eye-open"></span>',
-                                Yii::$app->urlManager->createUrl(['story/view', 'id' => $model->story_id]),
+                                Yii::$app->urlManager->createUrl(['story/view', 'key' => $model->key]),
                                 ['title' => Yii::t('app', 'BUTTON_VIEW')]
                             );
                         },
                         'update' => function ($url, Story $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-pencil"></span>',
-                                Yii::$app->urlManager->createUrl(['story/update', 'id' => $model->story_id]),
+                                Yii::$app->urlManager->createUrl(['story/update', 'key' => $model->key]),
                                 ['title' => Yii::t('app', 'BUTTON_UPDATE')]
                             );
                         },
@@ -190,14 +190,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'view' => function ($url, $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-eye-open"></span>',
-                                Yii::$app->urlManager->createUrl(['recap/view', 'id' => $model->recap_id]),
+                                Yii::$app->urlManager->createUrl(['recap/view', 'key' => $model->key]),
                                 ['title' => Yii::t('app', 'BUTTON_VIEW')]
                             );
                         },
                         'update' => function ($url, $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-pencil"></span>',
-                                Yii::$app->urlManager->createUrl(['recap/update', 'id' => $model->recap_id]),
+                                Yii::$app->urlManager->createUrl(['recap/update', 'key' => $model->key]),
                                 ['title' => Yii::t('app', 'BUTTON_UPDATE')]
                             );
                         },

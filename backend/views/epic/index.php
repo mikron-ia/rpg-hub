@@ -37,7 +37,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view}'
+                'template' => '{view}',
+                'buttons' => [
+                    'view' => function ($url, Epic $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-eye-open"></span>',
+                            Yii::$app->urlManager->createUrl(['epic/view', 'key' => $model->key]),
+                            ['title' => Yii::t('app', 'BUTTON_VIEW')]
+                        );
+                    },
+                ],
             ],
         ],
     ]); ?>
