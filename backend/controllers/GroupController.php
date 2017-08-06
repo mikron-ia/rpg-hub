@@ -63,12 +63,12 @@ final class GroupController extends Controller
 
     /**
      * Displays a single Group model.
-     * @param string $id
+     * @param string $key
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($key)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelByKey($key);
 
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
@@ -105,7 +105,7 @@ final class GroupController extends Controller
         $model->setCurrentEpicOnEmpty();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->group_id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -121,14 +121,14 @@ final class GroupController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelByKey($id);
 
         if (!$model->canUserControlYou()) {
             Group::throwExceptionAboutControl();
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->group_id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -139,13 +139,13 @@ final class GroupController extends Controller
     /**
      * Finds the Group model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
+     * @param string $key
      * @return Group the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModelByKey($key)
     {
-        $model = Group::findOne(['group_id' => $id]);
+        $model = Group::findOne(['key' => $key]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'GROUP_NOT_AVAILABLE'));

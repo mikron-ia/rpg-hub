@@ -41,7 +41,7 @@ use yii\widgets\DetailView;
         ]) ?>
 
         <div class="text-center">
-            <?= Html::a(Yii::t('app', 'BUTTON_LOAD'), ['load-data', 'id' => $model->group_id], [
+            <?= Html::a(Yii::t('app', 'BUTTON_LOAD'), ['load-data', 'key' => $model->key], [
                 'class' => 'btn btn-primary',
                 'data' => [
                     'confirm' => Yii::t('app', 'CONFIRMATION_LOAD'),
@@ -50,14 +50,14 @@ use yii\widgets\DetailView;
             ]) ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_UPDATE'),
-                ['update', 'id' => $model->group_id],
+                ['update', 'key' => $model->key],
                 ['class' => 'btn btn-primary']
             ) ?>
             <?= \yii\helpers\Html::a(
                 Yii::t('app', 'BUTTON_SEE_FRONTEND'),
                 Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
                     'group/view',
-                    'id' => $model->group_id
+                    'key' => $model->key
                 ]),
                 ['class' => 'btn btn-default']
             ) ?>
