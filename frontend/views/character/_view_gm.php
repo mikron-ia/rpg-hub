@@ -32,7 +32,7 @@ use yii\widgets\DetailView;
             Yii::t('app', 'BUTTON_SEE_BACKEND'),
             Yii::$app->params['uri.back'] . Yii::$app->urlManager->createUrl([
                 'character/view',
-                'id' => $model->character_id
+                'key' => $model->key
             ]),
             ['class' => 'btn btn-default']
         ) ?>

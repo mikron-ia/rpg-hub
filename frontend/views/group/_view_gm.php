@@ -25,7 +25,7 @@ use yii\widgets\DetailView;
             Yii::t('app', 'BUTTON_SEE_BACKEND'),
             Yii::$app->params['uri.back'] . Yii::$app->urlManager->createUrl([
                 'group/view',
-                'id' => $model->group_id
+                'key' => $model->key
             ]),
             ['class' => 'btn btn-default']
         ) ?>

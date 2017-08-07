@@ -20,7 +20,7 @@ use yii\widgets\DetailView;
     <div class="text-center">
         <?= \yii\helpers\Html::a(
             Yii::t('app', 'BUTTON_SEE_BACKEND'),
-            Yii::$app->params['uri.back'] . Yii::$app->urlManager->createUrl(['story/view', 'id' => $model->story_id]),
+            Yii::$app->params['uri.back'] . Yii::$app->urlManager->createUrl(['story/view', 'key' => $model->key]),
             ['class' => 'btn btn-default']
         ) ?>
     </div>
