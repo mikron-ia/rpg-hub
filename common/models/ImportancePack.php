@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\HasEpicControl;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -83,5 +84,31 @@ class ImportancePack extends ActiveRecord
         $pack->refresh();
 
         return $pack;
+    }
+
+    /**
+     * @return HasEpicControl
+     */
+    public function getControllingObject():HasEpicControl
+    {
+        $className = 'common\models\\' . $this->class;
+        /** @var HasEpicControl $object */
+        return ($className)::findOne(['importance_pack_id' => $this->importance_pack_id]);
+    }
+
+    /**
+     * @return Epic
+     */
+    public function getEpic():Epic
+    {
+        return $this->getControllingObject()->getEpic()->one();
+    }
+
+    /**
+     * @return bool
+     */
+    public function recalculatePacks():bool
+    {
+        return true;
     }
 }
