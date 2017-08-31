@@ -73,6 +73,8 @@ class ArticleController extends Controller
     {
         $model = new Article();
 
+        $model->setCurrentEpicOnEmpty();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
         } else {
