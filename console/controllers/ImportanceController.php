@@ -11,6 +11,9 @@ use yii\console\Controller;
  */
 class ImportanceController extends Controller
 {
+    /**
+     * Orders recalculation of every importance pack flagged for recalculation
+     */
     public function actionRecalculate()
     {
         if ($this->recalculate(true)) {
@@ -20,6 +23,9 @@ class ImportanceController extends Controller
         }
     }
 
+    /**
+     * Orders recalculation of every importance pack regardless of flagging
+     */
     public function actionRecalculateUnconditionally()
     {
         if ($this->recalculate(false)) {
@@ -29,6 +35,12 @@ class ImportanceController extends Controller
         }
     }
 
+    /**
+     * Recalculates packs
+     *
+     * @param bool $considerFlag Whether to consider recalculation flags
+     * @return bool
+     */
     private function recalculate(bool $considerFlag):bool
     {
         $query = ImportancePack::find();
@@ -43,7 +55,7 @@ class ImportanceController extends Controller
 
         foreach ($packs as $pack) {
             /** @var $pack ImportancePack */
-            if ($pack->recalculatePacks()) {
+            if ($pack->recalculatePack()) {
                 $successful++;
             } else {
                 echo "Pack " . $pack->importance_pack_id . " failed" . PHP_EOL . PHP_EOL;

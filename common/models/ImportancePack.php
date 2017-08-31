@@ -18,17 +18,11 @@ use yii\db\ActiveRecord;
  */
 class ImportancePack extends ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'importance_pack';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -37,9 +31,6 @@ class ImportancePack extends ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -105,9 +96,10 @@ class ImportancePack extends ActiveRecord
     }
 
     /**
+     * Recalculates pack importance objects
      * @return bool
      */
-    public function recalculatePacks():bool
+    public function recalculatePack():bool
     {
         return true;
     }
