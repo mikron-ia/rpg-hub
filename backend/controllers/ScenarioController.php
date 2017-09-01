@@ -103,7 +103,7 @@ class ScenarioController extends Controller
         $model->setCurrentEpicOnEmpty();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->scenario_id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         } else {
             return $this->render('create', [
                 'model' => $model,

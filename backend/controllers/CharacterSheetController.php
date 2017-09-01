@@ -98,7 +98,7 @@ final class CharacterSheetController extends Controller
         $model->setCurrentEpicOnEmpty();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->character_sheet_id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         } else {
             return $this->render('create', [
                 'model' => $model,
