@@ -17,17 +17,11 @@ use Yii;
  */
 class Importance extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'importance';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -37,9 +31,6 @@ class Importance extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -64,5 +55,14 @@ class Importance extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * Recalculates the importance object
+     * @return bool
+     */
+    public function recalculate():bool
+    {
+        return true;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\models\core\HasEpicControl;
+use common\models\core\HasImportanceCategory;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -18,6 +18,11 @@ use yii\db\ActiveRecord;
  */
 class ImportancePack extends ActiveRecord
 {
+    /**
+     * @var HasImportanceCategory
+     */
+    private $controllingObject;
+
     public static function tableName()
     {
         return 'importance_pack';
@@ -78,13 +83,16 @@ class ImportancePack extends ActiveRecord
     }
 
     /**
-     * @return HasEpicControl
+     * @return HasImportanceCategory
      */
-    public function getControllingObject():HasEpicControl
+    public function getControllingObject():HasImportanceCategory
     {
-        $className = 'common\models\\' . $this->class;
-        /** @var HasEpicControl $object */
-        return ($className)::findOne(['importance_pack_id' => $this->importance_pack_id]);
+        if (empty($this->controllingObject)) {
+            $className = 'common\models\\' . $this->class;
+            $this->controllingObject = ($className)::findOne(['importance_pack_id' => $this->importance_pack_id]);
+        }
+
+        return $this->controllingObject;
     }
 
     /**
@@ -101,6 +109,12 @@ class ImportancePack extends ActiveRecord
      */
     public function recalculatePack():bool
     {
-        return true;
+        $result = true;
+
+        foreach ($this->importances as $importance) {
+            $result = $result && $importance->recalculate();
+        }
+
+        return $result;
     }
 }
