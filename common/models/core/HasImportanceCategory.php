@@ -3,7 +3,7 @@
 namespace common\models\core;
 
 /**
- * Interface HasImportance is used for classes with `importance` field in order to provide names
+ * Interface HasImportanceCategory is used for classes with `importance_category` field in order to provide names
  * @package common\models\core
  */
 interface HasImportanceCategory

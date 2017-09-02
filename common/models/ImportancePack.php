@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\models\core\HasImportanceCategory;
+use common\models\core\HasImportance;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -19,7 +19,7 @@ use yii\db\ActiveRecord;
 class ImportancePack extends ActiveRecord
 {
     /**
-     * @var HasImportanceCategory
+     * @var HasImportance
      */
     private $controllingObject;
 
@@ -83,9 +83,9 @@ class ImportancePack extends ActiveRecord
     }
 
     /**
-     * @return HasImportanceCategory
+     * @return HasImportance
      */
-    public function getControllingObject():HasImportanceCategory
+    public function getControllingObject():HasImportance
     {
         if (empty($this->controllingObject)) {
             $className = 'common\models\\' . $this->class;
