@@ -408,6 +408,11 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return $importance->getName();
     }
 
+    public function getImportanceCategoryCode():string
+    {
+        return $this->importance_category;
+    }
+
     public function getImportanceCategoryLowercase():string
     {
         $importance = ImportanceCategory::create($this->importance_category);
@@ -444,5 +449,10 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public function showSightingCSS():string
     {
         return $this->seenPack->getCSSForCurrentUser();
+    }
+
+    public function getLastModified():\DateTimeImmutable
+    {
+        return new \DateTimeImmutable(date("Y-m-d H:i:s", $this->updated_at));
     }
 }

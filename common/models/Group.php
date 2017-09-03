@@ -353,6 +353,11 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $importance->getName();
     }
 
+    public function getImportanceCategoryCode():string
+    {
+        return $this->importance_category;
+    }
+
     public function getImportanceCategoryLowercase():string
     {
         $importance = ImportanceCategory::create($this->importance_category);
@@ -369,5 +374,11 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();
+    }
+
+    public function getLastModified():\DateTimeImmutable
+    {
+        /* @todo Implement update date on object */
+        return new \DateTimeImmutable('now');
     }
 }
