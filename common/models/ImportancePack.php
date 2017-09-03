@@ -112,14 +112,14 @@ class ImportancePack extends ActiveRecord
         $result = $this->createAbsentImportanceObjects();
 
         foreach ($this->importances as $importance) {
-            $result = $result && $importance->recalculate();
+            $result = $result && $importance->calculateAndSave();
         }
 
         return $result;
     }
 
     /**
-     * Creates new Importance objects
+     * Creates new Importance objects for users that do not have them
      * @return bool
      */
     private function createAbsentImportanceObjects()

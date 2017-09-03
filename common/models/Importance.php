@@ -71,10 +71,10 @@ class Importance extends \yii\db\ActiveRecord
     }
 
     /**
-     * Recalculates the importance object
-     * @return bool
+     * Calculates the importance value
+     * @return int
      */
-    public function recalculate():bool
+    private function calculate():int
     {
         $measuredObject = $this->importancePack->getControllingObject();
 
@@ -82,11 +82,23 @@ class Importance extends \yii\db\ActiveRecord
         $valueFromCategory = $this->determineValueBasedOnImportanceCategory($measuredObject->getImportanceCategoryCode());
         $valueFromLastModified = $this->determineValueBasedOnDate($measuredObject->getLastModified(), 8);
 
-        $this->importance = $valueFromLastModified + $valueFromCategory + $valueFromSeen;
+        return $valueFromLastModified + $valueFromCategory + $valueFromSeen;
+    }
 
+    /**
+     * Recalculates the importance object and saves the new value
+     * @return bool
+     */
+    public function calculateAndSave():bool
+    {
+        $this->importance = $this->calculate();
         return $this->save();
     }
 
+    /**
+     * @param string $seen Sighting code
+     * @return int
+     */
     private function determineValueBasedOnSeen(string $seen):int
     {
         switch ($seen) {
@@ -104,6 +116,10 @@ class Importance extends \yii\db\ActiveRecord
         return $result;
     }
 
+    /**
+     * @param string $importanceCategory Importance category code
+     * @return int
+     */
     private function determineValueBasedOnImportanceCategory(string $importanceCategory)
     {
         switch ($importanceCategory) {
@@ -130,12 +146,21 @@ class Importance extends \yii\db\ActiveRecord
         return $result;
     }
 
+    /**
+     * @param bool $isAssociated Is the character associated via group with another?
+     * @return int
+     */
     private function determineValueBasedOnAssociation(bool $isAssociated):int
     {
         return $isAssociated ? 8 : 0;
     }
 
-    private function determineValueBasedOnDate(\DateTimeImmutable $date, $topValue):int
+    /**
+     * @param \DateTimeImmutable $date Date of event
+     * @param int $topValue Value to assign if event was less than a day ago
+     * @return int
+     */
+    private function determineValueBasedOnDate(\DateTimeImmutable $date, int $topValue):int
     {
         $now = new \DateTimeImmutable('now');
         $difference = $date->diff($now);
