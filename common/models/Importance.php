@@ -76,7 +76,14 @@ class Importance extends \yii\db\ActiveRecord
      */
     public function recalculate():bool
     {
-        return true;
+        $measuredObject = $this->importancePack->getControllingObject();
+
+        $valueFromSeen = $this->determineValueBasedOnImportanceCategory($measuredObject->getImportanceCategoryCode());
+        $valueFromLastModified = $this->determineValueBasedOnDate($measuredObject->getLastModified(), 8);
+
+        $this->importance = $valueFromLastModified + $valueFromSeen;
+
+        return $this->save();
     }
 
     private function determineValueBasedOnSeen(string $seen):int
@@ -136,7 +143,7 @@ class Importance extends \yii\db\ActiveRecord
             $result = $topValue / 8;
         } elseif ($difference->m > 0) {
             $result = $topValue / 4;
-        } elseif ($difference->w > 0) {
+        } elseif ($difference->d > 0) {
             $result = $topValue / 2;
         } else {
             $result = $topValue;

@@ -109,12 +109,42 @@ class ImportancePack extends ActiveRecord
      */
     public function recalculatePack():bool
     {
-        $result = true;
+        $result = $this->createAbsentImportanceObjects();
 
         foreach ($this->importances as $importance) {
             $result = $result && $importance->recalculate();
         }
 
+        return $result;
+    }
+
+    /**
+     * Creates new Importance objects
+     * @return bool
+     */
+    private function createAbsentImportanceObjects()
+    {
+        /** @var User[] $users */
+        $users = User::findAll(['status' => User::STATUS_ACTIVE]);
+        $importanceObjectsRaw = Importance::findAll(['importance_pack_id' => $this->importance_pack_id]);
+
+        foreach ($importanceObjectsRaw as $importanceObject) {
+            $importanceObjectsOrdered[$importanceObject->user_id] = $importanceObject;
+        }
+
+        $result = true;
+
+        foreach ($users as $user) {
+            if(!isset($importanceObjectsOrdered[$user->id])) {
+                $importanceObject = new Importance();
+                $importanceObject->user_id = $user->id;
+                $importanceObject->importance_pack_id = $this->importance_pack_id;
+                $importanceObject->importance = 0;
+
+                $saveResult = $importanceObject->save();
+                $result = $result && $saveResult;
+            }
+        }
         return $result;
     }
 }
