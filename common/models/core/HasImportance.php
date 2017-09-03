@@ -19,4 +19,10 @@ interface HasImportance
      * @return \DateTimeImmutable
      */
     public function getLastModified():\DateTimeImmutable;
+
+    /**
+     * @param int $userId
+     * @return string
+     */
+    public function getSeenStatusForUser(int $userId):string;
 }

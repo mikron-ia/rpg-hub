@@ -455,4 +455,16 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     {
         return new \DateTimeImmutable(date("Y-m-d H:i:s", $this->updated_at));
     }
+
+    public function getSeenStatusForUser(int $userId):string
+    {
+        /** @var Seen $sighting */
+        $sighting = $this->seenPack->getSightingsForUser($userId)->one();
+
+        if(!$sighting) {
+            return 'none';
+        } else {
+            return $sighting->status;
+        }
+    }
 }

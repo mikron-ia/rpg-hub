@@ -381,4 +381,16 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         /* @todo Implement update date on object */
         return new \DateTimeImmutable('now');
     }
+
+    public function getSeenStatusForUser(int $userId):string
+    {
+        /** @var Seen $sighting */
+        $sighting = $this->seenPack->getSightingsForUser($userId)->one();
+
+        if(!$sighting) {
+            return 'none';
+        } else {
+            return $sighting->status;
+        }
+    }
 }

@@ -78,10 +78,11 @@ class Importance extends \yii\db\ActiveRecord
     {
         $measuredObject = $this->importancePack->getControllingObject();
 
-        $valueFromSeen = $this->determineValueBasedOnImportanceCategory($measuredObject->getImportanceCategoryCode());
+        $valueFromSeen = $this->determineValueBasedOnSeen($measuredObject->getSeenStatusForUser($this->user->id));
+        $valueFromCategory = $this->determineValueBasedOnImportanceCategory($measuredObject->getImportanceCategoryCode());
         $valueFromLastModified = $this->determineValueBasedOnDate($measuredObject->getLastModified(), 8);
 
-        $this->importance = $valueFromLastModified + $valueFromSeen;
+        $this->importance = $valueFromLastModified + $valueFromCategory + $valueFromSeen;
 
         return $this->save();
     }

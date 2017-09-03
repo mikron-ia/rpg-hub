@@ -140,6 +140,17 @@ class SeenPack extends ActiveRecord
     }
 
     /**
+     * @param $userId
+     * @return ActiveQuery
+     */
+    public function getSightingsForUser($userId)
+    {
+        return $this
+            ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
+            ->where(['user_id' => $userId]);
+    }
+
+    /**
      * @return ActiveQuery
      */
     public function getStories()
