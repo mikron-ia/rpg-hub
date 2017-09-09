@@ -105,7 +105,7 @@ class Importance extends \yii\db\ActiveRecord
             case 'new' :
                 $result = 128;
                 break;
-            case 'modified' :
+            case 'updated' :
                 $result = 64;
                 break;
             default:
