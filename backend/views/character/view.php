@@ -38,6 +38,12 @@ $items = [
         'encode' => false,
         'active' => false,
     ],
+    [
+        'label' => Yii::t('app', 'CHARACTER_IMPORTANCE_VALUES'),
+        'content' => $this->render('_view_importance_values', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ],
 ];
 ?>
 <div class="character-view">
