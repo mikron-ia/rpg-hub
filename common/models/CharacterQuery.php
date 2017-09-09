@@ -85,7 +85,11 @@ final class CharacterQuery extends Character
     {
         $search = $this->search($params);
 
-        $search->sort = ['defaultOrder' => ['importance_category' => SORT_ASC]];
+        $search->query->joinWith([
+            'importancePack.importances' => function ($query) {
+                $query->orderBy(['importance' => SORT_DESC]);
+            }
+        ])->andWhere(['user_id' => Yii::$app->user->id]);
 
         return $search;
     }
