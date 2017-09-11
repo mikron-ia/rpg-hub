@@ -35,14 +35,8 @@ $items = [
         'active' => false,
     ],
     [
-        'label' => Yii::t('app', 'GROUP_SIGHTINGS'),
-        'content' => $this->render('_view_views', ['model' => $model]),
-        'encode' => false,
-        'active' => false,
-    ],
-    [
-        'label' => Yii::t('app', 'GROUP_IMPORTANCE_VALUES'),
-        'content' => $this->render('_view_importance_values', ['model' => $model]),
+        'label' => Yii::t('app', 'GROUP_STATISTICS'),
+        'content' => $this->render('_view_statistics', ['model' => $model]),
         'encode' => false,
         'active' => false,
     ],
