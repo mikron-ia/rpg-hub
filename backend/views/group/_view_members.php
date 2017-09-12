@@ -40,7 +40,7 @@ use yii\helpers\StringHelper;
         },
         'columns' => [
             [
-                'attribute' => 'name',
+                'attribute' => 'character.name',
                 'format' => 'raw',
                 'value' => function (GroupMembership $model) {
                     return Html::a(
@@ -53,13 +53,15 @@ use yii\helpers\StringHelper;
                 'attribute' => 'visibility',
                 'value' => function (GroupMembership $model) {
                     return $model->getVisibility();
-                }
+                },
+                'enableSorting' => false
             ],
             [
                 'attribute' => 'status',
                 'value' => function (GroupMembership $model) {
                     return $model->getStatus();
-                }
+                },
+                'enableSorting' => false
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
@@ -142,7 +144,8 @@ use yii\helpers\StringHelper;
 
 <?php Modal::begin([
     'id' => 'view-membership-modal',
-    'header' => '<h2 class="modal-title" id="membership-view-modal-title">' . Yii::t('app', 'MEMBERSHIP_TITLE_VIEW') . '</h2>',
+    'header' => '<h2 class="modal-title" id="membership-view-modal-title">' . Yii::t('app',
+            'MEMBERSHIP_TITLE_VIEW') . '</h2>',
     'size' => Modal::SIZE_LARGE,
 ]); ?>
 
@@ -165,7 +168,8 @@ use yii\helpers\StringHelper;
 
 <?php Modal::begin([
     'id' => 'update-membership-modal',
-    'header' => '<h2 class="modal-title" id="membership-update-modal-title">' . Yii::t('app', 'MEMBERSHIP_TITLE_MODIFY') . '</h2>',
+    'header' => '<h2 class="modal-title" id="membership-update-modal-title">' . Yii::t('app',
+            'MEMBERSHIP_TITLE_MODIFY') . '</h2>',
     'clientOptions' => ['backdrop' => 'static'],
     'size' => Modal::SIZE_LARGE,
 ]); ?>
@@ -189,7 +193,8 @@ use yii\helpers\StringHelper;
 
 <?php Modal::begin([
     'id' => 'membership-history-modal',
-    'header' => '<h2 class="modal-title" id="membership-history-modal-title">' . Yii::t('app', 'MEMBERSHIP_TITLE_HISTORY') . '</h2>',
+    'header' => '<h2 class="modal-title" id="membership-history-modal-title">' . Yii::t('app',
+            'MEMBERSHIP_TITLE_HISTORY') . '</h2>',
     'size' => Modal::SIZE_LARGE,
 ]); ?>
 
