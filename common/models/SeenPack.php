@@ -158,7 +158,13 @@ class SeenPack extends ActiveRecord
         return $this->hasMany(Story::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    public function createRecordForUser($userId)
+    /**
+     * Creates a new, empty record
+     * @param int $userId
+     * @return Seen|null
+     * @todo Update return value once PHP 7.1 is used
+     */
+    public function createRecordForUser(int $userId)
     {
         $record = new Seen();
         $record->user_id = $userId;
@@ -213,18 +219,25 @@ class SeenPack extends ActiveRecord
         }
     }
 
-    public function updateRecord()
+    /**
+     * @return bool
+     */
+    public function updateRecord(): bool
     {
         $foundRecords = Seen::findAll([
             'seen_pack_id' => $this->seen_pack_id,
         ]);
 
+        $updateResult = true;
+
         foreach ($foundRecords as $record) {
             if ($record->status != Seen::STATUS_NEW) {
                 $record->status = Seen::STATUS_UPDATED;
-                $record->save();
+                $updateResult = $updateResult && $record->save();
             }
         }
+
+        return $updateResult;
     }
 
     /**
