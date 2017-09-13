@@ -158,11 +158,25 @@ class SeenPack extends ActiveRecord
         return $this->hasMany(Story::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
 
+    public function createRecordForUser($userId)
+    {
+        $record = new Seen();
+        $record->user_id = $userId;
+        $record->seen_pack_id = $this->seen_pack_id;
+        $record->alert_threshold = 0;
+        if ($record->save()) {
+            $record->refresh();
+            return $record;
+        } else {
+            return null;
+        }
+    }
+
     /**
      * @param bool $fullSight Has user seen all data? True for views, false for indexing
      * @return bool Success of the operation
      */
-    public function recordSighting(bool $fullSight = true):bool
+    public function recordSighting(bool $fullSight = true): bool
     {
         if (Yii::$app instanceof ConsoleApplication) {
             /* There is no point to record sighting from a console */
@@ -183,19 +197,20 @@ class SeenPack extends ActiveRecord
         if ($foundRecord) {
             $record = $foundRecord;
         } else {
-            $record = new Seen();
-            $record->user_id = $userId;
-            $record->seen_pack_id = $this->seen_pack_id;
-            $record->alert_threshold = 0;
+            $record = $this->createRecordForUser($userId);
         }
 
-        $record->noted_at = time();
-        if ($fullSight) {
-            $record->seen_at = time();
-            $record->status = Seen::STATUS_SEEN;
-        }
+        if ($record) {
+            $record->noted_at = time();
+            if ($fullSight) {
+                $record->seen_at = time();
+                $record->status = Seen::STATUS_SEEN;
+            }
 
-        return $record->save();
+            return $record->save();
+        } else {
+            return false;
+        }
     }
 
     public function updateRecord()
