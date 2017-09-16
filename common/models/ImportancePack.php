@@ -124,9 +124,9 @@ class ImportancePack extends ActiveRecord
      */
     private function createAbsentImportanceObjects()
     {
-        /** @var User[] $users */
-        $users = User::findAll(['status' => User::STATUS_ACTIVE]);
+        $users = $this->getEpic()->participants;
         $importanceObjectsRaw = Importance::findAll(['importance_pack_id' => $this->importance_pack_id]);
+        $importanceObjectsOrdered = [];
 
         foreach ($importanceObjectsRaw as $importanceObject) {
             $importanceObjectsOrdered[$importanceObject->user_id] = $importanceObject;
@@ -135,9 +135,9 @@ class ImportancePack extends ActiveRecord
         $result = true;
 
         foreach ($users as $user) {
-            if(!isset($importanceObjectsOrdered[$user->id])) {
+            if (!isset($importanceObjectsOrdered[$user->user_id])) {
                 $importanceObject = new Importance();
-                $importanceObject->user_id = $user->id;
+                $importanceObject->user_id = $user->user_id;
                 $importanceObject->importance_pack_id = $this->importance_pack_id;
                 $importanceObject->importance = 0;
 

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\HasSightings;
 use yii\console\Application as ConsoleApplication;
 use Yii;
 use yii\db\ActiveQuery;
@@ -28,6 +29,11 @@ class SeenPack extends ActiveRecord
      * @var Seen
      */
     private $sightingForCurrentUser;
+
+    /**
+     * @var HasSightings
+     */
+    private $controllingObject;
 
     public static function tableName()
     {
@@ -246,6 +252,72 @@ class SeenPack extends ActiveRecord
     public function recordNotification():bool
     {
         return $this->recordSighting(false);
+    }
+
+    /**
+     * @return HasSightings
+     */
+    public function getControllingObject(): HasSightings
+    {
+        if (empty($this->controllingObject)) {
+            $className = 'common\models\\' . $this->class;
+            $this->controllingObject = ($className)::findOne(['seen_pack_id' => $this->seen_pack_id]);
+        }
+
+        return $this->controllingObject;
+    }
+
+    /**
+     * @return Epic
+     */
+    public function getEpic(): Epic
+    {
+        return $this->getControllingObject()->getEpic()->one();
+    }
+
+    /**
+     * Create sighting packs for listed participants
+     * Intended for use with Participant list from Epic
+     * @param Participant[] $participants
+     * @return bool
+     */
+    public function createPacksForParticipants(array $participants): bool
+    {
+        $result = true;
+        foreach ($participants as $participant) {
+            $result = $result && $this->createRecordForUser($participant->user_id);
+        }
+        return $result;
+    }
+
+    /**
+     * Creates new Sighting objects for users that do not have them
+     * @return bool
+     */
+    public function createAbsentSightingObjects()
+    {
+        $users = $this->getEpic()->participants;
+        $sightingsRaw = Seen::findAll(['seen_pack_id' => $this->seen_pack_id]);
+        $sightingsOrdered = [];
+
+        foreach ($sightingsRaw as $sighting) {
+            $sightingsOrdered[$sighting->user_id] = $sighting;
+        }
+
+        $result = true;
+
+        foreach ($users as $user) {
+            if (!isset($sightingsOrdered[$user->user_id])) {
+                $sighting = new Seen();
+                $sighting->user_id = $user->user_id;
+                $sighting->seen_pack_id = $this->seen_pack_id;
+                $sighting->status = Seen::STATUS_NEW;
+
+                $saveResult = $sighting->save();
+                $result = $result && $saveResult;
+            }
+        }
+        return $result;
     }
 
     /**
