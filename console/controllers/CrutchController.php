@@ -26,7 +26,7 @@ class CrutchController extends Controller
         $objects = Character::find()->all();
 
         foreach ($objects as $object) {
-            $object->save();
+            $object->save(false);
         }
     }
 
@@ -39,7 +39,7 @@ class CrutchController extends Controller
         $objects = CharacterSheet::find()->all();
 
         foreach ($objects as $object) {
-            $object->save();
+            $object->save(false);
         }
     }
 
@@ -52,7 +52,7 @@ class CrutchController extends Controller
         $objects = Group::find()->all();
 
         foreach ($objects as $object) {
-            $object->save();
+            $object->save(false);
         }
     }
 
@@ -65,7 +65,7 @@ class CrutchController extends Controller
         $objects = Epic::find()->all();
 
         foreach ($objects as $object) {
-            $object->save();
+            $object->save(false);
         }
     }
 
@@ -78,7 +78,7 @@ class CrutchController extends Controller
         $objects = Recap::find()->all();
 
         foreach ($objects as $object) {
-            $object->save();
+            $object->save(false);
         }
     }
 
@@ -91,7 +91,7 @@ class CrutchController extends Controller
         $objects = Story::find()->all();
 
         foreach ($objects as $object) {
-            $object->save();
+            $object->save(false);
         }
     }
 

@@ -161,7 +161,6 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
     public function afterSave($insert, $changedAttributes)
     {
-        $this->seenPack->createAbsentSightingObjects();
         $this->seenPack->updateRecord();
         parent::afterSave($insert, $changedAttributes);
     }
