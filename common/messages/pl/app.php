@@ -237,6 +237,7 @@ return [
     'FRONTPAGE_TITLE' => 'Centrum RPGowe',
     'FRONTPAGE_WHAT_HAPPENED' => 'Wydarzenia w kampanii',
     'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT' => 'Ogólne streszczenie niedawnych wydarzeń, przeznaczone do szybkiego odzyskania orientacji w kampanii. Po szczegóły wydarzeń należy zwrócić się do streszczeń poszczególnych historii.',
+    'GAME_BASICS' => 'Opis podstawowy',
     'GAME_ID' => 'ID',
     'GAME_NOTES' => 'Notatki',
     'GAME_NOTES_MISSING' => 'Brak notatek dotyczących sesji',

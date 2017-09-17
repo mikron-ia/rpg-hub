@@ -237,6 +237,7 @@ return [
     'FRONTPAGE_TITLE' => 'RPG Hub',
     'FRONTPAGE_WHAT_HAPPENED' => 'Recent events',
     'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT' => 'General recap of the recent events. For details, please turn to descriptions of specific stories.',
+    'GAME_BASICS' => 'Basic description',
     'GAME_ID' => 'ID',
     'GAME_NOTES' => 'Notes',
     'GAME_NOTES_MISSING' => 'No game session notes found',
