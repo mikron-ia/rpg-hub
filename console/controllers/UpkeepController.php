@@ -2,109 +2,62 @@
 
 namespace console\controllers;
 
-use common\models\Article;
-use common\models\Character;
-use common\models\CharacterSheet;
-use common\models\core\HasSightings;
-use common\models\Epic;
-use common\models\Group;
-use common\models\Recap;
-use common\models\Story;
 use yii\console\Controller;
 
 /**
  * Class UpkeepController
+ *
+ * Those actions are intended to be run by cron calls, without much of the user input. Their purpose it to maintain
+ * the system - keeping the data updated, incorporate new objects into full operational capability, recognising new
+ * users and configuring their assets. All tasks included here do not have to be performed immediately - ideally, this
+ * should only call up workers that perform the tasks.
+ *
  * @package console\controllers
  */
 class UpkeepController extends Controller
 {
     /**
-     * Things that have to run often, at least once an hour
+     * Things that should be run often and are cheap
+     * Suggested frequency for this action is every hour.
      */
-    public function actionHourly()
+    public function actionRunsOftenIsCheap()
     {
-        $articles = Article::find()->all();
-        $characters = Character::find()->all();
-        $characterSheets = CharacterSheet::find()->all();
-        $epics = Epic::find()->all();
-        $groups = Group::find()->all();
-        $recaps = Recap::find()->all();
-        $stories = Story::find()->all();
+        /** @todo Automated e-mail sending from the queue */
+        exit(0);
+    }
 
-        $this->createAbsentSightingObjects($articles);
-        $this->createAbsentSightingObjects($characters);
-        $this->createAbsentSightingObjects($characterSheets);
-        $this->createAbsentSightingObjects($epics);
-        $this->createAbsentSightingObjects($groups);
-        $this->createAbsentSightingObjects($recaps);
-        $this->createAbsentSightingObjects($stories);
+    /**
+     * Things that should be run often, but are not very cheap
+     * If in doubt whether action is expensive or cheap, assume it is expensive
+     * Suggested frequency for this action is every day.
+     */
+    public function actionRunsOftenIsExpensive()
+    {
+
 
         exit(0);
     }
 
     /**
-     * Things that have to be run every few hours
+     * Things that should be run rarely, but are relatively cheap
+     * Keep in mind that actions grouped here could be considered expensive if run often. If it is possible, this action
+     * should be run outside business hours.
+     * Suggested frequency for this action is every week.
      */
-    public function actionSemiHourly()
+    public function actionRunsRarelyIsCheap()
     {
         exit(0);
     }
 
     /**
-     * Things that have to be run daily
+     * Things that should be run rarely and are expensive
+     * Those actions put notable strain on the server and should be run only at times of low activity - preferably
+     * outside business hours.
+     * Suggested frequency for this action is every month.
      */
-    public function actionDaily()
+    public function actionRunsRarelyIsExpensive()
     {
+        /* @todo Database diagnostic and integrity checks */
         exit(0);
-    }
-
-    /**
-     * Things that have to be run every few days
-     */
-    public function actionSemiDaily()
-    {
-        exit(0);
-    }
-
-    /**
-     * Things that have to be run weekly
-     */
-    public function actionWeekly()
-    {
-        exit(0);
-    }
-
-    /**
-     * Things that have to be run monthly
-     */
-    public function actionMonthly()
-    {
-        exit(0);
-    }
-
-    /**
-     * Things that have to be run every few months
-     */
-    public function actionSemiMonthly()
-    {
-        exit(0);
-    }
-
-    /**
-     * Things that have to be run yearly
-     */
-    public function actionYearly()
-    {
-        exit(0);
-    }
-
-    /**
-     * @param HasSightings[] $objects
-     */
-    private function createAbsentSightingObjects(array $objects)
-    {
-        foreach ($objects as $object) {
-            $object->seenPack->createAbsentSightingObjects();
-        }
     }
 }

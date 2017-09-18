@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use common\components\LoggingHelper;
 use common\models\ImportancePack;
 use yii\console\Controller;
 
@@ -17,9 +18,9 @@ class ImportanceController extends Controller
     public function actionRecalculate()
     {
         if ($this->recalculate(true)) {
-            exit(0);
+            LoggingHelper::log("Conditional recalculation completed", 'importance.calculator.summary');
         } else {
-            exit("Recalculation not completed");
+            LoggingHelper::log("Conditional recalculation not completed", 'importance.calculator.summary');
         }
     }
 
@@ -29,9 +30,9 @@ class ImportanceController extends Controller
     public function actionRecalculateUnconditionally()
     {
         if ($this->recalculate(false)) {
-            exit(0);
+            LoggingHelper::log("Unconditional recalculation completed", 'importance.calculator.summary');
         } else {
-            exit("Recalculation not completed");
+            LoggingHelper::log("Unconditional recalculation not completed", 'importance.calculator.summary');
         }
     }
 
@@ -41,7 +42,7 @@ class ImportanceController extends Controller
      * @param bool $considerFlag Whether to consider recalculation flags
      * @return bool
      */
-    private function recalculate(bool $considerFlag):bool
+    private function recalculate(bool $considerFlag): bool
     {
         $query = ImportancePack::find();
 
@@ -58,11 +59,17 @@ class ImportanceController extends Controller
             if ($pack->recalculatePack()) {
                 $successful++;
             } else {
-                echo "Pack " . $pack->importance_pack_id . " failed" . PHP_EOL . PHP_EOL;
+                LoggingHelper::log(
+                    "Pack " . $pack->importance_pack_id . " failed",
+                    'importance.calculator.process'
+                );
             }
         }
 
-        echo "Attempted " . count($packs) . " recalculations, succeeded with " . $successful . "." . PHP_EOL . PHP_EOL;
+        LoggingHelper::log(
+            "Attempted " . count($packs) . " recalculations, succeeded with " . $successful . ".",
+            'importance.calculator.process'
+        );
 
         return ($successful === count($packs));
     }
