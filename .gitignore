@@ -35,3 +35,6 @@ phpunit.phar
 
 # SQL data
 console/migrations/*.sql
+
+# Working scripts
+/scripts
