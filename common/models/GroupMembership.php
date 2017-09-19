@@ -167,7 +167,7 @@ class GroupMembership extends ActiveRecord implements HasVisibility
     }
 
     /**
-     * @return DescriptionHistory|null
+     * @return GroupMembershipHistory|null
      */
     public function createHistoryRecord()
     {

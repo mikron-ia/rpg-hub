@@ -8,8 +8,19 @@ use yii\base\Model;
 
 final class PasswordChange extends Model
 {
+    /**
+     * @var string
+     */
     public $password_old;
+
+    /**
+     * @var string
+     */
     public $password_new;
+
+    /**
+     * @var string
+     */
     public $password_again;
 
     /**
@@ -78,7 +89,7 @@ final class PasswordChange extends Model
 
     /**
      * Saves the password
-     * @return bool Success of the operatins
+     * @return bool Success of the operations
      */
     public function savePassword()
     {
