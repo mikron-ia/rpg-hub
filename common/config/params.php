@@ -6,7 +6,7 @@ if (getenv('LANGUAGES_ALLOWED')) {
     $languages = ['en', 'pl'];
 }
 
-$invitationValidityMultiplier = getenv('INVITATION_VALIDITY_IN_DAYS')??1;
+$invitationValidityMultiplier = getenv('INVITATION_VALIDITY_IN_DAYS') ?? 1;
 
 return [
     'user.passwordResetTokenExpire' => 3600,

@@ -6,15 +6,15 @@ $mailer = [
 ];
 
 if (getenv('MAIL_SMTP')) {
-        $mailer['useFileTransport'] = false;
-        $mailer['transport'] = [
-            'class' => 'Swift_SmtpTransport',
-            'host' => getenv('MAIL_HOST'),
-            'username' => getenv('MAIL_USER'),
-            'password' => getenv('MAIL_PASS'),
-            'port' => getenv('MAIL_PORT'),
-            'encryption' => getenv('MAIL_ENCRYPTION'),
-        ];
+    $mailer['useFileTransport'] = false;
+    $mailer['transport'] = [
+        'class' => 'Swift_SmtpTransport',
+        'host' => getenv('MAIL_HOST'),
+        'username' => getenv('MAIL_USER'),
+        'password' => getenv('MAIL_PASS'),
+        'port' => getenv('MAIL_PORT'),
+        'encryption' => getenv('MAIL_ENCRYPTION'),
+    ];
 } else {
     $mailer['useFileTransport'] = true;
 }

@@ -18,7 +18,7 @@ class LanguageSelector implements BootstrapInterface
             if (!$app->user->isGuest) {
                 /** @var User|null $user */
                 $user = $app->user->identity;
-                $preferredLanguage = isset($user)?$user->language:null;
+                $preferredLanguage = isset($user) ? $user->language : null;
             }
         }
 

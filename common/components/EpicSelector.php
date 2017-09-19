@@ -17,7 +17,7 @@ class EpicSelector implements BootstrapInterface
         $chosenEpicKey = isset($cookies['_epic']) ? (string)$cookies['_epic'] : null;
         $chosenEpic = EpicQuery::findOne(['key' => $chosenEpicKey]);
 
-        if($chosenEpic === null || $chosenEpic->isUserYourParticipant($app->user->identity)) {
+        if ($chosenEpic === null || $chosenEpic->isUserYourParticipant($app->user->identity)) {
             $app->params['activeEpic'] = $chosenEpic;
         } else {
             $app->response->cookies->remove('_epic');
