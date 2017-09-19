@@ -1,4 +1,5 @@
 <?php
+
 namespace common\models\user;
 
 use common\models\core\Language;
@@ -141,7 +142,7 @@ final class UserAcceptForm extends Model
     /**
      * @return int
      */
-    public function getExpirationTime():int
+    public function getExpirationTime(): int
     {
         return $this->invitation->valid_to;
     }

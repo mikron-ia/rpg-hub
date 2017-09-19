@@ -12,11 +12,11 @@ interface HasImportanceCategory
      * Provides name of importance category for the object as it is
      * @return string
      */
-    public function getImportanceCategory():string;
+    public function getImportanceCategory(): string;
 
     /**
      * Provides name of importance category for the object in lowercase
      * @return string
      */
-    public function getImportanceCategoryLowercase():string;
+    public function getImportanceCategoryLowercase(): string;
 }

@@ -13,5 +13,5 @@ interface HasDescriptions
      * Types should be listed in order desired in select
      * @return string[]
      */
-    static public function allowedDescriptionTypes():array;
+    static public function allowedDescriptionTypes(): array;
 }

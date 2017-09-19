@@ -121,7 +121,7 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
         }
     }
 
-    static public function allowedVisibilities():array
+    static public function allowedVisibilities(): array
     {
         return [
             Visibility::VISIBILITY_GM,
@@ -129,13 +129,13 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
         ];
     }
 
-    public function getVisibility():string
+    public function getVisibility(): string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getName();
     }
 
-    public function getVisibilityLowercase():string
+    public function getVisibilityLowercase(): string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();
@@ -144,7 +144,7 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
     /**
      * @return string[]
      */
-    static public function statusNames():array
+    static public function statusNames(): array
     {
         return GroupMembership::statusNames();
     }
@@ -152,7 +152,7 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
     /**
      * @return string[]
      */
-    static public function statusClasses():array
+    static public function statusClasses(): array
     {
         return GroupMembership::statusClasses();
     }
@@ -160,7 +160,7 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
     /**
      * @return string
      */
-    public function getStatus():string
+    public function getStatus(): string
     {
         $names = self::statusNames();
         return isset($names[$this->status]) ? $names[$this->status] : '?';
@@ -169,7 +169,7 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
     /**
      * @return string
      */
-    public function getStatusClass():string
+    public function getStatusClass(): string
     {
         $names = self::statusClasses();
         return isset($names[$this->status]) ? $names[$this->status] : '';

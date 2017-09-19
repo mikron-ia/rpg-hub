@@ -96,7 +96,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     /**
      * @return ActiveQuery
      */
-    public function getDescriptionPack():ActiveQuery
+    public function getDescriptionPack(): ActiveQuery
     {
         return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
     }
@@ -104,12 +104,12 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     /**
      * @return ActiveQuery
      */
-    public function getEpic():ActiveQuery
+    public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
 
-    static public function allowedDescriptionTypes():array
+    static public function allowedDescriptionTypes(): array
     {
         return [
             Description::TYPE_PREMISE,
@@ -129,22 +129,22 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
         ];
     }
 
-    static public function canUserIndexThem():bool
+    static public function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem():bool
+    static public function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
-    public function canUserControlYou():bool
+    public function canUserControlYou(): bool
     {
         return self::canUserControlInEpic($this->epic);
     }
 
-    public function canUserViewYou():bool
+    public function canUserViewYou(): bool
     {
         return self::canUserViewInEpic($this->epic);
     }
@@ -169,7 +169,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_SCENARIO'));
     }
 
-    static public function allowedStatuses():array
+    static public function allowedStatuses(): array
     {
         return [self::STATUS_NEW, self::STATUS_DISCARDED, self::STATUS_USED];
     }
@@ -177,7 +177,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     /**
      * @return string[]
      */
-    static public function statusNames():array
+    static public function statusNames(): array
     {
         return [
             self::STATUS_NEW => Yii::t('app', 'SCENARIO_STATUS_NEW'),
@@ -189,7 +189,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     /**
      * @return string[]
      */
-    static public function statusClasses():array
+    static public function statusClasses(): array
     {
         return [
             self::STATUS_NEW => 'scenario-status-proposed',
@@ -201,7 +201,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     /**
      * @return string
      */
-    public function getStatus():string
+    public function getStatus(): string
     {
         $names = self::statusNames();
         return isset($names[$this->status]) ? $names[$this->status] : '?';
@@ -210,7 +210,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     /**
      * @return string
      */
-    public function getStatusClass():string
+    public function getStatusClass(): string
     {
         $names = self::statusClasses();
         return isset($names[$this->status]) ? $names[$this->status] : '';

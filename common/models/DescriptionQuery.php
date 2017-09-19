@@ -84,7 +84,7 @@ final class DescriptionQuery extends Description
      * @param Language $language
      * @return ActiveQuery
      */
-    static public function listDescriptionsInLanguage(DescriptionPack $descriptionPack, Language $language):ActiveQuery
+    static public function listDescriptionsInLanguage(DescriptionPack $descriptionPack, Language $language): ActiveQuery
     {
         $query = Description::find();
 
@@ -101,7 +101,7 @@ final class DescriptionQuery extends Description
      * @param DescriptionPack $descriptionPack
      * @return ActiveQuery
      */
-    static public function listDescriptions(DescriptionPack $descriptionPack):ActiveQuery
+    static public function listDescriptions(DescriptionPack $descriptionPack): ActiveQuery
     {
         $query = Description::find();
 

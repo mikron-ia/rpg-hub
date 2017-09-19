@@ -26,7 +26,7 @@ final class Visibility
      * @param array $allowed
      * @return string[]
      */
-    static public function visibilityNames($allowed):array
+    static public function visibilityNames($allowed): array
     {
         $names = [
             Visibility::VISIBILITY_NONE => Yii::t('app', 'VISIBILITY_NONE'),
@@ -49,7 +49,7 @@ final class Visibility
      * Provides visibilities names in lowercase
      * @return string[]
      */
-    static public function visibilityNamesLowercase():array
+    static public function visibilityNamesLowercase(): array
     {
         return [
             Visibility::VISIBILITY_NONE => Yii::t('app', 'VISIBILITY_NONE_LOWERCASE'),
@@ -64,7 +64,7 @@ final class Visibility
      * Lists allowed visibilities
      * @return string[]
      */
-    static public function allowedVisibilities():array
+    static public function allowedVisibilities(): array
     {
         return [
             //Visibility::VISIBILITY_NONE,
@@ -79,7 +79,7 @@ final class Visibility
      * @param $code
      * @return Visibility
      */
-    static public function create($code):Visibility
+    static public function create($code): Visibility
     {
         $visibility = new Visibility();
         $visibility->visibility = $code;
@@ -111,7 +111,7 @@ final class Visibility
      * @param Epic $epic
      * @return array|\string[]
      */
-    static public function determineVisibilityVector(Epic $epic):array
+    static public function determineVisibilityVector(Epic $epic): array
     {
         if (empty($epic) || Yii::$app->user->isGuest) {
             /* No epic and no user makes bad business */

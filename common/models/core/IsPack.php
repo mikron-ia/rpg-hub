@@ -11,10 +11,10 @@ interface IsPack
     /**
      * @return bool
      */
-    public function canUserReadYou():bool;
+    public function canUserReadYou(): bool;
 
     /**
      * @return bool
      */
-    public function canUserControlYou():bool;
+    public function canUserControlYou(): bool;
 }

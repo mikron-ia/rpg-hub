@@ -19,7 +19,7 @@ final class Language
      * Lists supported languages
      * @return array
      */
-    static public function supportedLanguages():array
+    static public function supportedLanguages(): array
     {
         if (isset(Yii::$app->params['languagesAvailable'])) {
             return Yii::$app->params['languagesAvailable'];
@@ -32,7 +32,7 @@ final class Language
      * Provides short names for languages
      * @return array
      */
-    static public function languagesShort():array
+    static public function languagesShort(): array
     {
         $languageData = [
             'en' => 'EN',
@@ -54,7 +54,7 @@ final class Language
      * Provides long names for languages
      * @return array
      */
-    static public function languagesLong():array
+    static public function languagesLong(): array
     {
         $languageData = [
             'en' => Yii::t('app', 'LANGUAGE_CODE_ENGLISH'),
@@ -75,7 +75,7 @@ final class Language
      * @param string $code
      * @return Language
      */
-    static public function create($code):Language
+    static public function create($code): Language
     {
         $language = new Language();
         $language->language = $code;
@@ -96,7 +96,7 @@ final class Language
      * Provides languages as objects
      * @return Language[]
      */
-    static public function getLanguagesAsObjects():array
+    static public function getLanguagesAsObjects(): array
     {
         $languages = [];
 

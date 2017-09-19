@@ -79,7 +79,7 @@ class Seen extends ActiveRecord
     /**
      * @return string[]
      */
-    static public function statusNames():array
+    static public function statusNames(): array
     {
         return [
             self::STATUS_NEW => Yii::t('app', 'SEEN_STATUS_NEW'),
@@ -91,7 +91,7 @@ class Seen extends ActiveRecord
     /**
      * @return string[]
      */
-    static public function statusCSS():array
+    static public function statusCSS(): array
     {
         return [
             self::STATUS_NEW => 'seen-tag-new',
@@ -103,7 +103,7 @@ class Seen extends ActiveRecord
     /**
      * @return string
      */
-    public function getName():string
+    public function getName(): string
     {
         $names = self::statusNames();
         return isset($names[$this->status]) ? $names[$this->status] : '';
@@ -112,7 +112,7 @@ class Seen extends ActiveRecord
     /**
      * @return string
      */
-    public function getCSS():string
+    public function getCSS(): string
     {
         $names = self::statusCSS();
         return isset($names[$this->status]) ? $names[$this->status] : '';

@@ -22,6 +22,7 @@ final class StoryQuery extends Story
         $this->pageCount = $pagination;
         parent::__construct($config);
     }
+
     public $descriptions;
 
     public function rules()

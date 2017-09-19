@@ -49,9 +49,27 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             [['text_raw'], 'string'],
             [['title', 'subtitle'], 'string', 'max' => 120],
             [['visibility'], 'string', 'max' => 20],
-            [['description_pack_id'], 'exist', 'skipOnError' => true, 'targetClass' => DescriptionPack::className(), 'targetAttribute' => ['description_pack_id' => 'description_pack_id']],
-            [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
-            [['seen_pack_id'], 'exist', 'skipOnError' => true, 'targetClass' => SeenPack::className(), 'targetAttribute' => ['seen_pack_id' => 'seen_pack_id']],
+            [
+                ['description_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => DescriptionPack::className(),
+                'targetAttribute' => ['description_pack_id' => 'description_pack_id']
+            ],
+            [
+                ['epic_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Epic::className(),
+                'targetAttribute' => ['epic_id' => 'epic_id']
+            ],
+            [
+                ['seen_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => SeenPack::className(),
+                'targetAttribute' => ['seen_pack_id' => 'seen_pack_id']
+            ],
         ];
     }
 
@@ -108,7 +126,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         /**
          * @todo: Improve parsing routine that works the text over
          */
-        $this->text_ready =  Markdown::process(Html::encode($this->text_raw), 'gfm');
+        $this->text_ready = Markdown::process(Html::encode($this->text_raw), 'gfm');
 
         return parent::beforeSave($insert);
     }
@@ -135,27 +153,27 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
 
-    public function recordSighting():bool
+    public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
     }
 
-    public function recordNotification():bool
+    public function recordNotification(): bool
     {
         return $this->seenPack->recordNotification();
     }
 
-    public function showSightingStatus():string
+    public function showSightingStatus(): string
     {
         return $this->seenPack->getStatusForCurrentUser();
     }
 
-    public function showSightingCSS():string
+    public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();
     }
 
-    static public function allowedVisibilities():array
+    static public function allowedVisibilities(): array
     {
         return [
             Visibility::VISIBILITY_GM,
@@ -171,34 +189,34 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    public function getVisibility():string
+    public function getVisibility(): string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getName();
     }
 
-    public function getVisibilityLowercase():string
+    public function getVisibilityLowercase(): string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();
     }
 
-    static public function canUserIndexThem():bool
+    static public function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem():bool
+    static public function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
-    public function canUserControlYou():bool
+    public function canUserControlYou(): bool
     {
         return self::canUserControlInEpic($this->epic);
     }
 
-    public function canUserViewYou():bool
+    public function canUserViewYou(): bool
     {
         return self::canUserViewInEpic($this->epic);
     }

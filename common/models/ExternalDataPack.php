@@ -54,7 +54,7 @@ class ExternalDataPack extends ActiveRecord implements IsPack
      * @param string $className
      * @return ExternalDataPack
      */
-    static public function create($className):ExternalDataPack
+    static public function create($className): ExternalDataPack
     {
         $pack = new ExternalDataPack();
         $pack->class = $className;
@@ -68,7 +68,7 @@ class ExternalDataPack extends ActiveRecord implements IsPack
     /**
      * @return ActiveDataProvider
      */
-    public function getExternalDataAll():ActiveDataProvider
+    public function getExternalDataAll(): ActiveDataProvider
     {
         $objectsQuery = ExternalData::find();
 
@@ -85,7 +85,7 @@ class ExternalDataPack extends ActiveRecord implements IsPack
      * @param string $code
      * @return array
      */
-    public function getExternalDataByCode(string $code):array
+    public function getExternalDataByCode(string $code): array
     {
         $object = ExternalData::findOne([
             'external_data_pack_id' => $this->external_data_pack_id,
@@ -106,7 +106,7 @@ class ExternalDataPack extends ActiveRecord implements IsPack
      * @param array|string $data
      * @return bool
      */
-    public function saveExternalData(string $code, $data):bool
+    public function saveExternalData(string $code, $data): bool
     {
         /* @var $externalData ExternalData|null */
         $externalData = ExternalData::findOne([
@@ -135,7 +135,7 @@ class ExternalDataPack extends ActiveRecord implements IsPack
     /**
      * @return HasEpicControl
      */
-    public function getControllingObject():HasEpicControl
+    public function getControllingObject(): HasEpicControl
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */
@@ -145,12 +145,12 @@ class ExternalDataPack extends ActiveRecord implements IsPack
     /**
      * @return Epic
      */
-    public function getEpic():Epic
+    public function getEpic(): Epic
     {
         return $this->getControllingObject()->getEpic()->one();
     }
 
-    public function canUserReadYou():bool
+    public function canUserReadYou(): bool
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */
@@ -158,7 +158,7 @@ class ExternalDataPack extends ActiveRecord implements IsPack
         return $object->canUserViewYou();
     }
 
-    public function canUserControlYou():bool
+    public function canUserControlYou(): bool
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */

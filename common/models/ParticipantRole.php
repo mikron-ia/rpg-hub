@@ -33,7 +33,13 @@ final class ParticipantRole extends ActiveRecord
             [['participant_id', 'role'], 'required'],
             [['participant_id'], 'integer'],
             [['role'], 'string', 'max' => 20],
-            [['participant_id'], 'exist', 'skipOnError' => true, 'targetClass' => Participant::className(), 'targetAttribute' => ['participant_id' => 'participant_id']],
+            [
+                ['participant_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Participant::className(),
+                'targetAttribute' => ['participant_id' => 'participant_id']
+            ],
         ];
     }
 
@@ -48,7 +54,7 @@ final class ParticipantRole extends ActiveRecord
     /**
      * @return string[]
      */
-    static public function roleNames():array
+    static public function roleNames(): array
     {
         return [
             self::ROLE_GM => Yii::t('app', 'PARTICIPANT_ROLE_GM'),
@@ -62,7 +68,7 @@ final class ParticipantRole extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getParticipant():ActiveQuery
+    public function getParticipant(): ActiveQuery
     {
         return $this->hasOne(Participant::className(), ['participant_id' => 'participant_id']);
     }
@@ -71,7 +77,7 @@ final class ParticipantRole extends ActiveRecord
      * Provides description of the role
      * @return string
      */
-    public function getRoleDescribed():string
+    public function getRoleDescribed(): string
     {
         $names = self::roleNames();
         if (isset($names[$this->role])) {

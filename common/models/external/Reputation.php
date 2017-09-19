@@ -36,7 +36,7 @@ class Reputation extends Model
      */
     static public function createFromArray($reputationRawArray)
     {
-        if(!$reputationRawArray) {
+        if (!$reputationRawArray) {
             return [];
         }
 

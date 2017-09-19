@@ -30,7 +30,7 @@ final class ParticipantQuery extends Participant
      *
      * @return ActiveDataProvider
      */
-    public function search($params):ActiveDataProvider
+    public function search($params): ActiveDataProvider
     {
         $query = Participant::find();
 

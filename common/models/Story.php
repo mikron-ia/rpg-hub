@@ -144,7 +144,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     /**
      * @return ActiveQuery
      */
-    public function getEpic():ActiveQuery
+    public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
@@ -152,7 +152,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     /**
      * @return ActiveQuery
      */
-    public function getParameterPack():ActiveQuery
+    public function getParameterPack(): ActiveQuery
     {
         return $this->hasOne(ParameterPack::className(), ['parameter_pack_id' => 'parameter_pack_id']);
     }
@@ -160,7 +160,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     /**
      * @return ActiveQuery
      */
-    public function getSeenPack():ActiveQuery
+    public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
@@ -169,7 +169,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      * Provides story summary formatted in HTML
      * @return string Short summary formatted to HTML
      */
-    public function getShortFormatted():string
+    public function getShortFormatted(): string
     {
         return Markdown::process($this->short, 'gfm');
     }
@@ -178,7 +178,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      * Provides story summary formatted in HTML
      * @return string Long summary formatted to HTML
      */
-    public function getLongFormatted():string
+    public function getLongFormatted(): string
     {
         return Markdown::process($this->long, 'gfm');
     }
@@ -187,7 +187,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      * @return array
      * @todo Consider parameter visibility based on access rights - vide issue #104
      */
-    public function formatParameters():array
+    public function formatParameters(): array
     {
         if (!$this->parametersFormatted) {
             $parameters = [];
@@ -236,7 +236,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return ($this->visibility === Visibility::VISIBILITY_FULL);
     }
 
-    static public function allowedParameterTypes():array
+    static public function allowedParameterTypes(): array
     {
         return [
             Parameter::STORY_NUMBER,
@@ -250,22 +250,22 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
-    static public function canUserIndexThem():bool
+    static public function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem():bool
+    static public function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
-    public function canUserControlYou():bool
+    public function canUserControlYou(): bool
     {
         return self::canUserControlInEpic($this->epic);
     }
 
-    public function canUserViewYou():bool
+    public function canUserViewYou(): bool
     {
         return self::canUserViewInEpic($this->epic);
     }
@@ -294,40 +294,40 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      * @param string $parameterName
      * @return string
      */
-    public function getParameter(string $parameterName):string
+    public function getParameter(string $parameterName): string
     {
-        if(!$this->parametersFormatted) {
+        if (!$this->parametersFormatted) {
             $this->formatParameters();
         }
 
-        if(isset($this->parametersFormatted[$parameterName])) {
+        if (isset($this->parametersFormatted[$parameterName])) {
             return $this->parametersFormatted[$parameterName]['value'];
         } else {
             return '';
         }
     }
 
-    public function recordSighting():bool
+    public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
     }
 
-    public function recordNotification():bool
+    public function recordNotification(): bool
     {
         return $this->seenPack->recordNotification();
     }
 
-    public function showSightingStatus():string
+    public function showSightingStatus(): string
     {
         return $this->seenPack->getStatusForCurrentUser();
     }
 
-    public function showSightingCSS():string
+    public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();
     }
 
-    static public function allowedVisibilities():array
+    static public function allowedVisibilities(): array
     {
         return [
             Visibility::VISIBILITY_GM,
@@ -335,13 +335,13 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
-    public function getVisibility():string
+    public function getVisibility(): string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getName();
     }
 
-    public function getVisibilityLowercase():string
+    public function getVisibilityLowercase(): string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();

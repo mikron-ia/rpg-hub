@@ -147,7 +147,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     /**
      * @return ActiveQuery
      */
-    public function getSeenPack():ActiveQuery
+    public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
@@ -218,22 +218,22 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     /**
      * @return int[]
      */
-    public function getPeopleAvailableToThisCharacterAsIdList():array
+    public function getPeopleAvailableToThisCharacterAsIdList(): array
     {
         return array_keys($this->getPeopleAvailableToThisCharacterAsDropDownList());
     }
 
-    static public function canUserIndexThem():bool
+    static public function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem():bool
+    static public function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
-    public function canUserControlYou():bool
+    public function canUserControlYou(): bool
     {
         return self::canUserControlInEpic($this->epic);
     }
@@ -242,7 +242,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
      * {@inheritDoc}
      * @todo Add control on player level for front-end use
      */
-    public function canUserViewYou():bool
+    public function canUserViewYou(): bool
     {
         return self::canUserViewInEpic($this->epic);
     }
@@ -267,22 +267,22 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
     }
 
-    public function recordSighting():bool
+    public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
     }
 
-    public function recordNotification():bool
+    public function recordNotification(): bool
     {
         return $this->seenPack->recordNotification();
     }
 
-    public function showSightingStatus():string
+    public function showSightingStatus(): string
     {
         return $this->seenPack->getStatusForCurrentUser();
     }
 
-    public function showSightingCSS():string
+    public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();
     }

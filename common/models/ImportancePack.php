@@ -72,7 +72,7 @@ class ImportancePack extends ActiveRecord
      * @param string $class
      * @return ImportancePack
      */
-    public static function create(string $class):ImportancePack
+    public static function create(string $class): ImportancePack
     {
         $pack = new ImportancePack(['class' => $class]);
 
@@ -85,7 +85,7 @@ class ImportancePack extends ActiveRecord
     /**
      * @return HasImportance
      */
-    public function getControllingObject():HasImportance
+    public function getControllingObject(): HasImportance
     {
         if (empty($this->controllingObject)) {
             $className = 'common\models\\' . $this->class;
@@ -98,7 +98,7 @@ class ImportancePack extends ActiveRecord
     /**
      * @return Epic
      */
-    public function getEpic():Epic
+    public function getEpic(): Epic
     {
         return $this->getControllingObject()->getEpic()->one();
     }
@@ -107,7 +107,7 @@ class ImportancePack extends ActiveRecord
      * Recalculates pack importance objects
      * @return bool
      */
-    public function recalculatePack():bool
+    public function recalculatePack(): bool
     {
         $result = $this->createAbsentImportanceObjects();
 

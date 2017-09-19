@@ -13,7 +13,7 @@ trait ToolsForEntity
      * @return string
      * @throws HttpException
      */
-    private function generateKey($identifier):string
+    private function generateKey($identifier): string
     {
         if (!isset(Yii::$app->params['keyGeneration'][$identifier])) {
             throw new HttpException(500, "Missing configuration for key $identifier");
@@ -33,7 +33,7 @@ trait ToolsForEntity
      * @return bool
      * @throws HttpException
      */
-    static public function canUserCreateInEpic($epic):bool
+    static public function canUserCreateInEpic($epic): bool
     {
         /* Use of control* right is intentional; there is no need to separate creation from control at this level */
         if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
@@ -48,7 +48,7 @@ trait ToolsForEntity
      * @return bool
      * @throws HttpException
      */
-    static public function canUserControlInEpic($epic):bool
+    static public function canUserControlInEpic($epic): bool
     {
         if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
@@ -62,7 +62,7 @@ trait ToolsForEntity
      * @return bool
      * @throws HttpException
      */
-    static public function canUserViewInEpic($epic):bool
+    static public function canUserViewInEpic($epic): bool
     {
         if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
@@ -76,7 +76,7 @@ trait ToolsForEntity
      * @return bool
      * @throws HttpException
      */
-    static public function canUserIndexInEpic($epic):bool
+    static public function canUserIndexInEpic($epic): bool
     {
         if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
@@ -90,7 +90,7 @@ trait ToolsForEntity
      * Name comes without namespace
      * @return string
      */
-    static private function cleanClassName():string
+    static private function cleanClassName(): string
     {
         $position = strrpos(static::class, '\\');
         if ($position !== null) {
@@ -111,7 +111,7 @@ trait ToolsForEntity
 
     public function setCurrentEpicOnEmpty()
     {
-        if(isset(Yii::$app->params['activeEpic']) && $this->epic_id === null) {
+        if (isset(Yii::$app->params['activeEpic']) && $this->epic_id === null) {
             $this->epic_id = Yii::$app->params['activeEpic']->epic_id;
         }
     }

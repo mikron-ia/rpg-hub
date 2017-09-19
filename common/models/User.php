@@ -1,4 +1,5 @@
 <?php
+
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
@@ -176,7 +177,7 @@ final class User extends ActiveRecord implements IdentityInterface
      * @param string $token password reset token
      * @return boolean
      */
-    public static function isPasswordResetTokenValid($token):bool
+    public static function isPasswordResetTokenValid($token): bool
     {
         if (empty($token)) {
             return false;
@@ -200,7 +201,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
-    public function getEpicsAssisted():ActiveQuery
+    public function getEpicsAssisted(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
             ParticipantRole::ROLE_ASSISTANT
@@ -210,7 +211,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
-    public function getEpicsManaged():ActiveQuery
+    public function getEpicsManaged(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
             ParticipantRole::ROLE_MANAGER
@@ -220,7 +221,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
-    public function getEpicsGameMasteredAndManaged():ActiveQuery
+    public function getEpicsGameMasteredAndManaged(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
             ParticipantRole::ROLE_GM,
@@ -231,7 +232,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
-    public function getEpicsGameMastered():ActiveQuery
+    public function getEpicsGameMastered(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
             ParticipantRole::ROLE_GM
@@ -241,17 +242,18 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
-    public function getEpicsOperated():ActiveQuery
+    public function getEpicsOperated(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
             ParticipantRole::ROLE_GM,
             ParticipantRole::ROLE_ASSISTANT
         ]);
     }
+
     /**
      * @return ActiveQuery
      */
-    public function getEpicsPlayed():ActiveQuery
+    public function getEpicsPlayed(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
             ParticipantRole::ROLE_PLAYER
@@ -261,7 +263,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
-    public function getEpicsVisible():ActiveQuery
+    public function getEpicsVisible(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
             ParticipantRole::ROLE_GM,
@@ -274,7 +276,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return ActiveQuery
      */
-    public function getEpics():ActiveQuery
+    public function getEpics(): ActiveQuery
     {
 
         return Epic::find()
@@ -287,7 +289,7 @@ final class User extends ActiveRecord implements IdentityInterface
      * @param array $roles
      * @return ActiveQuery
      */
-    public function getEpicsLimitedByRoles(array $roles):ActiveQuery
+    public function getEpicsLimitedByRoles(array $roles): ActiveQuery
     {
         return Epic::find()
             ->joinWith('participants')
@@ -348,7 +350,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return \string[]
      */
-    static public function getAllForDropDown():array
+    static public function getAllForDropDown(): array
     {
         /** @var User[] $users */
         $users = User::find()->all();
@@ -366,7 +368,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return string[]
      */
-    static public function statusNames():array
+    static public function statusNames(): array
     {
         return [
             self::STATUS_DELETED => Yii::t('app', 'USER_STATUS_DELETED'),
@@ -374,7 +376,7 @@ final class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    public function getUserRoleName():string
+    public function getUserRoleName(): string
     {
         $names = self::userRoleNames();
         $code = $this->getUserRoleCode();
@@ -384,7 +386,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return string
      */
-    public function getUserRoleCode():string
+    public function getUserRoleCode(): string
     {
         if (Yii::$app->authManager->checkAccess($this->id, 'administrator')) {
             return self::USER_ROLE_ADMINISTRATOR;
@@ -402,7 +404,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return string[]
      */
-    static public function getFullUserList():array
+    static public function getFullUserList(): array
     {
         /**
          * @var $usersUnordered User[]
@@ -420,7 +422,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return string[]
      */
-    static public function userRoleNames():array
+    static public function userRoleNames(): array
     {
         return [
             self::USER_ROLE_NONE => Yii::t('app', 'USER_ROLE_NONE'),
@@ -434,7 +436,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return string[]
      */
-    static public function allowedUserRoleNames():array
+    static public function allowedUserRoleNames(): array
     {
         $roles = static::userRoleNames();
         $allowedRoles = static::allowedUserRoles();
@@ -451,7 +453,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return string[]
      */
-    static public function allowedUserRoles():array
+    static public function allowedUserRoles(): array
     {
         return [self::USER_ROLE_USER, self::USER_ROLE_OPERATOR, self::USER_ROLE_MANAGER];
     }
@@ -459,7 +461,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * @return string[]
      */
-    static public function operatorUserRoles():array
+    static public function operatorUserRoles(): array
     {
         return [self::USER_ROLE_OPERATOR, self::USER_ROLE_MANAGER, self::USER_ROLE_ADMINISTRATOR];
     }

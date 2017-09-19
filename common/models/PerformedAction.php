@@ -96,7 +96,7 @@ class PerformedAction extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getUser():ActiveQuery
+    public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
@@ -123,7 +123,7 @@ class PerformedAction extends ActiveRecord
      * @param int $object_id ID of the object
      * @return bool Success of the operation
      */
-    static public function createRecord($operation, $class, $object_id):bool
+    static public function createRecord($operation, $class, $object_id): bool
     {
         if (Yii::$app instanceof ConsoleApplication) {
             /* There is no point to record sighting from a console call */
@@ -171,7 +171,7 @@ class PerformedAction extends ActiveRecord
      * @param string $operation Operation performed
      * @return bool Success of the operation
      */
-    static public function createSimplifiedRecord($operation):bool
+    static public function createSimplifiedRecord($operation): bool
     {
         return self::createRecord($operation, null, null);
     }
@@ -179,7 +179,7 @@ class PerformedAction extends ActiveRecord
     /**
      * @return string[]
      */
-    static public function actionNames():array
+    static public function actionNames(): array
     {
         return [
             self::PERFORMED_ACTION_CREATE => Yii::t('app', 'PERFORMED_ACTION_CREATE'),
@@ -195,7 +195,7 @@ class PerformedAction extends ActiveRecord
     /**
      * @return string[]
      */
-    static public function allowedActions():array
+    static public function allowedActions(): array
     {
         return array_keys(self::actionNames());
     }
@@ -203,7 +203,7 @@ class PerformedAction extends ActiveRecord
     /**
      * @return string
      */
-    public function getName():string
+    public function getName(): string
     {
         $names = self::actionNames();
         return isset($names[$this->operation]) ? $names[$this->operation] : '?';

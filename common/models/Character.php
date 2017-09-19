@@ -180,7 +180,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ];
     }
 
-    static public function allowedVisibilities():array
+    static public function allowedVisibilities(): array
     {
         return [
             Visibility::VISIBILITY_GM,
@@ -191,7 +191,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     /**
      * @return ActiveQuery
      */
-    public function getEpic():ActiveQuery
+    public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
@@ -199,7 +199,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     /**
      * @return ActiveQuery
      */
-    public function getCharacter():ActiveQuery
+    public function getCharacter(): ActiveQuery
     {
         return $this->hasOne(CharacterSheet::className(), ['character_sheet_id' => 'character_sheet_id']);
     }
@@ -207,7 +207,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     /**
      * @return ActiveQuery
      */
-    public function getDescriptionPack():ActiveQuery
+    public function getDescriptionPack(): ActiveQuery
     {
         return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
     }
@@ -336,7 +336,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      * Provides list of types allowed by this class
      * @return string[]
      */
-    static public function allowedDescriptionTypes():array
+    static public function allowedDescriptionTypes(): array
     {
         return [
             Description::TYPE_WHO,
@@ -361,22 +361,22 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ];
     }
 
-    static public function canUserIndexThem():bool
+    static public function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem():bool
+    static public function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
-    public function canUserControlYou():bool
+    public function canUserControlYou(): bool
     {
         return self::canUserControlInEpic($this->epic);
     }
 
-    public function canUserViewYou():bool
+    public function canUserViewYou(): bool
     {
         return self::canUserViewInEpic($this->epic);
     }
@@ -401,66 +401,66 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
     }
 
-    public function getImportanceCategory():string
+    public function getImportanceCategory(): string
     {
         $importance = ImportanceCategory::create($this->importance_category);
         return $importance->getName();
     }
 
-    public function getImportanceCategoryCode():string
+    public function getImportanceCategoryCode(): string
     {
         return $this->importance_category;
     }
 
-    public function getImportanceCategoryLowercase():string
+    public function getImportanceCategoryLowercase(): string
     {
         $importance = ImportanceCategory::create($this->importance_category);
         return $importance->getNameLowercase();
     }
 
-    public function getVisibility():string
+    public function getVisibility(): string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getName();
     }
 
-    public function getVisibilityLowercase():string
+    public function getVisibilityLowercase(): string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();
     }
 
-    public function recordSighting():bool
+    public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
     }
 
-    public function recordNotification():bool
+    public function recordNotification(): bool
     {
         return $this->seenPack->recordNotification();
     }
 
-    public function showSightingStatus():string
+    public function showSightingStatus(): string
     {
         return $this->seenPack->getStatusForCurrentUser();
     }
 
-    public function showSightingCSS():string
+    public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();
     }
 
-    public function getLastModified():\DateTimeImmutable
+    public function getLastModified(): \DateTimeImmutable
     {
         return new \DateTimeImmutable(date("Y-m-d H:i:s", $this->updated_at));
     }
 
-    public function getSeenStatusForUser(int $userId):string
+    public function getSeenStatusForUser(int $userId): string
     {
         /** @var Seen $sighting */
         $sighting = $this->seenPack->getSightingsForUser($userId)->one();
 
-        if(!$sighting) {
+        if (!$sighting) {
             return 'none';
         } else {
             return $sighting->status;

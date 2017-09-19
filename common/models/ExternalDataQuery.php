@@ -30,7 +30,7 @@ class ExternalDataQuery extends ExternalData
      *
      * @return ActiveDataProvider
      */
-    public function search($params):ActiveDataProvider
+    public function search($params): ActiveDataProvider
     {
         $query = ExternalData::find();
 

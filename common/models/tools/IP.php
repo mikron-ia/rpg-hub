@@ -56,7 +56,7 @@ class IP extends \yii\db\ActiveRecord
     /**
      * @return string
      */
-    public function __toString():string
+    public function __toString(): string
     {
         return $this->content;
     }

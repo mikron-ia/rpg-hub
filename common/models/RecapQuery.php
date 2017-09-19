@@ -30,7 +30,7 @@ final class RecapQuery extends Recap
      * @param array $params
      * @return ActiveDataProvider
      */
-    public function search($params):ActiveDataProvider
+    public function search($params): ActiveDataProvider
     {
         $query = Recap::find();
 

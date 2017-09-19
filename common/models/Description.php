@@ -164,7 +164,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return string[]
      */
-    static public function typeNames():array
+    static public function typeNames(): array
     {
         return [
             self::TYPE_APPEARANCE => Yii::t('app', 'DESCRIPTION_TYPE_APPEARANCE'),
@@ -207,7 +207,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      *
      * @return string[]
      */
-    public function typeNamesForThisClass():array
+    public function typeNamesForThisClass(): array
     {
         $typeNamesAll = self::typeNames();
         $typeNamesAccepted = [];
@@ -232,7 +232,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return string[]
      */
-    public function allowedTypes():array
+    public function allowedTypes(): array
     {
         return array_keys(self::typeNames());
     }
@@ -240,7 +240,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return ActiveQuery
      */
-    public function getCreatedBy():ActiveQuery
+    public function getCreatedBy(): ActiveQuery
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
@@ -248,7 +248,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return ActiveQuery
      */
-    public function getDescriptionPack():ActiveQuery
+    public function getDescriptionPack(): ActiveQuery
     {
         return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
     }
@@ -256,7 +256,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return ActiveQuery
      */
-    public function getUpdatedBy():ActiveQuery
+    public function getUpdatedBy(): ActiveQuery
     {
         return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
@@ -283,7 +283,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         return $language->getName();
     }
 
-    static public function allowedVisibilities():array
+    static public function allowedVisibilities(): array
     {
         return [
             Visibility::VISIBILITY_GM,
@@ -291,13 +291,13 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         ];
     }
 
-    public function getVisibility():string
+    public function getVisibility(): string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getName();
     }
 
-    public function getVisibilityLowercase():string
+    public function getVisibilityLowercase(): string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();
@@ -365,7 +365,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      * Provides word count that player can see
      * @return int
      */
-    public function getWordCount():int
+    public function getWordCount(): int
     {
         return $this->getWordCountForPublic();
     }
@@ -374,7 +374,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      * Provides word count for public part
      * @return int
      */
-    public function getWordCountForPublic():int
+    public function getWordCountForPublic(): int
     {
         return StringHelper::countWords($this->public_text);
     }
@@ -383,7 +383,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      * Provides word count for private part
      * @return int
      */
-    public function getWordCountForPrivate():int
+    public function getWordCountForPrivate(): int
     {
         return StringHelper::countWords($this->private_text);
     }

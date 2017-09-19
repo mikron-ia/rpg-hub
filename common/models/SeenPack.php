@@ -249,7 +249,7 @@ class SeenPack extends ActiveRecord
     /**
      * @return bool
      */
-    public function recordNotification():bool
+    public function recordNotification(): bool
     {
         return $this->recordSighting(false);
     }
@@ -324,7 +324,7 @@ class SeenPack extends ActiveRecord
      * @param string $class
      * @return SeenPack
      */
-    public static function create(string $class):SeenPack
+    public static function create(string $class): SeenPack
     {
         $pack = new SeenPack(['class' => $class]);
 
@@ -352,7 +352,7 @@ class SeenPack extends ActiveRecord
         }
     }
 
-    public function getStatusForCurrentUser():string
+    public function getStatusForCurrentUser(): string
     {
         $this->fillSightingForCurrentUser();
 
@@ -364,7 +364,7 @@ class SeenPack extends ActiveRecord
         }
     }
 
-    public function getCSSForCurrentUser():string
+    public function getCSSForCurrentUser(): string
     {
         $this->fillSightingForCurrentUser();
 

@@ -66,7 +66,7 @@ class GameQuery extends Game
         return $dataProvider;
     }
 
-    public function mostRecentDataProvider():ActiveDataProvider
+    public function mostRecentDataProvider(): ActiveDataProvider
     {
         $query = Game::find();
 

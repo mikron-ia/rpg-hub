@@ -149,7 +149,7 @@ class Participant extends ActiveRecord
      * @param Epic $epic
      * @return bool
      */
-    static public function participantExists(User $user, Epic $epic):bool
+    static public function participantExists(User $user, Epic $epic): bool
     {
         if (Participant::findOne(['user_id' => $user->id, 'epic_id' => $epic->epic_id])) {
             return true;
@@ -165,7 +165,7 @@ class Participant extends ActiveRecord
      * @param string $role
      * @return bool
      */
-    static public function participantHasRole(User $user, Epic $epic, string $role):bool
+    static public function participantHasRole(User $user, Epic $epic, string $role): bool
     {
         $participant = Participant::find()
             ->joinWith('participantRoles')

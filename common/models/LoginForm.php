@@ -1,4 +1,5 @@
 <?php
+
 namespace common\models;
 
 use Yii;
@@ -51,7 +52,7 @@ class LoginForm extends Model
         if ($this->validate()) {
             $result = Yii::$app->user->login($this->getUser(), $this->rememberMe ? self::REMEMBER_TIME_IN_SECONDS : 0);
 
-            if($result) {
+            if ($result) {
                 PerformedAction::createSimplifiedRecord(PerformedAction::PERFORMED_ACTION_LOGIN);
             }
 

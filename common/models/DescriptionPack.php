@@ -54,7 +54,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
     /**
      * @return ActiveQuery
      */
-    public function getDescriptions():ActiveQuery
+    public function getDescriptions(): ActiveQuery
     {
         return $this->hasMany(Description::className(), ['description_pack_id' => 'description_pack_id']);
     }
@@ -62,7 +62,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
     /**
      * @return ActiveQuery
      */
-    public function getPeople():ActiveQuery
+    public function getPeople(): ActiveQuery
     {
         return $this->hasMany(Character::className(), ['description_pack_id' => 'description_pack_id']);
     }
@@ -116,7 +116,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
      * @param Language $language
      * @return ActiveQuery
      */
-    public function getDescriptionsInLanguage(Language $language):ActiveQuery
+    public function getDescriptionsInLanguage(Language $language): ActiveQuery
     {
         return DescriptionQuery::listDescriptionsInLanguage($this, $language);
     }
@@ -124,7 +124,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
     /**
      * @return ActiveQuery
      */
-    public function getDescriptionsVisible():ActiveQuery
+    public function getDescriptionsVisible(): ActiveQuery
     {
         return DescriptionQuery::listDescriptions($this);
     }
@@ -133,7 +133,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
      * @param User $user
      * @return ActiveQuery
      */
-    public function getDescriptionsInLanguageOfTheUser(User $user):ActiveQuery
+    public function getDescriptionsInLanguageOfTheUser(User $user): ActiveQuery
     {
         $language = Language::create($user->language);
         return $this->getDescriptionsInLanguage($language);
@@ -143,7 +143,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
      * @return ActiveQuery
      * @throws HttpException
      */
-    public function getDescriptionsInLanguageOfTheActiveUser():ActiveQuery
+    public function getDescriptionsInLanguageOfTheActiveUser(): ActiveQuery
     {
         if (Yii::$app->user->isGuest) {
             throw new HttpException(400, Yii::t('app', 'ERROR_NO_ACTIVE_USER'));
@@ -160,7 +160,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
      * @param string $code
      * @return ActiveQuery
      */
-    public function getDescriptionInLanguage(Language $language, string $code):ActiveQuery
+    public function getDescriptionInLanguage(Language $language, string $code): ActiveQuery
     {
         return $this->getDescriptions()->where(['lang' => $language->language, 'code' => $code]);
     }
@@ -170,7 +170,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
      * @param string $code
      * @return ActiveQuery
      */
-    public function getDescriptionInLanguageOfTheUser(User $user, string $code):ActiveQuery
+    public function getDescriptionInLanguageOfTheUser(User $user, string $code): ActiveQuery
     {
         $language = Language::create($user->language);
         return $this->getDescriptionInLanguage($language, $code);
@@ -181,7 +181,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
      * @return ActiveQuery
      * @throws HttpException
      */
-    public function getDescriptionInLanguageOfTheActiveUser(string $code):ActiveQuery
+    public function getDescriptionInLanguageOfTheActiveUser(string $code): ActiveQuery
     {
         if (Yii::$app->user->isGuest) {
             throw new HttpException(400, Yii::t('app', 'ERROR_NO_ACTIVE_USER'));
@@ -196,7 +196,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
     /**
      * @return HasEpicControl
      */
-    public function getControllingObject():HasEpicControl
+    public function getControllingObject(): HasEpicControl
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */
@@ -206,12 +206,12 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
     /**
      * @return Epic
      */
-    public function getEpic():Epic
+    public function getEpic(): Epic
     {
         return $this->getControllingObject()->getEpic()->one();
     }
 
-    public function canUserReadYou():bool
+    public function canUserReadYou(): bool
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */
@@ -219,7 +219,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
         return $object->canUserViewYou();
     }
 
-    public function canUserControlYou():bool
+    public function canUserControlYou(): bool
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */

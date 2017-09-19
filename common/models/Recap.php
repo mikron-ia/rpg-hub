@@ -116,7 +116,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
      * Provides recap content formatted in HTML
      * @return string HTML formatted text
      */
-    public function getDataFormatted():string
+    public function getDataFormatted(): string
     {
         return Markdown::process($this->data, 'gfm');
     }
@@ -124,7 +124,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     /**
      * @return ActiveQuery
      */
-    public function getEpic():ActiveQuery
+    public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
@@ -132,7 +132,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     /**
      * @return ActiveQuery
      */
-    public function getSeenPack():ActiveQuery
+    public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
@@ -161,22 +161,22 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         return true;
     }
 
-    static public function canUserIndexThem():bool
+    static public function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem():bool
+    static public function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
-    public function canUserControlYou():bool
+    public function canUserControlYou(): bool
     {
         return self::canUserControlInEpic($this->epic);
     }
 
-    public function canUserViewYou():bool
+    public function canUserViewYou(): bool
     {
         return self::canUserViewInEpic($this->epic);
     }
@@ -201,22 +201,22 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_RECAP'));
     }
 
-    public function recordSighting():bool
+    public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
     }
 
-    public function recordNotification():bool
+    public function recordNotification(): bool
     {
         return $this->seenPack->recordNotification();
     }
 
-    public function showSightingStatus():string
+    public function showSightingStatus(): string
     {
         return $this->seenPack->getStatusForCurrentUser();
     }
 
-    public function showSightingCSS():string
+    public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();
     }

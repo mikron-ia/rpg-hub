@@ -12,23 +12,23 @@ interface HasSightings
      * Records user viewing the object
      * @return bool
      */
-    public function recordSighting():bool;
+    public function recordSighting(): bool;
 
     /**
      * Records user listing of viewing the object
      * @return bool
      */
-    public function recordNotification():bool;
+    public function recordNotification(): bool;
 
     /**
      * Provides status name in appropriate language
      * @return string
      */
-    public function showSightingStatus():string;
+    public function showSightingStatus(): string;
 
     /**
      * Provides class applied to status tag
      * @return string
      */
-    public function showSightingCSS():string;
+    public function showSightingCSS(): string;
 }

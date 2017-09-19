@@ -106,7 +106,7 @@ class UserInvitation extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getCreatedBy():ActiveQuery
+    public function getCreatedBy(): ActiveQuery
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
@@ -164,7 +164,7 @@ class UserInvitation extends ActiveRecord
      * Finds out if invitation is valid
      * @return bool
      */
-    public function isInvitationValid():bool
+    public function isInvitationValid(): bool
     {
         return $this->valid_to >= time();
     }
@@ -173,7 +173,7 @@ class UserInvitation extends ActiveRecord
      * Finds out if invitation has not been used
      * @return bool
      */
-    public function isInvitationUnused():bool
+    public function isInvitationUnused(): bool
     {
         return !$this->used_at;
     }
@@ -182,7 +182,7 @@ class UserInvitation extends ActiveRecord
      * Finds out if invitation has not been revoked
      * @return bool
      */
-    public function isInvitationUnRevoked():bool
+    public function isInvitationUnRevoked(): bool
     {
         return !$this->revoked_at;
     }
@@ -191,7 +191,7 @@ class UserInvitation extends ActiveRecord
      * Finds out if invitation is still active
      * @return bool
      */
-    public function isInvitationActive():bool
+    public function isInvitationActive(): bool
     {
         return $this->isInvitationValid() && $this->isInvitationUnused() && $this->isInvitationUnRevoked();
     }
@@ -200,7 +200,7 @@ class UserInvitation extends ActiveRecord
      * Marks the invitation as opened if it was not already marked so
      * @return bool
      */
-    public function markAsOpened():bool
+    public function markAsOpened(): bool
     {
         if (!$this->opened_at) {
             $this->opened_at = time();
@@ -214,7 +214,7 @@ class UserInvitation extends ActiveRecord
      * Marks invitation as revoked
      * @return bool
      */
-    public function markAsRevoked():bool
+    public function markAsRevoked(): bool
     {
         $this->revoked_at = time();
         return $this->save();
@@ -224,18 +224,18 @@ class UserInvitation extends ActiveRecord
      * Marks invitation as used
      * @return bool
      */
-    public function markAsUsed():bool
+    public function markAsUsed(): bool
     {
         $this->used_at = time();
         return $this->save();
     }
 
-    public function isRenewable():bool
+    public function isRenewable(): bool
     {
         return $this->isInvitationUnused();
     }
 
-    public function renew():bool
+    public function renew(): bool
     {
         $this->valid_to = time() + Yii::$app->params['invitation.isValidFor'];
         $this->revoked_at = null;
@@ -246,7 +246,7 @@ class UserInvitation extends ActiveRecord
      * Provides readable name for role intended for the user
      * @return string
      */
-    public function getIntendedRoleName():string
+    public function getIntendedRoleName(): string
     {
         $names = User::userRoleNames();
         $code = $this->intended_role;

@@ -53,7 +53,13 @@ class Game extends ActiveRecord implements HasEpicControl
             [['notes'], 'string'],
             [['basics'], 'string', 'max' => 255],
             [['status'], 'string', 'max' => 20],
-            [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
+            [
+                ['epic_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Epic::className(),
+                'targetAttribute' => ['epic_id' => 'epic_id']
+            ],
         ];
     }
 
@@ -97,7 +103,7 @@ class Game extends ActiveRecord implements HasEpicControl
     /**
      * @return string[]
      */
-    static public function statusNames():array
+    static public function statusNames(): array
     {
         return [
             self::STATUS_PROPOSED => Yii::t('app', 'GAME_STATUS_PROPOSED'),
@@ -115,7 +121,7 @@ class Game extends ActiveRecord implements HasEpicControl
     /**
      * @return string[]
      */
-    static public function statusClasses():array
+    static public function statusClasses(): array
     {
         return [
             self::STATUS_PROPOSED => 'game-status-proposed',
@@ -133,7 +139,7 @@ class Game extends ActiveRecord implements HasEpicControl
     /**
      * @return string
      */
-    public function getStatus():string
+    public function getStatus(): string
     {
         $names = self::statusNames();
         return isset($names[$this->status]) ? $names[$this->status] : '?';
@@ -142,28 +148,28 @@ class Game extends ActiveRecord implements HasEpicControl
     /**
      * @return string
      */
-    public function getStatusClass():string
+    public function getStatusClass(): string
     {
         $names = self::statusClasses();
         return isset($names[$this->status]) ? $names[$this->status] : '';
     }
 
-    static public function canUserIndexThem():bool
+    static public function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem():bool
+    static public function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
-    public function canUserControlYou():bool
+    public function canUserControlYou(): bool
     {
         return self::canUserControlInEpic($this->epic);
     }
 
-    public function canUserViewYou():bool
+    public function canUserViewYou(): bool
     {
         return self::canUserViewInEpic($this->epic);
     }

@@ -74,7 +74,7 @@ class Importance extends \yii\db\ActiveRecord
      * Calculates the importance value
      * @return int
      */
-    private function calculate():int
+    private function calculate(): int
     {
         $measuredObject = $this->importancePack->getControllingObject();
 
@@ -89,7 +89,7 @@ class Importance extends \yii\db\ActiveRecord
      * Recalculates the importance object and saves the new value
      * @return bool
      */
-    public function calculateAndSave():bool
+    public function calculateAndSave(): bool
     {
         $this->importance = $this->calculate();
         return $this->save();
@@ -99,7 +99,7 @@ class Importance extends \yii\db\ActiveRecord
      * @param string $seen Sighting code
      * @return int
      */
-    private function determineValueBasedOnSeen(string $seen):int
+    private function determineValueBasedOnSeen(string $seen): int
     {
         switch ($seen) {
             case 'new' :
@@ -150,7 +150,7 @@ class Importance extends \yii\db\ActiveRecord
      * @param bool $isAssociated Is the character associated via group with another?
      * @return int
      */
-    private function determineValueBasedOnAssociation(bool $isAssociated):int
+    private function determineValueBasedOnAssociation(bool $isAssociated): int
     {
         return $isAssociated ? 8 : 0;
     }
@@ -160,7 +160,7 @@ class Importance extends \yii\db\ActiveRecord
      * @param int $topValue Value to assign if event was less than a day ago
      * @return int
      */
-    private function determineValueBasedOnDate(\DateTimeImmutable $date, int $topValue):int
+    private function determineValueBasedOnDate(\DateTimeImmutable $date, int $topValue): int
     {
         $now = new \DateTimeImmutable('now');
         $difference = $date->diff($now);

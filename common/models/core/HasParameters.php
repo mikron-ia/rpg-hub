@@ -12,5 +12,5 @@ interface HasParameters
      * Provides list of types allowed by this class
      * @return string[]
      */
-    static public function allowedParameterTypes():array;
+    static public function allowedParameterTypes(): array;
 }

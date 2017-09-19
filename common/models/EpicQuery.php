@@ -29,7 +29,7 @@ final class EpicQuery extends Epic
      * @param array $params
      * @return ActiveDataProvider
      */
-    public function search($params):ActiveDataProvider
+    public function search($params): ActiveDataProvider
     {
         $query = Epic::find();
 
@@ -63,7 +63,7 @@ final class EpicQuery extends Epic
      * @param bool $limitToControlled
      * @return ActiveQuery
      */
-    static public function activeEpicsAsActiveRecord($limitToControlled = true):ActiveQuery
+    static public function activeEpicsAsActiveRecord($limitToControlled = true): ActiveQuery
     {
         /* @var $user User */
         $user = Yii::$app->user->identity;
@@ -86,7 +86,7 @@ final class EpicQuery extends Epic
      * @param bool $limitToControlled
      * @return ActiveDataProvider
      */
-    static public function activeEpicsAsActiveDataProvider($limitToControlled = true):ActiveDataProvider
+    static public function activeEpicsAsActiveDataProvider($limitToControlled = true): ActiveDataProvider
     {
         $query = self::activeEpicsAsActiveRecord($limitToControlled);
 
@@ -102,7 +102,7 @@ final class EpicQuery extends Epic
      * @param bool $limitToControlled
      * @return \yii\db\ActiveRecord[]
      */
-    static public function activeEpicsAsModels($limitToControlled = true):array
+    static public function activeEpicsAsModels($limitToControlled = true): array
     {
         if (Yii::$app->user->isGuest) {
             return [];
@@ -120,7 +120,7 @@ final class EpicQuery extends Epic
     /**
      * @return string[]
      */
-    static public function getListOfEpicsForSelector():array
+    static public function getListOfEpicsForSelector(): array
     {
         $epicList = self::activeEpicsAsModels(true);
 
@@ -138,7 +138,7 @@ final class EpicQuery extends Epic
      * @param bool $limitToControlled
      * @return array|\string[]
      */
-    static public function allowedEpics($limitToControlled = true):array
+    static public function allowedEpics($limitToControlled = true): array
     {
         $ids = [];
         $epics = self::activeEpicsAsModels($limitToControlled);
@@ -154,7 +154,7 @@ final class EpicQuery extends Epic
      * Provides list of all epics, with indication of user's role in them
      * @return ActiveDataProvider
      */
-    static public function manageableEpicsAsActiveDataProvider():ActiveDataProvider
+    static public function manageableEpicsAsActiveDataProvider(): ActiveDataProvider
     {
         $query = Epic::find()
             ->joinWith('participants', true, 'LEFT JOIN')

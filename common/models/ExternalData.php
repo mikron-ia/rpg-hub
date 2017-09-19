@@ -68,12 +68,12 @@ class ExternalData extends ActiveRecord implements HasVisibility
     /**
      * @return ActiveQuery
      */
-    public function getExternalDataPack():ActiveQuery
+    public function getExternalDataPack(): ActiveQuery
     {
         return $this->hasOne(ExternalDataPack::className(), ['external_data_pack_id' => 'external_data_pack_id']);
     }
 
-    static public function allowedVisibilities():array
+    static public function allowedVisibilities(): array
     {
         return [
             Visibility::VISIBILITY_GM,
@@ -81,13 +81,13 @@ class ExternalData extends ActiveRecord implements HasVisibility
         ];
     }
 
-    public function getVisibility():string
+    public function getVisibility(): string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getName();
     }
 
-    public function getVisibilityLowercase():string
+    public function getVisibilityLowercase(): string
     {
         $visibility = Visibility::create($this->visibility);
         return $visibility->getNameLowercase();

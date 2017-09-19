@@ -184,7 +184,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     /**
      * @return ActiveQuery
      */
-    public function getSeenPack():ActiveQuery
+    public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
@@ -256,7 +256,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      * Provides list of types allowed by this class
      * @return string[]
      */
-    static public function allowedParameterTypes():array
+    static public function allowedParameterTypes(): array
     {
         return [
             Parameter::SESSION_COUNT,
@@ -274,7 +274,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      * @return bool
      * @throws HttpException
      */
-    static public function canUserIndexEpic():bool
+    static public function canUserIndexEpic(): bool
     {
         if (Yii::$app->user->can('indexEpic')) {
             return true;
@@ -288,7 +288,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      * @return bool
      * @throws HttpException
      */
-    static public function canUserCreateEpic():bool
+    static public function canUserCreateEpic(): bool
     {
         if (Yii::$app->user->can('openEpic')) {
             return true;
@@ -302,7 +302,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      * @return bool
      * @throws HttpException
      */
-    public function canUserControlYou():bool
+    public function canUserControlYou(): bool
     {
         if (Yii::$app->user->can('controlEpic', ['epic' => $this])) {
             return true;
@@ -316,7 +316,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      * @return bool
      * @throws HttpException
      */
-    public function canUserViewYou():bool
+    public function canUserViewYou(): bool
     {
         if (Yii::$app->user->can('viewEpic', ['epic' => $this])) {
             return true;
@@ -329,7 +329,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      * Determines whether user can view active epic
      * @return bool
      */
-    static public function canUserViewActiveEpic():bool
+    static public function canUserViewActiveEpic(): bool
     {
         if (isset(Yii::$app->params['activeEpic'])) {
             /** @var Epic $activeEpic */
@@ -344,7 +344,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      * @param User|null $user
      * @return bool
      */
-    public function isUserYourParticipant($user):bool
+    public function isUserYourParticipant($user): bool
     {
         if (!$user) {
             return false;
@@ -357,7 +357,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      * @param User|null $user
      * @return bool
      */
-    public function isUserYourManager($user):bool
+    public function isUserYourManager($user): bool
     {
         if (!$user) {
             return false;
@@ -429,22 +429,22 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return true;
     }
 
-    public function recordSighting():bool
+    public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
     }
 
-    public function recordNotification():bool
+    public function recordNotification(): bool
     {
         return $this->seenPack->recordNotification();
     }
 
-    public function showSightingStatus():string
+    public function showSightingStatus(): string
     {
         return $this->seenPack->getStatusForCurrentUser();
     }
 
-    public function showSightingCSS():string
+    public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();
     }

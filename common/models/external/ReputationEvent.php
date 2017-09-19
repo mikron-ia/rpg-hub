@@ -41,7 +41,7 @@ class ReputationEvent extends Model
      */
     static public function createFromArray($rawArray)
     {
-        if(!$rawArray) {
+        if (!$rawArray) {
             return [];
         }
 

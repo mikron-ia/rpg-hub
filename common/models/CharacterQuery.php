@@ -41,7 +41,7 @@ final class CharacterQuery extends Character
      * @param array $params
      * @return ActiveDataProvider
      */
-    public function search($params):ActiveDataProvider
+    public function search($params): ActiveDataProvider
     {
         $query = Character::find()->joinWith('seenPack', true, 'LEFT JOIN');
 
@@ -81,7 +81,7 @@ final class CharacterQuery extends Character
      * @param array $params
      * @return ActiveDataProvider
      */
-    public function searchForUser($params):ActiveDataProvider
+    public function searchForUser($params): ActiveDataProvider
     {
         $search = $this->search($params);
 
@@ -100,7 +100,7 @@ final class CharacterQuery extends Character
      * @param array $params
      * @return ActiveDataProvider
      */
-    public function searchForOperator($params):ActiveDataProvider
+    public function searchForOperator($params): ActiveDataProvider
     {
         $search = $this->search($params);
 
@@ -112,7 +112,7 @@ final class CharacterQuery extends Character
     /**
      * @return string[]
      */
-    static public function listEpicCharactersAsArray():array
+    static public function listEpicCharactersAsArray(): array
     {
         $query = Character::find();
 

@@ -122,7 +122,7 @@ class ParameterPack extends ActiveRecord implements IsPack
     /**
      * @return Epic
      */
-    public function getEpic():Epic
+    public function getEpic(): Epic
     {
         return $this->getControllingObject()->getEpic()->one();
     }
@@ -154,7 +154,7 @@ class ParameterPack extends ActiveRecord implements IsPack
         }
     }
 
-    public function canUserReadYou():bool
+    public function canUserReadYou(): bool
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */
@@ -162,7 +162,7 @@ class ParameterPack extends ActiveRecord implements IsPack
         return $object->canUserViewYou();
     }
 
-    public function canUserControlYou():bool
+    public function canUserControlYou(): bool
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */

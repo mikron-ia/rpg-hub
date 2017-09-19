@@ -14,7 +14,7 @@ class PerformedActionQuery extends PerformedAction
     {
         return [
             [['id', 'object_id', 'performed_at'], 'integer'],
-            [['operation', 'class', 'user_id', ], 'safe'],
+            [['operation', 'class', 'user_id',], 'safe'],
         ];
     }
 
@@ -29,7 +29,7 @@ class PerformedActionQuery extends PerformedAction
      * @param array $params
      * @return ActiveDataProvider
      */
-    public function search($params):ActiveDataProvider
+    public function search($params): ActiveDataProvider
     {
         $query = PerformedAction::find();
 
