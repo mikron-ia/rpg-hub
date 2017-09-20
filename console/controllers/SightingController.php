@@ -40,10 +40,6 @@ class SightingController extends Controller
         $this->createAbsentSightingObjects($stories);
 
         LoggingHelper::log("Completed", 'sighting.completion');
-
-        LoggingHelper::log("Initiated", 'importance.recalculation');
-        \Yii::$app->runAction('importance/recalculate-unconditionally');
-        LoggingHelper::log("Completed", 'importance.recalculation');
     }
 
     /**
