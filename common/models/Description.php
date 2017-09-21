@@ -24,6 +24,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $title
  * @property string $code
  * @property string $public_text
+ * @property string $protected_text
  * @property string $private_text
  * @property string $lang
  * @property string $visibility
@@ -79,7 +80,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         return [
             [['description_pack_id', 'position'], 'integer'],
             [['description_pack_id', 'code', 'public_text', 'lang', 'visibility'], 'required'],
-            [['public_text', 'private_text'], 'string'],
+            [['public_text', 'protected_text', 'private_text'], 'string'],
             [['code'], 'string', 'max' => 40],
             [['lang'], 'string', 'max' => 8],
             [['visibility'], 'string', 'max' => 20],
@@ -133,6 +134,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             'title' => Yii::t('app', 'DESCRIPTION_TITLE'),
             'code' => Yii::t('app', 'DESCRIPTION_CODE'),
             'public_text' => Yii::t('app', 'DESCRIPTION_TEXT_PUBLIC'),
+            'protected_text' => Yii::t('app', 'DESCRIPTION_TEXT_PROTECTED'),
             'private_text' => Yii::t('app', 'DESCRIPTION_TEXT_PRIVATE'),
             'lang' => Yii::t('app', 'LABEL_LANGUAGE'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
@@ -314,6 +316,14 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return string|null
      */
+    public function getProtectedFormatted()
+    {
+        return Markdown::process(Html::encode($this->protected_text), 'gfm');
+    }
+
+    /**
+     * @return string|null
+     */
     public function getPrivateFormatted()
     {
         return Markdown::process(Html::encode($this->private_text), 'gfm');
@@ -377,6 +387,15 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     public function getWordCountForPublic(): int
     {
         return StringHelper::countWords($this->public_text);
+    }
+
+    /**
+     * Provides word count for protected part
+     * @return int
+     */
+    public function getWordCountForProtected(): int
+    {
+        return StringHelper::countWords($this->protected_text);
     }
 
     /**

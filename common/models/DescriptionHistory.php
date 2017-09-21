@@ -17,6 +17,7 @@ use yii\helpers\Markdown;
  * @property string $description_id
  * @property string $created_at
  * @property string $public_text
+ * @property string $protected_text
  * @property string $private_text
  * @property string $visibility
  *
@@ -34,7 +35,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         return [
             [['description_id'], 'integer'],
             [['public_text'], 'required'],
-            [['public_text', 'private_text'], 'string'],
+            [['public_text', 'protected_text', 'private_text'], 'string'],
             [['time_ic'], 'string', 'max' => 255],
             [['visibility'], 'string', 'max' => 20],
             [
@@ -55,6 +56,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
             'created_at' => Yii::t('app', 'DESCRIPTION_HISTORY_CREATED'),
             'time_ic' => Yii::t('app', 'LABEL_TIME_IC'),
             'public_text' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PUBLIC'),
+            'protected_text' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PROTECTED'),
             'private_text' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PRIVATE'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
         ];
@@ -125,6 +127,14 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
     public function getPublicFormatted()
     {
         return Markdown::process(Html::encode($this->public_text), 'gfm');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProtectedFormatted()
+    {
+        return Markdown::process(Html::encode($this->protected_text), 'gfm');
     }
 
     /**
