@@ -59,7 +59,7 @@ class SeenPack extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getCharacters()
+    public function getCharacters(): ActiveQuery
     {
         return $this->hasMany(Character::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
@@ -67,7 +67,7 @@ class SeenPack extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getCharacterSheets()
+    public function getCharacterSheets(): ActiveQuery
     {
         return $this->hasMany(CharacterSheet::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
@@ -75,7 +75,7 @@ class SeenPack extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getEpics()
+    public function getEpics(): ActiveQuery
     {
         return $this->hasMany(Epic::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
@@ -83,7 +83,7 @@ class SeenPack extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getGroups()
+    public function getGroups(): ActiveQuery
     {
         return $this->hasMany(Group::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
@@ -91,7 +91,7 @@ class SeenPack extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getRecaps()
+    public function getRecaps(): ActiveQuery
     {
         return $this->hasMany(Recap::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
@@ -99,7 +99,7 @@ class SeenPack extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getSightings()
+    public function getSightings(): ActiveQuery
     {
         return $this->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id']);
     }
@@ -107,7 +107,7 @@ class SeenPack extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getSightingsForNotices()
+    public function getSightingsForNotices(): ActiveQuery
     {
         return $this
             ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
@@ -128,7 +128,7 @@ class SeenPack extends ActiveRecord
      * @param string $status
      * @return ActiveQuery
      */
-    public function getSightingsWithStatus(string $status)
+    public function getSightingsWithStatus(string $status): ActiveQuery
     {
         return $this
             ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
@@ -138,7 +138,7 @@ class SeenPack extends ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getSightingsForCurrentUser()
+    public function getSightingsForCurrentUser(): ActiveQuery
     {
         return $this
             ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
@@ -149,7 +149,7 @@ class SeenPack extends ActiveRecord
      * @param $userId
      * @return ActiveQuery
      */
-    public function getSightingsForUser($userId)
+    public function getSightingsForUser($userId): ActiveQuery
     {
         return $this
             ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
@@ -170,7 +170,7 @@ class SeenPack extends ActiveRecord
      * @return Seen|null
      * @todo Update return value once PHP 7.1 is used
      */
-    public function createRecordForUser(int $userId)
+    public function createRecordForUser($userId)
     {
         $record = new Seen();
         $record->user_id = $userId;
@@ -294,7 +294,7 @@ class SeenPack extends ActiveRecord
      * Creates new Sighting objects for users that do not have them
      * @return bool
      */
-    public function createAbsentSightingObjects()
+    public function createAbsentSightingObjects(): bool
     {
         $users = $this->getEpic()->participants;
         $sightingsRaw = Seen::findAll(['seen_pack_id' => $this->seen_pack_id]);
@@ -334,6 +334,9 @@ class SeenPack extends ActiveRecord
         return $pack;
     }
 
+    /**
+     * Fills missing sightings for current user
+     */
     private function fillSightingForCurrentUser()
     {
         if (!$this->sightingForCurrentUser) {
@@ -352,6 +355,9 @@ class SeenPack extends ActiveRecord
         }
     }
 
+    /**
+     * @return string
+     */
     public function getStatusForCurrentUser(): string
     {
         $this->fillSightingForCurrentUser();
@@ -364,6 +370,9 @@ class SeenPack extends ActiveRecord
         }
     }
 
+    /**
+     * @return string
+     */
     public function getCSSForCurrentUser(): string
     {
         $this->fillSightingForCurrentUser();
