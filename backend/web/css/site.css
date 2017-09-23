@@ -146,11 +146,25 @@ p {
     margin: 20px 0 10px 10px;
 }
 
-.private-notes {
-    background-color: #eeeeee;
-    border: 2px solid #eeeeee;
+.public-notes {
+    border: 4px dotted lightblue;
     border-radius: 15px;
     padding: 10px 15px 0 15px;
+    margin: 10px 0;
+}
+
+.protected-notes {
+    border: 4px dashed lightblue;
+    border-radius: 15px;
+    padding: 10px 15px 0 15px;
+    margin: 10px 0;
+}
+
+.private-notes {
+    border: 4px solid lightblue;
+    border-radius: 15px;
+    padding: 10px 15px 0 15px;
+    margin: 10px 0;
 }
 
 .subtitle {

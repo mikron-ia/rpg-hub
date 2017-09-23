@@ -8,9 +8,15 @@
 
     <h3><?= $model->getTypeName(); ?></h3>
 
-    <div>
+    <div class="public-notes">
         <?= $model->getPublicFormatted(); ?>
     </div>
+
+    <?php if ($model->protected_text): ?>
+        <div class="protected-notes comment">
+            <?= $model->getProtectedFormatted(); ?>
+        </div>
+    <?php endif; ?>
 
     <?php if ($showPrivates && $model->private_text): ?>
         <div class="private-notes secret">

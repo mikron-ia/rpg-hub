@@ -38,7 +38,17 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'LABEL_UPDATE');
                         'data-html' => 'true',
                         'data-placement' => 'auto top',
                         'data-trigger' => 'click hover',
-                        'class' => ['glyphicon', 'glyphicon-eye-open'],
+                        'class' => ['glyphicon', 'glyphicon-folder-open'],
+                    ]);
+
+                    $protected = Html::tag('span', '', [
+                        'title' => $model->getAttributeLabel('protected_text'),
+                        'data-toggle' => 'popover',
+                        'data-content' => $model->getProtectedFormatted(),
+                        'data-html' => 'true',
+                        'data-placement' => 'auto top',
+                        'data-trigger' => 'click hover',
+                        'class' => ['glyphicon', 'glyphicon-folder-close'],
                     ]);
 
                     $private = Html::tag('span', '', [
@@ -48,10 +58,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'LABEL_UPDATE');
                         'data-html' => 'true',
                         'data-placement' => 'auto top',
                         'data-trigger' => 'click hover',
-                        'class' => ['glyphicon', 'glyphicon-eye-close'],
+                        'class' => ['glyphicon', 'glyphicon-lock'],
                     ]);
 
-                    return $public . $private;
+                    return $public . $protected . $private;
                 },
                 'format' => 'raw',
             ],

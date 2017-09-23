@@ -22,6 +22,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'public_text')->textarea(['rows' => 8]); ?>
 
+    <?= $form->field($model, 'protected_text')->textarea(['rows' => 8]); ?>
+
     <?= $form->field($model, 'private_text')->textarea(['rows' => 8]); ?>
 
     <?= $form->field($model, 'lang')->dropDownList(Language::languagesLong()); ?>

@@ -254,11 +254,23 @@ a:focus {
     border-color: green;
 }
 
-.private-notes {
-    background-color: #eeeeee;
-    padding: 10px 15px 0 15px;
-    border: 2px solid #eeeeee;
+.public-notes {
+    background-color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.protected-notes {
+    padding: 10px 15px 0;
+    border: 4px dotted #88dd00;
     border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.private-notes {
+    padding: 10px 15px 0;
+    border: 4px dashed #88dd00;
+    border-radius: 15px;
+    margin-bottom: 10px;
 }
 
 .index-box {

@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 ?>
 
-<div class="col-md-12">
+<div class="col-md-6">
 
     <div class="buttoned-header">
 
@@ -90,11 +90,15 @@ use yii\helpers\Html;
 
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-12 public-notes">
         <?= $model->getPublicFormatted(); ?>
     </div>
 
-    <div class="col-md-6 private-notes">
+    <div class="col-md-12 protected-notes">
+        <?= $model->getProtectedFormatted(); ?>
+    </div>
+
+    <div class="col-md-12 private-notes">
         <?= $model->getPrivateFormatted(); ?>
     </div>
 
