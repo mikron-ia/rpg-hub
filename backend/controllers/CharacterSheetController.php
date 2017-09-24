@@ -160,6 +160,11 @@ final class CharacterSheetController extends Controller
         }
     }
 
+    /**
+     * Loads external data via paste box
+     * @param string $key Key of the object the loading is performed for
+     * @return string|\yii\web\Response
+     */
     public function actionLoadData($key)
     {
         $model = $this->findModelByKey($key);

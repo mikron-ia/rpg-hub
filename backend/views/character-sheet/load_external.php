@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id
 $this->params['breadcrumbs'][] = Yii::t('app', 'EXTERNAL_DATA_TITLE {name}', ['name' => $model->name]);
 ?>
 
-<div class="character-form">
+<div class="external-data-form">
 
     <h1><?= Yii::t('app', 'EXTERNAL_DATA_TITLE {name}', ['name' => $model->name]) ?></h1>
 
@@ -32,8 +32,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'EXTERNAL_DATA_TITLE {name}', ['n
             ]
         ) ?>
     </div>
-
-    <div class="clearfix"></div>
 
     <div class="form-group">
         <?= Html::submitButton(

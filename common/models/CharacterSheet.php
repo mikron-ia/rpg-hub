@@ -287,7 +287,12 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         return $this->seenPack->getCSSForCurrentUser();
     }
 
-    public function loadExternal(string $data)
+    /**
+     * Loads and saves external data
+     * @param string $data Data to be saved
+     * @return bool Success of the operation
+     */
+    public function loadExternal(string $data): bool
     {
         if (empty($data)) {
             return false;
