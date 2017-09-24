@@ -343,3 +343,8 @@ p {
     background-color: grey;
     color: white;
 }
+
+.external-data-textarea {
+    width: 100%;
+    margin: 1em 0;
+}

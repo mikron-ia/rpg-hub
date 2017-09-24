@@ -33,6 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         ) ?>
         <?= Html::a(
+            Yii::t('app', 'BUTTON_LOAD'),
+            ['load-data', 'key' => $model->key],
+            ['class' => 'btn btn-primary']
+        ) ?>
+        <?= Html::a(
             Yii::t('app', 'BUTTON_DELETE'),
             ['delete', 'key' => $model->key],
             [

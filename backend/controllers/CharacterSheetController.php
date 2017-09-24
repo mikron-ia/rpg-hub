@@ -23,7 +23,7 @@ final class CharacterSheetController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'create-character', 'index', 'update', 'view'],
+                        'actions' => ['create', 'create-character', 'index', 'load-data', 'update', 'view'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -152,9 +152,29 @@ final class CharacterSheetController extends Controller
         $model->canUserControlYou();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->character_sheet_id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         } else {
             return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionLoadData($key)
+    {
+        $model = $this->findModelByKey($key);
+
+        $model->canUserControlYou();
+
+        if (!empty(Yii::$app->request->post())) {
+            if($model->loadExternal(Yii::$app->request->post('external-data', ''))) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'EXTERNAL_DATA_LOAD_SUCCESS'));
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'EXTERNAL_DATA_LOAD_FAILURE'));
+            }
+            return $this->redirect(['view', 'key' => $model->key]);
+        } else {
+            return $this->render('load_external', [
                 'model' => $model,
             ]);
         }
