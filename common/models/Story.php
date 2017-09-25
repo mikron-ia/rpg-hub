@@ -39,6 +39,15 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
 {
     use ToolsForEntity;
 
+    const TYPE_CHAPTER = 'chapter';         // Part of larger story; interactive
+    const TYPE_EPISODE = 'episode';         // Self-standing episode; interactive
+    const TYPE_MISSION = 'mission';         // Self-standing episode; interactive
+    const TYPE_PROLOGUE = 'prologue';       // Prologue to an arc; interactive or not
+    const TYPE_INTERLUDE = 'interlude';     // Interlude in an arc; rarely interactive
+    const TYPE_EPILOGUE = 'epilogue';       // Epilogue to an arc; interactive or not
+    const TYPE_PART = 'part';               // Part of larger story; interactive
+    const TYPE_READING = 'reading';         // Narration to give context; not interactive
+
     /**
      * @var string[]
      */
@@ -350,5 +359,22 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function getLongDescriptionWordCount()
     {
         return StringHelper::countWords($this->long);
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function typeNames(): array
+    {
+        return [
+            self::TYPE_CHAPTER => Yii::t('app', 'STORY_TYPE_CHAPTER'),
+            self::TYPE_PART => Yii::t('app', 'STORY_TYPE_PART'),
+            self::TYPE_PROLOGUE => Yii::t('app', 'STORY_TYPE_PROLOGUE'),
+            self::TYPE_INTERLUDE => Yii::t('app', 'STORY_TYPE_INTERLUDE'),
+            self::TYPE_EPILOGUE => Yii::t('app', 'STORY_TYPE_EPILOGUE'),
+            self::TYPE_EPISODE => Yii::t('app', 'STORY_TYPE_EPISODE'),
+            self::TYPE_MISSION => Yii::t('app', 'STORY_TYPE_MISSION'),
+            self::TYPE_READING => Yii::t('app', 'STORY_TYPE_READING'),
+        ];
     }
 }
