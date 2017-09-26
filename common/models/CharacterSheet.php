@@ -316,4 +316,9 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             return $this->save();
         }
     }
+
+    public function presentExternal(): array
+    {
+        return json_decode($this->data, true);
+    }
 }
