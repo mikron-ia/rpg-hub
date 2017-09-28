@@ -11,29 +11,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $tabs = $model->presentExternal();
 
-var_dump($tabs); die;
-
 $active = true;
 
 $items = [];
 
 foreach ($tabs as $tabName => $tabData) {
-    if (is_array($tabData)) {
+    $item = [
+        'label' => $tabData->title,
+        'content' => $tabData, // @todo Next step - proper render with an object
+        'encode' => false,
+        'active' => $active,
+    ];
 
-        $item = [
-            'label' => $tabName,
-            'content' => $tabData, // @todo Next step - proper render with an object
-            'encode' => false,
-            'active' => $active,
-        ];
-
-        if ($active) {
-            $active = false;
-        }
-
-        $items[] = $item;
-
+    if ($active) {
+        $active = false;
     }
+
+    $items[] = $item;
 }
 
 $items[] = [

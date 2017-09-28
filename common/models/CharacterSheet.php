@@ -327,10 +327,13 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 
         $data = json_decode($this->data, true);
 
-        foreach($data as $row) {
+        foreach ($data as $row) {
 
-            if(is_array($row)) {
-                $tabs[] = Tab::createFromArray($row);
+            if (is_array($row)) {
+                var_dump($row); echo '<br><br>';
+                if (is_array($row)) {
+                    $tabs[] = Tab::createFromArray($row);
+                }
             }
         }
 
