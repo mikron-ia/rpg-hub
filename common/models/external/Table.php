@@ -35,7 +35,9 @@ class Table extends Model implements ExternalComponent
      */
     static public function createFromArray(array $array): ExternalComponent
     {
-        // TODO: Implement createFromArray() method.
+        $object = new Table([]);
+
+        return $object;
     }
 
     public function __toString()

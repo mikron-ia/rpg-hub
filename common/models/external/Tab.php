@@ -23,7 +23,7 @@ class Tab extends Model implements ExternalComponent
 
     static public function createFromArray(array $array): ExternalComponent
     {
-        $object = new TableRow([
+        $object = new Tab([
             'title' => $array['title'] ?? '',
             'description' => $array['description'] ?? ''
         ]);

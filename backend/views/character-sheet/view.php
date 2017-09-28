@@ -11,6 +11,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $tabs = $model->presentExternal();
 
+var_dump($tabs); die;
+
 $active = true;
 
 $items = [];
@@ -20,7 +22,7 @@ foreach ($tabs as $tabName => $tabData) {
 
         $item = [
             'label' => $tabName,
-            'content' => var_export($tabData, true), // @todo Next step - proper render with an object
+            'content' => $tabData, // @todo Next step - proper render with an object
             'encode' => false,
             'active' => $active,
         ];

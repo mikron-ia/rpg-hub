@@ -5,6 +5,7 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\core\HasSightings;
+use common\models\external\Tab;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -317,8 +318,22 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         }
     }
 
+    /**
+     * @return Tab[]
+     */
     public function presentExternal(): array
     {
-        return json_decode($this->data, true);
+        $tabs = [];
+
+        $data = json_decode($this->data, true);
+
+        foreach($data as $row) {
+
+            if(is_array($row)) {
+                $tabs[] = Tab::createFromArray($row);
+            }
+        }
+
+        return $tabs;
     }
 }

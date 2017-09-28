@@ -22,7 +22,7 @@ class Box extends Model implements ExternalComponent
     static public function createFromArray(array $array): ExternalComponent
     {
         $object = new Box([
-            'title' => $title,
+            'title' => $array['title'] ?? '',
             'description' => $array['description'] ?? ''
         ]);
 
