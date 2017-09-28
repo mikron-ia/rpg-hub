@@ -12,6 +12,9 @@ class Box extends Model implements ExternalComponent
      */
     public $title;
 
+    /**
+     * @var string
+     */
     public $content;
 
     /**
@@ -23,7 +26,7 @@ class Box extends Model implements ExternalComponent
     {
         $object = new Box([
             'title' => $array['title'] ?? '',
-            'description' => $array['description'] ?? ''
+            'content' => $array['description'] ?? '[empty]'
         ]);
 
         return $object;
@@ -31,6 +34,6 @@ class Box extends Model implements ExternalComponent
 
     public function __toString()
     {
-        // TODO: Implement __toString() method.
+        return '<div>' . $this->content . '</div>';
     }
 }
