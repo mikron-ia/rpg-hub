@@ -18,17 +18,27 @@ class TableRow extends Model implements ExternalComponent
      */
     public $cells;
 
+    /**
+     * @var string
+     */
+    public $cellTag;
+
     static public function createFromArray(array $array): ExternalComponent
     {
-        $object = new TableRow([
-            'cells' => $array
-        ]);
+        $object = new TableRow();
+
+        $object->cellTag = $array['tag'] ?? 'td';
+        unset($array['tag']);
+
+        $object->cells = $array;
 
         return $object;
     }
 
     public function getContent()
     {
-        return "<tr><td>" . implode("</td><td>", $this->cells) . "</td></tr>";
+        return "<tr><" . $this->cellTag . ">" .
+            implode("</" . $this->cellTag . "><" . $this->cellTag . ">", $this->cells) .
+            "</" . $this->cellTag . "></tr>";
     }
 }

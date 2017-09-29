@@ -44,6 +44,7 @@ class Table extends Model implements ExternalComponent
 
         $object->headerRows = [];
         foreach ($array['header']??[] as $record) {
+            $record['tag'] = 'th';
             $object->headerRows[] = TableRow::createFromArray($record);
         }
 
