@@ -12,5 +12,5 @@ interface ExternalComponent
      */
     static public function createFromArray(array $array): ExternalComponent;
 
-    public function __toString();
+    public function getContent();
 }

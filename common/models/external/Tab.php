@@ -27,26 +27,25 @@ class Tab extends Model implements ExternalComponent
         $boxes = [];
 
         foreach ($array['data'] as $row) {
-            $boxes = Box::createFromArray($row);
+            $boxes[] = Box::createFromArray($row);
         }
 
-        $object = new Tab([
-            'title' => $array['title'] ?? '',
-            'description' => $array['description'] ?? '',
-            'boxes' => $boxes,
-        ]);
+        $object = new Tab();
+
+        $object->title = $array['title'] ?? '';
+        $object->description = $array['description'] ?? '';
+        $object->boxes = $boxes;
 
         return $object;
     }
 
-    public function __toString()
+    public function getContent()
     {
         $boxes = [];
 
         foreach ($this->boxes as $box) {
-            $boxes[] = (string)$box;
+            $boxes[] = $box->getContent();
         }
-
 
         return '<p>' . $this->description . '</p>' . PHP_EOL . implode(PHP_EOL, $boxes);
     }

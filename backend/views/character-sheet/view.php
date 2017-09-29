@@ -18,7 +18,7 @@ $items = [];
 foreach ($tabs as $tabName => $tabData) {
     $item = [
         'label' => $tabData->title,
-        'content' => $tabData, // @todo Next step - proper render with an object
+        'content' => $tabData->getContent(),
         'encode' => false,
         'active' => $active,
     ];

@@ -27,7 +27,7 @@ class TableRow extends Model implements ExternalComponent
         return $object;
     }
 
-    public function __toString()
+    public function getContent()
     {
         return "<tr><td>" . implode("</td><td>", $this->cells) . "</td></tr>";
     }

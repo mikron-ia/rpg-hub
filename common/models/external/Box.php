@@ -13,7 +13,7 @@ class Box extends Model implements ExternalComponent
     public $title;
 
     /**
-     * @var string
+     * @var ExternalComponent
      */
     public $content;
 
@@ -24,16 +24,24 @@ class Box extends Model implements ExternalComponent
      */
     static public function createFromArray(array $array): ExternalComponent
     {
-        $object = new Box([
-            'title' => $array['title'] ?? '',
-            'content' => $array['description'] ?? '[empty]'
-        ]);
+        $type = $array['type'] ?? 'div';
+
+        if ($type === 'table') {
+            $content = Table::createFromArray($array);
+        } else {
+            $content = '[empty]';
+        }
+
+        $object = new Box();
+
+        $object->title = $array['title'] ?? '';
+        $object->content = $content;
 
         return $object;
     }
 
-    public function __toString()
+    public function getContent()
     {
-        return '<div>' . $this->content . '</div>';
+        return '<div class="col-md-4">' . $this->content->getContent() . '</div>';
     }
 }

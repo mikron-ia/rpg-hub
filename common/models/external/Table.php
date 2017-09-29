@@ -35,17 +35,50 @@ class Table extends Model implements ExternalComponent
      */
     static public function createFromArray(array $array): ExternalComponent
     {
-        $object = new Table([]);
+        $object = new Table();
+
+        $object->rows = [];
+        foreach ($array['data']??[] as $record) {
+            $object->rows[] = TableRow::createFromArray($record);
+        }
+
+        $object->headerRows = [];
+        foreach ($array['header']??[] as $record) {
+            $object->headerRows[] = TableRow::createFromArray($record);
+        }
+
+        $object->footerRows = [];
+        foreach ($array['footer']??[] as $record) {
+            $object->footerRows[] = TableRow::createFromArray($record);
+        }
+
+        $object->caption = $array['title']??'';
 
         return $object;
     }
 
-    public function __toString()
+    public function getContent()
     {
-        $body = '<tbody>' . implode(PHP_EOL, $this->rows) . '</tbody>';
-        $header = '<tbody>' . implode(PHP_EOL, $this->headerRows) . '</tbody>';
-        $footer = '<tbody>' . implode(PHP_EOL, $this->footerRows) . '</tbody>';
+        $rowsForBody = [];
+        foreach ($this->rows as $row) {
+            $rowsForBody[] = $row->getContent();
+        }
 
-        return '<table>' . PHP_EOL . $header . PHP_EOL . $footer . PHP_EOL . $body . PHP_EOL . '</table>' . PHP_EOL;
+        $rowsForHeader = [];
+        foreach ($this->headerRows as $row) {
+            $rowsForHeader[] = $row->getContent();
+        }
+
+        $rowsForFooter = [];
+        foreach ($this->footerRows as $row) {
+            $rowsForFooter[] = $row->getContent();
+        }
+
+        $caption = '<caption>' . $this->caption . '</caption>';
+        $body = (!empty($rowsForBody)) ? '<tbody>' . implode(PHP_EOL, $rowsForBody) . '</tbody>' : '';
+        $header = (!empty($rowsForHeader)) ? '<thead>' . implode(PHP_EOL, $rowsForHeader) . '</thead>' : '';
+        $footer = (!empty($rowsForFooter)) ? '<tfoot>' . implode(PHP_EOL, $rowsForFooter) . '</tfoot>' : '';
+
+        return '<table class="table table-striped table-bordered">' . PHP_EOL . $caption . PHP_EOL . $header . PHP_EOL . $footer . PHP_EOL . $body . PHP_EOL . '</table>' . PHP_EOL;
     }
 }
