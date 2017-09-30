@@ -117,6 +117,7 @@ return [
     'CHARACTER_SHEET_NAME' => 'Imię postaci',
     'CHARACTER_SHEET_NOT_AVAILABLE' => 'Karta postaci niedostępna',
     'CHARACTER_SHEET_PROMPT' => 'Wybierz kartę postaci ...',
+    'CHARACTER_SHEET_TECHNICAL' => 'Szczegóły techniczne',
     'CHARACTER_SHEET_TITLE_CREATE' => 'Dodaj kartę postaci',
     'CHARACTER_SHEET_TITLE_INDEX' => 'Karty postaci',
     'CHARACTER_SHEET_TITLE_UPDATE' => 'Zmodyfikuj kartę postaci',

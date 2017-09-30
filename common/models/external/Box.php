@@ -29,13 +29,20 @@ class Box extends Model implements ExternalComponent
      */
     static public function createFromData($data): ExternalComponent
     {
-        $type = $data['type'] ?? 'div';
+        $type = $data['type'] ?? 'text';
         $size = $data['size'] ?? 'medium';
 
-        if ($type === 'table') {
-            $content = Table::createFromData($data);
-        } else {
-            $content = '[empty]';
+        switch ($type) {
+            case 'table' :
+                $content = Table::createFromData($data);
+                break;
+            case 'text' :
+                $content = Text::createFromData($data);
+                break;
+            default :
+                $content = Text::createFromData($data);
+                break;
+
         }
 
         $object = new Box();
