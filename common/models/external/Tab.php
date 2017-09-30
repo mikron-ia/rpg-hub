@@ -23,7 +23,6 @@ class Tab extends Model implements ExternalComponent
 
     static public function createFromData($data): ExternalComponent
     {
-        /* @todo Make it work with non-table boxes */
         $boxes = [];
 
         foreach ($data['data'] as $row) {

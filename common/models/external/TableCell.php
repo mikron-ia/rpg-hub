@@ -2,7 +2,6 @@
 
 namespace common\models\external;
 
-
 use yii\base\Model;
 
 class TableCell extends Model implements ExternalComponent
@@ -30,7 +29,6 @@ class TableCell extends Model implements ExternalComponent
     static public function createFromData($data): ExternalComponent
     {
         $object = new TableCell();
-        //var_dump($data); echo "<br><br>";
 
         $classes = [];
 
@@ -45,8 +43,6 @@ class TableCell extends Model implements ExternalComponent
         $object->content = $data['data'] ?? '';
         $object->tag = $data['tag'] ?? 'td';
         $object->title = $data['title'] ?? null;
-
-        //var_dump($object); echo "<br><br>";
 
         return $object;
     }

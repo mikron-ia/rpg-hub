@@ -2,7 +2,6 @@
 
 namespace common\models\external;
 
-
 use yii\base\Model;
 
 class Box extends Model implements ExternalComponent

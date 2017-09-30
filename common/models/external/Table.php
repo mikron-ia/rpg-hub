@@ -2,7 +2,6 @@
 
 namespace common\models\external;
 
-
 use yii\base\Model;
 
 class Table extends Model implements ExternalComponent

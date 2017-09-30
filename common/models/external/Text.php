@@ -2,7 +2,6 @@
 
 namespace common\models\external;
 
-
 use yii\base\Model;
 
 class Text extends Model implements ExternalComponent
@@ -26,7 +25,7 @@ class Text extends Model implements ExternalComponent
     {
         $object = new Text();
 
-        $object->text = $data['text'] ?? '<p>[no data]</p>';
+        $object->text = $data['text'] ?? '<p>' . \Yii::t('app', 'EXTERNAL_COMPONENT_NO_DATA') . '</p>';
         $object->title = $data['title'] ?? '';
 
         return $object;
