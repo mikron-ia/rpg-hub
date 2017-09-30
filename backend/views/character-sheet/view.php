@@ -18,7 +18,7 @@ $items = [];
 foreach ($tabs as $tabName => $tabData) {
     $item = [
         'label' => $tabData->title,
-        'content' => $tabData->getContent(),
+        'content' => '<div class="external-data-tab-container">' . $tabData->getContent() . '</div>',
         'encode' => false,
         'active' => $active,
     ];
@@ -76,6 +76,7 @@ $items[] = [
             ]
         ) ?>
     </div>
+
 
     <?= \yii\bootstrap\Tabs::widget([
         'items' => $items

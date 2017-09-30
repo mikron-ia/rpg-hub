@@ -21,25 +21,25 @@ class Tab extends Model implements ExternalComponent
      */
     public $boxes;
 
-    static public function createFromArray(array $array): ExternalComponent
+    static public function createFromData($data): ExternalComponent
     {
         /* @todo Make it work with non-table boxes */
         $boxes = [];
 
-        foreach ($array['data'] as $row) {
-            $boxes[] = Box::createFromArray($row);
+        foreach ($data['data'] as $row) {
+            $boxes[] = Box::createFromData($row);
         }
 
         $object = new Tab();
 
-        $object->title = $array['title'] ?? '';
-        $object->description = $array['description'] ?? '';
+        $object->title = $data['title'] ?? '';
+        $object->description = $data['description'] ?? '';
         $object->boxes = $boxes;
 
         return $object;
     }
 
-    public function getContent()
+    public function getContent(): string
     {
         $boxes = [];
 

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Wilk
- * Date: 2017-09-27
- * Time: 19:56
- */
 
 namespace common\models\external;
 
@@ -14,31 +8,53 @@ use yii\base\Model;
 class TableRow extends Model implements ExternalComponent
 {
     /**
-     * @var string
+     * @var TableCell[]
      */
     public $cells;
 
-    /**
-     * @var string
-     */
-    public $cellTag;
-
-    static public function createFromArray(array $array): ExternalComponent
+    static public function createFromData($data): ExternalComponent
     {
         $object = new TableRow();
 
-        $object->cellTag = $array['tag'] ?? 'td';
-        unset($array['tag']);
-
-        $object->cells = $array;
+        if(isset($data['cells'])) {
+            $object->makeFromComplexArray($object, $data);
+        } else {
+            $object->makeFromSimpleArray($object, $data);
+        }
 
         return $object;
     }
 
-    public function getContent()
+    public function getContent(): string
     {
-        return "<tr><" . $this->cellTag . ">" .
-            implode("</" . $this->cellTag . "><" . $this->cellTag . ">", $this->cells) .
-            "</" . $this->cellTag . "></tr>";
+        $cells = [];
+
+        foreach ($this->cells ?? [] as $cell) {
+            $cells[] = $cell->getContent();
+        }
+
+        return "<tr>" . implode($cells) . "</tr>";
+    }
+
+    /**
+     * @param TableRow $object
+     * @param array $data
+     */
+    private function makeFromSimpleArray(TableRow $object, array $data)
+    {
+        foreach ($data ?? [] as $cell) {
+            $object->cells[] = TableCell::createFromData($cell);
+        }
+    }
+
+    /**
+     * @param TableRow $object
+     * @param array $data
+     */
+    private function makeFromComplexArray(TableRow $object, array $data)
+    {
+        foreach ($data['cells'] ?? [] as $cell) {
+            $object->cells[] = TableCell::createFromData($cell);
+        }
     }
 }

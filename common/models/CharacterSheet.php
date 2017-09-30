@@ -331,7 +331,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 
             if (is_array($row)) {
                 if (is_array($row)) {
-                    $tabs[] = Tab::createFromArray($row);
+                    $tabs[] = Tab::createFromData($row);
                 }
             }
         }

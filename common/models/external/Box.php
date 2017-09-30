@@ -24,23 +24,23 @@ class Box extends Model implements ExternalComponent
 
     /**
      * Creates object from array
-     * @param array $array
+     * @param array $data
      * @return ExternalComponent
      */
-    static public function createFromArray(array $array): ExternalComponent
+    static public function createFromData($data): ExternalComponent
     {
-        $type = $array['type'] ?? 'div';
-        $size = $array['size'] ?? 'medium';
+        $type = $data['type'] ?? 'div';
+        $size = $data['size'] ?? 'medium';
 
         if ($type === 'table') {
-            $content = Table::createFromArray($array);
+            $content = Table::createFromData($data);
         } else {
             $content = '[empty]';
         }
 
         $object = new Box();
 
-        $object->title = $array['title'] ?? '';
+        $object->title = $data['title'] ?? '';
         $object->content = $content;
 
         switch ($size) {
@@ -77,7 +77,7 @@ class Box extends Model implements ExternalComponent
         return $object;
     }
 
-    public function getContent()
+    public function getContent(): string
     {
         return '<div class="' . $this->sizeClass . '">' . $this->content->getContent() . '</div>';
     }

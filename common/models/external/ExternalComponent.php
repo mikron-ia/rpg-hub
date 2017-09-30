@@ -7,10 +7,13 @@ interface ExternalComponent
 {
     /**
      * Creates object from array
-     * @param array $array
+     * @param array|string $data
      * @return ExternalComponent
      */
-    static public function createFromArray(array $array): ExternalComponent;
+    static public function createFromData($data): ExternalComponent;
 
-    public function getContent();
+    /**
+     * @return string
+     */
+    public function getContent(): string;
 }
