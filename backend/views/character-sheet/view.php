@@ -1,8 +1,6 @@
 <?php
 
-use common\models\Seen;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\CharacterSheet */
@@ -10,8 +8,37 @@ use yii\widgets\DetailView;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'CHARACTER_SHEET_TITLE_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$tabs = $model->presentExternal();
+
+$active = true;
+
+$items = [];
+
+foreach ($tabs as $tabName => $tabData) {
+    $item = [
+        'label' => $tabData->title,
+        'content' => '<div class="external-data-tab-container">' . $tabData->getContent() . '</div>',
+        'encode' => false,
+        'active' => $active,
+    ];
+
+    if ($active) {
+        $active = false;
+    }
+
+    $items[] = $item;
+}
+
+$items[] = [
+    'label' => Yii::t('app', 'CHARACTER_SHEET_TECHNICAL'),
+    'content' => $this->render('_view_gm', ['model' => $model]),
+    'encode' => false,
+    'active' => $active,
+];
+
 ?>
-<div class="character-view">
+<div class="character-sheet-view">
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
@@ -33,6 +60,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         ) ?>
         <?= Html::a(
+            Yii::t('app', 'BUTTON_LOAD'),
+            ['load-data', 'key' => $model->key],
+            ['class' => 'btn btn-primary']
+        ) ?>
+        <?= Html::a(
             Yii::t('app', 'BUTTON_DELETE'),
             ['delete', 'key' => $model->key],
             [
@@ -45,100 +77,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ) ?>
     </div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            [
-                'attribute' => 'key',
-            ],
-            [
-                'attribute' => 'epic_id',
-                'format' => 'raw',
-                'value' => Html::a($model->epic->name, ['epic/view', 'key' => $model->epic->key], []),
-            ],
-            [
-                'label' => Yii::t('app', 'LABEL_DATA_SIZE'),
-                'format' => 'shortSize',
-                'value' => strlen($model->data),
-            ],
-            [
-                'attribute' => 'currently_delivered_character_id',
-                'format' => 'raw',
-                'value' => isset($model->currently_delivered_character_id) ?
-                    Html::a(
-                        $model->currentlyDeliveredPerson->name,
-                        ['character/view', 'key' => $model->currentlyDeliveredPerson->key]
-                    ) :
-                    null,
-            ],
-        ],
+    <?= \yii\bootstrap\Tabs::widget([
+        'items' => $items
     ]) ?>
-
-    <div class="col-md-12">
-
-        <div class="col-md-6">
-
-            <h2 class="text-center"><?= Yii::t('app', 'SEEN_READ') ?></h2>
-            <?= \yii\grid\GridView::widget([
-                'dataProvider' => new \yii\data\ActiveDataProvider([
-                    'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_SEEN),
-                    'pagination' => false,
-                ]),
-                'layout' => '{items}',
-                'columns' => [
-                    'user.username',
-                    [
-                        'attribute' => 'seen_at',
-                        'format' => 'datetime',
-                        'enableSorting' => false,
-                    ],
-                ],
-            ]) ?>
-
-        </div>
-
-        <div class="col-md-6">
-
-            <h2 class="text-center"><?= Yii::t('app', 'SEEN_BEFORE_UPDATE') ?></h2>
-            <?= \yii\grid\GridView::widget([
-                'dataProvider' => new \yii\data\ActiveDataProvider([
-                    'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_UPDATED),
-                    'pagination' => false,
-                ]),
-                'layout' => '{items}',
-                'columns' => [
-                    'user.username',
-                    [
-                        'attribute' => 'seen_at',
-                        'format' => 'datetime',
-                        'enableSorting' => false,
-                    ],
-                ],
-            ]) ?>
-
-        </div>
-
-        <div class="col-md-6">
-
-            <h2 class="text-center"><?= Yii::t('app', 'SEEN_NEW') ?></h2>
-            <?= \yii\grid\GridView::widget([
-                'dataProvider' => new \yii\data\ActiveDataProvider([
-                    'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_NEW),
-                    'pagination' => false,
-                ]),
-                'layout' => '{items}',
-                'columns' => [
-                    'user.username',
-                    [
-                        'attribute' => 'noted_at',
-                        'format' => 'datetime',
-                        'enableSorting' => false,
-                    ],
-                ],
-            ]) ?>
-
-        </div>
-
-    </div>
 
 </div>

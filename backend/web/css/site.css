@@ -343,3 +343,44 @@ p {
     background-color: grey;
     color: white;
 }
+
+.external-data-textarea {
+    width: 100%;
+    margin: 1em 0;
+}
+
+.external-data-tab-container {
+}
+
+.external-data-table {
+}
+
+.external-data-table > caption {
+    text-align: center;
+    color: black;
+    font-size: 1.5em;
+}
+
+.external-data-center {
+    text-align: center;
+}
+
+.external-data-left {
+    text-align: left;
+}
+
+.external-data-right {
+    text-align: right;
+}
+
+.external-data-bold {
+    font-weight: bold;
+}
+
+.external-data-italic {
+    font-style: italic;
+}
+
+.tab-pane > div {
+    padding: 1.5em;
+}

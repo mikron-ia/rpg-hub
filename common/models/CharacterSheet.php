@@ -5,6 +5,7 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\core\HasSightings;
+use common\models\external\Tab;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -285,5 +286,56 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();
+    }
+
+    /**
+     * Loads and saves external data
+     * @param string $data Data to be saved
+     * @return bool Success of the operation
+     */
+    public function loadExternal(string $data): bool
+    {
+        if (empty($data)) {
+            return false;
+        }
+
+        /* Try for JSON */
+        $array = json_decode($data);
+
+        if (!$array) {
+            /* Try for encoded JSON */
+            $decodedData = base64_decode($data);
+            $array = json_decode($decodedData);
+        }
+
+        if (!$array) {
+            /* If invalid JSON */
+            return false;
+        } else {
+            /* If valid JSON */
+            $this->data = json_encode($array);
+            return $this->save();
+        }
+    }
+
+    /**
+     * @return Tab[]
+     */
+    public function presentExternal(): array
+    {
+        $tabs = [];
+
+        $data = json_decode($this->data, true);
+
+        foreach ($data as $row) {
+
+            if (is_array($row)) {
+                if (is_array($row)) {
+                    $tabs[] = Tab::createFromData($row);
+                }
+            }
+        }
+
+        return $tabs;
     }
 }
