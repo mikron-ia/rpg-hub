@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="character-form">
+<div class="character-sheet-form">
 
     <?php $form = ActiveForm::begin(); ?>
 

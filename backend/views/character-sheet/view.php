@@ -38,7 +38,7 @@ $items[] = [
 ];
 
 ?>
-<div class="character-view">
+<div class="character-sheet-view">
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
@@ -76,7 +76,6 @@ $items[] = [
             ]
         ) ?>
     </div>
-
 
     <?= \yii\bootstrap\Tabs::widget([
         'items' => $items

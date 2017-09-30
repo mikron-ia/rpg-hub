@@ -10,7 +10,7 @@ $this->title = Yii::t('app', 'CHARACTER_SHEET_TITLE_CREATE');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'CHARACTER_SHEET_TITLE_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="character-create">
+<div class="character-sheet-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

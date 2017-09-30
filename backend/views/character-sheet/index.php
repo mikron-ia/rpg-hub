@@ -11,7 +11,7 @@ use yii\grid\GridView;
 $this->title = Yii::t('app', 'CHARACTER_SHEET_TITLE_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="character-index">
+<div class="character-sheet-index">
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
