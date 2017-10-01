@@ -25,10 +25,14 @@ class m170920_200346_v0_10_0 extends Migration
         ], $tableOptions);
 
         $this->addForeignKey('task_user', 'task', 'user_id', 'user', 'id', 'RESTRICT', 'CASCADE');
+
+        $this->execute("ALTER TABLE `character_sheet` CHANGE `data` `data` LONGTEXT NOT NULL;"); // @todo Remove when upload system uses ExternalData
     }
 
     public function safeDown()
     {
+        $this->execute("ALTER TABLE `character_sheet` CHANGE `data` `data` TEXT NOT NULL;"); // @todo Remove when upload system uses ExternalData
+
         $this->dropTable('task');
 
         $this->dropColumn('story', 'code');
