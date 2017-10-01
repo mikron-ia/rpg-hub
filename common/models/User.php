@@ -35,6 +35,7 @@ use yii\web\IdentityInterface;
  * @property Epic[] $epicsPlayed
  * @property Epic[] $epicsVisible
  * @property Participant[] $participants
+ * @property Task[] $tasks
  */
 final class User extends ActiveRecord implements IdentityInterface
 {
@@ -472,5 +473,13 @@ final class User extends ActiveRecord implements IdentityInterface
     public function getParticipants()
     {
         return $this->hasMany(Participant::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTasks()
+    {
+        return $this->hasMany(Task::className(), ['user_id' => 'id']);
     }
 }
