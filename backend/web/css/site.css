@@ -252,7 +252,7 @@ p {
 }
 
 .game-status-unplanned {
-    background-color: red;
+    background-color: lightcoral;
 }
 
 .game-status-planned {
@@ -272,7 +272,7 @@ p {
 }
 
 .game-status-completed {
-    background-color: green;
+    background-color: darkolivegreen;
 }
 
 .game-status-closed {

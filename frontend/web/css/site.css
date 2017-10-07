@@ -275,10 +275,9 @@ a:focus {
 
 .index-box {
     border: 3px solid green;
-    border-radius: 15px;
     float: left;
     margin: 1% 0.75%;
-    height: 180px;
+    height: 240px;
     padding: 0 10px;
     overflow: auto;
     position: relative;
@@ -318,8 +317,8 @@ a:focus {
 
 @media (min-width: 1600px) {
     .index-box {
-        width: 15%;
-        margin: 0.75% 0.75%;
+        width: 16%;
+        margin: 0.25% 0.25%;
     }
 }
 
@@ -435,7 +434,7 @@ a:focus {
 }
 
 .game-status-unplanned {
-    background-color: red;
+    background-color: lightcoral;
 }
 
 .game-status-planned {
@@ -455,7 +454,7 @@ a:focus {
 }
 
 .game-status-completed {
-    background-color: green;
+    background-color: darkolivegreen;
 }
 
 .game-status-closed {
