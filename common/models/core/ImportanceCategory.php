@@ -5,7 +5,7 @@ namespace common\models\core;
 use Yii;
 
 /**
- * Class Importance
+ * Class ImportanceCategory
  * @package common\models\core
  */
 final class ImportanceCategory
