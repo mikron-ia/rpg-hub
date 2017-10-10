@@ -6,6 +6,9 @@ use yii\base\Model;
 
 class Table extends Model implements ExternalComponent
 {
+    /**
+     * @var string
+     */
     public $caption = '';
 
     /**

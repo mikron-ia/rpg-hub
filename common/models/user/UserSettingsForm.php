@@ -15,8 +15,19 @@ final class UserSettingsForm extends Model
      */
     private $user;
 
+    /**
+     * @var string
+     */
     public $email;
+
+    /**
+     * @var string
+     */
     public $language;
+
+    /**
+     * @var string
+     */
     public $username;
 
     public function __construct($config = [])

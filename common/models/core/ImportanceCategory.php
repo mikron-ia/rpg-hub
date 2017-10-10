@@ -16,6 +16,9 @@ final class ImportanceCategory
     const IMPORTANCE_HIGH = '1-high';
     const IMPORTANCE_EXTREME = '0-extreme';
 
+    /**
+     * @var string
+     */
     public $importance;
 
     /**

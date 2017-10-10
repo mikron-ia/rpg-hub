@@ -4,6 +4,7 @@ namespace common\models\tools;
 
 use common\models\PerformedAction;
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "ip".
@@ -13,7 +14,7 @@ use Yii;
  *
  * @property PerformedAction[] $performedActions
  */
-class IP extends \yii\db\ActiveRecord
+class IP extends ActiveRecord
 {
     public static function tableName()
     {

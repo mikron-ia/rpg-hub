@@ -48,6 +48,9 @@ final class User extends ActiveRecord implements IdentityInterface
     const USER_ROLE_MANAGER = 'manager';
     const USER_ROLE_ADMINISTRATOR = 'administrator';
 
+    /**
+     * @var string
+     */
     public $user_role;
 
     public static function tableName()

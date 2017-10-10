@@ -19,6 +19,9 @@ final class Visibility
     const VISIBILITY_LOGGED = 'logged';
     const VISIBILITY_FULL = 'full';
 
+    /**
+     * @var string
+     */
     public $visibility;
 
     /**
