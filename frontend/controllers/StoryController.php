@@ -3,9 +3,9 @@
 namespace frontend\controllers;
 
 use common\models\core\Visibility;
+use common\models\Story;
 use common\models\StoryQuery;
 use Yii;
-use common\models\Story;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -84,13 +84,13 @@ final class StoryController extends Controller
     /**
      * Finds the Story model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
+     * @param string $key
      * @return Story the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelById($id)
+    protected function findModelByKey($key)
     {
-        $model = Story::findOne(['story_id' => $id]);
+        $model = Story::findOne(['key' => $key]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));
@@ -106,13 +106,13 @@ final class StoryController extends Controller
     /**
      * Finds the Story model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $key
+     * @param string $id
      * @return Story the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelByKey($key)
+    protected function findModelById($id)
     {
-        $model = Story::findOne(['key' => $key]);
+        $model = Story::findOne(['story_id' => $id]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));

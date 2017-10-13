@@ -3,13 +3,13 @@
 namespace frontend\controllers;
 
 use common\models\core\Visibility;
+use common\models\Group;
 use common\models\GroupQuery;
 use Yii;
-use common\models\Group;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * GroupController implements the CRUD actions for Group model.

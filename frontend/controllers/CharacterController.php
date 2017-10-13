@@ -2,17 +2,17 @@
 
 namespace frontend\controllers;
 
+use common\models\Character;
+use common\models\CharacterQuery;
 use common\models\core\Visibility;
 use common\models\external\Reputation;
 use common\models\external\ReputationEvent;
 use Yii;
-use common\models\Character;
-use common\models\CharacterQuery;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * CharacterController implements the CRUD actions for Character model.
@@ -92,6 +92,28 @@ final class CharacterController extends Controller
     }
 
     /**
+     * Finds the Story model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $key
+     * @return Character the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModelByKey($key)
+    {
+        $model = Character::findOne(['key' => $key]);
+
+        if ($model === null) {
+            throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));
+        }
+
+        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
+            throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));
+        }
+
+        return $model;
+    }
+
+    /**
      * @param $key
      * @return string|\yii\web\Response
      * @throws HttpException
@@ -161,28 +183,6 @@ final class CharacterController extends Controller
     protected function findModelById($id)
     {
         $model = Character::findOne(['character_id' => $id]);
-
-        if ($model === null) {
-            throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));
-        }
-
-        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
-            throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));
-        }
-
-        return $model;
-    }
-
-    /**
-     * Finds the Story model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $key
-     * @return Character the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModelByKey($key)
-    {
-        $model = Character::findOne(['key' => $key]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));

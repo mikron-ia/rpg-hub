@@ -25,18 +25,6 @@ class ImportanceController extends Controller
     }
 
     /**
-     * Orders recalculation of every importance pack regardless of flagging
-     */
-    public function actionRecalculateUnconditionally()
-    {
-        if ($this->recalculate(false)) {
-            LoggingHelper::log("Unconditional recalculation completed", 'importance.calculator.summary');
-        } else {
-            LoggingHelper::log("Unconditional recalculation not completed", 'importance.calculator.summary');
-        }
-    }
-
-    /**
      * Recalculates packs
      *
      * @param bool $considerFlag Whether to consider recalculation flags
@@ -72,5 +60,17 @@ class ImportanceController extends Controller
         );
 
         return ($successful === count($packs));
+    }
+
+    /**
+     * Orders recalculation of every importance pack regardless of flagging
+     */
+    public function actionRecalculateUnconditionally()
+    {
+        if ($this->recalculate(false)) {
+            LoggingHelper::log("Unconditional recalculation completed", 'importance.calculator.summary');
+        } else {
+            LoggingHelper::log("Unconditional recalculation not completed", 'importance.calculator.summary');
+        }
     }
 }

@@ -19,6 +19,24 @@ use yii\console\Controller;
 class RbacController extends Controller
 {
     /**
+     * Clears all rights and rules and sets them again
+     */
+    public function actionReset()
+    {
+        $this->actionClear();
+        $this->actionInit();
+    }
+
+    /**
+     * Clears all rights and rules
+     */
+    public function actionClear()
+    {
+        $auth = Yii::$app->authManager;
+        $auth->removeAll();
+    }
+
+    /**
      * Initiates all rules. NOTE: this will erase all access rights
      * Minor technical note: if there is no separate index* right, all view* rights should allow listing,
      * of course not necessarily complete.
@@ -33,24 +51,6 @@ class RbacController extends Controller
 
         /* Set up the administrator */
         $this->actionSetAdministrator();
-    }
-
-    /**
-     * Clears all rights and rules
-     */
-    public function actionClear()
-    {
-        $auth = Yii::$app->authManager;
-        $auth->removeAll();
-    }
-
-    /**
-     * Clears all rights and rules and sets them again
-     */
-    public function actionReset()
-    {
-        $this->actionClear();
-        $this->actionInit();
     }
 
     /**
@@ -240,37 +240,6 @@ class RbacController extends Controller
     }
 
     /**
-     * Sets administrator role to used with ID == 1. Intended for development and production initialisation.
-     */
-    public function actionSetAdministrator()
-    {
-        $auth = Yii::$app->authManager;
-        $administrator = $auth->getRole('administrator');
-        $auth->assign($administrator, 1);
-    }
-
-    /**
-     * Adds rights from v0.5.0
-     */
-    public function actionV050()
-    {
-    }
-
-    /**
-     * Adds rights from v0.6.0
-     */
-    public function actionV060()
-    {
-    }
-
-    /**
-     * Adds rights from v0.7.0
-     */
-    public function actionV070()
-    {
-    }
-
-    /**
      * Adds rights from v0.8.0
      */
     public function actionV080()
@@ -312,6 +281,37 @@ class RbacController extends Controller
 
         $auth->addChild($operator, $controlGame);
         $auth->addChild($user, $viewGame);
+    }
+
+    /**
+     * Sets administrator role to used with ID == 1. Intended for development and production initialisation.
+     */
+    public function actionSetAdministrator()
+    {
+        $auth = Yii::$app->authManager;
+        $administrator = $auth->getRole('administrator');
+        $auth->assign($administrator, 1);
+    }
+
+    /**
+     * Adds rights from v0.5.0
+     */
+    public function actionV050()
+    {
+    }
+
+    /**
+     * Adds rights from v0.6.0
+     */
+    public function actionV060()
+    {
+    }
+
+    /**
+     * Adds rights from v0.7.0
+     */
+    public function actionV070()
+    {
     }
 
     /**

@@ -2,14 +2,14 @@
 
 namespace frontend\controllers;
 
-use common\models\core\Visibility;
-use Yii;
 use common\models\Article;
 use common\models\ArticleQuery;
+use common\models\core\Visibility;
+use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ArticleController implements the CRUD actions for Article model.
@@ -82,15 +82,15 @@ class ArticleController extends Controller
     }
 
     /**
-     * Finds the Character model based on its primary key value.
+     * Finds the Story model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
+     * @param string $key
      * @return Article the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelById($id)
+    protected function findModelByKey($key)
     {
-        $model = Article::findOne(['article_id' => $id]);
+        $model = Article::findOne(['key' => $key]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'ARTICLE_NOT_AVAILABLE'));
@@ -104,15 +104,15 @@ class ArticleController extends Controller
     }
 
     /**
-     * Finds the Story model based on its primary key value.
+     * Finds the Character model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $key
+     * @param string $id
      * @return Article the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelByKey($key)
+    protected function findModelById($id)
     {
-        $model = Article::findOne(['key' => $key]);
+        $model = Article::findOne(['article_id' => $id]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'ARTICLE_NOT_AVAILABLE'));

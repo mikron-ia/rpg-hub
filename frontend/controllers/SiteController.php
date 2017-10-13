@@ -1,25 +1,26 @@
 <?php
+
 namespace frontend\controllers;
 
 use common\models\Epic;
 use common\models\EpicQuery;
 use common\models\GameQuery;
+use common\models\LoginForm;
 use common\models\PerformedAction;
 use common\models\RecapQuery;
 use common\models\StoryQuery;
 use common\models\user\PasswordChange;
 use common\models\user\UserAcceptForm;
 use common\models\user\UserSettingsForm;
-use Yii;
-use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
+use Yii;
 use yii\base\Exception;
 use yii\base\InvalidParamException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use yii\web\Cookie;
 use yii\web\Response;
 
@@ -239,7 +240,7 @@ final class SiteController extends Controller
      * Selects Epic
      * @return Response
      */
-    public function actionSetEpic():Response
+    public function actionSetEpic(): Response
     {
         $chosenEpicKey = Yii::$app->request->post('epic');
         $this->run('site/set-epic-in-silence', ['epicKey' => $chosenEpicKey]);

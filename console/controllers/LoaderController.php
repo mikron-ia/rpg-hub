@@ -4,9 +4,9 @@ namespace console\controllers;
 
 use common\models\Character;
 use common\models\tools\Retriever;
+use Yii;
 use yii\base\Exception;
 use yii\console\Controller;
-use Yii;
 
 class LoaderController extends Controller
 {
