@@ -6,6 +6,10 @@ use common\models\Epic;
 use Yii;
 use yii\web\HttpException;
 
+/**
+ * Trait ToolsForEntity
+ * @package common\models\tools
+ */
 trait ToolsForEntity
 {
     /**
