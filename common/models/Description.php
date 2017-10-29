@@ -26,6 +26,9 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $public_text
  * @property string $protected_text
  * @property string $private_text
+ * @property string $public_text_expanded
+ * @property string $protected_text_expanded
+ * @property string $private_text_expanded
  * @property string $lang
  * @property string $visibility
  * @property integer $position
@@ -114,6 +117,10 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             $this->createHistoryRecord();
         }
 
+        $this->public_text_expanded = $this->formatText($this->public_text);
+        $this->protected_text_expanded = $this->formatText($this->protected_text);
+        $this->private_text_expanded = $this->formatText($this->private_text);
+
         return parent::beforeSave($insert);
     }
 
@@ -136,6 +143,9 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             'public_text' => Yii::t('app', 'DESCRIPTION_TEXT_PUBLIC'),
             'protected_text' => Yii::t('app', 'DESCRIPTION_TEXT_PROTECTED'),
             'private_text' => Yii::t('app', 'DESCRIPTION_TEXT_PRIVATE'),
+            'public_text_expanded' => Yii::t('app', 'DESCRIPTION_TEXT_PUBLIC_EXPANDED'),
+            'protected_text_expanded' => Yii::t('app', 'DESCRIPTION_TEXT_PROTECTED_EXPANDED'),
+            'private_text_expanded' => Yii::t('app', 'DESCRIPTION_TEXT_PRIVATE_EXPANDED'),
             'lang' => Yii::t('app', 'LABEL_LANGUAGE'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
         ];
@@ -310,7 +320,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      */
     public function getPublicFormatted()
     {
-        return Markdown::process(Html::encode($this->public_text), 'gfm');
+        return Markdown::process(Html::encode($this->public_text_expanded), 'gfm');
     }
 
     /**
@@ -318,7 +328,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      */
     public function getProtectedFormatted()
     {
-        return Markdown::process(Html::encode($this->protected_text), 'gfm');
+        return Markdown::process(Html::encode($this->protected_text_expanded), 'gfm');
     }
 
     /**
@@ -326,7 +336,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      */
     public function getPrivateFormatted()
     {
-        return Markdown::process(Html::encode($this->private_text), 'gfm');
+        return Markdown::process(Html::encode($this->private_text_expanded), 'gfm');
     }
 
     /**
@@ -364,7 +374,10 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     {
         $description = Description::findOne(['description_id' => $this->description_id]);
 
-        if (($description->public_text === $this->public_text) && ($description->private_text === $this->private_text)) {
+        if (
+            ($description->public_text === $this->public_text) &&
+            ($description->protected_text === $this->protected_text) &&
+            ($description->private_text === $this->private_text)) {
             return null;
         }
 
@@ -386,7 +399,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      */
     public function getWordCountForPublic(): int
     {
-        return StringHelper::countWords($this->public_text);
+        return StringHelper::countWords($this->public_text_expanded);
     }
 
     /**
@@ -395,7 +408,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      */
     public function getWordCountForProtected(): int
     {
-        return StringHelper::countWords($this->protected_text);
+        return StringHelper::countWords($this->protected_text_expanded);
     }
 
     /**
@@ -404,6 +417,15 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      */
     public function getWordCountForPrivate(): int
     {
-        return StringHelper::countWords($this->private_text);
+        return StringHelper::countWords($this->private_text_expanded);
+    }
+
+    /**
+     * @param string $text Text to format
+     * @return string
+     */
+    private function formatText(string $text): string
+    {
+        return $text;
     }
 }

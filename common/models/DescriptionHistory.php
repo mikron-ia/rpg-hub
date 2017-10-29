@@ -19,6 +19,9 @@ use yii\helpers\Markdown;
  * @property string $public_text
  * @property string $protected_text
  * @property string $private_text
+ * @property string $public_text_expanded
+ * @property string $protected_text_expanded
+ * @property string $private_text_expanded
  * @property string $visibility
  *
  * @property Description $description
@@ -48,6 +51,15 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        $this->public_text_expanded = $this->formatText($this->public_text);
+        $this->protected_text_expanded = $this->formatText($this->protected_text);
+        $this->private_text_expanded = $this->formatText($this->private_text);
+
+        return parent::beforeSave($insert);
+    }
+
     public function attributeLabels()
     {
         return [
@@ -58,6 +70,9 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
             'public_text' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PUBLIC'),
             'protected_text' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PROTECTED'),
             'private_text' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PRIVATE'),
+            'public_text_expanded' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PUBLIC_EXPANDED'),
+            'protected_text_expanded' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PROTECTED_EXPANDED'),
+            'private_text_expanded' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PRIVATE_EXPANDED'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
         ];
     }
@@ -126,7 +141,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
      */
     public function getPublicFormatted()
     {
-        return Markdown::process(Html::encode($this->public_text), 'gfm');
+        return Markdown::process(Html::encode($this->public_text_expanded), 'gfm');
     }
 
     /**
@@ -134,7 +149,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
      */
     public function getProtectedFormatted()
     {
-        return Markdown::process(Html::encode($this->protected_text), 'gfm');
+        return Markdown::process(Html::encode($this->protected_text_expanded), 'gfm');
     }
 
     /**
@@ -142,6 +157,15 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
      */
     public function getPrivateFormatted()
     {
-        return Markdown::process(Html::encode($this->private_text), 'gfm');
+        return Markdown::process(Html::encode($this->private_text_expanded), 'gfm');
+    }
+
+    /**
+     * @param string $text Text to format
+     * @return string
+     */
+    private function formatText(string $text): string
+    {
+        return $text;
     }
 }
