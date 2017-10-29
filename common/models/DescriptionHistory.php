@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
+use common\models\tools\ToolsForDescription;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -28,6 +29,8 @@ use yii\helpers\Markdown;
  */
 class DescriptionHistory extends ActiveRecord implements HasVisibility
 {
+    use ToolsForDescription;
+
     public static function tableName()
     {
         return 'description_history';
@@ -161,11 +164,11 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
     }
 
     /**
-     * @param string $text Text to format
-     * @return string
+     * @param string|null $text Text to format
+     * @return string|null
      */
-    private function formatText(string $text): string
+    private function formatText($text)
     {
-        return $text;
+        return $this->processAllInOrder($text ?? '');
     }
 }
