@@ -12,9 +12,10 @@ class ToolsForDescriptionTest extends TestCase
     /**
      * @test
      * @dataProvider complexConversionDataProvider
-     * @param $data
+     * @param $text
+     * @param $result
      */
-    public function testComplexConversion(array $data)
+    public function testComplexConversion($text, $result)
     {
         $linkBases = [
             'Character' => '/index.php/character/view/key=',
@@ -22,7 +23,7 @@ class ToolsForDescriptionTest extends TestCase
             'Story' => '/index.php/story/view/key=',
         ];
 
-        $this->assertEquals($data['result'], $this->processKeys($data['text']));
+        $this->assertEquals($result, $this->processKeysInLinks($text, $linkBases));
     }
 
     /**
@@ -32,10 +33,60 @@ class ToolsForDescriptionTest extends TestCase
     {
         return [
             [
-                [
-                    'text' => '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a1)',
-                    'result' => '[Character\'s name](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1)'
-                ],
+                /* Correct character */
+                '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Character\'s name](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1)'
+            ],
+            [
+                /* Correct group */
+                '[Group\'s name](GR:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Group\'s name](/index.php/group/view/key=184e5117955e384ca1e68dd731637bb8988782a1)'
+
+            ],
+            [
+                /* Correct story */
+                '[Story\'s name](ST:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Story\'s name](/index.php/story/view/key=184e5117955e384ca1e68dd731637bb8988782a1)'
+            ],
+            [
+                /* Correct character */
+                '[Character\'s name](CHARACTER:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Character\'s name](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1)'
+            ],
+            [
+                /* Correct group */
+                '[Group\'s name](GROUP:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Group\'s name](/index.php/group/view/key=184e5117955e384ca1e68dd731637bb8988782a1)'
+            ],
+            [
+                /* Correct story */
+                '[Story\'s name](STORY:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Story\'s name](/index.php/story/view/key=184e5117955e384ca1e68dd731637bb8988782a1)'
+            ],
+            [
+                /* Unprocessed - key is too long */
+                '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a15)',
+                '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a15)'
+            ],
+            [
+                /* Unprocessed - key has invalid characters */
+                '[Character\'s name](CH:184e5117A55e384ca1e68dd731637bb8988782a1)',
+                '[Character\'s name](CH:184e5117A55e384ca1e68dd731637bb8988782a1)'
+            ],
+            [
+                /* Unprocessed - wrong code */
+                '[Character\'s name](CHA:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Character\'s name](CHA:184e5117955e384ca1e68dd731637bb8988782a1)'
+            ],
+            [
+                /* Unprocessed - unnecessary space */
+                '[Character\'s name](CH: 184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Character\'s name](CH: 184e5117955e384ca1e68dd731637bb8988782a1)'
+            ],
+            [
+                /* Unprocessed - unnecessary space */
+                '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a1 )',
+                '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a1 )',
             ],
         ];
     }

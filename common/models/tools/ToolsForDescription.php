@@ -35,6 +35,16 @@ trait ToolsForDescription
         ];
 
         /* Solve cases of [name](CODE:key) */
+        $textWithProcessedComplexKeys = $this->processKeysInLinks($text, $linkBases);
+
+        /* Solve cases of CODE:key format */
+        $textWithProcessedKeys = $this->processKeysInTheOpen($textWithProcessedComplexKeys, $linkBases);
+
+        return $textWithProcessedKeys;
+    }
+
+    private function processKeysInLinks(string $text, array $linkBases): string
+    {
         $complexPatterns = [
             'Character' => '|\[(.+)\]\(CH(ARACTER)?:([a-z\d]{40})\)|',
             'Group' => '|\[(.+)\]\(GR(OUP)?:([a-z\d]{40})\)|',
@@ -49,7 +59,11 @@ trait ToolsForDescription
 
         $textWithProcessedComplexKeys = preg_replace($complexPatterns, $complexReplacements, $text);
 
-        /* Solve cases of CODE:key format */
+        return $textWithProcessedComplexKeys;
+    }
+
+    private function processKeysInTheOpen(string $text, array $linkBases): string
+    {
         $simplePatterns = [
             'Character' => '|CH(ARACTER)?:([a-z\d]{40})|',
             'Group' => '|GR(OUP)?:([a-z\d]{40})|',
@@ -62,11 +76,9 @@ trait ToolsForDescription
             'Story' => Yii::t('app', 'STORY_NOT_AVAILABLE'),
         ];
 
-        $textWithProcessedKeys = $textWithProcessedComplexKeys;
-
         foreach ($simplePatterns as $class => $simplePattern) {
             $foundInstances = [];
-            preg_match_all($simplePattern, $textWithProcessedKeys, $foundInstances, PREG_SET_ORDER);
+            preg_match_all($simplePattern, $text, $foundInstances, PREG_SET_ORDER);
 
             foreach ($foundInstances as $instance) {
                 $className = 'common\models\\' . $class;
@@ -81,10 +93,10 @@ trait ToolsForDescription
                     $replacement = '`' . $errorMessages[$class] . '`';
                 }
 
-                $textWithProcessedKeys = str_replace($match, $replacement, $textWithProcessedKeys);
+                $text = str_replace($match, $replacement, $text);
             }
         }
 
-        return $textWithProcessedKeys;
+        return $text;
     }
 }
