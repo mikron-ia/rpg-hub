@@ -19,7 +19,8 @@
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*",
-        "yiisoft/yii2-gii": "*"
+        "yiisoft/yii2-gii": "*",
+        "phpunit/phpunit": "^6.4"
     },
     "config": {
         "process-timeout": 1800
@@ -29,5 +30,10 @@
             "npm-asset-library": "vendor/npm",
             "bower-asset-library": "vendor/bower"
         }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "common/models/tools/"
+        ]
     }
 }
