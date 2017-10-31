@@ -12,12 +12,14 @@ trait ToolsForDescription
 {
     /**
      * Processes text thorough all decorators
-     * @param string $text
+     * @param string $text Text to be processed
      * @return string
      */
     private function processAllInOrder(string $text): string
     {
-        return $this->processKeys($text);
+        $textWithProcessedKeys = $this->processKeys($text);
+        $textWithExpandedHeaders = $this->expandHeaders($textWithProcessedKeys);
+        return $textWithExpandedHeaders;
     }
 
     /**
@@ -43,6 +45,12 @@ trait ToolsForDescription
         return $textWithProcessedKeys;
     }
 
+    /**
+     * Turns keys in format of [name](NN:key) and [name](code:key) to []() markdown links
+     * @param string $text
+     * @param string[] $linkBases
+     * @return string
+     */
     private function processKeysInLinks(string $text, array $linkBases): string
     {
         $complexPatterns = [
@@ -62,6 +70,12 @@ trait ToolsForDescription
         return $textWithProcessedComplexKeys;
     }
 
+    /**
+     * Turns keys in format of NN:key and code:key to []() markdown links
+     * @param string $text
+     * @param string[] $linkBases
+     * @return string
+     */
     private function processKeysInTheOpen(string $text, array $linkBases): string
     {
         $simplePatterns = [
@@ -102,7 +116,7 @@ trait ToolsForDescription
 
     /**
      * Expands headers by a step
-     * @param string $text
+     * @param string $text Text to be processed
      * @return string
      */
     private function expandHeaders(string $text): string
