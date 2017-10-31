@@ -90,4 +90,41 @@ class ToolsForDescriptionTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * @test
+     * @dataProvider headerConversionDataProvider
+     * @param string $text
+     * @param string $result
+     */
+    public function testHeaderConversion(string $text, string $result)
+    {
+        $this->assertEquals($result, $this->expandHeaders($text));
+    }
+
+    /**
+     * @return array
+     */
+    public function headerConversionDataProvider(): array
+    {
+        return [
+            ['# Lorem ipsum', '## Lorem ipsum'],
+            ['## Lorem ipsum', '### Lorem ipsum'],
+            ['### Lorem ipsum', '#### Lorem ipsum'],
+            ['#### Lorem ipsum', '##### Lorem ipsum'],
+            ['##### Lorem ipsum', '###### Lorem ipsum'],
+            ['###### Lorem ipsum', '###### Lorem ipsum'],
+            ['#Lorem ipsum', '#Lorem ipsum'],
+            [' # Lorem ipsum', ' # Lorem ipsum'],
+            ['Lorem ipsum' . PHP_EOL . '# Lorem ipsum', 'Lorem ipsum' . PHP_EOL . '## Lorem ipsum'],
+            [
+                '# Lorem ipsum' . PHP_EOL . '## Lorem ipsum' . PHP_EOL . '# Lorem ipsum',
+                '## Lorem ipsum' . PHP_EOL . '### Lorem ipsum' . PHP_EOL . '## Lorem ipsum'
+            ],
+            [
+                '# Lorem ipsum' . PHP_EOL . ' ## Lorem ipsum' . PHP_EOL . '# Lorem ipsum',
+                '## Lorem ipsum' . PHP_EOL . ' ## Lorem ipsum' . PHP_EOL . '## Lorem ipsum'
+            ],
+        ];
+    }
 }

@@ -99,4 +99,24 @@ trait ToolsForDescription
 
         return $text;
     }
+
+    /**
+     * Expands headers by a step
+     * @param string $text
+     * @return string
+     */
+    private function expandHeaders(string $text): string
+    {
+        $replacements = [
+            '|^##### |m' => '###### ',
+            '|^#### |m' => '##### ',
+            '|^### |m' => '#### ',
+            '|^## |m' => '### ',
+            '|^# |m' => '## ',
+        ];
+
+        $text = preg_replace(array_keys($replacements), $replacements, $text);
+
+        return $text;
+    }
 }
