@@ -18,13 +18,13 @@ use yii\helpers\Html;
         <?php echo Html::tag('span', Html::encode($model->basics), []); ?>
     </p>
 
-    <p class="collapse" id="session-notes-<?php echo $model->game_id; ?>">
+    <div class="collapse" id="session-notes-<?php echo $model->game_id; ?>">
         <?php if (!empty($model->notes)): ?>
-            <?= $model->notes ?>
+            <?= $model->notesFormatted ?>
         <?php else: ?>
             <i><?= Yii::t('app', 'GAME_NOTES_MISSING') ?></i>
         <?php endif; ?>
-    </p>
+    </div>
 
 </div>
 
