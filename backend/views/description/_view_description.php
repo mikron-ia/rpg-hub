@@ -11,7 +11,7 @@ use yii\helpers\Html;
 
     <div class="buttoned-header">
 
-        <h3><?= $model->position; ?>. <?= $model->getTypeName(); ?></h3>
+        <h2><?= $model->position; ?>. <?= $model->getTypeName(); ?></h2>
 
         <div>
             <?= Html::a(
@@ -56,7 +56,7 @@ use yii\helpers\Html;
                     ],
                 ]
             ); ?>
-            
+
             <?= Html::a(
                 Yii::t('app', 'BUTTON_SHOW_HISTORY'),
                 '#',
