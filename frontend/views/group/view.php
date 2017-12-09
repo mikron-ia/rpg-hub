@@ -79,7 +79,7 @@ if ($this->params['showPrivates']) {
         function (data) {
             $('.reputations').html(data);
         }
-    ).success(function() {
+    ).done(function() {
         $('.tab-reputation').removeClass('hidden');
     });"); ?>
 
@@ -89,7 +89,7 @@ if ($this->params['showPrivates']) {
         function (data) {
             $('.reputation-events').html(data);
         }
-    ).success(function() {
+    ).done(function() {
         $('.tab-reputation-events').removeClass('hidden');
     });"); ?>
 

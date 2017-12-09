@@ -30,6 +30,7 @@ $items = [
 <div class="scenario-view">
 
     <div class="buttoned-header">
+        <h1><?= Html::encode($this->title) ?></h1>
     </div>
 
     <p class="subtitle"><?= $model->tag_line; ?></p>

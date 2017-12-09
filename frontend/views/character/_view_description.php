@@ -6,7 +6,7 @@
 
 <div class="col-md-6">
 
-    <h3><?= $model->getTypeName(); ?></h3>
+    <h2><?= $model->getTypeName(); ?></h2>
 
     <div class="public-notes">
         <?= $model->getPublicFormatted(); ?>
