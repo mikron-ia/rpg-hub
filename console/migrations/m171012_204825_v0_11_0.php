@@ -33,6 +33,8 @@ class m171012_204825_v0_11_0 extends Migration
             'description' => $this->string(255),
             'position' => $this->integer()->unsigned()->notNull()
         ], $tableOptions);
+
+        $this->addForeignKey('point_in_time_epic', 'point_in_time', 'epic_id', 'epic', 'epic_id', 'RESTRICT', 'CASCADE');
     }
 
     public function safeDown()
