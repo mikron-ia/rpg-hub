@@ -5,19 +5,29 @@ namespace backend\controllers;
 use common\models\PointInTime;
 use common\models\PointInTimeQuery;
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
  * PointInTimeController implements the CRUD actions for PointInTime model.
- * @todo Security
  */
 class PointInTimeController extends Controller
 {
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['create', 'index', 'update', 'view', 'delete', 'move-up', 'move-down'],
+                        'allow' => true,
+                        'roles' => ['operator'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -33,6 +43,14 @@ class PointInTimeController extends Controller
      */
     public function actionIndex()
     {
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection');
+        }
+
+        if (!PointInTime::canUserIndexThem()) {
+            PointInTime::throwExceptionAboutIndex();
+        }
+
         $searchModel = new PointInTimeQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -49,8 +67,22 @@ class PointInTimeController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
+        }
+
+        if (!$model->canUserViewYou()) {
+            PointInTime::throwExceptionAboutView();
+        }
+
+        if (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -61,6 +93,10 @@ class PointInTimeController extends Controller
      */
     public function actionCreate()
     {
+        if (!PointInTime::canUserCreateThem()) {
+            PointInTime::throwExceptionAboutCreate();
+        }
+
         $model = new PointInTime();
 
         $model->setCurrentEpicOnEmpty();
@@ -84,6 +120,10 @@ class PointInTimeController extends Controller
     {
         $model = $this->findModel($id);
 
+        if (!$model->canUserControlYou()) {
+            PointInTime::throwExceptionAboutControl();
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->point_in_time_id]);
         } else {
@@ -101,9 +141,57 @@ class PointInTimeController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if (!$model->canUserControlYou()) {
+            PointInTime::throwExceptionAboutControl();
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Moves game up in order; this means lower position on the list
+     * @param int $id Story ID
+     * @return \yii\web\Response
+     */
+    public function actionMoveUp($id)
+    {
+        $model = $this->findModel($id);
+        if (!$model->canUserControlYou()) {
+            PointInTime::throwExceptionAboutControl();
+        }
+        $model->movePrev();
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
+    }
+
+    /**
+     * Moves game down in order; this means higher position on the list
+     * @param int $id Story ID
+     * @return \yii\web\Response
+     */
+    public function actionMoveDown($id)
+    {
+        $model = $this->findModel($id);
+        if (!$model->canUserControlYou()) {
+            PointInTime::throwExceptionAboutControl();
+        }
+        $model->moveNext();
+
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if ($referrer) {
+            return Yii::$app->getResponse()->redirect($referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
     }
 
     /**
@@ -116,9 +204,16 @@ class PointInTimeController extends Controller
     protected function findModel($id)
     {
         if (($model = PointInTime::findOne($id)) !== null) {
+            if (empty(Yii::$app->params['activeEpic'])) {
+                $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
+            } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+                $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
+            }
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'POINT_IN_TIME_NOT_AVAILABLE'));
         }
     }
 }

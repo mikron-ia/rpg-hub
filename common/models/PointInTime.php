@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\HasEpicControl;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveRecord;
@@ -21,7 +22,7 @@ use yii2tech\ar\position\PositionBehavior;
  *
  * @property Epic $epic
  */
-class PointInTime extends ActiveRecord
+class PointInTime extends ActiveRecord implements HasEpicControl
 {
     use ToolsForEntity;
 
@@ -77,5 +78,45 @@ class PointInTime extends ActiveRecord
     public function getEpic()
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+    }
+
+    static public function canUserIndexThem(): bool
+    {
+        return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
+    }
+
+    static public function canUserCreateThem(): bool
+    {
+        return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
+    }
+
+    public function canUserControlYou(): bool
+    {
+        return self::canUserControlInEpic($this->epic);
+    }
+
+    public function canUserViewYou(): bool
+    {
+        return self::canUserViewInEpic($this->epic);
+    }
+
+    static function throwExceptionAboutCreate()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_POINT_IN_TIME'));
+    }
+
+    static function throwExceptionAboutControl()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_POINT_IN_TIME'));
+    }
+
+    static function throwExceptionAboutIndex()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_POINT_IN_TIME'));
+    }
+
+    static function throwExceptionAboutView()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_POINT_IN_TIME'));
     }
 }

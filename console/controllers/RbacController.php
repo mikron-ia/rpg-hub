@@ -342,9 +342,13 @@ class RbacController extends Controller
         $controlPointInTime->description = 'Able to add, edit, and move point in time';
         $controlPointInTime->ruleName = $gameMasterRule->name;
 
+        $auth->add($controlPointInTime);
+
         $viewPointInTime = $auth->createPermission('viewPointInTime');
         $viewPointInTime->description = 'Able to view point in time';
         $viewPointInTime->ruleName = $watcherRule->name;
+
+        $auth->add($viewPointInTime);
 
         $user = $auth->getRole('user');
         $operator = $auth->getRole('operator');
