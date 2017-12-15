@@ -16,12 +16,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
-            ['update', 'key' => $model->point_in_time_id],
+            ['update', 'id' => $model->point_in_time_id],
             ['class' => 'btn btn-primary']
         ) ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_MOVE_DOWN'),
-            ['move-up', 'key' => $model->point_in_time_id],
+            ['move-up', 'id' => $model->point_in_time_id],
             [
                 'class' => 'btn btn-default',
                 'data' => [
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ); ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_MOVE_UP'),
-            ['move-down', 'key' => $model->point_in_time_id],
+            ['move-down', 'id' => $model->point_in_time_id],
             [
                 'class' => 'btn btn-default',
                 'data' => [
@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ); ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_DELETE'),
-            ['delete', 'key' => $model->point_in_time_id],
+            ['delete', 'id' => $model->point_in_time_id],
             [
                 'class' => 'btn btn-danger',
                 'data' => [
@@ -64,17 +64,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="col-md-6">
         <h2><?= Yii::t('app', 'POINT_IN_TIME_NAME_PUBLIC'); ?></h2>
-        <?= $model->text_public ?? '<p>' . Yii::t('app', 'NO_TEXT') . '</p>'; ?>
+        <?= $model->text_public ?? '<p class="no-text">' . Yii::t('app', 'NO_TEXT') . '</p>'; ?>
     </div>
 
     <div class="col-md-6">
         <h2><?= Yii::t('app', 'POINT_IN_TIME_NAME_PROTECTED'); ?></h2>
-        <?= $model->text_protected ?? '<p>' . Yii::t('app', 'NO_TEXT') . '</p>'; ?>
+        <?= $model->text_protected ?? '<p class="no-text">' . Yii::t('app', 'NO_TEXT') . '</p>'; ?>
     </div>
 
     <div class="col-md-6">
         <h2><?= Yii::t('app', 'POINT_IN_TIME_NAME_PRIVATE'); ?></h2>
-        <?= $model->text_private ?? '<p>' . Yii::t('app', 'NO_TEXT') . '</p>'; ?>
+        <?= $model->text_private ?? '<p class="no-text">' . Yii::t('app', 'NO_TEXT') . '</p>'; ?>
     </div>
 
 </div>
