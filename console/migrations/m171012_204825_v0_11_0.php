@@ -29,8 +29,10 @@ class m171012_204825_v0_11_0 extends Migration
         $this->createTable('point_in_time', [
             'point_in_time_id' => $this->primaryKey()->unsigned(),
             'epic_id' => $this->integer()->unsigned()->notNull(),
-            'name' => $this->string(255)->notNull(),
-            'description' => $this->string(255),
+            'name' => $this->string(120)->notNull(),
+            'text_public' => $this->string(255),
+            'text_protected' => $this->string(255),
+            'text_private' => $this->string(255),
             'position' => $this->integer()->unsigned()->notNull()
         ], $tableOptions);
 
