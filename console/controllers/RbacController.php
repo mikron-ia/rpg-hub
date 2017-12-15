@@ -320,4 +320,36 @@ class RbacController extends Controller
     public function actionV090()
     {
     }
+
+    /**
+     * Adds rights from v0.10.0
+     */
+    public function actionV0100()
+    {
+    }
+
+    /**
+     * Adds rights from v0.11.0
+     */
+    public function actionV0110()
+    {
+        $auth = Yii::$app->authManager;
+
+        $gameMasterRule = $auth->getRule('epicGameMaster');
+        $watcherRule = $auth->getRule('epicWatcher');
+
+        $controlPointInTime = $auth->createPermission('controlPointInTime');
+        $controlPointInTime->description = 'Able to add, edit, and move point in time';
+        $controlPointInTime->ruleName = $gameMasterRule->name;
+
+        $viewPointInTime = $auth->createPermission('viewPointInTime');
+        $viewPointInTime->description = 'Able to view point in time';
+        $viewPointInTime->ruleName = $watcherRule->name;
+
+        $user = $auth->getRole('user');
+        $operator = $auth->getRole('operator');
+
+        $auth->addChild($operator, $controlPointInTime);
+        $auth->addChild($user, $viewPointInTime);
+    }
 }

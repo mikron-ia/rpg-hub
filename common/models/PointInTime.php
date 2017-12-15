@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveRecord;
 use yii2tech\ar\position\PositionBehavior;
@@ -22,6 +23,8 @@ use yii2tech\ar\position\PositionBehavior;
  */
 class PointInTime extends ActiveRecord
 {
+    use ToolsForEntity;
+
     public static function tableName()
     {
         return 'point_in_time';

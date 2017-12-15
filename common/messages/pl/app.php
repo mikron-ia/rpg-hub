@@ -475,7 +475,7 @@ return [
     'POINT_IN_TIME_NAME' => 'Nazwa',
     'POINT_IN_TIME_NAME_PRIVATE' => 'Notatki MG',
     'POINT_IN_TIME_NAME_PROTECTED' => 'Opis OOC',
-    'POINT_IN_TIME_NAME_PUBLIC' => 'Opic IC',
+    'POINT_IN_TIME_NAME_PUBLIC' => 'Opis IC',
     'POINT_IN_TIME_POSITION' => 'Pozycja',
     'PROMPT_SELECT_TYPE' => 'Wybierz typ ...',
     'PROMPT_USER' => 'Wybierz użytkownika ...',

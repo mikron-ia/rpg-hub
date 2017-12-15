@@ -2,15 +2,16 @@
 
 namespace backend\controllers;
 
-use Yii;
 use common\models\PointInTime;
-use yii\data\ActiveDataProvider;
+use common\models\PointInTimeQuery;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * PointInTimeController implements the CRUD actions for PointInTime model.
+ * @todo Security
  */
 class PointInTimeController extends Controller
 {
@@ -32,11 +33,11 @@ class PointInTimeController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => PointInTime::find(),
-        ]);
+        $searchModel = new PointInTimeQuery();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -61,6 +62,8 @@ class PointInTimeController extends Controller
     public function actionCreate()
     {
         $model = new PointInTime();
+
+        $model->setCurrentEpicOnEmpty();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->point_in_time_id]);
