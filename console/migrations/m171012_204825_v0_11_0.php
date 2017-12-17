@@ -36,11 +36,24 @@ class m171012_204825_v0_11_0 extends Migration
             'position' => $this->integer()->unsigned()->notNull()
         ], $tableOptions);
 
-        $this->addForeignKey('point_in_time_epic', 'point_in_time', 'epic_id', 'epic', 'epic_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey(
+            'point_in_time_epic',
+            'point_in_time', 'epic_id',
+            'epic', 'epic_id',
+            'RESTRICT', 'CASCADE'
+        );
+
+        /* Utility packs */
+        $this->createTable('utility_bag', [
+            'utility_bag_id' => $this->primaryKey()->unsigned(),
+            'class' => $this->string(20)->notNull()->comment("Name of class this pack belongs to; necessary for proper type assignment"),
+        ], $tableOptions);
     }
 
     public function safeDown()
     {
+        $this->dropTable('utility_bag');
+
         $this->dropTable('point_in_time');
 
         $this->dropColumn('description_history', 'public_text_expanded');
