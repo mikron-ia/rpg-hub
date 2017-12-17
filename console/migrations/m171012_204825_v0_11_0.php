@@ -14,8 +14,10 @@ class m171012_204825_v0_11_0 extends Migration
         $this->addColumn('description', 'private_text_expanded', $this->text()->after('protected_text_expanded'));
 
         $this->addColumn('description_history', 'public_text_expanded', $this->text()->after('private_text'));
-        $this->addColumn('description_history', 'protected_text_expanded', $this->text()->after('public_text_expanded'));
-        $this->addColumn('description_history', 'private_text_expanded', $this->text()->after('protected_text_expanded'));
+        $this->addColumn('description_history', 'protected_text_expanded',
+            $this->text()->after('public_text_expanded'));
+        $this->addColumn('description_history', 'private_text_expanded',
+            $this->text()->after('protected_text_expanded'));
 
         $this->execute('UPDATE description SET public_text_expanded = public_text');
         $this->execute('UPDATE description SET protected_text_expanded = protected_text');
@@ -43,6 +45,17 @@ class m171012_204825_v0_11_0 extends Migration
             'RESTRICT', 'CASCADE'
         );
 
+        $this->addColumn('recap', 'point_in_time_id', $this->integer()->unsigned()->after('seen_pack_id'));
+
+        $this->addForeignKey(
+            'recap_point_in_time',
+            'recap', 'point_in_time_id',
+            'point_in_time', 'point_in_time_id',
+            'RESTRICT', 'CASCADE'
+        );
+
+        $this->importPointsInTimeFromRecaps();
+
         /* Utility packs */
         $this->createTable('utility_bag', [
             'utility_bag_id' => $this->primaryKey()->unsigned(),
@@ -54,6 +67,10 @@ class m171012_204825_v0_11_0 extends Migration
     {
         $this->dropTable('utility_bag');
 
+        $this->dropForeignKey('recap_point_in_time', 'recap');
+
+        $this->dropColumn('recap', 'point_in_time_id');
+
         $this->dropTable('point_in_time');
 
         $this->dropColumn('description_history', 'public_text_expanded');
@@ -63,5 +80,29 @@ class m171012_204825_v0_11_0 extends Migration
         $this->dropColumn('description', 'public_text_expanded');
         $this->dropColumn('description', 'protected_text_expanded');
         $this->dropColumn('description', 'private_text_expanded');
+    }
+
+    /**
+     * Converts `time` fields into PointInTime objects
+     */
+    private function importPointsInTimeFromRecaps()
+    {
+        /** @var \common\models\Recap[] $recaps */
+        $recaps = \common\models\Recap::find()->all();
+
+        foreach ($recaps as $recap) {
+            if(!empty($recap->time)) {
+                $pointInTime = new \common\models\PointInTime();
+
+                $pointInTime->epic_id = $recap->epic_id;
+                $pointInTime->name = $recap->time;
+
+                $pointInTime->save();
+                $pointInTime->refresh();
+
+                $recap->point_in_time_id = $pointInTime->point_in_time_id;
+                $recap->save();
+            }
+        }
     }
 }

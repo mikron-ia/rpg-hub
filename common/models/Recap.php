@@ -22,6 +22,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $data
  * @property string $time
  * @property string $seen_pack_id
+ * @property string $point_in_time_id
  * @property int $position
  *
  * @property Epic $epic
@@ -40,7 +41,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     {
         return [
             [['epic_id', 'name', 'data'], 'required'],
-            [['epic_id'], 'integer'],
+            [['epic_id', 'point_in_time_id', 'position'], 'integer'],
             [['data'], 'string'],
             [['time'], 'default', 'value' => null],
             [['key'], 'string', 'max' => 80],
@@ -51,6 +52,13 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
                 'skipOnError' => true,
                 'targetClass' => Epic::className(),
                 'targetAttribute' => ['epic_id' => 'epic_id']
+            ],
+            [
+                ['point_in_time_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => PointInTime::className(),
+                'targetAttribute' => ['point_in_time_id' => 'point_in_time_id']
             ],
         ];
     }
@@ -64,6 +72,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
             'name' => Yii::t('app', 'RECAP_NAME'),
             'data' => Yii::t('app', 'RECAP_DATA'),
             'time' => Yii::t('app', 'RECAP_TIME'),
+            'point_in_time_id' => Yii::t('app', 'LABEL_POINT_IN_TIME'),
             'position' => Yii::t('app', 'RECAP_POSITION'),
         ];
     }
@@ -127,6 +136,14 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getPointInTime(): ActiveQuery
+    {
+        return $this->hasOne(PointInTime::className(), ['point_in_time_id' => 'point_in_time_id']);
     }
 
     /**
