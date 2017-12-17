@@ -1,5 +1,6 @@
 <?php
 
+use common\models\PointInTime;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
@@ -21,7 +22,30 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'position',
             'name',
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {up} {down}',
+                'buttons' => [
+                    'up' => function ($url, PointInTime $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-arrow-up"></span>',
+                            ['game/move-down', 'id' => $model->point_in_time_id],
+                            [
+                                'title' => Yii::t('app', 'LABEL_MOVE_UP'),
+                            ]
+                        );
+                    },
+                    'down' => function ($url, PointInTime $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-arrow-down"></span>',
+                            ['game/move-up', 'id' => $model->point_in_time_id],
+                            [
+                                'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
+                            ]
+                        );
+                    },
+                ]
+            ],
         ],
     ]); ?>
 </div>
