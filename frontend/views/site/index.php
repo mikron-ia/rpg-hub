@@ -78,8 +78,8 @@ if ($epic) {
                 </h3>
                 <div>
                     <?php if ($recap) {
-                        if ($recap->time) {
-                            echo '<p class="recap-box-time">' . $recap->time . '</p>';
+                        if ($recap->point_in_time_id) {
+                            echo '<p class="recap-box-time">' . $recap->pointInTime . '</p>';
                         }
                         echo $recap->getDataFormatted();
                     } else {

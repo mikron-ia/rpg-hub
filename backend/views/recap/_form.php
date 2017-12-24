@@ -1,6 +1,7 @@
 <?php
 
 use common\models\EpicQuery;
+use common\models\PointInTimeQuery;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -18,7 +19,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'time')->textInput() ?>
+        <?= $form->field($model, 'point_in_time_id')->dropDownList(PointInTimeQuery::getListOfPointsInTimeForSelector()) ?>
     </div>
 
     <div class="col-md-12">

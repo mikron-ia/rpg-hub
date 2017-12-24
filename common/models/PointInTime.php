@@ -119,4 +119,9 @@ class PointInTime extends ActiveRecord implements HasEpicControl
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_POINT_IN_TIME'));
     }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
 }

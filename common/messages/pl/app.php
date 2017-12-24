@@ -355,6 +355,7 @@ return [
     'LABEL_PASSWORD_NEW' => 'Nowe hasło',
     'LABEL_PASSWORD_OLD' => 'Stare hasło',
     'LABEL_PASSWORD_REPEAT' => 'Powtórzone hasło',
+    'LABEL_POINT_IN_TIME' => 'Punkt w czasie',
     'LABEL_POSITION' => 'Pozycja na liście',
     'LABEL_STATUS' => 'Status',
     'LABEL_TIME_IC' => 'Czas kampanii',

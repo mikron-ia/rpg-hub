@@ -38,9 +38,8 @@ $mostRecent = $searchModel->mostRecent();
                     'attribute' => 'name',
                 ],
                 [
-                    'attribute' => 'time',
+                    'attribute' => 'pointInTime',
                     'contentOptions' => ['class' => 'text-center text-nowrap'],
-
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',

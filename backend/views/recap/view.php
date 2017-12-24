@@ -65,9 +65,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => Html::a($model->epic->name, ['epic/view', 'key' => $model->epic->key], []),
             ],
             [
-                'attribute' => 'time',
+                'attribute' => 'pointInTime',
                 'format' => 'raw',
-                'value' => $model->time,
+                'value' => $model->pointInTime,
             ],
             [
                 'attribute' => 'position',

@@ -20,12 +20,12 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $key
  * @property string $name
  * @property string $data
- * @property string $time
  * @property string $seen_pack_id
  * @property string $point_in_time_id
  * @property int $position
  *
  * @property Epic $epic
+ * @property PointInTime $pointInTime
  * @property SeenPack $seenPack
  */
 class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSightings
@@ -43,7 +43,6 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
             [['epic_id', 'name', 'data'], 'required'],
             [['epic_id', 'point_in_time_id', 'position'], 'integer'],
             [['data'], 'string'],
-            [['time'], 'default', 'value' => null],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
             [
@@ -71,8 +70,8 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
             'key' => Yii::t('app', 'RECAP_KEY'),
             'name' => Yii::t('app', 'RECAP_NAME'),
             'data' => Yii::t('app', 'RECAP_DATA'),
-            'time' => Yii::t('app', 'RECAP_TIME'),
             'point_in_time_id' => Yii::t('app', 'LABEL_POINT_IN_TIME'),
+            'pointInTime' => Yii::t('app', 'LABEL_POINT_IN_TIME'),
             'position' => Yii::t('app', 'RECAP_POSITION'),
         ];
     }

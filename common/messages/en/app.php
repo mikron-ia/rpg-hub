@@ -355,6 +355,7 @@ return [
     'LABEL_PASSWORD_NEW' => 'New password',
     'LABEL_PASSWORD_OLD' => 'Old password',
     'LABEL_PASSWORD_REPEAT' => 'Repeat new password',
+    'LABEL_POINT_IN_TIME' => 'Point in time',
     'LABEL_POSITION' => 'Position on the list',
     'LABEL_STATUS' => 'Status',
     'LABEL_TIME_IC' => 'Epic-based time',

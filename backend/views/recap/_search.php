@@ -1,5 +1,6 @@
 <?php
 
+use common\models\PointInTimeQuery;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -18,8 +19,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'name') ?>
 
     <?= $form->field($model, 'data') ?>
-
-    <?= $form->field($model, 'time') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'BUTTON_SEARCH'), ['class' => 'btn btn-primary']) ?>

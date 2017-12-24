@@ -14,10 +14,8 @@ class m171012_204825_v0_11_0 extends Migration
         $this->addColumn('description', 'private_text_expanded', $this->text()->after('protected_text_expanded'));
 
         $this->addColumn('description_history', 'public_text_expanded', $this->text()->after('private_text'));
-        $this->addColumn('description_history', 'protected_text_expanded',
-            $this->text()->after('public_text_expanded'));
-        $this->addColumn('description_history', 'private_text_expanded',
-            $this->text()->after('protected_text_expanded'));
+        $this->addColumn('description_history', 'protected_text_expanded', $this->text()->after('public_text_expanded'));
+        $this->addColumn('description_history', 'private_text_expanded', $this->text()->after('protected_text_expanded'));
 
         $this->execute('UPDATE description SET public_text_expanded = public_text');
         $this->execute('UPDATE description SET protected_text_expanded = protected_text');
@@ -56,6 +54,8 @@ class m171012_204825_v0_11_0 extends Migration
 
         $this->importPointsInTimeFromRecaps();
 
+        $this->dropColumn('recap', 'time');
+
         /* Utility packs */
         $this->createTable('utility_bag', [
             'utility_bag_id' => $this->primaryKey()->unsigned(),
@@ -66,6 +66,10 @@ class m171012_204825_v0_11_0 extends Migration
     public function safeDown()
     {
         $this->dropTable('utility_bag');
+
+        $this->addColumn('recap', 'time', $this->string()->after('data'));
+
+        $this->restoreRecapTimeFromPointInTime();
 
         $this->dropForeignKey('recap_point_in_time', 'recap');
 
@@ -91,7 +95,7 @@ class m171012_204825_v0_11_0 extends Migration
         $recaps = \common\models\Recap::find()->all();
 
         foreach ($recaps as $recap) {
-            if(!empty($recap->time)) {
+            if (!empty($recap->time)) {
                 $pointInTime = new \common\models\PointInTime();
 
                 $pointInTime->epic_id = $recap->epic_id;
@@ -101,6 +105,22 @@ class m171012_204825_v0_11_0 extends Migration
                 $pointInTime->refresh();
 
                 $recap->point_in_time_id = $pointInTime->point_in_time_id;
+                $recap->save();
+            }
+        }
+    }
+
+    /**
+     * Converts PointInTime objects into `time` fields
+     */
+    private function restoreRecapTimeFromPointInTime()
+    {
+        /** @var \common\models\Recap[] $recaps */
+        $recaps = \common\models\Recap::find()->all();
+
+        foreach ($recaps as $recap) {
+            if(!empty($recap->point_in_time_id)) {
+                $recap->time = $recap->pointInTime->name;
                 $recap->save();
             }
         }
