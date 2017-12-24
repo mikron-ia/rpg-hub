@@ -1,5 +1,6 @@
 <?php
 
+use common\models\PointInTime;
 use yii\db\Migration;
 
 class m171012_204825_v0_11_0 extends Migration
@@ -33,7 +34,8 @@ class m171012_204825_v0_11_0 extends Migration
             'text_public' => $this->string(255),
             'text_protected' => $this->string(255),
             'text_private' => $this->string(255),
-            'position' => $this->integer()->unsigned()->notNull()
+            'status' => $this->string(10)->notNull()->defaultValue(PointInTime::STATUS_ACTIVE),
+            'position' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -95,11 +97,12 @@ class m171012_204825_v0_11_0 extends Migration
         $recaps = \common\models\Recap::find()->all();
 
         foreach ($recaps as $recap) {
-            if (!empty($recap->time)) {
-                $pointInTime = new \common\models\PointInTime();
+            if ($recap->time) {
+                $pointInTime = new PointInTime();
 
                 $pointInTime->epic_id = $recap->epic_id;
                 $pointInTime->name = $recap->time;
+                $pointInTime->status = PointInTime::STATUS_ACTIVE;
 
                 $pointInTime->save();
                 $pointInTime->refresh();

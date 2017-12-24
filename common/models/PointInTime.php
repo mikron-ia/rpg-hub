@@ -18,6 +18,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $text_public
  * @property string $text_protected
  * @property string $text_private
+ * @property string $status
  * @property string $position
  *
  * @property Epic $epic
@@ -25,6 +26,10 @@ use yii2tech\ar\position\PositionBehavior;
 class PointInTime extends ActiveRecord implements HasEpicControl
 {
     use ToolsForEntity;
+
+    public const STATUS_RETIRED = 'retired';
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_FUTURE = 'future';
 
     public static function tableName()
     {
@@ -39,6 +44,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl
             [['name'], 'string', 'max' => 120],
             [['text_public', 'text_protected', 'text_private'], 'string', 'max' => 255],
             [['text_public', 'text_protected', 'text_private'], 'default', 'value' => null],
+            [['status'], 'string', 'max' => 20],
             [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
         ];
     }
@@ -52,6 +58,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl
             'text_public' => Yii::t('app', 'POINT_IN_TIME_NAME_PUBLIC'),
             'text_protected' => Yii::t('app', 'POINT_IN_TIME_NAME_PROTECTED'),
             'text_private' => Yii::t('app', 'POINT_IN_TIME_NAME_PRIVATE'),
+            'status' => Yii::t('app', 'POINT_IN_TIME_STATUS'),
             'position' => Yii::t('app', 'POINT_IN_TIME_POSITION'),
         ];
     }

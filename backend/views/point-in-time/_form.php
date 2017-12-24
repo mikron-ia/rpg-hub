@@ -13,12 +13,16 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
     </div>
 
     <div class="col-md-6">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'status'); ?>
     </div>
 
     <div class="col-md-12">
