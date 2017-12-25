@@ -53,6 +53,7 @@ class Game extends ActiveRecord implements HasEpicControl
             [['notes'], 'string'],
             [['basics'], 'string', 'max' => 255],
             [['status'], 'string', 'max' => 20],
+            [['status'], 'in', 'range' => array_keys(Game::statusNames())],
             [
                 ['epic_id'],
                 'exist',
