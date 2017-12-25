@@ -1,6 +1,7 @@
 <?php
 
 use common\models\EpicQuery;
+use common\models\PointInTime;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -22,15 +23,15 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'status'); ?>
+        <?= $form->field($model, 'status')->dropDownList(PointInTime::statusNames()); ?>
     </div>
 
-    <div class="col-md-12">
-        <?= $form->field($model, 'text_public')->textarea(['rows' => 2]) ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'text_public')->textarea(['rows' => 4]) ?>
     </div>
 
-    <div class="col-md-12">
-        <?= $form->field($model, 'text_protected')->textarea(['rows' => 2]) ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'text_protected')->textarea(['rows' => 4]) ?>
     </div>
 
     <div class="col-md-12">

@@ -45,7 +45,18 @@ class PointInTime extends ActiveRecord implements HasEpicControl
             [['text_public', 'text_protected', 'text_private'], 'string', 'max' => 255],
             [['text_public', 'text_protected', 'text_private'], 'default', 'value' => null],
             [['status'], 'string', 'max' => 20],
-            [['epic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Epic::className(), 'targetAttribute' => ['epic_id' => 'epic_id']],
+            [
+                ['status'],
+                'in',
+                'range' => [PointInTime::STATUS_ACTIVE, PointInTime::STATUS_RETIRED, PointInTime::STATUS_FUTURE]
+            ],
+            [
+                ['epic_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Epic::className(),
+                'targetAttribute' => ['epic_id' => 'epic_id']
+            ],
         ];
     }
 
@@ -130,5 +141,48 @@ class PointInTime extends ActiveRecord implements HasEpicControl
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function statusNames(): array
+    {
+        return [
+            self::STATUS_ACTIVE => Yii::t('app', 'POINT_IN_TIME_STATUS_ACTIVE'),
+            self::STATUS_FUTURE => Yii::t('app', 'POINT_IN_TIME_STATUS_FUTURE'),
+            self::STATUS_RETIRED => Yii::t('app', 'POINT_IN_TIME_STATUS_RETIRED'),
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function statusCSS(): array
+    {
+        return [
+            self::STATUS_ACTIVE => 'point-in-time-status-active',
+            self::STATUS_FUTURE => 'point-in-time-status-future',
+            self::STATUS_RETIRED => 'point-in-time-status-retired',
+        ];
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        $names = self::statusNames();
+        return isset($names[$this->status]) ? $names[$this->status] : '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusCSS(): string
+    {
+        $names = self::statusCSS();
+        return isset($names[$this->status]) ? $names[$this->status] : '';
     }
 }

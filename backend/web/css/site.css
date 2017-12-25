@@ -400,3 +400,17 @@ p {
 .managed-tag {
     background-color: orange;
 }
+
+.point-in-time-status-active {
+    background-color: green;
+    color: white;
+}
+
+.point-in-time-status-future {
+    background-color: lightskyblue;
+}
+
+.point-in-time-status-retired {
+    background-color: grey;
+    color: white;
+}

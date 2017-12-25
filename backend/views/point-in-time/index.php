@@ -23,13 +23,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'position',
             'name',
             [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function(PointInTime $model) {
+                    return '<span class="table-tag ' . $model->getStatusCSS() . '">' . $model->getStatus() . '</span>';
+                },
+            ],
+            [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {up} {down}',
                 'buttons' => [
                     'up' => function ($url, PointInTime $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-arrow-up"></span>',
-                            ['game/move-down', 'id' => $model->point_in_time_id],
+                            ['point-in-time/move-down', 'id' => $model->point_in_time_id],
                             [
                                 'title' => Yii::t('app', 'LABEL_MOVE_UP'),
                             ]
@@ -38,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'down' => function ($url, PointInTime $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-arrow-down"></span>',
-                            ['game/move-up', 'id' => $model->point_in_time_id],
+                            ['point-in-time/move-up', 'id' => $model->point_in_time_id],
                             [
                                 'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
                             ]

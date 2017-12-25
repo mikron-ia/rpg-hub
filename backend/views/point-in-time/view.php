@@ -58,6 +58,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'attributes' => [
                 'name',
                 'position',
+                [
+                    'attribute' => 'status',
+                    'format' => 'raw',
+                    'value' => '<span class="table-tag ' . $model->getStatusCSS() . '">' . $model->getStatus() . '</span>',
+                ]
             ],
         ]) ?>
     </div>

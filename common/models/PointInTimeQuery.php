@@ -67,6 +67,7 @@ class PointInTimeQuery extends PointInTime
     }
 
     /**
+     * @param bool $limitToActive
      * @return ActiveQuery
      */
     static public function pointsInTimeAsActiveRecord($limitToActive = true): ActiveQuery
@@ -81,9 +82,8 @@ class PointInTimeQuery extends PointInTime
             ]);
         }
 
-        // @todo
         if($limitToActive) {
-            $query->andWhere([]);
+            $query->andWhere(['in', 'status', [PointInTime::STATUS_ACTIVE]]);
         }
 
         $query->orderBy('position DESC');
