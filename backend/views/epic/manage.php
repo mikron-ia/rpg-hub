@@ -2,8 +2,8 @@
 
 use common\models\Epic;
 use common\models\User;
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\EpicQuery */
@@ -31,6 +31,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'system',
             ],
             [
+                'label' => Yii::t('app', 'MANAGE_EPIC_TAGS'),
+                'format' => 'raw',
+                'value' => function (Epic $model) {
+                    $tags = [];
+
+                    /** @var User $user */
+                    $user = Yii::$app->user->identity;
+
+                    if ($model->isUserYourManager($user)) {
+                        $tags[] = '<span class="table-tag managed-tag">' . Yii::t('app', 'MANAGE_EPIC_TAG_MANAGED') . '</span>';
+                    }
+
+                    return implode($tags);
+                }
+            ],
+            [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{action}',
                 'buttons' => [
@@ -51,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
 
                         return Html::a('<span class="glyphicon ' . $glyph . '"></span>',
-                            [$action, 'id' => $key],
+                            [$action, 'key' => $model->key],
                             [
                                 'title' => $label,
                                 'data-confirm' => $confirmationText,

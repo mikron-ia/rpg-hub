@@ -375,6 +375,8 @@ return [
     'MANAGE_EPIC_DETACH_SUCCESS' => 'Attaching you as a manager to epic has succeeded. You no longer have access to the epic, unless you are a participant of another kind.',
     'MANAGE_EPIC_LABEL_ATTACH' => 'Attach as a manager',
     'MANAGE_EPIC_LABEL_DETACH' => 'Drop the management',
+    'MANAGE_EPIC_TAGS' => 'Tags',
+    'MANAGE_EPIC_TAG_MANAGED' => 'Under your management',
     'MEMBERSHIPS_NOT_FOUND' => 'No known members.',
     'MEMBERSHIP_BUTTON_ADD' => 'Add membership',
     'MEMBERSHIP_STATUS_ACTIVE' => 'Active',

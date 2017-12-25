@@ -388,3 +388,15 @@ p {
 .tab-pane > div {
     padding: 1.5em;
 }
+
+.table-tag {
+    padding: 1px 5px;
+    font-size: 0.8em;
+    border-radius: 3px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.managed-tag {
+    background-color: orange;
+}

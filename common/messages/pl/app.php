@@ -375,6 +375,8 @@ return [
     'MANAGE_EPIC_DETACH_SUCCESS' => 'Odłączenie od kampanii jako zarządca udane. Nie masz już dostępu do kampanii, chyba że jesteś jej uczestnikiem w inny sposób.',
     'MANAGE_EPIC_LABEL_ATTACH' => 'Dołącz do kampanii jako zarządca',
     'MANAGE_EPIC_LABEL_DETACH' => 'Porzuć rolę zarządcy kampanii',
+    'MANAGE_EPIC_TAGS' => 'Tagi',
+    'MANAGE_EPIC_TAG_MANAGED' => 'Pod Twoim zarządem',
     'MEMBERSHIPS_NOT_FOUND' => 'Brak znanych członków',
     'MEMBERSHIP_BUTTON_ADD' => 'Dodaj członkostwo',
     'MEMBERSHIP_STATUS_ACTIVE' => 'Aktywne',
