@@ -7,33 +7,15 @@ use yii\helpers\Html;
 
 ?>
 
-<div class="col-md-6">
+<div class="col-md-6 description-box" data-description-id="<?= $model->description_id ?>">
 
     <div class="buttoned-header">
 
         <h2><?= $model->position; ?>. <?= $model->getTypeName(); ?></h2>
 
         <div>
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_MOVE_DOWN'),
-                ['description/move-down', 'id' => $model->description_id],
-                [
-                    'class' => 'btn btn-default',
-                    'data' => [
-                        'method' => 'post',
-                    ],
-                ]
-            ); ?>
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_MOVE_UP'),
-                ['description/move-up', 'id' => $model->description_id],
-                [
-                    'class' => 'btn btn-default',
-                    'data' => [
-                        'method' => 'post',
-                    ],
-                ]
-            ); ?>
+            <span class="btn btn-default move-down" data-description-id="<?= $model->description_id ?>"><?= Yii::t('app', 'BUTTON_MOVE_DOWN') ?></span>
+            <span class="btn btn-default move-up" data-description-id="<?= $model->description_id ?>"><?= Yii::t('app', 'BUTTON_MOVE_UP') ?></span>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_UPDATE'),
                 '#',

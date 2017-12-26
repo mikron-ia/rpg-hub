@@ -181,38 +181,34 @@ final class DescriptionController extends Controller
 
     /**
      * @param $id
-     * @return Response
+     * @return bool
      * @throws NotFoundHttpException
+     * @throws MethodNotAllowedHttpException
      */
     public function actionMoveUp($id)
     {
-        $model = $this->findModel($id);
-        $model->movePrev();
-
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
+        if (!Yii::$app->request->isAjax) {
+            throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
         }
+
+        $model = $this->findModel($id);
+        return $model->movePrev();
     }
 
     /**
      * @param $id
-     * @return Response
+     * @return bool
      * @throws NotFoundHttpException
+     * @throws MethodNotAllowedHttpException
      */
     public function actionMoveDown($id)
     {
-        $model = $this->findModel($id);
-        $model->moveNext();
-
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
+        if (!Yii::$app->request->isAjax) {
+            throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
         }
+
+        $model = $this->findModel($id);
+        return $model->moveNext();
     }
 
     public function actionDisplay($id)
