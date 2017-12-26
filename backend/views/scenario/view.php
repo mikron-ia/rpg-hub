@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $items = [
     [
         'label' => Yii::t('app', 'SCENARIO_DESCRIPTIONS_TAB'),
-        'content' => $this->render('../description/_view_descriptions', ['model' => $model]),
+        'content' => $this->render('../description/_view_descriptions_empty', ['model' => $model]),
         'encode' => false,
         'active' => true,
     ],
@@ -40,3 +40,5 @@ $items = [
     ]) ?>
 
 </div>
+
+<?php $this->registerJsFile('@web/js/description-user.js', ['depends' => [\yii\web\JqueryAsset::className()]]) ?>

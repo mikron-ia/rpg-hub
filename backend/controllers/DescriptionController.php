@@ -218,7 +218,7 @@ final class DescriptionController extends Controller
         }
 
         $model = $this->findPack($id);
-        return $this->renderAjax('_view_descriptions_display', ['model' => $model]);
+        return $this->renderAjax('_view_descriptions', ['model' => $model]);
     }
 
     /**
