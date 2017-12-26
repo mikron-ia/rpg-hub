@@ -14,4 +14,10 @@ interface HasDescriptions
      * @return string[]
      */
     static public function allowedDescriptionTypes(): array;
+
+    /**
+     * Provides ID of the description pack
+     * @return int
+     */
+    public function getDescriptionPackId(): int;
 }

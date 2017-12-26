@@ -466,4 +466,9 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             return $sighting->status;
         }
     }
+
+    public function getDescriptionPackId(): int
+    {
+        return $this->description_pack_id;
+    }
 }

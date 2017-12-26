@@ -109,6 +109,11 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
 
+    public function getDescriptionPackId(): int
+    {
+        return $this->description_pack_id;
+    }
+
     static public function allowedDescriptionTypes(): array
     {
         return [

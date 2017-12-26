@@ -3,15 +3,17 @@
 namespace backend\controllers;
 
 use common\models\core\Visibility;
+use common\models\Description;
 use common\models\DescriptionHistory;
 use common\models\DescriptionPack;
 use common\models\Parameter;
 use Yii;
-use common\models\Description;
 use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\MethodNotAllowedHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -26,7 +28,16 @@ final class DescriptionController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'update', 'view', 'move-up', 'move-down', 'history'],
+                        'actions' => [
+                            'create',
+                            'delete',
+                            'update',
+                            'view',
+                            'move-up',
+                            'move-down',
+                            'history',
+                            'display'
+                        ],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -45,6 +56,7 @@ final class DescriptionController extends Controller
      * Displays a single Description model.
      * @param string $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
@@ -76,7 +88,7 @@ final class DescriptionController extends Controller
         $model->description_pack_id = $pack_id;
 
         $language = $descriptionPack->getEpic()->parameterPack->getParameterValueByCode(Parameter::LANGUAGE);
-        if(in_array($language, Yii::$app->params['languagesAvailable'])) {
+        if (in_array($language, Yii::$app->params['languagesAvailable'])) {
             $model->lang = $language;
         } else {
             $model->lang = 'en';
@@ -98,6 +110,7 @@ final class DescriptionController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
@@ -122,6 +135,7 @@ final class DescriptionController extends Controller
     /**
      * @param string $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionHistory($id)
     {
@@ -148,6 +162,10 @@ final class DescriptionController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -161,6 +179,11 @@ final class DescriptionController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return Response
+     * @throws NotFoundHttpException
+     */
     public function actionMoveUp($id)
     {
         $model = $this->findModel($id);
@@ -174,6 +197,11 @@ final class DescriptionController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return Response
+     * @throws NotFoundHttpException
+     */
     public function actionMoveDown($id)
     {
         $model = $this->findModel($id);
@@ -187,6 +215,16 @@ final class DescriptionController extends Controller
         }
     }
 
+    public function actionDisplay($id)
+    {
+        if (!Yii::$app->request->isAjax) {
+            throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
+        }
+
+        $model = $this->findPack($id);
+        return $this->renderAjax('_view_descriptions_display', ['model' => $model]);
+    }
+
     /**
      * Finds the Description model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -194,7 +232,7 @@ final class DescriptionController extends Controller
      * @return Description the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($id): Description
     {
         $model = Description::findOne(['description_id' => $id]);
 
@@ -210,10 +248,31 @@ final class DescriptionController extends Controller
     }
 
     /**
+     * @param $id
+     * @return DescriptionPack
+     * @throws NotFoundHttpException
+     * @throws ForbiddenHttpException
+     */
+    protected function findPack($id): DescriptionPack
+    {
+        $model = DescriptionPack::findOne(['description_pack_id' => $id]);
+
+        if ($model === null) {
+            throw new NotFoundHttpException(Yii::t('app', 'DESCRIPTION_PACK_NOT_AVAILABLE'));
+        }
+
+        if (!$model->canUserReadYou()) {
+            throw new ForbiddenHttpException(Yii::t('app', 'DESCRIPTION_PACK_NOT_ACCESSIBLE'));
+        }
+
+        return $model;
+    }
+
+    /**
      * @param string[] $default
      * @return Response
      */
-    protected function returnToReferrer(array $default):Response
+    protected function returnToReferrer(array $default): Response
     {
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {

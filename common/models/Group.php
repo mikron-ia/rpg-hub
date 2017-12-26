@@ -274,6 +274,11 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $decodedData;
     }
 
+    public function getDescriptionPackId(): int
+    {
+        return $this->description_pack_id;
+    }
+
     public function isVisibleInApi()
     {
         return true;
