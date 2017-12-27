@@ -15,6 +15,7 @@ use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "group".
@@ -35,6 +36,8 @@ use yii\db\ActiveRecord;
  * @property ExternalDataPack $externalDataPack
  * @property ImportancePack $importancePack
  * @property Epic $epic
+ * @property Group $masterGroup
+ * @property Group[] $subGroups
  * @property SeenPack $seenPack
  * @property GroupMembership[] $groupCharacterMemberships
  * @property GroupMembership[] $groupCharacterMembershipsOrderedByPosition
@@ -95,6 +98,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
             'importance_pack_id' => Yii::t('app', 'IMPORTANCE_PACK'),
+            'master_group_id' => Yii::t('app', 'GROUP_MASTER_GROUP'),
         ];
     }
 
@@ -176,7 +180,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getExternalDataPack()
     {
@@ -192,11 +196,27 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getImportancePack()
     {
         return $this->hasOne(ImportancePack::className(), ['importance_pack_id' => 'importance_pack_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMasterGroup()
+    {
+        return $this->hasOne(Group::className(), ['group_id' => 'master_group_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubGroups()
+    {
+        return $this->hasMany(Group::className(), ['master_group_id' => 'group_id']);
     }
 
     /**
@@ -397,5 +417,10 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         } else {
             return $sighting->status;
         }
+    }
+
+    public function __toString()
+    {
+        return Html::a($this->name, ['group/view', 'key' => $this->key]);
     }
 }

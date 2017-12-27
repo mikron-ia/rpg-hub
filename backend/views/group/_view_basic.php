@@ -1,6 +1,5 @@
 <?php
 
-use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -36,6 +35,18 @@ use yii\widgets\DetailView;
                 [
                     'attribute' => 'importance_category',
                     'value' => $model->getImportanceCategory(),
+                ],
+                [
+                    'attribute' => 'master_group_id',
+                    'format' => 'raw',
+                    'value' => $model->masterGroup ?? '<em>' . Yii::t('app', 'GROUP_WITHOUT_MASTER') . '</em>',
+                ],
+                [
+                    'label' => Yii::t('app', 'GROUP_SUBGROUPS'),
+                    'format' => 'raw',
+                    'value' => !empty($model->subGroups) ?
+                        implode(',', $model->subGroups) :
+                        '<em>' . Yii::t('app', 'GROUP_WITHOUT_SUBGROUPS') . '</em>',
                 ],
             ],
         ]) ?>

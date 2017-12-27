@@ -65,6 +65,7 @@ final class GroupController extends Controller
      * Displays a single Group model.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionView($key)
     {
@@ -118,6 +119,7 @@ final class GroupController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($key)
     {

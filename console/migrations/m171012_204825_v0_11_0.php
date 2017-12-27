@@ -63,10 +63,19 @@ class m171012_204825_v0_11_0 extends Migration
             'utility_bag_id' => $this->primaryKey()->unsigned(),
             'class' => $this->string(20)->notNull()->comment("Name of class this pack belongs to; necessary for proper type assignment"),
         ], $tableOptions);
+
+        /* Subgroups */
+        $this->addColumn('group', 'master_group_id', $this->integer(11)->unsigned());
+
+        $this->addForeignKey('group_master', 'group', 'master_group_id', 'group', 'group_id', 'RESTRICT', 'CASCADE');
     }
 
     public function safeDown()
     {
+        $this->dropForeignKey('group_master', 'group');
+
+        $this->dropColumn('group', 'master_group_id');
+
         $this->dropTable('utility_bag');
 
         $this->addColumn('recap', 'time', $this->string()->after('data'));

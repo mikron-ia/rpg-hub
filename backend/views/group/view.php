@@ -18,13 +18,13 @@ $items = [
             'model' => $model,
         ]),
         'encode' => false,
-        'active' => false,
+        'active' => true,
     ],
     [
         'label' => Yii::t('app', 'GROUP_DESCRIPTIONS_TAB'),
         'content' => $this->render('../description/_view_descriptions_empty', ['model' => $model]),
         'encode' => false,
-        'active' => true,
+        'active' => false,
     ],
     [
         'label' => Yii::t('app', 'GROUP_MEMBERSHIPS'),

@@ -37,6 +37,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 ],
                 [
+                    'attribute' => 'master_group_id',
+                    'format' => 'raw',
+                    'value' => function (Group $model) {
+                        return $model->masterGroup ?? '<em>&mdash;</em>';
+                    }
+                ],
+                [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view}',
                     'buttons' => [
