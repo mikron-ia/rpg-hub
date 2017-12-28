@@ -384,6 +384,7 @@ return [
     'MANAGE_EPIC_LABEL_DETACH' => 'Drop the management',
     'MANAGE_EPIC_TAGS' => 'Tags',
     'MANAGE_EPIC_TAG_MANAGED' => 'Under your management',
+    'MASTER_GROUP_PROMPT' => 'Select master group, if applicable',
     'MEMBERSHIPS_NOT_FOUND' => 'No known members.',
     'MEMBERSHIP_BUTTON_ADD' => 'Add membership',
     'MEMBERSHIP_STATUS_ACTIVE' => 'Active',

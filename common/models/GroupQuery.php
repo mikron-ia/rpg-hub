@@ -79,4 +79,29 @@ final class GroupQuery extends Group
 
         return $dataProvider;
     }
+
+    static public function getAllFromCurrentEpicForSelector()
+    {
+        $query = Group::find();
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            $query->where('0=1');
+        } else {
+            $query->andWhere([
+                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+                'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
+            ]);
+        }
+
+        /** @var Group[] $records */
+        $records = $query->all();
+
+        $list = [];
+
+        foreach ($records as $record) {
+            $list[$record->group_id] = $record->name;
+        }
+
+        return $list;
+    }
 }

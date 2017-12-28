@@ -58,7 +58,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     {
         return [
             [['epic_id', 'name'], 'required'],
-            [['epic_id'], 'integer'],
+            [['epic_id', 'master_group_id'], 'integer'],
             [['name'], 'string', 'max' => 120],
             [
                 ['epic_id'],

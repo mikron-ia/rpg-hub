@@ -4,6 +4,7 @@ use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
 use common\models\EpicQuery;
 use common\models\Group;
+use common\models\GroupQuery;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -18,19 +19,38 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-4">
-        <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
+        <?= $form->field(
+            $model,
+            'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()
+        ); ?>
     </div>
 
     <div class="col-md-4">
-        <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(Group::allowedVisibilities())) ?>
+        <?= $form->field(
+            $model,
+            'visibility')->dropDownList(Visibility::visibilityNames(Group::allowedVisibilities())
+        ) ?>
     </div>
 
     <div class="col-md-4">
-        <?= $form->field($model, 'importance_category')->dropDownList(ImportanceCategory::importanceNames()) ?>
+        <?= $form->field($model, 'master_group_id')->dropDownList(
+            GroupQuery::getAllFromCurrentEpicForSelector(),
+            ['prompt' => ' --- ' . Yii::t('app', 'MASTER_GROUP_PROMPT') . ' --- ']
+        ) ?>
     </div>
 
-    <div class="col-md-12">
-        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <div class="col-md-3">
+        <?= $form->field(
+            $model,
+            'importance_category')->dropDownList(ImportanceCategory::importanceNames()
+        ) ?>
+    </div>
+
+    <div class="col-md-9">
+        <?= $form->field(
+            $model,
+            'name')->textInput(['maxlength' => true]
+        ) ?>
     </div>
 
     <div class="clearfix"></div>

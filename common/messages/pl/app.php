@@ -384,6 +384,7 @@ return [
     'MANAGE_EPIC_LABEL_DETACH' => 'Porzuć rolę zarządcy kampanii',
     'MANAGE_EPIC_TAGS' => 'Tagi',
     'MANAGE_EPIC_TAG_MANAGED' => 'Pod Twoim zarządem',
+    'MASTER_GROUP_PROMPT' => 'Wybierz grupę nadrzędną',
     'MEMBERSHIPS_NOT_FOUND' => 'Brak znanych członków',
     'MEMBERSHIP_BUTTON_ADD' => 'Dodaj członkostwo',
     'MEMBERSHIP_STATUS_ACTIVE' => 'Aktywne',
