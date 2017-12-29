@@ -25,7 +25,7 @@ use yii\helpers\Html;
                     'label' => Yii::t('app', 'LABEL_GROUP'),
                     'format' => 'raw',
                     'value' => function (GroupMembership $model, $key, $index, $widget) {
-                        return Html::a($model->group->name, ['group/view', 'key' => $model->group->key]);
+                        return $model->group . ($model->group->master_group_id ? ' (' . $model->group->masterGroup . ')' : '');
                     },
                 ],
                 [

@@ -31,6 +31,7 @@ use yii\helpers\Html;
  * @property string $description_pack_id
  * @property string $external_data_pack_id
  * @property string $importance_pack_id
+ * @property string $master_group_id
  *
  * @property DescriptionPack $descriptionPack
  * @property ExternalDataPack $externalDataPack

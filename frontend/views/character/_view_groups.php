@@ -21,7 +21,7 @@
                 'label' => Yii::t('app', 'LABEL_GROUP'),
                 'format' => 'raw',
                 'value' => function (\common\models\GroupMembership $model, $key, $index, $widget) {
-                    return \yii\helpers\Html::a($model->group->name, ['group/view', 'key' => $model->group->key]);
+                    return $model->group . ($model->group->master_group_id ? ' (' . $model->group->masterGroup . ')' : '');
                 },
             ],
             [
