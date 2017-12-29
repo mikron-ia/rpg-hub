@@ -675,6 +675,8 @@ return [
     'USER_UPDATE_TITLE {user_name}' => 'User data edit: {user_name}',
     'USER_USERNAME' => 'Username',
     'USER_VIEW_TITLE {user_name}' => 'User {user_name}',
+    'UTILITY_BAG_CLASS' => 'Class',
+    'UTILITY_BAG_ID' => 'ID',
     'VISIBILITY_DESIGNATED' => 'Designated only',
     'VISIBILITY_DESIGNATED_LOWERCASE' => 'Designated only',
     'VISIBILITY_FULL' => 'To all',
