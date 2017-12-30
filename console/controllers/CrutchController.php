@@ -2,9 +2,11 @@
 
 namespace console\controllers;
 
+use common\models\Article;
 use common\models\Character;
 use common\models\CharacterSheet;
 use common\models\Epic;
+use common\models\Game;
 use common\models\Group;
 use common\models\Recap;
 use common\models\Story;
@@ -101,7 +103,7 @@ class CrutchController extends Controller
      */
     public function actionSaveArticles()
     {
-        $objects = Recap::find()->all();
+        $objects = Article::find()->all();
 
         foreach ($objects as $object) {
             $object->save(false);
@@ -114,7 +116,7 @@ class CrutchController extends Controller
      */
     public function actionSaveGames()
     {
-        $objects = Recap::find()->all();
+        $objects = Game::find()->all();
 
         foreach ($objects as $object) {
             $object->save(false);
