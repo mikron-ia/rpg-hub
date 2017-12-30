@@ -71,36 +71,40 @@ class m171012_204825_v0_11_0 extends Migration
 
         $this->addColumn('article', 'utility_bag_id', $this->integer(11)->unsigned());
         $this->addColumn('character', 'utility_bag_id', $this->integer(11)->unsigned());
+        $this->addColumn('character_sheet', 'utility_bag_id', $this->integer(11)->unsigned());
         $this->addColumn('epic', 'utility_bag_id', $this->integer(11)->unsigned());
         $this->addColumn('game', 'utility_bag_id', $this->integer(11)->unsigned());
         $this->addColumn('group', 'utility_bag_id', $this->integer(11)->unsigned());
         $this->addColumn('recap', 'utility_bag_id', $this->integer(11)->unsigned());
         $this->addColumn('story', 'utility_bag_id', $this->integer(11)->unsigned());
 
-        $this->addForeignKey('article_utility_bag', '{{%character}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('article_utility_bag', '{{%article}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('character_utility_bag', '{{%character}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('epic_utility_bag', '{{%character}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('game_utility_bag', '{{%character}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('group_utility_bag', '{{%character}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('recap_utility_bag', '{{%character}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('story_utility_bag', '{{%character}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('character_sheet_utility_bag', '{{%character_sheet}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('epic_utility_bag', '{{%epic}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('game_utility_bag', '{{%game}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('group_utility_bag', '{{%group}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('recap_utility_bag', '{{%recap}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('story_utility_bag', '{{%story}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
     }
 
     public function safeDown()
     {
-        $this->dropForeignKey('story_utility_bag', '{{%character}}');
-        $this->dropForeignKey('recap_utility_bag', '{{%character}}');
-        $this->dropForeignKey('group_utility_bag', '{{%character}}');
-        $this->dropForeignKey('game_utility_bag', '{{%character}}');
-        $this->dropForeignKey('epic_utility_bag', '{{%character}}');
+        $this->dropForeignKey('story_utility_bag', '{{%story}}');
+        $this->dropForeignKey('recap_utility_bag', '{{%recap}}');
+        $this->dropForeignKey('group_utility_bag', '{{%group}}');
+        $this->dropForeignKey('game_utility_bag', '{{%game}}');
+        $this->dropForeignKey('epic_utility_bag', '{{%epic}}');
+        $this->dropForeignKey('character_sheet_utility_bag', '{{%character_sheet}}');
         $this->dropForeignKey('character_utility_bag', '{{%character}}');
-        $this->dropForeignKey('article_utility_bag', '{{%character}}');
+        $this->dropForeignKey('article_utility_bag', '{{%article}}');
 
         $this->dropColumn('story', 'utility_bag_id');
         $this->dropColumn('recap', 'utility_bag_id');
         $this->dropColumn('group', 'utility_bag_id');
         $this->dropColumn('game', 'utility_bag_id');
         $this->dropColumn('epic', 'utility_bag_id');
+        $this->dropColumn('character_sheet', 'utility_bag_id');
         $this->dropColumn('character', 'utility_bag_id');
         $this->dropColumn('article', 'utility_bag_id');
 

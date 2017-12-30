@@ -19,20 +19,25 @@ use yii\web\HttpException;
  *
  * @property string $epic_id
  * @property string $key
- * @property string $name
- * @property string $system
+ * @property string $name Public name for the epic
+ * @property string $system Code for the system used
  * @property string $parameter_pack_id
  * @property string $seen_pack_id
+ * @property string $utility_bag_id
  *
  * @property CharacterSheet[] $characters
  * @property ParameterPack $parameterPack
+ * @property SeenPack $seenPack
+ * @property UtilityBag $utilityBag
  * @property User[] $gms
  * @property User[] $players
  * @property Group[] $groups
  * @property Participant[] $participants
+ * @property User[] $users
+ * @property PointInTime[] $pointsInTime
  * @property Character[] $people
  * @property Recap[] $recaps
- * @property SeenPack $seenPack
+ * @property Scenario[] $scenarios
  * @property Story[] $stories
  *
  * @todo: Someday, system field will have to come from a closed list of supported systems
@@ -70,6 +75,8 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             'name' => Yii::t('app', 'EPIC_NAME'),
             'system' => Yii::t('app', 'EPIC_GAME_SYSTEM'),
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
+            'seen_pack_id' => Yii::t('app', 'SEEN_PACK'),
+            'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
     }
 
@@ -131,6 +138,30 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     public function getParameterPack()
     {
         return $this->hasOne(ParameterPack::className(), ['parameter_pack_id' => 'parameter_pack_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getUtilityBag()
+    {
+        return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getGames()
+    {
+        return $this->hasMany(Game::className(), ['epic_id' => 'epic_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getPointsInTime()
+    {
+        return $this->hasMany(PointInTime::className(), ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -328,6 +359,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     /**
      * Determines whether user can view active epic
      * @return bool
+     * @throws HttpException
      */
     static public function canUserViewActiveEpic(): bool
     {
@@ -392,6 +424,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
 
             PerformedAction::createRecord(PerformedAction::PERFORMED_ACTION_MANAGER_ATTACH, 'Epic', $this->epic_id);
         } catch (Exception $e) {
+            /* @todo Add logging */
             return false;
         }
 
