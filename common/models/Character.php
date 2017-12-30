@@ -34,13 +34,15 @@ use yii\db\ActiveRecord;
  * @property string $external_data_pack_id
  * @property string $seen_pack_id
  * @property string $importance_pack_id
+ * @property string $utility_bag_id
  *
  * @property Epic $epic
- * @property CharacterSheet $character
+ * @property CharacterSheet $characterSheet
  * @property DescriptionPack $descriptionPack
  * @property ExternalDataPack $externalDataPack
  * @property ImportancePack $importancePack
  * @property SeenPack $seenPack
+ * @property UtilityBag $utilityBag
  * @property CharacterSheet[] $characterSheets
  * @property GroupMembership[] $groupMemberships
  * @property GroupMembership[] $groupMembershipsVisibleToUser
@@ -117,6 +119,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
             'seen_pack_id' => Yii::t('app', 'SEEN_PACK_ID'),
             'importance_pack_id' => Yii::t('app', 'IMPORTANCE_PACK'),
+            'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
     }
 
@@ -149,6 +152,11 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         if (empty($this->seen_pack_id)) {
             $pack = SeenPack::create('Character');
             $this->seen_pack_id = $pack->seen_pack_id;
+        }
+
+        if (empty($this->utility_bag_id)) {
+            $pack = UtilityBag::create('Character');
+            $this->utility_bag_id = $pack->utility_bag_id;
         }
 
         if (empty($this->importance_pack_id)) {

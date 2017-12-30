@@ -96,8 +96,36 @@ class CrutchController extends Controller
     }
 
     /**
+     * Saves all articles
+     * @return void
+     */
+    public function actionSaveArticles()
+    {
+        $objects = Recap::find()->all();
+
+        foreach ($objects as $object) {
+            $object->save(false);
+        }
+    }
+
+    /**
+     * Saves all games
+     * @return void
+     */
+    public function actionSaveGames()
+    {
+        $objects = Recap::find()->all();
+
+        foreach ($objects as $object) {
+            $object->save(false);
+        }
+    }
+
+    /**
      * Saves everything - to be used to trigger beforeSave() or afterSave() on all
      * @return void
+     * @throws \yii\base\InvalidRouteException
+     * @throws \yii\console\Exception
      */
     public function actionSaveAll()
     {
@@ -107,5 +135,7 @@ class CrutchController extends Controller
         $this->runAction('save-characters');
         $this->runAction('save-character-sheets');
         $this->runAction('save-groups');
+        $this->runAction('save-articles');
+        $this->runAction('save-games');
     }
 }

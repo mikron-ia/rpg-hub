@@ -23,10 +23,12 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $seen_pack_id
  * @property string $point_in_time_id
  * @property int $position
+ * @property string $utility_bag_id
  *
  * @property Epic $epic
  * @property PointInTime $pointInTime
  * @property SeenPack $seenPack
+ * @property UtilityBag $utilityBag
  */
 class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSightings
 {
@@ -73,6 +75,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
             'point_in_time_id' => Yii::t('app', 'LABEL_POINT_IN_TIME'),
             'pointInTime' => Yii::t('app', 'LABEL_POINT_IN_TIME'),
             'position' => Yii::t('app', 'RECAP_POSITION'),
+            'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
     }
 
@@ -99,6 +102,11 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         if (empty($this->seen_pack_id)) {
             $pack = SeenPack::create('Recap');
             $this->seen_pack_id = $pack->seen_pack_id;
+        }
+
+        if (empty($this->utility_bag_id)) {
+            $pack = UtilityBag::create('Recap');
+            $this->utility_bag_id = $pack->utility_bag_id;
         }
 
         return parent::beforeSave($insert);

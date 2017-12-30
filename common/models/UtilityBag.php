@@ -33,4 +33,18 @@ class UtilityBag extends ActiveRecord
             'class' => Yii::t('app', 'UTILITY_BAG_CLASS'),
         ];
     }
+
+    /**
+     * @param string $class
+     * @return UtilityBag
+     */
+    public static function create(string $class): UtilityBag
+    {
+        $pack = new UtilityBag(['class' => $class]);
+
+        $pack->save();
+        $pack->refresh();
+
+        return $pack;
+    }
 }

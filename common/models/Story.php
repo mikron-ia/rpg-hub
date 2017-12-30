@@ -30,10 +30,12 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $data
  * @property string $parameter_pack_id
  * @property string $seen_pack_id
+ * @property string $utility_bag_id
  *
  * @property Epic $epic
  * @property ParameterPack $parameterPack
  * @property SeenPack $seenPack
+ * @property UtilityBag $utilityBag
  */
 class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl, HasSightings, HasVisibility
 {
@@ -97,6 +99,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
             'data' => Yii::t('app', 'STORY_DATA'),
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
+            'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
     }
 
@@ -129,6 +132,11 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         if (empty($this->seen_pack_id)) {
             $pack = SeenPack::create('Story');
             $this->seen_pack_id = $pack->seen_pack_id;
+        }
+
+        if (empty($this->utility_bag_id)) {
+            $pack = UtilityBag::create('Story');
+            $this->utility_bag_id = $pack->utility_bag_id;
         }
 
         return parent::beforeSave($insert);

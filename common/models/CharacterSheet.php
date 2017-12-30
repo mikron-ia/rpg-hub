@@ -22,11 +22,13 @@ use yii\db\ActiveRecord;
  * @property string $data
  * @property string $currently_delivered_character_id
  * @property string $seen_pack_id
+ * @property string $utility_bag_id
  *
  * @property Epic $epic
  * @property Character $currentlyDeliveredPerson
  * @property Character[] $people
  * @property SeenPack $seenPack
+ * @property UtilityBag $utilityBag
  */
 class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl, HasSightings
 {
@@ -78,6 +80,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             'name' => Yii::t('app', 'CHARACTER_SHEET_NAME'),
             'data' => Yii::t('app', 'CHARACTER_SHEET_DATA'),
             'currently_delivered_character_id' => Yii::t('app', 'CHARACTER_SHEET_DELIVERED_CHARACTER_ID'),
+            'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
     }
 
@@ -105,6 +108,11 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         if (empty($this->seen_pack_id)) {
             $pack = SeenPack::create('CharacterSheet');
             $this->seen_pack_id = $pack->seen_pack_id;
+        }
+
+        if (empty($this->utility_bag_id)) {
+            $pack = UtilityBag::create('CharacterSheet');
+            $this->utility_bag_id = $pack->utility_bag_id;
         }
 
         return parent::beforeSave($insert);

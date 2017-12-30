@@ -21,10 +21,12 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $status
  * @property integer $position
  * @property string $notes
+ * @property string $utility_bag_id
  *
  * @property string $notesFormatted
  *
  * @property Epic $epic
+ * @property UtilityBag $utilityBag
  */
 class Game extends ActiveRecord implements HasEpicControl
 {
@@ -74,7 +76,18 @@ class Game extends ActiveRecord implements HasEpicControl
             'status' => Yii::t('app', 'GAME_STATUS'),
             'position' => Yii::t('app', 'GAME_POSITION'),
             'notes' => Yii::t('app', 'GAME_NOTES'),
+            'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (empty($this->utility_bag_id)) {
+            $pack = UtilityBag::create('Game');
+            $this->utility_bag_id = $pack->utility_bag_id;
+        }
+
+        return parent::beforeSave($insert);
     }
 
     public function behaviors()

@@ -27,10 +27,12 @@ use yii2tech\ar\position\PositionBehavior;
  * @property integer $position
  * @property string $text_raw
  * @property string $text_ready
+ * @property string $utility_bag_id
  *
  * @property DescriptionPack $descriptionPack
  * @property Epic $epic
  * @property SeenPack $seenPack
+ * @property UtilityBag $utilityBag
  */
 class Article extends ActiveRecord implements HasEpicControl, HasVisibility, HasSightings
 {
@@ -85,6 +87,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             'position' => Yii::t('app', 'ARTICLE_POSITION'),
             'text_raw' => Yii::t('app', 'ARTICLE_TEXT'),
             'text_ready' => Yii::t('app', 'ARTICLE_TEXT'),
+            'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
     }
 
@@ -116,6 +119,11 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         if (empty($this->seen_pack_id)) {
             $pack = SeenPack::create('Article');
             $this->seen_pack_id = $pack->seen_pack_id;
+        }
+
+        if (empty($this->utility_bag_id)) {
+            $pack = UtilityBag::create('Article');
+            $this->utility_bag_id = $pack->utility_bag_id;
         }
 
         if (empty($this->description_pack_id)) {

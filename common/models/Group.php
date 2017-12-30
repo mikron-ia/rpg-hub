@@ -32,6 +32,7 @@ use yii\helpers\Html;
  * @property string $external_data_pack_id
  * @property string $importance_pack_id
  * @property string $master_group_id
+ * @property string $utility_bag_id
  *
  * @property DescriptionPack $descriptionPack
  * @property ExternalDataPack $externalDataPack
@@ -40,6 +41,7 @@ use yii\helpers\Html;
  * @property Group $masterGroup
  * @property Group[] $subGroups
  * @property SeenPack $seenPack
+ * @property UtilityBag $utilityBag
  * @property GroupMembership[] $groupCharacterMemberships
  * @property GroupMembership[] $groupCharacterMembershipsOrderedByPosition
  * @property GroupMembership[] $groupCharacterMembershipsActive
@@ -100,6 +102,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
             'importance_pack_id' => Yii::t('app', 'IMPORTANCE_PACK'),
             'master_group_id' => Yii::t('app', 'GROUP_MASTER_GROUP'),
+            'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
     }
 
@@ -129,6 +132,11 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         if (empty($this->seen_pack_id)) {
             $pack = SeenPack::create('Group');
             $this->seen_pack_id = $pack->seen_pack_id;
+        }
+
+        if (empty($this->utility_bag_id)) {
+            $pack = UtilityBag::create('Group');
+            $this->utility_bag_id = $pack->utility_bag_id;
         }
 
         if (empty($this->importance_pack_id)) {
