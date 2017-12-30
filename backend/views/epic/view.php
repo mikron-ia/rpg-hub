@@ -2,9 +2,10 @@
 
 use common\models\Group;
 use common\models\Parameter;
+use common\models\Participant;
+use common\models\Recap;
 use common\models\Seen;
 use common\models\Story;
-use common\models\Participant;
 use yii\bootstrap\Modal;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -181,20 +182,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'name',
                 ],
                 [
-                    'attribute' => 'time',
+                    'attribute' => 'pointInTime',
+                    'format' => 'raw',
+                    'value' => function (Recap $model) {
+                        return $model->pointInTime;
+                    },
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {update}',
                     'buttons' => [
-                        'view' => function ($url, $model, $key) {
+                        'view' => function ($url, Recap $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-eye-open"></span>',
                                 Yii::$app->urlManager->createUrl(['recap/view', 'key' => $model->key]),
                                 ['title' => Yii::t('app', 'BUTTON_VIEW')]
                             );
                         },
-                        'update' => function ($url, $model, $key) {
+                        'update' => function ($url, Recap $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-pencil"></span>',
                                 Yii::$app->urlManager->createUrl(['recap/update', 'key' => $model->key]),
