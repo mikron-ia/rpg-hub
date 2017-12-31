@@ -33,6 +33,15 @@ class m171012_204825_v0_11_0 extends Migration
         $this->addForeignKey('recap_utility_bag', '{{%recap}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('story_utility_bag', '{{%story}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
 
+        /* Flags */
+        $this->createTable('flag', [
+            'utility_bag_id' => $this->integer()->unsigned()->notNull(),
+            'type' => $this->char(8)->notNull(),
+            'PRIMARY KEY (utility_bag_id, type)'
+        ], $tableOptions);
+
+        $this->addForeignKey('flag_utility_bag','{{%flag}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
+
         /* Description rework */
         $this->addColumn('description', 'public_text_expanded', $this->text()->after('private_text'));
         $this->addColumn('description', 'protected_text_expanded', $this->text()->after('public_text_expanded'));
@@ -58,7 +67,7 @@ class m171012_204825_v0_11_0 extends Migration
             'text_public' => $this->string(255),
             'text_protected' => $this->string(255),
             'text_private' => $this->string(255),
-            'status' => $this->string(10)->notNull()->defaultValue(PointInTime::STATUS_ACTIVE),
+            'status' => $this->char(7)->notNull()->defaultValue(PointInTime::STATUS_ACTIVE),
             'position' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
@@ -86,25 +95,16 @@ class m171012_204825_v0_11_0 extends Migration
         $this->addColumn('group', 'master_group_id', $this->integer(11)->unsigned());
 
         $this->addForeignKey('group_master', 'group', 'master_group_id', 'group', 'group_id', 'RESTRICT', 'CASCADE');
-
-        /* Flags */
-        $this->createTable('flag', [
-            'utility_bag_id' => $this->integer()->unsigned()->notNull(),
-            'type' => $this->char(8)->notNull(),
-            'PRIMARY KEY (utility_bag_id, type)'
-        ], $tableOptions);
-
-        $this->addForeignKey('flag_utility_bag','{{%flag}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
     }
 
     public function safeDown()
     {
-        $this->dropTable('flag');
-
+        /* Subgroups */
         $this->dropForeignKey('group_master', 'group');
 
         $this->dropColumn('group', 'master_group_id');
 
+        /* Points in time */
         $this->addColumn('recap', 'time', $this->string()->after('data'));
 
         $this->restoreRecapTimeFromPointInTime();
@@ -115,6 +115,7 @@ class m171012_204825_v0_11_0 extends Migration
 
         $this->dropTable('point_in_time');
 
+        /* Description rework */
         $this->dropColumn('description_history', 'public_text_expanded');
         $this->dropColumn('description_history', 'protected_text_expanded');
         $this->dropColumn('description_history', 'private_text_expanded');
@@ -123,6 +124,10 @@ class m171012_204825_v0_11_0 extends Migration
         $this->dropColumn('description', 'protected_text_expanded');
         $this->dropColumn('description', 'private_text_expanded');
 
+        /* Flags */
+        $this->dropTable('flag');
+
+        /* Utility packs */
         $this->dropForeignKey('story_utility_bag', '{{%story}}');
         $this->dropForeignKey('recap_utility_bag', '{{%recap}}');
         $this->dropForeignKey('group_utility_bag', '{{%group}}');
@@ -178,7 +183,7 @@ class m171012_204825_v0_11_0 extends Migration
         $recaps = \common\models\Recap::find()->all();
 
         foreach ($recaps as $recap) {
-            if(!empty($recap->point_in_time_id)) {
+            if (!empty($recap->point_in_time_id)) {
                 $recap->time = $recap->pointInTime->name;
                 $recap->save();
             }
