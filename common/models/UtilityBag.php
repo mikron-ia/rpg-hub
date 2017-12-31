@@ -57,4 +57,30 @@ class UtilityBag extends ActiveRecord
     {
         return $this->hasMany(Flag::className(), ['utility_bag_id' => 'utility_bag_id']);
     }
+
+    public function setFlag(string $flag): bool
+    {
+        return Flag::create($this->utility_bag_id, $flag);
+    }
+
+    public function removeFlag(string $flag): bool
+    {
+        return Flag::remove($this->utility_bag_id, $flag);
+    }
+
+    /**
+     * @return bool
+     */
+    public function flagAsChanged(): bool
+    {
+        return $this->setFlag(Flag::TYPE_CHANGED);
+    }
+
+    /**
+     * @return bool
+     */
+    public function flagForImportanceRecalculation(): bool
+    {
+        return $this->setFlag(Flag::TYPE_IMPORTANCE_RECALCULATE);
+    }
 }

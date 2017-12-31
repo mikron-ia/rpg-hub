@@ -33,7 +33,13 @@ class Flag extends ActiveRecord
             [['utility_bag_id'], 'integer'],
             [['type'], 'string', 'max' => 8],
             [['utility_bag_id', 'type'], 'unique', 'targetAttribute' => ['utility_bag_id', 'type']],
-            [['utility_bag_id'], 'exist', 'skipOnError' => true, 'targetClass' => UtilityBag::className(), 'targetAttribute' => ['utility_bag_id' => 'utility_bag_id']],
+            [
+                ['utility_bag_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => UtilityBag::className(),
+                'targetAttribute' => ['utility_bag_id' => 'utility_bag_id']
+            ],
         ];
     }
 
@@ -67,22 +73,27 @@ class Flag extends ActiveRecord
     }
 
     /**
-     * @return string[]
-     */
-    static public function typeClasses(): array
-    {
-        return [
-            self::TYPE_CHANGED => 'flag-type-changed',
-            self::TYPE_IMPORTANCE_RECALCULATE => 'flag-importance-recalculate',
-        ];
-    }
-
-    /**
      * @return string
      */
     public function getType(): string
     {
         $names = self::typeNames();
         return isset($names[$this->type]) ? $names[$this->type] : '?';
+    }
+
+    static public function create(int $bag_id, string $flagType)
+    {
+        self::remove($bag_id, $flagType);
+        return (new Flag(['utility_bag_id' => $bag_id, 'type' => $flagType]))->save();
+    }
+
+    static public function remove(int $bag_id, string $flagType)
+    {
+        Flag::deleteAll(['utility_bag_id' => $bag_id, 'type' => $flagType]);
+    }
+
+    public function __toString()
+    {
+        return $this->getType();
     }
 }

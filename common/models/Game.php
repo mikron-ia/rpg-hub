@@ -90,6 +90,12 @@ class Game extends ActiveRecord implements HasEpicControl
         return parent::beforeSave($insert);
     }
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->utilityBag->flagAsChanged();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
     public function behaviors()
     {
         return [
@@ -166,6 +172,14 @@ class Game extends ActiveRecord implements HasEpicControl
     {
         $names = self::statusClasses();
         return isset($names[$this->status]) ? $names[$this->status] : '';
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getUtilityBag()
+    {
+        return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
     }
 
     static public function canUserIndexThem(): bool

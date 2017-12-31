@@ -90,6 +90,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     public function afterSave($insert, $changedAttributes)
     {
         $this->seenPack->updateRecord();
+        $this->utilityBag->flagAsChanged();
         parent::afterSave($insert, $changedAttributes);
     }
 
@@ -159,6 +160,14 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getUtilityBag()
+    {
+        return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
     }
 
     public function getSimpleDataForApi()

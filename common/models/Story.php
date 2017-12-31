@@ -114,6 +114,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function afterSave($insert, $changedAttributes)
     {
         $this->seenPack->updateRecord();
+        $this->utilityBag->flagAsChanged();
         parent::afterSave($insert, $changedAttributes);
     }
 
@@ -180,6 +181,14 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getUtilityBag()
+    {
+        return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
     }
 
     /**

@@ -91,6 +91,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     public function afterSave($insert, $changedAttributes)
     {
         $this->seenPack->updateRecord();
+        $this->utilityBag->flagAsChanged();
         parent::afterSave($insert, $changedAttributes);
     }
 
@@ -108,6 +109,11 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         if (empty($this->seen_pack_id)) {
             $pack = SeenPack::create('Epic');
             $this->seen_pack_id = $pack->seen_pack_id;
+        }
+
+        if (empty($this->utility_bag_id)) {
+            $pack = UtilityBag::create('Epic');
+            $this->utility_bag_id = $pack->utility_bag_id;
         }
 
         return parent::beforeSave($insert);

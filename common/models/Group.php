@@ -109,6 +109,8 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public function afterSave($insert, $changedAttributes)
     {
         $this->seenPack->updateRecord();
+        $this->utilityBag->flagAsChanged();
+        $this->utilityBag->flagForImportanceRecalculation();
         parent::afterSave($insert, $changedAttributes);
     }
 
@@ -234,6 +236,14 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public function getSeenPack()
     {
         return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getUtilityBag()
+    {
+        return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
     }
 
     /**
