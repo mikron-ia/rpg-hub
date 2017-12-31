@@ -18,6 +18,9 @@ use yii\db\ActiveRecord;
  */
 class Flag extends ActiveRecord
 {
+    public const TYPE_CHANGED = 'changed';
+    public const TYPE_IMPORTANCE_RECALCULATE = 'imp-rec';
+
     public static function tableName()
     {
         return 'flag';
@@ -26,9 +29,10 @@ class Flag extends ActiveRecord
     public function rules()
     {
         return [
-            [['utility_bag_id', 'type', 'status'], 'required'],
+            [['utility_bag_id', 'type'], 'required'],
             [['utility_bag_id'], 'integer'],
-            [['type', 'status'], 'string', 'max' => 10],
+            [['type'], 'string', 'max' => 8],
+            [['utility_bag_id', 'type'], 'unique', 'targetAttribute' => ['utility_bag_id', 'type']],
             [['utility_bag_id'], 'exist', 'skipOnError' => true, 'targetClass' => UtilityBag::className(), 'targetAttribute' => ['utility_bag_id' => 'utility_bag_id']],
         ];
     }
@@ -36,10 +40,10 @@ class Flag extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'flag_id' => Yii::t('app', 'Flag ID'),
-            'utility_bag_id' => Yii::t('app', 'Utility Bag ID'),
-            'type' => Yii::t('app', 'Type'),
-            'status' => Yii::t('app', 'Status'),
+            'flag_id' => Yii::t('app', 'FLAG_ID'),
+            'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
+            'type' => Yii::t('app', 'FLAG_TYPE'),
+            'status' => Yii::t('app', 'FLAG_STATUS'),
         ];
     }
 
@@ -49,5 +53,36 @@ class Flag extends ActiveRecord
     public function getUtilityBag()
     {
         return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function typeNames(): array
+    {
+        return [
+            self::TYPE_CHANGED => Yii::t('app', 'FLAG_TYPE_CHANGED'),
+            self::TYPE_IMPORTANCE_RECALCULATE => Yii::t('app', 'FLAG_TYPE_IMPORTANCE_RECALCULATE'),
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function typeClasses(): array
+    {
+        return [
+            self::TYPE_CHANGED => 'flag-type-changed',
+            self::TYPE_IMPORTANCE_RECALCULATE => 'flag-importance-recalculate',
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        $names = self::typeNames();
+        return isset($names[$this->type]) ? $names[$this->type] : '?';
     }
 }

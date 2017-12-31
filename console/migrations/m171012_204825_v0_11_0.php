@@ -89,13 +89,12 @@ class m171012_204825_v0_11_0 extends Migration
 
         /* Flags */
         $this->createTable('flag', [
-            'flag_id' => $this->primaryKey()->unsigned(),
             'utility_bag_id' => $this->integer()->unsigned()->notNull(),
-            'type' => $this->string(10)->notNull(),
-            'status' => $this->string(10)->notNull(),
+            'type' => $this->char(8)->notNull(),
+            'PRIMARY KEY (utility_bag_id, type)'
         ], $tableOptions);
 
-        $this->addForeignKey('flag_utility_bag', '{{%flag}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('flag_utility_bag','{{%flag}}', 'utility_bag_id', '{{%utility_bag}}', 'utility_bag_id', 'RESTRICT', 'CASCADE');
     }
 
     public function safeDown()
