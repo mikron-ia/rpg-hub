@@ -31,9 +31,9 @@ trait ToolsForDescription
     {
         /* Define bases */
         $linkBases = [
-            'Character' => '/index.php/character/view/key=',
-            'Group' => '/index.php/group/view/key=',
-            'Story' => '/index.php/story/view/key=',
+            'Character' => '/index.php/character/view?key=',
+            'Group' => '/index.php/group/view?key=',
+            'Story' => '/index.php/story/view?key=',
         ];
 
         /* Solve cases of [name](CODE:key) */
