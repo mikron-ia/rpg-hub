@@ -21,6 +21,15 @@ class IP extends ActiveRecord
         return 'ip';
     }
 
+    /**
+     * {@inheritdoc}
+     * @return IpQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new IpQuery(get_called_class());
+    }
+
     public function rules()
     {
         return [
@@ -43,15 +52,6 @@ class IP extends ActiveRecord
     public function getPerformedActions()
     {
         return $this->hasMany(PerformedAction::className(), ['ip_id' => 'id']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return IpQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new IpQuery(get_called_class());
     }
 
     /**

@@ -13,76 +13,13 @@ use yii\web\HttpException;
 trait ToolsForEntity
 {
     /**
-     * @param $identifier
-     * @return string
-     * @throws HttpException
-     */
-    private function generateKey($identifier): string
-    {
-        if (!isset(Yii::$app->params['keyGeneration'][$identifier])) {
-            throw new HttpException(500, "Missing configuration for key $identifier");
-        }
-
-        $pattern = Yii::$app->params['keyGeneration'][$identifier];
-
-        $placeholders = ['number0', 'number1', 'number2', 'number3', 'number4'];
-        $values = [mt_rand(), mt_rand(), mt_rand(), mt_rand(), mt_rand()];
-        $string = str_replace($placeholders, $values, $pattern);
-
-        return sha1($string);
-    }
-
-    /**
      * @param $epic
      * @return bool
-     * @throws HttpException
      */
     static public function canUserCreateInEpic($epic): bool
     {
         /* Use of control* right is intentional; there is no need to separate creation from control at this level */
         if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * @param Epic $epic
-     * @return bool
-     * @throws HttpException
-     */
-    static public function canUserControlInEpic($epic): bool
-    {
-        if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * @param Epic $epic
-     * @return bool
-     * @throws HttpException
-     */
-    static public function canUserViewInEpic($epic): bool
-    {
-        if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * @param Epic $epic
-     * @return bool
-     * @throws HttpException
-     */
-    static public function canUserIndexInEpic($epic): bool
-    {
-        if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
             return true;
         } else {
             return false;
@@ -105,6 +42,45 @@ trait ToolsForEntity
     }
 
     /**
+     * @param Epic $epic
+     * @return bool
+     */
+    static public function canUserControlInEpic($epic): bool
+    {
+        if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param Epic $epic
+     * @return bool
+     */
+    static public function canUserViewInEpic($epic): bool
+    {
+        if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param Epic $epic
+     * @return bool
+     */
+    static public function canUserIndexInEpic($epic): bool
+    {
+        if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * @param $message
      * @throws HttpException
      */
@@ -118,5 +94,25 @@ trait ToolsForEntity
         if (isset(Yii::$app->params['activeEpic']) && $this->epic_id === null) {
             $this->epic_id = Yii::$app->params['activeEpic']->epic_id;
         }
+    }
+
+    /**
+     * @param $identifier
+     * @return string
+     * @throws HttpException
+     */
+    private function generateKey($identifier): string
+    {
+        if (!isset(Yii::$app->params['keyGeneration'][$identifier])) {
+            throw new HttpException(500, "Missing configuration for key $identifier");
+        }
+
+        $pattern = Yii::$app->params['keyGeneration'][$identifier];
+
+        $placeholders = ['number0', 'number1', 'number2', 'number3', 'number4'];
+        $values = [mt_rand(), mt_rand(), mt_rand(), mt_rand(), mt_rand()];
+        $string = str_replace($placeholders, $values, $pattern);
+
+        return sha1($string);
     }
 }

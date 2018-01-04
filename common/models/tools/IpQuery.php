@@ -2,12 +2,14 @@
 
 namespace common\models\tools;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[IP]].
  *
  * @see IP
  */
-class IpQuery extends \yii\db\ActiveQuery
+class IpQuery extends ActiveQuery
 {
     public function all($db = null)
     {

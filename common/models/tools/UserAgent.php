@@ -4,6 +4,7 @@ namespace common\models\tools;
 
 use common\models\PerformedAction;
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "user_agent".
@@ -13,11 +14,20 @@ use Yii;
  *
  * @property PerformedAction[] $performedActions
  */
-class UserAgent extends \yii\db\ActiveRecord
+class UserAgent extends ActiveRecord
 {
     public static function tableName()
     {
         return 'user_agent';
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return UserAgentQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new UserAgentQuery(get_called_class());
     }
 
     public function rules()
@@ -42,15 +52,6 @@ class UserAgent extends \yii\db\ActiveRecord
     public function getPerformedActions()
     {
         return $this->hasMany(PerformedAction::className(), ['user_agent_id' => 'id']);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return UserAgentQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new UserAgentQuery(get_called_class());
     }
 
     /**

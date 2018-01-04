@@ -66,6 +66,17 @@ class Retriever
     }
 
     /**
+     * Formats JSON string - at the moment, does nothing
+     *
+     * @param string $input JSON string to format
+     * @return string Formatted JSON string
+     */
+    private function formatInput($input)
+    {
+        return $input;
+    }
+
+    /**
      * @return string
      */
     public function getDataAsJSON()
@@ -79,16 +90,5 @@ class Retriever
     public function getDataAsArray()
     {
         return $this->data;
-    }
-
-    /**
-     * Formats JSON string - at the moment, does nothing
-     *
-     * @param string $input JSON string to format
-     * @return string Formatted JSON string
-     */
-    private function formatInput($input)
-    {
-        return $input;
     }
 }
