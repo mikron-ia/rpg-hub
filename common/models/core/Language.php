@@ -16,19 +16,6 @@ final class Language
     public $language;
 
     /**
-     * Lists supported languages
-     * @return array
-     */
-    static public function supportedLanguages(): array
-    {
-        if (isset(Yii::$app->params['languagesAvailable'])) {
-            return Yii::$app->params['languagesAvailable'];
-        } else {
-            return ['en'];
-        }
-    }
-
-    /**
      * Provides short names for languages
      * @return array
      */
@@ -51,20 +38,28 @@ final class Language
     }
 
     /**
-     * Provides long names for languages
+     * Lists supported languages
      * @return array
      */
-    static public function languagesLong(): array
+    static public function supportedLanguages(): array
     {
-        $languageData = [
-            'en' => Yii::t('app', 'LANGUAGE_CODE_ENGLISH'),
-            'pl' => Yii::t('app', 'LANGUAGE_CODE_POLISH'),
-        ];
+        if (isset(Yii::$app->params['languagesAvailable'])) {
+            return Yii::$app->params['languagesAvailable'];
+        } else {
+            return ['en'];
+        }
+    }
 
+    /**
+     * Provides languages as objects
+     * @return Language[]
+     */
+    static public function getLanguagesAsObjects(): array
+    {
         $languages = [];
 
         foreach (self::supportedLanguages() as $language) {
-            $languages[$language] = $languageData[$language];
+            $languages[] = self::create($language);
         }
 
         return $languages;
@@ -93,15 +88,20 @@ final class Language
     }
 
     /**
-     * Provides languages as objects
-     * @return Language[]
+     * Provides long names for languages
+     * @return array
      */
-    static public function getLanguagesAsObjects(): array
+    static public function languagesLong(): array
     {
+        $languageData = [
+            'en' => Yii::t('app', 'LANGUAGE_CODE_ENGLISH'),
+            'pl' => Yii::t('app', 'LANGUAGE_CODE_POLISH'),
+        ];
+
         $languages = [];
 
         foreach (self::supportedLanguages() as $language) {
-            $languages[] = self::create($language);
+            $languages[$language] = $languageData[$language];
         }
 
         return $languages;

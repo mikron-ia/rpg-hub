@@ -15,7 +15,7 @@ class TableRow extends Model implements ExternalComponent
     {
         $object = new TableRow();
 
-        if(isset($data['cells'])) {
+        if (isset($data['cells'])) {
             $object->makeFromComplexArray($object, $data);
         } else {
             $object->makeFromSimpleArray($object, $data);
@@ -24,15 +24,15 @@ class TableRow extends Model implements ExternalComponent
         return $object;
     }
 
-    public function getContent(): string
+    /**
+     * @param TableRow $object
+     * @param array $data
+     */
+    private function makeFromComplexArray(TableRow $object, array $data)
     {
-        $cells = [];
-
-        foreach ($this->cells ?? [] as $cell) {
-            $cells[] = $cell->getContent();
+        foreach ($data['cells'] ?? [] as $cell) {
+            $object->cells[] = TableCell::createFromData($cell);
         }
-
-        return "<tr>" . implode($cells) . "</tr>";
     }
 
     /**
@@ -46,14 +46,14 @@ class TableRow extends Model implements ExternalComponent
         }
     }
 
-    /**
-     * @param TableRow $object
-     * @param array $data
-     */
-    private function makeFromComplexArray(TableRow $object, array $data)
+    public function getContent(): string
     {
-        foreach ($data['cells'] ?? [] as $cell) {
-            $object->cells[] = TableCell::createFromData($cell);
+        $cells = [];
+
+        foreach ($this->cells ?? [] as $cell) {
+            $cells[] = $cell->getContent();
         }
+
+        return "<tr>" . implode($cells) . "</tr>";
     }
 }

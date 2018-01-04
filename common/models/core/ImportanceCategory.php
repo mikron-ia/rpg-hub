@@ -22,6 +22,27 @@ final class ImportanceCategory
     public $importance;
 
     /**
+     * @param $code
+     * @return ImportanceCategory
+     */
+    static public function create($code): ImportanceCategory
+    {
+        $importance = new ImportanceCategory();
+        $importance->importance = $code;
+        return $importance;
+    }
+
+    /**
+     * Provides importance name
+     * @return string
+     */
+    public function getName(): string
+    {
+        $names = self::importanceNames();
+        return isset($names[$this->importance]) ? $names[$this->importance] : '?';
+    }
+
+    /**
      * Provides importance names
      * @return string[]
      */
@@ -47,21 +68,6 @@ final class ImportanceCategory
     }
 
     /**
-     * Provides importance names in lowercase
-     * @return string[]
-     */
-    static public function importanceNamesLowercase(): array
-    {
-        return [
-            self::IMPORTANCE_NONE => Yii::t('app', 'IMPORTANCE_NONE_LOWERCASE'),
-            self::IMPORTANCE_LOW => Yii::t('app', 'IMPORTANCE_LOW_LOWERCASE'),
-            self::IMPORTANCE_MEDIUM => Yii::t('app', 'IMPORTANCE_MEDIUM_LOWERCASE'),
-            self::IMPORTANCE_HIGH => Yii::t('app', 'IMPORTANCE_HIGH_LOWERCASE'),
-            self::IMPORTANCE_EXTREME => Yii::t('app', 'IMPORTANCE_EXTREME_LOWERCASE'),
-        ];
-    }
-
-    /**
      * Lists allowed importance
      * @return string[]
      */
@@ -77,27 +83,6 @@ final class ImportanceCategory
     }
 
     /**
-     * @param $code
-     * @return ImportanceCategory
-     */
-    static public function create($code): ImportanceCategory
-    {
-        $importance = new ImportanceCategory();
-        $importance->importance = $code;
-        return $importance;
-    }
-
-    /**
-     * Provides importance name
-     * @return string
-     */
-    public function getName(): string
-    {
-        $names = self::importanceNames();
-        return isset($names[$this->importance]) ? $names[$this->importance] : '?';
-    }
-
-    /**
      * Provides importance name in lowercase
      * @return string
      */
@@ -105,5 +90,20 @@ final class ImportanceCategory
     {
         $names = self::importanceNamesLowercase();
         return isset($names[$this->importance]) ? $names[$this->importance] : '?';
+    }
+
+    /**
+     * Provides importance names in lowercase
+     * @return string[]
+     */
+    static public function importanceNamesLowercase(): array
+    {
+        return [
+            self::IMPORTANCE_NONE => Yii::t('app', 'IMPORTANCE_NONE_LOWERCASE'),
+            self::IMPORTANCE_LOW => Yii::t('app', 'IMPORTANCE_LOW_LOWERCASE'),
+            self::IMPORTANCE_MEDIUM => Yii::t('app', 'IMPORTANCE_MEDIUM_LOWERCASE'),
+            self::IMPORTANCE_HIGH => Yii::t('app', 'IMPORTANCE_HIGH_LOWERCASE'),
+            self::IMPORTANCE_EXTREME => Yii::t('app', 'IMPORTANCE_EXTREME_LOWERCASE'),
+        ];
     }
 }

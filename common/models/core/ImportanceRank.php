@@ -38,46 +38,6 @@ final class ImportanceRank
     public $importance;
 
     /**
-     * Provides importance names
-     * @return string[]
-     */
-    static public function importanceNames(): array
-    {
-        $names = [
-            self::IMPORTANCE_RANK_EXTREME_LOW => Yii::t('app', 'IMPORTANCE_RANK_EXTREME_LOW'),
-            self::IMPORTANCE_RANK_LOW => Yii::t('app', 'IMPORTANCE_RANK_LOW'),
-            self::IMPORTANCE_RANK_MEDIUM_LOW => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM_LOW'),
-            self::IMPORTANCE_RANK_MEDIUM => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM'),
-            self::IMPORTANCE_RANK_MEDIUM_HIGH => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM_HIGH'),
-            self::IMPORTANCE_RANK_HIGH => Yii::t('app', 'IMPORTANCE_RANK_HIGH'),
-            self::IMPORTANCE_RANK_EXTREMELY_HIGH => Yii::t('app', 'IMPORTANCE_RANK_EXTREMELY_HIGH'),
-            self::IMPORTANCE_RANK_UNKNOWN => Yii::t('app', 'IMPORTANCE_RANK_UNKNOWN'),
-            self::IMPORTANCE_RANK_INCORRECT => Yii::t('app', 'IMPORTANCE_RANK_INCORRECT'),
-        ];
-
-        return $names;
-    }
-
-    /**
-     * Provides importance names in lowercase
-     * @return string[]
-     */
-    static public function importanceNamesLowercase(): array
-    {
-        return [
-            self::IMPORTANCE_RANK_EXTREME_LOW => Yii::t('app', 'IMPORTANCE_RANK_EXTREME_LOW_LOWERCASE'),
-            self::IMPORTANCE_RANK_LOW => Yii::t('app', 'IMPORTANCE_RANK_LOW_LOWERCASE'),
-            self::IMPORTANCE_RANK_MEDIUM_LOW => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM_LOW_LOWERCASE'),
-            self::IMPORTANCE_RANK_MEDIUM => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM_LOWERCASE'),
-            self::IMPORTANCE_RANK_MEDIUM_HIGH => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM_HIGH_LOWERCASE'),
-            self::IMPORTANCE_RANK_HIGH => Yii::t('app', 'IMPORTANCE_RANK_HIGH_LOWERCASE'),
-            self::IMPORTANCE_RANK_EXTREMELY_HIGH => Yii::t('app', 'IMPORTANCE_RANK_EXTREMELY_HIGH_LOWERCASE'),
-            self::IMPORTANCE_RANK_UNKNOWN => Yii::t('app', 'IMPORTANCE_RANK_UNKNOWN_LOWERCASE'),
-            self::IMPORTANCE_RANK_INCORRECT => Yii::t('app', 'IMPORTANCE_RANK_INCORRECT_LOWERCASE'),
-        ];
-    }
-
-    /**
      * Creates ImportanceRank object from string code
      * @param $code
      * @return ImportanceRank
@@ -105,6 +65,27 @@ final class ImportanceRank
     }
 
     /**
+     * Provides importance names
+     * @return string[]
+     */
+    static public function importanceNames(): array
+    {
+        $names = [
+            self::IMPORTANCE_RANK_EXTREME_LOW => Yii::t('app', 'IMPORTANCE_RANK_EXTREME_LOW'),
+            self::IMPORTANCE_RANK_LOW => Yii::t('app', 'IMPORTANCE_RANK_LOW'),
+            self::IMPORTANCE_RANK_MEDIUM_LOW => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM_LOW'),
+            self::IMPORTANCE_RANK_MEDIUM => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM'),
+            self::IMPORTANCE_RANK_MEDIUM_HIGH => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM_HIGH'),
+            self::IMPORTANCE_RANK_HIGH => Yii::t('app', 'IMPORTANCE_RANK_HIGH'),
+            self::IMPORTANCE_RANK_EXTREMELY_HIGH => Yii::t('app', 'IMPORTANCE_RANK_EXTREMELY_HIGH'),
+            self::IMPORTANCE_RANK_UNKNOWN => Yii::t('app', 'IMPORTANCE_RANK_UNKNOWN'),
+            self::IMPORTANCE_RANK_INCORRECT => Yii::t('app', 'IMPORTANCE_RANK_INCORRECT'),
+        ];
+
+        return $names;
+    }
+
+    /**
      * Provides importance name in lowercase
      * @return string
      */
@@ -112,5 +93,24 @@ final class ImportanceRank
     {
         $names = self::importanceNamesLowercase();
         return isset($names[$this->importance]) ? $names[$this->importance] : '?';
+    }
+
+    /**
+     * Provides importance names in lowercase
+     * @return string[]
+     */
+    static public function importanceNamesLowercase(): array
+    {
+        return [
+            self::IMPORTANCE_RANK_EXTREME_LOW => Yii::t('app', 'IMPORTANCE_RANK_EXTREME_LOW_LOWERCASE'),
+            self::IMPORTANCE_RANK_LOW => Yii::t('app', 'IMPORTANCE_RANK_LOW_LOWERCASE'),
+            self::IMPORTANCE_RANK_MEDIUM_LOW => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM_LOW_LOWERCASE'),
+            self::IMPORTANCE_RANK_MEDIUM => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM_LOWERCASE'),
+            self::IMPORTANCE_RANK_MEDIUM_HIGH => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM_HIGH_LOWERCASE'),
+            self::IMPORTANCE_RANK_HIGH => Yii::t('app', 'IMPORTANCE_RANK_HIGH_LOWERCASE'),
+            self::IMPORTANCE_RANK_EXTREMELY_HIGH => Yii::t('app', 'IMPORTANCE_RANK_EXTREMELY_HIGH_LOWERCASE'),
+            self::IMPORTANCE_RANK_UNKNOWN => Yii::t('app', 'IMPORTANCE_RANK_UNKNOWN_LOWERCASE'),
+            self::IMPORTANCE_RANK_INCORRECT => Yii::t('app', 'IMPORTANCE_RANK_INCORRECT_LOWERCASE'),
+        ];
     }
 }
