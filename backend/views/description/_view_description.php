@@ -63,6 +63,12 @@ use yii\helpers\Html;
         </span>
 
         <span class="tag-box">
+            <?= Yii::t('app', 'DESCRIPTION_UPDATED_IC {when}', [
+                'when' => $model->pointInTime->name ?? '?',
+            ]); ?>
+        </span>
+
+        <span class="tag-box">
             <?= Yii::t('app', 'LABEL_VISIBLE') . ' ' . $model->getVisibilityLowercase(); ?>
         </span>
 

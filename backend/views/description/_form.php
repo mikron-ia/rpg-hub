@@ -15,20 +15,41 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'code')->dropDownList(
-        $model->typeNamesForThisClass(),
-        ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_TYPE') . ' --- ']
-    ); ?>
+    <div class="col-md-12">
+        <?= $form->field($model, 'code')->dropDownList(
+            $model->typeNamesForThisClass(),
+            ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_TYPE') . ' --- ']
+        ); ?>
+    </div>
 
-    <?= $form->field($model, 'public_text')->textarea(['rows' => 8]); ?>
+    <div class="col-md-12">
+        <?= $form->field($model, 'public_text')->textarea(['rows' => 8]); ?>
+    </div>
 
-    <?= $form->field($model, 'protected_text')->textarea(['rows' => 8]); ?>
+    <div class="col-md-12">
+        <?= $form->field($model, 'protected_text')->textarea(['rows' => 8]); ?>
+    </div>
 
-    <?= $form->field($model, 'private_text')->textarea(['rows' => 8]); ?>
+    <div class="col-md-12">
+        <?= $form->field($model, 'private_text')->textarea(['rows' => 8]); ?>
+    </div>
 
-    <?= $form->field($model, 'lang')->dropDownList(Language::languagesLong()); ?>
+    <div class="col-md-3">
+        <?= $form->field($model, 'lang')->dropDownList(Language::languagesLong()); ?>
+    </div>
 
-    <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(Description::allowedVisibilities())); ?>
+    <div class="col-md-3">
+        <?= $form->field($model,
+            'visibility')->dropDownList(Visibility::visibilityNames(Description::allowedVisibilities())); ?>
+    </div>
+
+    <div class="col-md-6">
+        <?= $form->field($model,
+            'point_in_time_id')->dropDownList(
+                    \common\models\PointInTimeQuery::getListOfPointsInTimeForSelector(),
+                    ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_POINT_IN_TIME') . ' --- ']
+        ) ?>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),
