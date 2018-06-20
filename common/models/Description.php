@@ -20,8 +20,8 @@ use yii2tech\ar\position\PositionBehavior;
 /**
  * This is the model class for table "description".
  *
- * @property string $description_id
- * @property string $description_pack_id
+ * @property int $description_id
+ * @property int $description_pack_id
  * @property string $title
  * @property string $code
  * @property string $public_text
@@ -32,15 +32,17 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $private_text_expanded
  * @property string $lang
  * @property string $visibility
- * @property integer $position
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $created_by
- * @property string $updated_by
+ * @property int $position
+ * @property int $created_at
+ * @property int $updated_at
+ * @property int $created_by
+ * @property int $updated_by
+ * @property int $point_in_time_id
  *
  * @property User $createdBy
  * @property DescriptionPack $descriptionPack
  * @property User $updatedBy
+ * @property PointInTime $pointInTime
  */
 class Description extends ActiveRecord implements Displayable, HasVisibility
 {
@@ -88,7 +90,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             [['description_pack_id', 'code', 'public_text', 'lang', 'visibility'], 'required'],
             [['public_text', 'protected_text', 'private_text'], 'string'],
             [['code'], 'string', 'max' => 40],
-            [['lang'], 'string', 'max' => 8],
+            [['lang'], 'string', 'max' => 5],
             [['visibility'], 'string', 'max' => 20],
             [
                 ['description_pack_id'],
@@ -110,6 +112,27 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
                 'range' => function () {
                     return $this->allowedVisibilities();
                 }
+            ],
+            [
+                ['point_in_time_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => PointInTime::class,
+                'targetAttribute' => ['point_in_time_id' => 'point_in_time_id']
+            ],
+            [
+                ['created_by'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::class,
+                'targetAttribute' => ['created_by' => 'id']
+            ],
+            [
+                ['updated_by'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::class,
+                'targetAttribute' => ['updated_by' => 'id']
             ],
         ];
     }
@@ -151,6 +174,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             'private_text_expanded' => Yii::t('app', 'DESCRIPTION_TEXT_PRIVATE_EXPANDED'),
             'lang' => Yii::t('app', 'LABEL_LANGUAGE'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
+            'point_in_time_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME'),
         ];
     }
 
@@ -266,6 +290,14 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     public function getDescriptionPack(): ActiveQuery
     {
         return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getPointInTime()
+    {
+        return $this->hasOne(PointInTime::class, ['point_in_time_id' => 'point_in_time_id']);
     }
 
     /**

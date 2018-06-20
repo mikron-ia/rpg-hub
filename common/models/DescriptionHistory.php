@@ -24,8 +24,10 @@ use yii\helpers\Markdown;
  * @property string $protected_text_expanded
  * @property string $private_text_expanded
  * @property string $visibility
+ * @property string $point_in_time_id
  *
  * @property Description $description
+ * @property PointInTime $pointInTime
  */
 class DescriptionHistory extends ActiveRecord implements HasVisibility
 {
@@ -50,6 +52,13 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
                 'skipOnError' => true,
                 'targetClass' => Description::className(),
                 'targetAttribute' => ['description_id' => 'description_id']
+            ],
+            [
+                ['point_in_time_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => PointInTime::class,
+                'targetAttribute' => ['point_in_time_id' => 'point_in_time_id']
             ],
         ];
     }
@@ -77,6 +86,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
             'protected_text_expanded' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PROTECTED_EXPANDED'),
             'private_text_expanded' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PRIVATE_EXPANDED'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
+            'point_in_time_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME'),
         ];
     }
 
@@ -122,6 +132,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         $history->public_text = $description->public_text;
         $history->private_text = $description->private_text;
         $history->visibility = $description->visibility;
+        $history->point_in_time_id = $description->point_in_time_id;
 
         if ($history->save()) {
             $history->refresh();
