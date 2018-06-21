@@ -466,14 +466,23 @@ tr.table-row-hidden > td {
     background-color: lightgoldenrodyellow;
 }
 
+.session-box-closed {
+    cursor: pointer;
+}
+
 .session-box-closed:after {
     content: '+';
     color: green;
     float: right;
 }
 
+.session-box-open {
+    cursor: pointer;
+}
+
 .session-box-open:after {
     content: '-';
     color: green;
     float: right;
+    cursor: pointer;
 }
