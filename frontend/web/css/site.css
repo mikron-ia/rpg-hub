@@ -150,13 +150,13 @@ p {
     font-style: italic;
     text-align: left;
 }
-
 .tag-box {
-    background-color: lightblue;
+    background-color: lightgreen;
     border-radius: 5px;
+    display: inline-block;
     font-weight: bold;
-    padding: 5px 10px;
-    margin: 0 10px 0 0;
+    padding: 8px 12px;
+    margin: 0 10px 5px 0;
 }
 
 .btn-group {

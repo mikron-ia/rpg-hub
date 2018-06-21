@@ -8,6 +8,14 @@
 
     <h2><?= $model->getTypeName(); ?></h2>
 
+    <?php if (isset($model->point_in_time_id)): ?>
+        <div class="tag-box" title="<?= Yii::t('app', 'DESCRIPTION_UPDATED_IC_TITLE {when}', [
+            'when' => $model->pointInTime->name,
+        ]); ?>">
+            <?= $model->pointInTime->name ?>
+        </div>
+    <?php endif; ?>
+
     <div class="public-notes">
         <?= $model->getPublicFormatted(); ?>
     </div>
