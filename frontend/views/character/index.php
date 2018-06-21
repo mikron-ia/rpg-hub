@@ -33,7 +33,7 @@ $allTab = [
     'url' => ['character/index'],
 ];
 
-if(isset(Yii::$app->request->queryParams['CharacterQuery'])) {
+if (isset(Yii::$app->request->queryParams['CharacterQuery'])) {
     $items = [$allTab, $searchTab, $mainTab];
 } else {
     $items = [$mainTab, $searchTab];
