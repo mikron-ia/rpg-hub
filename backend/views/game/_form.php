@@ -1,10 +1,13 @@
 <?php
 
+use backend\assets\GameAsset;
 use common\models\EpicQuery;
 use common\models\Game;
 use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
+GameAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Game */
@@ -27,9 +30,9 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'planned_date')->widget(
             DatePicker::class,
             [
-                'language' => 'en-gb',
+                'language' => 'pl',
                 'pluginOptions' => [
-                    'format' => 'yyyy-mm-dd',
+                    'format' => 'yyyy-mm-dd', // @todo Change to 'DD, yyyy-mm-dd' once language issue is resolved (see issue #296)
                     'autoclose' => true,
                     'weekStart' => 1,
                     'todayHighlight' => true,
