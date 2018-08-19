@@ -16,8 +16,7 @@
         "kartik-v/strength-meter": "^1.1",
         "yii2tech/ar-position": "^1.0",
         "vlucas/phpdotenv": "^2.4",
-        "kartik-v/yii2-widget-datepicker": "^1.4",
-        "kartik-v/yii2-widget-timepicker": "^1.0"
+        "kartik-v/yii2-widget-datepicker": "^1.4"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*",
