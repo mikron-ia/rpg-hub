@@ -1,9 +1,13 @@
 <?php
 
+use backend\assets\GroupAsset;
 use common\models\Character;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\StringHelper;
+
+GroupAsset::register($this);
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\CharacterQuery */

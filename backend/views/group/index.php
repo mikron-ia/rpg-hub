@@ -1,8 +1,11 @@
 <?php
 
+use backend\assets\GroupAsset;
 use common\models\Group;
 use yii\helpers\Html;
 use yii\grid\GridView;
+
+GroupAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\GroupQuery */

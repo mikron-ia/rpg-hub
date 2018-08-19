@@ -1,6 +1,5 @@
 <?php
 
-use common\models\core\Language;
 use common\models\GroupMembership;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
@@ -21,6 +20,7 @@ use yii\helpers\StringHelper;
             'title' => Yii::t('app', 'MEMBERSHIP_BUTTON_ADD'),
             'data-toggle' => 'modal',
             'data-target' => '#add-membership-modal',
+            'data-group-id' => $model->group_id,
         ]
     ); ?>
 </div>
@@ -127,90 +127,37 @@ use yii\helpers\StringHelper;
 
 <?php Modal::end(); ?>
 
-<?php $this->registerJs(
-    "$('.add-membership-link').click(function() {
-    $.get(
-        '" . Yii::$app->urlManager->createUrl(['group-membership/create']) . "',
-        {
-            group_id: " . $model->group_id . "
-        },
-        function (data) {
-            $('.modal-body').html(data);
-            $('#add-membership-modal').modal();
-        }
-    );
-});"
-); ?>
-
 <?php Modal::begin([
     'id' => 'view-membership-modal',
-    'header' => '<h2 class="modal-title" id="membership-view-modal-title">' . Yii::t('app',
-            'MEMBERSHIP_TITLE_VIEW') . '</h2>',
+    'header' => '<h2 class="modal-title" id="membership-view-modal-title">' . Yii::t(
+            'app',
+            'MEMBERSHIP_TITLE_VIEW'
+        ) . '</h2>',
     'size' => Modal::SIZE_LARGE,
 ]); ?>
 
 <?php Modal::end(); ?>
 
-<?php $this->registerJs(
-    "$('.view-membership-link').click(function() {
-    $.get(
-        '" . Yii::$app->urlManager->createUrl(['group-membership/view']) . "',
-        {
-            id: $(this).data('id')
-        },
-        function (data) {
-            $('.modal-body').html(data);
-            $('#view-membership-modal').modal();
-        }
-    );
-});"
-); ?>
-
 <?php Modal::begin([
     'id' => 'update-membership-modal',
-    'header' => '<h2 class="modal-title" id="membership-update-modal-title">' . Yii::t('app',
-            'MEMBERSHIP_TITLE_MODIFY') . '</h2>',
+    'header' => '<h2 class="modal-title" id="membership-update-modal-title">' . Yii::t(
+            'app',
+            'MEMBERSHIP_TITLE_MODIFY'
+        ) . '</h2>',
     'clientOptions' => ['backdrop' => 'static'],
     'size' => Modal::SIZE_LARGE,
 ]); ?>
 
 <?php Modal::end(); ?>
 
-<?php $this->registerJs(
-    "$('.update-membership-link').click(function() {
-    $.get(
-        '" . Yii::$app->urlManager->createUrl(['group-membership/update']) . "',
-        {
-            id: $(this).data('id')
-        },
-        function (data) {
-            $('.modal-body').html(data);
-            $('#update-membership-modal').modal();
-        }
-    );
-});"
-); ?>
-
 <?php Modal::begin([
     'id' => 'membership-history-modal',
-    'header' => '<h2 class="modal-title" id="membership-history-modal-title">' . Yii::t('app',
-            'MEMBERSHIP_TITLE_HISTORY') . '</h2>',
+    'header' => '<h2 class="modal-title" id="membership-history-modal-title">' . Yii::t(
+            'app',
+            'MEMBERSHIP_TITLE_HISTORY'
+        ) . '</h2>',
     'size' => Modal::SIZE_LARGE,
 ]); ?>
 
 <?php Modal::end(); ?>
 
-<?php $this->registerJs(
-    "$('.membership-history-link').click(function() {
-    $.get(
-        '" . Yii::$app->urlManager->createUrl(['group-membership/history']) . "',
-        {
-            id: $(this).data('id')
-        },
-        function (data) {
-            $('.modal-body').html(data);
-            $('#membership-history-modal').modal();
-        }
-    );
-});"
-); ?>
