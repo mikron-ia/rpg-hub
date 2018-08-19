@@ -18,21 +18,20 @@ GameAsset::register($this);
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-4 col-lg-2">
+    <div class="col-md-4 col-lg-4">
         <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
     </div>
 
-    <div class="col-md-4 col-lg-2">
+    <div class="col-md-4 col-lg-4">
         <?= $form->field($model, 'status')->dropDownList(Game::statusNames()) ?>
     </div>
 
-    <div class="col-md-4 col-lg-2">
+    <div class="col-md-4 col-lg-4">
         <?= $form->field($model, 'planned_date')->widget(
             DatePicker::class,
             [
-                'language' => 'pl',
                 'pluginOptions' => [
-                    'format' => 'yyyy-mm-dd', // @todo Change to 'DD, yyyy-mm-dd' once language issue is resolved (see issue #296)
+                    'format' => 'yyyy-mm-dd', // @todo Change to 'DD, yyyy-mm-dd' once #296 is resolved
                     'autoclose' => true,
                     'weekStart' => 1,
                     'todayHighlight' => true,
@@ -41,7 +40,27 @@ GameAsset::register($this);
         ) ?>
     </div>
 
-    <div class="col-md-12 col-lg-6">
+    <div class="col-md-5">
+        <div class="form-group field-game-basics-constructed">
+            <label class="control-label" for="game-basics-constructed">
+                <?= Yii::t('app', 'GAME_BASICS_CONSTRUCTED') ?>
+            </label>
+            <input class="form-control" id="game-basics-constructed" disabled/>
+        </div>
+    </div>
+
+    <div class="col-md-1">
+        <div class="form-group">
+            <label class="control-label" for="game-basics-transfer">&nbsp;</label>
+            <?= Html::button('=>', [
+                'class' => 'btn btn-default btn-wide',
+                'id' => 'game-basics-transfer',
+                'title' => Yii::t('app', 'GAME_BASICS_TRANSFER_TITLE')
+            ]) ?>
+        </div>
+    </div>
+
+    <div class="col-md-6">
         <?= $form->field($model, 'basics')->textInput(['maxlength' => true]) ?>
     </div>
 

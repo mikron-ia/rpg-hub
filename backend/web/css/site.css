@@ -189,6 +189,10 @@ p {
     margin-top: 5px;
 }
 
+.btn-wide {
+    width: 100%;
+}
+
 .error-box {
     color: #a94442;
     background: #fdf7f7;

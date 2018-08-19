@@ -266,6 +266,8 @@ return [
     'FRONTPAGE_WHAT_HAPPENED' => 'Recent events',
     'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT' => 'General recap of the recent events. For details, please turn to descriptions of specific stories.',
     'GAME_BASICS' => 'Basic description',
+    'GAME_BASICS_CONSTRUCTED' => 'Basic description constructed from session data',
+    'GAME_BASICS_TRANSFER_TITLE' => 'Use constructed description; caution: this will erase current basic description',
     'GAME_ID' => 'ID',
     'GAME_NOTES' => 'Notes',
     'GAME_PLANNED_DATE' => 'Planned date',
