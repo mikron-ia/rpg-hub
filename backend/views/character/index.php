@@ -1,12 +1,12 @@
 <?php
 
-use backend\assets\GroupAsset;
+use backend\assets\CharacterAsset;
 use common\models\Character;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\StringHelper;
 
-GroupAsset::register($this);
+CharacterAsset::register($this);
 
 
 /* @var $this yii\web\View */
@@ -75,10 +75,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]); ?>
-
-        <?php $this->registerJs("$(document).ready(function(){
-                $('[data-toggle=\"tooltip\"]').tooltip();
-            });"); ?>
     </div>
 
     <div class="col-md-3" id="filter">

@@ -1,9 +1,9 @@
 <?php
 
-use backend\assets\GroupAsset;
+use backend\assets\CharacterAsset;
 use yii\helpers\Html;
 
-GroupAsset::register($this);
+CharacterAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Character */

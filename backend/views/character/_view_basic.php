@@ -153,21 +153,6 @@ use yii\widgets\DetailView;
 
         <?php Modal::end(); ?>
 
-        <?php $this->registerJs(
-            "$('.update-external-data-link').click(function() {
-    $.get(
-        '" . Yii::$app->urlManager->createUrl(['external-data/update']) . "',
-        {
-            id: $(this).closest('tr').data('key')
-        },
-        function (data) {
-            $('.modal-body').html(data);
-            $('#update-parameter-modal').modal();
-        }
-    );
-});"
-        );
-        ?>
     </div>
 
 </div>

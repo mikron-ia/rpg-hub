@@ -10,6 +10,7 @@ class CharacterAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [];
     public $js = [
+        'js/character.js',
         'js/description-user.js',
     ];
     public $depends = [
