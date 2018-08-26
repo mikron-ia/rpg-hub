@@ -1,7 +1,3 @@
-$(document).ready(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-});
-
 $('.update-external-data-link').click(function () {
     $.get(
         '../external-data/update',

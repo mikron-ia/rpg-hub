@@ -12,6 +12,7 @@ class CharacterAsset extends AssetBundle
     public $js = [
         'js/character.js',
         'js/description-user.js',
+        'js/tooltip.js',
     ];
     public $depends = [
         'backend\assets\AppAsset',

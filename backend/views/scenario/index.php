@@ -1,8 +1,11 @@
 <?php
 
+use backend\assets\ScenarioAsset;
 use common\models\Scenario;
 use yii\helpers\Html;
 use yii\grid\GridView;
+
+ScenarioAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $searchModel \common\models\ScenarioQuery */

@@ -1,6 +1,9 @@
 <?php
 
+use backend\assets\ScenarioAsset;
 use yii\helpers\Html;
+
+ScenarioAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Scenario */

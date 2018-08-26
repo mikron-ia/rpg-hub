@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-use common\models\DescriptionHistory;
+
 use common\models\GroupMembershipHistory;
 use yii\helpers\Html;
 
