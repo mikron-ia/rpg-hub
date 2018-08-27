@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'status',
                 'format' => 'raw',
-                'value' => function(PointInTime $model) {
+                'value' => function (PointInTime $model) {
                     return '<span class="table-tag ' . $model->getStatusCSS() . '">' . $model->getStatus() . '</span>';
                 },
             ],

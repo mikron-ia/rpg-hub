@@ -1,6 +1,5 @@
 <?php
 
-use common\models\PointInTimeQuery;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 

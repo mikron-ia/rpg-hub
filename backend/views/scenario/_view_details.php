@@ -1,7 +1,5 @@
 <?php
 
-use common\models\ExternalData;
-use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 

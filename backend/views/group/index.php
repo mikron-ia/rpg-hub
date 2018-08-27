@@ -2,8 +2,8 @@
 
 use backend\assets\GroupAsset;
 use common\models\Group;
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 GroupAsset::register($this);
 
