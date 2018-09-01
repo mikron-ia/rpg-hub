@@ -1,6 +1,9 @@
 <?php
 
+use backend\assets\StoryAsset;
 use yii\helpers\Html;
+
+StoryAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Story */

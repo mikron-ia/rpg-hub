@@ -112,7 +112,8 @@ use yii\widgets\DetailView;
                     'class' => 'create-parameter-link',
                     'title' => Yii::t('app', 'BUTTON_PARAMETER_CREATE'),
                     'data-toggle' => 'modal',
-                    'data-target' => '#create-parameter-modal'
+                    'data-target' => '#create-parameter-modal',
+                    'data-pack-id' => $model->parameterPack->parameter_pack_id
                 ]
             ); ?>
         </div>
@@ -201,21 +202,6 @@ use yii\widgets\DetailView;
 
     <?php Modal::end(); ?>
 
-    <?php $this->registerJs(
-        "$('.create-parameter-link').click(function() {
-    $.get(
-        '" . Yii::$app->urlManager->createUrl(['parameter/create']) . "',
-        {
-            pack_id: " . $model->parameterPack->parameter_pack_id . "
-        },
-        function (data) {
-            $('.modal-body').html(data);
-            $('#create-parameter-modal').modal();
-        }
-    );
-});"
-    ); ?>
-
     <?php Modal::begin([
         'id' => 'update-parameter-modal',
         'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_UPDATE') . '</h2>',
@@ -224,21 +210,5 @@ use yii\widgets\DetailView;
     ]); ?>
 
     <?php Modal::end(); ?>
-
-    <?php $this->registerJs(
-        "$('.update-parameter-link').click(function() {
-    $.get(
-        '" . Yii::$app->urlManager->createUrl(['parameter/update']) . "',
-        {
-            id: $(this).closest('tr').data('key')
-        },
-        function (data) {
-            $('.modal-body').html(data);
-            $('#update-parameter-modal').modal();
-        }
-    );
-});"
-    );
-    ?>
 
 </div>

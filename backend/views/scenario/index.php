@@ -74,10 +74,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]); ?>
 
-        <?php $this->registerJs("$(document).ready(function(){
-                $('[data-toggle=\"tooltip\"]').tooltip();
-            });"); ?>
-
     </div>
 
     <div class="col-md-3" id="filter">
