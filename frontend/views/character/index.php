@@ -1,7 +1,10 @@
 <?php
 
+use frontend\assets\CharacterAsset;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
+
+CharacterAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\CharacterQuery */

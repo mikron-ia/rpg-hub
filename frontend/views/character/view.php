@@ -1,7 +1,10 @@
 <?php
 
+use frontend\assets\CharacterAsset;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
+
+CharacterAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Character */
@@ -27,14 +30,14 @@ $items = [
     [
         'label' => Yii::t('external', 'CHARACTER_REPUTATIONS_TAB'),
         'content' => '<div class="reputations"></div>',
-        'headerOptions' => ['class' => 'tab-reputation hidden'],
+        'headerOptions' => ['class' => 'tab-reputation hidden', 'data-key' => $model->key],
         'encode' => false,
         'active' => false,
     ],
     [
         'label' => Yii::t('external', 'CHARACTER_REPUTATION_EVENTS_TAB'),
         'content' => '<div class="reputation-events"></div>',
-        'headerOptions' => ['class' => 'tab-reputation-events hidden'],
+        'headerOptions' => ['class' => 'tab-reputation-events hidden', 'data-key' => $model->key],
         'encode' => false,
         'active' => false,
     ],
@@ -57,12 +60,12 @@ if ($this->params['showPrivates']) {
         <?php if ($this->params['showPrivates']): ?>
             <?= Html::a(Yii::t('app', 'BUTTON_SECRETS_SHOW'), '#', [
                 'class' => 'btn btn-default',
-                'onclick' => '$(".secret").show(); $("#secrets-show").hide(); $("#secrets-hide").show();',
+                'onclick' => 'showSecrets()',
                 'id' => 'secrets-show',
             ]) ?>
             <?= Html::a(Yii::t('app', 'BUTTON_SECRETS_HIDE'), '#', [
                 'class' => 'btn btn-default',
-                'onclick' => '$(".secret").hide(); $("#secrets-show").show(); $("#secrets-hide").hide();',
+                'onclick' => 'hideSecrets()',
                 'id' => 'secrets-hide',
                 'style' => 'display: none;'
             ]) ?>
@@ -74,26 +77,6 @@ if ($this->params['showPrivates']) {
     <?= Tabs::widget([
         'items' => $items
     ]) ?>
-
-    <?php $this->registerJs("$.get(
-        '" . Yii::$app->urlManager->createUrl(['character/external-reputation']) . "',
-        {key: '" . $model->key . "'},
-        function (data) {
-            $('.reputations').html(data);
-        }
-    ).done(function() {
-        $('.tab-reputation').removeClass('hidden');
-    });"); ?>
-
-    <?php $this->registerJs("$.get(
-        '" . Yii::$app->urlManager->createUrl(['character/external-reputation-event']) . "',
-        {key: '" . $model->key . "'},
-        function (data) {
-            $('.reputation-events').html(data);
-        }
-    ).done(function() {
-        $('.tab-reputation-events').removeClass('hidden');
-    });"); ?>
 
     <?php if ($this->params['showPrivates']): ?>
         <?= $this->registerJs('$(".secret").hide();'); ?>
