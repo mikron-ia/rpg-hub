@@ -1,7 +1,10 @@
 <?php
 
+use frontend\assets\StoryAsset;
 use yii\helpers\Html;
 use yii\widgets\ListView;
+
+StoryAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */

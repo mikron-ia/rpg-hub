@@ -1,7 +1,10 @@
 <?php
 
+use frontend\assets\StoryAsset;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
+
+StoryAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Story */

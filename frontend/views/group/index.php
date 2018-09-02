@@ -1,6 +1,9 @@
 <?php
 
+use frontend\assets\GroupAsset;
 use yii\helpers\Html;
+
+GroupAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
