@@ -140,7 +140,7 @@ final class CharacterController extends Controller
             }
         }
 
-        throw new HttpException(404, Yii::t('external', 'NO_DATA'));
+        throw new HttpException(204, Yii::t('external', 'NO_DATA'));
     }
 
     /**
@@ -170,7 +170,7 @@ final class CharacterController extends Controller
             }
         }
 
-        throw new HttpException(404, Yii::t('external', 'NO_DATA'));
+        throw new HttpException(204, Yii::t('external', 'NO_DATA'));
     }
 
     /**
