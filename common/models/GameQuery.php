@@ -65,11 +65,15 @@ class GameQuery extends Game
         return $dataProvider;
     }
 
-    public function mostRecentDataProvider(): ActiveDataProvider
+    public function mostRecentDataProvider(?Epic $activeEpic = null): ?ActiveDataProvider
     {
         $query = Game::find();
 
-        if (empty(Yii::$app->params['activeEpic'])) {
+        if (empty($activeEpic)) {
+            $activeEpic = Yii::$app->params['activeEpic'];
+        }
+
+        if (empty($activeEpic)) {
             return null;
         }
 
@@ -81,7 +85,7 @@ class GameQuery extends Game
 
         $query
             ->andWhere([
-                'epic_id' => Yii::$app->params['activeEpic']->epic_id
+                'epic_id' => $activeEpic->epic_id
             ])
             ->orderBy(['position' => SORT_DESC])
             ->limit(4);

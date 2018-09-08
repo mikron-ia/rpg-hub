@@ -488,6 +488,26 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return $this->seenPack->getCSSForCurrentUser();
     }
 
+    static function throwExceptionAboutCreate()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_EPIC'));
+    }
+
+    static function throwExceptionAboutControl()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_EPIC'));
+    }
+
+    static function throwExceptionAboutIndex()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_EPIC'));
+    }
+
+    static function throwExceptionAboutView()
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_EPIC'));
+    }
+
     public function __toString()
     {
         return Html::a($this->name, ['epic/view', 'id' => $this->epic_id]);

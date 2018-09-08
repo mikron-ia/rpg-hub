@@ -244,7 +244,7 @@ final class SiteController extends Controller
     {
         $chosenEpicKey = Yii::$app->request->post('epic');
         $this->run('site/set-epic-in-silence', ['epicKey' => $chosenEpicKey]);
-        return $this->goHome();
+        return $this->redirect(Yii::$app->urlManager->createUrl(['epic/view', 'key' => $chosenEpicKey]));
     }
 
     public function actionSetEpicInSilence($epicKey)
