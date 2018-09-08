@@ -6,7 +6,7 @@ use yii\bootstrap\Html;
 
 $this->title = 'RPG hub - control';
 
-$epics = \common\models\EpicQuery::activeEpicsAsModels(true);
+$epics = \common\models\EpicQuery::activeEpicsAsModels(false);
 $items = [];
 
 if (isset($objectEpic)) {
