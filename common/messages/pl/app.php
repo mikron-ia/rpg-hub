@@ -264,7 +264,7 @@ return [
     'FRONTPAGE_SESSION_NOT_AVAILABLE' => 'Nie znaleziono sesji dla tej kampanii',
     'FRONTPAGE_STORIES' => 'Niedawne historie',
     'FRONTPAGE_STORIES_TITLE_TEXT' => 'Kilka ostatnich historii z kampanii',
-    'FRONTPAGE_TITLE' => 'Centrum RPGowe',
+    'FRONTPAGE_TITLE' => 'Centrum RPG-owe',
     'FRONTPAGE_WHAT_HAPPENED' => 'Wydarzenia w kampanii',
     'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT' => 'Ogólne streszczenie niedawnych wydarzeń, przeznaczone do szybkiego odzyskania orientacji w kampanii. Po szczegóły wydarzeń należy zwrócić się do streszczeń poszczególnych historii.',
     'GAME_BASICS' => 'Opis podstawowy',

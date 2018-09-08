@@ -59,6 +59,7 @@ class ArticleController extends Controller
      * Displays a single Article model.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionView($key)
     {
@@ -92,6 +93,7 @@ class ArticleController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($key)
     {
@@ -111,6 +113,9 @@ class ArticleController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($key)
     {
@@ -123,6 +128,8 @@ class ArticleController extends Controller
      * Moves game up in order; this means lower position on the list
      * @param int $key Story ID
      * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \yii\web\HttpException
      */
     public function actionMoveUp($key)
     {
@@ -144,6 +151,8 @@ class ArticleController extends Controller
      * Moves game down in order; this means higher position on the list
      * @param int $key Story ID
      * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \yii\web\HttpException
      */
     public function actionMoveDown($key)
     {

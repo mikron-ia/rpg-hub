@@ -64,6 +64,7 @@ class ArticleController extends Controller
      * Displays a single Article model.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionView($key)
     {
