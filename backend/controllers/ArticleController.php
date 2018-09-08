@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\controllers\tools\EpicAssistance;
 use Yii;
 use common\models\Article;
 use common\models\ArticleQuery;
@@ -15,6 +16,8 @@ use yii\filters\VerbFilter;
  */
 class ArticleController extends Controller
 {
+    use EpicAssistance;
+
     public function behaviors()
     {
         return [
@@ -169,13 +172,7 @@ class ArticleController extends Controller
     {
         if (($model = Article::findOne(['key' => $key])) !== null) {
             if($model->epic_id) {
-                if (empty(Yii::$app->params['activeEpic'])) {
-                    $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-                    Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
-                } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-                    $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-                    Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
-                }
+                $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
             }
             return $model;
         } else {

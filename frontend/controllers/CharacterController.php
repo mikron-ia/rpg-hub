@@ -7,6 +7,7 @@ use common\models\CharacterQuery;
 use common\models\core\Visibility;
 use common\models\external\Reputation;
 use common\models\external\ReputationEvent;
+use frontend\controllers\tools\EpicAssistance;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -19,6 +20,8 @@ use yii\web\NotFoundHttpException;
  */
 final class CharacterController extends Controller
 {
+    use EpicAssistance;
+
     public function behaviors()
     {
         return [
@@ -76,13 +79,7 @@ final class CharacterController extends Controller
             Character::throwExceptionAboutView();
         }
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
-        }
+        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
 
         $model->recordSighting();
 

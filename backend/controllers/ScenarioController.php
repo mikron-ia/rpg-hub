@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\controllers\tools\EpicAssistance;
 use common\models\ScenarioQuery;
 use common\models\tools\ToolsForEntity;
 use Yii;
@@ -16,6 +17,7 @@ use yii\filters\VerbFilter;
  */
 class ScenarioController extends Controller
 {
+    use EpicAssistance;
     use ToolsForEntity;
 
     public function behaviors()
@@ -163,13 +165,7 @@ class ScenarioController extends Controller
     protected function findModel($key)
     {
         if (($model = Scenario::findOne(['key' => $key])) !== null) {
-            if (empty(Yii::$app->params['activeEpic'])) {
-                $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
-            } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-                $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
-            }
+            $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'SCENARIO_NOT_AVAILABLE'));

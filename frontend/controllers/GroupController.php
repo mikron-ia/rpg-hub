@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\core\Visibility;
 use common\models\Group;
 use common\models\GroupQuery;
+use frontend\controllers\tools\EpicAssistance;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -16,11 +17,13 @@ use yii\web\NotFoundHttpException;
  */
 class GroupController extends Controller
 {
+    use EpicAssistance;
+
     public function behaviors()
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'actions' => ['index', 'view', 'external-reputation', 'external-reputation-event'],
@@ -30,7 +33,7 @@ class GroupController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [],
             ],
         ];
@@ -39,6 +42,7 @@ class GroupController extends Controller
     /**
      * Lists all Group models.
      * @return mixed
+     * @throws \yii\web\HttpException
      */
     public function actionIndex()
     {
@@ -63,6 +67,8 @@ class GroupController extends Controller
      * Displays a single Group model.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\web\HttpException
      */
     public function actionView($key)
     {
@@ -72,13 +78,7 @@ class GroupController extends Controller
             Group::throwExceptionAboutView();
         }
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
-        }
+        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
 
         $model->recordSighting();
 

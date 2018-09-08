@@ -2,20 +2,23 @@
 
 namespace backend\controllers;
 
-use common\models\Participant;
-use Yii;
+use backend\controllers\tools\EpicAssistance;
 use common\models\Epic;
 use common\models\EpicQuery;
+use common\models\Participant;
+use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * EpicController implements the CRUD actions for Epic model.
  */
 final class EpicController extends Controller
 {
+    use EpicAssistance;
+
     public function behaviors()
     {
         return [
@@ -59,6 +62,7 @@ final class EpicController extends Controller
     /**
      * Lists all Epic models user can access
      * @return mixed
+     * @throws \yii\web\HttpException
      */
     public function actionIndex()
     {
@@ -76,6 +80,7 @@ final class EpicController extends Controller
     /**
      * Lists all Epic models for management purposes
      * @return mixed
+     * @throws \yii\web\HttpException
      */
     public function actionManage()
     {
@@ -94,6 +99,8 @@ final class EpicController extends Controller
      * Displays a single Epic model.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\web\HttpException
      */
     public function actionView($key)
     {
@@ -120,6 +127,7 @@ final class EpicController extends Controller
      * Creates a new Epic model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
+     * @throws \yii\web\HttpException
      */
     public function actionCreate()
     {
@@ -141,6 +149,8 @@ final class EpicController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\web\HttpException
      */
     public function actionUpdate($key)
     {
@@ -168,6 +178,9 @@ final class EpicController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($key)
     {
@@ -206,6 +219,7 @@ final class EpicController extends Controller
      * Edits a participant
      * @param string $participant_id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionParticipantEdit($participant_id)
     {
@@ -262,13 +276,7 @@ final class EpicController extends Controller
     protected function findModel($key)
     {
         if (($model = Epic::findOne(['key' => $key])) !== null) {
-            if (empty(Yii::$app->params['activeEpic'])) {
-                $this->run('site/set-epic-in-silence', ['epicKey' => $model->key]);
-                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
-            } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-                $this->run('site/set-epic-in-silence', ['epicKey' => $model->key]);
-                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
-            }
+            $this->selectEpic($model->key, $model->epic_id, $model->name);
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));

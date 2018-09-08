@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\controllers\tools\EpicAssistance;
 use Yii;
 use common\models\Recap;
 use common\models\RecapQuery;
@@ -15,6 +16,8 @@ use yii\filters\VerbFilter;
  */
 final class RecapController extends Controller
 {
+    use EpicAssistance;
+
     public function behaviors()
     {
         return [
@@ -214,13 +217,7 @@ final class RecapController extends Controller
     protected function findModel($key)
     {
         if (($model = Recap::findOne(['key' => $key])) !== null) {
-            if (empty(Yii::$app->params['activeEpic'])) {
-                $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
-            } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-                $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
-            }
+            $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'RECAP_NOT_AVAILABLE'));

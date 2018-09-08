@@ -2,20 +2,22 @@
 
 namespace backend\controllers;
 
+use backend\controllers\tools\EpicAssistance;
+use common\models\Game;
 use common\models\GameQuery;
 use Yii;
-use common\models\Game;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\web\Response;
 
 /**
  * GameController implements the CRUD actions for Game model.
  */
 class GameController extends Controller
 {
+    use EpicAssistance;
+
     public function behaviors()
     {
         return [
@@ -205,13 +207,7 @@ class GameController extends Controller
     protected function findModel($id)
     {
         if (($model = Game::findOne($id)) !== null) {
-            if (empty(Yii::$app->params['activeEpic'])) {
-                $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
-            } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-                $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-                Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
-            }
+            $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'GAME_SESSION_NOT_AVAILABLE'));

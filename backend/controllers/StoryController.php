@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\controllers\tools\EpicAssistance;
 use common\models\core\Visibility;
 use common\models\StoryQuery;
 use Yii;
@@ -16,6 +17,8 @@ use yii\web\NotFoundHttpException;
  */
 final class StoryController extends Controller
 {
+    use EpicAssistance;
+
     public function behaviors()
     {
         return [
@@ -202,13 +205,7 @@ final class StoryController extends Controller
             throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));
         }
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
-        }
+        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
 
         return $model;
     }

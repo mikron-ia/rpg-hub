@@ -2,20 +2,23 @@
 
 namespace backend\controllers;
 
+use backend\controllers\tools\EpicAssistance;
 use common\models\core\Visibility;
-use Yii;
 use common\models\Group;
 use common\models\GroupQuery;
+use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * GroupController implements the CRUD actions for Group model.
  */
 final class GroupController extends Controller
 {
+    use EpicAssistance;
+
     public function behaviors()
     {
         return [
@@ -153,13 +156,7 @@ final class GroupController extends Controller
             throw new NotFoundHttpException(Yii::t('app', 'GROUP_NOT_AVAILABLE'));
         }
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            $this->run('site/set-epic-in-silence', ['epicKey' => $model->epic->key]);
-            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
-        }
+        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
 
         if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
             throw new NotFoundHttpException(Yii::t('app', 'GROUP_NOT_AVAILABLE'));

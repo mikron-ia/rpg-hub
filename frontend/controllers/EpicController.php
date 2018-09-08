@@ -6,6 +6,7 @@ use common\models\Epic;
 use common\models\GameQuery;
 use common\models\RecapQuery;
 use common\models\StoryQuery;
+use frontend\controllers\tools\EpicAssistance;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -17,6 +18,8 @@ use yii\web\NotFoundHttpException;
  */
 final class EpicController extends Controller
 {
+    use EpicAssistance;
+
     public function behaviors()
     {
         return [
@@ -29,7 +32,6 @@ final class EpicController extends Controller
                     ],
                     [
                         'actions' => [
-                            'index',
                             'view',
                         ],
                         'allow' => true,
@@ -55,11 +57,6 @@ final class EpicController extends Controller
         ];
     }
 
-    public function actionIndex()
-    {
-        throw new \HTTP_Request2_NotImplementedException();
-    }
-
     /**
      * Displays Epic
      * @param $key
@@ -76,13 +73,7 @@ final class EpicController extends Controller
             Epic::throwExceptionAboutView();
         }
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            $this->run('site/set-epic-in-silence', ['epicKey' => $model->key]);
-            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_SET_BASED_ON_OBJECT'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            $this->run('site/set-epic-in-silence', ['epicKey' => $model->key]);
-            Yii::$app->session->setFlash('success', Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT'));
-        }
+        $this->selectEpic($model->key, $model->epic_id, $model->name);
 
         $model->recordSighting();
 
