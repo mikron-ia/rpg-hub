@@ -30,7 +30,7 @@ class m180620_211700_description_dating extends Migration
 
     public function safeDown()
     {
-        $this->dropForeignKey('description_history_point_in_time', 'description');
+        $this->dropForeignKey('description_history_point_in_time', 'description_history');
         $this->dropForeignKey('description_point_in_time', 'description');
 
         $this->dropColumn('description_history', 'point_in_time_id');
