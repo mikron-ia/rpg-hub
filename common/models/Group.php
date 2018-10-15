@@ -63,11 +63,12 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             [['epic_id', 'name'], 'required'],
             [['epic_id', 'master_group_id'], 'integer'],
             [['name'], 'string', 'max' => 120],
+            [['visibility', 'importance_category'], 'string', 'max' => 20],
             [
                 ['epic_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Epic::className(),
+                'targetClass' => Epic::class,
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
             [
