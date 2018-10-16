@@ -1,14 +1,15 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
-use yii\helpers\Html;
+use common\widgets\Alert;
+use frontend\assets\AppAsset;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
-use common\widgets\Alert;
 
 AppAsset::register($this);
 ?>
@@ -119,9 +120,7 @@ AppAsset::register($this);
     <div class="container">
         <?= Breadcrumbs::widget([
             'homeLink' => [
-                'label' => Yii::$app->params['activeEpic']
-                    ? (Yii::$app->params['activeEpic']->name)
-                    : (Yii::t('app', 'BREADCRUMBS_HOME')),
+                'label' => Yii::t('app', 'BREADCRUMBS_HOME'),
                 'url' => Yii::$app->homeUrl,
             ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

@@ -7,7 +7,8 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Article */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ARTICLE_TITLE_INDEX'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/view', 'key' => $model->epic->key]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ARTICLE_TITLE_INDEX'), 'url' => ['index', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-view">
