@@ -42,6 +42,7 @@ use yii\widgets\DetailView;
                 ],
                 [
                     'attribute' => 'importance_category',
+                    'label' => Yii::t('app', 'CHARACTER_IMPORTANCE'),
                     'value' => $model->getImportanceCategory(),
                 ],
                 [

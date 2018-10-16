@@ -34,6 +34,7 @@ use yii\widgets\DetailView;
                 ],
                 [
                     'attribute' => 'importance_category',
+                    'label' => Yii::t('app', 'GROUP_IMPORTANCE'),
                     'value' => $model->getImportanceCategory(),
                 ],
                 [

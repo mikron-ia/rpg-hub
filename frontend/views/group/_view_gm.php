@@ -16,6 +16,11 @@ use yii\widgets\DetailView;
                     'attribute' => 'visibility',
                     'value' => $model->getVisibility(),
                 ],
+                [
+                    'attribute' => 'importance_category',
+                    'label' => Yii::t('app', 'GROUP_IMPORTANCE'),
+                    'value' => $model->getImportanceCategory(),
+                ],
             ],
         ]);
     } ?>
