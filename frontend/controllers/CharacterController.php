@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Character;
 use common\models\CharacterQuery;
 use common\models\core\Visibility;
+use common\models\Epic;
 use common\models\external\Reputation;
 use common\models\external\ReputationEvent;
 use frontend\controllers\tools\EpicAssistance;
@@ -44,10 +45,22 @@ final class CharacterController extends Controller
 
     /**
      * Lists all Character models
+     * @param string|null $key
      * @return mixed
+     * @throws HttpException
      */
-    public function actionIndex()
+    public function actionIndex(?string $key = null)
     {
+        if ($key) {
+            $epic = $this->findEpicByKey($key);
+
+            if (!$epic->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epic->key, $epic->epic_id, $epic->name);
+        }
+
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection');
         }
