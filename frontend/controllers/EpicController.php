@@ -109,7 +109,6 @@ final class EpicController extends Controller
         ]);
     }
 
-
     /**
      * Finds the Story model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -127,5 +126,4 @@ final class EpicController extends Controller
 
         return $model;
     }
-
 }

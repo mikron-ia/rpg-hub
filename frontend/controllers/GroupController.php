@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\core\Visibility;
+use common\models\Epic;
 use common\models\Group;
 use common\models\GroupQuery;
 use frontend\controllers\tools\EpicAssistance;
@@ -41,11 +42,23 @@ class GroupController extends Controller
 
     /**
      * Lists all Group models.
+     * @param null|string $key
      * @return mixed
+     * @throws NotFoundHttpException
      * @throws \yii\web\HttpException
      */
-    public function actionIndex()
+    public function actionIndex(?string $key = null)
     {
+        if ($key) {
+            $epic = $this->findEpicByKey($key);
+
+            if (!$epic->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epic->key, $epic->epic_id, $epic->name);
+        }
+
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection');
         }

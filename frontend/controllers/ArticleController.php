@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Article;
 use common\models\ArticleQuery;
 use common\models\core\Visibility;
+use common\models\Epic;
 use frontend\controllers\tools\EpicAssistance;
 use Yii;
 use yii\filters\AccessControl;
@@ -43,10 +44,23 @@ class ArticleController extends Controller
 
     /**
      * Lists all Article models.
+     * @param null|string $key
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\web\HttpException
      */
-    public function actionIndex()
+    public function actionIndex(?string $key = null)
     {
+        if ($key) {
+            $epic = $this->findEpicByKey($key);
+
+            if (!$epic->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epic->key, $epic->epic_id, $epic->name);
+        }
+
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection');
         }
