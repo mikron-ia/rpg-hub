@@ -62,7 +62,22 @@ if ($epic) {
             <h3 title="<?= Yii::t('app', 'FRONTPAGE_SESSIONS_TITLE_TEXT') ?>">
                 <?= Yii::t('app', 'FRONTPAGE_SESSIONS') ?>
             </h3>
-            <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED_SEE_EPIC_PAGE') ?></i></p>
+            <?php if ($sessions): ?>
+                <?= ListView::widget([
+                    'dataProvider' => $sessions,
+                    'emptyText' => '<p class="error-box">' . Yii::t('app', 'EPIC_SESSION_NOT_AVAILABLE') . '</p>',
+                    'layout' => '{items}',
+                    'itemOptions' => ['class' => 'item'],
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        return $this->render(
+                            '../session/_index_box',
+                            ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                        );
+                    },
+                ]) ?>
+            <?php else: ?>
+                <p class="error-box"><?= Yii::t('app', 'EPIC_SESSION_NOT_AVAILABLE') ?></p>
+            <?php endif; ?>
         </div>
 
         <div>

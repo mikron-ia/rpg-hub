@@ -92,4 +92,26 @@ class GameQuery extends Game
 
         return $dataProvider;
     }
+
+    /**
+     * @param array $userIds
+     * @return null|ActiveDataProvider
+     */
+    public function mostRecentByPlayerDataProvider(array $userIds): ?ActiveDataProvider
+    {
+        $query = Game::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => ['defaultOrder' => ['planned_date' => SORT_DESC]],
+            'pagination' => false,
+        ]);
+
+        $query
+            ->andWhere(['in', 'epic_id', $userIds])
+            ->orderBy(['planned_date' => SORT_DESC])
+            ->limit(8);
+
+        return $dataProvider;
+    }
 }

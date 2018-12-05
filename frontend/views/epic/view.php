@@ -129,7 +129,7 @@ if ($epic) {
                     'itemOptions' => ['class' => 'item'],
                     'itemView' => function ($model, $key, $index, $widget) {
                         return $this->render(
-                            '../session/_index_box',
+                            '../session/_epic_box',
                             ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
                         );
                     },

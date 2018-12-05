@@ -6,9 +6,11 @@ use common\models\Epic;
 use common\models\EpicQuery;
 use common\models\GameQuery;
 use common\models\LoginForm;
+use common\models\Participant;
 use common\models\PerformedAction;
 use common\models\RecapQuery;
 use common\models\StoryQuery;
+use common\models\User;
 use common\models\user\PasswordChange;
 use common\models\user\UserAcceptForm;
 use common\models\user\UserSettingsForm;
@@ -114,14 +116,20 @@ final class SiteController extends Controller
             $searchModel = new StoryQuery(4);
             $stories = $searchModel->search(Yii::$app->request->queryParams);
 
-            /* Get Sessions */
-            $sessionQuery = new GameQuery();
-            $sessions = $sessionQuery->mostRecentDataProvider();
-
             if ($recap) {
                 $recap->recordSighting();
             }
         }
+
+        $user = User::findOne(['id' => \Yii::$app->user->id]);
+
+        $userEpicIDs = array_map(function(Participant $participation) {
+            return $participation->epic_id;
+        }, $user->getParticipants()->all());
+
+        /* Get Sessions */
+        $sessionQuery = new GameQuery();
+        $sessions = $sessionQuery->mostRecentByPlayerDataProvider($userEpicIDs);
 
         /* Get News */
         $news = [];

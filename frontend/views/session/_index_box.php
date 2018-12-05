@@ -8,26 +8,21 @@ use yii\helpers\Html;
 
 <div id="session-<?= $model->game_id; ?>">
 
-    <?php if (!empty($model->notes)): ?>
-        <p
-                class="session-box session-box-closed"
-                data-toggle="collapse"
-                data-target="#session-notes-<?php echo $model->game_id; ?>"
-                onclick="$(this).toggleClass('session-box-closed session-box-open')"
-        >
-            <?= Html::tag('span', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass()]]) ?>
-            <?php echo Html::tag('span', Html::encode($model->basics), []); ?>
-        </p>
+    <p class="session-box session-box-closed"
+       data-toggle="collapse"
+       data-target="#session-notes-<?php echo $model->game_id; ?>"
+       onclick="$(this).toggleClass('session-box-closed session-box-open')"
+    >
+        <?= Html::tag('span', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass()]]) ?>
+        <?php echo Html::tag('span', Html::encode($model->basics), []); ?>
+    </p>
 
-        <div class="collapse" id="session-notes-<?php echo $model->game_id; ?>">
-            <?= $model->notesFormatted ?>
-        </div>
-    <?php else: ?>
-        <p class="session-box">
-            <?= Html::tag('span', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass()]]) ?>
-            <?php echo Html::tag('span', Html::encode($model->basics), []); ?>
+    <div class="collapse" id="session-notes-<?php echo $model->game_id; ?>">
+        <p>
+            <strong><?php echo Yii::t('app', 'LABEL_EPIC'); ?>:</strong> <?php echo Html::encode($model->epic->name); ?>
         </p>
-    <?php endif; ?>
+        <?= $model->notesFormatted ?>
+    </div>
 
 </div>
 
