@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 
 /**
  * RecapQuery represents the model behind the search form about `common\models\Recap`.
@@ -87,5 +88,32 @@ final class RecapQuery extends Recap
         $recap = $query->one();
 
         return $recap;
+    }
+
+    /**
+     * @param array $userIds
+     * @return ArrayDataProvider|null
+     */
+    public function mostRecentByPlayerDataProvider(array $userIds): ?ArrayDataProvider
+    {
+        $query = Recap::find()->where(['in', 'epic_id', $userIds])->orderBy(['epic_id' => SORT_ASC, 'position' => SORT_DESC]);
+
+        $mostRecentRecaps = [];
+
+        foreach ($query->all() as $recap)
+        {
+            /** @var Recap $recap */
+            if(!isset($mostRecentRecaps[$recap->epic_id]))
+            {
+                $mostRecentRecaps[$recap->epic_id] = $recap;
+            }
+        }
+
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $mostRecentRecaps,
+            'pagination' => false,
+        ]);
+
+        return $dataProvider;
     }
 }

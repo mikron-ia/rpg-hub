@@ -96,7 +96,7 @@ final class SiteController extends Controller
         if (!isset(Yii::$app->params['activeEpic'])) {
             $epic = null;
             $stories = null;
-            $recap = null;
+            $recaps = null;
             $sessions = null;
         } else {
             /** @var Epic $epic */
@@ -104,21 +104,9 @@ final class SiteController extends Controller
 
             $epic->recordSighting();
 
-            /* Get Recap */
-            $recapQuery = new RecapQuery();
-            $recap = $recapQuery->mostRecent();
-
-            if ($recap) {
-                $recap->recordSighting();
-            }
-
             /* Get Stories */
             $searchModel = new StoryQuery(4);
             $stories = $searchModel->search(Yii::$app->request->queryParams);
-
-            if ($recap) {
-                $recap->recordSighting();
-            }
         }
 
         $user = User::findOne(['id' => \Yii::$app->user->id]);
@@ -131,6 +119,12 @@ final class SiteController extends Controller
         $sessionQuery = new GameQuery();
         $sessions = $sessionQuery->mostRecentByPlayerDataProvider($userEpicIDs);
 
+        /* Get Recap */
+        $recapQuery = new RecapQuery();
+        $recaps = $recapQuery->mostRecentByPlayerDataProvider($userEpicIDs);
+
+        // @todo Recap sighting
+
         /* Get News */
         $news = [];
 
@@ -139,7 +133,7 @@ final class SiteController extends Controller
             'sessions' => $sessions,
             'stories' => $stories,
             'news' => $news,
-            'recap' => $recap,
+            'recaps' => $recaps,
         ]);
     }
 

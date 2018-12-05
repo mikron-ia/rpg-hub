@@ -2,10 +2,9 @@
 
 /* @var $this yii\web\View */
 /* @var $epic \common\models\Epic */
+/* @var $recaps \common\models\Recap[] */
 /* @var $sessions \yii\data\ActiveDataProvider */
 /* @var $stories \yii\data\ActiveDataProvider */
-
-/* @var $recap \common\models\Recap */
 
 use yii\widgets\ListView;
 
@@ -39,7 +38,22 @@ if ($epic) {
             <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
                 <?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?>
             </h3>
-            <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED_SEE_EPIC_PAGE') ?></i></p>
+            <?php if($recaps): ?>
+                <?= ListView::widget([
+                    'dataProvider' => $recaps,
+                    'emptyText' => '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_RECAPS_NOT_AVAILABLE') . '</p>',
+                    'layout' => '{items}',
+                    'itemOptions' => ['class' => 'item'],
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        return $this->render(
+                            '../site/_recap_box',
+                            ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                        );
+                    },
+                ]) ?>
+            <?php else: ?>
+                <p class="error-box"><?= Yii::t('app', 'FRONTPAGE_RECAPS_NOT_AVAILABLE') ?></p>
+            <?php endif; ?>
         </div>
 
         <div>
