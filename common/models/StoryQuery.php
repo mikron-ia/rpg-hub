@@ -6,6 +6,7 @@ use common\models\core\Visibility;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 
 /**
  * StoryQuery represents the model behind the search form about `common\models\Story`.
@@ -89,6 +90,39 @@ final class StoryQuery extends Story
                 ['like', 'short', $this->descriptions],
                 ['like', 'long', $this->descriptions]
             ]);
+
+        return $dataProvider;
+    }
+
+    /**
+     * @param array $userIds
+     * @return ArrayDataProvider|null
+     * @throws \yii\web\HttpException
+     */
+    public function mostRecentByPlayerDataProvider(array $userIds): ?ArrayDataProvider
+    {
+        $query = Story::find()->where(['in', 'epic_id', $userIds])->orderBy([
+            'position' => SORT_DESC,
+            'story_id' => SORT_DESC
+        ]);
+
+        $mostRecentStories = [];
+
+        foreach ($query->all() as $story) {
+            /** @var Story $story */
+            if (
+                !isset($mostRecentStories[$story->epic_id]) &&
+                $story->canUserViewYou() &&
+                $story->visibility === Visibility::VISIBILITY_FULL
+            ) {
+                $mostRecentStories[$story->epic_id] = $story;
+            }
+        }
+
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $mostRecentStories,
+            'pagination' => false,
+        ]);
 
         return $dataProvider;
     }

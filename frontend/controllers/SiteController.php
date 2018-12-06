@@ -103,10 +103,6 @@ final class SiteController extends Controller
             $epic = Yii::$app->params['activeEpic'];
 
             $epic->recordSighting();
-
-            /* Get Stories */
-            $searchModel = new StoryQuery(4);
-            $stories = $searchModel->search(Yii::$app->request->queryParams);
         }
 
         $user = User::findOne(['id' => \Yii::$app->user->id]);
@@ -122,6 +118,10 @@ final class SiteController extends Controller
         /* Get Recap */
         $recapQuery = new RecapQuery();
         $recaps = $recapQuery->mostRecentByPlayerDataProvider($userEpicIDs);
+
+        /* Get Stories */
+        $searchModel = new StoryQuery(4);
+        $stories = $searchModel->mostRecentByPlayerDataProvider($userEpicIDs);
 
         // @todo Recap sighting
 

@@ -23,12 +23,12 @@ if ($epic) {
 
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-2">
         <h1 class="text-center"><?= Yii::t('app', 'FRONTEND_FRONT_PAGE_MAIN_SELECT_EPIC'); ?></h1>
         <?= $this->render('../_epic-selection_box', isset($objectEpic) ? ['objectEpic' => $objectEpic] : []) ?>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
 
         <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_IC_TITLE_TEXT') ?>">
             <?= Yii::t('app', 'FRONTPAGE_IC') ?>
@@ -60,7 +60,23 @@ if ($epic) {
             <h3 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
                 <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
             </h3>
-            <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED_SEE_EPIC_PAGE') ?></i></p>
+
+            <?php if($stories): ?>
+                <?= ListView::widget([
+                    'dataProvider' => $stories,
+                    'emptyText' => '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_STORIES_NOT_AVAILABLE') . '</p>',
+                    'layout' => '{items}',
+                    'itemOptions' => ['class' => 'item'],
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        return $this->render(
+                            '../story/_front_index_box',
+                            ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                        );
+                    },
+                ]) ?>
+            <?php else: ?>
+                <p class="error-box"><?= Yii::t('app', 'FRONTPAGE_STORIES_NOT_AVAILABLE') ?></p>
+            <?php endif; ?>
         </div>
 
     </div>
