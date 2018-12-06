@@ -89,22 +89,10 @@ final class SiteController extends Controller
     /**
      * Displays front page
      * @return string
+     * @throws \yii\web\HttpException
      */
     public function actionIndex()
     {
-        /* Get Epic */
-        if (!isset(Yii::$app->params['activeEpic'])) {
-            $epic = null;
-            $stories = null;
-            $recaps = null;
-            $sessions = null;
-        } else {
-            /** @var Epic $epic */
-            $epic = Yii::$app->params['activeEpic'];
-
-            $epic->recordSighting();
-        }
-
         $user = User::findOne(['id' => \Yii::$app->user->id]);
 
         $userEpicIDs = array_map(function(Participant $participation) {
@@ -129,7 +117,6 @@ final class SiteController extends Controller
         $news = [];
 
         return $this->render('index', [
-            'epic' => $epic,
             'sessions' => $sessions,
             'stories' => $stories,
             'news' => $news,

@@ -1,7 +1,5 @@
 <?php
-
 /* @var $model \common\models\Recap */
-
 ?>
 
 <div id="session-<?= $model->recap_id; ?>">

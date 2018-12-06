@@ -3,11 +3,9 @@
 use yii\helpers\Html;
 
 /** @var $model \common\models\Game */
-
 ?>
 
 <div id="session-<?= $model->game_id; ?>">
-
     <?php if (!empty($model->notes)): ?>
         <p class="session-box session-box-closed"
            data-toggle="collapse"
@@ -27,7 +25,6 @@ use yii\helpers\Html;
             <?php echo Html::tag('span', Html::encode($model->basics), []); ?>
         </p>
     <?php endif; ?>
-
 </div>
 
 <div class="clearfix"></div>
