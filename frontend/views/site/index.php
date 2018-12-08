@@ -1,27 +1,23 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $epics Epic[] */
 /* @var $recaps \common\models\Recap[] */
 /* @var $sessions \yii\data\ActiveDataProvider */
 
 /* @var $stories \yii\data\ActiveDataProvider */
 
+use common\models\Epic;
 use yii\widgets\ListView;
 
 ?>
 <div class="site-index">
-    <div class="jumbotron">
-
+    <div class="text-center">
         <h1><?= Yii::t('app', 'FRONTPAGE_TITLE') ?></h1>
-
+        <?= $this->render('../_epic-selection_box', ['epics' => $epics]) ?>
     </div>
 
-    <div class="col-lg-3 col-md-4">
-        <h1 class="text-center"><?= Yii::t('app', 'FRONTEND_FRONT_PAGE_MAIN_SELECT_EPIC'); ?></h1>
-        <?= $this->render('../_epic-selection_box', isset($objectEpic) ? ['objectEpic' => $objectEpic] : []) ?>
-    </div>
-
-    <div class="col-lg-5 col-md-4">
+    <div class="col-md-6">
         <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_IC_TITLE_TEXT') ?>">
             <?= Yii::t('app', 'FRONTPAGE_IC') ?>
         </h2>
@@ -70,7 +66,7 @@ use yii\widgets\ListView;
         </div>
     </div>
 
-    <div class="col-lg-4 col-md-4">
+    <div class="col-md-6">
         <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_OOC_TITLE_TEXT') ?>">
             <?= Yii::t('app', 'FRONTPAGE_OOC') ?>
         </h2>

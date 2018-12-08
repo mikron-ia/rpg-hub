@@ -19,7 +19,7 @@ if ($epic) {
 ?>
 <div class="epic-view">
 
-    <div class="jumbotron">
+    <div class="text-center">
 
         <?php if ($epic): ?>
 

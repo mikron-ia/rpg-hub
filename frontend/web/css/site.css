@@ -150,6 +150,7 @@ p {
     font-style: italic;
     text-align: left;
 }
+
 .tag-box {
     background-color: lightgreen;
     border-radius: 5px;
@@ -414,7 +415,7 @@ a:focus {
     color: white;
     display: inline-block;
     font-family: "Courier New", Courier, monospace;
-    font-size: 0.8em;
+    font-size: 14px;
     font-weight: bold;
     border-radius: 15px;
     padding: 5px 7px;
@@ -485,4 +486,26 @@ tr.table-row-hidden > td {
     color: green;
     float: right;
     cursor: pointer;
+}
+
+.game-status-in-row {
+    display: none;
+}
+
+.game-status-in-description {
+    display: inline-block;
+}
+
+@media (min-width: 576px) {
+    .game-status-in-row {
+        display: inline-block;
+    }
+
+    .game-status-in-description {
+        display: none;
+    }
+}
+
+.btn-epic-selection {
+    margin: 5px;
 }

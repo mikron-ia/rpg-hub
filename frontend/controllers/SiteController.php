@@ -95,28 +95,20 @@ final class SiteController extends Controller
     {
         $user = User::findOne(['id' => \Yii::$app->user->id]);
 
-        $userEpicIDs = array_map(function(Participant $participation) {
+        $userEpicIDs = array_map(function (Participant $participation) {
             return $participation->epic_id;
         }, $user->getParticipants()->all());
 
-        /* Get Sessions */
-        $sessionQuery = new GameQuery();
-        $sessions = $sessionQuery->mostRecentByPlayerDataProvider($userEpicIDs);
-
-        /* Get Recap */
-        $recapQuery = new RecapQuery();
-        $recaps = $recapQuery->mostRecentByPlayerDataProvider($userEpicIDs);
-
-        /* Get Stories */
-        $searchModel = new StoryQuery(4);
-        $stories = $searchModel->mostRecentByPlayerDataProvider($userEpicIDs);
+        $epics = EpicQuery::activeEpicsAsModels(false);
+        $sessions = (new GameQuery())->mostRecentByPlayerDataProvider($userEpicIDs);
+        $recaps = (new RecapQuery())->mostRecentByPlayerDataProvider($userEpicIDs);
+        $stories = (new StoryQuery(4))->mostRecentByPlayerDataProvider($userEpicIDs);
+        $news = [];
 
         // @todo Recap sighting
 
-        /* Get News */
-        $news = [];
-
         return $this->render('index', [
+            'epics' => $epics,
             'sessions' => $sessions,
             'stories' => $stories,
             'news' => $news,
