@@ -59,7 +59,7 @@ use yii\widgets\ListView;
                     'itemOptions' => ['class' => 'item'],
                     'itemView' => function ($model, $key, $index, $widget) {
                         return $this->render(
-                            '../story/_front_index_box',
+                            '../story/_index_box',
                             ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
                         );
                     },

@@ -41,11 +41,8 @@ if ($this->params['showPrivates']) {
 
 ?>
 <div class="story-view">
-
     <h1><?= Html::encode($this->title) ?></h1>
-
     <?= Tabs::widget([
         'items' => $items
     ]) ?>
-
 </div>

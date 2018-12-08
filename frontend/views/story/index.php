@@ -15,15 +15,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="story-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
-
     <?php echo ListView::widget([
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
             return $this->render(
-                '_index_box',
+                '_epic_box',
                 [
                     'model' => $model,
                     'key' => $key,
@@ -33,5 +31,4 @@ $this->params['breadcrumbs'][] = $this->title;
             );
         },
     ]) ?>
-
 </div>

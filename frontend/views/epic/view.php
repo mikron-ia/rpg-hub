@@ -98,7 +98,7 @@ if ($epic) {
                     'itemOptions' => ['class' => 'item'],
                     'itemView' => function ($model, $key, $index, $widget) {
                         return $this->render(
-                            '../story/_index_box_short',
+                            '../story/_epic_box_short',
                             ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
                         );
                     },
