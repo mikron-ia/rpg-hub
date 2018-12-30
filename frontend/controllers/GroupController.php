@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use common\models\core\Visibility;
 use common\models\Epic;
+use common\models\external\Reputation;
+use common\models\external\ReputationEvent;
 use common\models\Group;
 use common\models\GroupQuery;
 use frontend\controllers\tools\EpicAssistance;
@@ -11,6 +13,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -98,6 +101,66 @@ class GroupController extends Controller
         return $this->render('view', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * @param $key
+     * @return string|\yii\web\Response
+     * @throws HttpException
+     */
+    public function actionExternalReputation($key)
+    {
+        $model = $this->findModelByKey($key);
+
+        if (!$model->canUserViewYou()) {
+            Group::throwExceptionAboutView();
+        }
+
+        if ($model->external_data_pack_id) {
+            $data = $model->externalDataPack->getExternalDataByCode('reputations');
+            if (isset($data)) {
+                $reputation = Reputation::createFromArray($data);
+                if ($reputation) {
+                    if (Yii::$app->request->isAjax) {
+                        return $this->renderAjax('external/reputation', ['reputations' => $reputation]);
+                    } else {
+                        return $this->render('external/reputation', ['reputations' => $reputation]);
+                    }
+                }
+            }
+        }
+
+        throw new HttpException(204, Yii::t('external', 'NO_DATA'));
+    }
+
+    /**
+     * @param $key
+     * @return string|\yii\web\Response
+     * @throws HttpException
+     */
+    public function actionExternalReputationEvent($key)
+    {
+        $model = $this->findModelByKey($key);
+
+        if (!$model->canUserViewYou()) {
+            Group::throwExceptionAboutView();
+        }
+
+        if ($model->external_data_pack_id) {
+            $data = $model->externalDataPack->getExternalDataByCode('reputationEvents');
+            if (isset($data)) {
+                $event = ReputationEvent::createFromArray($data);
+                if ($event) {
+                    if (Yii::$app->request->isAjax) {
+                        return $this->renderAjax('external/reputation_event', ['events' => $event]);
+                    } else {
+                        return $this->render('external/reputation_event', ['events' => $event]);
+                    }
+                }
+            }
+        }
+
+        throw new HttpException(204, Yii::t('external', 'NO_DATA'));
     }
 
     /**

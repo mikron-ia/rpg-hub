@@ -11,7 +11,6 @@ class GroupAsset extends AssetBundle
     public $css = [];
     public $js = [
         'js/group.js',
-        'js/_reputation-tabs.js',
         'js/_secrets.js',
     ];
     public $depends = [
