@@ -7,7 +7,6 @@
 var descriptions = [];
 
 $descriptionTimestamps = $('.description-timestamp');
-$('.description-outdated').hide();
 
 $descriptionTimestamps.each(function (index, element) {
     var $element = $(element);

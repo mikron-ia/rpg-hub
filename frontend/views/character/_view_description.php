@@ -19,7 +19,7 @@
              data-order="<?= $model->pointInTime->position ?>">
             <?= $model->pointInTime->name ?>
         </div>
-        <div class="tag-box description-outdated">
+        <div class="tag-box description-outdated" style="display: none;">
             <?= Yii::t('app', 'DESCRIPTION_OUTDATED'); ?>
         </div>
     <?php endif; ?>
