@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\HasCompletion;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\core\HasImportance;
@@ -47,7 +48,7 @@ use yii\db\ActiveRecord;
  * @property GroupMembership[] $groupMemberships
  * @property GroupMembership[] $groupMembershipsVisibleToUser
  */
-class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasVisibility, HasSightings
+class Character extends ActiveRecord implements Displayable, HasCompletion, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasVisibility, HasSightings
 {
     use ToolsForEntity;
 
@@ -488,5 +489,10 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public function getDescriptionPackId(): int
     {
         return $this->description_pack_id;
+    }
+
+    public function getCompletionPercentage(): ?int
+    {
+        return null;
     }
 }
