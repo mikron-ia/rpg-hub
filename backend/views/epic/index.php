@@ -30,6 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'system',
             ],
             [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function (Epic $model) {
+                    return $model->getStatus();
+                }
+            ],
+            [
                 'label' => Yii::t('app', 'EPIC_COUNT_GROUPS'),
                 'value' => function (Epic $model) {
                     return $model->getGroups()->count();

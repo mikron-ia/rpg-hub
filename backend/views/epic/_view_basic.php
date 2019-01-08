@@ -68,6 +68,7 @@ use yii\widgets\DetailView;
             'attributes' => [
                 'key',
                 'system',
+                ['attribute' => 'status', 'value' => $model->getStatus()]
             ],
         ]) ?>
     </div>
