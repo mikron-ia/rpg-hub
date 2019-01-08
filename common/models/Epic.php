@@ -5,6 +5,7 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasParameters;
 use common\models\core\HasSightings;
+use common\models\core\HasStatus;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\base\Exception;
@@ -21,6 +22,7 @@ use yii\web\HttpException;
  * @property string $key
  * @property string $name Public name for the epic
  * @property string $system Code for the system used
+ * @property string $status Epic status
  * @property string $parameter_pack_id
  * @property string $seen_pack_id
  * @property string $utility_bag_id
@@ -42,9 +44,22 @@ use yii\web\HttpException;
  *
  * @todo: Someday, system field will have to come from a closed list of supported systems
  */
-class Epic extends ActiveRecord implements Displayable, HasParameters, HasSightings
+class Epic extends ActiveRecord implements Displayable, HasParameters, HasSightings, HasStatus
 {
     use ToolsForEntity;
+
+    const STATUS_PROPOSED = 'proposed';       // idea is created; next: PREPARED, SCRAPPED
+    const STATUS_PLANNED = 'planning';        // epic is being planned; next: PREPARED, SCRAPPED
+    const STATUS_PREPARED = 'preparation';    // epic is being prepared; next: READY, SCRAPPED
+    const STATUS_READY = 'ready';             // epic is ready to run; next: PLAYED, SCRAPPED
+    const STATUS_SCRAPPED = 'scrapped';       // epic failed to achieve readiness; next: PLANNED, CLOSED
+    const STATUS_CANCELLED = 'cancelled';     // epic ran, but failed to complete; next: RESUMING, CLOSED
+    const STATUS_PLAYED = 'played';           // in progress; next: LAPSED, ON HOLD, CANCELLED, FINISHED
+    const STATUS_LAPSED = 'lapsed';           // sessions stopped, but nothing was said yet; next: ON HOLD, CANCELLED, RESUMING
+    const STATUS_ON_HOLD = 'on hold';         // epic was officially suspended; next: RESUMING, CANCELLED
+    const STATUS_RESUMING = 'resuming';       // resuming after some trouble; next: PLAYED, ON HOLD
+    const STATUS_FINISHED = 'finished';       // epic was completed; next: CLOSED
+    const STATUS_CLOSED = 'closed';           // epic is documented and done; next: none
 
     public static function tableName()
     {
@@ -57,11 +72,13 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             [['name', 'system'], 'required'],
             [['name'], 'string', 'max' => 80],
             [['system'], 'string', 'max' => 20],
+            [['status'], 'string', 'max' => 20],
+            [['status'], 'in', 'range' => array_keys(Game::statusNames())],
             [
                 ['parameter_pack_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => ParameterPack::className(),
+                'targetClass' => ParameterPack::class,
                 'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id']
             ],
         ];
@@ -74,10 +91,59 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             'key' => Yii::t('app', 'EPIC_KEY'),
             'name' => Yii::t('app', 'EPIC_NAME'),
             'system' => Yii::t('app', 'EPIC_GAME_SYSTEM'),
+            'status' => Yii::t('app', 'EPIC_STATUS'),
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
             'seen_pack_id' => Yii::t('app', 'SEEN_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
+    }
+
+    static public function statusNames(): array
+    {
+        return [
+            self::STATUS_CANCELLED => Yii::t('app', 'EPIC_STATUS_CANCELLED'),
+            self::STATUS_CLOSED => Yii::t('app', 'EPIC_STATUS_CLOSED'),
+            self::STATUS_FINISHED => Yii::t('app', 'EPIC_STATUS_FINISHED'),
+            self::STATUS_LAPSED => Yii::t('app', 'EPIC_STATUS_LAPSED'),
+            self::STATUS_ON_HOLD => Yii::t('app', 'EPIC_STATUS_ON_HOLD'),
+            self::STATUS_PLANNED => Yii::t('app', 'EPIC_STATUS_PLANNED'),
+            self::STATUS_PREPARED => Yii::t('app', 'EPIC_STATUS_PREPARED'),
+            self::STATUS_PLAYED => Yii::t('app', 'EPIC_STATUS_PLAYED'),
+            self::STATUS_PROPOSED => Yii::t('app', 'EPIC_STATUS_PROPOSED'),
+            self::STATUS_READY => Yii::t('app', 'EPIC_STATUS_READY'),
+            self::STATUS_RESUMING => Yii::t('app', 'EPIC_STATUS_RESUMING'),
+            self::STATUS_SCRAPPED => Yii::t('app', 'EPIC_STATUS_SCRAPPED'),
+        ];
+    }
+
+    static public function statusClasses(): array
+    {
+        return [
+            self::STATUS_CANCELLED => 'epic-status-cancelled',
+            self::STATUS_CLOSED => 'epic-status-closed',
+            self::STATUS_FINISHED => 'epic-status-finished',
+            self::STATUS_LAPSED => 'epic-status-lapsed',
+            self::STATUS_ON_HOLD => 'epic-status-on-hold',
+            self::STATUS_PLANNED => 'epic-status-planned',
+            self::STATUS_PREPARED => 'epic-status-prepared',
+            self::STATUS_PLAYED => 'epic-status-played',
+            self::STATUS_PROPOSED => 'epic-status-proposed',
+            self::STATUS_READY => 'epic-status-ready',
+            self::STATUS_RESUMING => 'epic-status-resuming',
+            self::STATUS_SCRAPPED => 'epic-status-scrapped',
+        ];
+    }
+
+    public function getStatus(): string
+    {
+        $names = self::statusNames();
+        return isset($names[$this->status]) ? $names[$this->status] : '?';
+    }
+
+    public function getStatusClass(): string
+    {
+        $names = self::statusClasses();
+        return isset($names[$this->status]) ? $names[$this->status] : '';
     }
 
     public function afterFind()

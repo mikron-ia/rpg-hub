@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
+use common\models\core\HasStatus;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
@@ -29,7 +30,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property Epic $epic
  * @property UtilityBag $utilityBag
  */
-class Game extends ActiveRecord implements HasEpicControl
+class Game extends ActiveRecord implements HasEpicControl, HasStatus
 {
     use ToolsForEntity;
 
@@ -123,9 +124,6 @@ class Game extends ActiveRecord implements HasEpicControl
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return string[]
-     */
     static public function statusNames(): array
     {
         return [
@@ -141,9 +139,6 @@ class Game extends ActiveRecord implements HasEpicControl
         ];
     }
 
-    /**
-     * @return string[]
-     */
     static public function statusClasses(): array
     {
         return [
@@ -159,18 +154,12 @@ class Game extends ActiveRecord implements HasEpicControl
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getStatus(): string
     {
         $names = self::statusNames();
         return isset($names[$this->status]) ? $names[$this->status] : '?';
     }
 
-    /**
-     * @return string
-     */
     public function getStatusClass(): string
     {
         $names = self::statusClasses();
