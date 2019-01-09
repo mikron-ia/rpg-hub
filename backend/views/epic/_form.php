@@ -12,17 +12,19 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-4">
+    <div class="col-md-12">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-12">
         <?= $form->field($model, 'system')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-4">
-        <?= $form->field($model, 'status')->dropDownList($model->getAllowedChangeNames()) ?>
-    </div>
+    <?php if (!$model->isNewRecord): ?>
+        <div class="col-md-12">
+            <?= $form->field($model, 'status')->dropDownList($model->getAllowedChangeNames()) ?>
+        </div>
+    <?php endif; ?>
 
     <div class="form-group">
         <?= Html::submitButton(

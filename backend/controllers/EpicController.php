@@ -6,6 +6,7 @@ use backend\controllers\tools\EpicAssistance;
 use common\models\Epic;
 use common\models\EpicQuery;
 use common\models\Participant;
+use common\models\ParticipantRole;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -105,18 +106,8 @@ final class EpicController extends Controller
     public function actionView($key)
     {
         $model = $this->findModel($key);
-
-        if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection', ['objectEpic' => $model]);
-        }
-
         $model->canUserViewYou();
-
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
-        }
+        $this->selectEpic($model->key, $model->epic_id, $model->name);
 
         return $this->render('view', [
             'model' => $model,
@@ -135,7 +126,10 @@ final class EpicController extends Controller
 
         $model = new Epic();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save() && $model->refresh()) {
+            if (!Participant::createForEpic($model->epic_id, Yii::$app->user->id, ParticipantRole::ROLE_GM)) {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_GM_ADDED'));
+            }
             return $this->redirect(['view', 'key' => $model->key]);
         } else {
             return $this->render('create', [

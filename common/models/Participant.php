@@ -181,4 +181,20 @@ class Participant extends ActiveRecord
             return false;
         }
     }
+
+    /**
+     * Creates Game Master participant for an epic
+     * @param int $epic_id
+     * @param int $user_id
+     * @param string $role
+     * @return bool
+     */
+    static public function createForEpic(int $epic_id, int $user_id, string $role): bool
+    {
+        $participant = new Participant();
+        $participant->epic_id = $epic_id;
+        $participant->user_id = $user_id;
+        $participant->roleChoices = [$role];
+        return $participant->save();
+    }
 }
