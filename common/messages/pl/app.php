@@ -198,6 +198,7 @@ return [
     'DESCRIPTION_UPDATED {when} {who}' => 'Zmienione przez {who}, {when}',
     'DESCRIPTION_UPDATED_IC {when}' => 'Obowiązuje w punkcie: {when}',
     'DESCRIPTION_UPDATED_IC_TITLE {when}' => 'Opis obowiązujący w punkcie czasowym: {when}',
+    'DESCRIPTION_WORDS' => 'Słów',
     'EPIC_BASIC' => 'Podstawy',
     'EPIC_CARD_ANNOUNCEMENTS' => 'Ogłoszenia',
     'EPIC_CARD_EPIC_ATTRIBUTES' => 'Atrybuty kampanii',

@@ -198,6 +198,7 @@ return [
     'DESCRIPTION_UPDATED {when} {who}' => 'Changed {when}, by {who}',
     'DESCRIPTION_UPDATED_IC {when}' => 'Correct in point: {when}',
     'DESCRIPTION_UPDATED_IC_TITLE {when}' => 'Description correct in point: {when}',
+    'DESCRIPTION_WORDS' => 'Word count',
     'EPIC_BASIC' => 'Basics',
     'EPIC_CARD_ANNOUNCEMENTS' => 'Announcements',
     'EPIC_CARD_EPIC_ATTRIBUTES' => 'Epic attributes',

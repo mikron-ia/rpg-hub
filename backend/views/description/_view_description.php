@@ -14,8 +14,10 @@ use yii\helpers\Html;
         <h2><?= $model->position; ?>. <?= $model->getTypeName(); ?></h2>
 
         <div>
-            <span class="btn btn-default move-down" data-description-id="<?= $model->description_id ?>"><?= Yii::t('app', 'BUTTON_MOVE_DOWN') ?></span>
-            <span class="btn btn-default move-up" data-description-id="<?= $model->description_id ?>"><?= Yii::t('app', 'BUTTON_MOVE_UP') ?></span>
+            <span class="btn btn-default move-down"
+                  data-description-id="<?= $model->description_id ?>"><?= Yii::t('app', 'BUTTON_MOVE_DOWN') ?></span>
+            <span class="btn btn-default move-up" data-description-id="<?= $model->description_id ?>"><?= Yii::t('app',
+                    'BUTTON_MOVE_UP') ?></span>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_UPDATE'),
                 '#',
@@ -74,6 +76,13 @@ use yii\helpers\Html;
 
         <span class="tag-box">
             <?= $model->getLanguage(); ?>
+        </span>
+
+        <span class="tag-box">
+            <?= Yii::t('app', 'DESCRIPTION_WORDS') ?>:
+            <?= \yii\helpers\StringHelper::countWords($model->public_text); ?> /
+            <?= \yii\helpers\StringHelper::countWords($model->protected_text); ?> /
+            <?= \yii\helpers\StringHelper::countWords($model->private_text); ?>
         </span>
 
     </div>
