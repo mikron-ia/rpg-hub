@@ -23,7 +23,9 @@ GameAsset::register($this);
     </div>
 
     <div class="col-md-4 col-lg-4">
-        <?= $form->field($model, 'status')->dropDownList(Game::statusNames()) ?>
+        <?= $form->field($model, 'status')
+            ->dropDownList($model->isNewRecord ? Game::statusNames() : $model->getAllowedChangeNames())
+        ?>
     </div>
 
     <div class="col-md-4 col-lg-4">

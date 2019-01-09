@@ -59,12 +59,22 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
             [['notes'], 'string'],
             [['basics'], 'string', 'max' => 255],
             [['status'], 'string', 'max' => 20],
-            [['status'], 'in', 'range' => array_keys(Game::statusNames())],
+            [
+                ['status'],
+                'in',
+                'range' => $this->getAllowedChange(),
+                'message' => Yii::t(
+                    'app',
+                    'EPIC_STATUS_NOT_ALLOWED {allowed}',
+                    ['allowed' => implode(', ', $this->getAllowedChangeNames())]
+                ),
+                'on' => 'update',
+            ],
             [
                 ['epic_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Epic::className(),
+                'targetClass' => Epic::class,
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
         ];
@@ -154,6 +164,21 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         ];
     }
 
+    public function statusAllowedChanges(): array
+    {
+        return [
+            self::STATUS_PROPOSED => [self::STATUS_ANNOUNCED, self::STATUS_PLANNED, self::STATUS_UNPLANNED],
+            self::STATUS_ANNOUNCED => [self::STATUS_PLANNED, self::STATUS_UNPLANNED],
+            self::STATUS_UNPLANNED => [],
+            self::STATUS_PLANNED => [self::STATUS_PROGRESSING, self::STATUS_CANCELLED],
+            self::STATUS_CANCELLED => [],
+            self::STATUS_PROGRESSING => [self::STATUS_COMPLETED, self::STATUS_ABORTED],
+            self::STATUS_ABORTED => [],
+            self::STATUS_COMPLETED => [self::STATUS_CLOSED],
+            self::STATUS_CLOSED => [],
+        ];
+    }
+
     public function getStatus(): string
     {
         $names = self::statusNames();
@@ -164,6 +189,18 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
     {
         $names = self::statusClasses();
         return isset($names[$this->status]) ? $names[$this->status] : '';
+    }
+
+    public function getAllowedChange(): array
+    {
+        return array_merge(($this->statusAllowedChanges()[$this->status] ?? []), [$this->status]);
+    }
+
+    public function getAllowedChangeNames(): array
+    {
+        return array_filter(self::statusNames(), function ($key) {
+            return in_array($key, $this->getAllowedChange());
+        }, ARRAY_FILTER_USE_KEY);
     }
 
     /**

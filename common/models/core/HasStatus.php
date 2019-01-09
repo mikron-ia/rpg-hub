@@ -28,4 +28,22 @@ interface HasStatus
      * @return string
      */
     public function getStatusClass(): string;
+
+    /**
+     * Provides all permitted changes in statuses
+     * @return string[][]
+     */
+    public function statusAllowedChanges(): array;
+
+    /**
+     * Provides statuses permitted from the current one
+     * @return string[]
+     */
+    public function getAllowedChange(): array;
+
+    /**
+     * Provides names of statuses permitted from the current one
+     * @return string[]
+     */
+    public function getAllowedChangeNames(): array;
 }

@@ -225,6 +225,7 @@ return [
     'EPIC_STATUS_CLOSED' => 'Zamknięta',
     'EPIC_STATUS_FINISHED' => 'Zakończona',
     'EPIC_STATUS_LAPSED' => 'Wygasła',
+    'EPIC_STATUS_NOT_ALLOWED {allowed}' => 'Dopuszczalne statusy z bieżącego to: {allowed}.',
     'EPIC_STATUS_ON_HOLD' => 'Zawieszona',
     'EPIC_STATUS_PLANNED' => 'W planowaniu',
     'EPIC_STATUS_PLAYED' => 'Rozgrywana',

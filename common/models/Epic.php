@@ -73,7 +73,16 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             [['name'], 'string', 'max' => 80],
             [['system'], 'string', 'max' => 20],
             [['status'], 'string', 'max' => 20],
-            [['status'], 'in', 'range' => array_keys(Game::statusNames())],
+            [
+                ['status'],
+                'in',
+                'range' => $this->getAllowedChange(),
+                'message' => Yii::t(
+                    'app',
+                    'EPIC_STATUS_NOT_ALLOWED {allowed}',
+                    ['allowed' => implode(', ', $this->getAllowedChangeNames())]
+                )
+            ],
             [
                 ['parameter_pack_id'],
                 'exist',
@@ -134,6 +143,29 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         ];
     }
 
+    public function statusAllowedChanges(): array
+    {
+        return [
+            self::STATUS_CANCELLED => [self::STATUS_RESUMING, self::STATUS_CLOSED],
+            self::STATUS_CLOSED => [],
+            self::STATUS_FINISHED => [self::STATUS_CLOSED],
+            self::STATUS_LAPSED => [self::STATUS_ON_HOLD, self::STATUS_CANCELLED, self::STATUS_RESUMING],
+            self::STATUS_ON_HOLD => [self::STATUS_RESUMING, self::STATUS_CANCELLED],
+            self::STATUS_PLANNED => [self::STATUS_PREPARED, self::STATUS_SCRAPPED],
+            self::STATUS_PREPARED => [self::STATUS_READY, self::STATUS_SCRAPPED],
+            self::STATUS_PLAYED => [
+                self::STATUS_LAPSED,
+                self::STATUS_ON_HOLD,
+                self::STATUS_CANCELLED,
+                self::STATUS_FINISHED
+            ],
+            self::STATUS_PROPOSED => [self::STATUS_PLANNED, self::STATUS_SCRAPPED],
+            self::STATUS_READY => [self::STATUS_PLAYED, self::STATUS_SCRAPPED],
+            self::STATUS_RESUMING => [self::STATUS_PLAYED, self::STATUS_ON_HOLD],
+            self::STATUS_SCRAPPED => [self::STATUS_PLANNED, self::STATUS_CLOSED],
+        ];
+    }
+
     public function getStatus(): string
     {
         $names = self::statusNames();
@@ -144,6 +176,18 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     {
         $names = self::statusClasses();
         return isset($names[$this->status]) ? $names[$this->status] : '';
+    }
+
+    public function getAllowedChange(): array
+    {
+        return array_merge(($this->statusAllowedChanges()[$this->status] ?? []), [$this->status]);
+    }
+
+    public function getAllowedChangeNames(): array
+    {
+        return array_filter(self::statusNames(), function ($key) {
+            return in_array($key, $this->getAllowedChange());
+        }, ARRAY_FILTER_USE_KEY);
     }
 
     public function afterFind()

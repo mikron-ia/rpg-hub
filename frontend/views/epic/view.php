@@ -116,7 +116,6 @@ if ($epic) {
             <?= Yii::t('app', 'FRONTPAGE_OOC') ?>
         </h2>
 
-
         <div>
             <h3 title="<?= Yii::t('app', 'FRONTPAGE_SESSIONS_TITLE_TEXT') ?>">
                 <?= Yii::t('app', 'FRONTPAGE_SESSIONS') ?>
@@ -145,6 +144,9 @@ if ($epic) {
             </h3>
             <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></i></p>
         </div>
+
+        <h3><?= Yii::t('app', 'EPIC_CARD_EPIC_ATTRIBUTES'); ?></h3>
+        <span class="epic-status <?= $epic->getStatusClass(); ?>"><?= $epic->getStatus(); ?></span>
 
     </div>
 

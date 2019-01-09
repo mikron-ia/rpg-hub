@@ -225,6 +225,7 @@ return [
     'EPIC_STATUS_CLOSED' => 'Closed',
     'EPIC_STATUS_FINISHED' => 'Finished',
     'EPIC_STATUS_LAPSED' => 'Lapsed',
+    'EPIC_STATUS_NOT_ALLOWED {allowed}' => 'Allowed statuses: {allowed}',
     'EPIC_STATUS_ON_HOLD' => 'On hold',
     'EPIC_STATUS_PLANNED' => 'In planning',
     'EPIC_STATUS_PLAYED' => 'Played',
