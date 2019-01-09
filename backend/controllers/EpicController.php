@@ -276,10 +276,9 @@ final class EpicController extends Controller
     protected function findModel($key)
     {
         if (($model = Epic::findOne(['key' => $key])) !== null) {
-            $this->selectEpic($model->key, $model->epic_id, $model->name);
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));
+            throw new NotFoundHttpException(Yii::t('app', 'EPIC_NOT_FOUND'));
         }
     }
 
@@ -295,7 +294,7 @@ final class EpicController extends Controller
         if (($model = Participant::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('app', 'PAGE_NOT_FOUND'));
+            throw new NotFoundHttpException(Yii::t('app', 'PARTICIPANT_NOT_FOUND'));
         }
     }
 }
