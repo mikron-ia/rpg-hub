@@ -4,9 +4,9 @@
 /* @var $epic \common\models\Epic */
 /* @var $sessions \yii\data\ActiveDataProvider */
 /* @var $stories \yii\data\ActiveDataProvider */
+
 /* @var $recap \common\models\Recap */
 
-use common\models\Epic;
 use common\models\Participant;
 use yii\bootstrap\Html;
 use yii\widgets\ListView;
@@ -103,14 +103,16 @@ $this->title = 'RPG hub - control';
             <div class="col-md-4">
                 <h2><?= Yii::t('app', 'EPIC_CARD_EPIC_ATTRIBUTES'); ?></h2>
 
-                <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></i></p>
+                <span class="epic-status <?= $epic->getStatusClass(); ?>"><?= $epic->getStatus(); ?></span>
 
                 <h2><?= Yii::t('app', 'EPIC_CARD_SESSIONS'); ?></h2>
 
                 <div>
                     <?= ListView::widget([
                         'dataProvider' => $sessions,
-                        'emptyText' => '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_SESSION_NOT_AVAILABLE') . '</p>',
+                        'emptyText' => '<p class="error-box">'
+                            . Yii::t('app', 'FRONTPAGE_SESSION_NOT_AVAILABLE')
+                            . '</p>',
                         'layout' => '{items}',
                         'itemOptions' => ['class' => 'item'],
                         'itemView' => function ($model, $key, $index, $widget) {

@@ -464,3 +464,71 @@ p {
     background-color: grey;
     color: white;
 }
+
+.epic-status {
+    color: black;
+    display: inline-block;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 5px 7px;
+    min-width: 120px;
+    margin-right: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.epic-status-cancelled {
+    background-color: darkslategrey;
+    color: white;
+}
+
+.epic-status-closed {
+    background-color: black;
+    color: white;
+}
+
+.epic-status-on-hold {
+    background-color: lightgrey;
+}
+
+.epic-status-lapsed {
+    background-color: lightgrey;
+}
+
+.epic-status-finished {
+    background-color: darkgreen;
+    color: white;
+}
+
+.epic-status-planned {
+    background-color: greenyellow;
+}
+
+.epic-status-prepared {
+    background-color: greenyellow;
+}
+
+.epic-status-played {
+    background-color: green;
+    color: white;
+}
+
+.epic-status-proposed {
+    background-color: greenyellow;
+}
+
+.epic-status-resuming {
+    background-color: greenyellow;
+}
+
+.epic-status-scrapped {
+    background-color: darkslategrey;
+    color: white;
+}
+
+.epic-status-ready {
+    background-color: greenyellow;
+}
