@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php echo \yii\widgets\ListView::widget([
         'dataProvider' => $dataProvider,
+        'emptyText' => '<p class="error-box">' . Yii::t('app', 'ARTICLES_NOT_FOUND') . '</p>',
         'itemOptions' => ['class' => 'item'],
         'summary' => '',
         'itemView' => function ($model, $key, $index, $widget) {

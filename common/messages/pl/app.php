@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'ARTICLES_NOT_FOUND' => 'Tekstów nie znaleziono',
     'ARTICLE_BASICS' => 'Podstawowe dane',
     'ARTICLE_BUTTON_CREATE' => 'Dodaj artykuł',
     'ARTICLE_CHARACTER_COUNT' => 'Znaków',
@@ -91,6 +92,7 @@ return [
     'BUTTON_USER_INVITE' => 'Zaproś użytkownika',
     'BUTTON_USER_LIST' => 'Zarządzanie użytkownikami',
     'BUTTON_VIEW' => 'Wyświetl',
+    'CHARACTERS_NOT_AVAILABLE' => 'Postaci nie znaleziono',
     'CHARACTER_BASIC' => 'Dane podstawowe',
     'CHARACTER_BUTTON_CREATE' => 'Dodaj postać',
     'CHARACTER_CREATE_FROM_CHARACTER_SHEET_FAILURE' => 'Tworzenie postaci nieudane.',
@@ -574,6 +576,7 @@ return [
     'SEEN_STATUS_NEW' => 'Nowa',
     'SEEN_STATUS_SEEN' => 'Bez zmian',
     'SEEN_STATUS_UPDATED' => 'Zmieniona',
+    'STORIES_NOT_FOUND' => 'Histori nie znaleziono',
     'STORY_BASIC' => 'Podstawowe dane',
     'STORY_DATA' => 'Dane',
     'STORY_DESCRIPTIONS' => 'Opisy',

@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php echo ListView::widget([
         'dataProvider' => $dataProvider,
+        'emptyText' => '<p class="error-box">' . Yii::t('app', 'STORIES_NOT_FOUND') . '</p>',
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
             return $this->render(

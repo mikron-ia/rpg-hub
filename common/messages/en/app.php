@@ -17,6 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'ARTICLES_NOT_FOUND' => 'Articles not found',
     'ARTICLE_BASICS' => 'Article basic data',
     'ARTICLE_BUTTON_CREATE' => 'Add article',
     'ARTICLE_CHARACTER_COUNT' => 'Character count',
@@ -91,6 +92,7 @@ return [
     'BUTTON_USER_INVITE' => 'Invite user',
     'BUTTON_USER_LIST' => 'User management',
     'BUTTON_VIEW' => 'View',
+    'CHARACTERS_NOT_AVAILABLE' => 'Characters not found',
     'CHARACTER_BASIC' => 'Character basic data',
     'CHARACTER_BUTTON_CREATE' => 'Add character',
     'CHARACTER_CREATE_FROM_CHARACTER_SHEET_FAILURE' => 'Character creation failed.',
@@ -574,6 +576,7 @@ return [
     'SEEN_STATUS_NEW' => 'New',
     'SEEN_STATUS_SEEN' => 'Seen',
     'SEEN_STATUS_UPDATED' => 'Updated',
+    'STORIES_NOT_FOUND' => 'Stories not found',
     'STORY_BASIC' => 'Story basic data',
     'STORY_DATA' => 'Data',
     'STORY_DESCRIPTIONS' => 'Descriptions',
