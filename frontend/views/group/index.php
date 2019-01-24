@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= \yii\widgets\ListView::widget([
         'dataProvider' => $dataProvider,
+        'emptyText' => '<p class="error-box">' . Yii::t('app', 'GROUPS_NOT_FOUND') . '</p>',
         'layout' => '{summary}{items}<div class="clearfix"></div>{pager}',
         'itemView' => function (\common\models\Group $model, $key, $index, $widget) {
             return $this->render(
