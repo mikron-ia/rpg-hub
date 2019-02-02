@@ -22,7 +22,7 @@ if ($storyNumberRaw) {
             ['epic/view', 'key' => $model->epic->key]
         ) ?> / <?= Html::a(
             Html::encode($storyNumber . $model->name),
-            ['epic/view', 'key' => $model->epic->key]
+            ['story/view', 'key' => $model->key]
         ); ?>
     </h4>
     <div class="col-md-12 text-justify">
