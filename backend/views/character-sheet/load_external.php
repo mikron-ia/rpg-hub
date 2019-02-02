@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'CHARACTER_SHEET_TITLE_INDEX'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->character_sheet_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'key' => $model->key]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'EXTERNAL_DATA_TITLE {name}', ['name' => $model->name]);
 ?>
 
