@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
+
 /* @var $model common\models\CharacterSheet */
 
 use common\models\Seen;
@@ -38,6 +39,10 @@ use yii\widgets\DetailView;
                             ['character/view', 'key' => $model->currentlyDeliveredPerson->key]
                         ) :
                         null,
+                ],
+                [
+                    'attribute' => 'player_id',
+                    'value' => isset($model->player_id) ? $model->player->username : null
                 ],
             ],
         ]) ?>

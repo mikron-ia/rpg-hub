@@ -21,12 +21,14 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property string $data
  * @property string $currently_delivered_character_id
+ * @property string $player_id
  * @property string $seen_pack_id
  * @property string $utility_bag_id
  *
  * @property Epic $epic
  * @property Character $currentlyDeliveredPerson
- * @property Character[] $people
+ * @property Character[] $characters
+ * @property User $player
  * @property SeenPack $seenPack
  * @property UtilityBag $utilityBag
  */
@@ -43,20 +45,20 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     {
         return [
             [['epic_id', 'name'], 'required'],
-            [['epic_id', 'currently_delivered_character_id'], 'integer'],
+            [['epic_id', 'currently_delivered_character_id', 'player_id'], 'integer'],
             [['name'], 'string', 'max' => 120],
             [
                 ['epic_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Epic::className(),
+                'targetClass' => Epic::class,
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
             [
                 ['currently_delivered_character_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Character::className(),
+                'targetClass' => Character::class,
                 'targetAttribute' => [
                     'currently_delivered_character_id' => 'character_id'
                 ]
@@ -67,6 +69,13 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
                 'skipOnError' => true,
                 'range' => $this->getPeopleAvailableToThisCharacterAsIdList(),
                 'message' => Yii::t('app', 'CHARACTER_SHEET_ERROR_CHARACTER_NOT_CONNECTED'),
+            ],
+            [
+                ['player_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::class,
+                'targetAttribute' => ['player_id' => 'id']
             ],
         ];
     }
@@ -80,6 +89,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             'name' => Yii::t('app', 'CHARACTER_SHEET_NAME'),
             'data' => Yii::t('app', 'CHARACTER_SHEET_DATA'),
             'currently_delivered_character_id' => Yii::t('app', 'CHARACTER_SHEET_DELIVERED_CHARACTER_ID'),
+            'player_id' => Yii::t('app', 'CHARACTER_SHEET_PLAYER'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
     }
@@ -123,7 +133,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     {
         return [
             'performedActionBehavior' => [
-                'class' => PerformedActionBehavior::className(),
+                'class' => PerformedActionBehavior::class,
                 'idName' => 'character_sheet_id',
                 'className' => 'CharacterSheet',
             ]
@@ -133,25 +143,33 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     /**
      * @return ActiveQuery
      */
-    public function getEpic()
+    public function getEpic(): ActiveQuery
     {
-        return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+        return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
     /**
      * @return ActiveQuery
      */
-    public function getCurrentlyDeliveredPerson()
+    public function getCurrentlyDeliveredPerson(): ActiveQuery
     {
-        return $this->hasOne(Character::className(), ['character_id' => 'currently_delivered_character_id']);
+        return $this->hasOne(Character::class, ['character_id' => 'currently_delivered_character_id']);
     }
 
     /**
      * @return ActiveQuery
      */
-    public function getPeople()
+    public function getCharacters()
     {
-        return $this->hasMany(Character::className(), ['character_sheet_id' => 'character_sheet_id']);
+        return $this->hasMany(Character::class, ['character_sheet_id' => 'character_sheet_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getPlayer(): ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'player_id']);
     }
 
     /**
@@ -159,15 +177,15 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
      */
     public function getSeenPack(): ActiveQuery
     {
-        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
      * @return ActiveQuery
      */
-    public function getUtilityBag()
+    public function getUtilityBag(): ActiveQuery
     {
-        return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
+        return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
     public function getSimpleDataForApi()
@@ -200,7 +218,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     public function getPeopleAvailableToThisCharacterAsDropDownList()
     {
         $query = new ActiveDataProvider([
-            'query' => $this->getPeople()
+            'query' => $this->getCharacters()
         ]);
 
         /* @var $peopleList Character[] */

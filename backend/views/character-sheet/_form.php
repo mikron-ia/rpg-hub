@@ -36,6 +36,17 @@ use yii\widgets\ActiveForm;
 
     <?php endif; ?>
 
+    <div class="col-md-6">
+        <?= $form->field($model, 'player_id')->dropDownList(
+            $model->epic->getPlayerListForDropDown(),
+            [
+                'prompt' => ' --- '
+                    . Yii::t('app', 'CHARACTER_SHEET_FORM_SELECT_PLAYER')
+                    . ' --- ',
+            ]
+        ); ?>
+    </div>
+
     <div class="clearfix"></div>
 
     <div class="form-group">

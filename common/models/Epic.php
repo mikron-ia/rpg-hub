@@ -578,6 +578,20 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return true;
     }
 
+    /**
+     * Provides list of players for a drop down
+     * @return string[]
+     */
+    public function getPlayerListForDropDown(): array
+    {
+        $list = [];
+        foreach ($this->getPlayers()->all() as $player) {
+            /** @var Participant $player */
+            $list[$player->user_id] = $player->user->username;
+        }
+        return $list;
+    }
+
     public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
