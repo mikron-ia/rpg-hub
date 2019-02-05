@@ -2,6 +2,7 @@
 
 namespace common\models\external;
 
+use Yii;
 use yii\base\Model;
 
 class Tab extends Model implements ExternalComponent
@@ -25,13 +26,13 @@ class Tab extends Model implements ExternalComponent
     {
         $boxes = [];
 
-        foreach ($data['data'] as $row) {
+        foreach ($data['data'] ?? [] as $row) {
             $boxes[] = Box::createFromData($row);
         }
 
         $object = new Tab();
 
-        $object->title = $data['title'] ?? '';
+        $object->title = $data['title'] ?? Yii::t('external', 'CHARACTER_SHEET_TAB_TITLE_NEEDED');
         $object->description = $data['description'] ?? '';
         $object->boxes = $boxes;
 

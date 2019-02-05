@@ -19,6 +19,7 @@
 return [
     'CHARACTER_REPUTATIONS_TAB' => 'Reputacje',
     'CHARACTER_REPUTATION_EVENTS_TAB' => 'Historia reputacji',
+    'CHARACTER_SHEET_TAB_TITLE_NEEDED' => '[nie znaleziono nagłówka]',
     'EXTERNAL_DATA_CODE' => 'Kod identyfikacyjny',
     'EXTERNAL_DATA_DATA' => 'Dane',
     'EXTERNAL_DATA_ID' => 'ID',

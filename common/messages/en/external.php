@@ -19,6 +19,7 @@
 return [
     'CHARACTER_REPUTATIONS_TAB' => 'Reputations',
     'CHARACTER_REPUTATION_EVENTS_TAB' => 'Reputation history',
+    'CHARACTER_SHEET_TAB_TITLE_NEEDED' => '[no header found]',
     'EXTERNAL_DATA_CODE' => 'Identification code',
     'EXTERNAL_DATA_DATA' => 'Data',
     'EXTERNAL_DATA_ID' => 'ID',
