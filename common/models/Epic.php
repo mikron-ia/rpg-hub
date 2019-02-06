@@ -634,7 +634,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
 
     public function __toString()
     {
-        return Html::a($this->name, ['epic/view', 'id' => $this->epic_id]);
+        return Html::a($this->name, ['epic/view', 'key' => $this->key]);
     }
 
     /**
