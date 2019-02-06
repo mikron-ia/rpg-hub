@@ -12,6 +12,7 @@ GroupAsset::register($this);
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_GROUPS_INDEX');
+$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-index">

@@ -135,9 +135,7 @@ AppAsset::register($this);
     <div class="container">
         <?= Breadcrumbs::widget([
             'homeLink' => [
-                'label' => Yii::$app->params['activeEpic']
-                    ? (Yii::$app->params['activeEpic']->name)
-                    : (Yii::t('app', 'BREADCRUMBS_HOME')),
+                'label' => Yii::t('app', 'BREADCRUMBS_HOME'),
                 'url' => Yii::$app->homeUrl,
             ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

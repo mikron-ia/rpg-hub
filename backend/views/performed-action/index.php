@@ -9,6 +9,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'PERFORMED_ACTIONS_TITLE_INDEX');
+$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="performed-action-index">

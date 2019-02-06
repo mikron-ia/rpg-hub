@@ -6,6 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Article */
 
 $this->title = Yii::t('app', 'TITLE_ARTICLE_CREATE');
+$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ARTICLE_TITLE_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

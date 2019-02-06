@@ -6,6 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\PointInTime */
 
 $this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_POINT_IN_TIME_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->point_in_time_id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'LABEL_UPDATE');

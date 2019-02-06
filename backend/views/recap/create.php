@@ -6,6 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Recap */
 
 $this->title = Yii::t('app', 'RECAP_CREATE_TITLE');
+$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'RECAP_TITLE_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
