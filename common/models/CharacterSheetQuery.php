@@ -70,6 +70,17 @@ final class CharacterSheetQuery extends CharacterSheet
         return $dataProvider;
     }
 
+    public function searchForFront($params)
+    {
+        $search = $this->search($params);
+
+        if (!Participant::participantHasRole(Yii::$app->user->identity, Yii::$app->params['activeEpic'], ParticipantRole::ROLE_GM)) {
+            $search->query->andWhere(['player_id' => Yii::$app->user->id]);
+        }
+
+        return $search;
+    }
+
     /**
      * Provides all active characters from the current epic
      * @return CharacterSheet[]

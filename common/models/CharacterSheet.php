@@ -274,13 +274,17 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         return self::canUserControlInEpic($this->epic);
     }
 
-    /**
-     * {@inheritDoc}
-     * @todo Add control on player level for front-end use
-     */
     public function canUserViewYou(): bool
     {
-        return self::canUserViewInEpic($this->epic);
+        return self::canUserViewInEpic($this->epic)
+            AND (
+                Participant::participantHasRole(
+                    Yii::$app->user->identity,
+                    Yii::$app->params['activeEpic'],
+                    ParticipantRole::ROLE_GM
+                )
+                OR $this->player_id === Yii::$app->user->id
+            );
     }
 
     static function throwExceptionAboutCreate()
