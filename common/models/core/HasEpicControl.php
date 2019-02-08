@@ -25,7 +25,7 @@ interface HasEpicControl
     static public function canUserIndexThem(): bool;
 
     /**
-     * Throws a 401 exception if user cannot create
+     * Throws a 403 exception if user cannot create
      */
     static function throwExceptionAboutCreate();
 
@@ -35,12 +35,12 @@ interface HasEpicControl
     static function throwExceptionAboutControl();
 
     /**
-     * Throws a 401 exception if user cannot index
+     * Throws a 403 exception if user cannot index
      */
     static function throwExceptionAboutIndex();
 
     /**
-     * Throws a 401 exception if user cannot view
+     * Throws a 403 exception if user cannot view
      */
     static function throwExceptionAboutView();
 

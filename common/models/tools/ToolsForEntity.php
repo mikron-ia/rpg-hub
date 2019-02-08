@@ -86,7 +86,7 @@ trait ToolsForEntity
      */
     static private function thrownExceptionAbout($message)
     {
-        throw new HttpException(401, $message);
+        throw new HttpException(403, $message);
     }
 
     public function setCurrentEpicOnEmpty()

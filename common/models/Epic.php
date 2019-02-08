@@ -426,7 +426,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         if (Yii::$app->user->can('indexEpic')) {
             return true;
         } else {
-            throw new HttpException(401, Yii::t('app', 'NO_RIGHT_TO_LIST_EPIC'));
+            throw new HttpException(403, Yii::t('app', 'NO_RIGHT_TO_LIST_EPIC'));
         }
     }
 
@@ -440,7 +440,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         if (Yii::$app->user->can('openEpic')) {
             return true;
         } else {
-            throw new HttpException(401, Yii::t('app', 'NO_RIGHT_TO_CREATE_EPIC'));
+            throw new HttpException(403, Yii::t('app', 'NO_RIGHT_TO_CREATE_EPIC'));
         }
     }
 
@@ -454,7 +454,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         if (Yii::$app->user->can('controlEpic', ['epic' => $this])) {
             return true;
         } else {
-            throw new HttpException(401, Yii::t('app', 'NO_RIGHT_TO_CONTROL_EPIC'));
+            throw new HttpException(403, Yii::t('app', 'NO_RIGHT_TO_CONTROL_EPIC'));
         }
     }
 
@@ -468,7 +468,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         if (Yii::$app->user->can('viewEpic', ['epic' => $this])) {
             return true;
         } else {
-            throw new HttpException(401, Yii::t('app', 'NO_RIGHT_TO_VIEW_EPIC'));
+            throw new HttpException(403, Yii::t('app', 'NO_RIGHT_TO_VIEW_EPIC'));
         }
     }
 
