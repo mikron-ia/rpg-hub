@@ -46,6 +46,11 @@ final class CharacterSheetController extends Controller
         $searchModel = new CharacterSheetQuery();
         $dataProvider = $searchModel->searchForFront(Yii::$app->request->queryParams);
 
+        if($dataProvider->count === 1) {
+            $models = $dataProvider->getModels();
+            $this->redirect(['character-sheet/view', 'key' => array_pop($models)->key]);
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
