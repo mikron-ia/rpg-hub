@@ -7,17 +7,14 @@ use yii\helpers\StringHelper;
 
 ?>
 
-<div id="character-sheet-<?php echo $model->key; ?>" class="index-box index-box-designated">
-
+<div id="character-sheet-<?php echo $model->key; ?>" class="index-box">
     <h3 class="center">
         <?= Html::a(
             Html::encode(StringHelper::truncateWords($model->name, 16, ' (...)', false)),
             ['view', 'key' => $model->key]
         ); ?>
     </h3>
-
     <p class="text-center seen-tag-common <?= $model->showSightingCSS() ?> seen-tag-box">
         <?= $model->showSightingStatus() ?>
     </p>
-
 </div>
