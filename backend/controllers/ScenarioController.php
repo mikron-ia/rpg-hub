@@ -3,14 +3,14 @@
 namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
+use common\models\Scenario;
 use common\models\ScenarioQuery;
 use common\models\tools\ToolsForEntity;
 use Yii;
-use common\models\Scenario;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ScenarioController implements the CRUD actions for Scenario model.
@@ -65,6 +65,8 @@ class ScenarioController extends Controller
      * Displays a single Scenario model.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\web\HttpException
      */
     public function actionView($key)
     {
@@ -93,6 +95,7 @@ class ScenarioController extends Controller
      * Creates a new Scenario model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
+     * @throws \yii\web\HttpException
      */
     public function actionCreate()
     {
@@ -118,6 +121,8 @@ class ScenarioController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\web\HttpException
      */
     public function actionUpdate($key)
     {
@@ -128,7 +133,7 @@ class ScenarioController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->scenario_id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -141,6 +146,10 @@ class ScenarioController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     * @throws \yii\web\HttpException
      */
     public function actionDelete($key)
     {
