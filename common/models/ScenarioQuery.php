@@ -46,6 +46,7 @@ class ScenarioQuery extends Scenario
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['status' => SORT_ASC]]
         ]);
 
         $this->load($params);

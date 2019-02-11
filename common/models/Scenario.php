@@ -28,7 +28,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     use ToolsForEntity;
 
     const STATUS_NEW = 'new';
-    const STATUS_DISCARDED = 'discarded';
+    const STATUS_REJECTED = 'rejected';
     const STATUS_USED = 'used';
 
     public static function tableName()
@@ -176,7 +176,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
 
     static public function allowedStatuses(): array
     {
-        return [self::STATUS_NEW, self::STATUS_DISCARDED, self::STATUS_USED];
+        return [self::STATUS_NEW, self::STATUS_REJECTED, self::STATUS_USED];
     }
 
     /**
@@ -186,7 +186,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     {
         return [
             self::STATUS_NEW => Yii::t('app', 'SCENARIO_STATUS_NEW'),
-            self::STATUS_DISCARDED => Yii::t('app', 'SCENARIO_STATUS_DISCARDED'),
+            self::STATUS_REJECTED => Yii::t('app', 'SCENARIO_STATUS_DISCARDED'),
             self::STATUS_USED => Yii::t('app', 'SCENARIO_STATUS_USED'),
         ];
     }
@@ -198,7 +198,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     {
         return [
             self::STATUS_NEW => 'scenario-status-proposed',
-            self::STATUS_DISCARDED => 'scenario-status-discarded',
+            self::STATUS_REJECTED => 'scenario-status-discarded',
             self::STATUS_USED => 'scenario-status-used',
         ];
     }
