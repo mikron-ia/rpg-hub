@@ -6,6 +6,7 @@ use common\models\core\HasEpicControl;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
+use common\models\tools\ToolsForDescription;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveRecord;
@@ -37,6 +38,7 @@ use yii2tech\ar\position\PositionBehavior;
 class Article extends ActiveRecord implements HasEpicControl, HasVisibility, HasSightings
 {
     use ToolsForEntity;
+    use ToolsForDescription;
 
     public static function tableName()
     {
@@ -131,10 +133,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             $this->description_pack_id = $pack->description_pack_id;
         }
 
-        /**
-         * @todo: Improve parsing routine that works the text over
-         */
-        $this->text_ready = Markdown::process(Html::encode($this->text_raw), 'gfm');
+        $this->text_ready = Markdown::process(Html::encode($this->processAllInOrder($this->text_raw)), 'gfm');
 
         return parent::beforeSave($insert);
     }
