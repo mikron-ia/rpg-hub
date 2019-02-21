@@ -57,21 +57,21 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
                 ['description_pack_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => DescriptionPack::className(),
+                'targetClass' => DescriptionPack::class,
                 'targetAttribute' => ['description_pack_id' => 'description_pack_id']
             ],
             [
                 ['epic_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Epic::className(),
+                'targetClass' => Epic::class,
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
             [
                 ['seen_pack_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => SeenPack::className(),
+                'targetClass' => SeenPack::class,
                 'targetAttribute' => ['seen_pack_id' => 'seen_pack_id']
             ],
         ];
@@ -105,7 +105,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
     {
         return [
             'positionBehavior' => [
-                'class' => PositionBehavior::className(),
+                'class' => PositionBehavior::class,
                 'positionAttribute' => 'position',
                 'groupAttributes' => ['epic_id'],
             ],
@@ -149,7 +149,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
      */
     public function getDescriptionPack()
     {
-        return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
+        return $this->hasOne(DescriptionPack::class, ['description_pack_id' => 'description_pack_id']);
     }
 
     /**
@@ -157,7 +157,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
      */
     public function getEpic()
     {
-        return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+        return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
     public function recordSighting(): bool
@@ -193,7 +193,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
      */
     public function getSeenPack()
     {
-        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     public function getVisibility(): string
@@ -228,22 +228,22 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return self::canUserViewInEpic($this->epic);
     }
 
-    static function throwExceptionAboutCreate()
+    static public function throwExceptionAboutCreate()
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_ARTICLE'));
     }
 
-    static function throwExceptionAboutControl()
+    static public function throwExceptionAboutControl()
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_ARTICLE'));
     }
 
-    static function throwExceptionAboutIndex()
+    static public function throwExceptionAboutIndex()
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_ARTICLE'));
     }
 
-    static function throwExceptionAboutView()
+    static public function throwExceptionAboutView()
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_ARTICLE'));
     }

@@ -26,21 +26,25 @@ interface HasEpicControl
 
     /**
      * Throws a 403 exception if user cannot create
+     * @throws HttpException
      */
     static function throwExceptionAboutCreate();
 
     /**
      * Throws an exception if user cannot create
+     * @throws HttpException
      */
     static function throwExceptionAboutControl();
 
     /**
      * Throws a 403 exception if user cannot index
+     * @throws HttpException
      */
     static function throwExceptionAboutIndex();
 
     /**
      * Throws a 403 exception if user cannot view
+     * @throws HttpException
      */
     static function throwExceptionAboutView();
 
