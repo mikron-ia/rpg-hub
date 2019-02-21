@@ -201,7 +201,7 @@ final class EpicController extends Controller
         $model->epic_id = $epic_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'key' => $model->epic->epic_id]);
+            return $this->redirect(['view', 'key' => $model->epic->key]);
         } else {
             return $this->render('participant/add', [
                 'model' => $model,
