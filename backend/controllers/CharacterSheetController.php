@@ -23,7 +23,7 @@ final class CharacterSheetController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'actions' => ['create', 'create-character', 'index', 'load-data', 'update', 'view'],
@@ -33,7 +33,7 @@ final class CharacterSheetController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'create-character' => ['POST'],
                     'delete' => ['POST'],
@@ -65,6 +65,8 @@ final class CharacterSheetController extends Controller
      * Displays a single CharacterSheet model.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\web\HttpException
      */
     public function actionView($key)
     {
@@ -114,6 +116,8 @@ final class CharacterSheetController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @param $key
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\web\HttpException
      */
     public function actionCreateCharacter($key)
     {
@@ -139,7 +143,7 @@ final class CharacterSheetController extends Controller
             Yii::$app->session->setFlash('error', Yii::t('app', 'CHARACTER_CREATE_FROM_CHARACTER_SHEET_FAILURE'));
         }
 
-        return $this->redirect(['view', 'id' => $model->character_sheet_id]);
+        return $this->redirect(['view', 'key' => $model->key]);
     }
 
     /**
@@ -147,6 +151,8 @@ final class CharacterSheetController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $key
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\web\HttpException
      */
     public function actionUpdate($key)
     {
@@ -167,6 +173,8 @@ final class CharacterSheetController extends Controller
      * Loads external data via paste box
      * @param string $key Key of the object the loading is performed for
      * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \yii\web\HttpException
      */
     public function actionLoadData($key)
     {
