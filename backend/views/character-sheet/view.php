@@ -19,7 +19,7 @@ $items = [];
 foreach ($tabs as $tabName => $tabData) {
     $item = [
         'label' => $tabData->title,
-        'content' => '<div class="external-data-tab-container">' . $tabData->getContent() . '</div>',
+        'content' => '<div class="external-data-tab-container">' . \yii\helpers\HtmlPurifier::process($tabData->getContent()) . '</div>',
         'encode' => false,
         'active' => $active,
     ];
