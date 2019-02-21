@@ -125,6 +125,7 @@ return [
     'CHARACTER_SHEET_NO_DATA' => 'Character sheet is empty.',
     'CHARACTER_SHEET_PLAYER' => 'Player',
     'CHARACTER_SHEET_PROMPT' => 'Select character sheet to attach ...',
+    'CHARACTER_SHEET_RAW_DATA' => 'Raw data',
     'CHARACTER_SHEET_TECHNICAL' => 'Technical details',
     'CHARACTER_SHEET_TITLE_CREATE' => 'Add character sheet',
     'CHARACTER_SHEET_TITLE_INDEX' => 'Character sheets',

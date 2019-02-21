@@ -1,5 +1,4 @@
 <?php
-
 /* @var $this yii\web\View */
 
 /* @var $model common\models\CharacterSheet */
@@ -14,6 +13,7 @@ use yii\widgets\DetailView;
 
     <div class="col-md-6">
 
+        <h2 class="text-center"><?= Yii::t('app', 'CHARACTER_SHEET_TECHNICAL') ?></h2>
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
@@ -68,10 +68,6 @@ use yii\widgets\DetailView;
             ],
         ]) ?>
 
-    </div>
-
-    <div class="col-md-6">
-
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_BEFORE_UPDATE') ?></h2>
         <?= \yii\grid\GridView::widget([
             'dataProvider' => new \yii\data\ActiveDataProvider([
@@ -88,10 +84,6 @@ use yii\widgets\DetailView;
                 ],
             ],
         ]) ?>
-
-    </div>
-
-    <div class="col-md-6">
 
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_NEW') ?></h2>
         <?= \yii\grid\GridView::widget([

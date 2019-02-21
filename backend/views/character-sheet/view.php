@@ -32,6 +32,13 @@ foreach ($tabs as $tabName => $tabData) {
 }
 
 $items[] = [
+    'label' => Yii::t('app', 'CHARACTER_SHEET_RAW_DATA'),
+    'content' => $this->render('_view_data', ['model' => $model]),
+    'encode' => true,
+    'active' => false,
+];
+
+$items[] = [
     'label' => Yii::t('app', 'CHARACTER_SHEET_TECHNICAL'),
     'content' => $this->render('_view_gm', ['model' => $model]),
     'encode' => false,
@@ -50,6 +57,17 @@ $items[] = [
             ['class' => 'btn btn-primary']
         ); ?>
         <?= Html::a(
+            Yii::t('app', 'BUTTON_DELETE'),
+            ['delete', 'key' => $model->key],
+            [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
+                    'method' => 'post',
+                ],
+            ]
+        ) ?>
+        <?= Html::a(
             Yii::t('app', 'BUTTON_CREATE_CHARACTER'),
             ['create-character', 'key' => $model->key],
             [
@@ -65,16 +83,14 @@ $items[] = [
             ['load-data', 'key' => $model->key],
             ['class' => 'btn btn-primary']
         ) ?>
-        <?= Html::a(
-            Yii::t('app', 'BUTTON_DELETE'),
-            ['delete', 'key' => $model->key],
-            [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
-                    'method' => 'post',
-                ],
-            ]
+
+        <?= \yii\helpers\Html::a(
+            Yii::t('app', 'BUTTON_SEE_FRONTEND'),
+            Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
+                'character-sheet/view',
+                'key' => $model->key
+            ]),
+            ['class' => 'btn btn-default']
         ) ?>
     </div>
 

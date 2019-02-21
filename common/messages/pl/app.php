@@ -125,6 +125,7 @@ return [
     'CHARACTER_SHEET_NO_DATA' => 'Karta postaci jest pusta.',
     'CHARACTER_SHEET_PLAYER' => 'Gracz',
     'CHARACTER_SHEET_PROMPT' => 'Wybierz kartę postaci ...',
+    'CHARACTER_SHEET_RAW_DATA' => 'Surowe dane',
     'CHARACTER_SHEET_TECHNICAL' => 'Szczegóły techniczne',
     'CHARACTER_SHEET_TITLE_CREATE' => 'Dodaj kartę postaci',
     'CHARACTER_SHEET_TITLE_INDEX' => 'Karty postaci',
