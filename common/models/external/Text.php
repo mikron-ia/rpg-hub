@@ -9,6 +9,11 @@ class Text extends Model implements ExternalComponent
     /**
      * @var string
      */
+    public $class;
+
+    /**
+     * @var string
+     */
     public $title = '';
 
     /**
@@ -25,6 +30,16 @@ class Text extends Model implements ExternalComponent
     {
         $object = new Text();
 
+        $classes = [];
+
+        if (isset($data['class'])) {
+            $classList = explode(' ', $data['class']);
+            foreach ($classList as $class) {
+                $classes[] = 'external-data-' . $class;
+            }
+        }
+
+        $object->class = implode(' ', $classes);
         $object->text = $data['text'] ?? '<p>' . \Yii::t('app', 'EXTERNAL_COMPONENT_NO_DATA') . '</p>';
         $object->title = $data['title'] ?? '';
 
@@ -33,6 +48,7 @@ class Text extends Model implements ExternalComponent
 
     public function getContent(): string
     {
-        return '<h3 class="center">' . $this->title . '</h3><div>' . $this->text . '</div>' . PHP_EOL;
+        $class = $this->class ? (' class="' . $this->class . '"') : '';
+        return '<h3 class="center">' . $this->title . '</h3><div' . $class . '>' . $this->text . '</div>' . PHP_EOL;
     }
 }

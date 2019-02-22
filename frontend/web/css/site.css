@@ -583,6 +583,38 @@ tr.table-row-hidden > td {
     margin: 1em 0;
 }
 
+.external-data-correct {
+    background-color: lightgreen;
+    color: darkgreen;
+    padding: 1em;
+    border-radius: .5rem;
+    border: 2px solid;
+}
+
+.external-data-error {
+    background-color: lightpink;
+    color: darkred;
+    padding: 1em;
+    border-radius: .5rem;
+    border: 2px solid;
+}
+
+.external-data-info {
+    background-color: lightblue;
+    color: blue;
+    padding: 1em;
+    border-radius: .5rem;
+    border: 2px solid;
+}
+
+.external-data-warning {
+    background-color: lightgoldenrodyellow;
+    color: darkgoldenrod;
+    padding: 1em;
+    border-radius: .5rem;
+    border: 2px solid;
+}
+
 .external-data-tab-container {
 }
 
