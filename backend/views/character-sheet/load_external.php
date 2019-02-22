@@ -43,4 +43,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'EXTERNAL_DATA_TITLE {name}', ['n
 
     <?php ActiveForm::end(); ?>
 
+    <h3><?= Yii::t('external', 'EXTERNAL_DATA_FORMAT_TITLE') ?></h3>
+    <div><?= Yii::t('external', 'EXTERNAL_DATA_FORMAT_CONTENT') ?></div>
+
 </div>

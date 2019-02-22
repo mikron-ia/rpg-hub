@@ -22,6 +22,29 @@ return [
     'CHARACTER_SHEET_TAB_TITLE_NEEDED' => '[no header found]',
     'EXTERNAL_DATA_CODE' => 'Identification code',
     'EXTERNAL_DATA_DATA' => 'Data',
+    'EXTERNAL_DATA_FORMAT_CONTENT' => '<ul>
+<li>The JSON top component must be an array</li>
+<li>Each tab must be a separate object with required the "title" and "data" fields</li>
+<li>Each "title" field must be a single string</li>
+<li>Each "data" field must be an array of objects</li>
+<li>Each data object must have
+<ul>
+<li>a "type" field with either "table" or "text" value</li>
+<li>a content field: "rows" for table, "text" for text</li>
+</ul>
+</li>
+<li>Each data object may have a "title" field in form of a single string</li>
+<li>Each data object may have a "size" field in form of a single string; this is the column size; options are: smallest, smaller, small, medium, large, larger, largest or a number between 1 and 12, designating bootstrap-based size</li>
+<li>Each text object is a simple string; it may be HTML</li>
+<li>Each rows object is an array (representing table rows) of arrays (representing cells within a row)
+<ul>
+<li>Each cell object must have a "data" field for content</li>
+<li>Each cell object may have a "title" field for title text</li>
+<li>Each cell object may have a "class" field for CSS class</li>
+</ul>
+</li>
+</ul>',
+    'EXTERNAL_DATA_FORMAT_TITLE' => 'JSON data format requirements',
     'EXTERNAL_DATA_ID' => 'ID',
     'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Loading operation failed - JSON issue',
     'EXTERNAL_DATA_LOAD_ERROR_PARTITION {errors}' => 'Loading operation partially failed - unable to partition data. Problems found in {errors} packs.',

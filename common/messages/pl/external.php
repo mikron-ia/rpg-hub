@@ -22,6 +22,29 @@ return [
     'CHARACTER_SHEET_TAB_TITLE_NEEDED' => '[nie znaleziono nagłówka]',
     'EXTERNAL_DATA_CODE' => 'Kod identyfikacyjny',
     'EXTERNAL_DATA_DATA' => 'Dane',
+    'EXTERNAL_DATA_FORMAT_CONTENT' => '<ul>
+<li>Komponent najwyższego stopnia musi być tablicą</li>
+<li>Każda zakładka jest reprezentowana przez osobny obiekt z wymaganymi polami: "title" i "data"</li>
+<li>Każde pole "title" to string</li>
+<li>Każde pole "data" to tablica obiektów</li>
+<li>Każdy obiekt danych musi mieć:
+<ul>
+<li>pole "type" z wartością "table" lub "text"</li>
+<li>pole treści: "rows" dla tablic, "text" dla tekstu</li>
+</ul>
+</li>
+<li>Każdy obiekt danych może mieć pole "title" jako string</li>
+<li>Każdy obiekt danych może mieć pole "size" jako string, opisujące rozmiar kolumny; opcje to: smallest, smaller, small, medium, large, larger, largest lub liczba między 1 a 12 włącznie, opisująca rozmiar wg bootstrapa</li>
+<li>Każdy obiekt tekstowy to string; może to być HTML</li>
+<li>Każdy obiekt "rows" to tablica (opisująca wiersze) tablic obiektów (opisujących komórki)
+<ul>
+<li>Każdy obiekt opisujący komórkę musi mieć pole "data", zawierające treść</li>
+<li>Każdy obiekt opisujący komórkę może mieć pole "title", zawierające title text</li>
+<li>Każdy obiekt opisujący komórkę może mieć pole "class", zawierające klasy CSS </li>
+</ul>
+</li>
+</ul>',
+    'EXTERNAL_DATA_FORMAT_TITLE' => 'Wymagania co do formatu JSON-a',
     'EXTERNAL_DATA_ID' => 'ID',
     'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Ładowanie zewnętrznych danych nieudane - błąd JSON-a',
     'EXTERNAL_DATA_LOAD_ERROR_PARTITION {errors}' => 'Ładowanie zewnętrznych danych częściowo nieudane - błędy w pakietach: {errors}',
