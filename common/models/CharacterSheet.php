@@ -36,6 +36,14 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 {
     use ToolsForEntity;
 
+    public const STATUS_DRAFT = 'draft';
+    public const STATUS_INCOMPLETE = 'incomplete';
+    public const STATUS_UP_TO_DATE = 'up-to-date';
+    public const STATUS_UPDATE_PENDING = 'update';
+    public const STATUS_CHANGE_PENDING = 'change';
+    public const STATUS_REWRITE_PENDING = 'rewrite';
+    public const STATUS_CLOSED = 'closed';
+
     public static function tableName()
     {
         return 'character_sheet';
