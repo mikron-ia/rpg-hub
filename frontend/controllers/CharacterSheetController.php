@@ -26,7 +26,7 @@ final class CharacterSheetController extends Controller
                     [
                         'actions' => ['index', 'view'],
                         'allow' => true,
-                        'roles' => ['operator'],
+                        'roles' => ['@'],
                     ],
                 ],
             ]
