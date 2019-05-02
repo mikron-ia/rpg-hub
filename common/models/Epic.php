@@ -166,6 +166,35 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         ];
     }
 
+    /**
+     * @return int[]
+     */
+    public function sortPriorities(): array
+    {
+        return [
+            self::STATUS_CANCELLED => 4,
+            self::STATUS_CLOSED => 4,
+            self::STATUS_FINISHED => 4,
+            self::STATUS_LAPSED => 2,
+            self::STATUS_ON_HOLD => 3,
+            self::STATUS_PLANNED => 2,
+            self::STATUS_PREPARED => 2,
+            self::STATUS_PLAYED => 0,
+            self::STATUS_PROPOSED => 3,
+            self::STATUS_READY => 1,
+            self::STATUS_RESUMING => 1,
+            self::STATUS_SCRAPPED => 4,
+        ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getOwnSortPriority(): int
+    {
+        return $this->sortPriorities()[$this->status];
+    }
+
     public function getStatus(): string
     {
         $names = self::statusNames();
@@ -646,5 +675,23 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     public function getEpic()
     {
         return Epic::find()->where(['epic_id' => $this->epic_id]);
+    }
+
+    /**
+     * Sorts Epics by status
+     *
+     * @param Epic[] $epics
+     * @return Epic[]
+     */
+    static public function sortByStatus(array $epics)
+    {
+        uasort($epics, function (Epic $a, Epic $b) {
+            if ($a->getOwnSortPriority() === $b->getOwnSortPriority()) {
+                return $a->epic_id > $b->epic_id ? -1 : 1; // it impossible to have the same ID and with this, the sorting is deterministic
+            }
+            return $a->getOwnSortPriority() < $b->getOwnSortPriority() ? -1 : 1;
+        });
+
+        return $epics;
     }
 }

@@ -114,7 +114,7 @@ final class EpicQuery extends Epic
             return [];
         }
 
-        return $query->all();
+        return self::sortByStatus($query->all());
     }
 
     /**
