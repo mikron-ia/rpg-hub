@@ -11,7 +11,7 @@ use common\models\Participant;
 use yii\bootstrap\Html;
 use yii\widgets\ListView;
 
-$this->title = 'RPG hub - control';
+$this->title = Yii::t('app', 'FRONTPAGE_TITLE');
 ?>
 <div class="site-index">
 

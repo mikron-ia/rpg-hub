@@ -10,6 +10,7 @@
 use common\models\Epic;
 use yii\widgets\ListView;
 
+$this->title = Yii::t('app', 'FRONTPAGE_TITLE');
 ?>
 <div class="site-index">
     <div class="text-center">
