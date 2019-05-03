@@ -167,27 +167,30 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     }
 
     /**
+     * Provides sorting priorities based on status
+     * Note: most important statuses have the lowest numbers
      * @return int[]
      */
     public function sortPriorities(): array
     {
         return [
-            self::STATUS_CANCELLED => 4,
+            self::STATUS_CANCELLED => 3,
             self::STATUS_CLOSED => 4,
-            self::STATUS_FINISHED => 4,
-            self::STATUS_LAPSED => 2,
-            self::STATUS_ON_HOLD => 3,
-            self::STATUS_PLANNED => 2,
-            self::STATUS_PREPARED => 2,
+            self::STATUS_FINISHED => 3,
+            self::STATUS_LAPSED => 1,
+            self::STATUS_ON_HOLD => 2,
+            self::STATUS_PLANNED => 1,
+            self::STATUS_PREPARED => 1,
             self::STATUS_PLAYED => 0,
-            self::STATUS_PROPOSED => 3,
-            self::STATUS_READY => 1,
-            self::STATUS_RESUMING => 1,
-            self::STATUS_SCRAPPED => 4,
+            self::STATUS_PROPOSED => 2,
+            self::STATUS_READY => 0,
+            self::STATUS_RESUMING => 0,
+            self::STATUS_SCRAPPED => 3,
         ];
     }
 
     /**
+     * Provides Epic's own priority
      * @return int
      */
     public function getOwnSortPriority(): int
@@ -678,7 +681,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     }
 
     /**
-     * Sorts Epics by status
+     * Sorts Epics by status and ID
      *
      * @param Epic[] $epics
      * @return Epic[]
