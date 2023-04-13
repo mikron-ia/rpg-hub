@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Game;
 use common\models\Seen;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -69,6 +70,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'pointInTime',
                 'format' => 'raw',
                 'value' => $model->pointInTime,
+            ],
+            [
+                'label' => Yii::t('app', 'LABEL_GAMES'),
+                'format' => 'raw',
+                'value' => implode('; ', array_map(function (Game $model) {
+                    return Html::a($model->basics, ['game/view', 'id' => $model->game_id], []);
+                }, $model->games))
             ],
             [
                 'attribute' => 'position',

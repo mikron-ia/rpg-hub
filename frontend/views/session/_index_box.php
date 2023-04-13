@@ -22,6 +22,9 @@ use yii\helpers\Html;
         <p>
             <strong><?php echo Yii::t('app', 'LABEL_EPIC'); ?>:</strong> <?php echo Html::encode($model->epic->name); ?>
         </p>
+        <?php if (!empty($model->recap)): ?>
+            <p><?= '<strong>' . Yii::t('app', 'LABEL_RECAP') . ': </strong>' . $model->recap->getNameWithTime(); ?></p>
+        <?php endif; ?>
         <?= $model->notesFormatted ?>
     </div>
 

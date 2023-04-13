@@ -26,6 +26,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $utility_bag_id
  *
  * @property Epic $epic
+ * @property Game[] $games
  * @property PointInTime $pointInTime
  * @property SeenPack $seenPack
  * @property UtilityBag $utilityBag
@@ -147,6 +148,16 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     }
 
     /**
+     * Gets query for [[Games]]
+     *
+     * @return ActiveQuery
+     */
+    public function getGames(): ActiveQuery
+    {
+        return $this->hasMany(Game::class, ['recap_id' => 'recap_id']);
+    }
+
+    /**
      * @return ActiveQuery
      */
     public function getPointInTime(): ActiveQuery
@@ -252,5 +263,17 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();
+    }
+
+    public function getNameWithTime(): string
+    {
+        return $this->name . ' (' . $this->pointInTime . ')';
+    }
+
+    public function getSessionNamesFormatted($glue = '; '): string
+    {
+        return implode($glue, array_map(function (Game $model) {
+            return $model->basics;
+        }, $this->games));
     }
 }

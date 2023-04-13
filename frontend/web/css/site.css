@@ -407,6 +407,12 @@ a:focus {
     font-weight: bold;
 }
 
+.recap-box-sessions {
+    text-align: left;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 2rem;
+}
+
 .session-box {
     font-size: 1.8rem;
 }

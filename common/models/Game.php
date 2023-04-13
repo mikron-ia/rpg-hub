@@ -28,6 +28,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $notesFormatted
  *
  * @property Epic $epic
+ * @property Recap $recap
  * @property UtilityBag $utilityBag
  */
 class Game extends ActiveRecord implements HasEpicControl, HasStatus
@@ -53,7 +54,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
     {
         return [
             [['epic_id'], 'required'],
-            [['epic_id', 'position'], 'integer'],
+            [['epic_id', 'position', 'recap_id', 'utility_bag_id'], 'integer'],
             [['planned_date'], 'safe'],
             [['planned_date'], 'default', 'value' => null],
             [['notes'], 'string'],
@@ -77,6 +78,20 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
                 'targetClass' => Epic::class,
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
+            [
+                ['recap_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Recap::class,
+                'targetAttribute' => ['recap_id' => 'recap_id']
+            ],
+            [
+                ['utility_bag_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => UtilityBag::class,
+                'targetAttribute' => ['utility_bag_id' => 'utility_bag_id']
+            ],
         ];
     }
 
@@ -90,6 +105,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
             'status' => Yii::t('app', 'GAME_STATUS'),
             'position' => Yii::t('app', 'GAME_POSITION'),
             'notes' => Yii::t('app', 'GAME_NOTES'),
+            'recap_id' => Yii::t('app', 'LABEL_RECAP'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
     }
@@ -201,6 +217,11 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         return array_filter(self::statusNames(), function ($key) {
             return in_array($key, $this->getAllowedChange());
         }, ARRAY_FILTER_USE_KEY);
+    }
+
+    public function getRecap(): ActiveQuery
+    {
+        return $this->hasOne(Recap::class, ['recap_id' => 'recap_id']);
     }
 
     /**

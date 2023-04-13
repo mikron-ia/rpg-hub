@@ -116,4 +116,33 @@ final class RecapQuery extends Recap
 
         return $dataProvider;
     }
+
+    /**
+     * Provides list of all recaps from current epic for use in a selector
+     *
+     * @return string[]
+     */
+    static public function allFromCurrentEpicForSelector(): array
+    {
+        $query = Recap::find();
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            $query->where('0=1');
+        } else {
+            $query->andWhere([
+                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+            ])->orderBy('recap_id DESC');
+        }
+
+        /** @var Recap[] $records */
+        $records = $query->all();
+
+        $list = [];
+
+        foreach ($records as $record) {
+            $list[$record->recap_id] = $record->getNameWithTime();
+        }
+
+        return $list;
+    }
 }

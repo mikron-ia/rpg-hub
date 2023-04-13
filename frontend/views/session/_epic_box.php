@@ -1,12 +1,13 @@
 <?php
 
+use common\models\Game;
 use yii\helpers\Html;
 
-/** @var $model \common\models\Game */
+/** @var $model Game */
 ?>
 
 <div id="session-<?= $model->game_id; ?>">
-    <?php if (!empty($model->notes)): ?>
+    <?php if (!empty($model->notes) || !empty($model->recap)): ?>
         <p class="session-box session-box-closed"
            data-toggle="collapse"
            data-target="#session-notes-<?php echo $model->game_id; ?>"
@@ -17,7 +18,15 @@ use yii\helpers\Html;
         </p>
 
         <div class="collapse" id="session-notes-<?php echo $model->game_id; ?>">
-            <?= $model->notesFormatted ?>
+            <?php if (!empty($model->recap)): ?>
+                <p>
+                    <?= '<strong>' . Yii::t('app', 'LABEL_RECAP') . ': </strong>' . $model->recap->getNameWithTime(); ?>
+                </p>
+            <?php endif; ?>
+
+            <?php if (!empty($model->notes)): ?>
+                <?= $model->notesFormatted ?>
+            <?php endif; ?>
         </div>
     <?php else: ?>
         <p class="session-box">

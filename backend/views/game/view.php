@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Game */
@@ -30,9 +31,37 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div>
-        <?= Html::tag('span', $model->getStatus(), ['class' => ['game-status', 'pull-left', $model->getStatusClass()]]) ?>
-        <?= $model->notesFormatted; ?>
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    [
+                        'attribute' => 'epic_id',
+                        'format' => 'raw',
+                        'value' => Html::a($model->epic->name, ['epic/view', 'key' => $model->epic->key], []),
+                    ],
+                    [
+                        'attribute' => 'recap_id',
+                        'format' => 'raw',
+                        'value' => isset($model->recap)
+                            ? Html::a(
+                                $model->recap->name,
+                                ['recap/view', 'key' => $model->recap->key], []
+                            )
+                            : Yii::t('app', 'RECAP_NOT_AVAILABLE'),
+                    ],
+                    [
+                        'attribute' => 'status',
+                        'format' => 'raw',
+                        'value' => '<span class="table-tag game-status ' . $model->getStatusClass() . '">' . $model->getStatus() . '</span>',
+                    ]
+                ],
+            ]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $model->notesFormatted; ?>
+        </div>
     </div>
 
 </div>

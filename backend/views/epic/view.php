@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\Tabs;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -30,7 +31,7 @@ $items = [
         <h1><?= Html::encode($this->title) ?></h1>
     </div>
 
-    <?= \yii\bootstrap\Tabs::widget([
+    <?= Tabs::widget([
         'items' => $items
     ]) ?>
 

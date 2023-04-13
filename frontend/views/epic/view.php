@@ -1,13 +1,16 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $epic \common\models\Epic */
-/* @var $sessions \yii\data\ActiveDataProvider */
-/* @var $stories \yii\data\ActiveDataProvider */
+/* @var $epic Epic */
+/* @var $sessions ActiveDataProvider */
+/* @var $stories ActiveDataProvider */
 
-/* @var $recap \common\models\Recap */
+/* @var $recap Recap */
 
+use common\models\Epic;
+use common\models\Recap;
 use yii\bootstrap\Html;
+use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
 
 if ($epic) {
@@ -86,6 +89,12 @@ if ($epic) {
                             echo '<p class="recap-box-time">' . $recap->pointInTime . '</p>';
                         }
                         echo $recap->getDataFormatted();
+                        if (!empty($recap->games)) {
+                            echo '<p>'
+                                . '<strong>' . Yii::t('app', 'LABEL_GAMES') . ': </strong>'
+                                . $recap->getSessionNamesFormatted()
+                                . '</p>';
+                        }
                     } else {
                         echo '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_RECAP_NOT_AVAILABLE') . '</p>';
                     } ?>
