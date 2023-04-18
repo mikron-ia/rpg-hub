@@ -8,16 +8,16 @@
 
     <h2><?= $model->getTypeName(); ?></h2>
 
-    <?php if (isset($model->point_in_time_id)): ?>
+    <?php if (isset($model->point_in_time_start_id)): ?>
         <div class="tag-box description-timestamp"
              title="<?= Yii::t(
                  'app',
                  'DESCRIPTION_UPDATED_IC_TITLE {when}',
-                 ['when' => $model->pointInTime->name]
+                 ['when' => $model->pointInTimeStart->name]
              ); ?>"
              data-type="<?= $model->code ?>"
-             data-order="<?= $model->pointInTime->position ?>">
-            <?= $model->pointInTime->name ?>
+             data-order="<?= $model->pointInTimeStart->position ?>">
+            <?= $model->pointInTimeStart->name ?>
         </div>
         <div class="tag-box description-outdated" style="display: none;">
             <?= Yii::t('app', 'DESCRIPTION_OUTDATED'); ?>

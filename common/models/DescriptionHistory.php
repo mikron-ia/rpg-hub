@@ -7,6 +7,7 @@ use common\models\core\Visibility;
 use common\models\tools\ToolsForDescription;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
@@ -24,10 +25,12 @@ use yii\helpers\Markdown;
  * @property string $protected_text_expanded
  * @property string $private_text_expanded
  * @property string $visibility
- * @property string $point_in_time_id
+ * @property int|null $point_in_time_start_id
+ * @property int|null $point_in_time_end_id
  *
  * @property Description $description
- * @property PointInTime $pointInTime
+ * @property PointInTime $pointInTimeStart
+ * @property PointInTime $pointInTimeEnd
  */
 class DescriptionHistory extends ActiveRecord implements HasVisibility
 {
@@ -54,11 +57,18 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
                 'targetAttribute' => ['description_id' => 'description_id']
             ],
             [
-                ['point_in_time_id'],
+                ['point_in_time_start_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => PointInTime::class,
-                'targetAttribute' => ['point_in_time_id' => 'point_in_time_id']
+                'targetAttribute' => ['point_in_time_start_id' => 'point_in_time_id']
+            ],
+            [
+                ['point_in_time_end_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => PointInTime::class,
+                'targetAttribute' => ['point_in_time_end_id' => 'point_in_time_id']
             ],
         ];
     }
@@ -86,7 +96,8 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
             'protected_text_expanded' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PROTECTED_EXPANDED'),
             'private_text_expanded' => Yii::t('app', 'DESCRIPTION_HISTORY_TEXT_PRIVATE_EXPANDED'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
-            'point_in_time_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME'),
+            'point_in_time_start_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME_START'),
+            'point_in_time_end_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME_END'),
         ];
     }
 
@@ -132,7 +143,8 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         $history->public_text = $description->public_text;
         $history->private_text = $description->private_text;
         $history->visibility = $description->visibility;
-        $history->point_in_time_id = $description->point_in_time_id;
+        $history->point_in_time_start_id = $description->point_in_time_start_id;
+        $history->point_in_time_end_id = $description->point_in_time_end_id;
 
         if ($history->save()) {
             $history->refresh();
@@ -143,11 +155,21 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getDescription()
     {
         return $this->hasOne(Description::className(), ['description_id' => 'description_id']);
+    }
+
+    public function getPointInTimeStart(): ActiveQuery
+    {
+        return $this->hasOne(PointInTime::class, ['point_in_time_id' => 'point_in_time_start_id']);
+    }
+
+    public function getPointInTimeEnd(): ActiveQuery
+    {
+        return $this->hasOne(PointInTime::class, ['point_in_time_id' => 'point_in_time_end_id']);
     }
 
     /**

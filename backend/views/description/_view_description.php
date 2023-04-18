@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Description */
@@ -66,7 +67,13 @@ use yii\helpers\Html;
 
         <span class="tag-box">
             <?= Yii::t('app', 'DESCRIPTION_UPDATED_IC {when}', [
-                'when' => $model->pointInTime->name ?? '?',
+                'when' => $model->pointInTimeStart->name ?? '?',
+            ]); ?>
+        </span>
+
+        <span class="tag-box">
+            <?= Yii::t('app', 'DESCRIPTION_EXPIRED_IC {when}', [
+                'when' => $model->pointInTimeEnd->name ?? '?',
             ]); ?>
         </span>
 
@@ -80,9 +87,9 @@ use yii\helpers\Html;
 
         <span class="tag-box">
             <?= Yii::t('app', 'DESCRIPTION_WORDS') ?>:
-            <?= \yii\helpers\StringHelper::countWords($model->public_text); ?> /
-            <?= \yii\helpers\StringHelper::countWords($model->protected_text); ?> /
-            <?= \yii\helpers\StringHelper::countWords($model->private_text); ?>
+            <?= StringHelper::countWords($model->public_text); ?> /
+            <?= StringHelper::countWords($model->protected_text); ?> /
+            <?= StringHelper::countWords($model->private_text); ?>
         </span>
 
     </div>
