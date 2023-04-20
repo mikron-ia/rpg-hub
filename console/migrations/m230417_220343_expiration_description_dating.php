@@ -53,14 +53,14 @@ class m230417_220343_expiration_description_dating extends Migration
         $this->dropForeignKey('description_point_in_time_start', 'description');
 
         $this->addForeignKey(
-            'description_history_point_in_time_start',
+            'description_history_point_in_time',
             'description_history', 'point_in_time_start_id',
             'point_in_time', 'point_in_time_id',
             'RESTRICT', 'CASCADE'
         );
 
         $this->addForeignKey(
-            'description_point_in_time_start',
+            'description_point_in_time',
             'description', 'point_in_time_start_id',
             'point_in_time', 'point_in_time_id',
             'RESTRICT', 'CASCADE'
