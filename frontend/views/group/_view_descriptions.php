@@ -1,5 +1,10 @@
 <?php
 /* @var $this yii\web\View */
+
+use common\models\Description;
+use yii\data\ActiveDataProvider;
+use yii\widgets\ListView;
+
 /* @var $model common\models\Group */
 /* @var $showPrivates bool */
 ?>
@@ -7,16 +12,16 @@
 <?php if ($model->descriptionPack): ?>
     <div id="descriptions">
 
-        <?= \yii\widgets\ListView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider([
+        <?= ListView::widget([
+            'dataProvider' => new ActiveDataProvider([
                 'query' => $model->descriptionPack->getDescriptionsVisible(),
                 'sort' => ['defaultOrder' => ['position' => SORT_ASC]]
             ]),
             'itemOptions' => ['class' => 'item'],
             'summary' => '',
-            'itemView' => function (\common\models\Description $model, $key, $index, $widget) {
+            'itemView' => function (Description $model, $key, $index, $widget) {
                 return $this->render(
-                    '_view_description',
+                    '../_view_description',
                     [
                         'model' => $model,
                         'key' => $key,
