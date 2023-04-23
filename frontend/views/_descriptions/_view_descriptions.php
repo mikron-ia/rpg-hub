@@ -1,27 +1,29 @@
 <?php
 /* @var $this yii\web\View */
 
+use common\models\core\HasDescriptions;
 use common\models\Description;
 use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
 
-/* @var $model common\models\Group */
+/* @var $model HasDescriptions */
 /* @var $showPrivates bool */
+
+$descriptions = $model->getDescriptionsVisible();
 ?>
 
-<?php if ($model->descriptionPack): ?>
+<?php if ($descriptions): ?>
     <div id="descriptions">
-
         <?= ListView::widget([
             'dataProvider' => new ActiveDataProvider([
-                'query' => $model->descriptionPack->getDescriptionsVisible(),
+                'query' => $descriptions,
                 'sort' => ['defaultOrder' => ['position' => SORT_ASC]]
             ]),
             'itemOptions' => ['class' => 'item'],
             'summary' => '',
             'itemView' => function (Description $model, $key, $index, $widget) {
                 return $this->render(
-                    '../_view_description',
+                    '_view_description',
                     [
                         'model' => $model,
                         'key' => $key,
@@ -32,7 +34,6 @@ use yii\widgets\ListView;
                 );
             },
         ]) ?>
-
     </div>
 <?php else: ?>
     <p><?= Yii::t('app', 'DESCRIPTIONS_NOT_FOUND'); ?></p>

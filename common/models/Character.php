@@ -13,6 +13,7 @@ use common\models\core\HasVisibility;
 use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
+use common\models\tools\ToolsForHasDescription;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -51,6 +52,7 @@ use yii\db\ActiveRecord;
 class Character extends ActiveRecord implements Displayable, HasCompletion, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasVisibility, HasSightings
 {
     use ToolsForEntity;
+    use ToolsForHasDescription;
 
     public static function tableName()
     {
@@ -215,9 +217,6 @@ class Character extends ActiveRecord implements Displayable, HasCompletion, HasD
         return $this->hasOne(CharacterSheet::className(), ['character_sheet_id' => 'character_sheet_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getDescriptionPack(): ActiveQuery
     {
         return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
@@ -484,11 +483,6 @@ class Character extends ActiveRecord implements Displayable, HasCompletion, HasD
         } else {
             return $sighting->status;
         }
-    }
-
-    public function getDescriptionPackId(): int
-    {
-        return $this->description_pack_id;
     }
 
     public function getCompletionPercentage(): ?int

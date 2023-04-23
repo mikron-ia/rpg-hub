@@ -12,6 +12,7 @@ use common\models\core\HasVisibility;
 use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
+use common\models\tools\ToolsForHasDescription;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -51,6 +52,7 @@ use yii\helpers\Html;
 class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasSightings, HasVisibility
 {
     use ToolsForEntity;
+    use ToolsForHasDescription;
 
     public static function tableName()
     {
@@ -183,10 +185,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getDescriptionPack()
+    public function getDescriptionPack(): ActiveQuery
     {
         return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
     }
@@ -312,11 +311,6 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         $decodedData['key'] = $this->key;
 
         return $decodedData;
-    }
-
-    public function getDescriptionPackId(): int
-    {
-        return $this->description_pack_id;
     }
 
     public function isVisibleInApi()

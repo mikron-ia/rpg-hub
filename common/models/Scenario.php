@@ -5,6 +5,7 @@ namespace common\models;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\tools\ToolsForEntity;
+use common\models\tools\ToolsForHasDescription;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -26,6 +27,7 @@ use yii\db\ActiveRecord;
 class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
 {
     use ToolsForEntity;
+    use ToolsForHasDescription;
 
     const STATUS_NEW = 'new';
     const STATUS_REJECTED = 'rejected';
@@ -107,11 +109,6 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
-    }
-
-    public function getDescriptionPackId(): int
-    {
-        return $this->description_pack_id;
     }
 
     static public function allowedDescriptionTypes(): array
