@@ -18,11 +18,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-8">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
 
@@ -30,15 +30,15 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'tagline')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(Character::allowedVisibilities())) ?>
     </div>
 
-    <div class="col-md-3">
-        <?= $form->field($model, 'importance_category')->dropDownList(ImportanceCategory::importanceNames()) ?>
+    <div class="col-md-6 col-lg-5">
+        <?= $form->field($model, 'importance_category')->dropDownList(ImportanceCategory::importanceNames(true)) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4 col-lg-5">
         <?= $form->field($model, 'character_sheet_id')->dropDownList(
             CharacterSheetQuery::getListOfCharactersForSelector(),
             ['prompt' => ' --- ' . Yii::t('app', 'CHARACTER_SHEET_PROMPT') . ' --- ']

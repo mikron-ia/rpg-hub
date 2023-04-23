@@ -43,18 +43,45 @@ final class ImportanceCategory
     }
 
     /**
-     * Provides importance names
      * @return string[]
      */
-    static public function importanceNames(): array
+    static private function importanceNamesSimple(): array
     {
-        $names = [
+        return [
             self::IMPORTANCE_NONE => Yii::t('app', 'IMPORTANCE_NONE'),
             self::IMPORTANCE_LOW => Yii::t('app', 'IMPORTANCE_LOW'),
             self::IMPORTANCE_MEDIUM => Yii::t('app', 'IMPORTANCE_MEDIUM'),
             self::IMPORTANCE_HIGH => Yii::t('app', 'IMPORTANCE_HIGH'),
             self::IMPORTANCE_EXTREME => Yii::t('app', 'IMPORTANCE_EXTREME'),
         ];
+    }
+
+    /**
+     * @return string[]
+     */
+    static private function importanceNamesWithDescriptions(): array
+    {
+        $descriptions = self::importanceNamesDescriptions();
+
+        $namesWithDescriptions = self::importanceNamesSimple();
+
+        array_walk($namesWithDescriptions, function (string &$name, string $key) use ($descriptions) {
+            $name .= ' (' . $descriptions[$key] . ')';
+        });
+
+        return $namesWithDescriptions;
+    }
+
+    /**
+     * Provides importance names
+     *
+     * @param bool $includeDescriptions
+     *
+     * @return string[]
+     */
+    static public function importanceNames(bool $includeDescriptions = false): array
+    {
+        $names = $includeDescriptions ? self::importanceNamesWithDescriptions() : self::importanceNamesSimple();
 
         $allowed = self::allowedImportance();
 
@@ -94,6 +121,7 @@ final class ImportanceCategory
 
     /**
      * Provides importance names in lowercase
+     *
      * @return string[]
      */
     static public function importanceNamesLowercase(): array
@@ -104,6 +132,22 @@ final class ImportanceCategory
             self::IMPORTANCE_MEDIUM => Yii::t('app', 'IMPORTANCE_MEDIUM_LOWERCASE'),
             self::IMPORTANCE_HIGH => Yii::t('app', 'IMPORTANCE_HIGH_LOWERCASE'),
             self::IMPORTANCE_EXTREME => Yii::t('app', 'IMPORTANCE_EXTREME_LOWERCASE'),
+        ];
+    }
+
+    /**
+     * Provides importance names' descriptions
+     *
+     * @return string[]
+     */
+    static public function importanceNamesDescriptions(): array
+    {
+        return [
+            self::IMPORTANCE_NONE => Yii::t('app', 'IMPORTANCE_NONE_DESCRIPTION'),
+            self::IMPORTANCE_LOW => Yii::t('app', 'IMPORTANCE_LOW_DESCRIPTION'),
+            self::IMPORTANCE_MEDIUM => Yii::t('app', 'IMPORTANCE_MEDIUM_DESCRIPTION'),
+            self::IMPORTANCE_HIGH => Yii::t('app', 'IMPORTANCE_HIGH_DESCRIPTION'),
+            self::IMPORTANCE_EXTREME => Yii::t('app', 'IMPORTANCE_EXTREME_DESCRIPTION'),
         ];
     }
 }
