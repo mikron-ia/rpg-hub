@@ -10,11 +10,28 @@ use Yii;
  */
 final class ImportanceCategory
 {
+    // todo: move all const handling to an enum - see #360
     const IMPORTANCE_NONE = '4-none';
     const IMPORTANCE_LOW = '3-low';
     const IMPORTANCE_MEDIUM = '2-medium';
     const IMPORTANCE_HIGH = '1-high';
     const IMPORTANCE_EXTREME = '0-extreme';
+
+    private const MINIMUMS = [
+        self::IMPORTANCE_NONE => 1,
+        self::IMPORTANCE_LOW => 1,
+        self::IMPORTANCE_MEDIUM => 2,
+        self::IMPORTANCE_HIGH => 3,
+        self::IMPORTANCE_EXTREME => 5,
+    ];
+
+    private const MAXIMUMS = [
+        self::IMPORTANCE_NONE => 3,
+        self::IMPORTANCE_LOW => 5,
+        self::IMPORTANCE_MEDIUM => 8,
+        self::IMPORTANCE_HIGH => 13,
+        self::IMPORTANCE_EXTREME => 21,
+    ];
 
     /**
      * @var string
@@ -149,5 +166,20 @@ final class ImportanceCategory
             self::IMPORTANCE_HIGH => Yii::t('app', 'IMPORTANCE_HIGH_DESCRIPTION'),
             self::IMPORTANCE_EXTREME => Yii::t('app', 'IMPORTANCE_EXTREME_DESCRIPTION'),
         ];
+    }
+
+    public function fitsWithMinimum(int $descriptionCount): bool
+    {
+        return $descriptionCount >= self::MINIMUMS[$this->importance];
+    }
+
+    public function fitsWithMaximum(int $descriptionCount): bool
+    {
+        return $descriptionCount <= self::MAXIMUMS[$this->importance];
+    }
+
+    public function fits(int $descriptionCount): bool
+    {
+        return $this->fitsWithMinimum($descriptionCount) && $this->fitsWithMaximum($descriptionCount);
     }
 }
