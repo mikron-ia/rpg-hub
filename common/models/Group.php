@@ -12,7 +12,7 @@ use common\models\core\HasVisibility;
 use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
-use common\models\tools\ToolsForHasDescription;
+use common\models\tools\ToolsForHasDescriptions;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -52,7 +52,7 @@ use yii\helpers\Html;
 class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasSightings, HasVisibility
 {
     use ToolsForEntity;
-    use ToolsForHasDescription;
+    use ToolsForHasDescriptions;
 
     public static function tableName()
     {
@@ -388,8 +388,12 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
 
     public function getImportanceCategory(): string
     {
-        $importance = ImportanceCategory::create($this->importance_category);
-        return $importance->getName();
+        return $this->getImportanceCategoryObject()->getName();
+    }
+
+    public function getImportanceCategoryObject(): ImportanceCategory
+    {
+        return ImportanceCategory::create($this->importance_category);
     }
 
     public function getImportanceCategoryCode(): string

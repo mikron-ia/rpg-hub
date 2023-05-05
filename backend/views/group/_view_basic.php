@@ -38,6 +38,11 @@ use yii\widgets\DetailView;
                     'value' => $model->getImportanceCategory(),
                 ],
                 [
+                    'label' => Yii::t('app', 'DESCRIPTION_COUNT_EXPECTED'),
+                    'format' => 'raw',
+                    'value' => $model->getImportanceCategoryObject()->minimum() . ' &mdash; ' . $model->getImportanceCategoryObject()->maximum(),
+                ],
+                [
                     'attribute' => 'master_group_id',
                     'format' => 'raw',
                     'value' => $model->masterGroup ?? '<em>' . Yii::t('app', 'GROUP_WITHOUT_MASTER') . '</em>',
@@ -65,7 +70,7 @@ use yii\widgets\DetailView;
                 ['update', 'key' => $model->key],
                 ['class' => 'btn btn-primary']
             ) ?>
-            <?= \yii\helpers\Html::a(
+            <?= Html::a(
                 Yii::t('app', 'BUTTON_SEE_FRONTEND'),
                 Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
                     'group/view',

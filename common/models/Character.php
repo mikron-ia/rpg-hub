@@ -13,7 +13,7 @@ use common\models\core\HasVisibility;
 use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
-use common\models\tools\ToolsForHasDescription;
+use common\models\tools\ToolsForHasDescriptions;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -49,10 +49,10 @@ use yii\db\ActiveRecord;
  * @property GroupMembership[] $groupMemberships
  * @property GroupMembership[] $groupMembershipsVisibleToUser
  */
-class Character extends ActiveRecord implements Displayable, HasCompletion, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasVisibility, HasSightings
+class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasVisibility, HasSightings
 {
     use ToolsForEntity;
-    use ToolsForHasDescription;
+    use ToolsForHasDescriptions;
 
     public static function tableName()
     {
@@ -421,8 +421,12 @@ class Character extends ActiveRecord implements Displayable, HasCompletion, HasD
 
     public function getImportanceCategory(): string
     {
-        $importance = ImportanceCategory::create($this->importance_category);
-        return $importance->getName();
+        return $this->getImportanceCategoryObject()->getName();
+    }
+
+    public function getImportanceCategoryObject(): ImportanceCategory
+    {
+        return ImportanceCategory::create($this->importance_category);
     }
 
     public function getImportanceCategoryCode(): string
@@ -483,10 +487,5 @@ class Character extends ActiveRecord implements Displayable, HasCompletion, HasD
         } else {
             return $sighting->status;
         }
-    }
-
-    public function getCompletionPercentage(): ?int
-    {
-        return null;
     }
 }

@@ -19,4 +19,9 @@ interface HasImportanceCategory
      * @return string
      */
     public function getImportanceCategoryLowercase(): string;
+
+    /**
+     * @return ImportanceCategory
+     */
+    public function getImportanceCategoryObject(): ImportanceCategory;
 }

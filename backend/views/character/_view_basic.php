@@ -2,6 +2,7 @@
 
 use common\models\ExternalData;
 use yii\bootstrap\Modal;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -32,8 +33,11 @@ use yii\widgets\DetailView;
                     'attribute' => 'character_sheet_id',
                     'format' => 'raw',
                     'value' => $model->character_sheet_id ?
-                        Html::a($model->character->name, ['character-sheet/view', 'key' => $model->character->key],
-                            []) :
+                        Html::a(
+                            $model->character->name,
+                            ['character-sheet/view', 'key' => $model->character->key],
+                            []
+                        ) :
                         null,
                 ],
                 [
@@ -44,6 +48,15 @@ use yii\widgets\DetailView;
                     'attribute' => 'importance_category',
                     'label' => Yii::t('app', 'CHARACTER_IMPORTANCE'),
                     'value' => $model->getImportanceCategory(),
+                ],
+                [
+                    'label' => Yii::t('app', 'DESCRIPTION_COUNT_UNIQUE'),
+                    'value' => $model->descriptionPack->getUniqueDescriptionTypesCount(),
+                ],
+                [
+                    'label' => Yii::t('app', 'DESCRIPTION_COUNT_EXPECTED'),
+                    'format' => 'raw',
+                    'value' => $model->getImportanceCategoryObject()->minimum() . ' &mdash; ' . $model->getImportanceCategoryObject()->maximum(),
                 ],
                 [
                     'attribute' => 'updated_at',
@@ -83,7 +96,7 @@ use yii\widgets\DetailView;
                     'method' => 'post',
                 ],
             ]) ?>
-            <?= \yii\helpers\Html::a(
+            <?= Html::a(
                 Yii::t('app', 'BUTTON_SEE_FRONTEND'),
                 Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
                     'character/view',
@@ -96,7 +109,7 @@ use yii\widgets\DetailView;
 
     <div class="col-md-6">
         <h2 class="text-center"><?= Yii::t('app', 'LABEL_EXTERNAL_DATA'); ?></h2>
-        <?= \yii\grid\GridView::widget([
+        <?= GridView::widget([
             'dataProvider' => $externalDataDataProvider,
             'layout' => '{items}',
             'columns' => [

@@ -14,7 +14,10 @@ CharacterAsset::register($this);
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_CHARACTER_INDEX');
-$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::$app->params['activeEpic']->name,
+    'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]
+];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -66,31 +69,25 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 ],
                 [
-                    'label' => Yii::t('app', 'DESCRIPTION_COUNT'),
-                    'headerOptions' => ['class' => 'text-center'],
-                    'contentOptions' => ['class' => 'text-center'],
-                    'format' => function (int $value) {
-                        /**
-                         * This is a temporary solution to indicate Characters with missing descriptions
-                         * todo: rework to proper interface-based method that indicates thresholds
-                         */
-                        if ($value > 0) {
-                            return '<span class="label label-info">' . $value . '</span>';
-                        } else {
-                            return '<span class="label label-warning">' . $value . '</span>';
-                        }
-                    },
-                    'value' => function (Character $model) {
-                        return count($model->descriptionPack->descriptions);
-                    }
-                ],
-                [
                     'label' => Yii::t('app', 'LABEL_COMPLETION'),
                     'headerOptions' => ['class' => 'text-center'],
                     'contentOptions' => ['class' => 'text-center'],
-                    'format' => 'percent',
+                    'format' => 'raw',
                     'value' => function (Character $model) {
-                        return $model->getCompletionPercentage();
+                        $count = $model->descriptionPack->getUniqueDescriptionTypesCount();
+
+                        if ($count > $model->getImportanceCategoryObject()->maximum()) {
+                            $class = 'label-info';
+                        } elseif ($count >= $model->getImportanceCategoryObject()->minimum()) {
+                            $class = 'label-success';
+                        } else {
+                            $class = 'label-warning';
+                        }
+
+                        return '<span class="label ' . $class . '">'
+                            . $count
+                            . ' / ' . $model->getImportanceCategoryObject()->minimum()
+                            . '</span>';
                     }
                 ],
                 [

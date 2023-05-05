@@ -5,7 +5,7 @@ namespace common\models;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\tools\ToolsForEntity;
-use common\models\tools\ToolsForHasDescription;
+use common\models\tools\ToolsForHasDescriptions;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -27,7 +27,7 @@ use yii\db\ActiveRecord;
 class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
 {
     use ToolsForEntity;
-    use ToolsForHasDescription;
+    use ToolsForHasDescriptions;
 
     const STATUS_NEW = 'new';
     const STATUS_REJECTED = 'rejected';

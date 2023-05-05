@@ -168,18 +168,13 @@ final class ImportanceCategory
         ];
     }
 
-    public function fitsWithMinimum(int $descriptionCount): bool
+    public function minimum(): int
     {
-        return $descriptionCount >= self::MINIMUMS[$this->importance];
+        return self::MINIMUMS[$this->importance];
     }
 
-    public function fitsWithMaximum(int $descriptionCount): bool
+    public function maximum(): int
     {
-        return $descriptionCount <= self::MAXIMUMS[$this->importance];
-    }
-
-    public function fits(int $descriptionCount): bool
-    {
-        return $this->fitsWithMinimum($descriptionCount) && $this->fitsWithMaximum($descriptionCount);
+        return self::MAXIMUMS[$this->importance];
     }
 }

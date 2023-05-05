@@ -226,4 +226,17 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
         $object = ($className)::findOne(['description_pack_id' => $this->description_pack_id]);
         return $object->canUserControlYou();
     }
+
+    /**
+     * Counts every type of description once
+     *
+     * @return int
+     */
+    public function getUniqueDescriptionTypesCount(): int
+    {
+        return count(array_reduce($this->descriptions, function (array $carry, Description $item) {
+            $carry[$item->code] = true;
+            return $carry;
+        }, []));
+    }
 }
