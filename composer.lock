@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "458aef07331df5c5ab165cbbce5cd344",
+    "content-hash": "c28190b1ca85af61fbf4cedc8ee08574",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -372,25 +372,27 @@
         },
         {
             "name": "kartik-v/yii2-krajee-base",
-            "version": "v1.9.9",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-krajee-base.git",
-                "reference": "1693374160c24443524ddc23508d2eb2955443f4"
+                "reference": "5c095126d1be47e0bb1f92779b7dc099f6feae31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/1693374160c24443524ddc23508d2eb2955443f4",
-                "reference": "1693374160c24443524ddc23508d2eb2955443f4",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/5c095126d1be47e0bb1f92779b7dc099f6feae31",
+                "reference": "5c095126d1be47e0bb1f92779b7dc099f6feae31",
                 "shasum": ""
             },
-            "require": {
-                "yiisoft/yii2-bootstrap": "@dev"
+            "suggest": {
+                "yiisoft/yii2-bootstrap": "for Krajee extensions to work with Bootstrap 3.x version",
+                "yiisoft/yii2-bootstrap4": "for Krajee extensions to work with Bootstrap 4.x version",
+                "yiisoft/yii2-bootstrap5": "for Krajee extensions to work with Bootstrap 5.x version"
             },
             "type": "yii2-extension",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.9.x-dev"
+                    "dev-master": "3.0.x-dev"
                 }
             },
             "autoload": {
@@ -421,27 +423,27 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-krajee-base/issues",
-                "source": "https://github.com/kartik-v/yii2-krajee-base/tree/v1.9.9"
+                "source": "https://github.com/kartik-v/yii2-krajee-base/tree/v3.0.5"
             },
-            "time": "2018-09-27T18:02:35+00:00"
+            "time": "2022-06-01T14:05:39+00:00"
         },
         {
             "name": "kartik-v/yii2-password",
-            "version": "v1.5.4",
+            "version": "v1.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-password.git",
-                "reference": "ba94ef669a350bf5cff2d9d2b6c1d771e288de96"
+                "reference": "59910c89c5e21f231dc2947b412196d22bcd47e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/ba94ef669a350bf5cff2d9d2b6c1d771e288de96",
-                "reference": "ba94ef669a350bf5cff2d9d2b6c1d771e288de96",
+                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/59910c89c5e21f231dc2947b412196d22bcd47e2",
+                "reference": "59910c89c5e21f231dc2947b412196d22bcd47e2",
                 "shasum": ""
             },
             "require": {
                 "kartik-v/strength-meter": "~1.1",
-                "kartik-v/yii2-krajee-base": ">=1.9"
+                "kartik-v/yii2-krajee-base": ">=3.0.4"
             },
             "type": "yii2-extension",
             "extra": {
@@ -481,26 +483,26 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-password/issues",
-                "source": "https://github.com/kartik-v/yii2-password/tree/master"
+                "source": "https://github.com/kartik-v/yii2-password/tree/v1.5.7"
             },
-            "time": "2018-09-07T05:19:50+00:00"
+            "time": "2022-05-16T05:38:31+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-datepicker",
-            "version": "v1.4.6",
+            "version": "v1.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-datepicker.git",
-                "reference": "01a5940fb1b70b39b7916a4e68768f8626024ddc"
+                "reference": "f5f8b396cf03d4a383aad5e7b338f8cb065abf66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/01a5940fb1b70b39b7916a4e68768f8626024ddc",
-                "reference": "01a5940fb1b70b39b7916a4e68768f8626024ddc",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/f5f8b396cf03d4a383aad5e7b338f8cb065abf66",
+                "reference": "f5f8b396cf03d4a383aad5e7b338f8cb065abf66",
                 "shasum": ""
             },
             "require": {
-                "kartik-v/yii2-krajee-base": "~1.9"
+                "kartik-v/yii2-krajee-base": ">=2.0.0"
             },
             "type": "yii2-extension",
             "extra": {
@@ -539,26 +541,26 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-widget-datepicker/issues",
-                "source": "https://github.com/kartik-v/yii2-widget-datepicker/tree/master"
+                "source": "https://github.com/kartik-v/yii2-widget-datepicker/tree/v1.4.8"
             },
-            "time": "2018-08-29T12:10:45+00:00"
+            "time": "2021-10-28T03:58:09+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-select2",
-            "version": "v2.2.1",
+            "version": "v2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "b30936d556639cdecd98bdd9733509a6be5dcc1c"
+                "reference": "f74f2cfbd5b4628ea578735890c39f9a8e4ed062"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/b30936d556639cdecd98bdd9733509a6be5dcc1c",
-                "reference": "b30936d556639cdecd98bdd9733509a6be5dcc1c",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/f74f2cfbd5b4628ea578735890c39f9a8e4ed062",
+                "reference": "f74f2cfbd5b4628ea578735890c39f9a8e4ed062",
                 "shasum": ""
             },
             "require": {
-                "kartik-v/yii2-krajee-base": ">=1.9",
+                "kartik-v/yii2-krajee-base": ">=3.0.4",
                 "select2/select2": ">=4.0"
             },
             "type": "yii2-extension",
@@ -597,7 +599,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-widget-select2/issues",
-                "source": "https://github.com/kartik-v/yii2-widget-select2/tree/v2.2.1"
+                "source": "https://github.com/kartik-v/yii2-widget-select2/tree/v2.2.4"
             },
             "funding": [
                 {
@@ -605,7 +607,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2021-06-09T07:29:31+00:00"
+            "time": "2022-08-29T12:24:10+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3677,7 +3679,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.1"
+        "php": ">=7.2"
     },
     "platform-dev": [],
     "plugin-api-version": "2.2.0"
