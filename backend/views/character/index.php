@@ -76,15 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function (Character $model) {
                         $count = $model->descriptionPack->getUniqueDescriptionTypesCount();
 
-                        if ($count > $model->getImportanceCategoryObject()->maximum()) {
-                            $class = 'label-info';
-                        } elseif ($count >= $model->getImportanceCategoryObject()->minimum()) {
-                            $class = 'label-success';
-                        } else {
-                            $class = 'label-warning';
-                        }
-
-                        return '<span class="label ' . $class . '">'
+                        return '<span class="label ' . $model->getImportanceCategoryObject()->getClassForDescriptionCounter($count) . '">'
                             . $count
                             . ' / ' . $model->getImportanceCategoryObject()->minimum()
                             . '</span>';

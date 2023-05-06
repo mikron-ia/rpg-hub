@@ -35,16 +35,40 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 'name',
                 [
+                    'attribute' => 'master_group_id',
+                    'format' => 'raw',
+                    'value' => function (Group $model) {
+                        return $model->masterGroup ?? '<em>&mdash;</em>';
+                    }
+                ],
+                [
                     'attribute' => 'visibility',
+                    'headerOptions' => ['class' => 'text-center'],
+                    'contentOptions' => ['class' => 'text-center'],
                     'value' => function (Group $model) {
                         return $model->getVisibility();
                     }
                 ],
                 [
-                    'attribute' => 'master_group_id',
+                    'attribute' => 'importance_category',
+                    'headerOptions' => ['class' => 'text-center'],
+                    'contentOptions' => ['class' => 'text-center'],
+                    'value' => function (Group $model) {
+                        return $model->getImportanceCategory();
+                    }
+                ],
+                [
+                    'label' => Yii::t('app', 'LABEL_COMPLETION'),
+                    'headerOptions' => ['class' => 'text-center'],
+                    'contentOptions' => ['class' => 'text-center'],
                     'format' => 'raw',
                     'value' => function (Group $model) {
-                        return $model->masterGroup ?? '<em>&mdash;</em>';
+                        $count = $model->descriptionPack->getUniqueDescriptionTypesCount();
+
+                        return '<span class="label ' . $model->getImportanceCategoryObject()->getClassForDescriptionCounter($count) . '">'
+                            . $count
+                            . ' / ' . $model->getImportanceCategoryObject()->minimum()
+                            . '</span>';
                     }
                 ],
                 [

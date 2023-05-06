@@ -177,4 +177,26 @@ final class ImportanceCategory
     {
         return self::MAXIMUMS[$this->importance];
     }
+
+    /**
+     * Returns class to use in labeling the description counter
+     *
+     * @param int $count
+     *
+     * @return string
+     */
+    public function getClassForDescriptionCounter(int $count): string
+    {
+        if ($count > $this->maximum()) {
+            $class = 'label-info';
+        } elseif ($count >= $this->minimum()) {
+            $class = 'label-success';
+        } elseif ($count > 0) {
+            $class = 'label-warning';
+        } else {
+            $class = 'label-danger';
+        }
+
+        return $class;
+    }
 }
