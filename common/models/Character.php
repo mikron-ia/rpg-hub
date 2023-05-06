@@ -71,28 +71,28 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
                 ['epic_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Epic::className(),
+                'targetClass' => Epic::class,
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
             [
                 ['character_sheet_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => CharacterSheet::className(),
+                'targetClass' => CharacterSheet::class,
                 'targetAttribute' => ['character_sheet_id' => 'character_sheet_id']
             ],
             [
                 ['description_pack_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => DescriptionPack::className(),
+                'targetClass' => DescriptionPack::class,
                 'targetAttribute' => ['description_pack_id' => 'description_pack_id']
             ],
             [
                 ['external_data_pack_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => ExternalDataPack::className(),
+                'targetClass' => ExternalDataPack::class,
                 'targetAttribute' => ['external_data_pack_id' => 'external_data_pack_id']
             ],
             [
@@ -182,12 +182,12 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     {
         return [
             'performedActionBehavior' => [
-                'class' => PerformedActionBehavior::className(),
+                'class' => PerformedActionBehavior::class,
                 'idName' => 'character_id',
                 'className' => 'Character',
             ],
             'timestampBehavior' => [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'createdAtAttribute' => null,
             ],
         ];
@@ -206,7 +206,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      */
     public function getEpic(): ActiveQuery
     {
-        return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+        return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -214,12 +214,12 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      */
     public function getCharacter(): ActiveQuery
     {
-        return $this->hasOne(CharacterSheet::className(), ['character_sheet_id' => 'character_sheet_id']);
+        return $this->hasOne(CharacterSheet::class, ['character_sheet_id' => 'character_sheet_id']);
     }
 
     public function getDescriptionPack(): ActiveQuery
     {
-        return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
+        return $this->hasOne(DescriptionPack::class, ['description_pack_id' => 'description_pack_id']);
     }
 
     /**
@@ -227,7 +227,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      */
     public function getExternalDataPack()
     {
-        return $this->hasOne(ExternalDataPack::className(), ['external_data_pack_id' => 'external_data_pack_id']);
+        return $this->hasOne(ExternalDataPack::class, ['external_data_pack_id' => 'external_data_pack_id']);
     }
 
     /**
@@ -235,7 +235,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      */
     public function getImportancePack()
     {
-        return $this->hasOne(ImportancePack::className(), ['importance_pack_id' => 'importance_pack_id']);
+        return $this->hasOne(ImportancePack::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
     /**
@@ -243,7 +243,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      */
     public function getSeenPack()
     {
-        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
@@ -251,7 +251,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      */
     public function getUtilityBag()
     {
-        return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
+        return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
     /**
@@ -259,7 +259,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      */
     public function getCharacterSheets()
     {
-        return $this->hasMany(CharacterSheet::className(), ['currently_delivered_character_id' => 'character_id']);
+        return $this->hasMany(CharacterSheet::class, ['currently_delivered_character_id' => 'character_id']);
     }
 
     /**
@@ -267,7 +267,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      */
     public function getGroupMemberships()
     {
-        return $this->hasMany(GroupMembership::className(), ['character_id' => 'character_id']);
+        return $this->hasMany(GroupMembership::class, ['character_id' => 'character_id']);
     }
 
     /**
@@ -275,7 +275,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      */
     public function getGroupMembershipsVisibleToUser()
     {
-        return $this->hasMany(GroupMembership::className(), ['character_id' => 'character_id'])->where([
+        return $this->hasMany(GroupMembership::class, ['character_id' => 'character_id'])->where([
             'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
         ])->orderBy('status');
     }

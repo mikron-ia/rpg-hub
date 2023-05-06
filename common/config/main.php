@@ -1,5 +1,7 @@
 <?php
 
+use yii\i18n\PhpMessageSource;
+
 $mailer = [
     'class' => 'yii\swiftmailer\Mailer',
     'viewPath' => '@common/mail',
@@ -43,15 +45,15 @@ return [
         'i18n' => [
             'translations' => [
                 'app*' => [
-                    'class' => \yii\i18n\PhpMessageSource::className(),
+                    'class' => PhpMessageSource::class,
                     'basePath' => '@common/messages',
                 ],
                 'external*' => [
-                    'class' => \yii\i18n\PhpMessageSource::className(),
+                    'class' => PhpMessageSource::class,
                     'basePath' => '@common/messages',
                 ],
                 'mail*' => [
-                    'class' => \yii\i18n\PhpMessageSource::className(),
+                    'class' => PhpMessageSource::class,
                     'basePath' => '@common/messages',
                 ],
             ],

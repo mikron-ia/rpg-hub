@@ -87,12 +87,12 @@ final class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'performedActionBehavior' => [
-                'class' => PerformedActionBehavior::className(),
+                'class' => PerformedActionBehavior::class,
                 'idName' => 'id',
                 'className' => 'User',
             ],
             'timestampBehavior' => [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
             ],
         ];
     }
@@ -475,7 +475,7 @@ final class User extends ActiveRecord implements IdentityInterface
      */
     public function getParticipants()
     {
-        return $this->hasMany(Participant::className(), ['user_id' => 'id']);
+        return $this->hasMany(Participant::class, ['user_id' => 'id']);
     }
 
     /**
@@ -483,6 +483,6 @@ final class User extends ActiveRecord implements IdentityInterface
      */
     public function getTasks()
     {
-        return $this->hasMany(Task::className(), ['user_id' => 'id']);
+        return $this->hasMany(Task::class, ['user_id' => 'id']);
     }
 }

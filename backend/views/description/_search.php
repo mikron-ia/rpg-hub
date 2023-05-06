@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'description_pack_id') ?>
 
     <?= $form->field($model, 'code')->widget(
-        kartik\select2\Select2::className(),
+        kartik\select2\Select2::class,
         [
             'data' => Description::typeNames(),
             'options' => ['multiple' => true],
@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'public_text') ?>
 
     <?= $form->field($model, 'lang')->widget(
-        kartik\select2\Select2::className(),
+        kartik\select2\Select2::class,
         [
             'data' => Language::languagesLong(),
             'options' => ['multiple' => true],
@@ -41,7 +41,7 @@ use yii\widgets\ActiveForm;
     ) ?>
 
     <?= $form->field($model, 'visibility')->widget(
-        kartik\select2\Select2::className(),
+        kartik\select2\Select2::class,
         [
             'data' => Visibility::visibilityNames(Description::allowedVisibilities()),
             'options' => ['multiple' => true],

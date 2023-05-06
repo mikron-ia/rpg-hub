@@ -20,7 +20,7 @@ final class ParameterController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'actions' => ['create', 'delete', 'update', 'view', 'move-up', 'move-down'],
@@ -30,7 +30,7 @@ final class ParameterController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],

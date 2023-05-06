@@ -53,14 +53,14 @@ class GroupMembership extends ActiveRecord implements HasVisibility
                 ['character_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Character::className(),
+                'targetClass' => Character::class,
                 'targetAttribute' => ['character_id' => 'character_id']
             ],
             [
                 ['group_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Group::className(),
+                'targetClass' => Group::class,
                 'targetAttribute' => ['group_id' => 'group_id']
             ],
         ];
@@ -94,12 +94,12 @@ class GroupMembership extends ActiveRecord implements HasVisibility
     {
         return [
             'performedActionBehavior' => [
-                'class' => PerformedActionBehavior::className(),
+                'class' => PerformedActionBehavior::class,
                 'idName' => 'group_membership_id',
                 'className' => 'GroupMembership',
             ],
             'positionBehavior' => [
-                'class' => PositionBehavior::className(),
+                'class' => PositionBehavior::class,
                 'positionAttribute' => 'position',
                 'groupAttributes' => ['group_id'],
             ],
@@ -111,7 +111,7 @@ class GroupMembership extends ActiveRecord implements HasVisibility
      */
     public function getCharacter()
     {
-        return $this->hasOne(Character::className(), ['character_id' => 'character_id']);
+        return $this->hasOne(Character::class, ['character_id' => 'character_id']);
     }
 
     /**
@@ -119,7 +119,7 @@ class GroupMembership extends ActiveRecord implements HasVisibility
      */
     public function getGroup()
     {
-        return $this->hasOne(Group::className(), ['group_id' => 'group_id']);
+        return $this->hasOne(Group::class, ['group_id' => 'group_id']);
     }
 
     /**
@@ -127,7 +127,7 @@ class GroupMembership extends ActiveRecord implements HasVisibility
      */
     public function getGroupMembershipHistories()
     {
-        return $this->hasMany(GroupMembershipHistory::className(), ['group_membership_id' => 'group_membership_id']);
+        return $this->hasMany(GroupMembershipHistory::class, ['group_membership_id' => 'group_membership_id']);
     }
 
     static public function allowedVisibilities(): array

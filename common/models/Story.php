@@ -73,14 +73,14 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
                 ['epic_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Epic::className(),
+                'targetClass' => Epic::class,
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
             [
                 ['parameter_pack_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => ParameterPack::className(),
+                'targetClass' => ParameterPack::class,
                 'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id']
             ],
         ];
@@ -147,12 +147,12 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     {
         return [
             'positionBehavior' => [
-                'class' => PositionBehavior::className(),
+                'class' => PositionBehavior::class,
                 'positionAttribute' => 'position',
                 'groupAttributes' => ['epic_id'],
             ],
             'performedActionBehavior' => [
-                'class' => PerformedActionBehavior::className(),
+                'class' => PerformedActionBehavior::class,
                 'idName' => 'story_id',
                 'className' => 'Story',
             ],
@@ -164,7 +164,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      */
     public function getEpic(): ActiveQuery
     {
-        return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+        return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -172,7 +172,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      */
     public function getParameterPack(): ActiveQuery
     {
-        return $this->hasOne(ParameterPack::className(), ['parameter_pack_id' => 'parameter_pack_id']);
+        return $this->hasOne(ParameterPack::class, ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
     /**
@@ -180,7 +180,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      */
     public function getSeenPack(): ActiveQuery
     {
-        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
@@ -188,7 +188,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      */
     public function getUtilityBag()
     {
-        return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
+        return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
     /**

@@ -42,14 +42,14 @@ class Participant extends ActiveRecord
                 ['user_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => User::className(),
+                'targetClass' => User::class,
                 'targetAttribute' => ['user_id' => 'id']
             ],
             [
                 ['epic_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Epic::className(),
+                'targetClass' => Epic::class,
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
         ];
@@ -87,7 +87,7 @@ class Participant extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**
@@ -95,7 +95,7 @@ class Participant extends ActiveRecord
      */
     public function getEpic()
     {
-        return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+        return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -103,7 +103,7 @@ class Participant extends ActiveRecord
      */
     public function getParticipantRoles()
     {
-        return $this->hasMany(ParticipantRole::className(), ['participant_id' => 'participant_id']);
+        return $this->hasMany(ParticipantRole::class, ['participant_id' => 'participant_id']);
     }
 
     /**
@@ -145,8 +145,10 @@ class Participant extends ActiveRecord
 
     /**
      * Informs whether a given user is a participant of given epic
+     *
      * @param User $user
      * @param Epic $epic
+     *
      * @return bool
      */
     static public function participantExists(User $user, Epic $epic): bool
@@ -160,9 +162,11 @@ class Participant extends ActiveRecord
 
     /**
      * Informs whether a given user has a given role in given epic
+     *
      * @param User $user
      * @param Epic $epic
      * @param string $role
+     *
      * @return bool
      */
     static public function participantHasRole(User $user, Epic $epic, string $role): bool
@@ -184,9 +188,11 @@ class Participant extends ActiveRecord
 
     /**
      * Creates Game Master participant for an epic
+     *
      * @param int $epic_id
      * @param int $user_id
      * @param string $role
+     *
      * @return bool
      */
     static public function createForEpic(int $epic_id, int $user_id, string $role): bool

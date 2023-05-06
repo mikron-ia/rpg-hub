@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\core\ImportanceCategory;
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "importance".
@@ -31,14 +32,14 @@ class Importance extends \yii\db\ActiveRecord
                 ['importance_pack_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => ImportancePack::className(),
+                'targetClass' => ImportancePack::class,
                 'targetAttribute' => ['importance_pack_id' => 'importance_pack_id']
             ],
             [
                 ['user_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => User::className(),
+                'targetClass' => User::class,
                 'targetAttribute' => ['user_id' => 'id']
             ],
         ];
@@ -55,19 +56,19 @@ class Importance extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getImportancePack()
     {
-        return $this->hasOne(ImportancePack::className(), ['importance_pack_id' => 'importance_pack_id']);
+        return $this->hasOne(ImportancePack::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**

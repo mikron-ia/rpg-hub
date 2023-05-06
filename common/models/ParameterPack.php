@@ -56,7 +56,7 @@ class ParameterPack extends ActiveRecord implements IsPack
     public function behaviors()
     {
         return [
-            ['class' => TimestampBehavior::className()],
+            ['class' => TimestampBehavior::class],
         ];
     }
 
@@ -80,7 +80,7 @@ class ParameterPack extends ActiveRecord implements IsPack
      */
     public function getEpics()
     {
-        return $this->hasMany(Epic::className(), ['parameter_pack_id' => 'parameter_pack_id']);
+        return $this->hasMany(Epic::class, ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
     /**
@@ -88,7 +88,7 @@ class ParameterPack extends ActiveRecord implements IsPack
      */
     public function getParameters()
     {
-        return $this->hasMany(Parameter::className(), ['parameter_pack_id' => 'parameter_pack_id']);
+        return $this->hasMany(Parameter::class, ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
     /**
@@ -97,7 +97,7 @@ class ParameterPack extends ActiveRecord implements IsPack
     public function getParametersOrdered()
     {
         return $this
-            ->hasMany(Parameter::className(), ['parameter_pack_id' => 'parameter_pack_id'])
+            ->hasMany(Parameter::class, ['parameter_pack_id' => 'parameter_pack_id'])
             ->orderBy(['position' => SORT_ASC]);
     }
 
@@ -106,7 +106,7 @@ class ParameterPack extends ActiveRecord implements IsPack
      */
     public function getStories()
     {
-        return $this->hasMany(Story::className(), ['parameter_pack_id' => 'parameter_pack_id']);
+        return $this->hasMany(Story::class, ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
     /**

@@ -57,7 +57,7 @@ class Parameter extends ActiveRecord implements HasVisibility
                 ['parameter_pack_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => ParameterPack::className(),
+                'targetClass' => ParameterPack::class,
                 'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id']
             ],
         ];
@@ -91,20 +91,20 @@ class Parameter extends ActiveRecord implements HasVisibility
     {
         return [
             'positionBehavior' => [
-                'class' => PositionBehavior::className(),
+                'class' => PositionBehavior::class,
                 'positionAttribute' => 'position',
                 'groupAttributes' => ['parameter_pack_id'],
             ],
             'performedActionBehavior' => [
-                'class' => PerformedActionBehavior::className(),
+                'class' => PerformedActionBehavior::class,
                 'idName' => 'parameter_id',
                 'className' => 'Parameter',
             ],
             'timestampBehavior' => [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
             ],
             'blameableBehavior' => [
-                'class' => BlameableBehavior::className(),
+                'class' => BlameableBehavior::class,
             ],
         ];
     }
@@ -168,7 +168,7 @@ class Parameter extends ActiveRecord implements HasVisibility
      */
     public function getParameterPack()
     {
-        return $this->hasOne(ParameterPack::className(), ['parameter_pack_id' => 'parameter_pack_id']);
+        return $this->hasOne(ParameterPack::class, ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
     /**

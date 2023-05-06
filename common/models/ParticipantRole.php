@@ -37,7 +37,7 @@ final class ParticipantRole extends ActiveRecord
                 ['participant_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Participant::className(),
+                'targetClass' => Participant::class,
                 'targetAttribute' => ['participant_id' => 'participant_id']
             ],
         ];
@@ -70,7 +70,7 @@ final class ParticipantRole extends ActiveRecord
      */
     public function getParticipant(): ActiveQuery
     {
-        return $this->hasOne(Participant::className(), ['participant_id' => 'participant_id']);
+        return $this->hasOne(Participant::class, ['participant_id' => 'participant_id']);
     }
 
     /**

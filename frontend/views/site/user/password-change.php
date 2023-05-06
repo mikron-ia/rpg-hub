@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'password_old')->passwordInput() ?>
             <?= $form->field($model, 'password_new')->widget(
-                PasswordInput::className(),
+                PasswordInput::class,
                 [
                     'pluginOptions' => [
                         'showMeter' => true,

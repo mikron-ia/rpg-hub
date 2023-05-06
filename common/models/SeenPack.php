@@ -61,7 +61,7 @@ class SeenPack extends ActiveRecord
      */
     public function getCharacters(): ActiveQuery
     {
-        return $this->hasMany(Character::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasMany(Character::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
@@ -69,7 +69,7 @@ class SeenPack extends ActiveRecord
      */
     public function getCharacterSheets(): ActiveQuery
     {
-        return $this->hasMany(CharacterSheet::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasMany(CharacterSheet::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
@@ -77,7 +77,7 @@ class SeenPack extends ActiveRecord
      */
     public function getEpics(): ActiveQuery
     {
-        return $this->hasMany(Epic::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasMany(Epic::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
@@ -85,7 +85,7 @@ class SeenPack extends ActiveRecord
      */
     public function getGroups(): ActiveQuery
     {
-        return $this->hasMany(Group::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasMany(Group::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
@@ -93,7 +93,7 @@ class SeenPack extends ActiveRecord
      */
     public function getRecaps(): ActiveQuery
     {
-        return $this->hasMany(Recap::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasMany(Recap::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
@@ -101,7 +101,7 @@ class SeenPack extends ActiveRecord
      */
     public function getSightings(): ActiveQuery
     {
-        return $this->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasMany(Seen::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
@@ -110,7 +110,7 @@ class SeenPack extends ActiveRecord
     public function getSightingsForNotices(): ActiveQuery
     {
         return $this
-            ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
+            ->hasMany(Seen::class, ['seen_pack_id' => 'seen_pack_id'])
             ->where(new Expression('seen_at IS NULL'));
     }
 
@@ -120,7 +120,7 @@ class SeenPack extends ActiveRecord
     public function getSightingsForSightings()
     {
         return $this
-            ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
+            ->hasMany(Seen::class, ['seen_pack_id' => 'seen_pack_id'])
             ->where(new Expression('seen_at IS NOT NULL'));
     }
 
@@ -131,7 +131,7 @@ class SeenPack extends ActiveRecord
     public function getSightingsWithStatus(string $status): ActiveQuery
     {
         return $this
-            ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
+            ->hasMany(Seen::class, ['seen_pack_id' => 'seen_pack_id'])
             ->where(['status' => $status]);
     }
 
@@ -141,18 +141,19 @@ class SeenPack extends ActiveRecord
     public function getSightingsForCurrentUser(): ActiveQuery
     {
         return $this
-            ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
+            ->hasMany(Seen::class, ['seen_pack_id' => 'seen_pack_id'])
             ->where(['user_id' => Yii::$app->user->id]);
     }
 
     /**
      * @param $userId
+     *
      * @return ActiveQuery
      */
     public function getSightingsForUser($userId): ActiveQuery
     {
         return $this
-            ->hasMany(Seen::className(), ['seen_pack_id' => 'seen_pack_id'])
+            ->hasMany(Seen::class, ['seen_pack_id' => 'seen_pack_id'])
             ->where(['user_id' => $userId]);
     }
 
@@ -161,7 +162,7 @@ class SeenPack extends ActiveRecord
      */
     public function getStories()
     {
-        return $this->hasMany(Story::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasMany(Story::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**

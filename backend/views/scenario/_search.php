@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'tag_line') ?>
 
     <?php echo $form->field($model, 'status')->widget(
-        kartik\select2\Select2::className(),
+        kartik\select2\Select2::class,
         [
             'data' => \common\models\Scenario::statusNames(),
             'options' => ['multiple' => true],

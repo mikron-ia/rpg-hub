@@ -41,7 +41,7 @@ final class PasswordChange extends Model
             ['password_old', 'validatePassword'],
             [
                 'password_new',
-                StrengthValidator::className(),
+                StrengthValidator::class,
                 'min' => 8,
                 'lower' => 2,
                 'upper' => 1,

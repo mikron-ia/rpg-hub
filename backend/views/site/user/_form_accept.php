@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <div class="col-md-6">
         <?= $form->field($model, 'password')->widget(
-            PasswordInput::className(),
+            PasswordInput::class,
             [
                 'pluginOptions' => [
                     'showMeter' => true,

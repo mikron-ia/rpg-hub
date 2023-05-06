@@ -54,7 +54,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl
                 ['epic_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Epic::className(),
+                'targetClass' => Epic::class,
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
         ];
@@ -78,12 +78,12 @@ class PointInTime extends ActiveRecord implements HasEpicControl
     {
         return [
             'positionBehavior' => [
-                'class' => PositionBehavior::className(),
+                'class' => PositionBehavior::class,
                 'positionAttribute' => 'position',
                 'groupAttributes' => ['epic_id'],
             ],
             'performedActionBehavior' => [
-                'class' => PerformedActionBehavior::className(),
+                'class' => PerformedActionBehavior::class,
                 'idName' => 'point_in_time_id',
                 'className' => 'PointInTime',
             ]
@@ -95,7 +95,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl
      */
     public function getEpic()
     {
-        return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+        return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
     static public function canUserIndexThem(): bool

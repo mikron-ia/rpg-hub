@@ -265,7 +265,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     {
         return [
             'performedActionBehavior' => [
-                'class' => PerformedActionBehavior::className(),
+                'class' => PerformedActionBehavior::class,
                 'idName' => 'epic_id',
                 'className' => 'Epic',
             ]
@@ -277,7 +277,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      */
     public function getCharacters()
     {
-        return $this->hasMany(CharacterSheet::className(), ['epic_id' => 'epic_id']);
+        return $this->hasMany(CharacterSheet::class, ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -285,7 +285,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      */
     public function getParameterPack()
     {
-        return $this->hasOne(ParameterPack::className(), ['parameter_pack_id' => 'parameter_pack_id']);
+        return $this->hasOne(ParameterPack::class, ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
     /**
@@ -293,7 +293,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      */
     public function getUtilityBag()
     {
-        return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
+        return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
     /**
@@ -301,7 +301,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      */
     public function getGames()
     {
-        return $this->hasMany(Game::className(), ['epic_id' => 'epic_id']);
+        return $this->hasMany(Game::class, ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -309,7 +309,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      */
     public function getPointsInTime()
     {
-        return $this->hasMany(PointInTime::className(), ['epic_id' => 'epic_id']);
+        return $this->hasMany(PointInTime::class, ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -317,7 +317,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      */
     public function getGroups()
     {
-        return $this->hasMany(Group::className(), ['epic_id' => 'epic_id']);
+        return $this->hasMany(Group::class, ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -341,7 +341,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      */
     public function getParticipants()
     {
-        return $this->hasMany(Participant::className(), ['epic_id' => 'epic_id']);
+        return $this->hasMany(Participant::class, ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -349,7 +349,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      */
     public function getPeople()
     {
-        return $this->hasMany(Character::className(), ['epic_id' => 'epic_id']);
+        return $this->hasMany(Character::class, ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -357,7 +357,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      */
     public function getRecaps()
     {
-        return $this->hasMany(Recap::className(), ['epic_id' => 'epic_id']);
+        return $this->hasMany(Recap::class, ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -365,7 +365,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      */
     public function getSeenPack(): ActiveQuery
     {
-        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
@@ -373,7 +373,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      */
     public function getStories()
     {
-        return $this->hasMany(Story::className(), ['epic_id' => 'epic_id']);
+        return $this->hasMany(Story::class, ['epic_id' => 'epic_id']);
     }
 
     /**

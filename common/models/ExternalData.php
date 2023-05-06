@@ -42,8 +42,8 @@ class ExternalData extends ActiveRecord implements HasVisibility
     public function behaviors()
     {
         return [
-            ['class' => TimestampBehavior::className()],
-            ['class' => BlameableBehavior::className()],
+            ['class' => TimestampBehavior::class],
+            ['class' => BlameableBehavior::class],
         ];
     }
 
@@ -70,7 +70,7 @@ class ExternalData extends ActiveRecord implements HasVisibility
      */
     public function getExternalDataPack(): ActiveQuery
     {
-        return $this->hasOne(ExternalDataPack::className(), ['external_data_pack_id' => 'external_data_pack_id']);
+        return $this->hasOne(ExternalDataPack::class, ['external_data_pack_id' => 'external_data_pack_id']);
     }
 
     static public function allowedVisibilities(): array

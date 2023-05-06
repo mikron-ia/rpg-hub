@@ -41,7 +41,7 @@ class Seen extends ActiveRecord
                 ['seen_pack_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => SeenPack::className(),
+                'targetClass' => SeenPack::class,
                 'targetAttribute' => ['seen_pack_id' => 'seen_pack_id']
             ],
         ];
@@ -65,7 +65,7 @@ class Seen extends ActiveRecord
      */
     public function getSeenPack(): ActiveQuery
     {
-        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
@@ -73,7 +73,7 @@ class Seen extends ActiveRecord
      */
     public function getUser(): ActiveQuery
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**

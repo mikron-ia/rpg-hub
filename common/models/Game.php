@@ -130,12 +130,12 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
     {
         return [
             'positionBehavior' => [
-                'class' => PositionBehavior::className(),
+                'class' => PositionBehavior::class,
                 'positionAttribute' => 'position',
                 'groupAttributes' => ['epic_id'],
             ],
             'performedActionBehavior' => [
-                'class' => PerformedActionBehavior::className(),
+                'class' => PerformedActionBehavior::class,
                 'idName' => 'game_id',
                 'className' => 'Game',
             ],
@@ -147,7 +147,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
      */
     public function getEpic()
     {
-        return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+        return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
     static public function statusNames(): array
@@ -229,7 +229,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
      */
     public function getUtilityBag()
     {
-        return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
+        return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
     static public function canUserIndexThem(): bool

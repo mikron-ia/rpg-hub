@@ -56,14 +56,14 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
                 ['description_pack_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => DescriptionPack::className(),
+                'targetClass' => DescriptionPack::class,
                 'targetAttribute' => ['description_pack_id' => 'description_pack_id']
             ],
             [
                 ['epic_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Epic::className(),
+                'targetClass' => Epic::class,
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
         ];
@@ -100,7 +100,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
      */
     public function getDescriptionPack(): ActiveQuery
     {
-        return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
+        return $this->hasOne(DescriptionPack::class, ['description_pack_id' => 'description_pack_id']);
     }
 
     /**
@@ -108,7 +108,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
      */
     public function getEpic(): ActiveQuery
     {
-        return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+        return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
     static public function allowedDescriptionTypes(): array

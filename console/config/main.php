@@ -22,7 +22,7 @@ return [
         ],
         'i18n' => [
             'translations' => [
-                'class' => \yii\i18n\PhpMessageSource::className(),
+                'class' => \yii\i18n\PhpMessageSource::class,
                 'basePath' => '@common/messages',
             ]
         ],

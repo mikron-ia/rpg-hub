@@ -37,7 +37,7 @@ class Flag extends ActiveRecord
                 ['utility_bag_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => UtilityBag::className(),
+                'targetClass' => UtilityBag::class,
                 'targetAttribute' => ['utility_bag_id' => 'utility_bag_id']
             ],
         ];
@@ -58,7 +58,7 @@ class Flag extends ActiveRecord
      */
     public function getUtilityBag()
     {
-        return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
+        return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
     /**

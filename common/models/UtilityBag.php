@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -51,11 +52,11 @@ class UtilityBag extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getFlags()
     {
-        return $this->hasMany(Flag::className(), ['utility_bag_id' => 'utility_bag_id']);
+        return $this->hasMany(Flag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
     public function setFlag(string $flag): bool

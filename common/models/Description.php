@@ -120,7 +120,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
                 ['description_pack_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => DescriptionPack::className(),
+                'targetClass' => DescriptionPack::class,
                 'targetAttribute' => ['description_pack_id' => 'description_pack_id']
             ],
             [
@@ -214,20 +214,20 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     {
         return [
             'positionBehavior' => [
-                'class' => PositionBehavior::className(),
+                'class' => PositionBehavior::class,
                 'positionAttribute' => 'position',
                 'groupAttributes' => ['description_pack_id'],
             ],
             'performedActionBehavior' => [
-                'class' => PerformedActionBehavior::className(),
+                'class' => PerformedActionBehavior::class,
                 'idName' => 'description_id',
                 'className' => 'Description',
             ],
             'timestampBehavior' => [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
             ],
             'blameableBehavior' => [
-                'class' => BlameableBehavior::className(),
+                'class' => BlameableBehavior::class,
             ],
         ];
     }
@@ -313,7 +313,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      */
     public function getCreatedBy(): ActiveQuery
     {
-        return $this->hasOne(User::className(), ['id' => 'created_by']);
+        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
@@ -321,7 +321,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      */
     public function getDescriptionPack(): ActiveQuery
     {
-        return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
+        return $this->hasOne(DescriptionPack::class, ['description_pack_id' => 'description_pack_id']);
     }
 
     public function getPointInTimeStart(): ActiveQuery
@@ -339,7 +339,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
      */
     public function getUpdatedBy(): ActiveQuery
     {
-        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
     /**

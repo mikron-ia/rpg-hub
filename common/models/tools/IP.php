@@ -4,6 +4,7 @@ namespace common\models\tools;
 
 use common\models\PerformedAction;
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -47,11 +48,11 @@ class IP extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPerformedActions()
     {
-        return $this->hasMany(PerformedAction::className(), ['ip_id' => 'id']);
+        return $this->hasMany(PerformedAction::class, ['ip_id' => 'id']);
     }
 
     /**

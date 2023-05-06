@@ -23,7 +23,7 @@ class GroupMembershipController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'actions' => ['create', 'update', 'view', 'move-up', 'move-down', 'history'],
@@ -33,7 +33,7 @@ class GroupMembershipController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],

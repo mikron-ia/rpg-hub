@@ -45,7 +45,7 @@ class PerformedAction extends ActiveRecord
     {
         return [
             [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'performed_at',
                 'updatedAtAttribute' => false,
             ],
@@ -75,7 +75,7 @@ class PerformedAction extends ActiveRecord
                 ['user_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => User::className(),
+                'targetClass' => User::class,
                 'targetAttribute' => ['user_id' => 'id']
             ],
         ];
@@ -98,7 +98,7 @@ class PerformedAction extends ActiveRecord
      */
     public function getUser(): ActiveQuery
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**
@@ -106,7 +106,7 @@ class PerformedAction extends ActiveRecord
      */
     public function getIp()
     {
-        return $this->hasOne(IP::className(), ['id' => 'ip_id']);
+        return $this->hasOne(IP::class, ['id' => 'ip_id']);
     }
 
     /**
@@ -114,7 +114,7 @@ class PerformedAction extends ActiveRecord
      */
     public function getUserAgent()
     {
-        return $this->hasOne(UserAgent::className(), ['id' => 'user_agent_id']);
+        return $this->hasOne(UserAgent::class, ['id' => 'user_agent_id']);
     }
 
     /**

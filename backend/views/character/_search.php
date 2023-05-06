@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
     <?php echo $form->field($model, 'tagline') ?>
 
     <?php echo $form->field($model, 'visibility')->widget(
-        kartik\select2\Select2::className(),
+        kartik\select2\Select2::class,
         [
             'data' => Visibility::visibilityNames(Character::allowedVisibilities()),
             'options' => ['multiple' => true],

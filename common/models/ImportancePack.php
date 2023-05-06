@@ -49,7 +49,7 @@ class ImportancePack extends ActiveRecord
      */
     public function getCharacters()
     {
-        return $this->hasMany(Character::className(), ['importance_pack_id' => 'importance_pack_id']);
+        return $this->hasMany(Character::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
     /**
@@ -57,7 +57,7 @@ class ImportancePack extends ActiveRecord
      */
     public function getGroups()
     {
-        return $this->hasMany(Group::className(), ['importance_pack_id' => 'importance_pack_id']);
+        return $this->hasMany(Group::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
     /**
@@ -65,7 +65,7 @@ class ImportancePack extends ActiveRecord
      */
     public function getImportances()
     {
-        return $this->hasMany(Importance::className(), ['importance_pack_id' => 'importance_pack_id']);
+        return $this->hasMany(Importance::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
     /**

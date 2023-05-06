@@ -178,7 +178,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     {
         return [
             'performedActionBehavior' => [
-                'class' => PerformedActionBehavior::className(),
+                'class' => PerformedActionBehavior::class,
                 'idName' => 'group_id',
                 'className' => 'Group',
             ]
@@ -187,7 +187,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
 
     public function getDescriptionPack(): ActiveQuery
     {
-        return $this->hasOne(DescriptionPack::className(), ['description_pack_id' => 'description_pack_id']);
+        return $this->hasOne(DescriptionPack::class, ['description_pack_id' => 'description_pack_id']);
     }
 
     /**
@@ -195,7 +195,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
      */
     public function getExternalDataPack()
     {
-        return $this->hasOne(ExternalDataPack::className(), ['external_data_pack_id' => 'external_data_pack_id']);
+        return $this->hasOne(ExternalDataPack::class, ['external_data_pack_id' => 'external_data_pack_id']);
     }
 
     /**
@@ -203,7 +203,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
      */
     public function getEpic()
     {
-        return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+        return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -211,7 +211,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
      */
     public function getImportancePack()
     {
-        return $this->hasOne(ImportancePack::className(), ['importance_pack_id' => 'importance_pack_id']);
+        return $this->hasOne(ImportancePack::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
     /**
@@ -219,7 +219,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
      */
     public function getMasterGroup()
     {
-        return $this->hasOne(Group::className(), ['group_id' => 'master_group_id']);
+        return $this->hasOne(Group::class, ['group_id' => 'master_group_id']);
     }
 
     /**
@@ -227,7 +227,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
      */
     public function getSubGroups()
     {
-        return $this->hasMany(Group::className(), ['master_group_id' => 'group_id']);
+        return $this->hasMany(Group::class, ['master_group_id' => 'group_id']);
     }
 
     /**
@@ -235,7 +235,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
      */
     public function getSeenPack()
     {
-        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
@@ -243,7 +243,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
      */
     public function getUtilityBag()
     {
-        return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
+        return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
     /**
@@ -251,7 +251,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
      */
     public function getGroupCharacterMemberships()
     {
-        return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id']);
+        return $this->hasMany(GroupMembership::class, ['group_id' => 'group_id']);
     }
 
     /**
@@ -259,7 +259,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
      */
     public function getGroupCharacterMembershipsOrderedByPosition()
     {
-        return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id'])->orderBy('position ASC');
+        return $this->hasMany(GroupMembership::class, ['group_id' => 'group_id'])->orderBy('position ASC');
     }
 
     /**
@@ -267,7 +267,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
      */
     public function getGroupCharacterMembershipsActive()
     {
-        return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id'])->where([
+        return $this->hasMany(GroupMembership::class, ['group_id' => 'group_id'])->where([
             'status' => GroupMembership::STATUS_ACTIVE,
             'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
         ])->orderBy('position ASC');
@@ -278,7 +278,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
      */
     public function getGroupCharacterMembershipsPast()
     {
-        return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id'])->where([
+        return $this->hasMany(GroupMembership::class, ['group_id' => 'group_id'])->where([
             'status' => GroupMembership::STATUS_PAST,
             'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
         ])->orderBy('position ASC');
@@ -289,7 +289,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
      */
     public function getGroupCharacterMembershipsPassive()
     {
-        return $this->hasMany(GroupMembership::className(), ['group_id' => 'group_id'])->where([
+        return $this->hasMany(GroupMembership::class, ['group_id' => 'group_id'])->where([
             'status' => GroupMembership::STATUS_PASSIVE,
             'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
         ])->orderBy('position ASC');

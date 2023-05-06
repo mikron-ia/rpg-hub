@@ -46,7 +46,7 @@ class ExternalDataPack extends ActiveRecord implements IsPack
     public function behaviors()
     {
         return [
-            ['class' => TimestampBehavior::className()],
+            ['class' => TimestampBehavior::class],
         ];
     }
 

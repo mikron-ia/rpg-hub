@@ -7,7 +7,7 @@ use common\models\User;
 use common\models\UserInvitation;
 use kartik\password\StrengthValidator;
 use Yii;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use yii\base\Model;
 
 /**
@@ -33,19 +33,19 @@ final class UserAcceptForm extends Model
         $this->invitation = UserInvitation::findByToken($token);
 
         if (!$this->invitation) {
-            throw new InvalidParamException(Yii::t('app', 'USER_INVITATION_NOT_FOUND'));
+            throw new InvalidArgumentException(Yii::t('app', 'USER_INVITATION_NOT_FOUND'));
         }
 
         if (!$this->invitation->isInvitationUnused()) {
-            throw new InvalidParamException(Yii::t('app', 'USER_INVITATION_USED'));
+            throw new InvalidArgumentException(Yii::t('app', 'USER_INVITATION_USED'));
         }
 
         if (!$this->invitation->isInvitationValid()) {
-            throw new InvalidParamException(Yii::t('app', 'USER_INVITATION_NO_LONGER_VALID'));
+            throw new InvalidArgumentException(Yii::t('app', 'USER_INVITATION_NO_LONGER_VALID'));
         }
 
         if (!$this->invitation->isInvitationUnRevoked()) {
-            throw new InvalidParamException(Yii::t('app', 'USER_INVITATION_HAS_BEEN_REVOKED'));
+            throw new InvalidArgumentException(Yii::t('app', 'USER_INVITATION_HAS_BEEN_REVOKED'));
         }
 
         $this->invitation->markAsOpened();
@@ -99,7 +99,7 @@ final class UserAcceptForm extends Model
             ['password', 'required'],
             [
                 'password',
-                StrengthValidator::className(),
+                StrengthValidator::class,
                 'min' => 8,
                 'lower' => 2,
                 'upper' => 1,

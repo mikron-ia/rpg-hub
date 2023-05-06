@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'user_id')->widget(
-        kartik\select2\Select2::className(),
+        kartik\select2\Select2::class,
         [
             'data' => User::getFullUserList(),
             'options' => ['multiple' => true],
@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'class') ?>
 
     <?= $form->field($model, 'operation')->widget(
-        kartik\select2\Select2::className(),
+        kartik\select2\Select2::class,
         [
             'data' => PerformedAction::actionNames(),
             'options' => ['multiple' => true],

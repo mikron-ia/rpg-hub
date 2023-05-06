@@ -22,7 +22,7 @@ class PointInTimeController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'actions' => ['create', 'index', 'update', 'view', 'delete', 'move-up', 'move-down'],
@@ -32,7 +32,7 @@ class PointInTimeController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],

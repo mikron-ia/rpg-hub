@@ -43,7 +43,7 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
                 ['group_membership_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => GroupMembership::className(),
+                'targetClass' => GroupMembership::class,
                 'targetAttribute' => ['group_membership_id' => 'group_membership_id']
             ],
         ];
@@ -68,7 +68,7 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
     {
         return [
             'timestampBehavior' => [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'updatedAtAttribute' => null,
             ],
         ];
@@ -79,7 +79,7 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
      */
     public function getGroupMembership()
     {
-        return $this->hasOne(GroupMembership::className(), ['group_membership_id' => 'group_membership_id']);
+        return $this->hasOne(GroupMembership::class, ['group_membership_id' => 'group_membership_id']);
     }
 
     /**

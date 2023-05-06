@@ -53,7 +53,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
                 ['description_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Description::className(),
+                'targetClass' => Description::class,
                 'targetAttribute' => ['description_id' => 'description_id']
             ],
             [
@@ -105,7 +105,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
     {
         return [
             'timestampBehavior' => [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'updatedAtAttribute' => null,
             ],
         ];
@@ -159,7 +159,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
      */
     public function getDescription()
     {
-        return $this->hasOne(Description::className(), ['description_id' => 'description_id']);
+        return $this->hasOne(Description::class, ['description_id' => 'description_id']);
     }
 
     public function getPointInTimeStart(): ActiveQuery

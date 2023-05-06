@@ -52,14 +52,14 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
                 ['epic_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Epic::className(),
+                'targetClass' => Epic::class,
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
             [
                 ['point_in_time_id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => PointInTime::className(),
+                'targetClass' => PointInTime::class,
                 'targetAttribute' => ['point_in_time_id' => 'point_in_time_id']
             ],
         ];
@@ -118,12 +118,12 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     {
         return [
             'positionBehavior' => [
-                'class' => PositionBehavior::className(),
+                'class' => PositionBehavior::class,
                 'positionAttribute' => 'position',
                 'groupAttributes' => ['epic_id'],
             ],
             'performedActionBehavior' => [
-                'class' => PerformedActionBehavior::className(),
+                'class' => PerformedActionBehavior::class,
                 'idName' => 'recap_id',
                 'className' => 'Recap',
             ]
@@ -144,7 +144,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
      */
     public function getEpic(): ActiveQuery
     {
-        return $this->hasOne(Epic::className(), ['epic_id' => 'epic_id']);
+        return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -162,7 +162,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
      */
     public function getPointInTime(): ActiveQuery
     {
-        return $this->hasOne(PointInTime::className(), ['point_in_time_id' => 'point_in_time_id']);
+        return $this->hasOne(PointInTime::class, ['point_in_time_id' => 'point_in_time_id']);
     }
 
     /**
@@ -170,7 +170,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
      */
     public function getSeenPack(): ActiveQuery
     {
-        return $this->hasOne(SeenPack::className(), ['seen_pack_id' => 'seen_pack_id']);
+        return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
@@ -178,7 +178,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
      */
     public function getUtilityBag()
     {
-        return $this->hasOne(UtilityBag::className(), ['utility_bag_id' => 'utility_bag_id']);
+        return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
     public function getSimpleDataForApi()

@@ -47,7 +47,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
     public function behaviors()
     {
         return [
-            ['class' => TimestampBehavior::className()],
+            ['class' => TimestampBehavior::class],
         ];
     }
 
@@ -56,7 +56,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
      */
     public function getDescriptions(): ActiveQuery
     {
-        return $this->hasMany(Description::className(), ['description_pack_id' => 'description_pack_id']);
+        return $this->hasMany(Description::class, ['description_pack_id' => 'description_pack_id']);
     }
 
     /**
@@ -64,7 +64,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
      */
     public function getPeople(): ActiveQuery
     {
-        return $this->hasMany(Character::className(), ['description_pack_id' => 'description_pack_id']);
+        return $this->hasMany(Character::class, ['description_pack_id' => 'description_pack_id']);
     }
 
 

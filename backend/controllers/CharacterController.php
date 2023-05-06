@@ -30,7 +30,7 @@ final class CharacterController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'actions' => ['create', 'create-sheet', 'index', 'update', 'view', 'load-data'],
@@ -40,7 +40,7 @@ final class CharacterController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'create-sheet' => ['POST'],
                     'delete' => ['POST'],
