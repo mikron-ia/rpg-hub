@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Character;
 use common\models\core\Visibility;
 use common\models\GroupMembership;
 use yii\helpers\Html;
@@ -8,7 +9,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\GroupMembership */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $charactersForMembership \common\models\Character[] */
+/* @var $charactersForMembership Character[] */
 ?>
 
 <div class="group-membership-form">
@@ -31,12 +32,12 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'short_text')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-12">
-        <?= $form->field($model, 'public_text')->textarea(['rows' => 8]) ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'public_text')->textarea(['rows' => 4]) ?>
     </div>
 
-    <div class="col-md-12">
-        <?= $form->field($model, 'private_text')->textarea(['rows' => 8]) ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'private_text')->textarea(['rows' => 4]) ?>
     </div>
 
     <div class="form-group text-right">
