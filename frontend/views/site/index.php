@@ -34,8 +34,8 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                     'itemOptions' => ['class' => 'item'],
                     'itemView' => function ($model, $key, $index, $widget) {
                         return $this->render(
-                            '../site/_recap_box',
-                            ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                            '../recap/_site_box',
+                            ['model' => $model->recap, 'key' => $key, 'index' => $index, 'widget' => $widget]
                         );
                     },
                 ]) ?>
