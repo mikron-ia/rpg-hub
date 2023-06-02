@@ -34,6 +34,11 @@ if ($epic) {
                     ['story/index'],
                     ['class' => 'btn btn-lg btn-primary']
                 ); ?>
+                <?= Html::a(
+                    Yii::t('app', 'BUTTON_RECAPS'),
+                    ['recap/index'],
+                    ['class' => 'btn btn-lg btn-primary']
+                ); ?>
             </div>
 
             <div class="btn-group btn-group-lg">
@@ -80,9 +85,16 @@ if ($epic) {
 
         <?php if ($epic): ?>
             <div>
-                <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
-                    <?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?>
-                </h3>
+                <div class="buttoned-header">
+                    <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
+                        <?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?>
+                    </h3>
+                    <?= Html::a(
+                        Yii::t('app', 'BUTTON_RECAP_VIEW_ALL'),
+                        ['recap/index'],
+                        ['class' => 'btn btn-primary']
+                    ); ?>
+                </div>
                 <div>
                     <?php if ($recap) {
                         if ($recap->point_in_time_id) {
@@ -106,8 +118,11 @@ if ($epic) {
                     <h3 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
                         <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
                     </h3>
-                    <?= Html::a(Yii::t('app', 'BUTTON_STORY_VIEW_ALL'), ['story/index'],
-                        ['class' => 'btn btn-primary']); ?>
+                    <?= Html::a(
+                        Yii::t('app', 'BUTTON_STORY_VIEW_ALL'),
+                        ['story/index'],
+                        ['class' => 'btn btn-primary']
+                    ); ?>
                 </div>
                 <?= ListView::widget([
                     'dataProvider' => $stories,

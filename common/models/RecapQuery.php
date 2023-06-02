@@ -12,6 +12,17 @@ use yii\data\ArrayDataProvider;
  */
 final class RecapQuery extends Recap
 {
+    /**
+     * @var int
+     */
+    private $pageCount;
+
+    public function __construct($pagination = 4, array $config = [])
+    {
+        $this->pageCount = $pagination;
+        parent::__construct($config);
+    }
+
     public function rules()
     {
         return [
@@ -48,7 +59,7 @@ final class RecapQuery extends Recap
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => ['pageSize' => 20],
+            'pagination' => ['pageSize' => $this->pageCount],
             'sort' => ['defaultOrder' => ['position' => SORT_DESC]]
         ]);
 

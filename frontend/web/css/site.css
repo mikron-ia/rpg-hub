@@ -407,6 +407,13 @@ a:focus {
     font-weight: bold;
 }
 
+.recap-box-time-view {
+    text-align: left;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
 .recap-box-sessions {
     text-align: left;
     font-family: "Courier New", Courier, monospace;

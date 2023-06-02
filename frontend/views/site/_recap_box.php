@@ -6,7 +6,7 @@ use yii\helpers\Html;
 
 ?>
 
-<div id="session-<?= $model->recap_id; ?>">
+<div id="recap-<?= $model->recap_id; ?>">
     <p class="recap-box-time">
         <?= Html::a(
             $model->epic->name,

@@ -20,7 +20,8 @@ use yii\helpers\Html;
         <div class="collapse" id="session-notes-<?php echo $model->game_id; ?>">
             <?php if (!empty($model->recap)): ?>
                 <p>
-                    <?= '<strong>' . Yii::t('app', 'LABEL_RECAP') . ': </strong>' . $model->recap->getNameWithTime(); ?>
+                    <strong><?= Yii::t('app', 'LABEL_RECAP') ?>: </strong>
+                    <?= Html::a($model->recap->getNameWithTime(), ['recap/view', 'key' => $model->recap->key]); ?>
                 </p>
             <?php endif; ?>
 
