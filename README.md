@@ -19,7 +19,7 @@ A system for role-playing game story/campaign/epic (names vary from system to sy
     1. For production: `./init --env=Production --overwrite=All`
 1. Run `./yii migrate/up` if this is a fresh database installation; `data.sql` will be automatically loaded if present; skip this step if you connect to existing, configured database
 1. Run `./yii rbac/init` if this is fresh database installation to set up rights
-1. Run `./yii rbac/set-administrator` if this is fresh database installation to set up rights; this will give administrator rights to user with ID == 1.
+1. [on empty database] Run `./yii install/add-administrator` to add administrator user
 1. [optional] Set-up cron tasks with content of `scripts/`
 1. Enjoy the hub! Entry points are:
     1. `backend/web` for back end
@@ -30,4 +30,3 @@ A system for role-playing game story/campaign/epic (names vary from system to sy
 1. Ensure your `.env` file is up to date, based on `.env.example` 
 1. Run migrations
 1. Run `./yii rbac/v*` for proper version
-

@@ -285,6 +285,8 @@ class RbacController extends Controller
 
     /**
      * Sets administrator role to used with ID == 1. Intended for development and production initialisation.
+     *
+     * @deprecated Use `install/add-administrator` instead
      */
     public function actionSetAdministrator()
     {
