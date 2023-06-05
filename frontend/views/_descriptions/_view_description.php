@@ -6,6 +6,8 @@
 $pointInTimeStartExists = isset($model->point_in_time_start_id);
 $pointInTimeEndExists = isset($model->point_in_time_end_id);
 
+$displayPointsInTime = false;
+
 if ($pointInTimeStartExists || $pointInTimeEndExists) {
     if ($pointInTimeStartExists && $pointInTimeEndExists) {
         $message = Yii::t(
@@ -22,15 +24,12 @@ if ($pointInTimeStartExists || $pointInTimeEndExists) {
         $message = Yii::t('app', 'DESCRIPTION_VALID_END {end}', ['end' => $model->pointInTimeEnd->name]);
         $position = $model->pointInTimeEnd->position;
         $displayPointsInTime = true;
-    } else {
-        $displayPointsInTime = false;
     }
 }
 
 ?>
 
 <div class="col-md-6">
-
     <h2><?= $model->getTypeName(); ?></h2>
 
     <?php if ($displayPointsInTime): ?>
@@ -57,5 +56,4 @@ if ($pointInTimeStartExists || $pointInTimeEndExists) {
             <?= $model->getPrivateFormatted(); ?>
         </div>
     <?php endif; ?>
-
 </div>
