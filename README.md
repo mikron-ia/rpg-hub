@@ -3,6 +3,12 @@
 A system for role-playing game story/campaign/epic (names vary from system to system) management. This is an attempt on
 an integrated system that would be a help in that process.
 
+## Licensing
+
+The project's main license is `GNU General Public License v3.0` - see the `LICENSE.md` file for the text. The `yii2`
+framework is `BSD 3-Clause "New" or "Revised" License`; particular libraries can have their own licenses, see
+attribution section of this file for details.
+
 ## Background
 
 [Role-playing games](https://en.wikipedia.org/wiki/Role-playing_game) are a very wide category, ranging from very
@@ -89,5 +95,19 @@ The hub allows handling of the following:
 Other components serve only auxiliary roles and are not directly editable.
 
 Use of most components is optional; for example, an `Epic` can be conceivably run with use of `Recap`s and `Game`s only
-- or just with `Character` gallery. There are, of course, limits to that - for example,`Group` functionality is limited
+or just with `Character` gallery. There are, of course, limits to that - for example,`Group` functionality is limited
 without any `Character`s. Still, most elements can be used entirely independently of each other.
+
+## Attributions
+
+What follows is a list of libraries used in the project; only those included directly are listed.
+
+All the following libraries are licensed under `BSD-3-Clause license` or a derivative, unless stated otherwise.
+
+* [The yii framework](https://github.com/yiisoft/yii2) is the basis of this project
+    * this includes [yii2-bootstrap](https://github.com/yiisoft/yii2-bootstrap), [yii2-swiftmailer](https://github.com/yiisoft/yii2-swiftmailer), [yii2-debug](https://github.com/yiisoft/yii2-debug), and [yii2-gii](https://github.com/yiisoft/yii2-gii)
+* Tools made by [Kartik Visweswaran](https://github.com/kartik-v/)
+    * those include [yii2-krajee-base](https://github.com/kartik-v/yii2-krajee-base), [yii2-widget-select2](https://github.com/kartik-v/yii2-widget-select2), [yii2-password](https://github.com/kartik-v/yii2-password)
+      , [strength-meter](https://github.com/kartik-v/strength-meter), and [yii2-widget-datepicker](https://github.com/kartik-v/yii2-widget-datepicker)
+* [phpunit](https://github.com/sebastianbergmann/phpunit)
+* [phpdotenv](https://github.com/vlucas/phpdotenv)
