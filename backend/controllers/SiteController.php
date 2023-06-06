@@ -33,7 +33,7 @@ final class SiteController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['about', 'login', 'error'],
                         'allow' => true,
                     ],
                     [
@@ -68,6 +68,14 @@ final class SiteController extends Controller
                 'class' => 'yii\web\ErrorAction',
             ],
         ];
+    }
+
+    /**
+     * Displays the about page
+     */
+    public function actionAbout(): string
+    {
+        return $this->render('about');
     }
 
     /**

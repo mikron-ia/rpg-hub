@@ -284,6 +284,7 @@ return [
     'FLAG_TYPE' => 'Type',
     'FLAG_TYPE_CHANGED' => 'changed',
     'FLAG_TYPE_IMPORTANCE_RECALCULATE' => 'recalculate importance',
+    'FOOTER_ABOUT_LINK' => 'About',
     'FRONTPAGE_IC' => 'In-character section',
     'FRONTPAGE_IC_TITLE_TEXT' => 'Things that happened in-epic / in-character',
     'FRONTPAGE_NEWS' => 'News',

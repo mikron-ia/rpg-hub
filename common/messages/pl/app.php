@@ -284,6 +284,7 @@ return [
     'FLAG_TYPE' => 'Typ',
     'FLAG_TYPE_CHANGED' => 'obiekt zmieniony',
     'FLAG_TYPE_IMPORTANCE_RECALCULATE' => 'ważność do przeliczenia',
+    'FOOTER_ABOUT_LINK' => 'O stronie',
     'FRONTPAGE_IC' => 'Sekcja IC',
     'FRONTPAGE_IC_TITLE_TEXT' => 'Rzeczy dziejące się w ramach kampanii',
     'FRONTPAGE_NEWS' => 'Wieści',

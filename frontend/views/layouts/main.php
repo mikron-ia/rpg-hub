@@ -4,8 +4,9 @@
 
 /* @var $content string */
 
-use common\widgets\Alert;
 use frontend\assets\AppAsset;
+use common\components\FooterHelper;
+use common\widgets\Alert;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\helpers\Html;
@@ -132,9 +133,8 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Mikron <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-left"><?= FooterHelper::copyright() ?></p>
+        <p class="pull-right"><?= FooterHelper::powered() ?></p>
     </div>
 </footer>
 

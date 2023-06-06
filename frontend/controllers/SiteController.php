@@ -54,7 +54,7 @@ final class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['accept'],
+                        'actions' => ['about', 'accept'],
                         'allow' => true,
                     ],
                     [
@@ -84,6 +84,14 @@ final class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+    /**
+     * Displays the about page
+     */
+    public function actionAbout(): string
+    {
+        return $this->render('about');
     }
 
     /**
