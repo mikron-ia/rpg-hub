@@ -16,7 +16,7 @@ class FooterHelper
     public static function powered(): string
     {
         return Html::a(
-            Yii::t('app', 'FOOTER_ABOUT_LINK'),
+            Yii::t('app', 'LABEL_ABOUT'),
             ['site/about']
         );
     }

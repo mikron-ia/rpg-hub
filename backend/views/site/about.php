@@ -1,8 +1,8 @@
 <?php
 
-$this->title = Yii::t('app', 'FOOTER_ABOUT_LINK');
+$this->title = Yii::t('app', 'LABEL_ABOUT');
 
-?>
+?>a
 
 <h1>About</h1>
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\controllers;
 
 use common\models\Epic;
@@ -14,9 +15,9 @@ use Yii;
 use yii\base\Exception;
 use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\web\Cookie;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
@@ -37,7 +38,14 @@ final class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'password-change', 'set-epic', 'set-epic-in-silence', 'settings'],
+                        'actions' => [
+                            'logout',
+                            'markdown-help',
+                            'password-change',
+                            'set-epic',
+                            'set-epic-in-silence',
+                            'settings'
+                        ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -146,6 +154,14 @@ final class SiteController extends Controller
     }
 
     /**
+     * Displays the markdown instructions
+     */
+    public function actionMarkdownHelp(): string
+    {
+        return $this->render('markdownHelp');
+    }
+
+    /**
      * Password change action
      *
      * @return mixed
@@ -182,7 +198,7 @@ final class SiteController extends Controller
      * Selects Epic
      * @return Response
      */
-    public function actionSetEpic():Response
+    public function actionSetEpic(): Response
     {
         $chosenEpicKey = Yii::$app->request->post('epic');
         $this->run('site/set-epic-in-silence', ['epicKey' => $chosenEpicKey]);

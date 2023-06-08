@@ -58,6 +58,8 @@ AppAsset::register($this);
         $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_EPIC_MANAGEMENT'), 'url' => ['/epic/manage']];
     }
 
+    $auxiliaryItems[] = ['label' => Yii::t('app', 'LABEL_MARKDOWN_HELP'), 'url' => ['/site/markdown-help']];
+    $auxiliaryItems[] = ['label' => Yii::t('app', 'LABEL_ABOUT'), 'url' => ['/site/about']];
     $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_GOTO_FRONTEND'), 'url' => Yii::$app->params['uri.front']];
 
     $menuItems = [];
