@@ -18,6 +18,8 @@ final class RecapController extends Controller
 {
     use EpicAssistance;
 
+    private const POSITIONS_PER_PAGE = 16;
+
     public function behaviors()
     {
         return [
@@ -62,7 +64,7 @@ final class RecapController extends Controller
             Recap::throwExceptionAboutIndex();
         }
 
-        $searchModel = new RecapQuery();
+        $searchModel = new RecapQuery(self::POSITIONS_PER_PAGE);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
