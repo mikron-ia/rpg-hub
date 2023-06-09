@@ -3,21 +3,21 @@
 namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
+use common\models\Character;
+use common\models\CharacterQuery;
 use common\models\CharacterSheet;
 use common\models\core\Visibility;
 use common\models\EpicQuery;
 use common\models\Parameter;
 use common\models\tools\Retriever;
 use Yii;
-use common\models\Character;
-use common\models\CharacterQuery;
 use yii\base\Exception;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * CharacterController implements the CRUD actions for Character model.
@@ -25,6 +25,8 @@ use yii\filters\VerbFilter;
 final class CharacterController extends Controller
 {
     use EpicAssistance;
+
+    private const POSITIONS_PER_PAGE = 16;
 
     public function behaviors()
     {
@@ -63,7 +65,7 @@ final class CharacterController extends Controller
             Character::throwExceptionAboutIndex();
         }
 
-        $searchModel = new CharacterQuery(16);
+        $searchModel = new CharacterQuery(self::POSITIONS_PER_PAGE);
         $dataProvider = $searchModel->searchForOperator(Yii::$app->request->queryParams);
 
         return $this->render('index', [

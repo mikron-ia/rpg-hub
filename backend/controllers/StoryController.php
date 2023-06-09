@@ -4,9 +4,9 @@ namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
 use common\models\core\Visibility;
+use common\models\Story;
 use common\models\StoryQuery;
 use Yii;
-use common\models\Story;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -18,6 +18,8 @@ use yii\web\NotFoundHttpException;
 final class StoryController extends Controller
 {
     use EpicAssistance;
+
+    private const POSITIONS_PER_PAGE = 16;
 
     public function behaviors()
     {
@@ -62,7 +64,7 @@ final class StoryController extends Controller
             Story::throwExceptionAboutIndex();
         }
 
-        $searchModel = new StoryQuery(16);
+        $searchModel = new StoryQuery(self::POSITIONS_PER_PAGE);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
