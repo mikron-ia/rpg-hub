@@ -23,6 +23,8 @@ class GroupController extends Controller
 {
     use EpicAssistance;
 
+    private const POSITIONS_PER_PAGE = 24;
+
     public function behaviors()
     {
         return [
@@ -70,7 +72,7 @@ class GroupController extends Controller
             Group::throwExceptionAboutIndex();
         }
 
-        $searchModel = new GroupQuery(24);
+        $searchModel = new GroupQuery(self::POSITIONS_PER_PAGE);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

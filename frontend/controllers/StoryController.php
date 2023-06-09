@@ -19,6 +19,8 @@ final class StoryController extends Controller
 {
     use EpicAssistance;
 
+    private const POSITIONS_PER_PAGE = 4;
+
     public function behaviors()
     {
         return [
@@ -62,7 +64,7 @@ final class StoryController extends Controller
             Story::throwExceptionAboutIndex();
         }
 
-        $searchModel = new StoryQuery(4);
+        $searchModel = new StoryQuery(self::POSITIONS_PER_PAGE);
         $dataProvider = $searchModel->search([]);
 
         return $this->render('index', [

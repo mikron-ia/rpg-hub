@@ -23,6 +23,8 @@ final class CharacterController extends Controller
 {
     use EpicAssistance;
 
+    private const POSITIONS_PER_PAGE = 24;
+
     public function behaviors()
     {
         return [
@@ -69,7 +71,7 @@ final class CharacterController extends Controller
             Character::throwExceptionAboutIndex();
         }
 
-        $searchModel = new CharacterQuery(24);
+        $searchModel = new CharacterQuery(self::POSITIONS_PER_PAGE);
         $dataProvider = $searchModel->searchForUser(Yii::$app->request->queryParams);
 
         return $this->render('index', [

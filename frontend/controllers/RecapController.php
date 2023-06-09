@@ -16,6 +16,8 @@ class RecapController extends Controller
 {
     use EpicAssistance;
 
+    private const POSITIONS_PER_PAGE = 4;
+
     public function behaviors()
     {
         return array_merge(
@@ -61,7 +63,7 @@ class RecapController extends Controller
             Recap::throwExceptionAboutIndex();
         }
 
-        $searchModel = new RecapQuery(4);
+        $searchModel = new RecapQuery(self::POSITIONS_PER_PAGE);
         $dataProvider = $searchModel->search([]);
 
         return $this->render('index', [
