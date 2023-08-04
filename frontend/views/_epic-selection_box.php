@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Epic;
+use common\models\EpicQuery;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -8,7 +9,7 @@ use yii\helpers\Html;
 
 $epicButtons = [];
 
-foreach ($epics as $epic) {
+foreach (EpicQuery::activeEpicsAsModels(false) as $epic) {
     if (!(isset($objectEpic) && $epic->key == $objectEpic->key)) {
         $epicButtons[] = Html::a(
             $epic->name,
