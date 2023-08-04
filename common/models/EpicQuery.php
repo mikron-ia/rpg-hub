@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * EpicQuery represents the model behind the search form about `common\models\Epic`.
@@ -63,7 +64,7 @@ final class EpicQuery extends Epic
      * @param bool $limitToControlled
      * @return ActiveQuery
      */
-    static public function activeEpicsAsActiveRecord($limitToControlled = true): ActiveQuery
+    static public function activeEpicsAsActiveRecord(bool $limitToControlled = true): ActiveQuery
     {
         /* @var $user User */
         $user = Yii::$app->user->identity;
@@ -86,23 +87,21 @@ final class EpicQuery extends Epic
      * @param bool $limitToControlled
      * @return ActiveDataProvider
      */
-    static public function activeEpicsAsActiveDataProvider($limitToControlled = true): ActiveDataProvider
+    static public function activeEpicsAsActiveDataProvider(bool $limitToControlled = true): ActiveDataProvider
     {
         $query = self::activeEpicsAsActiveRecord($limitToControlled);
 
-        $dataProvider = new ActiveDataProvider([
+        return new ActiveDataProvider([
             'query' => $query,
             'pagination' => false,
         ]);
-
-        return $dataProvider;
     }
 
     /**
      * @param bool $limitToControlled
-     * @return \yii\db\ActiveRecord[]
+     * @return ActiveRecord[]
      */
-    static public function activeEpicsAsModels($limitToControlled = true): array
+    static public function activeEpicsAsModels(bool $limitToControlled = true): array
     {
         if (Yii::$app->user->isGuest) {
             return [];
@@ -136,9 +135,9 @@ final class EpicQuery extends Epic
 
     /**
      * @param bool $limitToControlled
-     * @return array|\string[]
+     * @return string[]
      */
-    static public function allowedEpics($limitToControlled = true): array
+    static public function allowedEpics(bool $limitToControlled = true): array
     {
         $ids = [];
         $epics = self::activeEpicsAsModels($limitToControlled);
@@ -160,11 +159,9 @@ final class EpicQuery extends Epic
             ->joinWith('participants', true, 'LEFT JOIN')
             ->joinWith('participants.participantRoles', true, 'LEFT JOIN');
 
-        $dataProvider = new ActiveDataProvider([
+        return new ActiveDataProvider([
             'query' => $query,
             'pagination' => false,
         ]);
-
-        return $dataProvider;
     }
 }
