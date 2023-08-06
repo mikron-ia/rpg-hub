@@ -353,11 +353,13 @@ a:focus {
 .seen-tag-new {
     background-color: yellowgreen;
     color: white;
+    display: inline-block;
 }
 
 .seen-tag-updated {
     background-color: goldenrod;
     color: white;
+    display: inline-block;
 }
 
 .seen-tag-seen {
@@ -392,6 +394,7 @@ a:focus {
     background-color: darkviolet;
     border-radius: 15px;
     color: white;
+    display: inline-block;
     font-family: "Courier New", Courier, monospace;
     font-size: 2rem;
     font-weight: bold;
