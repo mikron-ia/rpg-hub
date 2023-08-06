@@ -12,8 +12,6 @@ use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\helpers\Html;
-use yii\helpers\Markdown;
 use yii\helpers\StringHelper;
 use yii2tech\ar\position\PositionBehavior;
 
@@ -174,9 +172,9 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             $this->createHistoryRecord();
         }
 
-        $this->public_text_expanded = $this->formatText($this->public_text);
-        $this->protected_text_expanded = $this->formatText($this->protected_text);
-        $this->private_text_expanded = $this->formatText($this->private_text);
+        $this->public_text_expanded = $this->expandText($this->public_text);
+        $this->protected_text_expanded = $this->expandText($this->protected_text);
+        $this->private_text_expanded = $this->expandText($this->private_text);
 
         return parent::beforeSave($insert);
     }
@@ -385,27 +383,27 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getPublicFormatted()
+    public function getPublicFormatted(): string
     {
-        return Markdown::process(Html::encode($this->public_text_expanded), 'gfm');
+        return $this->formatText($this->public_text_expanded);
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getProtectedFormatted()
+    public function getProtectedFormatted(): string
     {
-        return Markdown::process(Html::encode($this->protected_text_expanded), 'gfm');
+        return $this->formatText($this->protected_text_expanded);
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getPrivateFormatted()
+    public function getPrivateFormatted(): string
     {
-        return Markdown::process(Html::encode($this->private_text_expanded), 'gfm');
+        return $this->formatText($this->private_text_expanded);
     }
 
     /**
@@ -487,14 +485,5 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     public function getWordCountForPrivate(): int
     {
         return StringHelper::countWords($this->private_text_expanded);
-    }
-
-    /**
-     * @param string|null $text Text to format
-     * @return string|null
-     */
-    private function formatText($text)
-    {
-        return $this->processAllInOrder($text ?? '');
     }
 }

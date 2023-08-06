@@ -9,8 +9,6 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\helpers\Html;
-use yii\helpers\Markdown;
 
 /**
  * This is the model class for table "description_history".
@@ -75,9 +73,9 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
 
     public function beforeSave($insert)
     {
-        $this->public_text_expanded = $this->formatText($this->public_text);
-        $this->protected_text_expanded = $this->formatText($this->protected_text);
-        $this->private_text_expanded = $this->formatText($this->private_text);
+        $this->public_text_expanded = $this->expandText($this->public_text);
+        $this->protected_text_expanded = $this->expandText($this->protected_text);
+        $this->private_text_expanded = $this->expandText($this->private_text);
 
         return parent::beforeSave($insert);
     }
@@ -173,35 +171,26 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getPublicFormatted()
+    public function getPublicFormatted(): string
     {
-        return Markdown::process(Html::encode($this->public_text_expanded), 'gfm');
+        return $this->formatText($this->public_text_expanded);
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getProtectedFormatted()
+    public function getProtectedFormatted(): string
     {
-        return Markdown::process(Html::encode($this->protected_text_expanded), 'gfm');
+        return $this->formatText($this->protected_text_expanded);
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getPrivateFormatted()
+    public function getPrivateFormatted(): string
     {
-        return Markdown::process(Html::encode($this->private_text_expanded), 'gfm');
-    }
-
-    /**
-     * @param string|null $text Text to format
-     * @return string|null
-     */
-    private function formatText($text)
-    {
-        return $this->processAllInOrder($text ?? '');
+        return $this->formatText($this->private_text_expanded);
     }
 }

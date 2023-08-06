@@ -3,6 +3,8 @@
 namespace common\models\tools;
 
 use Yii;
+use yii\helpers\Html;
+use yii\helpers\Markdown;
 
 /**
  * Trait ToolsForDescription
@@ -132,5 +134,25 @@ trait ToolsForDescription
         $text = preg_replace(array_keys($replacements), $replacements, $text);
 
         return $text;
+    }
+
+    /**
+     * @param string|null $textToFormat Text to expand
+     *
+     * @return string
+     */
+    private function expandText(?string $textToFormat): string
+    {
+        return $this->processAllInOrder($textToFormat ?? '');
+    }
+
+    /**
+     * @param string $textToFormat
+     *
+     * @return string
+     */
+    private function formatText(string $textToFormat): string
+    {
+        return Markdown::process(str_ireplace('&gt;', '>', Html::encode($textToFormat)), 'gfm');
     }
 }
