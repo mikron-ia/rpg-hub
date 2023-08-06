@@ -12,6 +12,7 @@ use yii\console\Controller;
 
 /**
  * Class RbacController
+ *
  * Initiates and sets all access rights
  *
  * @package console\controllers
@@ -44,19 +45,37 @@ class RbacController extends Controller
     public function actionInit()
     {
         /* Load v0.4.0 and older */
-        $this->actionV040();
+        $this->actionV0040();
 
-        /* Load v0.7.0 */
-        $this->actionV080();
+        /* Nothing to load in v0.5.0 */
 
-        /* Set up the administrator */
-        $this->actionSetAdministrator();
+        /* Nothing to load in v0.6.0 */
+
+        /* Nothing to load in v0.7.0 */
+
+        /* Load v0.8.0 */
+        $this->actionV0080();
+
+        /* Nothing to load in v0.9.0 */
+
+        /* Nothing to load in v0.10.0 */
+
+        /* Load v0.11.0 */
+        $this->actionV0110();
+
+        /* Nothing to load in v0.12.0 */
+
+        /* Nothing to load in v0.13.0 */
+
+        /* Nothing to load in v0.14.0 */
+
+        /* Nothing to load in v0.15.0 */
     }
 
     /**
      * Adds rights from v0.4.0 and earlier
      */
-    public function actionV040()
+    public function actionV0040()
     {
         $auth = Yii::$app->authManager;
 
@@ -242,7 +261,7 @@ class RbacController extends Controller
     /**
      * Adds rights from v0.8.0
      */
-    public function actionV080()
+    public function actionV0080()
     {
         $auth = Yii::$app->authManager;
 
@@ -281,53 +300,6 @@ class RbacController extends Controller
 
         $auth->addChild($operator, $controlGame);
         $auth->addChild($user, $viewGame);
-    }
-
-    /**
-     * Sets administrator role to used with ID == 1. Intended for development and production initialisation.
-     *
-     * @deprecated Use `install/add-administrator` instead
-     */
-    public function actionSetAdministrator()
-    {
-        $auth = Yii::$app->authManager;
-        $administrator = $auth->getRole('administrator');
-        $auth->assign($administrator, 1);
-    }
-
-    /**
-     * Adds rights from v0.5.0
-     */
-    public function actionV050()
-    {
-    }
-
-    /**
-     * Adds rights from v0.6.0
-     */
-    public function actionV060()
-    {
-    }
-
-    /**
-     * Adds rights from v0.7.0
-     */
-    public function actionV070()
-    {
-    }
-
-    /**
-     * Adds rights from v0.9.0
-     */
-    public function actionV090()
-    {
-    }
-
-    /**
-     * Adds rights from v0.10.0
-     */
-    public function actionV0100()
-    {
     }
 
     /**
