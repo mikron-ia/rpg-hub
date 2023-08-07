@@ -2,10 +2,12 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
 
-use yii\helpers\Html;
+/* @var $model LoginForm */
+
+use common\models\LoginForm;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
 
 $this->title = Yii::t('app', 'TITLE_LOGIN');
 $this->params['breadcrumbs'][] = $this->title;

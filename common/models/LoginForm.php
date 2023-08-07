@@ -18,7 +18,7 @@ class LoginForm extends Model
 
     const REMEMBER_TIME_IN_SECONDS = 2592000;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['username', 'password'], 'required'],
@@ -56,7 +56,7 @@ class LoginForm extends Model
      * Logs in a user using the provided username and password
      * @return boolean whether the user is logged in successfully
      */
-    public function login()
+    public function login(): bool
     {
         if ($this->validate()) {
             $result = Yii::$app->user->login($this->getUser(), $this->rememberMe ? self::REMEMBER_TIME_IN_SECONDS : 0);
@@ -75,7 +75,7 @@ class LoginForm extends Model
      * Finds user by [[username]]
      * @return User|null
      */
-    protected function getUser()
+    protected function getUser(): ?User
     {
         if ($this->_user === null) {
             $this->_user = User::findByUsername($this->username);

@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\models;
 
 use common\models\User;
@@ -12,7 +13,7 @@ final class PasswordResetRequestForm extends Model
 {
     public $email;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             ['email', 'filter', 'filter' => 'trim'],
@@ -40,7 +41,7 @@ final class PasswordResetRequestForm extends Model
      * Sends an email with a link, for resetting the password.
      * @return boolean whether the email was send
      */
-    public function sendEmail()
+    public function sendEmail(): bool
     {
         /* @var $user User */
         $user = User::findOne([
