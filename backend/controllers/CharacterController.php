@@ -12,12 +12,14 @@ use common\models\Parameter;
 use common\models\tools\Retriever;
 use Yii;
 use yii\base\Exception;
+use yii\base\InvalidRouteException;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * CharacterController implements the CRUD actions for Character model.
@@ -53,9 +55,12 @@ final class CharacterController extends Controller
 
     /**
      * Lists all characters
-     * @return mixed
+     *
+     * @return string
+     *
+     * @throws HttpException
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection');
@@ -76,11 +81,15 @@ final class CharacterController extends Controller
 
     /**
      * Displays a single character
+     *
      * @param string $key
-     * @return mixed
+     *
+     * @return string
+     *
      * @throws HttpException
+     * @throws NotFoundHttpException
      */
-    public function actionView($key)
+    public function actionView(string $key): string
     {
         $model = $this->findModelByKey($key);
 
@@ -111,9 +120,12 @@ final class CharacterController extends Controller
     /**
      * Creates a new character
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     *
+     * @return Response|string
+     *
+     * @throws HttpException
      */
-    public function actionCreate()
+    public function actionCreate(): Response|string
     {
         if (!Character::canUserCreateThem()) {
             Character::throwExceptionAboutCreate();
@@ -138,10 +150,15 @@ final class CharacterController extends Controller
     /**
      * Creates a new character
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @param $key
-     * @return mixed
+     *
+     * @param string $key
+     *
+     * @return Response
+     *
+     * @throws HttpException
+     * @throws NotFoundHttpException
      */
-    public function actionCreateSheet($key)
+    public function actionCreateSheet(string $key): Response
     {
         if (!CharacterSheet::canUserCreateThem()) {
             CharacterSheet::throwExceptionAboutCreate();
@@ -173,10 +190,15 @@ final class CharacterController extends Controller
     /**
      * Updates an existing character
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param string $key
-     * @return mixed
+     *
+     * @return Response|string
+     *
+     * @throws HttpException
+     * @throws NotFoundHttpException
      */
-    public function actionUpdate($key)
+    public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModelByKey($key);
 
@@ -201,9 +223,14 @@ final class CharacterController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      *
      * @param string $key
-     * @return mixed
+     *
+     * @return Response|\yii\console\Response
+     *
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     * @throws InvalidRouteException
      */
-    public function actionLoadData($key)
+    public function actionLoadData(string $key): Response|\yii\console\Response
     {
         $model = $this->findModelByKey($key);
 
@@ -215,7 +242,7 @@ final class CharacterController extends Controller
 
         if (!$baseUrl) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'EXTERNAL_DATA_LOAD_MISSING_ADDRESS'));
-        } elseif (strpos($baseUrl, '{modelKey}') === false) {
+        } elseif (!str_contains($baseUrl, '{modelKey}')) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'EXTERNAL_DATA_LOAD_MISSING_MODEL_KEY'));
         } else {
             $placeholders = ['{modelKey}'];
@@ -290,7 +317,7 @@ final class CharacterController extends Controller
      * @return Character the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelByKey($key)
+    protected function findModelByKey(string $key): Character
     {
         $model = Character::findOne(['key' => $key]);
 
