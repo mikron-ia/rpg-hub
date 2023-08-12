@@ -1,8 +1,4 @@
-<?php
-
-$this->title = Yii::t('app', 'LABEL_ABOUT');
-
-?>a
+<?php $this->title = Yii::t('app', 'LABEL_ABOUT'); ?>
 
 <h1>About</h1>
 
