@@ -6,10 +6,13 @@ use backend\controllers\tools\EpicAssistance;
 use Yii;
 use common\models\Article;
 use common\models\ArticleQuery;
+use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ArticleController implements the CRUD actions for Article model.
@@ -42,9 +45,10 @@ class ArticleController extends Controller
 
     /**
      * Lists all Article models.
-     * @return mixed
+     *
+     * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $searchModel = new ArticleQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -57,11 +61,14 @@ class ArticleController extends Controller
 
     /**
      * Displays a single Article model.
+     *
      * @param string $key
-     * @return mixed
+     *
+     * @return string
+     *
      * @throws NotFoundHttpException
      */
-    public function actionView($key)
+    public function actionView(string $key): string
     {
         return $this->render('view', [
             'model' => $this->findModelByKey($key),
@@ -71,9 +78,10 @@ class ArticleController extends Controller
     /**
      * Creates a new Article model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     *
+     * @return Response|string
      */
-    public function actionCreate()
+    public function actionCreate(): Response|string
     {
         $model = new Article();
 
@@ -91,11 +99,14 @@ class ArticleController extends Controller
     /**
      * Updates an existing Article model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param string $key
-     * @return mixed
+     *
+     * @return Response|string
+     *
      * @throws NotFoundHttpException
      */
-    public function actionUpdate($key)
+    public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModelByKey($key);
 
@@ -111,13 +122,16 @@ class ArticleController extends Controller
     /**
      * Deletes an existing Article model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param string $key
-     * @return mixed
+     *
+     * @return Response
+     *
      * @throws NotFoundHttpException
      * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws StaleObjectException
      */
-    public function actionDelete($key)
+    public function actionDelete(string $key): Response
     {
         $this->findModelByKey($key)->delete();
 
@@ -127,11 +141,10 @@ class ArticleController extends Controller
     /**
      * Moves game up in order; this means lower position on the list
      * @param int $key Story ID
-     * @return \yii\web\Response
      * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
+     * @throws HttpException
      */
-    public function actionMoveUp($key)
+    public function actionMoveUp($key): Response|\yii\console\Response
     {
         $model = $this->findModelByKey($key);
         if (!$model->canUserControlYou()) {
@@ -150,9 +163,9 @@ class ArticleController extends Controller
     /**
      * Moves game down in order; this means higher position on the list
      * @param int $key Story ID
-     * @return \yii\web\Response
+     * @return Response
      * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
+     * @throws HttpException
      */
     public function actionMoveDown($key)
     {

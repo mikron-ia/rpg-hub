@@ -10,7 +10,9 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * GroupController implements the CRUD actions for Group model.
@@ -45,9 +47,12 @@ final class GroupController extends Controller
 
     /**
      * Lists all Group models.
-     * @return mixed
+     *
+     * @return string
+     *
+     * @throws HttpException
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection');
@@ -68,11 +73,15 @@ final class GroupController extends Controller
 
     /**
      * Displays a single Group model.
+     *
      * @param string $key
-     * @return mixed
+     *
+     * @return string
+     *
+     * @throws HttpException
      * @throws NotFoundHttpException
      */
-    public function actionView($key)
+    public function actionView(string $key): string
     {
         $model = $this->findModelByKey($key);
 
@@ -98,9 +107,12 @@ final class GroupController extends Controller
     /**
      * Creates a new Group model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     *
+     * @return Response|string
+     *
+     * @throws HttpException
      */
-    public function actionCreate()
+    public function actionCreate(): Response|string
     {
         if (!Group::canUserCreateThem()) {
             Group::throwExceptionAboutCreate();
@@ -122,11 +134,15 @@ final class GroupController extends Controller
     /**
      * Updates an existing Group model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param string $key
-     * @return mixed
+     *
+     * @return Response|string
+     *
+     * @throws HttpException
      * @throws NotFoundHttpException
      */
-    public function actionUpdate($key)
+    public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModelByKey($key);
 
@@ -146,11 +162,14 @@ final class GroupController extends Controller
     /**
      * Finds the Group model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param string $key
+     *
      * @return Group the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelByKey($key)
+    protected function findModelByKey(string $key): Group
     {
         $model = Group::findOne(['key' => $key]);
 
