@@ -4,10 +4,9 @@ namespace frontend\controllers;
 
 use common\models\core\Visibility;
 use common\models\Epic;
-use common\models\external\Reputation;
-use common\models\external\ReputationEvent;
 use common\models\Group;
 use common\models\GroupQuery;
+use frontend\controllers\external\ReputationToolsForControllerTrait;
 use frontend\controllers\tools\EpicAssistance;
 use Yii;
 use yii\filters\AccessControl;
@@ -22,6 +21,7 @@ use yii\web\NotFoundHttpException;
 class GroupController extends Controller
 {
     use EpicAssistance;
+    use ReputationToolsForControllerTrait;
 
     private const POSITIONS_PER_PAGE = 24;
 
@@ -47,12 +47,15 @@ class GroupController extends Controller
 
     /**
      * Lists all Group models.
+     *
      * @param null|string $key
-     * @return mixed
+     *
+     * @return string
+     *
+     * @throws HttpException
      * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
      */
-    public function actionIndex(?string $key = null)
+    public function actionIndex(?string $key = null): string
     {
         if ($key) {
             $epic = $this->findEpicByKey($key);
@@ -106,11 +109,14 @@ class GroupController extends Controller
     }
 
     /**
-     * @param $key
-     * @return string|\yii\web\Response
+     * @param string $key
+     *
+     * @return string
+     *
      * @throws HttpException
+     * @throws NotFoundHttpException
      */
-    public function actionExternalReputation($key)
+    public function actionExternalReputation(string $key): string
     {
         $model = $this->findModelByKey($key);
 
@@ -118,17 +124,13 @@ class GroupController extends Controller
             Group::throwExceptionAboutView();
         }
 
-        if ($model->external_data_pack_id) {
-            $data = $model->externalDataPack->getExternalDataByCode('reputations');
-            if (isset($data)) {
-                $reputation = Reputation::createFromArray($data);
-                if ($reputation) {
-                    if (Yii::$app->request->isAjax) {
-                        return $this->renderAjax('external/reputation', ['reputations' => $reputation]);
-                    } else {
-                        return $this->render('external/reputation', ['reputations' => $reputation]);
-                    }
-                }
+        $reputation = $this->prepareReputationList($model);
+
+        if ($reputation) {
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('external/reputation', ['reputations' => $reputation]);
+            } else {
+                return $this->render('external/reputation', ['reputations' => $reputation]);
             }
         }
 
@@ -136,11 +138,14 @@ class GroupController extends Controller
     }
 
     /**
-     * @param $key
-     * @return string|\yii\web\Response
+     * @param string $key
+     *
+     * @return string
+     *
      * @throws HttpException
+     * @throws NotFoundHttpException
      */
-    public function actionExternalReputationEvent($key)
+    public function actionExternalReputationEvent(string $key): string
     {
         $model = $this->findModelByKey($key);
 
@@ -148,17 +153,12 @@ class GroupController extends Controller
             Group::throwExceptionAboutView();
         }
 
-        if ($model->external_data_pack_id) {
-            $data = $model->externalDataPack->getExternalDataByCode('reputationEvents');
-            if (isset($data)) {
-                $event = ReputationEvent::createFromArray($data);
-                if ($event) {
-                    if (Yii::$app->request->isAjax) {
-                        return $this->renderAjax('external/reputation_event', ['events' => $event]);
-                    } else {
-                        return $this->render('external/reputation_event', ['events' => $event]);
-                    }
-                }
+        $event = $this->prepareReputationEventsList($model);
+        if ($event) {
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('external/reputation_event', ['events' => $event]);
+            } else {
+                return $this->render('external/reputation_event', ['events' => $event]);
             }
         }
 
@@ -168,11 +168,14 @@ class GroupController extends Controller
     /**
      * Finds the Group model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param string $key
+     *
      * @return Group the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelByKey($key)
+    protected function findModelByKey(string $key): Group
     {
         $model = Group::findOne(['key' => $key]);
 

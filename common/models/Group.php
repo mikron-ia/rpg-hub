@@ -11,6 +11,7 @@ use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
+use common\models\external\HasReputations;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
 use Yii;
@@ -49,7 +50,7 @@ use yii\helpers\Html;
  * @property GroupMembership[] $groupCharacterMembershipsPassive
  * @property GroupMembership[] $groupCharacterMembershipsPast
  */
-class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasSightings, HasVisibility
+class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasSightings, HasVisibility
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;

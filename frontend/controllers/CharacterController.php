@@ -6,8 +6,7 @@ use common\models\Character;
 use common\models\CharacterQuery;
 use common\models\core\Visibility;
 use common\models\Epic;
-use common\models\external\Reputation;
-use common\models\external\ReputationEvent;
+use frontend\controllers\external\ReputationToolsForControllerTrait;
 use frontend\controllers\tools\EpicAssistance;
 use Yii;
 use yii\filters\AccessControl;
@@ -15,6 +14,7 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * CharacterController implements the CRUD actions for Character model.
@@ -22,6 +22,7 @@ use yii\web\NotFoundHttpException;
 final class CharacterController extends Controller
 {
     use EpicAssistance;
+    use ReputationToolsForControllerTrait;
 
     private const POSITIONS_PER_PAGE = 24;
 
@@ -47,11 +48,15 @@ final class CharacterController extends Controller
 
     /**
      * Lists all Character models
+     *
      * @param string|null $key
-     * @return mixed
+     *
+     * @return string
+     *
      * @throws HttpException
+     * @throws NotFoundHttpException
      */
-    public function actionIndex(?string $key = null)
+    public function actionIndex(?string $key = null): string
     {
         if ($key) {
             $epic = $this->findEpicByKey($key);
@@ -82,11 +87,15 @@ final class CharacterController extends Controller
 
     /**
      * Displays a single Character model
+     *
      * @param string $key
-     * @return mixed
+     *
+     * @return string
+     *
      * @throws HttpException
+     * @throws NotFoundHttpException
      */
-    public function actionView($key)
+    public function actionView(string $key): string
     {
         $model = $this->findModelByKey($key);
 
@@ -110,7 +119,7 @@ final class CharacterController extends Controller
      * @return Character the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelByKey($key)
+    protected function findModelByKey(string $key): Character
     {
         $model = Character::findOne(['key' => $key]);
 
@@ -127,10 +136,12 @@ final class CharacterController extends Controller
 
     /**
      * @param $key
-     * @return string|\yii\web\Response
+     *
+     * @return string|Response
+     *
      * @throws HttpException
      */
-    public function actionExternalReputation($key)
+    public function actionExternalReputation($key): Response|string
     {
         $model = $this->findModelByKey($key);
 
@@ -138,17 +149,13 @@ final class CharacterController extends Controller
             Character::throwExceptionAboutView();
         }
 
-        if ($model->external_data_pack_id) {
-            $data = $model->externalDataPack->getExternalDataByCode('reputations');
-            if (isset($data)) {
-                $reputation = Reputation::createFromArray($data);
-                if ($reputation) {
-                    if (Yii::$app->request->isAjax) {
-                        return $this->renderAjax('external/reputation', ['reputations' => $reputation]);
-                    } else {
-                        return $this->render('external/reputation', ['reputations' => $reputation]);
-                    }
-                }
+        $reputation = $this->prepareReputationList($model);
+
+        if ($reputation) {
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('external/reputation', ['reputations' => $reputation]);
+            } else {
+                return $this->render('external/reputation', ['reputations' => $reputation]);
             }
         }
 
@@ -156,11 +163,14 @@ final class CharacterController extends Controller
     }
 
     /**
-     * @param $key
-     * @return string|\yii\web\Response
+     * @param string $key
+     *
+     * @return string
+     *
      * @throws HttpException
+     * @throws NotFoundHttpException
      */
-    public function actionExternalReputationEvent($key)
+    public function actionExternalReputationEvent(string $key): string
     {
         $model = $this->findModelByKey($key);
 
@@ -168,17 +178,12 @@ final class CharacterController extends Controller
             Character::throwExceptionAboutView();
         }
 
-        if ($model->external_data_pack_id) {
-            $data = $model->externalDataPack->getExternalDataByCode('reputationEvents');
-            if (isset($data)) {
-                $event = ReputationEvent::createFromArray($data);
-                if ($event) {
-                    if (Yii::$app->request->isAjax) {
-                        return $this->renderAjax('external/reputation_event', ['events' => $event]);
-                    } else {
-                        return $this->render('external/reputation_event', ['events' => $event]);
-                    }
-                }
+        $event = $this->prepareReputationEventsList($model);
+        if ($event) {
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('external/reputation_event', ['events' => $event]);
+            } else {
+                return $this->render('external/reputation_event', ['events' => $event]);
             }
         }
 
@@ -188,11 +193,14 @@ final class CharacterController extends Controller
     /**
      * Finds the Character model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param string $id
+     *
      * @return Character the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelById($id)
+    protected function findModelById(string $id): Character
     {
         $model = Character::findOne(['character_id' => $id]);
 
