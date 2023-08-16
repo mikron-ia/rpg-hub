@@ -3,8 +3,10 @@
 namespace common\models;
 
 use common\models\core\ImportanceCategory;
+use DateTimeImmutable;
 use Yii;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "importance".
@@ -17,14 +19,14 @@ use yii\db\ActiveQuery;
  * @property ImportancePack $importancePack
  * @property User $user
  */
-class Importance extends \yii\db\ActiveRecord
+class Importance extends ActiveRecord
 {
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'importance';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['importance_pack_id', 'user_id', 'importance'], 'integer'],
@@ -45,7 +47,7 @@ class Importance extends \yii\db\ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'importance_id' => Yii::t('app', 'IMPORTANCE_ID'),
@@ -58,7 +60,7 @@ class Importance extends \yii\db\ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getImportancePack()
+    public function getImportancePack(): ActiveQuery
     {
         return $this->hasOne(ImportancePack::class, ['importance_pack_id' => 'importance_pack_id']);
     }
@@ -66,13 +68,14 @@ class Importance extends \yii\db\ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getUser()
+    public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**
      * Calculates the importance value
+     *
      * @return int
      */
     private function calculate(): int
@@ -88,6 +91,7 @@ class Importance extends \yii\db\ActiveRecord
 
     /**
      * Recalculates the importance object and saves the new value
+     *
      * @return bool
      */
     public function calculateAndSave(): bool
@@ -102,49 +106,28 @@ class Importance extends \yii\db\ActiveRecord
      */
     private function determineValueBasedOnSeen(string $seen): int
     {
-        switch ($seen) {
-            case 'new' :
-                $result = 128;
-                break;
-            case 'updated' :
-                $result = 64;
-                break;
-            default:
-                $result = 0;
-                break;
-        }
-
-        return $result;
+        return match ($seen) {
+            'new' => 128,
+            'updated' => 64,
+            default => 0,
+        };
     }
 
     /**
      * @param string $importanceCategory Importance category code
+     *
      * @return int
      */
-    private function determineValueBasedOnImportanceCategory(string $importanceCategory)
+    private function determineValueBasedOnImportanceCategory(string $importanceCategory): int
     {
-        switch ($importanceCategory) {
-            case ImportanceCategory::IMPORTANCE_EXTREME :
-                $result = 64;
-                break;
-            case ImportanceCategory::IMPORTANCE_HIGH:
-                $result = 32;
-                break;
-            case ImportanceCategory::IMPORTANCE_MEDIUM:
-                $result = 16;
-                break;
-            case ImportanceCategory::IMPORTANCE_LOW:
-                $result = 8;
-                break;
-            case ImportanceCategory::IMPORTANCE_NONE:
-                $result = 0;
-                break;
-            default:
-                $result = 0;
-                break;
-        }
-
-        return $result;
+        return match ($importanceCategory) {
+            ImportanceCategory::IMPORTANCE_EXTREME => 64,
+            ImportanceCategory::IMPORTANCE_HIGH => 32,
+            ImportanceCategory::IMPORTANCE_MEDIUM => 16,
+            ImportanceCategory::IMPORTANCE_LOW => 8,
+            ImportanceCategory::IMPORTANCE_NONE => 0,
+            default => 0,
+        };
     }
 
     /**
@@ -157,13 +140,13 @@ class Importance extends \yii\db\ActiveRecord
     }
 
     /**
-     * @param \DateTimeImmutable $date Date of event
+     * @param DateTimeImmutable $date Date of event
      * @param int $topValue Value to assign if event was less than a day ago
      * @return int
      */
-    private function determineValueBasedOnDate(\DateTimeImmutable $date, int $topValue): int
+    private function determineValueBasedOnDate(DateTimeImmutable $date, int $topValue): int
     {
-        $now = new \DateTimeImmutable('now');
+        $now = new DateTimeImmutable('now');
         $difference = $date->diff($now);
 
         if ($difference->y > 0) {

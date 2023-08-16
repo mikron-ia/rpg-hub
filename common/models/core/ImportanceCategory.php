@@ -6,6 +6,7 @@ use Yii;
 
 /**
  * Class ImportanceCategory
+ * 
  * @package common\models\core
  */
 final class ImportanceCategory
@@ -38,10 +39,6 @@ final class ImportanceCategory
      */
     public $importance;
 
-    /**
-     * @param $code
-     * @return ImportanceCategory
-     */
     static public function create($code): ImportanceCategory
     {
         $importance = new ImportanceCategory();
@@ -56,7 +53,7 @@ final class ImportanceCategory
     public function getName(): string
     {
         $names = self::importanceNames();
-        return isset($names[$this->importance]) ? $names[$this->importance] : '?';
+        return $names[$this->importance] ?? '?';
     }
 
     /**
@@ -113,6 +110,7 @@ final class ImportanceCategory
 
     /**
      * Lists allowed importance
+     *
      * @return string[]
      */
     static public function allowedImportance(): array
@@ -133,7 +131,7 @@ final class ImportanceCategory
     public function getNameLowercase(): string
     {
         $names = self::importanceNamesLowercase();
-        return isset($names[$this->importance]) ? $names[$this->importance] : '?';
+        return $names[$this->importance] ?? '?';
     }
 
     /**

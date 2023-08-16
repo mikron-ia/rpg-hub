@@ -61,7 +61,7 @@ final class ImportanceRank
     public function getName(): string
     {
         $names = self::importanceNames();
-        return isset($names[$this->importance]) ? $names[$this->importance] : '?';
+        return $names[$this->importance] ?? '?';
     }
 
     /**
@@ -70,7 +70,7 @@ final class ImportanceRank
      */
     static public function importanceNames(): array
     {
-        $names = [
+        return [
             self::IMPORTANCE_RANK_EXTREME_LOW => Yii::t('app', 'IMPORTANCE_RANK_EXTREME_LOW'),
             self::IMPORTANCE_RANK_LOW => Yii::t('app', 'IMPORTANCE_RANK_LOW'),
             self::IMPORTANCE_RANK_MEDIUM_LOW => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM_LOW'),
@@ -81,8 +81,6 @@ final class ImportanceRank
             self::IMPORTANCE_RANK_UNKNOWN => Yii::t('app', 'IMPORTANCE_RANK_UNKNOWN'),
             self::IMPORTANCE_RANK_INCORRECT => Yii::t('app', 'IMPORTANCE_RANK_INCORRECT'),
         ];
-
-        return $names;
     }
 
     /**
@@ -92,7 +90,7 @@ final class ImportanceRank
     public function getNameLowercase(): string
     {
         $names = self::importanceNamesLowercase();
-        return isset($names[$this->importance]) ? $names[$this->importance] : '?';
+        return $names[$this->importance] ?? '?';
     }
 
     /**

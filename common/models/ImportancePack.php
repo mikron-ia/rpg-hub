@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\core\HasImportance;
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -21,14 +22,14 @@ class ImportancePack extends ActiveRecord
     /**
      * @var HasImportance
      */
-    private $controllingObject;
+    private HasImportance $controllingObject;
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'importance_pack';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['class'], 'required'],
@@ -36,7 +37,7 @@ class ImportancePack extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'importance_pack_id' => Yii::t('app', 'IMPORTANCE_PACK_ID'),
@@ -45,31 +46,32 @@ class ImportancePack extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getCharacters()
+    public function getCharacters(): ActiveQuery
     {
         return $this->hasMany(Character::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getGroups()
+    public function getGroups(): ActiveQuery
     {
         return $this->hasMany(Group::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getImportances()
+    public function getImportances(): ActiveQuery
     {
         return $this->hasMany(Importance::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
     /**
      * @param string $class
+     *
      * @return ImportancePack
      */
     public static function create(string $class): ImportancePack
@@ -122,7 +124,7 @@ class ImportancePack extends ActiveRecord
      * Creates new Importance objects for users that do not have them
      * @return bool
      */
-    private function createAbsentImportanceObjects()
+    private function createAbsentImportanceObjects(): bool
     {
         $users = $this->getEpic()->participants;
         $importanceObjectsRaw = Importance::findAll(['importance_pack_id' => $this->importance_pack_id]);
