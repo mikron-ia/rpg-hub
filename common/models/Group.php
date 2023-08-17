@@ -394,7 +394,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
 
     public function getImportanceCategoryObject(): ImportanceCategory
     {
-        return ImportanceCategory::create($this->importance_category);
+        return ImportanceCategory::from($this->importance_category);
     }
 
     public function getImportanceCategoryCode(): string
@@ -404,7 +404,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
 
     public function getImportanceCategoryLowercase(): string
     {
-        $importance = ImportanceCategory::create($this->importance_category);
+        $importance = ImportanceCategory::from($this->importance_category);
         return $importance->getNameLowercase();
     }
 

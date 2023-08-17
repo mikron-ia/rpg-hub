@@ -5,72 +5,31 @@ namespace common\models\core;
 use Yii;
 
 /**
- * Class ImportanceRank
+ * Enumeration ImportanceRank
+ *
  * @package common\models\core
  */
-final class ImportanceRank
+enum ImportanceRank: string
 {
-    const IMPORTANCE_RANK_EXTREME_LOW = 'extreme-low';
-    const IMPORTANCE_RANK_LOW = 'low';
-    const IMPORTANCE_RANK_MEDIUM_LOW = 'medium-low';
-    const IMPORTANCE_RANK_MEDIUM = 'medium';
-    const IMPORTANCE_RANK_MEDIUM_HIGH = 'medium-high';
-    const IMPORTANCE_RANK_HIGH = 'high';
-    const IMPORTANCE_RANK_EXTREMELY_HIGH = 'extreme-high';
+    case IMPORTANCE_RANK_EXTREME_LOW = 'extreme-low';
+    case IMPORTANCE_RANK_LOW = 'low';
+    case IMPORTANCE_RANK_MEDIUM_LOW = 'medium-low';
+    case IMPORTANCE_RANK_MEDIUM = 'medium';
+    case IMPORTANCE_RANK_MEDIUM_HIGH = 'medium-high';
+    case IMPORTANCE_RANK_HIGH = 'high';
+    case IMPORTANCE_RANK_EXTREMELY_HIGH = 'extreme-high';
 
-    const IMPORTANCE_RANK_INCORRECT = 'incorrect';
-    const IMPORTANCE_RANK_UNKNOWN = 'unknown';
-
-    const IMPORTANCE_RANK_CODES = [
-        self::IMPORTANCE_RANK_EXTREME_LOW,
-        self::IMPORTANCE_RANK_LOW,
-        self::IMPORTANCE_RANK_MEDIUM_LOW,
-        self::IMPORTANCE_RANK_MEDIUM,
-        self::IMPORTANCE_RANK_MEDIUM_HIGH,
-        self::IMPORTANCE_RANK_HIGH,
-        self::IMPORTANCE_RANK_EXTREMELY_HIGH,
-        self::IMPORTANCE_RANK_UNKNOWN,
-    ];
-
-    /**
-     * @var string
-     */
-    public $importance;
-
-    /**
-     * Creates ImportanceRank object from string code
-     * @param $code
-     * @return ImportanceRank
-     */
-    static public function create($code): ImportanceRank
-    {
-        $importance = new ImportanceRank();
-
-        if (!in_array($code, self::IMPORTANCE_RANK_CODES)) {
-            $code = self::IMPORTANCE_RANK_INCORRECT;
-        }
-
-        $importance->importance = $code;
-        return $importance;
-    }
+    case IMPORTANCE_RANK_INCORRECT = 'incorrect';
+    case IMPORTANCE_RANK_UNKNOWN = 'unknown';
 
     /**
      * Provides importance name
+     *
      * @return string
      */
     public function getName(): string
     {
-        $names = self::importanceNames();
-        return $names[$this->importance] ?? '?';
-    }
-
-    /**
-     * Provides importance names
-     * @return string[]
-     */
-    static public function importanceNames(): array
-    {
-        return [
+        return match ($this) {
             self::IMPORTANCE_RANK_EXTREME_LOW => Yii::t('app', 'IMPORTANCE_RANK_EXTREME_LOW'),
             self::IMPORTANCE_RANK_LOW => Yii::t('app', 'IMPORTANCE_RANK_LOW'),
             self::IMPORTANCE_RANK_MEDIUM_LOW => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM_LOW'),
@@ -80,26 +39,17 @@ final class ImportanceRank
             self::IMPORTANCE_RANK_EXTREMELY_HIGH => Yii::t('app', 'IMPORTANCE_RANK_EXTREMELY_HIGH'),
             self::IMPORTANCE_RANK_UNKNOWN => Yii::t('app', 'IMPORTANCE_RANK_UNKNOWN'),
             self::IMPORTANCE_RANK_INCORRECT => Yii::t('app', 'IMPORTANCE_RANK_INCORRECT'),
-        ];
-    }
-
-    /**
-     * Provides importance name in lowercase
-     * @return string
-     */
-    public function getNameLowercase(): string
-    {
-        $names = self::importanceNamesLowercase();
-        return $names[$this->importance] ?? '?';
+        };
     }
 
     /**
      * Provides importance names in lowercase
-     * @return string[]
+     *
+     * @return string
      */
-    static public function importanceNamesLowercase(): array
+    public function getNameLowercase(): string
     {
-        return [
+        return match ($this) {
             self::IMPORTANCE_RANK_EXTREME_LOW => Yii::t('app', 'IMPORTANCE_RANK_EXTREME_LOW_LOWERCASE'),
             self::IMPORTANCE_RANK_LOW => Yii::t('app', 'IMPORTANCE_RANK_LOW_LOWERCASE'),
             self::IMPORTANCE_RANK_MEDIUM_LOW => Yii::t('app', 'IMPORTANCE_RANK_MEDIUM_LOW_LOWERCASE'),
@@ -109,6 +59,6 @@ final class ImportanceRank
             self::IMPORTANCE_RANK_EXTREMELY_HIGH => Yii::t('app', 'IMPORTANCE_RANK_EXTREMELY_HIGH_LOWERCASE'),
             self::IMPORTANCE_RANK_UNKNOWN => Yii::t('app', 'IMPORTANCE_RANK_UNKNOWN_LOWERCASE'),
             self::IMPORTANCE_RANK_INCORRECT => Yii::t('app', 'IMPORTANCE_RANK_INCORRECT_LOWERCASE'),
-        ];
+        };
     }
 }

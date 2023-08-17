@@ -426,7 +426,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
     public function getImportanceCategoryObject(): ImportanceCategory
     {
-        return ImportanceCategory::create($this->importance_category);
+        return ImportanceCategory::from($this->importance_category);
     }
 
     public function getImportanceCategoryCode(): string
@@ -436,7 +436,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
     public function getImportanceCategoryLowercase(): string
     {
-        $importance = ImportanceCategory::create($this->importance_category);
+        $importance = ImportanceCategory::from($this->importance_category);
         return $importance->getNameLowercase();
     }
 

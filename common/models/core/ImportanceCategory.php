@@ -5,85 +5,32 @@ namespace common\models\core;
 use Yii;
 
 /**
- * Class ImportanceCategory
- * 
+ * Enumeration ImportanceCategory
+ *
  * @package common\models\core
  */
-final class ImportanceCategory
+enum ImportanceCategory: string
 {
-    // todo: move all const handling to an enum - see #360
-    const IMPORTANCE_NONE = '4-none';
-    const IMPORTANCE_LOW = '3-low';
-    const IMPORTANCE_MEDIUM = '2-medium';
-    const IMPORTANCE_HIGH = '1-high';
-    const IMPORTANCE_EXTREME = '0-extreme';
+    case IMPORTANCE_NONE = '4-none';
+    case IMPORTANCE_LOW = '3-low';
+    case IMPORTANCE_MEDIUM = '2-medium';
+    case IMPORTANCE_HIGH = '1-high';
+    case IMPORTANCE_EXTREME = '0-extreme';
 
-    private const MINIMUMS = [
-        self::IMPORTANCE_NONE => 1,
-        self::IMPORTANCE_LOW => 1,
-        self::IMPORTANCE_MEDIUM => 2,
-        self::IMPORTANCE_HIGH => 3,
-        self::IMPORTANCE_EXTREME => 5,
-    ];
-
-    private const MAXIMUMS = [
-        self::IMPORTANCE_NONE => 3,
-        self::IMPORTANCE_LOW => 5,
-        self::IMPORTANCE_MEDIUM => 8,
-        self::IMPORTANCE_HIGH => 13,
-        self::IMPORTANCE_EXTREME => 21,
-    ];
-
-    /**
-     * @var string
-     */
-    public $importance;
-
-    static public function create($code): ImportanceCategory
-    {
-        $importance = new ImportanceCategory();
-        $importance->importance = $code;
-        return $importance;
-    }
-
-    /**
-     * Provides importance name
-     * @return string
-     */
     public function getName(): string
     {
-        $names = self::importanceNames();
-        return $names[$this->importance] ?? '?';
-    }
-
-    /**
-     * @return string[]
-     */
-    static private function importanceNamesSimple(): array
-    {
-        return [
+        return match ($this) {
             self::IMPORTANCE_NONE => Yii::t('app', 'IMPORTANCE_NONE'),
             self::IMPORTANCE_LOW => Yii::t('app', 'IMPORTANCE_LOW'),
             self::IMPORTANCE_MEDIUM => Yii::t('app', 'IMPORTANCE_MEDIUM'),
             self::IMPORTANCE_HIGH => Yii::t('app', 'IMPORTANCE_HIGH'),
             self::IMPORTANCE_EXTREME => Yii::t('app', 'IMPORTANCE_EXTREME'),
-        ];
+        };
     }
 
-    /**
-     * @return string[]
-     */
-    static private function importanceNamesWithDescriptions(): array
+    public function getNameWithDescription(): string
     {
-        $descriptions = self::importanceNamesDescriptions();
-
-        $namesWithDescriptions = self::importanceNamesSimple();
-
-        array_walk($namesWithDescriptions, function (string &$name, string $key) use ($descriptions) {
-            $name .= ' (' . $descriptions[$key] . ')';
-        });
-
-        return $namesWithDescriptions;
+        return $this->getName() . ' (' . $this->getDescription() . ')';
     }
 
     /**
@@ -95,13 +42,11 @@ final class ImportanceCategory
      */
     static public function importanceNames(bool $includeDescriptions = false): array
     {
-        $names = $includeDescriptions ? self::importanceNamesWithDescriptions() : self::importanceNamesSimple();
+        $names = [];
 
-        $allowed = self::allowedImportance();
-
-        foreach ($names as $key => $name) {
-            if (!in_array($key, $allowed)) {
-                unset($names[$key]);
+        foreach (ImportanceCategory::cases() as $case) {
+            if (in_array($case, self::allowedImportance())) {
+                $names[$case->value] = $includeDescriptions ? $case->getNameWithDescription() : $case->getName();
             }
         }
 
@@ -109,11 +54,11 @@ final class ImportanceCategory
     }
 
     /**
-     * Lists allowed importance
+     * Lists of allowed importance types
      *
      * @return string[]
      */
-    static public function allowedImportance(): array
+    static private function allowedImportance(): array
     {
         return [
             self::IMPORTANCE_NONE,
@@ -125,55 +70,57 @@ final class ImportanceCategory
     }
 
     /**
-     * Provides importance name in lowercase
+     * Provides importance names in lowercase
+     *
      * @return string
      */
     public function getNameLowercase(): string
     {
-        $names = self::importanceNamesLowercase();
-        return $names[$this->importance] ?? '?';
-    }
-
-    /**
-     * Provides importance names in lowercase
-     *
-     * @return string[]
-     */
-    static public function importanceNamesLowercase(): array
-    {
-        return [
+        return match ($this) {
             self::IMPORTANCE_NONE => Yii::t('app', 'IMPORTANCE_NONE_LOWERCASE'),
             self::IMPORTANCE_LOW => Yii::t('app', 'IMPORTANCE_LOW_LOWERCASE'),
             self::IMPORTANCE_MEDIUM => Yii::t('app', 'IMPORTANCE_MEDIUM_LOWERCASE'),
             self::IMPORTANCE_HIGH => Yii::t('app', 'IMPORTANCE_HIGH_LOWERCASE'),
             self::IMPORTANCE_EXTREME => Yii::t('app', 'IMPORTANCE_EXTREME_LOWERCASE'),
-        ];
+        };
     }
 
     /**
      * Provides importance names' descriptions
      *
-     * @return string[]
+     * @return string
      */
-    static public function importanceNamesDescriptions(): array
+    public function getDescription(): string
     {
-        return [
+        return match ($this) {
             self::IMPORTANCE_NONE => Yii::t('app', 'IMPORTANCE_NONE_DESCRIPTION'),
             self::IMPORTANCE_LOW => Yii::t('app', 'IMPORTANCE_LOW_DESCRIPTION'),
             self::IMPORTANCE_MEDIUM => Yii::t('app', 'IMPORTANCE_MEDIUM_DESCRIPTION'),
             self::IMPORTANCE_HIGH => Yii::t('app', 'IMPORTANCE_HIGH_DESCRIPTION'),
             self::IMPORTANCE_EXTREME => Yii::t('app', 'IMPORTANCE_EXTREME_DESCRIPTION'),
-        ];
+        };
     }
 
     public function minimum(): int
     {
-        return self::MINIMUMS[$this->importance];
+        return match ($this) {
+            self::IMPORTANCE_NONE => 1,
+            self::IMPORTANCE_LOW => 1,
+            self::IMPORTANCE_MEDIUM => 2,
+            self::IMPORTANCE_HIGH => 3,
+            self::IMPORTANCE_EXTREME => 5,
+        };
     }
 
     public function maximum(): int
     {
-        return self::MAXIMUMS[$this->importance];
+        return match ($this) {
+            self::IMPORTANCE_NONE => 3,
+            self::IMPORTANCE_LOW => 5,
+            self::IMPORTANCE_MEDIUM => 8,
+            self::IMPORTANCE_HIGH => 13,
+            self::IMPORTANCE_EXTREME => 21,
+        };
     }
 
     /**
