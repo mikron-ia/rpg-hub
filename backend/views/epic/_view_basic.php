@@ -3,6 +3,7 @@
 use common\models\Parameter;
 use common\models\Participant;
 use yii\bootstrap\Modal;
+use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -61,7 +62,7 @@ use yii\widgets\DetailView;
 
     </div>
 
-    <div class="col-lg-3">
+    <div class="col-lg-6">
         <h2><?= Yii::t('app', 'EPIC_BASIC') ?></h2>
         <?= DetailView::widget([
             'model' => $model,
@@ -76,72 +77,46 @@ use yii\widgets\DetailView;
     <div class="col-lg-6">
 
         <div class="buttoned-header">
-            <h2><?= Yii::t('app', 'PARAMETER_TITLE_INDEX') ?></h2>
+            <h2><?= Yii::t('app', 'EPIC_CARD_PARTICIPANTS'); ?></h2>
             <?= Html::a(
-                '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_PARAMETER_CREATE') . '</span>',
-                '#',
-                [
-                    'class' => 'create-parameter-link',
-                    'title' => Yii::t('app', 'BUTTON_PARAMETER_CREATE'),
-                    'data-toggle' => 'modal',
-                    'data-target' => '#create-parameter-modal'
-                ]
+                '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_PARTICIPANT_ADD') . '</span>',
+                ['participant-add', 'epic_id' => $model->epic_id],
+                ['title' => Yii::t('app', 'BUTTON_PARTICIPANT_ADD')]
             ); ?>
         </div>
 
         <?= GridView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider(['query' => Parameter::find()->where(['parameter_pack_id' => $model->parameter_pack_id])]),
+            'dataProvider' => new ActiveDataProvider(['query' => $model->getParticipants()]),
             'summary' => '',
             'columns' => [
                 [
-                    'attribute' => 'code',
+                    'attribute' => 'user.username',
+                    'label' => Yii::t('app', 'EPIC_CARD_USERNAME'),
                     'enableSorting' => false,
-                    'value' => function (Parameter $model) {
-                        return $model->getCodeName();
-                    },
                 ],
                 [
-                    'attribute' => 'visibility',
+                    'attribute' => 'role',
+                    'label' => Yii::t('app', 'EPIC_CARD_ROLE'),
                     'enableSorting' => false,
-                    'value' => function (Parameter $model) {
-                        return $model->getVisibilityName();
-                    },
-                ],
-                [
-                    'attribute' => 'content',
-                    'enableSorting' => false,
+                    'value' => function (Participant $model) {
+                        return implode(', ', $model->getRolesList());
+                    }
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{update} {delete}',
+                    'template' => '{update}',
                     'buttons' => [
-                        'update' => function ($url, Parameter $model, $key) {
-                            return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
-                                'class' => 'update-parameter-link',
-                                'title' => Yii::t('app', 'LABEL_UPDATE'),
-                                'data-toggle' => 'modal',
-                                'data-target' => '#update-parameter-modal',
-                                'data-id' => $key,
-                            ]);
-                        },
-                        'delete' => function ($url, Parameter $model, $key) {
+                        'update' => function ($url, Participant $model, $key) {
                             return Html::a(
-                                '<span class="glyphicon glyphicon-erase"></span>',
-                                ['parameter/delete', 'id' => $model->parameter_id],
-                                [
-                                    'title' => Yii::t('app', 'LABEL_DELETE'),
-                                    'data-confirm' => Yii::t(
-                                        'app',
-                                        'CONFIRMATION_DELETE {name}',
-                                        ['name' => $model->getCodeName()]
-                                    ),
-                                    'data-method' => 'post',
-                                ]);
-                        }
-                    ]
+                                '<span class="glyphicon glyphicon-pencil"></span>',
+                                ['participant-edit', 'participant_id' => $model->participant_id],
+                                ['title' => Yii::t('app', 'LABEL_UPDATE')]);
+                        },
+                    ],
                 ],
             ],
         ]); ?>
+
     </div>
 
     <?php Modal::begin([
@@ -193,49 +168,76 @@ use yii\widgets\DetailView;
     );
     ?>
 
-    <div class="col-lg-3">
+    <div class="col-lg-12">
 
         <div class="buttoned-header">
-            <h2><?= Yii::t('app', 'EPIC_CARD_PARTICIPANTS'); ?></h2>
+            <h2><?= Yii::t('app', 'PARAMETER_TITLE_INDEX') ?></h2>
             <?= Html::a(
-                '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_PARTICIPANT_ADD') . '</span>',
-                ['participant-add', 'epic_id' => $model->epic_id],
-                ['title' => Yii::t('app', 'BUTTON_PARTICIPANT_ADD')]
+                '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_PARAMETER_CREATE') . '</span>',
+                '#',
+                [
+                    'class' => 'create-parameter-link',
+                    'title' => Yii::t('app', 'BUTTON_PARAMETER_CREATE'),
+                    'data-toggle' => 'modal',
+                    'data-target' => '#create-parameter-modal'
+                ]
             ); ?>
         </div>
 
         <?= GridView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider(['query' => $model->getParticipants()]),
+            'dataProvider' => new ActiveDataProvider(['query' => Parameter::find()->where(['parameter_pack_id' => $model->parameter_pack_id])]),
             'summary' => '',
+            'options' => ['style' => 'table-layout: fixed'],
             'columns' => [
                 [
-                    'attribute' => 'user.username',
-                    'label' => Yii::t('app', 'EPIC_CARD_USERNAME'),
+                    'attribute' => 'code',
                     'enableSorting' => false,
+                    'value' => function (Parameter $model) {
+                        return $model->getCodeName();
+                    },
                 ],
                 [
-                    'attribute' => 'role',
-                    'label' => Yii::t('app', 'EPIC_CARD_ROLE'),
+                    'attribute' => 'visibility',
                     'enableSorting' => false,
-                    'value' => function (Participant $model) {
-                        return implode(', ', $model->getRolesList());
-                    }
+                    'value' => function (Parameter $model) {
+                        return $model->getVisibilityName();
+                    },
+                ],
+                [
+                    'attribute' => 'content',
+                    'enableSorting' => false,
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{update}',
+                    'template' => '{update} {delete}',
                     'buttons' => [
-                        'update' => function ($url, Participant $model, $key) {
-                            return Html::a(
-                                '<span class="glyphicon glyphicon-pencil"></span>',
-                                ['participant-edit', 'participant_id' => $model->participant_id],
-                                ['title' => Yii::t('app', 'LABEL_UPDATE')]);
+                        'update' => function ($url, Parameter $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
+                                'class' => 'update-parameter-link',
+                                'title' => Yii::t('app', 'LABEL_UPDATE'),
+                                'data-toggle' => 'modal',
+                                'data-target' => '#update-parameter-modal',
+                                'data-id' => $key,
+                            ]);
                         },
-                    ],
+                        'delete' => function ($url, Parameter $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-erase"></span>',
+                                ['parameter/delete', 'id' => $model->parameter_id],
+                                [
+                                    'title' => Yii::t('app', 'LABEL_DELETE'),
+                                    'data-confirm' => Yii::t(
+                                        'app',
+                                        'CONFIRMATION_DELETE {name}',
+                                        ['name' => $model->getCodeName()]
+                                    ),
+                                    'data-method' => 'post',
+                                ]);
+                        }
+                    ]
                 ],
             ],
         ]); ?>
-
     </div>
 
     <?php Modal::begin([
