@@ -69,7 +69,18 @@ use yii\widgets\DetailView;
             'attributes' => [
                 'key',
                 'system',
-                ['attribute' => 'status', 'value' => $model->getStatus()]
+                ['attribute' => 'status', 'value' => $model->getStatus()],
+                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_STORIES'), 'value' => count($model->stories)],
+                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_CHARACTERS'), 'value' => count($model->people)],
+                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_GROUPS'), 'value' => count($model->groups)],
+                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_CHARACTER_SHEETS'), 'value' => count($model->characters)],
+                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_RECAPS'), 'value' => count($model->recaps)],
+                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_POINTS_IN_TIME'), 'value' => count($model->pointsInTime)],
+                [
+                    'label' => Yii::t('app', 'EPIC_BASIC_COUNT_SESSIONS'),
+                    'value' => $model->getGameCountByStatus('closed') . ' / ' . count($model->games),
+                ],
+                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_ARTICLES'), 'value' => count($model->articles)],
             ],
         ]) ?>
     </div>

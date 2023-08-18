@@ -33,6 +33,8 @@ use yii\web\HttpException;
  * @property UtilityBag $utilityBag
  * @property User[] $gms
  * @property User[] $players
+ * @property Article[] $articles
+ * @property Game[] $games
  * @property Group[] $groups
  * @property Participant[] $participants
  * @property User[] $users
@@ -270,6 +272,11 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
                 'className' => 'Epic',
             ]
         ];
+    }
+
+    public function getArticles(): ActiveQuery
+    {
+        return $this->hasMany(Article::class, ['epic_id' => 'epic_id']);
     }
 
     /**
@@ -678,6 +685,13 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     public function getEpic()
     {
         return Epic::find()->where(['epic_id' => $this->epic_id]);
+    }
+
+    public function getGameCountByStatus(string $status): int
+    {
+        return count(array_filter($this->games, function (Game $game) use ($status) {
+            return $game->status == $status;
+        }));
     }
 
     /**
