@@ -286,6 +286,8 @@ return [
     'EXTERNAL_DATA_PACK' => 'Pakiet danych zewnętrznych',
     'EXTERNAL_DATA_TITLE {name}' => 'Pakiet danych zewnętrznych dla: {name}',
     'EXTERNAL_DATA_UPDATE_TITLE' => 'Modyfikacja danych zewnętrznych',
+    'FAVORITE_STAR_TITLE_NO' => 'Klinij, by dodać do ulubionych',
+    'FAVORITE_STAR_TITLE_YES' => 'W ulubionych; kliknij, by usunąć z ulubionych',
     'FLAG_ID' => 'ID',
     'FLAG_STATUS' => 'Status',
     'FLAG_TYPE' => 'Typ',

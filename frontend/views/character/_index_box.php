@@ -29,7 +29,11 @@ switch ($model->visibility) {
         break;
 }
 
+$favorite = !rand(0, 4); // to be replaced by an actual value based on the database record
+
 $classesForBox = 'index-box' . ($additionalBoxClasses ? ' ' . $additionalBoxClasses : '');
+$favoriteClass = $favorite ? 'glyphicon-star' : 'glyphicon-star-empty';
+$favoriteTitle = $favorite ? Yii::t('app', 'FAVORITE_STAR_TITLE_YES') : Yii::t('app', 'FAVORITE_STAR_TITLE_NO');
 $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleText : '');
 
 ?>
@@ -42,6 +46,8 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
             ['view', 'key' => $model->key]
         ); ?>
     </h3>
+
+    <span class="favorite-star favorite-star glyphicon <?= $favoriteClass ?>" title="<?= $favoriteTitle ?>"></span>
 
     <p class="subtitle">
         <?= StringHelper::truncateWords($model->tagline, 16, ' (...)', false) ?>
