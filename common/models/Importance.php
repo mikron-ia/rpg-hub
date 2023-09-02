@@ -83,7 +83,7 @@ class Importance extends ActiveRecord
         $measuredObject = $this->importancePack->getControllingObject();
 
         $valueFromSeen = $this->determineValueBasedOnSeen($measuredObject->getSeenStatusForUser($this->user->id));
-        $valueFromCategory = $this->determineValueBasedOnImportanceCategory($measuredObject->getImportanceCategoryCode());
+        $valueFromCategory = $this->determineValueBasedOnImportanceCategory($measuredObject->getImportanceCategoryObject());
         $valueFromLastModified = $this->determineValueBasedOnDate($measuredObject->getLastModified(), 8);
 
         return $valueFromLastModified + $valueFromCategory + $valueFromSeen;
@@ -113,12 +113,7 @@ class Importance extends ActiveRecord
         };
     }
 
-    /**
-     * @param string $importanceCategory Importance category code
-     *
-     * @return int
-     */
-    private function determineValueBasedOnImportanceCategory(string $importanceCategory): int
+    private function determineValueBasedOnImportanceCategory(ImportanceCategory $importanceCategory): int
     {
         return match ($importanceCategory) {
             ImportanceCategory::IMPORTANCE_EXTREME => 64,
@@ -126,7 +121,6 @@ class Importance extends ActiveRecord
             ImportanceCategory::IMPORTANCE_MEDIUM => 16,
             ImportanceCategory::IMPORTANCE_LOW => 8,
             ImportanceCategory::IMPORTANCE_NONE => 0,
-            default => 0,
         };
     }
 

@@ -9,10 +9,11 @@ namespace common\models\core;
 interface HasImportance
 {
     /**
-     * Provides importance category in raw form of a code
-     * @return string
+     * Provides importance category
+     *
+     * @return ImportanceCategory
      */
-    public function getImportanceCategoryCode(): string;
+    public function getImportanceCategoryObject(): ImportanceCategory;
 
     /**
      * Provides the moment of most recent modification of the object
