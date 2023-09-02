@@ -40,14 +40,14 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
 
 <div id="character-<?php echo $model->key; ?>" class="<?= $classesForBox ?>" title="<?= $titleText ?>">
 
-    <h3 class="center">
+    <h3 class="index-box-header-narrow">
         <?= Html::a(
             Html::encode(StringHelper::truncateWords($model->name, 16, ' (...)', false)),
             ['view', 'key' => $model->key]
         ); ?>
     </h3>
 
-    <span class="favorite-star favorite-star glyphicon <?= $favoriteClass ?>" title="<?= $favoriteTitle ?>"></span>
+    <span class="index-box-header-icon glyphicon <?= $favoriteClass ?>" title="<?= $favoriteTitle ?>"></span>
 
     <p class="subtitle">
         <?= StringHelper::truncateWords($model->tagline, 16, ' (...)', false) ?>
