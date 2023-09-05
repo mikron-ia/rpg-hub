@@ -76,7 +76,7 @@ class GroupController extends Controller
         }
 
         $searchModel = new GroupQuery(self::POSITIONS_PER_PAGE);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchForUser(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

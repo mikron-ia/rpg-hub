@@ -63,7 +63,7 @@ final class GroupController extends Controller
         }
 
         $searchModel = new GroupQuery(self::POSITIONS_PER_PAGE);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams); // todo switch to searchForOperator() once Group has updated_at field; see issue #379
 
         return $this->render('index', [
             'searchModel' => $searchModel,
