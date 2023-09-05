@@ -15,18 +15,15 @@ final class GroupQuery extends Group
 {
     use ToolsForImportanceInQueries;
 
-    /**
-     * @var int
-     */
-    private $pageCount;
+    private int $pageCount;
 
-    public function __construct($pagination = 24, array $config = [])
+    public function __construct(int $pagination = 24, array $config = [])
     {
         $this->pageCount = $pagination;
         parent::__construct($config);
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['group_id', 'epic_id'], 'integer'],
@@ -34,17 +31,19 @@ final class GroupQuery extends Group
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
 
     /**
      * Creates data provider instance with search query applied
+     *
      * @param array $params
+     *
      * @return ActiveDataProvider
      */
-    public function search($params): ActiveDataProvider
+    public function search(array $params): ActiveDataProvider
     {
         $query = Group::find()->joinWith('seenPack', true, 'LEFT JOIN');
 
@@ -99,7 +98,10 @@ final class GroupQuery extends Group
         return $this->setUpSearchForOperator($this->search($params));
     }
 
-    static public function getAllFromCurrentEpicForSelector()
+    /**
+     * @return string[]
+     */
+    static public function getAllFromCurrentEpicForSelector(): array
     {
         $query = Group::find();
 

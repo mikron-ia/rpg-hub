@@ -9,6 +9,13 @@ use yii\db\ActiveQuery;
 
 trait ToolsForImportanceInQueries
 {
+    /**
+     * Adds sorting by importance to the data provider
+     *
+     * @param ActiveDataProvider $search
+     *
+     * @return ActiveDataProvider
+     */
     private function setUpSearchForUser(ActiveDataProvider $search): ActiveDataProvider
     {
         $search->query->joinWith([
@@ -20,6 +27,12 @@ trait ToolsForImportanceInQueries
         return $search;
     }
 
+    /**
+     * Adds sorting by last update to the data provider
+     *
+     * @param ActiveDataProvider $search
+     * @return ActiveDataProvider
+     */
     private function setUpSearchForOperator(ActiveDataProvider $search): ActiveDataProvider
     {
         $search->sort = ['defaultOrder' => ['updated_at' => SORT_DESC]];
@@ -27,6 +40,12 @@ trait ToolsForImportanceInQueries
         return $search;
     }
 
+    /**
+     * Sets up the basic query - checks for Epic, filters by Epic and visibility
+     *
+     * @param ActiveQuery $query
+     * @return ActiveQuery
+     */
     private function setUpQuery(ActiveQuery $query): ActiveQuery
     {
         if (empty(Yii::$app->params['activeEpic'])) {

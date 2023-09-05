@@ -11,7 +11,7 @@ use yii\data\ActiveDataProvider;
  */
 class GameQuery extends Game
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             [['game_id', 'epic_id', 'position'], 'integer'],
@@ -19,7 +19,7 @@ class GameQuery extends Game
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
@@ -31,7 +31,7 @@ class GameQuery extends Game
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params): ActiveDataProvider
     {
         $query = Game::find();
 
