@@ -33,12 +33,12 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     const STATUS_REJECTED = 'rejected';
     const STATUS_USED = 'used';
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'scenario';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['epic_id', 'name'], 'required'],
@@ -83,7 +83,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
         return parent::beforeSave($insert);
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'scenario_id' => Yii::t('app', 'SCENARIO_ID'),

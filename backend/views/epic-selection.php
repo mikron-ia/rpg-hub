@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 
 use yii\bootstrap\Html;
+use yii\helpers\Url;
 
 $this->title = 'RPG hub - control';
 
@@ -35,7 +36,17 @@ foreach ($epics as $epic) {
 
         <h1><?= Yii::t('app', 'BACKEND_FRONT_PAGE_TITLE'); ?></h1>
 
-        <p class="lead text-center"><?= Yii::t('app', 'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC'); ?></p>
+        <p class="lead text-center">
+            <?php if (empty($items)): ?>
+                <?= Yii::t(
+                    'app',
+                    'BACKEND_FRONT_PAGE_MAIN_EMPTY_EPIC_LIST {link}',
+                    ['link' => Url::to(['epic/index'])],
+                ); ?>
+            <?php else: ?>
+                <?= Yii::t('app', 'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC'); ?>
+            <?php endif; ?>
+        </p>
 
         <div class="site-index">
 

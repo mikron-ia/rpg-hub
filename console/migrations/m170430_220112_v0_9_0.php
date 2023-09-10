@@ -28,7 +28,11 @@ class m170430_220112_v0_9_0 extends Migration
         $this->addForeignKey('article_seen', 'article', 'seen_pack_id', 'seen_pack', 'seen_pack_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('article_description', 'article', 'description_pack_id', 'description_pack', 'description_pack_id', 'RESTRICT', 'CASCADE');
 
-        $this->addColumn('character', 'importance_category', $this->string(20)->notNull()->defaultValue(ImportanceCategory::IMPORTANCE_MEDIUM)->after('importance'));
+        $this->addColumn(
+            'character',
+            'importance_category',
+            $this->string(20)->notNull()->defaultValue(ImportanceCategory::IMPORTANCE_MEDIUM->value)->after('importance')
+        );
         $this->execute("UPDATE `character` SET importance_category = importance");
         $this->dropColumn('character', 'importance');
 
@@ -57,7 +61,15 @@ class m170430_220112_v0_9_0 extends Migration
         $this->addForeignKey('character_importance_pack', '{{%character}}', 'importance_pack_id', '{{%importance_pack}}', 'importance_pack_id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('group_importance_pack', '{{%group}}', 'importance_pack_id', '{{%importance_pack}}', 'importance_pack_id', 'RESTRICT', 'CASCADE');
 
-        $this->addColumn('group', 'importance_category', $this->string(20)->notNull()->defaultValue(ImportanceCategory::IMPORTANCE_MEDIUM)->after('visibility'));
+        $this->addColumn(
+            'group',
+            'importance_category',
+            $this
+                ->string(20)
+                ->notNull()
+                ->defaultValue(ImportanceCategory::IMPORTANCE_MEDIUM->value)
+                ->after('visibility')
+        );
     }
 
     public function down()
@@ -76,7 +88,11 @@ class m170430_220112_v0_9_0 extends Migration
         $this->dropForeignKey('group_external_data', 'group');
         $this->dropColumn('group', 'external_data_pack_id');
 
-        $this->addColumn('character', 'importance', $this->string(20)->notNull()->defaultValue(ImportanceCategory::IMPORTANCE_MEDIUM)->after('visibility'));
+        $this->addColumn(
+            'character',
+            'importance',
+            $this->string(20)->notNull()->defaultValue(ImportanceCategory::IMPORTANCE_MEDIUM->value)->after('visibility')
+        );
         $this->execute("UPDATE `character` SET importance = importance_category");
         $this->dropColumn('character', 'importance_category');
 

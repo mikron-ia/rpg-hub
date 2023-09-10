@@ -11,7 +11,7 @@ use yii\data\ActiveDataProvider;
  */
 final class CharacterSheetQuery extends CharacterSheet
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             [['character_sheet_id', 'epic_id'], 'integer'],
@@ -19,7 +19,7 @@ final class CharacterSheetQuery extends CharacterSheet
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
@@ -27,10 +27,12 @@ final class CharacterSheetQuery extends CharacterSheet
 
     /**
      * Creates data provider instance with search query applied
+     *
      * @param array $params
+     *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params): ActiveDataProvider
     {
         $query = CharacterSheet::find();
 
@@ -70,11 +72,12 @@ final class CharacterSheetQuery extends CharacterSheet
         return $dataProvider;
     }
 
-    public function searchForFront($params)
+    public function searchForFront(array $params): ActiveDataProvider
     {
         $search = $this->search($params);
 
-        if (!Participant::participantHasRole(Yii::$app->user->identity, Yii::$app->params['activeEpic'], ParticipantRole::ROLE_GM)) {
+        if (!Participant::participantHasRole(Yii::$app->user->identity, Yii::$app->params['activeEpic'],
+            ParticipantRole::ROLE_GM)) {
             $search->query->andWhere(['player_id' => Yii::$app->user->id]);
         }
 
@@ -83,9 +86,10 @@ final class CharacterSheetQuery extends CharacterSheet
 
     /**
      * Provides all active characters from the current epic
+     *
      * @return CharacterSheet[]
      */
-    static public function activeCharactersAsModels()
+    static public function activeCharactersAsModels(): array
     {
         $query = CharacterSheet::find();
 
@@ -109,7 +113,7 @@ final class CharacterSheetQuery extends CharacterSheet
     /**
      * @return string[]
      */
-    static public function getListOfCharactersForSelector()
+    static public function getListOfCharactersForSelector(): array
     {
         $characterList = self::activeCharactersAsModels();
 
@@ -126,7 +130,7 @@ final class CharacterSheetQuery extends CharacterSheet
     /**
      * @return int[]
      */
-    static public function allowedCharacters()
+    static public function allowedCharacters(): array
     {
         return array_keys(self::activeCharactersAsModels());
     }

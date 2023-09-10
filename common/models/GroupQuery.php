@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\core\Visibility;
+use common\models\tools\ToolsForImportanceInQueries;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -12,18 +13,17 @@ use yii\data\ActiveDataProvider;
  */
 final class GroupQuery extends Group
 {
-    /**
-     * @var int
-     */
-    private $pageCount;
+    use ToolsForImportanceInQueries;
 
-    public function __construct($pagination = 24, array $config = [])
+    private int $pageCount;
+
+    public function __construct(int $pagination = 24, array $config = [])
     {
         $this->pageCount = $pagination;
         parent::__construct($config);
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['group_id', 'epic_id'], 'integer'],
@@ -31,29 +31,23 @@ final class GroupQuery extends Group
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
 
     /**
      * Creates data provider instance with search query applied
+     *
      * @param array $params
+     *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params): ActiveDataProvider
     {
         $query = Group::find()->joinWith('seenPack', true, 'LEFT JOIN');
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-            $query->where('0=1');
-        } else {
-            $query->andWhere([
-                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-                'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
-            ]);
-        }
+        $this->setUpQuery($query);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -80,7 +74,34 @@ final class GroupQuery extends Group
         return $dataProvider;
     }
 
-    static public function getAllFromCurrentEpicForSelector()
+    /**
+     * Creates data provider instance with search query applied and applies default order according to importance
+     * This list is more suitable for front section
+     *
+     * @param array $params
+     * @return ActiveDataProvider
+     */
+    public function searchForUser(array $params): ActiveDataProvider
+    {
+        return $this->setUpSearchForUser($this->search($params));
+    }
+
+    /**
+     * Creates data provider instance with search query applied and applies default order according to time of the last modification
+     * This list is more suitable for operator section
+     *
+     * @param array $params
+     * @return ActiveDataProvider
+     */
+    public function searchForOperator(array $params): ActiveDataProvider
+    {
+        return $this->setUpSearchForOperator($this->search($params));
+    }
+
+    /**
+     * @return string[]
+     */
+    static public function getAllFromCurrentEpicForSelector(): array
     {
         $query = Group::find();
 

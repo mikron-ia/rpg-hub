@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\core\Visibility;
+use common\models\tools\ToolsForImportanceInQueries;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -12,18 +13,17 @@ use yii\data\ActiveDataProvider;
  */
 final class CharacterQuery extends Character
 {
-    /**
-     * @var int
-     */
-    private $pageCount;
+    use ToolsForImportanceInQueries;
 
-    public function __construct($pagination = 24, array $config = [])
+    private int $pageCount;
+
+    public function __construct(int $pagination = 24, array $config = [])
     {
         $this->pageCount = $pagination;
         parent::__construct($config);
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['character_id', 'character_sheet_id'], 'integer'],
@@ -31,33 +31,26 @@ final class CharacterQuery extends Character
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
 
     /**
      * Creates data provider instance with search query applied
+     *
      * @param array $params
+     *
      * @return ActiveDataProvider
      */
-    public function search($params): ActiveDataProvider
+    public function search(array $params): ActiveDataProvider
     {
         $query = Character::find()->joinWith('seenPack', true, 'LEFT JOIN');
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-            $query->where('0=1');
-        } else {
-            $query->andWhere([
-                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-                'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
-            ]);
-        }
+        $this->setUpQuery($query);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['importance_category' => SORT_ASC]],
             'pagination' => ['pageSize' => $this->pageCount],
         ]);
 
@@ -78,35 +71,25 @@ final class CharacterQuery extends Character
     /**
      * Creates data provider instance with search query applied and applies default order according to importance
      * This list is more suitable for front section
+     *
      * @param array $params
      * @return ActiveDataProvider
      */
-    public function searchForUser($params): ActiveDataProvider
+    public function searchForUser(array $params): ActiveDataProvider
     {
-        $search = $this->search($params);
-
-        $search->query->joinWith([
-            'importancePack.importances' => function ($query) {
-                $query->orderBy(['importance' => SORT_DESC]);
-            }
-        ])->andWhere(['user_id' => Yii::$app->user->id]);
-
-        return $search;
+        return $this->setUpSearchForUser($this->search($params));
     }
 
     /**
      * Creates data provider instance with search query applied and applies default order according to time of the last modification
      * This list is more suitable for operator section
+     *
      * @param array $params
      * @return ActiveDataProvider
      */
-    public function searchForOperator($params): ActiveDataProvider
+    public function searchForOperator(array $params): ActiveDataProvider
     {
-        $search = $this->search($params);
-
-        $search->sort = ['defaultOrder' => ['updated_at' => SORT_DESC]];
-
-        return $search;
+        return $this->setUpSearchForOperator($this->search($params));
     }
 
     /**
