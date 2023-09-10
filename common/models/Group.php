@@ -15,6 +15,7 @@ use common\models\external\HasReputations;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
@@ -30,6 +31,7 @@ use yii\helpers\Html;
  * @property string $seen_pack_id
  * @property string $visibility
  * @property string $importance_category
+ * @property string $updated_at
  * @property string $description_pack_id
  * @property string $external_data_pack_id
  * @property string $importance_pack_id
@@ -102,6 +104,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             'data' => Yii::t('app', 'GROUP_DATA'),
             'visibility' => Yii::t('app', 'GROUP_VISIBILITY'),
             'importance_category' => Yii::t('app', 'GROUP_IMPORTANCE'),
+            'updated_at' => Yii::t('app', 'GROUP_UPDATED_AT'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
             'importance_pack_id' => Yii::t('app', 'IMPORTANCE_PACK'),
@@ -182,7 +185,11 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
                 'class' => PerformedActionBehavior::class,
                 'idName' => 'group_id',
                 'className' => 'Group',
-            ]
+            ],
+            'timestampBehavior' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => null,
+            ],
         ];
     }
 
@@ -422,8 +429,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
 
     public function getLastModified(): \DateTimeImmutable
     {
-        /* @todo Implement update date on object */
-        return new \DateTimeImmutable('now');
+        return new \DateTimeImmutable(date("Y-m-d H:i:s", $this->updated_at));
     }
 
     public function getSeenStatusForUser(int $userId): string

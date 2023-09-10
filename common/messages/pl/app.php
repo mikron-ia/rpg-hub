@@ -361,6 +361,7 @@ return [
     'GROUP_NOT_AVAILABLE' => 'Grupa niedostępna',
     'GROUP_STATISTICS' => 'Dane techniczne',
     'GROUP_SUBGROUPS' => 'Grupy podrzędne',
+    'GROUP_UPDATED_AT' => 'Zmieniano',
     'GROUP_VISIBILITY' => 'Widoczność',
     'GROUP_WITHOUT_MASTER' => 'Brak grupy nadrzędnej',
     'GROUP_WITHOUT_SUBGROUPS' => 'Brak grup podrzędnych',
