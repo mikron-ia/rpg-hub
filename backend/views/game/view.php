@@ -41,6 +41,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'raw',
                         'value' => Html::a($model->epic->name, ['epic/view', 'key' => $model->epic->key], []),
                     ],
+                    'planned_date',
+                    'planned_location',
                     [
                         'attribute' => 'recap_id',
                         'format' => 'raw',

@@ -20,6 +20,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $epic_id
  * @property string $basics
  * @property string $planned_date
+ * @property string $planned_location
  * @property string $status
  * @property int $position
  * @property string $notes
@@ -56,9 +57,10 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
             [['epic_id'], 'required'],
             [['epic_id', 'position', 'recap_id', 'utility_bag_id'], 'integer'],
             [['planned_date'], 'safe'],
-            [['planned_date'], 'default', 'value' => null],
+            [['planned_date', 'planned_location'], 'default', 'value' => null],
             [['notes'], 'string'],
             [['basics'], 'string', 'max' => 255],
+            [['planned_location'], 'string', 'max' => 80],
             [['status'], 'string', 'max' => 20],
             [
                 ['status'],
@@ -102,6 +104,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
             'epic_id' => Yii::t('app', 'LABEL_EPIC'),
             'basics' => Yii::t('app', 'GAME_BASICS'),
             'planned_date' => Yii::t('app', 'GAME_PLANNED_DATE'),
+            'planned_location' => Yii::t('app', 'GAME_PLANNED_LOCATION'),
             'status' => Yii::t('app', 'GAME_STATUS'),
             'position' => Yii::t('app', 'GAME_POSITION'),
             'notes' => Yii::t('app', 'GAME_NOTES'),

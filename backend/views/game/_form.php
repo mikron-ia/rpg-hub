@@ -19,7 +19,7 @@ GameAsset::register($this);
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-6 col-lg-3">
+    <div class="col-md-6 col-lg-4">
         <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
     </div>
 
@@ -29,7 +29,14 @@ GameAsset::register($this);
         ?>
     </div>
 
-    <div class="col-md-6 col-lg-2">
+    <div class="col-md-6 col-lg-6">
+        <?= $form->field($model, 'recap_id')->dropDownList(
+            RecapQuery::allFromCurrentEpicForSelector(),
+            ['prompt' => ' --- ' . Yii::t('app', 'RECAP_PROMPT') . ' --- ']
+        ) ?>
+    </div>
+
+    <div class="col-md-6 col-lg-6">
         <?= $form->field($model, 'planned_date')->widget(
             DatePicker::class,
             [
@@ -43,11 +50,8 @@ GameAsset::register($this);
         ) ?>
     </div>
 
-    <div class="col-md-6 col-lg-5">
-        <?= $form->field($model, 'recap_id')->dropDownList(
-            RecapQuery::allFromCurrentEpicForSelector(),
-            ['prompt' => ' --- ' . Yii::t('app', 'RECAP_PROMPT') . ' --- ']
-        ) ?>
+    <div class="col-md-12 col-lg-6">
+        <?= $form->field($model, 'planned_location') ?>
     </div>
 
     <div class="col-md-5">

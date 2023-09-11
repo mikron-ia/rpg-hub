@@ -320,6 +320,7 @@ return [
     'GAME_ID' => 'ID',
     'GAME_NOTES' => 'Notatki',
     'GAME_PLANNED_DATE' => 'Planowana data',
+    'GAME_PLANNED_LOCATION' => 'Planowane miejsce',
     'GAME_POSITION' => 'Pozycja',
     'GAME_SESSION_NOT_AVAILABLE' => 'Sesja niedostępna',
     'GAME_STATUS' => 'Status',
