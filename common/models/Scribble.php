@@ -36,10 +36,10 @@ class Scribble extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'scribble_id' => Yii::t('app', 'Scribble ID'),
-            'scribble_pack_id' => Yii::t('app', 'Scribble Pack ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'favorite' => Yii::t('app', 'Favorite'),
+            'scribble_id' => Yii::t('app', 'SCRIBBLE_ID'),
+            'scribble_pack_id' => Yii::t('app', 'SCRIBBLE_PACK'),
+            'user_id' => Yii::t('app', 'USER_LABEL'),
+            'favorite' => Yii::t('app', 'SCRIBBLE_IS_FAVORITE'),
         ];
     }
 
