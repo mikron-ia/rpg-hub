@@ -36,6 +36,7 @@ use yii\helpers\Html;
  * @property string $external_data_pack_id
  * @property string $importance_pack_id
  * @property string $master_group_id
+ * @property int|null $scribble_pack_id
  * @property string $utility_bag_id
  *
  * @property DescriptionPack $descriptionPack
@@ -83,6 +84,13 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
                     return $this->allowedVisibilities();
                 }
             ],
+            [
+                ['scribble_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => ScribblePack::class,
+                'targetAttribute' => ['scribble_pack_id' => 'scribble_pack_id']
+            ],
         ];
     }
 
@@ -109,6 +117,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
             'importance_pack_id' => Yii::t('app', 'IMPORTANCE_PACK'),
             'master_group_id' => Yii::t('app', 'GROUP_MASTER_GROUP'),
+            'scribble_pack_id' => Yii::t('app', 'SCRIBBLE_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
     }
@@ -220,6 +229,16 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public function getImportancePack()
     {
         return $this->hasOne(ImportancePack::class, ['importance_pack_id' => 'importance_pack_id']);
+    }
+
+    /**
+     * Gets query for [[ScribblePack]].
+     *
+     * @return \yii\db\ActiveQuery|ScribblePackQuery
+     */
+    public function getScribblePack(): ActiveQuery|ScribblePackQuery
+    {
+        return $this->hasOne(ScribblePack::class, ['scribble_pack_id' => 'scribble_pack_id']);
     }
 
     /**
