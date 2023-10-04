@@ -14,6 +14,8 @@ use common\models\core\Visibility;
 use common\models\external\HasReputations;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
+use DateTimeImmutable;
+use ReflectionClass;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -32,12 +34,12 @@ use yii\helpers\Html;
  * @property string $visibility
  * @property string $importance_category
  * @property string $updated_at
- * @property string $description_pack_id
- * @property string $external_data_pack_id
- * @property string $importance_pack_id
- * @property string $master_group_id
+ * @property int|null $description_pack_id
+ * @property int|null $external_data_pack_id
+ * @property int|null $importance_pack_id
+ * @property int|null $master_group_id
  * @property int|null $scribble_pack_id
- * @property string $utility_bag_id
+ * @property int|null $utility_bag_id
  *
  * @property DescriptionPack $descriptionPack
  * @property ExternalDataPack $externalDataPack
@@ -58,16 +60,29 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     use ToolsForEntity;
     use ToolsForHasDescriptions;
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'group';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['epic_id', 'name'], 'required'],
-            [['epic_id', 'master_group_id'], 'integer'],
+            [
+                [
+                    'epic_id',
+                    'seen_pack_id',
+                    'updated_at',
+                    'description_pack_id',
+                    'external_data_pack_id',
+                    'importance_pack_id',
+                    'scribble_pack_id',
+                    'utility_bag_id',
+                    'master_group_id'
+                ],
+                'integer'
+            ],
             [['name'], 'string', 'max' => 120],
             [['visibility', 'importance_category'], 'string', 'max' => 20],
             [
@@ -85,11 +100,39 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
                 }
             ],
             [
+                ['importance_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => ImportancePack::class,
+                'targetAttribute' => ['importance_pack_id' => 'importance_pack_id']
+            ],
+            [
+                ['master_group_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Group::class,
+                'targetAttribute' => ['master_group_id' => 'group_id']
+            ],
+            [
                 ['scribble_pack_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => ScribblePack::class,
                 'targetAttribute' => ['scribble_pack_id' => 'scribble_pack_id']
+            ],
+            [
+                ['seen_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => SeenPack::class,
+                'targetAttribute' => ['seen_pack_id' => 'seen_pack_id']
+            ],
+            [
+                ['utility_bag_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => UtilityBag::class,
+                'targetAttribute' => ['utility_bag_id' => 'utility_bag_id']
             ],
         ];
     }
@@ -102,7 +145,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         parent::afterFind();
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'group_id' => Yii::t('app', 'GROUP_ID'),
@@ -130,10 +173,10 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+            $this->key = $this->generateKey(strtolower((new ReflectionClass($this))->getShortName()));
             $this->data = json_encode([]);
         }
 
@@ -187,7 +230,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         ];
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'performedActionBehavior' => [
@@ -207,92 +250,60 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $this->hasOne(DescriptionPack::class, ['description_pack_id' => 'description_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getExternalDataPack()
+    public function getExternalDataPack(): ActiveQuery
     {
         return $this->hasOne(ExternalDataPack::class, ['external_data_pack_id' => 'external_data_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getEpic()
+    public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getImportancePack()
+    public function getImportancePack(): ActiveQuery
     {
         return $this->hasOne(ImportancePack::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
     /**
-     * Gets query for [[ScribblePack]].
-     *
-     * @return \yii\db\ActiveQuery|ScribblePackQuery
+     * Gets query for [[ScribblePack]]
      */
     public function getScribblePack(): ActiveQuery|ScribblePackQuery
     {
         return $this->hasOne(ScribblePack::class, ['scribble_pack_id' => 'scribble_pack_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMasterGroup()
+    public function getMasterGroup(): ActiveQuery
     {
         return $this->hasOne(Group::class, ['group_id' => 'master_group_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSubGroups()
+    public function getSubGroups(): ActiveQuery
     {
         return $this->hasMany(Group::class, ['master_group_id' => 'group_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getSeenPack()
+    public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getUtilityBag()
+    public function getUtilityBag(): ActiveQuery
     {
         return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getGroupCharacterMemberships()
+    public function getGroupCharacterMemberships(): ActiveQuery
     {
         return $this->hasMany(GroupMembership::class, ['group_id' => 'group_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getGroupCharacterMembershipsOrderedByPosition()
+    public function getGroupCharacterMembershipsOrderedByPosition(): ActiveQuery
     {
         return $this->hasMany(GroupMembership::class, ['group_id' => 'group_id'])->orderBy('position ASC');
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getGroupCharacterMembershipsActive()
+    public function getGroupCharacterMembershipsActive(): ActiveQuery
     {
         return $this->hasMany(GroupMembership::class, ['group_id' => 'group_id'])->where([
             'status' => GroupMembership::STATUS_ACTIVE,
@@ -300,10 +311,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         ])->orderBy('position ASC');
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getGroupCharacterMembershipsPast()
+    public function getGroupCharacterMembershipsPast(): ActiveQuery
     {
         return $this->hasMany(GroupMembership::class, ['group_id' => 'group_id'])->where([
             'status' => GroupMembership::STATUS_PAST,
@@ -311,10 +319,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         ])->orderBy('position ASC');
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getGroupCharacterMembershipsPassive()
+    public function getGroupCharacterMembershipsPassive(): ActiveQuery
     {
         return $this->hasMany(GroupMembership::class, ['group_id' => 'group_id'])->where([
             'status' => GroupMembership::STATUS_PASSIVE,
@@ -322,7 +327,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         ])->orderBy('position ASC');
     }
 
-    public function getSimpleDataForApi()
+    public function getSimpleDataForApi(): array
     {
         return [
             'name' => $this->name,
@@ -340,7 +345,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $decodedData;
     }
 
-    public function isVisibleInApi()
+    public function isVisibleInApi(): bool
     {
         return true;
     }
@@ -446,9 +451,9 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $visibility->getNameLowercase();
     }
 
-    public function getLastModified(): \DateTimeImmutable
+    public function getLastModified(): DateTimeImmutable
     {
-        return new \DateTimeImmutable(date("Y-m-d H:i:s", $this->updated_at));
+        return new DateTimeImmutable(date("Y-m-d H:i:s", $this->updated_at));
     }
 
     public function getSeenStatusForUser(int $userId): string
