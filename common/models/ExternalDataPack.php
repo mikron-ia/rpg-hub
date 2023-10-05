@@ -3,7 +3,7 @@
 namespace common\models;
 
 use common\models\core\HasEpicControl;
-use common\models\core\IsPack;
+use common\models\core\IsEditablePack;
 use common\models\core\Visibility;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -20,7 +20,7 @@ use yii\db\ActiveRecord;
  *
  * @property Epic $epic
  */
-class ExternalDataPack extends ActiveRecord implements IsPack
+class ExternalDataPack extends ActiveRecord implements IsEditablePack
 {
     public static function tableName()
     {

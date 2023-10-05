@@ -7,6 +7,7 @@ use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\core\HasImportance;
 use common\models\core\HasImportanceCategory;
+use common\models\core\HasScribbles;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\ImportanceCategory;
@@ -55,7 +56,7 @@ use yii\helpers\Html;
  * @property GroupMembership[] $groupCharacterMembershipsPassive
  * @property GroupMembership[] $groupCharacterMembershipsPast
  */
-class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasSightings, HasVisibility
+class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasScribbles, HasSightings, HasVisibility
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
@@ -203,6 +204,11 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         if (empty($this->importance_pack_id)) {
             $pack = ImportancePack::create('Group');
             $this->importance_pack_id = $pack->importance_pack_id;
+        }
+
+        if (empty($this->scribble_pack_id)) {
+            $pack = ScribblePack::create('Group');
+            $this->scribble_pack_id = $pack->scribble_pack_id;
         }
 
         return parent::beforeSave($insert);

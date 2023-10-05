@@ -70,4 +70,14 @@ class Scribble extends ActiveRecord
     {
         return new ScribbleQuery(get_called_class());
     }
+
+    public static function createEmptyForPack(int $userId, ScribblePack $pack): self
+    {
+        $object = new Scribble();
+        $object->user_id = $userId;
+        $object->scribble_pack_id = $pack->scribble_pack_id;
+        $object->favorite = false;
+
+        return $object;
+    }
 }

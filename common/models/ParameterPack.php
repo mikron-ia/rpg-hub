@@ -3,7 +3,7 @@
 namespace common\models;
 
 use common\models\core\HasEpicControl;
-use common\models\core\IsPack;
+use common\models\core\IsEditablePack;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -21,7 +21,7 @@ use yii\db\ActiveRecord;
  * @property Story[] $stories
  * @property Epic $epic
  */
-class ParameterPack extends ActiveRecord implements IsPack
+class ParameterPack extends ActiveRecord implements IsEditablePack
 {
     /**
      * @inheritdoc

@@ -3,7 +3,10 @@
 namespace common\models;
 
 use common\models\core\HasEpicControl;
-use common\models\core\IsPack;
+use common\models\core\HasScribbles;
+use common\models\core\IsEditablePack;
+use common\models\core\IsSelfFillingPack;
+use common\models\tools\ToolsForSelfFillingPacks;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -18,8 +21,10 @@ use yii\db\ActiveRecord;
  * @property Group[] $groups
  * @property Scribble[] $scribbles
  */
-class ScribblePack extends ActiveRecord implements IsPack
+class ScribblePack extends ActiveRecord implements IsEditablePack
 {
+    use ToolsForSelfFillingPacks;
+
     public static function tableName(): string
     {
         return 'scribble_pack';
@@ -71,6 +76,16 @@ class ScribblePack extends ActiveRecord implements IsPack
         return $this->hasMany(Scribble::class, ['scribble_pack_id' => 'scribble_pack_id']);
     }
 
+    public static function create(string $class): ScribblePack
+    {
+        $pack = new ScribblePack(['class' => $class]);
+
+        $pack->save();
+        $pack->refresh();
+
+        return $pack;
+    }
+
     public static function find(): ScribblePackQuery
     {
         return new ScribblePackQuery(get_called_class());
@@ -80,7 +95,7 @@ class ScribblePack extends ActiveRecord implements IsPack
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */
-        $object = ($className)::findOne(['description_pack_id' => $this->description_pack_id]);
+        $object = ($className)::findOne(['scribble_pack_id' => $this->scribble_pack_id]);
         return $object->canUserViewYou();
     }
 
@@ -88,7 +103,7 @@ class ScribblePack extends ActiveRecord implements IsPack
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */
-        $object = ($className)::findOne(['description_pack_id' => $this->description_pack_id]);
+        $object = ($className)::findOne(['scribble_pack_id' => $this->scribble_pack_id]);
         return $object->canUserControlYou();
     }
 }

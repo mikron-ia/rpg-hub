@@ -7,6 +7,7 @@ use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\core\HasImportance;
 use common\models\core\HasImportanceCategory;
+use common\models\core\HasScribbles;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\ImportanceCategory;
@@ -50,7 +51,7 @@ use yii\db\ActiveRecord;
  * @property GroupMembership[] $groupMemberships
  * @property GroupMembership[] $groupMembershipsVisibleToUser
  */
-class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasVisibility, HasSightings
+class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasVisibility, HasScribbles, HasSightings
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
@@ -176,9 +177,9 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             $this->importance_pack_id = $pack->importance_pack_id;
         }
 
-        if (empty($this->importance_pack_id)) {
-            $pack = ImportancePack::create('Character');
-            $this->importance_pack_id = $pack->importance_pack_id;
+        if (empty($this->scribble_pack_id)) {
+            $pack = ScribblePack::create('Character');
+            $this->scribble_pack_id = $pack->scribble_pack_id;
         }
 
         return parent::beforeSave($insert);
@@ -218,7 +219,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     /**
      * @return ActiveQuery
      */
-    public function getEpic(): ActiveQuery
+    public function  getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
