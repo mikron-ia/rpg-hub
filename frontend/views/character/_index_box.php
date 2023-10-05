@@ -29,11 +29,11 @@ switch ($model->visibility) {
         break;
 }
 
-$favorite = !rand(0, 4); // to be replaced by an actual value based on the database record
+$favorite = false; // to be replaced by an actual value based on the database record
 
 $classesForBox = 'index-box' . ($additionalBoxClasses ? ' ' . $additionalBoxClasses : '');
-$favoriteClass = $favorite ? 'glyphicon-star' : 'glyphicon-star-empty';
-$favoriteTitle = $favorite ? Yii::t('app', 'FAVORITE_STAR_TITLE_YES') : Yii::t('app', 'FAVORITE_STAR_TITLE_NO');
+$favoriteClass = $favorite ? 'glyphicon-tags' : 'glyphicon-tag';
+$favoriteTitle = $favorite ? Yii::t('app', 'SCRIBBLES_TITLE_YES') : Yii::t('app', 'SCRIBBLES_TITLE_NO');
 $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleText : '');
 
 ?>
@@ -47,7 +47,10 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
         ); ?>
     </h3>
 
-    <span class="index-box-header-icon glyphicon <?= $favoriteClass ?>" title="<?= $favoriteTitle ?>"></span>
+    <span class="index-box-header-icon glyphicon <?= $favoriteClass ?> scribble-button"
+          data-character-key="<?= $model->key ?>"
+          title="<?= $favoriteTitle ?>"
+    ></span>
 
     <p class="subtitle">
         <?= StringHelper::truncateWords($model->tagline, 16, ' (...)', false) ?>

@@ -27,7 +27,8 @@ class Scribble extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['scribble_pack_id', 'user_id', 'favorite'], 'integer'],
+            [['scribble_pack_id', 'user_id'], 'integer'],
+            [['favorite'], 'boolean'],
             [['scribble_pack_id'], 'exist', 'skipOnError' => true, 'targetClass' => ScribblePack::class, 'targetAttribute' => ['scribble_pack_id' => 'scribble_pack_id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -71,7 +72,7 @@ class Scribble extends ActiveRecord
         return new ScribbleQuery(get_called_class());
     }
 
-    public static function createEmptyForPack(int $userId, ScribblePack $pack): self
+    public static function createEmptyForPack(int $userId, ScribblePack $pack): Scribble
     {
         $object = new Scribble();
         $object->user_id = $userId;

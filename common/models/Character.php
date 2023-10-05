@@ -46,6 +46,7 @@ use yii\db\ActiveRecord;
  * @property ExternalDataPack $externalDataPack
  * @property ImportancePack $importancePack
  * @property SeenPack $seenPack
+ * @property ScribblePack $scribblePack
  * @property UtilityBag $utilityBag
  * @property CharacterSheet[] $characterSheets
  * @property GroupMembership[] $groupMemberships

@@ -3,9 +3,7 @@
 namespace common\models;
 
 use common\models\core\HasEpicControl;
-use common\models\core\HasScribbles;
 use common\models\core\IsEditablePack;
-use common\models\core\IsSelfFillingPack;
 use common\models\tools\ToolsForSelfFillingPacks;
 use Yii;
 use yii\db\ActiveQuery;
@@ -105,5 +103,21 @@ class ScribblePack extends ActiveRecord implements IsEditablePack
         /** @var HasEpicControl $object */
         $object = ($className)::findOne(['scribble_pack_id' => $this->scribble_pack_id]);
         return $object->canUserControlYou();
+    }
+
+    public function getScribbleByUserId(int $userId): Scribble
+    {
+        $scribble = Scribble::findOne([
+            'scribble_pack_id' => $this->scribble_pack_id,
+            'user_id' => $userId,
+        ]);
+
+        if (empty($scribble)) {
+            $scribble = Scribble::createEmptyForPack($userId, $this);
+            $scribble->save();
+            $scribble->refresh();
+        }
+
+        return $scribble;
     }
 }

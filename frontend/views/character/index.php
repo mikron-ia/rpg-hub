@@ -1,6 +1,7 @@
 <?php
 
 use frontend\assets\CharacterAsset;
+use yii\bootstrap\Modal;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
 
@@ -54,3 +55,11 @@ if (isset(Yii::$app->request->queryParams['CharacterQuery'])) {
     ]) ?>
 
 </div>
+
+<?php Modal::begin([
+    'id' => 'scribble-modal',
+    'header' => '<h2 class="modal-title">' . Yii::t('app', 'SCRIBBLE_TITLE') . '</h2>',
+    'clientOptions' => ['backdrop' => 'static'],
+    'size' => Modal::SIZE_LARGE,
+]); ?>
+<?php Modal::end(); ?>
