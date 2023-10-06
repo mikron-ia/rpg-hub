@@ -6,38 +6,48 @@ use yii\helpers\Html;
 /** @var common\models\Scribble $model */
 
 $favoriteButtonTexts = [
-    false => Yii::t('app', 'SCRIBBLES_TITLE_NO'),
-    true => Yii::t('app', 'SCRIBBLES_TITLE_YES'),
+    false => Yii::t('app', 'SCRIBBLES_BUTTON_NO'),
+    true => Yii::t('app', 'SCRIBBLES_BUTTON_YES'),
 ];
 
 ?>
 <div class="scribble-view">
-
+    <p id="scribble-modal-error-box" class="error-summary"></p>
     <?= Html::button($favoriteButtonTexts[$model->favorite], [
         'id' => 'favorite-button',
         'class' => 'btn btn-primary btn-block',
         'data-scribble-id' => $model->scribble_id,
     ]) ?>
-
 </div>
 
 <script>
-    let favorite = <?= (int)$model->favorite ?>;
-    const isFavoriteText = "<?= $favoriteButtonTexts[true] ?>";
-    const isNotFavoriteText = "<?= $favoriteButtonTexts[false]  ?>";
+    var favorite = <?= (int)$model->favorite ?>;
+
+    $('#scribble-modal-error-box').hide();
 
     $('#favorite-button').on('click', function () {
+        const button = $('#favorite-button');
+        button.text('<?= Yii::t('app', 'SCRIBBLES_BUTTON_WORKING') ?>');
+        button.prop('disabled', true);
+
         $.ajax(
             '../scribble/reverse-favorite',
             {
-                method: "GET",
+                method: 'GET',
                 data: {
-                    id: <?= $model->scribble_id ?>
+                    id: $(this).data('scribble-id')
                 }
             }
         ).done(function () {
             favorite = !favorite;
-            $(this).val(favorite ? isFavoriteText : isNotFavoriteText);
+            $('#scribble-modal-error-box').hide();
+        }).fail(function () {
+            const errorBox = $('#scribble-modal-error-box');
+            errorBox.text('<?= Yii::t('app', 'SCRIBBLES_FAVORITE_ERROR_GENERIC') ?>');
+            errorBox.show();
+        }).always(function () {
+            button.prop('disabled', false);
+            $('#favorite-button').text(favorite ? "<?= $favoriteButtonTexts[true] ?>" : "<?= $favoriteButtonTexts[false]  ?>");
         });
     });
 </script>
