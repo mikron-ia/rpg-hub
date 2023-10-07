@@ -26,7 +26,7 @@ final class CharacterController extends Controller
 
     private const POSITIONS_PER_PAGE = 24;
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [

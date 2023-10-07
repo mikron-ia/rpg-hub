@@ -4,7 +4,6 @@ namespace frontend\controllers;
 
 use common\models\Scribble;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
@@ -18,7 +17,7 @@ use yii\web\ServerErrorHttpException;
  */
 class ScribbleController extends Controller
 {
-    public function behaviors()
+    public function behaviors(): array
     {
         return array_merge(
             parent::behaviors(),
@@ -28,7 +27,9 @@ class ScribbleController extends Controller
                     'rules' => [
                         [
                             'actions' => [
-                                'reverse-favorite'
+                                'reverse-favorite',
+                                'set-favorite',
+                                'unset-favorite',
                             ],
                             'allow' => true,
                             'roles' => ['@'],
@@ -45,7 +46,7 @@ class ScribbleController extends Controller
         );
     }
 
-    public function actionReverseFavorite(int $id)
+    public function actionReverseFavorite(int $id): void
     {
         $scribble = $this->getModelWithValidation($id);
         $scribble->favorite = !$scribble->favorite;
@@ -54,7 +55,7 @@ class ScribbleController extends Controller
         }
     }
 
-    public function actionSetAsFavorite(int $id)
+    public function actionSetAsFavorite(int $id): void
     {
         $scribble = $this->getModelWithValidation($id);
         $scribble->favorite = true;
@@ -63,7 +64,7 @@ class ScribbleController extends Controller
         }
     }
 
-    public function actionUnsetAsFavorite(int $id)
+    public function actionUnsetAsFavorite(int $id): void
     {
         $scribble = $this->getModelWithValidation($id);
         $scribble->favorite = false;
@@ -99,16 +100,19 @@ class ScribbleController extends Controller
     /**
      * Finds the Scribble model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param int $scribble_id Scribble ID
+     *
      * @return Scribble the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($scribble_id)
+    protected function findModel(int $scribble_id): Scribble
     {
         if (($model = Scribble::findOne(['scribble_id' => $scribble_id])) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(Yii::t('app', 'SCRIBBLE_NOT_FOUND'));
     }
 }

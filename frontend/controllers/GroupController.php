@@ -25,7 +25,7 @@ class GroupController extends Controller
 
     private const POSITIONS_PER_PAGE = 24;
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -86,12 +86,15 @@ class GroupController extends Controller
 
     /**
      * Displays a single Group model.
+     *
      * @param string $key
-     * @return mixed
+     *
+     * @return string
+     *
+     * @throws HttpException
      * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
      */
-    public function actionView($key)
+    public function actionView(string $key): string
     {
         $model = $this->findModelByKey($key);
 
