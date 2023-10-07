@@ -58,7 +58,7 @@ if (isset(Yii::$app->request->queryParams['CharacterQuery'])) {
 
 <?php Modal::begin([
     'id' => 'scribble-modal',
-    'header' => '<h2 class="modal-title">' . Yii::t('app', 'SCRIBBLE_TITLE') . '</h2>',
+    'header' => '<h2 class="modal-title modal-title-centered">' . Yii::t('app', 'SCRIBBLE_TITLE') . '</h2>',
     'clientOptions' => ['backdrop' => 'static'],
     'size' => Modal::SIZE_LARGE,
 ]); ?>

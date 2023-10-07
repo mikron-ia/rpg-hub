@@ -49,6 +49,7 @@ use yii\helpers\Html;
  * @property Group $masterGroup
  * @property Group[] $subGroups
  * @property SeenPack $seenPack
+ * @property ScribblePack $scribblePack
  * @property UtilityBag $utilityBag
  * @property GroupMembership[] $groupCharacterMemberships
  * @property GroupMembership[] $groupCharacterMembershipsOrderedByPosition

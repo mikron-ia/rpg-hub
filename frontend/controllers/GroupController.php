@@ -32,7 +32,13 @@ class GroupController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'external-reputation', 'external-reputation-event'],
+                        'actions' => [
+                            'index',
+                            'view',
+                            'external-reputation',
+                            'external-reputation-event',
+                            'open-scribble-modal',
+                        ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -166,6 +172,23 @@ class GroupController extends Controller
         }
 
         throw new HttpException(204, Yii::t('external', 'NO_DATA'));
+    }
+
+    public function actionOpenScribbleModal(string $key): string
+    {
+        $model = $this->findModelByKey($key);
+
+        if (!$model->canUserViewYou()) {
+            Group::throwExceptionAboutView();
+        }
+
+        $scribbleModel = $model->scribblePack->getScribbleByUserId(Yii::$app->user->getId());
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('../scribble/_modal_box', ['model' => $scribbleModel]);
+        } else {
+            return $this->render('../scribble/_modal_box', ['model' => $scribbleModel]);
+        }
     }
 
     /**

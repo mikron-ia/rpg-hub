@@ -18,6 +18,14 @@ $favoriteButtonTexts = [
         'class' => 'btn btn-primary btn-block',
         'data-scribble-id' => $model->scribble_id,
     ]) ?>
+
+    <hr/>
+
+    <?= Html::button(Yii::t('app', 'SCRIBBLE_BUTTON_MODAL_CLOSE'), [
+        'type' => 'button',
+        'class' => 'btn btn-default btn-block',
+        'data-dismiss' => 'modal',
+    ]) ?>
 </div>
 
 <script>

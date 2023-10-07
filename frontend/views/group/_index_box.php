@@ -29,19 +29,28 @@ switch ($model->visibility) {
         break;
 }
 
+$favorite = false; // to be replaced by an actual value based on the database record
+
 $classesForBox = 'index-box' . ($additionalBoxClasses ? ' ' . $additionalBoxClasses : '');
+$favoriteClass = $favorite ? 'glyphicon-tags' : 'glyphicon-tag';
+$favoriteTitle = $favorite ? Yii::t('app', 'SCRIBBLES_TITLE_YES') : Yii::t('app', 'SCRIBBLES_TITLE_NO');
 $titleText = '';
 
 ?>
 
-<div id="character-<?php echo $model->key; ?>" class="<?= $classesForBox ?>" title="<?= $titleText ?>">
+<div id="group-<?php echo $model->key; ?>" class="<?= $classesForBox ?>" title="<?= $titleText ?>">
 
-    <h3 class="center">
+    <h3 class="index-box-header-narrow">
         <?= Html::a(
             Html::encode(StringHelper::truncateWords($model->name, 16, ' (...)', false)),
             ['view', 'key' => $model->key]
         ); ?>
     </h3>
+
+    <span class="index-box-header-icon glyphicon <?= $favoriteClass ?> scribble-button"
+          data-group-key="<?= $model->key ?>"
+          title="<?= $favoriteTitle ?>"
+    ></span>
 
     <p class="text-center seen-tag-common <?= $model->showSightingCSS() ?> seen-tag-box">
         <?= $model->showSightingStatus() ?>

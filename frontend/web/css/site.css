@@ -676,3 +676,12 @@ tr.table-row-hidden > td {
 .external-data-italic {
     font-style: italic;
 }
+
+.modal-title-centered {
+    text-align: center;
+}
+
+.btn-block-half {
+    width: 44%;
+    margin: 0 2.5%;
+}

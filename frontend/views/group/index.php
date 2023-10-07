@@ -1,6 +1,7 @@
 <?php
 
 use frontend\assets\GroupAsset;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 
 GroupAsset::register($this);
@@ -33,3 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
         },
     ]) ?>
 </div>
+
+<?php Modal::begin([
+    'id' => 'scribble-modal',
+    'header' => '<h2 class="modal-title modal-title-centered" style="align: center;">' . Yii::t('app', 'SCRIBBLE_TITLE') . '</h2>',
+    'clientOptions' => ['backdrop' => 'static'],
+    'size' => Modal::SIZE_LARGE,
+]); ?>
+<?php Modal::end(); ?>
