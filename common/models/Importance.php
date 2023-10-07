@@ -73,6 +73,16 @@ class Importance extends ActiveRecord
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+    public static function createEmptyForPack(int $userId, ImportancePack $pack): self
+    {
+        $object = new Importance();
+        $object->user_id = $userId;
+        $object->importance_pack_id = $pack->importance_pack_id;
+        $object->importance = 0;
+
+        return $object;
+    }
+
     /**
      * Calculates the importance value
      *

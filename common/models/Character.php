@@ -7,6 +7,7 @@ use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\core\HasImportance;
 use common\models\core\HasImportanceCategory;
+use common\models\core\HasScribbles;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\ImportanceCategory;
@@ -36,6 +37,7 @@ use yii\db\ActiveRecord;
  * @property string $external_data_pack_id
  * @property string $seen_pack_id
  * @property string $importance_pack_id
+ * @property int|null $scribble_pack_id
  * @property string $utility_bag_id
  *
  * @property Epic $epic
@@ -44,12 +46,13 @@ use yii\db\ActiveRecord;
  * @property ExternalDataPack $externalDataPack
  * @property ImportancePack $importancePack
  * @property SeenPack $seenPack
+ * @property ScribblePack $scribblePack
  * @property UtilityBag $utilityBag
  * @property CharacterSheet[] $characterSheets
  * @property GroupMembership[] $groupMemberships
  * @property GroupMembership[] $groupMembershipsVisibleToUser
  */
-class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasVisibility, HasSightings
+class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasVisibility, HasScribbles, HasSightings
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
@@ -63,7 +66,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     {
         return [
             [['epic_id', 'name', 'tagline', 'visibility', 'importance_category'], 'required'],
-            [['epic_id', 'character_sheet_id', 'description_pack_id'], 'integer'],
+            [['epic_id', 'character_sheet_id', 'description_pack_id', 'scribble_pack_id'], 'integer'],
             [['data', 'visibility', 'importance_category'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name', 'tagline'], 'string', 'max' => 120],
@@ -96,6 +99,13 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
                 'targetAttribute' => ['external_data_pack_id' => 'external_data_pack_id']
             ],
             [
+                ['scribble_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => ScribblePack::class,
+                'targetAttribute' => ['scribble_pack_id' => 'scribble_pack_id']
+            ],
+            [
                 ['visibility'],
                 'in',
                 'range' => function () {
@@ -122,6 +132,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
             'seen_pack_id' => Yii::t('app', 'SEEN_PACK_ID'),
             'importance_pack_id' => Yii::t('app', 'IMPORTANCE_PACK'),
+            'scribble_pack_id' => Yii::t('app', 'SCRIBBLE_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
     }
@@ -167,6 +178,11 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             $this->importance_pack_id = $pack->importance_pack_id;
         }
 
+        if (empty($this->scribble_pack_id)) {
+            $pack = ScribblePack::create('Character');
+            $this->scribble_pack_id = $pack->scribble_pack_id;
+        }
+
         return parent::beforeSave($insert);
     }
 
@@ -204,7 +220,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     /**
      * @return ActiveQuery
      */
-    public function getEpic(): ActiveQuery
+    public function  getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
@@ -236,6 +252,16 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public function getImportancePack()
     {
         return $this->hasOne(ImportancePack::class, ['importance_pack_id' => 'importance_pack_id']);
+    }
+
+    /**
+     * Gets query for [[ScribblePack]].
+     *
+     * @return \yii\db\ActiveQuery|ScribblePackQuery
+     */
+    public function getScribblePack(): ActiveQuery|ScribblePackQuery
+    {
+        return $this->hasOne(ScribblePack::class, ['scribble_pack_id' => 'scribble_pack_id']);
     }
 
     /**

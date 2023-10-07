@@ -2,6 +2,6 @@
 
 namespace common\models\core;
 
-interface IsPack
+interface HasScribbles
 {
 }

@@ -3,6 +3,8 @@
 namespace common\models;
 
 use common\models\core\HasImportance;
+use common\models\core\IsSelfFillingPack;
+use common\models\tools\ToolsForSelfFillingPacks;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -17,8 +19,10 @@ use yii\db\ActiveRecord;
  * @property Group[] $groups
  * @property Importance[] $importances
  */
-class ImportancePack extends ActiveRecord
+class ImportancePack extends ActiveRecord implements IsSelfFillingPack
 {
+    use ToolsForSelfFillingPacks;
+
     /**
      * @var HasImportance
      */
@@ -105,48 +109,27 @@ class ImportancePack extends ActiveRecord
         return $this->getControllingObject()->getEpic()->one();
     }
 
+    public function createEmptyContent(int $userId): Importance
+    {
+        return Importance::createEmptyForPack($userId, $this);
+    }
+
     /**
      * Recalculates pack importance objects
      * @return bool
      */
     public function recalculatePack(): bool
     {
-        $result = $this->createAbsentImportanceObjects();
+        $result = $this->createAbsentRecords(
+            $this->getEpic(),
+            $this,
+            Importance::findAll(['importance_pack_id' => $this->importance_pack_id])
+        );
 
         foreach ($this->importances as $importance) {
             $result = $result && $importance->calculateAndSave();
         }
 
-        return $result;
-    }
-
-    /**
-     * Creates new Importance objects for users that do not have them
-     * @return bool
-     */
-    private function createAbsentImportanceObjects(): bool
-    {
-        $users = $this->getEpic()->participants;
-        $importanceObjectsRaw = Importance::findAll(['importance_pack_id' => $this->importance_pack_id]);
-        $importanceObjectsOrdered = [];
-
-        foreach ($importanceObjectsRaw as $importanceObject) {
-            $importanceObjectsOrdered[$importanceObject->user_id] = $importanceObject;
-        }
-
-        $result = true;
-
-        foreach ($users as $user) {
-            if (!isset($importanceObjectsOrdered[$user->user_id])) {
-                $importanceObject = new Importance();
-                $importanceObject->user_id = $user->user_id;
-                $importanceObject->importance_pack_id = $this->importance_pack_id;
-                $importanceObject->importance = 0;
-
-                $saveResult = $importanceObject->save();
-                $result = $result && $saveResult;
-            }
-        }
         return $result;
     }
 }

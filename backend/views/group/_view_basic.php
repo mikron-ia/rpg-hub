@@ -38,9 +38,17 @@ use yii\widgets\DetailView;
                     'value' => $model->getImportanceCategory(),
                 ],
                 [
+                    'label' => Yii::t('app', 'DESCRIPTION_COUNT_UNIQUE'),
+                    'value' => $model->descriptionPack->getUniqueDescriptionTypesCount(),
+                ],
+                [
                     'label' => Yii::t('app', 'DESCRIPTION_COUNT_EXPECTED'),
                     'format' => 'raw',
                     'value' => $model->getImportanceCategoryObject()->minimum() . ' &mdash; ' . $model->getImportanceCategoryObject()->maximum(),
+                ],
+                [
+                    'attribute' => 'updated_at',
+                    'format' => 'datetime',
                 ],
                 [
                     'attribute' => 'master_group_id',

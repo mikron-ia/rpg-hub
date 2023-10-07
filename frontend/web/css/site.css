@@ -346,6 +346,20 @@ a:focus {
     border: 3px solid yellowgreen;
 }
 
+.index-box-header-icon {
+    color: green;
+    cursor: pointer;
+    font-size: 2.5rem;
+    padding: 5px;
+    position: absolute;
+    right: 2%;
+    top: 2%;
+}
+
+.index-box-header-narrow {
+    width: 88%;
+}
+
 .tab-pane {
     margin-top: 20px;
 }

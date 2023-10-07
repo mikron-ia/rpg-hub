@@ -3,7 +3,7 @@
 namespace common\models;
 
 use common\models\core\HasEpicControl;
-use common\models\core\IsPack;
+use common\models\core\IsEditablePack;
 use common\models\core\Language;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -21,7 +21,7 @@ use yii\web\HttpException;
  * @property Character[] $people
  * @property Epic $epic
  */
-final class DescriptionPack extends ActiveRecord implements Displayable, IsPack
+final class DescriptionPack extends ActiveRecord implements Displayable, IsEditablePack
 {
     public static function tableName()
     {

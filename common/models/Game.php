@@ -20,6 +20,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $epic_id
  * @property string $basics
  * @property string $planned_date
+ * @property string $planned_location
  * @property string $status
  * @property int $position
  * @property string $notes
@@ -45,20 +46,21 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
     const STATUS_COMPLETED = 'completed';     // game was completed; next: CLOSED
     const STATUS_CLOSED = 'closed';           // game was described; next: none
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'game';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['epic_id'], 'required'],
             [['epic_id', 'position', 'recap_id', 'utility_bag_id'], 'integer'],
             [['planned_date'], 'safe'],
-            [['planned_date'], 'default', 'value' => null],
+            [['planned_date', 'planned_location'], 'default', 'value' => null],
             [['notes'], 'string'],
             [['basics'], 'string', 'max' => 255],
+            [['planned_location'], 'string', 'max' => 80],
             [['status'], 'string', 'max' => 20],
             [
                 ['status'],
@@ -95,13 +97,17 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         ];
     }
 
-    public function attributeLabels()
+    /**
+     * @return string[]
+     */
+    public function attributeLabels(): array
     {
         return [
             'game_id' => Yii::t('app', 'GAME_ID'),
             'epic_id' => Yii::t('app', 'LABEL_EPIC'),
             'basics' => Yii::t('app', 'GAME_BASICS'),
             'planned_date' => Yii::t('app', 'GAME_PLANNED_DATE'),
+            'planned_location' => Yii::t('app', 'GAME_PLANNED_LOCATION'),
             'status' => Yii::t('app', 'GAME_STATUS'),
             'position' => Yii::t('app', 'GAME_POSITION'),
             'notes' => Yii::t('app', 'GAME_NOTES'),
@@ -110,7 +116,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         ];
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if (empty($this->utility_bag_id)) {
             $pack = UtilityBag::create('Game');
@@ -120,13 +126,13 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         return parent::beforeSave($insert);
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): void
     {
         $this->utilityBag->flagAsChanged();
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'positionBehavior' => [
@@ -142,10 +148,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getEpic()
+    public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
@@ -198,13 +201,13 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
     public function getStatus(): string
     {
         $names = self::statusNames();
-        return isset($names[$this->status]) ? $names[$this->status] : '?';
+        return $names[$this->status] ?? '?';
     }
 
     public function getStatusClass(): string
     {
         $names = self::statusClasses();
-        return isset($names[$this->status]) ? $names[$this->status] : '';
+        return $names[$this->status] ?? '';
     }
 
     public function getAllowedChange(): array
@@ -224,10 +227,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         return $this->hasOne(Recap::class, ['recap_id' => 'recap_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getUtilityBag()
+    public function getUtilityBag(): ActiveQuery
     {
         return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
@@ -272,10 +272,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_SESSION'));
     }
 
-    /**
-     * @return string|null
-     */
-    public function getNotesFormatted()
+    public function getNotesFormatted(): ?string
     {
         return Markdown::process(Html::encode($this->notes), 'gfm');
     }
