@@ -38,7 +38,7 @@ final class CharacterController extends Controller
                             'view',
                             'external-reputation',
                             'external-reputation-event',
-                            'open-scribble-modal'
+                            'open-scribble-modal',
                         ],
                         'allow' => true,
                         'roles' => ['@'],

@@ -57,12 +57,12 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     use ToolsForEntity;
     use ToolsForHasDescriptions;
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'character';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['epic_id', 'name', 'tagline', 'visibility', 'importance_category'], 'required'],
@@ -115,7 +115,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'character_id' => Yii::t('app', 'CHARACTER_ID'),
@@ -146,7 +146,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         parent::afterFind();
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if ($insert) {
             $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
@@ -194,7 +194,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'performedActionBehavior' => [
@@ -225,9 +225,6 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getCharacter(): ActiveQuery
     {
         return $this->hasOne(CharacterSheet::class, ['character_sheet_id' => 'character_sheet_id']);
@@ -238,18 +235,12 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return $this->hasOne(DescriptionPack::class, ['description_pack_id' => 'description_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getExternalDataPack()
+    public function getExternalDataPack(): ActiveQuery
     {
         return $this->hasOne(ExternalDataPack::class, ['external_data_pack_id' => 'external_data_pack_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getImportancePack()
+    public function getImportancePack(): ActiveQuery
     {
         return $this->hasOne(ImportancePack::class, ['importance_pack_id' => 'importance_pack_id']);
     }
@@ -257,49 +248,34 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     /**
      * Gets query for [[ScribblePack]].
      *
-     * @return \yii\db\ActiveQuery|ScribblePackQuery
+     * @return ActiveQuery|ScribblePackQuery
      */
     public function getScribblePack(): ActiveQuery|ScribblePackQuery
     {
         return $this->hasOne(ScribblePack::class, ['scribble_pack_id' => 'scribble_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getSeenPack()
+    public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getUtilityBag()
+    public function getUtilityBag(): ActiveQuery
     {
         return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getCharacterSheets()
+    public function getCharacterSheets(): ActiveQuery
     {
         return $this->hasMany(CharacterSheet::class, ['currently_delivered_character_id' => 'character_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGroupMemberships()
+    public function getGroupMemberships(): ActiveQuery
     {
         return $this->hasMany(GroupMembership::class, ['character_id' => 'character_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGroupMembershipsVisibleToUser()
+    public function getGroupMembershipsVisibleToUser(): ActiveQuery
     {
         return $this->hasMany(GroupMembership::class, ['character_id' => 'character_id'])->where([
             'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
@@ -355,10 +331,12 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
     /**
      * Creates character record for character sheet
+     *
      * @param CharacterSheet $characterSheet
+     *
      * @return null|Character
      */
-    static public function createForCharacterSheet(CharacterSheet $characterSheet)
+    static public function createForCharacterSheet(CharacterSheet $characterSheet): ?Character
     {
         $character = new Character();
         $character->epic_id = $characterSheet->epic_id;
@@ -378,6 +356,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
     /**
      * Provides list of types allowed by this class
+     *
      * @return string[]
      */
     static public function allowedDescriptionTypes(): array
