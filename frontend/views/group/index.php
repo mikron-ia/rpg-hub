@@ -2,37 +2,53 @@
 
 use frontend\assets\GroupAsset;
 use yii\bootstrap\Modal;
+use yii\bootstrap\Tabs;
 use yii\helpers\Html;
 
 GroupAsset::register($this);
 
 /* @var $this yii\web\View */
+/* @var $searchModel common\models\CharacterQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_GROUPS_INDEX');
 $this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
 $this->params['breadcrumbs'][] = $this->title;
+
+$labelForMain = isset(Yii::$app->request->queryParams['GroupQuery'])
+    ? Yii::t('app', 'GROUP_LABEL_SEARCH_RESULTS')
+    : Yii::t('app', 'GROUP_LABEL_ALL');
+
+$mainTab = [
+    'label' => $labelForMain,
+    'content' => $this->render('_index_groups', ['dataProvider' => $dataProvider]),
+    'encode' => false,
+    'active' => true,
+];
+
+$searchTab = [
+    'label' => Yii::t('app', 'GROUP_LABEL_SEARCH'),
+    'content' => $this->render('_search', ['model' => $searchModel]),
+    'encode' => false,
+    'active' => false,
+];
+
+$allTab = [
+    'label' => Yii::t('app', 'GROUP_LABEL_ALL'),
+    'url' => ['group/index'],
+];
+
+if (isset(Yii::$app->request->queryParams['GroupQuery'])) {
+    $items = [$allTab, $searchTab, $mainTab];
+} else {
+    $items = [$mainTab, $searchTab];
+}
+
 ?>
+
 <div class="group-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= \yii\widgets\ListView::widget([
-        'dataProvider' => $dataProvider,
-        'emptyText' => '<p class="error-box">' . Yii::t('app', 'GROUPS_NOT_FOUND') . '</p>',
-        'layout' => '{summary}{items}<div class="clearfix"></div>{pager}',
-        'itemView' => function (\common\models\Group $model, $key, $index, $widget) {
-            return $this->render(
-                '_index_box',
-                [
-                    'model' => $model,
-                    'key' => $key,
-                    'index' => $index,
-                    'widget' => $widget,
-                ]
-            );
-        },
-    ]) ?>
+    <?= Tabs::widget(['items' => $items]) ?>
 </div>
 
 <?php Modal::begin([

@@ -21,7 +21,7 @@ $labelForMain = isset(Yii::$app->request->queryParams['CharacterQuery'])
 
 $mainTab = [
     'label' => $labelForMain,
-    'content' => $this->render('_index_people', ['dataProvider' => $dataProvider]),
+    'content' => $this->render('_index_characters', ['dataProvider' => $dataProvider]),
     'encode' => false,
     'active' => true,
 ];
@@ -47,13 +47,8 @@ if (isset(Yii::$app->request->queryParams['CharacterQuery'])) {
 ?>
 
 <div class="person-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= Tabs::widget([
-        'items' => $items
-    ]) ?>
-
+    <?= Tabs::widget(['items' => $items]) ?>
 </div>
 
 <?php Modal::begin([
