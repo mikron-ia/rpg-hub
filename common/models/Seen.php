@@ -26,12 +26,12 @@ class Seen extends ActiveRecord
     const STATUS_UPDATED = 'updated';
     const STATUS_SEEN = 'seen';
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'seen';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['seen_pack_id', 'user_id', 'noted_at', 'seen_at', 'alert_threshold'], 'integer'],
@@ -47,7 +47,7 @@ class Seen extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'seen_id' => Yii::t('app', 'SEEN_ID'),
@@ -106,7 +106,7 @@ class Seen extends ActiveRecord
     public function getName(): string
     {
         $names = self::statusNames();
-        return isset($names[$this->status]) ? $names[$this->status] : '';
+        return $names[$this->status] ?? '';
     }
 
     /**
@@ -115,6 +115,6 @@ class Seen extends ActiveRecord
     public function getCSS(): string
     {
         $names = self::statusCSS();
-        return isset($names[$this->status]) ? $names[$this->status] : '';
+        return $names[$this->status] ?? '';
     }
 }

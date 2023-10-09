@@ -15,6 +15,8 @@ use common\models\core\Visibility;
 use common\models\external\HasReputations;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
+use DateTimeImmutable;
+use ReflectionClass;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -149,7 +151,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+            $this->key = $this->generateKey(strtolower((new ReflectionClass($this))->getShortName()));
             $this->data = json_encode([]);
         }
 
@@ -282,7 +284,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ])->orderBy('status');
     }
 
-    public function getSimpleDataForApi()
+    public function getSimpleDataForApi(): array
     {
         return [
             'name' => $this->name,
@@ -311,7 +313,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return $decodedData;
     }
 
-    public function isVisibleInApi()
+    public function isVisibleInApi(): bool
     {
         return ($this->visibility === Visibility::VISIBILITY_FULL);
     }
@@ -319,14 +321,10 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     /**
      * @return string|null
      */
-    public function getVisibilityName()
+    public function getVisibilityName(): ?string
     {
         $list = Visibility::visibilityNames(self::allowedVisibilities());
-        if (isset($list[$this->visibility])) {
-            return $list[$this->visibility];
-        } else {
-            return null;
-        }
+        return $list[$this->visibility] ?? null;
     }
 
     /**
@@ -477,9 +475,9 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return $this->seenPack->getCSSForCurrentUser();
     }
 
-    public function getLastModified(): \DateTimeImmutable
+    public function getLastModified(): DateTimeImmutable
     {
-        return new \DateTimeImmutable(date("Y-m-d H:i:s", $this->updated_at));
+        return new DateTimeImmutable(date("Y-m-d H:i:s", $this->updated_at));
     }
 
     public function getSeenStatusForUser(int $userId): string

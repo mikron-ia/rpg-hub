@@ -25,22 +25,15 @@ use yii\db\Expression;
  */
 class SeenPack extends ActiveRecord
 {
-    /**
-     * @var Seen
-     */
-    private $sightingForCurrentUser;
+    private ?Seen $sightingForCurrentUser;
+    private ?HasSightings $controllingObject;
 
-    /**
-     * @var HasSightings
-     */
-    private $controllingObject;
-
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'seen_pack';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['class'], 'required'],
@@ -48,7 +41,7 @@ class SeenPack extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'seen_pack_id' => Yii::t('app', 'SEEN_PACK_ID'),
@@ -56,57 +49,36 @@ class SeenPack extends ActiveRecord
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getCharacters(): ActiveQuery
     {
         return $this->hasMany(Character::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getCharacterSheets(): ActiveQuery
     {
         return $this->hasMany(CharacterSheet::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getEpics(): ActiveQuery
     {
         return $this->hasMany(Epic::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getGroups(): ActiveQuery
     {
         return $this->hasMany(Group::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getRecaps(): ActiveQuery
     {
         return $this->hasMany(Recap::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getSightings(): ActiveQuery
     {
         return $this->hasMany(Seen::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getSightingsForNotices(): ActiveQuery
     {
         return $this
@@ -114,20 +86,13 @@ class SeenPack extends ActiveRecord
             ->where(new Expression('seen_at IS NULL'));
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getSightingsForSightings()
+    public function getSightingsForSightings(): ActiveQuery
     {
         return $this
             ->hasMany(Seen::class, ['seen_pack_id' => 'seen_pack_id'])
             ->where(new Expression('seen_at IS NOT NULL'));
     }
 
-    /**
-     * @param string $status
-     * @return ActiveQuery
-     */
     public function getSightingsWithStatus(string $status): ActiveQuery
     {
         return $this
@@ -135,9 +100,6 @@ class SeenPack extends ActiveRecord
             ->where(['status' => $status]);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getSightingsForCurrentUser(): ActiveQuery
     {
         return $this
@@ -157,21 +119,17 @@ class SeenPack extends ActiveRecord
             ->where(['user_id' => $userId]);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getStories()
+    public function getStories(): ActiveQuery
     {
         return $this->hasMany(Story::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
     /**
      * Creates a new, empty record
-     * @param int $userId
+     * @param int|null $userId
      * @return Seen|null
-     * @todo Update return value once PHP 7.1 is used
      */
-    public function createRecordForUser($userId)
+    public function createRecordForUser(?int $userId): ?Seen
     {
         $record = new Seen();
         $record->user_id = $userId;
@@ -180,13 +138,14 @@ class SeenPack extends ActiveRecord
         if ($record->save()) {
             $record->refresh();
             return $record;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
      * @param bool $fullSight Has user seen all data? True for views, false for indexing
+     *
      * @return bool Success of the operation
      */
     public function recordSighting(bool $fullSight = true): bool
@@ -340,7 +299,7 @@ class SeenPack extends ActiveRecord
      */
     private function fillSightingForCurrentUser()
     {
-        if (!$this->sightingForCurrentUser) {
+        if (empty($this->sightingForCurrentUser)) {
             $userId = Yii::$app->user->identity->getId();
 
             $sighting = Seen::findOne([
@@ -363,7 +322,7 @@ class SeenPack extends ActiveRecord
     {
         $this->fillSightingForCurrentUser();
 
-        if (!$this->sightingForCurrentUser) {
+        if (empty($this->sightingForCurrentUser)) {
             $names = Seen::statusNames();
             return $names[Seen::STATUS_NEW];
         } else {
@@ -378,7 +337,7 @@ class SeenPack extends ActiveRecord
     {
         $this->fillSightingForCurrentUser();
 
-        if (!$this->sightingForCurrentUser) {
+        if (empty($this->sightingForCurrentUser)) {
             $names = Seen::statusCSS();
             return $names[Seen::STATUS_NEW];
         } else {
