@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\core\HasSightings;
+use common\models\core\SeenStatus;
 use yii\console\Application as ConsoleApplication;
 use Yii;
 use yii\db\ActiveQuery;
@@ -93,11 +94,11 @@ class SeenPack extends ActiveRecord
             ->where(new Expression('seen_at IS NOT NULL'));
     }
 
-    public function getSightingsWithStatus(string $status): ActiveQuery
+    public function getSightingsWithStatus(SeenStatus $status): ActiveQuery
     {
         return $this
             ->hasMany(Seen::class, ['seen_pack_id' => 'seen_pack_id'])
-            ->where(['status' => $status]);
+            ->where(['status' => $status->value]);
     }
 
     public function getSightingsForCurrentUser(): ActiveQuery
@@ -176,7 +177,7 @@ class SeenPack extends ActiveRecord
             $record->noted_at = time();
             if ($fullSight) {
                 $record->seen_at = time();
-                $record->status = Seen::STATUS_SEEN;
+                $record->setSeenStatus(SeenStatus::STATUS_SEEN);
             }
 
             return $record->save();
@@ -197,8 +198,8 @@ class SeenPack extends ActiveRecord
         $updateResult = true;
 
         foreach ($foundRecords as $record) {
-            if ($record->status != Seen::STATUS_NEW) {
-                $record->status = Seen::STATUS_UPDATED;
+            if ($record->getSeenStatus() != SeenStatus::STATUS_NEW) {
+                $record->setSeenStatus(SeenStatus::STATUS_UPDATED);
                 $updateResult = $updateResult && $record->save();
             }
         }
@@ -271,7 +272,7 @@ class SeenPack extends ActiveRecord
                 $sighting = new Seen();
                 $sighting->user_id = $user->user_id;
                 $sighting->seen_pack_id = $this->seen_pack_id;
-                $sighting->status = Seen::STATUS_NEW;
+                $sighting->status = SeenStatus::STATUS_NEW->value;
 
                 $saveResult = $sighting->save();
                 $result = $result && $saveResult;
@@ -307,10 +308,9 @@ class SeenPack extends ActiveRecord
                 'user_id' => $userId,
             ]);
 
+            $this->sightingForCurrentUser = null;
             if ($sighting) {
                 $this->sightingForCurrentUser = $sighting;
-            } else {
-                $this->sightingForCurrentUser = null;
             }
         }
     }
@@ -324,10 +324,10 @@ class SeenPack extends ActiveRecord
 
         if (empty($this->sightingForCurrentUser)) {
             $names = Seen::statusNames();
-            return $names[Seen::STATUS_NEW];
-        } else {
-            return $this->sightingForCurrentUser->getName();
+            return $names[SeenStatus::STATUS_NEW->value];
         }
+
+        return $this->sightingForCurrentUser->getName();
     }
 
     /**
@@ -338,10 +338,9 @@ class SeenPack extends ActiveRecord
         $this->fillSightingForCurrentUser();
 
         if (empty($this->sightingForCurrentUser)) {
-            $names = Seen::statusCSS();
-            return $names[Seen::STATUS_NEW];
-        } else {
-            return $this->sightingForCurrentUser->getCSS();
+            return SeenStatus::STATUS_NEW->statusCSS();
         }
+
+        return $this->sightingForCurrentUser->getCSS();
     }
 }

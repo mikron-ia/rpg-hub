@@ -4,7 +4,7 @@
 
 /* @var $model common\models\CharacterSheet */
 
-use common\models\Seen;
+use common\models\core\SeenStatus;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -54,7 +54,7 @@ use yii\widgets\DetailView;
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_READ') ?></h2>
         <?= \yii\grid\GridView::widget([
             'dataProvider' => new \yii\data\ActiveDataProvider([
-                'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_SEEN),
+                'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_SEEN),
                 'pagination' => false,
             ]),
             'layout' => '{items}',
@@ -75,7 +75,7 @@ use yii\widgets\DetailView;
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_BEFORE_UPDATE') ?></h2>
         <?= \yii\grid\GridView::widget([
             'dataProvider' => new \yii\data\ActiveDataProvider([
-                'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_UPDATED),
+                'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_UPDATED),
                 'pagination' => false,
             ]),
             'layout' => '{items}',
@@ -96,7 +96,7 @@ use yii\widgets\DetailView;
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_NEW') ?></h2>
         <?= \yii\grid\GridView::widget([
             'dataProvider' => new \yii\data\ActiveDataProvider([
-                'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_NEW),
+                'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_NEW),
                 'pagination' => false,
             ]),
             'layout' => '{items}',

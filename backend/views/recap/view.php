@@ -1,7 +1,7 @@
 <?php
 
+use common\models\core\SeenStatus;
 use common\models\Game;
-use common\models\Seen;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -97,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <h2 class="text-center"><?= Yii::t('app', 'SEEN_READ') ?></h2>
             <?= \yii\grid\GridView::widget([
                 'dataProvider' => new \yii\data\ActiveDataProvider([
-                    'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_SEEN),
+                    'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_SEEN),
                     'pagination' => false,
                 ]),
                 'layout' => '{items}',
@@ -118,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <h2 class="text-center"><?= Yii::t('app', 'SEEN_BEFORE_UPDATE') ?></h2>
             <?= \yii\grid\GridView::widget([
                 'dataProvider' => new \yii\data\ActiveDataProvider([
-                    'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_UPDATED),
+                    'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_UPDATED),
                     'pagination' => false,
                 ]),
                 'layout' => '{items}',
@@ -139,7 +139,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <h2 class="text-center"><?= Yii::t('app', 'SEEN_NEW') ?></h2>
             <?= \yii\grid\GridView::widget([
                 'dataProvider' => new \yii\data\ActiveDataProvider([
-                    'query' => $model->seenPack->getSightingsWithStatus(Seen::STATUS_NEW),
+                    'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_NEW),
                     'pagination' => false,
                 ]),
                 'layout' => '{items}',

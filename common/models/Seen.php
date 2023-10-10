@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\SeenStatus;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -22,10 +23,6 @@ use yii\db\ActiveRecord;
  */
 class Seen extends ActiveRecord
 {
-    const STATUS_NEW = 'new';
-    const STATUS_UPDATED = 'updated';
-    const STATUS_SEEN = 'seen';
-
     public static function tableName(): string
     {
         return 'seen';
@@ -36,7 +33,7 @@ class Seen extends ActiveRecord
         return [
             [['seen_pack_id', 'user_id', 'noted_at', 'seen_at', 'alert_threshold'], 'integer'],
             [['status'], 'string', 'max' => 16],
-            [['status'], 'default', 'value' => Seen::STATUS_NEW],
+            [['status'], 'default', 'value' => SeenStatus::STATUS_NEW->value],
             [
                 ['seen_pack_id'],
                 'exist',
@@ -82,21 +79,9 @@ class Seen extends ActiveRecord
     static public function statusNames(): array
     {
         return [
-            self::STATUS_NEW => Yii::t('app', 'SEEN_STATUS_NEW'),
-            self::STATUS_SEEN => Yii::t('app', 'SEEN_STATUS_SEEN'),
-            self::STATUS_UPDATED => Yii::t('app', 'SEEN_STATUS_UPDATED'),
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    static public function statusCSS(): array
-    {
-        return [
-            self::STATUS_NEW => 'seen-tag-new',
-            self::STATUS_UPDATED => 'seen-tag-updated',
-            self::STATUS_SEEN => 'seen-tag-seen',
+            SeenStatus::STATUS_NEW->value => Yii::t('app', 'SEEN_STATUS_NEW'),
+            SeenStatus::STATUS_SEEN->value => Yii::t('app', 'SEEN_STATUS_SEEN'),
+            SeenStatus::STATUS_UPDATED->value => Yii::t('app', 'SEEN_STATUS_UPDATED'),
         ];
     }
 
@@ -109,12 +94,31 @@ class Seen extends ActiveRecord
         return $names[$this->status] ?? '';
     }
 
-    /**
-     * @return string
-     */
     public function getCSS(): string
     {
-        $names = self::statusCSS();
-        return $names[$this->status] ?? '';
+        return $this->getSeenStatus()->statusCSS();
+    }
+
+    public function getSeenStatus(): SeenStatus
+    {
+        return SeenStatus::from($this->status);
+    }
+
+    public function setSeenStatus(SeenStatus $seenStatus): void
+    {
+        $this->status = $seenStatus->value;
+    }
+
+    /**
+     * Sets the status unless the existing one is already newer
+     *
+     * @param SeenStatus $seenStatus
+     * @return void
+     */
+    public function setSeenStatusMax(SeenStatus $seenStatus): void
+    {
+        if ($this->getSeenStatus()->isNewerThanMe($seenStatus)) {
+            $this->setSeenStatus($seenStatus);
+        }
     }
 }
