@@ -1,8 +1,8 @@
 <?php
 
-require('./vendor/autoload.php');
+require(__DIR__ . '/../vendor/autoload.php');
 require(__DIR__ . '/../common/environment.php');
-require('./vendor/yiisoft/yii2/Yii.php');
+require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
 
 Yii::setAlias('@common', dirname(__DIR__));
 Yii::setAlias('@frontend', dirname(dirname(__DIR__)) . '/frontend');

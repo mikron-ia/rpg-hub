@@ -26,10 +26,7 @@ class ToolsForDescriptionTest extends TestCase
         $this->assertEquals($result, $this->processKeysInLinks($text, $linkBases));
     }
 
-    /**
-     * @return array
-     */
-    public function complexConversionDataProvider(): array
+    static public function complexConversionDataProvider(): array
     {
         return [
             [
@@ -105,7 +102,7 @@ class ToolsForDescriptionTest extends TestCase
     /**
      * @return array
      */
-    public function headerConversionDataProvider(): array
+    static public function headerConversionDataProvider(): array
     {
         return [
             ['# Lorem ipsum', '## Lorem ipsum'],
