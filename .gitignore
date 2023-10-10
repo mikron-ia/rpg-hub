@@ -38,3 +38,6 @@ console/migrations/*.sql
 
 # Working scripts
 /scripts
+
+# Tests cache
+tests/*.cache

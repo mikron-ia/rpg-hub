@@ -1,6 +1,6 @@
 <?php
 
-namespace tests;
+namespace tests\common\models\tools;
 
 use common\models\tools\ToolsForDescription;
 use PHPUnit\Framework\TestCase;
@@ -10,12 +10,12 @@ class ToolsForDescriptionTest extends TestCase
     use ToolsForDescription;
 
     /**
-     * @test
      * @dataProvider complexConversionDataProvider
-     * @param $text
-     * @param $result
+     *
+     * @param string $text
+     * @param string $result
      */
-    public function testComplexConversion($text, $result)
+    public function testComplexConversion(string $text, string $result)
     {
         $linkBases = [
             'Character' => '/index.php/character/view/key=',
@@ -89,7 +89,6 @@ class ToolsForDescriptionTest extends TestCase
     }
 
     /**
-     * @test
      * @dataProvider headerConversionDataProvider
      * @param string $text
      * @param string $result
@@ -99,9 +98,6 @@ class ToolsForDescriptionTest extends TestCase
         $this->assertEquals($result, $this->expandHeaders($text));
     }
 
-    /**
-     * @return array
-     */
     static public function headerConversionDataProvider(): array
     {
         return [
