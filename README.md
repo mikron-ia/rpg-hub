@@ -1,7 +1,6 @@
 # RPG hub
 
-A system for role-playing game story/campaign/epic (names vary from system to system) management. This is an attempt on
-an integrated system that would be a help in that process.
+This project is a system for role-playing game story/campaign/epic management.
 
 ## Licensing
 
@@ -19,15 +18,17 @@ its cast, threads, and - if present - mechanical components - is the role of thi
 ## Set up instruction
 
 1. Make sure you have the proper stack installed; the current requirements are:
-    * PHP 7.2+
+    * PHP 8.2+
+        * Since there are no components from 8.2 used so far, the current code will run on 8.1 as well with minimal
+          tweaking -- but there is no gurarantee this behavior will be maintained
     * MySQL 5.6+ database or MariaDB equivalent
 1. If you have no composer, install it via instructions from [here](https://getcomposer.org/download/)
 1. Clone the project to the desired directory
 1. Run `composer install`
     * for a production deployment, add `--no-dev` option to avoid adding unnecessary libraries
 1. Copy `.env.example` to `.env` and fill it with configuration data
-    * Database access is mandatory; without it, the hub will fail to start
-    * Language configuration and key generators can be left with their default valuea
+    * Database access data is mandatory; without it, the hub will fail to start
+    * Language configuration and key generators can be left with their default values
         * change them only if you have a good reason to
     * API key must be set up to make API accessible from outside
     * URIs are needed - without them mailing will fail, and a few redirects may not work
@@ -50,13 +51,13 @@ its cast, threads, and - if present - mechanical components - is the role of thi
 
 1. Update the code base from an archive pack or a git tag
     * If you are feeling adventurous, use the `master` branch, but its content is **not** guaranteed to work at all
-      times
+      times; to be safe, use the latest release
 1. Run `composer install`
 1. Ensure your `.env` file is up to date, based on `.env.example`
 1. Run migrations with `./yii migrate/up`
 1. Run `./yii rbac/v*` sequentially to get up to a proper version
-    * Note: there is, to date, no record on which RBAC migration was ran last; running something twice will likely cause
-      an error
+    * Note: there is, to date, no record on which RBAC migration was ran last; running any of those "migrations" twice
+      will cause an error - it will not damage anything, though, just break the execution
 
 ## Project structure
 
@@ -105,9 +106,14 @@ What follows is a list of libraries used in the project; only those included dir
 All the following libraries are licensed under `BSD-3-Clause license` or a derivative, unless stated otherwise.
 
 * [The yii framework](https://github.com/yiisoft/yii2) is the basis of this project
-    * this includes [yii2-bootstrap](https://github.com/yiisoft/yii2-bootstrap), [yii2-swiftmailer](https://github.com/yiisoft/yii2-swiftmailer), [yii2-debug](https://github.com/yiisoft/yii2-debug), and [yii2-gii](https://github.com/yiisoft/yii2-gii)
+    * this includes [yii2-bootstrap](https://github.com/yiisoft/yii2-bootstrap),
+      [yii2-swiftmailer](https://github.com/yiisoft/yii2-swiftmailer),
+      [yii2-debug](https://github.com/yiisoft/yii2-debug), and [yii2-gii](https://github.com/yiisoft/yii2-gii)
 * Tools made by [Kartik Visweswaran](https://github.com/kartik-v/)
-    * those include [yii2-krajee-base](https://github.com/kartik-v/yii2-krajee-base), [yii2-widget-select2](https://github.com/kartik-v/yii2-widget-select2), [yii2-password](https://github.com/kartik-v/yii2-password)
-      , [strength-meter](https://github.com/kartik-v/strength-meter), and [yii2-widget-datepicker](https://github.com/kartik-v/yii2-widget-datepicker)
+    * those include [yii2-krajee-base](https://github.com/kartik-v/yii2-krajee-base),
+      [yii2-widget-select2](https://github.com/kartik-v/yii2-widget-select2),
+      [yii2-password](https://github.com/kartik-v/yii2-password),
+      [strength-meter](https://github.com/kartik-v/strength-meter),
+      and [yii2-widget-datepicker](https://github.com/kartik-v/yii2-widget-datepicker)
 * [phpunit](https://github.com/sebastianbergmann/phpunit)
 * [phpdotenv](https://github.com/vlucas/phpdotenv)
