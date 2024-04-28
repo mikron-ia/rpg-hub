@@ -1,0 +1,114 @@
+a {
+    color: green;
+}
+
+.btn-primary {
+    background-image: -webkit-linear-gradient(top, forestgreen 0%, green 100%) !important;
+    background-image: -o-linear-gradient(top, forestgreen 0%, green 100%) !important;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(forestgreen), to(green)) !important;
+    background-image: linear-gradient(to bottom, forestgreen 0%, green 100%) !important;
+    border-color: mediumseagreen !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: mediumseagreen 0 -15px !important;
+}
+
+.btn-primary:active,
+.btn-primary.active {
+    background-color: green !important;
+    border-color: mediumseagreen !important;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary.focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+    background: green none !important;
+}
+
+a {
+    color: green;
+}
+
+a:hover,
+a:focus {
+    color: mediumseagreen;
+}
+
+.pagination > li > a, .pagination > li > span {
+    color: green;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: green;
+    border-color: green;
+}
+
+.public-notes {
+    margin-bottom: 10px;
+}
+
+.protected-notes {
+    border: 4px dotted #88dd00;
+}
+
+.private-notes {
+    border: 4px dashed #88dd00;
+}
+
+.index-box {
+    border: 3px solid green;
+}
+
+.index-box-header-icon {
+    color: green;
+}
+
+.index-box-gm {
+    border: 3px solid darkviolet;
+}
+
+.index-box-designated {
+    border: 3px solid yellowgreen;
+}
+
+.seen-tag-new {
+    background-color: yellowgreen;
+    color: white;
+}
+
+.seen-tag-updated {
+    background-color: goldenrod;
+    color: white;
+}
+
+.seen-tag-seen {
+    background-color: lightgrey;
+    color: white;
+}
+
+.tag-box {
+    background-color: lightgreen;
+    color: inherit;
+}
+
+.unpublished-tag {
+    background-color: darkviolet;
+    color: white;
+}

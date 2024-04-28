@@ -1,0 +1,113 @@
+a {
+    color: brown;
+}
+
+.btn-primary {
+    background-image: -webkit-linear-gradient(top, brown 0%, saddlebrown 100%) !important;
+    background-image: -o-linear-gradient(top, brown 0%, saddlebrown 100%) !important;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(brown), to(saddlebrown)) !important;
+    background-image: linear-gradient(to bottom, saddlebrown 0%, brown 100%) !important;
+    border-color: brown !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: chocolate 0 -15px !important;
+}
+
+.btn-primary:active,
+.btn-primary.active {
+    background-color: saddlebrown !important;
+    border-color: brown !important;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary.focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+    background: saddlebrown none !important;
+}
+
+a {
+    color: saddlebrown;
+}
+
+a:hover,
+a:focus {
+    color: chocolate;
+}
+
+.pagination > li > a, .pagination > li > span {
+    color: saddlebrown;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: saddlebrown;
+    border-color: saddlebrown;
+}
+
+.public-notes {
+    background-color: #ffffff;
+}
+
+.protected-notes {
+    border: 4px dotted saddlebrown;
+}
+
+.private-notes {
+    border: 4px dashed saddlebrown;
+}
+
+.index-box {
+    border: 3px solid saddlebrown;
+}
+
+.index-box-header-icon {
+    color: saddlebrown;
+}
+
+.index-box-gm {
+    border: 3px solid darkviolet;
+}
+
+.index-box-designated {
+    border: 3px solid chocolate;
+}
+
+.seen-tag-new {
+    background-color: chocolate;
+    color: white;
+}
+
+.seen-tag-updated {
+    background-color: goldenrod;
+    color: white;
+}
+
+.seen-tag-seen {
+    background-color: lightgrey;
+    color: white;
+}
+
+.unpublished-tag {
+    background-color: orangered;
+    color: white;
+}
+
+.tag-box {
+    background-color: chocolate;
+}

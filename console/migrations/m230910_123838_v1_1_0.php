@@ -94,10 +94,16 @@ class m230910_123838_v1_1_0 extends Migration
             'RESTRICT',
             'CASCADE'
         );
+
+        /* Epic styling */
+        $this->addColumn('{{%epic}}', 'style', $this->string(20)->after('system'));
     }
 
     public function safeDown()
     {
+        /* Epic styling removed */
+        $this->dropColumn('{{%epic}}', 'style');
+
         /* Scribbles removed */
         $this->dropForeignKey('group_scribble_pack', '{{%group}}');
         $this->dropForeignKey('character_scribble_pack', '{{%character}}');

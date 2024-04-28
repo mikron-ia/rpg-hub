@@ -81,6 +81,7 @@ use yii\widgets\DetailView;
                     'value' => $model->getGameCountByStatus('closed') . ' / ' . count($model->games),
                 ],
                 ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_ARTICLES'), 'value' => count($model->articles)],
+                ['attribute' => 'style', 'value' => $model->getStyle()->getStyleName()],
             ],
         ]) ?>
     </div>

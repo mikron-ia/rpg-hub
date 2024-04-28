@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\FrontStyles;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -16,8 +17,12 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-6">
         <?= $form->field($model, 'system')->textInput(['maxlength' => true]) ?>
+    </div>
+
+    <div class="col-md-6">
+        <?= $form->field($model, 'style')->dropDownList(FrontStyles::provideStyleNames()) ?>
     </div>
 
     <?php if (!$model->isNewRecord): ?>

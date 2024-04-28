@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\FrontStyles;
 use common\models\core\HasParameters;
 use common\models\core\HasSightings;
 use common\models\core\HasStatus;
@@ -22,6 +23,7 @@ use yii\web\HttpException;
  * @property string $key
  * @property string $name Public name for the epic
  * @property string $system Code for the system used
+ * @property string|null $style Default style
  * @property string $status Epic status
  * @property string $parameter_pack_id
  * @property string $seen_pack_id
@@ -73,7 +75,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return [
             [['name', 'system'], 'required'],
             [['name'], 'string', 'max' => 80],
-            [['system'], 'string', 'max' => 20],
+            [['system', 'style'], 'string', 'max' => 20],
             [['status'], 'string', 'max' => 20],
             [
                 ['status'],
@@ -102,6 +104,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             'key' => Yii::t('app', 'EPIC_KEY'),
             'name' => Yii::t('app', 'EPIC_NAME'),
             'system' => Yii::t('app', 'EPIC_GAME_SYSTEM'),
+            'style' => Yii::t('app', 'EPIC_STYLE_FOR_FRONT'),
             'status' => Yii::t('app', 'EPIC_STATUS'),
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
             'seen_pack_id' => Yii::t('app', 'SEEN_PACK'),
@@ -222,6 +225,11 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return array_filter(self::statusNames(), function ($key) {
             return in_array($key, $this->getAllowedChange());
         }, ARRAY_FILTER_USE_KEY);
+    }
+
+    public function getStyle(): FrontStyles
+    {
+        return FrontStyles::tryFrom($this->style) ?? FrontStyles::Default;
     }
 
     public function afterFind()

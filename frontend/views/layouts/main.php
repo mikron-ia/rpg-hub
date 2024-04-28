@@ -4,6 +4,7 @@
 
 /* @var $content string */
 
+use common\models\core\FrontStyles;
 use frontend\assets\AppAsset;
 use common\components\FooterHelper;
 use common\widgets\Alert;
@@ -13,6 +14,8 @@ use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
+(Yii::$app->params['activeEpic']?->getStyle() ?? FrontStyles::Default)->provideClass()::register($this);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
