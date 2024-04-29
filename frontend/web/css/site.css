@@ -148,7 +148,6 @@ p {
 }
 
 .tag-box {
-    background-color: lightgreen;
     border-radius: 5px;
     display: inline-block;
     font-weight: bold;
@@ -434,7 +433,6 @@ tr.table-row-hidden > td {
 
 .session-box-closed:after {
     content: '+';
-    color: green;
     float: right;
 }
 
@@ -444,7 +442,6 @@ tr.table-row-hidden > td {
 
 .session-box-open:after {
     content: '-';
-    color: green;
     float: right;
     cursor: pointer;
 }

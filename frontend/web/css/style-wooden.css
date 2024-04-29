@@ -103,11 +103,20 @@ a:focus {
     color: white;
 }
 
-.unpublished-tag {
-    background-color: orangered;
-    color: white;
+.session-box-closed:after {
+    color: saddlebrown;
+}
+
+.session-box-open:after {
+    color: saddlebrown
 }
 
 .tag-box {
     background-color: chocolate;
+    color: white
+}
+
+.unpublished-tag {
+    background-color: orangered;
+    color: white;
 }
