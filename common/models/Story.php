@@ -262,6 +262,15 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return ($this->visibility === Visibility::VISIBILITY_FULL);
     }
 
+    /**
+     * @return string|null
+     */
+    public function getVisibilityName(): ?string
+    {
+        $list = Visibility::visibilityNames(self::allowedVisibilities());
+        return $list[$this->visibility] ?? null;
+    }
+
     static public function allowedParameterTypes(): array
     {
         return [

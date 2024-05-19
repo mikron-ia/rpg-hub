@@ -35,6 +35,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'name',
                 ],
                 [
+                    'attribute' => 'visibility',
+                    'headerOptions' => ['class' => 'text-center'],
+                    'contentOptions' => ['class' => 'text-center'],
+                    'value' => function (Story $model) {
+                        return $model->getVisibilityName();
+                    }
+                ],
+                [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view}',
                     'buttons' => [
