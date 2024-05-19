@@ -85,10 +85,6 @@ a.desc:after {
     content: "\e156";
 }
 
-.grid-view td {
-    white-space: nowrap;
-}
-
 .grid-view .filters input,
 .grid-view .filters select {
     min-width: 50px;
@@ -187,6 +183,18 @@ p {
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
     vertical-align: middle
+}
+
+@media (max-width: 575px) {
+    .table > thead > tr > th {
+        text-align: center;
+    }
+}
+
+@media (max-width: 383px) {
+    .table > thead > tr > th {
+        font-size: 12px;
+    }
 }
 
 .btn-primary {
