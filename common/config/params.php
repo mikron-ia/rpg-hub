@@ -1,5 +1,7 @@
 <?php
 
+use common\models\core\ImportanceCategory;
+
 if (getenv('LANGUAGES_ALLOWED')) {
     $languages = explode(',', str_replace(' ', '', getenv('LANGUAGES_ALLOWED')));
 } else {
@@ -27,6 +29,30 @@ return [
         'reputation' => [
             'allowedStrategies' => [],
             'settingsByStrategy' => []
+        ],
+    ],
+    'importance' => [
+        'importanceWeights' => [
+            'importanceCategory' => [
+                ImportanceCategory::IMPORTANCE_EXTREME->value => getenv('IMPORTANCE_CATEGORY_EXTREME_VALUE'),
+                ImportanceCategory::IMPORTANCE_HIGH->value => getenv('IMPORTANCE_CATEGORY_IMPORTANCE_HIGH_VALUE'),
+                ImportanceCategory::IMPORTANCE_MEDIUM->value => getenv('IMPORTANCE_CATEGORY_IMPORTANCE_MEDIUM_VALUE'),
+                ImportanceCategory::IMPORTANCE_LOW->value => getenv('IMPORTANCE_CATEGORY_IMPORTANCE_LOW_VALUE'),
+                ImportanceCategory::IMPORTANCE_NONE->value => getenv('IMPORTANCE_CATEGORY_IMPORTANCE_NONE_VALUE'),
+            ],
+            'newAndUpdated' => [
+                'new' => getenv('IMPORTANCE_NEW_VALUE'),
+                'updated' => getenv('IMPORTANCE_UPDATED_VALUE'),
+                'default' => getenv('IMPORTANCE_DEFAULT_VALUE'),
+            ],
+            'associated' => [
+                'associated' => getenv('IMPORTANCE_ASSOCIATED_VALUE'),
+                'unassociated' => getenv('IMPORTANCE_UNASSOCIATED_VALUE'),
+            ],
+            'date' => [
+                'initial' => getenv('IMPORTANCE_DATE_INITIAL_VALUE'),
+                'divider' => getenv('IMPORTANCE_DATE_DIVIDER_VALUE'),
+            ],
         ],
     ],
     'invitation.isValidFor' => $invitationValidityMultiplier * 86400,

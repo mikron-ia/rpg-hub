@@ -94,7 +94,7 @@ class Importance extends ActiveRecord
 
         $valueFromSeen = $this->determineValueBasedOnSeen($measuredObject->getSeenStatusForUser($this->user->id));
         $valueFromCategory = $this->determineValueBasedOnImportanceCategory($measuredObject->getImportanceCategoryObject());
-        $valueFromLastModified = $this->determineValueBasedOnDate($measuredObject->getLastModified(), 8);
+        $valueFromLastModified = $this->determineValueBasedOnDate($measuredObject->getLastModified());
 
         return $valueFromLastModified + $valueFromCategory + $valueFromSeen;
     }
@@ -117,21 +117,15 @@ class Importance extends ActiveRecord
     private function determineValueBasedOnSeen(string $seen): int
     {
         return match ($seen) {
-            'new' => 128,
-            'updated' => 64,
-            default => 0,
+            'new' => Yii::$app->params['importance']['importanceWeights']['newAndUpdated']['new'],
+            'updated' => Yii::$app->params['importance']['importanceWeights']['newAndUpdated']['updated'],
+            default => Yii::$app->params['importance']['importanceWeights']['newAndUpdated']['default'],
         };
     }
 
     private function determineValueBasedOnImportanceCategory(ImportanceCategory $importanceCategory): int
     {
-        return match ($importanceCategory) {
-            ImportanceCategory::IMPORTANCE_EXTREME => 64,
-            ImportanceCategory::IMPORTANCE_HIGH => 32,
-            ImportanceCategory::IMPORTANCE_MEDIUM => 16,
-            ImportanceCategory::IMPORTANCE_LOW => 8,
-            ImportanceCategory::IMPORTANCE_NONE => 0,
-        };
+        return Yii::$app->params['importance']['importanceWeights']['importanceCategory'][$importanceCategory->value] ?? 0;
     }
 
     /**
@@ -140,27 +134,31 @@ class Importance extends ActiveRecord
      */
     private function determineValueBasedOnAssociation(bool $isAssociated): int
     {
-        return $isAssociated ? 8 : 0;
+        return $isAssociated
+            ? Yii::$app->params['importance']['importanceWeights']['associated']['associated']
+            : Yii::$app->params['importance']['importanceWeights']['associated']['unassociated'];
     }
 
     /**
      * @param DateTimeImmutable $date Date of event
-     * @param int $topValue Value to assign if event was less than a day ago
      * @return int
      */
-    private function determineValueBasedOnDate(DateTimeImmutable $date, int $topValue): int
+    private function determineValueBasedOnDate(DateTimeImmutable $date): int
     {
         $now = new DateTimeImmutable('now');
         $difference = $date->diff($now);
 
+        $initial = Yii::$app->params['importance']['importanceWeights']['date']['initial'];
+        $divider = Yii::$app->params['importance']['importanceWeights']['date']['divider'];
+
         if ($difference->y > 0) {
-            $result = $topValue / 8;
+            $result = $initial / pow($divider, 3);
         } elseif ($difference->m > 0) {
-            $result = $topValue / 4;
+            $result = $initial / pow($divider, 2);
         } elseif ($difference->d > 0) {
-            $result = $topValue / 2;
+            $result = $initial / $divider;
         } else {
-            $result = $topValue;
+            $result = $initial;
         }
 
         return (int)round($result);
