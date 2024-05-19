@@ -5,6 +5,7 @@
 ?>
 
 <div class="col-md-8">
+    <h2><?= Yii::t('app', 'STORY_SUMMARY') ?></h2>
     <?= $model->getShortFormatted(); ?>
 </div>
 
@@ -13,7 +14,7 @@
     <table class="table table-bordered table-hover">
         <tbody>
         <?php foreach ($model->parameterPack->parametersOrdered as $storyParameter): ?>
-            <tr title="<?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?>">
+            <tr>
                 <td class="text-left"><strong><?php echo $storyParameter->getCodeName(); ?></strong></td>
                 <td class="text-center"><?php echo $storyParameter->content; ?></td>
             </tr>
