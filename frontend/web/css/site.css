@@ -229,7 +229,7 @@ a:focus {
 .index-box {
     float: left;
     margin: 1% 0.75%;
-    height: 240px;
+    height: 200px;
     padding: 0 10px;
     overflow: auto;
     position: relative;
@@ -237,14 +237,30 @@ a:focus {
 
 @media (max-width: 383px) {
     .index-box {
-        width: 94%;
-        margin: 2% 0;
+        min-width: 280px;
+        width: 96%;
+        margin: 1% 0;
     }
 }
 
 @media (min-width: 384px) {
     .index-box {
+        width: 80%;
+        margin: 1% 10%;
+    }
+}
+
+@media (min-width: 480px) {
+    .index-box {
+        width: 64%;
+        margin: 1% 15%;
+    }
+}
+
+@media (min-width: 576px) {
+    .index-box {
         width: 48%;
+        margin: 1% 1%;
     }
 }
 
