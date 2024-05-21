@@ -237,7 +237,7 @@ a:focus {
 
 @media (max-width: 383px) {
     .index-box {
-        min-width: 280px;
+        min-width: 240px;
         width: 96%;
         margin: 1% 0;
     }
@@ -245,15 +245,9 @@ a:focus {
 
 @media (min-width: 384px) {
     .index-box {
-        width: 80%;
-        margin: 1% 10%;
-    }
-}
-
-@media (min-width: 480px) {
-    .index-box {
-        width: 64%;
-        margin: 1% 15%;
+        height: 232px;
+        width: 48%;
+        margin: 1% 1%;
     }
 }
 
@@ -266,12 +260,14 @@ a:focus {
 
 @media (min-width: 768px) {
     .index-box {
+        height: 200px;
         width: 48%;
     }
 }
 
 @media (min-width: 960px) {
     .index-box {
+        height: 232px;
         width: 32%;
         margin: 0.5% 0.5%;
     }
@@ -295,6 +291,25 @@ a:focus {
         width: 12%;
         margin: 0.2% 0.2%;
     }
+}
+
+.index-box>h3 {
+    margin-top: 10px;
+    padding-top: 4px;
+    max-height: 50%;
+    overflow: clip;
+}
+
+@media (max-width: 383px) {
+    .index-box>h3 {
+        padding-top: 0px;
+        overflow: visible;
+    }
+}
+
+.index-box>.subtitle {
+    max-height: 25%;
+    overflow: clip;
 }
 
 .index-box-low {
@@ -342,11 +357,17 @@ a:focus {
     font-size: 1.75rem;
     font-weight: bold;
     border-radius: 15px;
-    padding: 5px;
+    padding: 2%;
     position: absolute;
     bottom: 1%;
     right: 5%;
     width: 64%;
+}
+
+@media (max-width: 575px) {
+    .seen-tag-box {
+        width: 88%;
+    }
 }
 
 .seen-tag-header {
