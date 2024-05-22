@@ -85,13 +85,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'contentOptions' => ['class' => 'text-center'],
-                    'template' => '{view}',
+                    'template' => '{view} {update}',
                     'buttons' => [
                         'view' => function ($url, Character $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-eye-open"></span>',
                                 Yii::$app->urlManager->createUrl(['character/view', 'key' => $model->key]),
                                 ['title' => Yii::t('app', 'BUTTON_VIEW')]
+                            );
+                        },
+                        'update' => function ($url, Character $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-pencil"></span>',
+                                Yii::$app->urlManager->createUrl(['character/update', 'key' => $model->key]),
+                                ['title' => Yii::t('app', 'BUTTON_UPDATE')]
                             );
                         },
                     ],
