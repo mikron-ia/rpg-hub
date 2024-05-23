@@ -11,7 +11,7 @@ use yii\data\ActiveDataProvider;
  */
 class ScenarioQuery extends Scenario
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             [['scenario_id', 'epic_id', 'description_pack_id'], 'integer'],
@@ -19,7 +19,7 @@ class ScenarioQuery extends Scenario
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
@@ -31,7 +31,7 @@ class ScenarioQuery extends Scenario
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params): ActiveDataProvider
     {
         $query = Scenario::find();
 
