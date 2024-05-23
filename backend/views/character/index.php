@@ -84,7 +84,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'contentOptions' => ['class' => 'text-center'],
                     'template' => '{view} {update}',
                     'buttons' => [
                         'view' => function ($url, Character $model, $key) {

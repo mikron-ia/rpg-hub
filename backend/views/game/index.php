@@ -43,6 +43,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {up} {down}',
                 'buttons' => [
+                    'view' => function ($url, Game $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-eye-open"></span>',
+                            Yii::$app->urlManager->createUrl(['game/view', 'id' => $model->game_id]),
+                            ['title' => Yii::t('app', 'BUTTON_VIEW')]
+                        );
+                    },
+                    'update' => function ($url, Game $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-pencil"></span>',
+                            Yii::$app->urlManager->createUrl(['game/update', 'id' => $model->game_id]),
+                            ['title' => Yii::t('app', 'BUTTON_UPDATE')]
+                        );
+                    },
                     'up' => function ($url, Game $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-arrow-up"></span>',

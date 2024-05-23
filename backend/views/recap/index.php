@@ -44,14 +44,20 @@ $mostRecent = $searchModel->mostRecent();
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{view}',
-                    'contentOptions' => ['class' => 'text-center'],
+                    'template' => '{view} {update}',
                     'buttons' => [
                         'view' => function ($url, Recap $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-eye-open"></span>',
                                 Yii::$app->urlManager->createUrl(['recap/view', 'key' => $model->key]),
                                 ['title' => Yii::t('app', 'BUTTON_VIEW')]
+                            );
+                        },
+                        'update' => function ($url, Recap $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-pencil"></span>',
+                                Yii::$app->urlManager->createUrl(['recap/update', 'key' => $model->key]),
+                                ['title' => Yii::t('app', 'BUTTON_UPDATE')]
                             );
                         },
                     ],

@@ -34,6 +34,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {up} {down}',
                 'buttons' => [
+                    'view' => function ($url, PointInTime $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-eye-open"></span>',
+                            Yii::$app->urlManager->createUrl(['point-in-time/view', 'id' => $model->point_in_time_id]),
+                            ['title' => Yii::t('app', 'BUTTON_VIEW')]
+                        );
+                    },
+                    'update' => function ($url, PointInTime $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-pencil"></span>',
+                            Yii::$app->urlManager->createUrl(['point-in-time/update', 'id' => $model->point_in_time_id]),
+                            ['title' => Yii::t('app', 'BUTTON_UPDATE')]
+                        );
+                    },
                     'up' => function ($url, PointInTime $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-arrow-up"></span>',
