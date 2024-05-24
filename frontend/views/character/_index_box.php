@@ -42,7 +42,11 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
 
     <h3 class="index-box-header-narrow">
         <?= Html::a(
-            Html::encode(StringHelper::truncateWords($model->name, 8, ' (...)', false)),
+            Html::encode(StringHelper::truncateWords(
+                $model->name, Yii::$app->params['indexBoxWordTrimming']['title'],
+                ' (...)',
+                false
+            )),
             ['view', 'key' => $model->key]
         ); ?>
     </h3>
@@ -53,7 +57,12 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
     ></span>
 
     <p class="subtitle">
-        <?= StringHelper::truncateWords($model->tagline, 8, ' (...)', false) ?>
+        <?= StringHelper::truncateWords(
+            $model->tagline,
+            Yii::$app->params['indexBoxWordTrimming']['subtitle'],
+            ' (...)',
+            false
+        ) ?>
     </p>
 
     <p class="text-center seen-tag-common <?= $model->showSightingCSS() ?> seen-tag-box">

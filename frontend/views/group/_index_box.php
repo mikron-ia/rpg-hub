@@ -1,10 +1,11 @@
 <?php
 
 use common\models\core\Visibility;
+use common\models\Group;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 
-/** @var $model \common\models\Character */
+/** @var $model Group */
 
 switch ($model->visibility) {
     case Visibility::VISIBILITY_GM :
@@ -42,7 +43,11 @@ $titleText = '';
 
     <h3 class="index-box-header-narrow">
         <?= Html::a(
-            Html::encode(StringHelper::truncateWords($model->name, 16, ' (...)', false)),
+            Html::encode(StringHelper::truncateWords(
+                $model->name, Yii::$app->params['indexBoxWordTrimming']['title'],
+                ' (...)',
+                false
+            )),
             ['view', 'key' => $model->key]
         ); ?>
     </h3>
