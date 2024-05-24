@@ -286,8 +286,7 @@ a:focus {
 }
 
 .index-box>h3 {
-    margin-top: 10px;
-    padding-top: 4px;
+    margin-top: 8px;
 }
 
 .index-box-low {
@@ -337,14 +336,15 @@ a:focus {
     border-radius: 15px;
     padding: 2%;
     position: absolute;
-    bottom: 1%;
-    right: 5%;
+    bottom: -1%;
+    right: 2.5%;
     width: 64%;
 }
 
 @media (max-width: 575px) {
     .seen-tag-box {
         width: 88%;
+        right: 6%;
     }
 }
 
