@@ -1,11 +1,11 @@
 <?php
 
-use frontend\assets\GroupAsset;
+use frontend\assets\IndexBoxesAsset;
 use yii\bootstrap\Modal;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
 
-GroupAsset::register($this);
+IndexBoxesAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\CharacterQuery */

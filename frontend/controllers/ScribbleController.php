@@ -90,7 +90,11 @@ class ScribbleController extends Controller
 
         $scribble = $this->findModel($scribbleId);
 
-        if (!$scribble->scribblePack->canUserReadYou()) {
+        if (!$scribble->isOwnedBy(Yii::$app->getUser())) {
+            throw new ForbiddenHttpException(Yii::t('app', 'SCRIBBLE_DENIED_ACCESS'));
+        }
+
+        if (!$scribble->scribblePack->canUserControlYou()) {
             throw new ForbiddenHttpException(Yii::t('app', 'SCRIBBLE_DENIED_ACCESS'));
         }
 

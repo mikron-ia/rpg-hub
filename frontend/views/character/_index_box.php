@@ -1,10 +1,11 @@
 <?php
 
+use common\models\Character;
 use common\models\core\Visibility;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 
-/** @var $model \common\models\Character */
+/** @var $model Character */
 
 switch ($model->visibility) {
     case Visibility::VISIBILITY_GM :
@@ -29,11 +30,16 @@ switch ($model->visibility) {
         break;
 }
 
-$favorite = false; // to be replaced by an actual value based on the database record
+$scribbleObject = $model->scribblePack?->getScribbleByUserId(Yii::$app->getUser()->getId());
+
+$favorite = $scribbleObject?->favorite;
+$scribble = false; // to be replaced by an actual value based on the database record
 
 $classesForBox = 'index-box' . ($additionalBoxClasses ? ' ' . $additionalBoxClasses : '');
-$favoriteClass = $favorite ? 'glyphicon-tags' : 'glyphicon-tag';
-$favoriteTitle = $favorite ? Yii::t('app', 'SCRIBBLES_TITLE_YES') : Yii::t('app', 'SCRIBBLES_TITLE_NO');
+$favoriteClass = $favorite ? 'glyphicon-star' : 'glyphicon-star-empty';
+$favoriteTitle = $favorite ? Yii::t('app', 'FAVORITE_TITLE_YES') : Yii::t('app', 'FAVORITE_TITLE_NO');
+$scribbleClass = $scribble ? 'glyphicon-tags' : 'glyphicon-tag';
+$scribbleTitle = $scribble ? Yii::t('app', 'SCRIBBLES_TITLE_YES') : Yii::t('app', 'SCRIBBLES_TITLE_NO');
 $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleText : '');
 
 ?>
@@ -51,12 +57,18 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
         ); ?>
     </h3>
 
-    <span class="index-box-header-icon glyphicon <?= $favoriteClass ?> scribble-button"
-          data-character-key="<?= $model->key ?>"
+    <span class="index-box-header-icon index-box-header-icon-top glyphicon <?= $favoriteClass ?> favorite-button"
+          data-box-key="<?= $model->key ?>"
+          data-scribble-id="<?= $scribbleObject?->scribble_id ?>"
           title="<?= $favoriteTitle ?>"
     ></span>
 
-    <p class="subtitle">
+    <span class="index-box-header-icon index-box-header-icon-bottom glyphicon <?= $scribbleClass ?> scribble-button"
+          data-character-key="<?= $model->key ?>"
+          title="<?= $scribbleTitle ?>"
+    ></span>
+
+    <p class="subtitle index-box-subtitle-narrow">
         <?= StringHelper::truncateWords(
             $model->tagline,
             Yii::$app->params['indexBoxWordTrimming']['subtitle'],

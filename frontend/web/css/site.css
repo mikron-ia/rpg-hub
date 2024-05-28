@@ -298,15 +298,27 @@ a:focus {
 }
 
 .index-box-header-icon {
+    position: absolute;
     cursor: pointer;
     font-size: 2.5rem;
     padding: 5px;
-    position: absolute;
+}
+
+.index-box-header-icon-top {
     right: 2%;
     top: 2%;
 }
 
+.index-box-header-icon-bottom {
+    right: 2%;
+    top: 20%;
+}
+
 .index-box-header-narrow {
+    width: 88%;
+}
+
+.index-box-subtitle-narrow {
     width: 88%;
 }
 

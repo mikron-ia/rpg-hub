@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\HasOwner;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -17,7 +18,7 @@ use yii\db\ActiveRecord;
  * @property ScribblePack $scribblePack
  * @property User $user
  */
-class Scribble extends ActiveRecord
+class Scribble extends ActiveRecord implements HasOwner
 {
     public static function tableName(): string
     {
@@ -62,6 +63,15 @@ class Scribble extends ActiveRecord
     public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function isOwnedBy(User|\yii\web\User|null $user): bool
+    {
+        if (empty($user)) {
+            return false;
+        }
+
+        return $this->user->getId() === $user->getId();
     }
 
     /**

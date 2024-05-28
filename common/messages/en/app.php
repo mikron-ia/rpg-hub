@@ -288,6 +288,8 @@ return [
     'EXTERNAL_DATA_PACK' => 'External data pack',
     'EXTERNAL_DATA_TITLE {name}' => 'External data for {name}',
     'EXTERNAL_DATA_UPDATE_TITLE' => 'External data update',
+    'FAVORITE_TITLE_NO' => 'Not favorited; click to add to favorites',
+    'FAVORITE_TITLE_YES' => 'Favorited; click to remove from favorites',
     'FLAG_ID' => 'ID',
     'FLAG_STATUS' => 'Status',
     'FLAG_TYPE' => 'Type',

@@ -69,7 +69,7 @@ class ScribblePack extends ActiveRecord implements IsEditablePack
      *
      * @return ActiveQuery|ScribbleQuery
      */
-    public function getScribbles()
+    public function getScribbles(): ScribbleQuery|ActiveQuery
     {
         return $this->hasMany(Scribble::class, ['scribble_pack_id' => 'scribble_pack_id']);
     }

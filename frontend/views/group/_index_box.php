@@ -30,10 +30,15 @@ switch ($model->visibility) {
         break;
 }
 
-$favorite = false; // to be replaced by an actual value based on the database record
+$scribbleObject = $model->scribblePack?->getScribbleByUserId(Yii::$app->getUser()->getId());
+
+$favorite = $scribbleObject?->favorite;
+$scribble = false; // to be replaced by an actual value based on the database record
 
 $classesForBox = 'index-box' . ($additionalBoxClasses ? ' ' . $additionalBoxClasses : '');
-$favoriteClass = $favorite ? 'glyphicon-tags' : 'glyphicon-tag';
+$scribbleClass = $scribble ? 'glyphicon-tags' : 'glyphicon-tag';
+$scribbleTitle = $scribble ? Yii::t('app', 'SCRIBBLES_TITLE_YES') : Yii::t('app', 'SCRIBBLES_TITLE_NO');
+$favoriteClass = $favorite ? 'glyphicon-star' : 'glyphicon-star-empty';
 $favoriteTitle = $favorite ? Yii::t('app', 'SCRIBBLES_TITLE_YES') : Yii::t('app', 'SCRIBBLES_TITLE_NO');
 $titleText = '';
 
@@ -52,9 +57,15 @@ $titleText = '';
         ); ?>
     </h3>
 
-    <span class="index-box-header-icon glyphicon <?= $favoriteClass ?> scribble-button"
-          data-group-key="<?= $model->key ?>"
+    <span class="index-box-header-icon index-box-header-icon-top glyphicon <?= $favoriteClass ?> favorite-button"
+          data-box-key="<?= $model->key ?>"
+          data-scribble-id="<?= $scribbleObject?->scribble_id ?>"
           title="<?= $favoriteTitle ?>"
+    ></span>
+
+    <span class="index-box-header-icon index-box-header-icon-bottom glyphicon <?= $scribbleClass ?> scribble-button"
+          data-box-key="<?= $model->key ?>"
+          title="<?= $scribbleTitle ?>"
     ></span>
 
     <p class="text-center seen-tag-common <?= $model->showSightingCSS() ?> seen-tag-box">
