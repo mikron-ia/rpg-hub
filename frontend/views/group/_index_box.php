@@ -58,13 +58,13 @@ $titleText = '';
     </h3>
 
     <span class="index-box-header-icon index-box-header-icon-top glyphicon <?= $favoriteClass ?> favorite-button"
-          data-box-key="<?= $model->key ?>"
+          data-group-key="<?= $model->key ?>"
           data-scribble-id="<?= $scribbleObject?->scribble_id ?>"
           title="<?= $favoriteTitle ?>"
     ></span>
 
     <span class="index-box-header-icon index-box-header-icon-bottom glyphicon <?= $scribbleClass ?> scribble-button"
-          data-box-key="<?= $model->key ?>"
+          data-group-key="<?= $model->key ?>"
           title="<?= $scribbleTitle ?>"
     ></span>
 
