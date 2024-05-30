@@ -59,6 +59,8 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     use ToolsForEntity;
     use ToolsForHasDescriptions;
 
+    public bool $is_off_the_record_change = false;
+
     public static function tableName(): string
     {
         return 'character';
@@ -70,6 +72,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             [['epic_id', 'name', 'tagline', 'visibility', 'importance_category'], 'required'],
             [['epic_id', 'character_sheet_id', 'description_pack_id', 'scribble_pack_id'], 'integer'],
             [['data', 'visibility', 'importance_category'], 'string'],
+            [['is_off_the_record_change'], 'boolean'],
             [['key'], 'string', 'max' => 80],
             [['name', 'tagline'], 'string', 'max' => 120],
             [
@@ -136,10 +139,11 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'importance_pack_id' => Yii::t('app', 'IMPORTANCE_PACK'),
             'scribble_pack_id' => Yii::t('app', 'SCRIBBLE_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
+            'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
         ];
     }
 
-    public function afterFind()
+    public function afterFind(): void
     {
         if ($this->seen_pack_id) {
             $this->seenPack->recordNotification();
@@ -188,10 +192,12 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return parent::beforeSave($insert);
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): void
     {
-        $this->seenPack->updateRecord();
-        $this->utilityBag->flagAsChanged();
+        if (!$this->is_off_the_record_change) {
+            $this->seenPack->updateRecord();
+            $this->utilityBag->flagAsChanged();
+        }
         $this->utilityBag->flagForImportanceRecalculation();
         parent::afterSave($insert, $changedAttributes);
     }

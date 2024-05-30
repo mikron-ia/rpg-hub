@@ -49,6 +49,10 @@ use yii\widgets\ActiveForm;
         <div class="col-md-12">
             <?= $form->field($model, 'data')->textarea(['rows' => 8]) ?>
         </div>
+
+        <div class="col-md-12">
+            <?= $form->field($model, 'is_soft_change')->checkbox() ?>
+        </div>
     <?php endif; ?>
 
     <div class="clearfix"></div>

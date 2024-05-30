@@ -30,14 +30,14 @@ final class CharacterController extends Controller
 
     private const POSITIONS_PER_PAGE = 16;
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'create-sheet', 'index', 'update', 'view', 'load-data'],
+                        'actions' => ['create', 'create-sheet', 'index', 'update', 'view', 'load-data', 'mark-changed'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -308,6 +308,33 @@ final class CharacterController extends Controller
         } else {
             return $this->redirect(['index']);
         }
+    }
+
+    /**
+     * Saves the model to mark it as changed
+     *
+     * @param string $key
+     *
+     * @return Response
+     *
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     */
+    public function actionMarkChanged(string $key): Response
+    {
+        $model = $this->findModelByKey($key);
+
+        if (!$model->canUserControlYou()) {
+            Character::throwExceptionAboutControl();
+        }
+
+        if ($model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'MARK_CHANGE_SUCCESS'));
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'MARK_CHANGE_ERROR'));
+        }
+
+        return $this->redirect(['view', 'key' => $model->key]);
     }
 
     /**
