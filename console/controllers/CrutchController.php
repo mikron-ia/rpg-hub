@@ -10,33 +10,41 @@ use common\models\Game;
 use common\models\Group;
 use common\models\Recap;
 use common\models\Story;
+use yii\base\InvalidRouteException;
 use yii\console\Controller;
+use yii\console\Exception;
 
 /**
  * Class CrutchController
+ *
  * Class used for migration operations that can be done only from console
+ *
  * @package console\controllers
  */
 class CrutchController extends Controller
 {
     /**
      * Saves all characters
+     *
      * @return void
      */
-    public function actionSaveCharacters()
+    public function actionSaveCharacters(): void
     {
         $objects = Character::find()->all();
 
         foreach ($objects as $object) {
+            /** @var Character $object */
+            $object->is_off_the_record_change = true;
             $object->save(false);
         }
     }
 
     /**
      * Saves all character sheets
+     *
      * @return void
      */
-    public function actionSaveCharacterSheets()
+    public function actionSaveCharacterSheets(): void
     {
         $objects = CharacterSheet::find()->all();
 
@@ -47,9 +55,10 @@ class CrutchController extends Controller
 
     /**
      * Saves all groups
+     *
      * @return void
      */
-    public function actionSaveGroups()
+    public function actionSaveGroups(): void
     {
         $objects = Group::find()->all();
 
@@ -60,9 +69,10 @@ class CrutchController extends Controller
 
     /**
      * Saves all epics
+     *
      * @return void
      */
-    public function actionSaveEpics()
+    public function actionSaveEpics(): void
     {
         $objects = Epic::find()->all();
 
@@ -75,7 +85,7 @@ class CrutchController extends Controller
      * Saves all recaps
      * @return void
      */
-    public function actionSaveRecaps()
+    public function actionSaveRecaps(): void
     {
         $objects = Recap::find()->all();
 
@@ -86,9 +96,10 @@ class CrutchController extends Controller
 
     /**
      * Saves all stories
+     *
      * @return void
      */
-    public function actionSaveStories()
+    public function actionSaveStories(): void
     {
         $objects = Story::find()->all();
 
@@ -101,7 +112,7 @@ class CrutchController extends Controller
      * Saves all articles
      * @return void
      */
-    public function actionSaveArticles()
+    public function actionSaveArticles(): void
     {
         $objects = Article::find()->all();
 
@@ -112,9 +123,10 @@ class CrutchController extends Controller
 
     /**
      * Saves all games
+     *
      * @return void
      */
-    public function actionSaveGames()
+    public function actionSaveGames(): void
     {
         $objects = Game::find()->all();
 
@@ -125,11 +137,13 @@ class CrutchController extends Controller
 
     /**
      * Saves everything - to be used to trigger beforeSave() or afterSave() on all
+     *
      * @return void
-     * @throws \yii\base\InvalidRouteException
-     * @throws \yii\console\Exception
+     *
+     * @throws InvalidRouteException
+     * @throws Exception
      */
-    public function actionSaveAll()
+    public function actionSaveAll(): void
     {
         $this->runAction('save-epics');
         $this->runAction('save-stories');

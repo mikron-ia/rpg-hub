@@ -63,7 +63,7 @@ return [
     'BUTTON_GROUP_CREATE' => 'Dodaj grupę',
     'BUTTON_LOAD' => 'Załaduj dane',
     'BUTTON_LOGIN' => 'Zaloguj',
-    'BUTTON_MARK_AS_CHANGED' => 'Oznacz jako zmienione',
+    'BUTTON_MARK_AS_CHANGED' => 'Oznacz jako zmienioną',
     'BUTTON_MOVE_DOWN' => 'W dół',
     'BUTTON_MOVE_UP' => 'W górę',
     'BUTTON_PARAMETER_CREATE' => 'Dodaj parametr',
