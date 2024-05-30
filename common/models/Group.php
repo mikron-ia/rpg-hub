@@ -62,6 +62,8 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     use ToolsForEntity;
     use ToolsForHasDescriptions;
 
+    public bool $is_off_the_record_change = false;
+
     public static function tableName(): string
     {
         return 'group';
@@ -87,6 +89,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             ],
             [['name'], 'string', 'max' => 120],
             [['visibility', 'importance_category'], 'string', 'max' => 20],
+            [['is_off_the_record_change'], 'boolean'],
             [
                 ['epic_id'],
                 'exist',
@@ -164,13 +167,16 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             'master_group_id' => Yii::t('app', 'GROUP_MASTER_GROUP'),
             'scribble_pack_id' => Yii::t('app', 'SCRIBBLE_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
+            'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
         ];
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): void
     {
-        $this->seenPack->updateRecord();
-        $this->utilityBag->flagAsChanged();
+        if (!$this->is_off_the_record_change) {
+            $this->seenPack->updateRecord();
+            $this->utilityBag->flagAsChanged();
+        }
         $this->utilityBag->flagForImportanceRecalculation();
         parent::afterSave($insert, $changedAttributes);
     }

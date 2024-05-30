@@ -35,6 +35,12 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'text_raw')->textarea(['rows' => 12]) ?>
     </div>
 
+    <?php if (!$model->isNewRecord): ?>
+        <div class="col-md-12">
+            <?= $form->field($model, 'is_off_the_record_change')->checkbox() ?>
+        </div>
+    <?php endif; ?>
+
     <div class="form-group">
         <?= Html::submitButton(
             $model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),

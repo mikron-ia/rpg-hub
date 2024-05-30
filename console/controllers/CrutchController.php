@@ -49,6 +49,7 @@ class CrutchController extends Controller
         $objects = CharacterSheet::find()->all();
 
         foreach ($objects as $object) {
+            /** @var CharacterSheet $object */
             $object->save(false);
         }
     }
@@ -63,6 +64,8 @@ class CrutchController extends Controller
         $objects = Group::find()->all();
 
         foreach ($objects as $object) {
+            /** @var Group $object */
+            $object->is_off_the_record_change = true;
             $object->save(false);
         }
     }
@@ -77,6 +80,7 @@ class CrutchController extends Controller
         $objects = Epic::find()->all();
 
         foreach ($objects as $object) {
+            /** @var Epic $object */
             $object->save(false);
         }
     }
@@ -90,6 +94,7 @@ class CrutchController extends Controller
         $objects = Recap::find()->all();
 
         foreach ($objects as $object) {
+            /** @var Recap $object */
             $object->save(false);
         }
     }
@@ -104,6 +109,8 @@ class CrutchController extends Controller
         $objects = Story::find()->all();
 
         foreach ($objects as $object) {
+            /** @var Story $object */
+            $object->is_off_the_record_change = true;
             $object->save(false);
         }
     }
@@ -117,6 +124,8 @@ class CrutchController extends Controller
         $objects = Article::find()->all();
 
         foreach ($objects as $object) {
+            /** @var Article $object */
+            $object->is_off_the_record_change = true;
             $object->save(false);
         }
     }
@@ -131,6 +140,7 @@ class CrutchController extends Controller
         $objects = Game::find()->all();
 
         foreach ($objects as $object) {
+            /** @var Game $object */
             $object->save(false);
         }
     }

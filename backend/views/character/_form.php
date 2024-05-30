@@ -51,7 +51,7 @@ use yii\widgets\ActiveForm;
         </div>
 
         <div class="col-md-12">
-            <?= $form->field($model, 'is_soft_change')->checkbox() ?>
+            <?= $form->field($model, 'is_off_the_record_change')->checkbox() ?>
         </div>
     <?php endif; ?>
 

@@ -40,6 +40,8 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
     use ToolsForEntity;
     use ToolsForDescription;
 
+    public bool $is_off_the_record_change = false;
+
     public static function tableName()
     {
         return 'article';
@@ -53,6 +55,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             [['text_raw'], 'string'],
             [['title', 'subtitle'], 'string', 'max' => 120],
             [['visibility'], 'string', 'max' => 20],
+            [['is_off_the_record_change'], 'boolean'],
             [
                 ['description_pack_id'],
                 'exist',
@@ -90,6 +93,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             'text_raw' => Yii::t('app', 'ARTICLE_TEXT'),
             'text_ready' => Yii::t('app', 'ARTICLE_TEXT'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
+            'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
         ];
     }
 
@@ -138,9 +142,11 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return parent::beforeSave($insert);
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): void
     {
-        $this->seenPack->updateRecord();
+        if (!$this->is_off_the_record_change) {
+            $this->seenPack->updateRecord();
+        }
         parent::afterSave($insert, $changedAttributes);
     }
 

@@ -35,6 +35,12 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'long')->textarea(['rows' => 20]); ?>
     </div>
 
+    <?php if (!$model->isNewRecord): ?>
+        <div class="col-md-12">
+            <?= $form->field($model, 'is_off_the_record_change')->checkbox() ?>
+        </div>
+    <?php endif; ?>
+
     <div class="form-group col-md-2">
         <?php
         echo Html::submitButton(

@@ -55,6 +55,8 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      */
     private $parametersFormatted;
 
+    public bool $is_off_the_record_change = false;
+
     public static function tableName()
     {
         return 'story';
@@ -69,6 +71,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
             [['visibility'], 'string', 'max' => 20],
+            [['is_off_the_record_change'], 'boolean'],
             [
                 ['epic_id'],
                 'exist',
@@ -100,6 +103,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             'data' => Yii::t('app', 'STORY_DATA'),
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
+            'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
         ];
     }
 
@@ -111,10 +115,12 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         parent::afterFind();
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): void
     {
-        $this->seenPack->updateRecord();
-        $this->utilityBag->flagAsChanged();
+        if (!$this->is_off_the_record_change) {
+            $this->seenPack->updateRecord();
+            $this->utilityBag->flagAsChanged();
+        }
         parent::afterSave($insert, $changedAttributes);
     }
 
