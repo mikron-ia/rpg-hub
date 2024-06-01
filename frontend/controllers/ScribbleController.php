@@ -94,7 +94,7 @@ class ScribbleController extends Controller
             throw new ForbiddenHttpException(Yii::t('app', 'SCRIBBLE_DENIED_ACCESS'));
         }
 
-        if (!$scribble->scribblePack->canUserControlYou()) {
+        if (!$scribble->scribblePack->canUserReadYou()) {
             throw new ForbiddenHttpException(Yii::t('app', 'SCRIBBLE_DENIED_ACCESS'));
         }
 
