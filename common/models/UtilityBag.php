@@ -79,6 +79,8 @@ class UtilityBag extends ActiveRecord
 
     /**
      * @return bool
+     *
+     * @deprecated v1.2.0, use ImportancePack->flagForRecalculation() instead
      */
     public function flagForImportanceRecalculation(): bool
     {

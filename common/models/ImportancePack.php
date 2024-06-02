@@ -8,12 +8,14 @@ use common\models\tools\ToolsForSelfFillingPacks;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "importance_pack".
  *
  * @property string $importance_pack_id
  * @property string $class
+ * @property bool $flagged
  *
  * @property Character[] $characters
  * @property Group[] $groups
@@ -46,6 +48,7 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
         return [
             'importance_pack_id' => Yii::t('app', 'IMPORTANCE_PACK_ID'),
             'class' => Yii::t('app', 'IMPORTANCE_CLASS'),
+            'flagged' => Yii::t('app', 'IMPORTANCE_RECALCULATION_FLAG'),
         ];
     }
 
@@ -80,7 +83,10 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
      */
     public static function create(string $class): ImportancePack
     {
-        $pack = new ImportancePack(['class' => $class]);
+        $pack = new ImportancePack([
+            'class' => $class,
+            'flagged' => false,
+        ]);
 
         $pack->save();
         $pack->refresh();
@@ -131,5 +137,41 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
         }
 
         return $result;
+    }
+
+    /**
+     * Flags the pack for recalculation
+     *
+     * @return bool
+     *
+     * @throws Exception
+     */
+    public function flagForRecalculation(): bool
+    {
+        $this->flagged = true;
+        return $this->save();
+    }
+
+    /**
+     * Removes the recalculation flag
+     *
+     * @return bool
+     *
+     * @throws Exception
+     */
+    public function unflagForRecalculation(): bool
+    {
+        $this->flagged = false;
+        return $this->save();
+    }
+
+    /**
+     * Reports whether the pack is flagged for recalculation
+     *
+     * @return bool
+     */
+    public function isFlaggedForRecalculation(): bool
+    {
+        return $this->flagged;
     }
 }

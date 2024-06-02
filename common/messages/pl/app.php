@@ -413,6 +413,7 @@ return [
     'IMPORTANCE_RANK_MEDIUM_LOW_LOWERCASE' => 'średnio niska',
     'IMPORTANCE_RANK_UNKNOWN' => 'Nieznana',
     'IMPORTANCE_RANK_UNKNOWN_LOWERCASE' => 'nieznana',
+    'IMPORTANCE_RECALCULATION_FLAG' => 'Oznaczona do przeliczenia ważności',
     'IMPORTANCE_USER' => 'Użytkownik',
     'IMPORTANCE_VALUE' => 'Wartość',
     'IMPORTANCE_VALUES_LIST' => 'Ważność wg użytkownika',

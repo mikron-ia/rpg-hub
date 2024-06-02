@@ -19,6 +19,8 @@ use yii\db\ActiveRecord;
 class Flag extends ActiveRecord
 {
     public const TYPE_CHANGED = 'changed';
+
+    /** @deprecated v1.2.0, use ImportancePack instead */
     public const TYPE_IMPORTANCE_RECALCULATE = 'imp-rec';
 
     public static function tableName()

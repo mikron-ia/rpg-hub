@@ -413,6 +413,7 @@ return [
     'IMPORTANCE_RANK_MEDIUM_LOW_LOWERCASE' => 'medium low',
     'IMPORTANCE_RANK_UNKNOWN' => 'Unknown',
     'IMPORTANCE_RANK_UNKNOWN_LOWERCASE' => 'unknown',
+    'IMPORTANCE_RECALCULATION_FLAG' => 'Flagged for importance recalculation',
     'IMPORTANCE_USER' => 'User',
     'IMPORTANCE_VALUE' => 'Value',
     'IMPORTANCE_VALUES_LIST' => 'Importance values per user',

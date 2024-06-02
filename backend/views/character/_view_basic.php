@@ -66,6 +66,11 @@ use yii\widgets\DetailView;
                     'attribute' => 'modified_at',
                     'format' => 'datetime',
                 ],
+                [
+                    'label' => Yii::t('app', 'IMPORTANCE_RECALCULATION_FLAG'),
+                    'format' => 'boolean',
+                    'value' => $model->importancePack->isFlaggedForRecalculation(),
+                ],
             ],
         ]) ?>
 

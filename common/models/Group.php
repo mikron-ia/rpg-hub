@@ -178,7 +178,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             $this->seenPack->updateRecord();
             $this->utilityBag->flagAsChanged();
         }
-        $this->utilityBag->flagForImportanceRecalculation();
+        $this->importancePack->flagForRecalculation();
         parent::afterSave($insert, $changedAttributes);
     }
 

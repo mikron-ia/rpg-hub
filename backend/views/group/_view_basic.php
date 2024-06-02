@@ -55,6 +55,11 @@ use yii\widgets\DetailView;
                     'format' => 'datetime',
                 ],
                 [
+                    'label' => Yii::t('app', 'IMPORTANCE_RECALCULATION_FLAG'),
+                    'format' => 'boolean',
+                    'value' => $model->importancePack->isFlaggedForRecalculation(),
+                ],
+                [
                     'attribute' => 'master_group_id',
                     'format' => 'raw',
                     'value' => $model->masterGroup ?? '<em>' . Yii::t('app', 'GROUP_WITHOUT_MASTER') . '</em>',
