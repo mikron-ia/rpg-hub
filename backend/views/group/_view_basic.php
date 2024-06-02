@@ -51,6 +51,10 @@ use yii\widgets\DetailView;
                     'format' => 'datetime',
                 ],
                 [
+                    'attribute' => 'modified_at',
+                    'format' => 'datetime',
+                ],
+                [
                     'attribute' => 'master_group_id',
                     'format' => 'raw',
                     'value' => $model->masterGroup ?? '<em>' . Yii::t('app', 'GROUP_WITHOUT_MASTER') . '</em>',

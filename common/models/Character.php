@@ -33,14 +33,15 @@ use yii\db\ActiveRecord;
  * @property string $data
  * @property string $visibility
  * @property string $importance_category
- * @property string $updated_at
- * @property string $character_sheet_id
- * @property string $description_pack_id
- * @property string $external_data_pack_id
- * @property string $seen_pack_id
- * @property string $importance_pack_id
+ * @property int $updated_at
+ * @property int $modified_at
+ * @property int|null $character_sheet_id
+ * @property int|null $description_pack_id
+ * @property int|null $external_data_pack_id
+ * @property int|null $seen_pack_id
+ * @property int|null $importance_pack_id
  * @property int|null $scribble_pack_id
- * @property string $utility_bag_id
+ * @property int|null $utility_bag_id
  *
  * @property Epic $epic
  * @property CharacterSheet $characterSheet
@@ -132,6 +133,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'visibility' => Yii::t('app', 'CHARACTER_VISIBILITY'),
             'importance_category' => Yii::t('app', 'CHARACTER_IMPORTANCE'),
             'updated_at' => Yii::t('app', 'CHARACTER_UPDATED_AT'),
+            'modified_at' => Yii::t('app', 'CHARACTER_MODIFIED_AT'),
             'character_sheet_id' => Yii::t('app', 'LABEL_CHARACTER'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
@@ -187,6 +189,10 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         if (empty($this->scribble_pack_id)) {
             $pack = ScribblePack::create('Character');
             $this->scribble_pack_id = $pack->scribble_pack_id;
+        }
+
+        if (!$this->is_off_the_record_change) {
+            $this->modified_at = time();
         }
 
         return parent::beforeSave($insert);
@@ -483,7 +489,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
     public function getLastModified(): DateTimeImmutable
     {
-        return new DateTimeImmutable(date("Y-m-d H:i:s", $this->updated_at));
+        return new DateTimeImmutable(date("Y-m-d H:i:s", $this->modified_at));
     }
 
     public function getSeenStatusForUser(int $userId): string

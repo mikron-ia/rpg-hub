@@ -62,6 +62,10 @@ use yii\widgets\DetailView;
                     'attribute' => 'updated_at',
                     'format' => 'datetime',
                 ],
+                [
+                    'attribute' => 'modified_at',
+                    'format' => 'datetime',
+                ],
             ],
         ]) ?>
 

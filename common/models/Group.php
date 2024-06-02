@@ -34,7 +34,8 @@ use yii\helpers\Html;
  * @property string $seen_pack_id
  * @property string $visibility
  * @property string $importance_category
- * @property string $updated_at
+ * @property int $updated_at
+ * @property int $modified_at
  * @property int|null $description_pack_id
  * @property int|null $external_data_pack_id
  * @property int|null $importance_pack_id
@@ -77,7 +78,6 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
                 [
                     'epic_id',
                     'seen_pack_id',
-                    'updated_at',
                     'description_pack_id',
                     'external_data_pack_id',
                     'importance_pack_id',
@@ -161,6 +161,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             'visibility' => Yii::t('app', 'GROUP_VISIBILITY'),
             'importance_category' => Yii::t('app', 'GROUP_IMPORTANCE'),
             'updated_at' => Yii::t('app', 'GROUP_UPDATED_AT'),
+            'modified_at' => Yii::t('app', 'GROUP_MODIFIED_AT'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
             'importance_pack_id' => Yii::t('app', 'IMPORTANCE_PACK'),
@@ -216,6 +217,10 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         if (empty($this->scribble_pack_id)) {
             $pack = ScribblePack::create('Group');
             $this->scribble_pack_id = $pack->scribble_pack_id;
+        }
+
+        if (!$this->is_off_the_record_change) {
+            $this->modified_at = time();
         }
 
         return parent::beforeSave($insert);
@@ -466,7 +471,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
 
     public function getLastModified(): DateTimeImmutable
     {
-        return new DateTimeImmutable(date("Y-m-d H:i:s", $this->updated_at));
+        return new DateTimeImmutable(date("Y-m-d H:i:s", $this->modified_at));
     }
 
     public function getSeenStatusForUser(int $userId): string
