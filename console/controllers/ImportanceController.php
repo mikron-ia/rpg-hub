@@ -5,9 +5,11 @@ namespace console\controllers;
 use common\components\LoggingHelper;
 use common\models\ImportancePack;
 use yii\console\Controller;
+use yii\db\Exception;
 
 /**
  * Class ImportanceController
+ *
  * @package console\controllers
  */
 class ImportanceController extends Controller
@@ -15,12 +17,24 @@ class ImportanceController extends Controller
     /**
      * Orders recalculation of every importance pack flagged for recalculation
      */
-    public function actionRecalculate()
+    public function actionRecalculate(): void
     {
         if ($this->recalculate(true)) {
-            LoggingHelper::log("Conditional recalculation completed", 'importance.calculator.summary');
+            LoggingHelper::log('Conditional recalculation completed', 'importance.calculator.summary');
         } else {
-            LoggingHelper::log("Conditional recalculation not completed", 'importance.calculator.summary');
+            LoggingHelper::log('Conditional recalculation not completed', 'importance.calculator.summary');
+        }
+    }
+
+    /**
+     * Orders recalculation of every importance pack regardless of flagging
+     */
+    public function actionRecalculateUnconditionally(): void
+    {
+        if ($this->recalculate(false)) {
+            LoggingHelper::log('Unconditional recalculation completed', 'importance.calculator.summary');
+        } else {
+            LoggingHelper::log('Unconditional recalculation not completed', 'importance.calculator.summary');
         }
     }
 
@@ -28,14 +42,17 @@ class ImportanceController extends Controller
      * Recalculates packs
      *
      * @param bool $considerFlag Whether to consider recalculation flags
+     *
      * @return bool
+     *
+     * @throws Exception
      */
     private function recalculate(bool $considerFlag): bool
     {
         $query = ImportancePack::find();
 
         if ($considerFlag) {
-            $query->where('1=1'); // @todo Add condition on flag once flag exists
+            $query->where(['flagged' => true]);
         }
 
         $packs = $query->all();
@@ -46,31 +63,20 @@ class ImportanceController extends Controller
             /** @var $pack ImportancePack */
             if ($pack->recalculatePack()) {
                 $successful++;
+                $pack->unflagForRecalculation();
             } else {
                 LoggingHelper::log(
-                    "Pack " . $pack->importance_pack_id . " failed",
+                    'Pack ' . $pack->importance_pack_id . ' failed',
                     'importance.calculator.process'
                 );
             }
         }
 
         LoggingHelper::log(
-            "Attempted " . count($packs) . " recalculations, succeeded with " . $successful . ".",
+            'Attempted ' . count($packs) . ' recalculations, succeeded with ' . $successful . '.',
             'importance.calculator.process'
         );
 
         return ($successful === count($packs));
-    }
-
-    /**
-     * Orders recalculation of every importance pack regardless of flagging
-     */
-    public function actionRecalculateUnconditionally()
-    {
-        if ($this->recalculate(false)) {
-            LoggingHelper::log("Unconditional recalculation completed", 'importance.calculator.summary');
-        } else {
-            LoggingHelper::log("Unconditional recalculation not completed", 'importance.calculator.summary');
-        }
     }
 }
