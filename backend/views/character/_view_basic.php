@@ -96,7 +96,13 @@ use yii\widgets\DetailView;
             <?= Html::a(
                 Yii::t('app', 'BUTTON_MARK_AS_CHANGED'),
                 ['mark-changed', 'key' => $model->key],
-                ['class' => 'btn btn-primary']
+                [
+                    'class' => 'btn btn-primary',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'CONFIRMATION_MARK_AS_CHANGED'),
+                        'method' => 'post',
+                    ],
+                ]
             ) ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_UPDATE'),

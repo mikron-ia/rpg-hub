@@ -145,6 +145,7 @@ return [
     'CONFIRMATION_DELETE' => 'Potwierdź usunięcie obiektu.',
     'CONFIRMATION_DELETE {name}' => 'Potwierdź usunięcie obiektu "{name}".',
     'CONFIRMATION_LOAD' => 'Potwierdź operację zastąpienia danych nowozaładowanymi.',
+    'CONFIRMATION_MARK_AS_CHANGED' => 'Potwierdź sygnalizację zmiany.',
     'CURL_ERROR' => 'Błąd cURL',
     'DESCRIPTIONS_NOT_FOUND' => 'Nie znaleziono opisów',
     'DESCRIPTION_BUTTON_CREATE' => 'Dodaj opis',

@@ -145,6 +145,7 @@ return [
     'CONFIRMATION_DELETE' => 'Please confirm deletion.',
     'CONFIRMATION_DELETE {name}' => 'Please confirm deletion of "{name}".',
     'CONFIRMATION_LOAD' => 'Confirm replacing current data with newly loaded content.',
+    'CONFIRMATION_MARK_AS_CHANGED' => 'Confirm marking as changed.',
     'CURL_ERROR' => 'cURL error',
     'DESCRIPTIONS_NOT_FOUND' => 'Descriptions not found',
     'DESCRIPTION_BUTTON_CREATE' => 'Add description',
