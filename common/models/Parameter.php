@@ -9,6 +9,7 @@ use common\models\core\Visibility;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii2tech\ar\position\PositionBehavior;
 
@@ -40,12 +41,12 @@ class Parameter extends ActiveRecord implements HasVisibility
     const EPIC_SYSTEM_STATE = 'epic-system-state';
     const LANGUAGE = 'language';
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'parameter';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['parameter_pack_id', 'position'], 'integer'],
@@ -63,10 +64,7 @@ class Parameter extends ActiveRecord implements HasVisibility
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'parameter_id' => Yii::t('app', 'PARAMETER_ID'),
@@ -78,7 +76,7 @@ class Parameter extends ActiveRecord implements HasVisibility
         ];
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): void
     {
         if (!empty($changedAttributes)) {
             $this->parameterPack->touch('updated_at');
@@ -87,7 +85,7 @@ class Parameter extends ActiveRecord implements HasVisibility
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'positionBehavior' => [
@@ -112,7 +110,7 @@ class Parameter extends ActiveRecord implements HasVisibility
     /**
      * @return string[]
      */
-    public function allowedTypes()
+    public function allowedTypes(): array
     {
         return array_keys(self::typeNames());
     }
@@ -120,7 +118,7 @@ class Parameter extends ActiveRecord implements HasVisibility
     /**
      * @return string[]
      */
-    static public function typeNames()
+    static public function typeNames(): array
     {
         return [
             self::STORY_NUMBER => Yii::t('app', 'ST_PARAM_STORY_NUMBER'),
@@ -141,15 +139,33 @@ class Parameter extends ActiveRecord implements HasVisibility
     /**
      * @return string[]
      */
-    public function typeNamesForThisClass()
+    public function typeNamesForThisClassForAdd(): array
+    {
+        return $this->typeNamesForThisClassPerMethod('availableParameterTypes');
+    }
+
+    /**
+     * @return string[]
+     */
+    public function typeNamesForThisClassForEdit(): array
+    {
+        return $this->typeNamesForThisClassPerMethod('allowedParameterTypes');
+    }
+
+    /**
+     * @param string $methodToUse
+     *
+     * @return string[]
+     */
+    private function typeNamesForThisClassPerMethod(string $methodToUse): array
     {
         $typeNamesAll = self::typeNames();
         $typeNamesAccepted = [];
 
         $class = 'common\models\\' . $this->parameterPack->class;
 
-        if (method_exists($class, 'allowedParameterTypes')) {
-            $typesAllowed = call_user_func([$class, 'allowedParameterTypes']);
+        if (method_exists($class, $methodToUse)) {
+            $typesAllowed = call_user_func([$class, $methodToUse]);
         } else {
             $typesAllowed = array_keys($typeNamesAll);
         }
@@ -163,31 +179,25 @@ class Parameter extends ActiveRecord implements HasVisibility
         return $typeNamesAccepted;
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getParameterPack()
+    public function getParameterPack(): ActiveQuery
     {
         return $this->hasOne(ParameterPack::class, ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTypeName()
+    public function getTypeName(): string
     {
         $names = self::typeNames();
         if (isset($names[$this->code])) {
             return $names[$this->code];
         } else {
-            return "?";
+            return '?';
         }
     }
 
     /**
-     * @return string Language name
+     * @return string|null Language name
      */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         $language = Language::create($this->lang);
         return $language->getName();
@@ -216,7 +226,7 @@ class Parameter extends ActiveRecord implements HasVisibility
     /**
      * @return string Code name in chosen language
      */
-    public function getCodeName()
+    public function getCodeName(): string
     {
         $codes = self::typeNames();
         return isset($codes[$this->code]) ? $codes[$this->code] : $this->code;
@@ -225,7 +235,7 @@ class Parameter extends ActiveRecord implements HasVisibility
     /**
      * @return string Visibility name in chosen language
      */
-    public function getVisibilityName()
+    public function getVisibilityName(): string
     {
         $visibilities = Visibility::visibilityNames(self::allowedVisibilities());
         return isset($visibilities[$this->visibility]) ? $visibilities[$this->visibility] : $this->visibility;

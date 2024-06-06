@@ -291,6 +291,20 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
+    static public function availableParameterTypes(): array
+    {
+        return [
+            Parameter::STORY_NUMBER,
+            Parameter::TIME_RANGE,
+            Parameter::LOCATION_POINT_START,
+            Parameter::LOCATION_POINT_END,
+            Parameter::SESSION_COUNT,
+            Parameter::XP_PARTY,
+            Parameter::PCS_ACTIVE,
+            Parameter::CS_ACTIVE,
+        ];
+    }
+
     static public function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);

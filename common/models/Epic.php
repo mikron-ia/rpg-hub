@@ -463,6 +463,18 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         ];
     }
 
+    static public function availableParameterTypes(): array
+    {
+        return [
+            Parameter::SESSION_COUNT,
+            Parameter::PCS_ACTIVE,
+            Parameter::CS_ACTIVE,
+            Parameter::DATA_SOURCE_FOR_REPUTATION,
+            Parameter::EPIC_SYSTEM_STATE,
+            Parameter::LANGUAGE,
+        ];
+    }
+
     /**
      * Determines whether user can list epics
      * @return bool

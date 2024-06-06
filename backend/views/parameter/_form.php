@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'code')->dropDownList(
-        $model->typeNamesForThisClass(),
+        $model->isNewRecord ? $model->typeNamesForThisClassForAdd() : $model->typeNamesForThisClassForEdit(),
         ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_TYPE') . ' --- ']
     ); ?>
 
