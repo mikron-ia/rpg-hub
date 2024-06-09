@@ -74,36 +74,7 @@ use yii\widgets\DetailView;
             ],
         ]) ?>
 
-        <div class="text-center">
-            <?= Html::a(Yii::t('app', 'BUTTON_LOAD'), ['load-data', 'key' => $model->key], [
-                'class' => 'btn btn-primary',
-                'data' => [
-                    'confirm' => Yii::t('app', 'CONFIRMATION_LOAD'),
-                    'method' => 'post',
-                ],
-            ]) ?>
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_CREATE_CHARACTER_SHEET'),
-                ['create-sheet', 'key' => $model->key],
-                [
-                    'class' => 'btn btn-primary',
-                    'data' => [
-                        'confirm' => Yii::t('app', 'CONFIRMATION_CREATE_CHARACTER_SHEET'),
-                        'method' => 'post',
-                    ],
-                ]
-            ) ?>
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_MARK_AS_CHANGED'),
-                ['mark-changed', 'key' => $model->key],
-                [
-                    'class' => 'btn btn-primary',
-                    'data' => [
-                        'confirm' => Yii::t('app', 'CONFIRMATION_MARK_AS_CHANGED'),
-                        'method' => 'post',
-                    ],
-                ]
-            ) ?>
+        <div class="buttons-on-view">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_UPDATE'),
                 ['update', 'key' => $model->key],
@@ -187,6 +158,49 @@ use yii\widgets\DetailView;
 
         <?php Modal::end(); ?>
 
+    </div>
+
+    <div class="col-md-6">
+        <h2 class="text-center"><?= Yii::t('app', 'LABEL_AUXILIARY_ACTIONS'); ?></h2>
+        <div class="buttons-on-view">
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_CREATE_CHARACTER_SHEET'),
+                ['create-sheet', 'key' => $model->key],
+                [
+                    'class' => 'btn btn-primary',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'CONFIRMATION_CREATE_CHARACTER_SHEET'),
+                        'method' => 'post',
+                    ],
+                ]
+            ) ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_LOAD'), ['load-data', 'key' => $model->key], [
+                'class' => 'btn btn-primary',
+                'data' => [
+                    'confirm' => Yii::t('app', 'CONFIRMATION_LOAD'),
+                    'method' => 'post',
+                ],
+            ]) ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_MARK_AS_CHANGED'),
+                ['mark-changed', 'key' => $model->key],
+                [
+                    'class' => 'btn btn-primary',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'CONFIRMATION_MARK_AS_CHANGED'),
+                        'method' => 'post',
+                    ],
+                ]
+            ) ?>
+            <span class="hidden" id="key-value" data-key="CH:<?= $model->key ?>"></span>
+            <span class="hidden" id="button-message-base"><?= Yii::t('app', 'BUTTON_COPY_KEY') ?></span>
+            <span class="hidden" id="button-message-progress"><?= Yii::t('app', 'BUTTON_COPY_IN_PROGRESS') ?></span>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_COPY_KEY'),
+                '#',
+                ['class' => 'btn btn-default', 'id' => 'button-copy-key']
+            ) ?>
+        </div>
     </div>
 
 </div>

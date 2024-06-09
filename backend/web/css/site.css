@@ -150,6 +150,15 @@ p {
     margin: 20px 0 10px 10px;
 }
 
+.buttons-on-view {
+    margin: 5px 0;
+    text-align: center;
+}
+
+.buttons-on-view > a {
+    margin: 0 5px;
+}
+
 .public-notes {
     border: 4px dotted lightblue;
     border-radius: 15px;
