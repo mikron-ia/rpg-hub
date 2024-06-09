@@ -11,6 +11,7 @@ class CharacterAsset extends AssetBundle
     public $css = [];
     public $js = [
         'js/character.js',
+        'js/copy-key-button.js',
         'js/description-user.js',
         'js/tooltip.js',
     ];
