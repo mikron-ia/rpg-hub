@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
+use backend\controllers\tools\MarkChangeTrait;
 use common\models\core\Visibility;
 use common\models\Group;
 use common\models\GroupQuery;
@@ -20,6 +21,7 @@ use yii\web\Response;
 final class GroupController extends Controller
 {
     use EpicAssistance;
+    use MarkChangeTrait;
 
     private const POSITIONS_PER_PAGE = 16;
 
@@ -30,7 +32,7 @@ final class GroupController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'update', 'view'],
+                        'actions' => ['create', 'index', 'update', 'view', 'mark-changed'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -157,6 +159,23 @@ final class GroupController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    /**
+     * Saves the model to mark it as changed
+     *
+     * @param string $key
+     *
+     * @return Response
+     *
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     */
+    public function actionMarkChanged(string $key): Response
+    {
+        $model = $this->findModelByKey($key);
+        $this->markChange($model);
+        return $this->redirect(['view', 'key' => $model->key]);
     }
 
     /**

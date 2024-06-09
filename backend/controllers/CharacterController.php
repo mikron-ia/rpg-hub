@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
+use backend\controllers\tools\MarkChangeTrait;
 use common\models\Character;
 use common\models\CharacterQuery;
 use common\models\CharacterSheet;
@@ -27,6 +28,7 @@ use yii\web\Response;
 final class CharacterController extends Controller
 {
     use EpicAssistance;
+    use MarkChangeTrait;
 
     private const POSITIONS_PER_PAGE = 16;
 
@@ -323,17 +325,7 @@ final class CharacterController extends Controller
     public function actionMarkChanged(string $key): Response
     {
         $model = $this->findModelByKey($key);
-
-        if (!$model->canUserControlYou()) {
-            Character::throwExceptionAboutControl();
-        }
-
-        if ($model->save()) {
-            Yii::$app->session->setFlash('success', Yii::t('app', 'MARK_CHANGE_SUCCESS'));
-        } else {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'MARK_CHANGE_ERROR'));
-        }
-
+        $this->markChange($model);
         return $this->redirect(['view', 'key' => $model->key]);
     }
 

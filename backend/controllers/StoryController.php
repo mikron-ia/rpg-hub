@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
+use backend\controllers\tools\MarkChangeTrait;
 use common\models\core\Visibility;
 use common\models\Story;
 use common\models\StoryQuery;
@@ -10,7 +11,9 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * StoryController implements the CRUD actions for Story model.
@@ -18,6 +21,7 @@ use yii\web\NotFoundHttpException;
 final class StoryController extends Controller
 {
     use EpicAssistance;
+    use MarkChangeTrait;
 
     private const POSITIONS_PER_PAGE = 16;
 
@@ -35,6 +39,7 @@ final class StoryController extends Controller
                             'view',
                             'move-down',
                             'move-up',
+                            'mark-changed'
                         ],
                         'allow' => true,
                         'roles' => ['operator'],
@@ -189,13 +194,30 @@ final class StoryController extends Controller
     }
 
     /**
+     * Saves the model to mark it as changed
+     *
+     * @param string $key
+     *
+     * @return Response
+     *
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     */
+    public function actionMarkChanged(string $key): Response
+    {
+        $model = $this->findModel($key);
+        $this->markChange($model);
+        return $this->redirect(['view', 'key' => $model->key]);
+    }
+
+    /**
      * Finds the Story model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $key
      * @return Story the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($key)
+    protected function findModel(string $key): Story
     {
         $model = Story::findOne(['key' => $key]);
 

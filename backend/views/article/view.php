@@ -18,6 +18,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(
+            Yii::t('app', 'BUTTON_MARK_AS_CHANGED'),
+            ['mark-changed', 'key' => $model->key],
+            [
+                'class' => 'btn btn-primary',
+                'data' => [
+                    'confirm' => Yii::t('app', 'CONFIRMATION_MARK_AS_CHANGED'),
+                    'method' => 'post',
+                ],
+            ]
+        ) ?>
+        <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
             ['update', 'key' => $model->key],
             ['class' => 'btn btn-primary']

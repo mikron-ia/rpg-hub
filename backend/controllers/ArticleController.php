@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
+use backend\controllers\tools\MarkChangeTrait;
 use Yii;
 use common\models\Article;
 use common\models\ArticleQuery;
@@ -20,6 +21,7 @@ use yii\web\Response;
 class ArticleController extends Controller
 {
     use EpicAssistance;
+    use MarkChangeTrait;
 
     public function behaviors()
     {
@@ -28,7 +30,16 @@ class ArticleController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'update', 'view', 'delete', 'move-up', 'move-down'],
+                        'actions' => [
+                            'create',
+                            'index',
+                            'update',
+                            'view',
+                            'delete',
+                            'move-up',
+                            'move-down',
+                            'mark-changed'
+                        ],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -181,6 +192,23 @@ class ArticleController extends Controller
         } else {
             return $this->redirect(['index']);
         }
+    }
+
+    /**
+     * Saves the model to mark it as changed
+     *
+     * @param string $key
+     *
+     * @return Response
+     *
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     */
+    public function actionMarkChanged(string $key): Response
+    {
+        $model = $this->findModelByKey($key);
+        $this->markChange($model);
+        return $this->redirect(['view', 'key' => $model->key]);
     }
 
     /**

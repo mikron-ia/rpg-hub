@@ -474,6 +474,7 @@ return [
     'MANAGE_EPIC_TAGS' => 'Tags',
     'MANAGE_EPIC_TAG_MANAGED' => 'Under your management',
     'MARK_CHANGE_ERROR' => 'Unable to set changed status',
+    'MARK_CHANGE_EXCEPTION' => 'Unable to set changed status; serious error occurred',
     'MARK_CHANGE_SUCCESS' => 'Changed status set',
     'MASTER_GROUP_PROMPT' => 'Select master group, if applicable',
     'MEMBERSHIPS_NOT_FOUND' => 'No known members.',

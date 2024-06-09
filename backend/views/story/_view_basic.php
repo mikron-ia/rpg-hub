@@ -64,6 +64,17 @@ use yii\widgets\DetailView;
             );
             ?>
             <?= Html::a(
+                Yii::t('app', 'BUTTON_MARK_AS_CHANGED'),
+                ['mark-changed', 'key' => $model->key],
+                [
+                    'class' => 'btn btn-primary',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'CONFIRMATION_MARK_AS_CHANGED'),
+                        'method' => 'post',
+                    ],
+                ]
+            ) ?>
+            <?= Html::a(
                 Yii::t('app', 'BUTTON_MOVE_DOWN'),
                 ['story/move-up', 'key' => $model->key],
                 [
@@ -83,7 +94,7 @@ use yii\widgets\DetailView;
                     ],
                 ]
             ); ?>
-            <?= \yii\helpers\Html::a(
+            <?= Html::a(
                 Yii::t('app', 'BUTTON_SEE_FRONTEND'),
                 Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
                     'story/view',

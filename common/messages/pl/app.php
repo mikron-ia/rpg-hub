@@ -474,6 +474,7 @@ return [
     'MANAGE_EPIC_TAGS' => 'Tagi',
     'MANAGE_EPIC_TAG_MANAGED' => 'Pod Twoim zarządem',
     'MARK_CHANGE_ERROR' => 'Sygnalizacja zmiany nieskuteczna',
+    'MARK_CHANGE_EXCEPTION' => 'Sygnalizacja zmiany wywołała poważny błąd',
     'MARK_CHANGE_SUCCESS' => 'Zasygnalizowano zmianę',
     'MASTER_GROUP_PROMPT' => 'Wybierz grupę nadrzędną',
     'MEMBERSHIPS_NOT_FOUND' => 'Brak znanych członków',
