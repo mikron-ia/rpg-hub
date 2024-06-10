@@ -10,6 +10,7 @@ class StoryAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [];
     public $js = [
+        'js/copy-key-button.js',
         'js/story.js',
     ];
     public $depends = [

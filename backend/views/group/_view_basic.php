@@ -98,6 +98,14 @@ use yii\widgets\DetailView;
                     ],
                 ]
             ) ?>
+            <span class="hidden" id="key-value" data-key="GR:<?= $model->key ?>"></span>
+            <span class="hidden" id="button-message-copy-base"><?= Yii::t('app', 'BUTTON_COPY_KEY') ?></span>
+            <span class="hidden" id="button-message-copy-confirm"><?= Yii::t('app', 'BUTTON_COPY_IN_PROGRESS') ?></span>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_COPY_KEY'),
+                '#',
+                ['class' => 'btn btn-default', 'id' => 'button-copy-key']
+            ) ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_SEE_FRONTEND'),
                 Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
