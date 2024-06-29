@@ -2,12 +2,13 @@
 
 namespace common\models;
 
+use common\models\exceptions\InvalidBackendConfigurationException;
 use Yii;
-use yii\base\Exception;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "user_invitation".
@@ -31,12 +32,12 @@ use yii\db\ActiveRecord;
  */
 class UserInvitation extends ActiveRecord
 {
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'user_invitation';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['email', 'message', 'intended_role'], 'required'],
@@ -56,7 +57,7 @@ class UserInvitation extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'USER_INVITATION_ID'),
@@ -76,7 +77,7 @@ class UserInvitation extends ActiveRecord
         ];
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             [
@@ -92,7 +93,7 @@ class UserInvitation extends ActiveRecord
         ];
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if ($insert) {
             $this->valid_to = time() + Yii::$app->params['invitation.isValidFor'];
@@ -113,30 +114,22 @@ class UserInvitation extends ActiveRecord
 
     /**
      * Sends an invitation to create an account
+     *
      * @return bool Success of the operation
-     * @throws Exception
+     *
+     * @throws InvalidBackendConfigurationException
      */
-    public function sendEmail()
+    public function sendEmail(): bool
     {
         $oldLanguage = Yii::$app->language;
         Yii::$app->language = $this->language;
-
-        if (in_array($this->intended_role, User::operatorUserRoles())) {
-            $baseUri = Yii::$app->params['uri.back'];
-        } else {
-            $baseUri = Yii::$app->params['uri.front'];
-        }
-
-        if (empty($baseUri)) {
-            throw new Exception(Yii::t('app', 'USER_INVITATION_NO_BASE_URI'), 500);
-        }
 
         $mail = Yii::$app->mailer
             ->compose(
                 ['html' => 'invitation-html', 'text' => 'invitation-text'],
                 [
                     'invitation' => $this,
-                    'link' => $baseUri . Yii::$app->urlManager->createUrl(['site/accept', 'token' => $this->token]),
+                    'link' => $this->getInvitationLink(),
                 ]
             )
             ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->name])
@@ -150,10 +143,11 @@ class UserInvitation extends ActiveRecord
 
     /**
      * Finds invitation by token
+     *
      * @param string $token password reset token
      * @return static|null
      */
-    public static function findByToken($token)
+    public static function findByToken(string $token): null|static
     {
         return static::findOne([
             'token' => $token,
@@ -162,6 +156,7 @@ class UserInvitation extends ActiveRecord
 
     /**
      * Finds out if invitation is valid
+     *
      * @return bool
      */
     public function isInvitationValid(): bool
@@ -171,6 +166,7 @@ class UserInvitation extends ActiveRecord
 
     /**
      * Finds out if invitation has not been used
+     *
      * @return bool
      */
     public function isInvitationUnused(): bool
@@ -189,6 +185,7 @@ class UserInvitation extends ActiveRecord
 
     /**
      * Finds out if invitation is still active
+     *
      * @return bool
      */
     public function isInvitationActive(): bool
@@ -198,7 +195,9 @@ class UserInvitation extends ActiveRecord
 
     /**
      * Marks the invitation as opened if it was not already marked so
+     *
      * @return bool
+     * @throws Exception
      */
     public function markAsOpened(): bool
     {
@@ -212,7 +211,9 @@ class UserInvitation extends ActiveRecord
 
     /**
      * Marks invitation as revoked
+     *
      * @return bool
+     * @throws Exception
      */
     public function markAsRevoked(): bool
     {
@@ -235,6 +236,10 @@ class UserInvitation extends ActiveRecord
         return $this->isInvitationUnused();
     }
 
+    /**
+     * @return bool
+     * @throws Exception
+     */
     public function renew(): bool
     {
         $this->valid_to = time() + Yii::$app->params['invitation.isValidFor'];
@@ -244,12 +249,32 @@ class UserInvitation extends ActiveRecord
 
     /**
      * Provides readable name for role intended for the user
+     *
      * @return string
      */
     public function getIntendedRoleName(): string
     {
         $names = User::userRoleNames();
         $code = $this->intended_role;
-        return isset($names[$code]) ? $names[$code] : '?';
+        return $names[$code] ?? '?';
+    }
+
+    /**
+     * Provides the invitation link
+     *
+     * @return string
+     * @throws InvalidBackendConfigurationException
+     */
+    public function getInvitationLink(): string
+    {
+        $baseUri = in_array($this->intended_role, User::operatorUserRoles())
+            ? Yii::$app->params['uri.back']
+            : Yii::$app->params['uri.front'];
+
+        if (empty($baseUri)) {
+            throw new InvalidBackendConfigurationException(Yii::t('app', 'USER_INVITATION_NO_BASE_URI'));
+        }
+
+        return $baseUri . Yii::$app->urlManager->createUrl(['site/accept', 'token' => $this->token]);
     }
 }
