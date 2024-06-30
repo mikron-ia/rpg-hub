@@ -34,7 +34,7 @@ return [
     'importance' => [
         'importanceWeights' => [
             'importanceCategory' => [
-                ImportanceCategory::IMPORTANCE_EXTREME->value => getenv('IMPORTANCE_CATEGORY_EXTREME_VALUE'),
+                ImportanceCategory::IMPORTANCE_EXTREME->value => getenv('IMPORTANCE_CATEGORY_IMPORTANCE_EXTREME_VALUE'),
                 ImportanceCategory::IMPORTANCE_HIGH->value => getenv('IMPORTANCE_CATEGORY_IMPORTANCE_HIGH_VALUE'),
                 ImportanceCategory::IMPORTANCE_MEDIUM->value => getenv('IMPORTANCE_CATEGORY_IMPORTANCE_MEDIUM_VALUE'),
                 ImportanceCategory::IMPORTANCE_LOW->value => getenv('IMPORTANCE_CATEGORY_IMPORTANCE_LOW_VALUE'),

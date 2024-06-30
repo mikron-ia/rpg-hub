@@ -19,10 +19,11 @@ class ImportanceController extends Controller
      */
     public function actionRecalculate(): void
     {
+        LoggingHelper::log('Conditional recalculation started', 'importance.calculator.state');
         if ($this->recalculate(true)) {
-            LoggingHelper::log('Conditional recalculation completed', 'importance.calculator.summary');
+            LoggingHelper::log('Conditional recalculation completed', 'importance.calculator.state');
         } else {
-            LoggingHelper::log('Conditional recalculation not completed', 'importance.calculator.summary');
+            LoggingHelper::log('Conditional recalculation not completed', 'importance.calculator.state');
         }
     }
 
@@ -31,10 +32,11 @@ class ImportanceController extends Controller
      */
     public function actionRecalculateUnconditionally(): void
     {
+        LoggingHelper::log('Unconditional recalculation started', 'importance.calculator.state');
         if ($this->recalculate(false)) {
-            LoggingHelper::log('Unconditional recalculation completed', 'importance.calculator.summary');
+            LoggingHelper::log('Unconditional recalculation completed', 'importance.calculator.state');
         } else {
-            LoggingHelper::log('Unconditional recalculation not completed', 'importance.calculator.summary');
+            LoggingHelper::log('Unconditional recalculation not completed', 'importance.calculator.state');
         }
     }
 
@@ -74,7 +76,7 @@ class ImportanceController extends Controller
 
         LoggingHelper::log(
             'Attempted ' . count($packs) . ' recalculations, succeeded with ' . $successful . '.',
-            'importance.calculator.process'
+            'importance.calculator.summary'
         );
 
         return ($successful === count($packs));
