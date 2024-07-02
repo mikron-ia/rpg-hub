@@ -22,7 +22,7 @@ class RbacController extends Controller
     /**
      * Clears all rights and rules and sets them again
      */
-    public function actionReset()
+    public function actionReset(): void
     {
         $this->actionClear();
         $this->actionInit();
@@ -31,7 +31,7 @@ class RbacController extends Controller
     /**
      * Clears all rights and rules
      */
-    public function actionClear()
+    public function actionClear(): void
     {
         $auth = Yii::$app->authManager;
         $auth->removeAll();
@@ -42,7 +42,7 @@ class RbacController extends Controller
      * Minor technical note: if there is no separate index* right, all view* rights should allow listing,
      * of course not necessarily complete.
      */
-    public function actionInit()
+    public function actionInit(): void
     {
         /* Load v0.4.0 and older */
         $this->actionV0040();
@@ -70,12 +70,16 @@ class RbacController extends Controller
         /* Nothing to load in v0.14.0 */
 
         /* Nothing to load in v0.15.0 */
+
+        /* Nothing to load in v1.0.0 */
+
+        /* Nothing to load in v1.1.0 */
     }
 
     /**
      * Adds rights from v0.4.0 and earlier
      */
-    public function actionV0040()
+    public function actionV0040(): void
     {
         $auth = Yii::$app->authManager;
 
@@ -261,7 +265,7 @@ class RbacController extends Controller
     /**
      * Adds rights from v0.8.0
      */
-    public function actionV0080()
+    public function actionV0080(): void
     {
         $auth = Yii::$app->authManager;
 
@@ -305,7 +309,7 @@ class RbacController extends Controller
     /**
      * Adds rights from v0.11.0
      */
-    public function actionV0110()
+    public function actionV0110(): void
     {
         $auth = Yii::$app->authManager;
 
