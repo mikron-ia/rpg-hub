@@ -12,7 +12,7 @@ use yii\data\ActiveDataProvider;
  */
 class ArticleQuery extends Article
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             [['article_id', 'epic_id'], 'integer'],
@@ -20,17 +20,19 @@ class ArticleQuery extends Article
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
 
     /**
      * Creates data provider instance with search query applied
+     *
      * @param array $params
+     *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params): ActiveDataProvider
     {
         $query = Article::find();
 

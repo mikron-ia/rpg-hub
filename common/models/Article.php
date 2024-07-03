@@ -9,6 +9,7 @@ use common\models\core\Visibility;
 use common\models\tools\ToolsForDescription;
 use common\models\tools\ToolsForEntity;
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
@@ -42,12 +43,12 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
 
     public bool $is_off_the_record_change = false;
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'article';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['epic_id'], 'integer'],
@@ -80,7 +81,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'article_id' => Yii::t('app', 'ARTICLE_ID'),
@@ -97,7 +98,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         ];
     }
 
-    public function afterFind()
+    public function afterFind(): void
     {
         if ($this->seen_pack_id) {
             $this->seenPack->recordNotification();
@@ -105,7 +106,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         parent::afterFind();
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'positionBehavior' => [
@@ -116,7 +117,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         ];
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if ($insert) {
             $this->key = $this->generateKey('article');
@@ -151,17 +152,17 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getDescriptionPack()
+    public function getDescriptionPack(): ActiveQuery
     {
         return $this->hasOne(DescriptionPack::class, ['description_pack_id' => 'description_pack_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getEpic()
+    public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
@@ -194,10 +195,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSeenPack()
+    public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
@@ -234,22 +232,22 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return self::canUserViewInEpic($this->epic);
     }
 
-    static public function throwExceptionAboutCreate()
+    static public function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_ARTICLE'));
     }
 
-    static public function throwExceptionAboutControl()
+    static public function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_ARTICLE'));
     }
 
-    static public function throwExceptionAboutIndex()
+    static public function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_ARTICLE'));
     }
 
-    static public function throwExceptionAboutView()
+    static public function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_ARTICLE'));
     }

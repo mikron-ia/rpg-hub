@@ -7,6 +7,8 @@ use backend\controllers\tools\MarkChangeTrait;
 use Yii;
 use common\models\Article;
 use common\models\ArticleQuery;
+use yii\base\InvalidRouteException;
+use yii\db\Exception;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -23,7 +25,7 @@ class ArticleController extends Controller
     use EpicAssistance;
     use MarkChangeTrait;
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -87,10 +89,12 @@ class ArticleController extends Controller
     }
 
     /**
-     * Creates a new Article model.
+     * Creates a new Article model
      * If creation is successful, the browser will be redirected to the 'view' page.
      *
      * @return Response|string
+     *
+     * @throws Exception
      */
     public function actionCreate(): Response|string
     {
@@ -116,6 +120,7 @@ class ArticleController extends Controller
      * @return Response|string
      *
      * @throws NotFoundHttpException
+     * @throws Exception
      */
     public function actionUpdate(string $key): Response|string
     {
@@ -151,11 +156,14 @@ class ArticleController extends Controller
 
     /**
      * Moves game up in order; this means lower position on the list
+     *
      * @param int $key Story ID
+     *
      * @throws NotFoundHttpException
      * @throws HttpException
+     * @throws InvalidRouteException
      */
-    public function actionMoveUp($key): Response|\yii\console\Response
+    public function actionMoveUp(int $key): Response|\yii\console\Response
     {
         $model = $this->findModelByKey($key);
         if (!$model->canUserControlYou()) {
@@ -173,12 +181,16 @@ class ArticleController extends Controller
 
     /**
      * Moves game down in order; this means higher position on the list
+     *
      * @param int $key Story ID
+     *
      * @return Response
+     *
      * @throws NotFoundHttpException
      * @throws HttpException
+     * @throws InvalidRouteException
      */
-    public function actionMoveDown($key)
+    public function actionMoveDown(int $key): Response
     {
         $model = $this->findModelByKey($key);
         if (!$model->canUserControlYou()) {
@@ -214,11 +226,14 @@ class ArticleController extends Controller
     /**
      * Finds the Article model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param string $key
+     *
      * @return Article the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelByKey($key)
+    protected function findModelByKey($key): Article
     {
         if (($model = Article::findOne(['key' => $key])) !== null) {
             if($model->epic_id) {
