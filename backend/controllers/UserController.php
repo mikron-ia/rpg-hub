@@ -3,21 +3,26 @@
 namespace backend\controllers;
 
 use backend\models\UserCreateForm;
+use common\models\exceptions\InvalidBackendConfigurationException;
 use common\models\UserInvitation;
+use Throwable;
 use Yii;
 use common\models\User;
 use yii\data\ActiveDataProvider;
+use yii\db\Exception;
+use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * UserController implements the CRUD actions for User model.
  */
 final class UserController extends Controller
 {
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -53,9 +58,10 @@ final class UserController extends Controller
 
     /**
      * Lists all users
-     * @return mixed
+     *
+     * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $dataProvider = new ActiveDataProvider([
             'query' => User::find(),
@@ -68,9 +74,10 @@ final class UserController extends Controller
 
     /**
      * Lists all invitations
-     * @return mixed
+     *
+     * @return string
      */
-    public function actionInvitations()
+    public function actionInvitations(): string
     {
         $dataProvider = new ActiveDataProvider([
             'query' => UserInvitation::find(),
@@ -84,10 +91,14 @@ final class UserController extends Controller
 
     /**
      * Displays a single user
+     *
      * @param integer $id
-     * @return mixed
+     *
+     * @return string
+     *
+     * @throws NotFoundHttpException
      */
-    public function actionView($id)
+    public function actionView(int $id): string
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -96,9 +107,10 @@ final class UserController extends Controller
 
     /**
      * Sends an invitation to a new user
-     * @return mixed
+     *
+     * @return Response|string
      */
-    public function actionCreate()
+    public function actionCreate(): Response|string
     {
         $model = new UserCreateForm();
 
@@ -119,10 +131,15 @@ final class UserController extends Controller
 
     /**
      * Updates an existing user
-     * @param integer $id
-     * @return mixed
+     *
+     * @param int $id
+     *
+     * @return Response|string
+     *
+     * @throws NotFoundHttpException
+     * @throws Exception
      */
-    public function actionUpdate($id)
+    public function actionUpdate(int $id): Response|string
     {
         $model = $this->findModel($id);
 
@@ -137,10 +154,16 @@ final class UserController extends Controller
 
     /**
      * Deletes an existing user
-     * @param integer $id
-     * @return mixed
+     *
+     * @param int $id
+     *
+     * @return Response
+     *
+     * @throws NotFoundHttpException
+     * @throws Throwable
+     * @throws StaleObjectException
      */
-    public function actionDelete($id)
+    public function actionDelete(int $id): Response
     {
         $this->findModel($id)->update(false, ['status' => User::STATUS_DELETED]);
 
@@ -149,10 +172,14 @@ final class UserController extends Controller
 
     /**
      * Revokes an invitation
-     * @param integer $id
-     * @return mixed
+     *
+     * @param int $id
+     *
+     * @return Response
+     *
+     * @throws Exception
      */
-    public function actionRevoke($id)
+    public function actionRevoke(int $id): Response
     {
         $model = UserInvitation::findOne($id);
 
@@ -167,10 +194,14 @@ final class UserController extends Controller
 
     /**
      * Renews an invitation
-     * @param integer $id
-     * @return mixed
+     *
+     * @param int $id
+     *
+     * @return Response
+     *
+     * @throws Exception
      */
-    public function actionRenew($id)
+    public function actionRenew(int $id): Response
     {
         $model = UserInvitation::findOne($id);
 
@@ -189,10 +220,14 @@ final class UserController extends Controller
 
     /**
      * Re-sends an invitation
+     *
      * @param integer $id
-     * @return mixed
+     *
+     * @return Response
+     *
+     * @throws InvalidBackendConfigurationException
      */
-    public function actionResend($id)
+    public function actionResend(int $id): Response
     {
         $model = UserInvitation::findOne($id);
 
@@ -212,11 +247,14 @@ final class UserController extends Controller
     /**
      * Finds the User model based on its primary key value
      * If the model is not found, a 404 HTTP exception will be thrown
+     *
      * @param integer $id
+     *
      * @return User the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel(int $id): User
     {
         if (($model = User::findOne($id)) !== null) {
             return $model;
