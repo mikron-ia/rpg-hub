@@ -11,6 +11,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -43,13 +44,16 @@ class ArticleController extends Controller
     }
 
     /**
-     * Lists all Article models.
+     * Lists all Article models
+     *
      * @param null|string $key
-     * @return mixed
+     *
+     * @return string
+     *
+     * @throws HttpException
      * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
      */
-    public function actionIndex(?string $key = null)
+    public function actionIndex(?string $key = null): string
     {
         if ($key) {
             $epic = $this->findEpicByKey($key);
@@ -65,6 +69,10 @@ class ArticleController extends Controller
             return $this->render('../epic-selection');
         }
 
+        if (!Article::canUserIndexThem()) {
+            Article::throwExceptionAboutIndex();
+        }
+
         $searchModel = new ArticleQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -75,14 +83,22 @@ class ArticleController extends Controller
     }
 
     /**
-     * Displays a single Article model.
+     * Displays a single Article model
+     *
      * @param string $key
-     * @return mixed
+     *
+     * @return string
+     *
+     * @throws HttpException
      * @throws NotFoundHttpException
      */
-    public function actionView($key)
+    public function actionView(string $key): string
     {
         $model = $this->findModelByKey($key);
+
+        if (!$model->canUserViewYou()) {
+            Article::throwExceptionAboutView();
+        }
 
         $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
 

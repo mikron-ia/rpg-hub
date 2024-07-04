@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
 use backend\controllers\tools\MarkChangeTrait;
+use Throwable;
 use Yii;
 use common\models\Article;
 use common\models\ArticleQuery;
@@ -60,9 +61,19 @@ class ArticleController extends Controller
      * Lists all Article models.
      *
      * @return string
+     *
+     * @throws HttpException
      */
     public function actionIndex(): string
     {
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection');
+        }
+
+        if (!Article::canUserIndexThem()) {
+            Article::throwExceptionAboutIndex();
+        }
+        
         $searchModel = new ArticleQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -80,11 +91,28 @@ class ArticleController extends Controller
      * @return string
      *
      * @throws NotFoundHttpException
+     * @throws HttpException
      */
     public function actionView(string $key): string
     {
+        $model = $this->findModelByKey($key);
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
+        }
+
+        if (!$model->canUserViewYou()) {
+            Article::throwExceptionAboutView();
+        }
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
+        }
+
         return $this->render('view', [
-            'model' => $this->findModelByKey($key),
+            'model' => $model,
         ]);
     }
 
@@ -95,9 +123,14 @@ class ArticleController extends Controller
      * @return Response|string
      *
      * @throws Exception
+     * @throws HttpException
      */
     public function actionCreate(): Response|string
     {
+        if (!Article::canUserCreateThem()) {
+            Article::throwExceptionAboutCreate();
+        }
+
         $model = new Article();
 
         $model->setCurrentEpicOnEmpty();
@@ -121,10 +154,15 @@ class ArticleController extends Controller
      *
      * @throws NotFoundHttpException
      * @throws Exception
+     * @throws HttpException
      */
     public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModelByKey($key);
+
+        if (!$model->canUserControlYou()) {
+            Article::throwExceptionAboutControl();
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
@@ -143,13 +181,20 @@ class ArticleController extends Controller
      *
      * @return Response
      *
+     * @throws HttpException
      * @throws NotFoundHttpException
-     * @throws \Throwable
      * @throws StaleObjectException
+     * @throws Throwable
      */
     public function actionDelete(string $key): Response
     {
-        $this->findModelByKey($key)->delete();
+        $model = $this->findModelByKey($key);
+
+        if (!$model->canUserControlYou()) {
+            Article::throwExceptionAboutControl();
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }
