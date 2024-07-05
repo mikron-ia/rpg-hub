@@ -1,9 +1,13 @@
 <?php
 
+use backend\assets\InvitationAsset;
 use common\models\core\Language;
 use common\models\UserInvitation;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\grid\GridView;
+
+InvitationAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -43,9 +47,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'valid_to:datetime',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{revoke} {renew} {resend}',
+                'template' => '{link} {revoke} {renew} {resend}',
                 'contentOptions' => ['class' => 'text-center'],
                 'buttons' => [
+                    'link' => function ($url, $model, $key) {
+                        return Html::a(
+                            '<span class="open-modal-with-link glyphicon glyphicon-link" data-link="'
+                            . $model->getInvitationLink()
+                            . '"></span>',
+                            '#',
+                            [
+                                'title' => Yii::t('app', 'USER_INVITATION_SHOW_LINK'),
+                                'data-link' => $model->getInvitationLink(),
+                            ]
+                        );
+                    },
                     'revoke' => function ($url, $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-remove-circle"></span>',
@@ -83,5 +99,32 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
+
+    <?php Modal::begin([
+        'id' => 'invitation-link-display-modal',
+        'header' => '<h2 class="modal-title">' . Yii::t('app', 'INVITATION_LINK_MODAL_TITLE') . '</h2>',
+        'size' => Modal::SIZE_LARGE,
+    ]); ?>
+
+    <div>
+        <span class="hidden" id="button-message-copy-base"><?= Yii::t('app', 'BUTTON_COPY_INVITE') ?></span>
+        <span class="hidden" id="button-message-copy-confirm"><?= Yii::t('app', 'BUTTON_COPY_IN_PROGRESS') ?></span>
+        <?= Html::textarea(
+            name: 'link-content',
+            options: [
+                'id' => 'invitation-link-content',
+                'class' => 'invitation-link-content',
+                'readonly' => 'readonly',
+                'rows' => 2,
+            ],
+        ); ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_COPY_INVITE'),
+            '#',
+            ['class' => 'btn btn-default btn-copy-in-modal', 'id' => 'button-copy-link']
+        ) ?>
+    </div>
+
+    <?php Modal::end(); ?>
 
 </div>

@@ -202,6 +202,17 @@ p {
     width: 100%;
 }
 
+.btn-copy-in-modal {
+    display: block;
+    max-width: 90%;
+    margin: 15px auto 10px;
+}
+
+.invitation-link-content {
+    resize: none;
+    width: 100%;
+}
+
 .error-box {
     color: #a94442;
     background: #fdf7f7;
