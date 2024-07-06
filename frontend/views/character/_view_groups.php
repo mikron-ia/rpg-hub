@@ -29,7 +29,13 @@ use yii\grid\GridView;
                 'label' => Yii::t('app', 'LABEL_GROUP'),
                 'format' => 'raw',
                 'value' => function (GroupMembership $model, $key, $index, $widget) {
-                    return $model->group . ($model->group->master_group_id ? ' (' . $model->group->masterGroup . ')' : '');
+                    return
+                        in_array(
+                            $model->group->visibility,
+                            Visibility::determineVisibilityVector($model->character->epic)
+                        )
+                            ? $model->group . ($model->group->master_group_id ? ' (' . $model->group->masterGroup . ')' : '')
+                            : $model->group->name; // no master group in this path is intentional for secrecy reasons
                 },
             ],
             [

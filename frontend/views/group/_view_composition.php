@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use common\models\Group;
 use common\models\GroupMembership;
 use yii\data\ArrayDataProvider;
@@ -17,7 +18,7 @@ use yii\helpers\Html;
         'summary' => '',
         'rowOptions' => function (GroupMembership $model, $key, $index, $grid) {
             $options = [];
-            if ($model->visibility === \common\models\core\Visibility::VISIBILITY_GM) {
+            if ($model->visibility === Visibility::VISIBILITY_GM) {
                 $options['class'] = 'table-row-hidden secret';
             }
             return $options;
@@ -28,7 +29,13 @@ use yii\helpers\Html;
                 'label' => Yii::t('app', 'CHARACTER_NAME'),
                 'format' => 'raw',
                 'value' => function (GroupMembership $model, $key, $index, $widget) {
-                    return Html::a($model->character->name, ['character/view', 'key' => $model->character->key]);
+                    return
+                        in_array(
+                            $model->character->visibility,
+                            Visibility::determineVisibilityVector($model->group->epic)
+                        )
+                            ? Html::a($model->character->name, ['character/view', 'key' => $model->character->key])
+                            : $model->character->name;
                 },
             ],
             [
