@@ -1,16 +1,24 @@
 <?php
+
+use common\models\Character;
+use common\models\core\Visibility;
+use common\models\GroupMembership;
+use yii\data\ArrayDataProvider;
+use yii\grid\GridView;
+
 /* @var $this yii\web\View */
 /* @var $header string */
-/* @var $model \common\models\Character */
+/* @var $model Character */
+
 ?>
 
 <?php if ($model->groupMembershipsVisibleToUser): ?>
-    <?= \yii\grid\GridView::widget([
-        'dataProvider' => new \yii\data\ArrayDataProvider(['allModels' => $model->groupMembershipsVisibleToUser]),
+    <?= GridView::widget([
+        'dataProvider' => new ArrayDataProvider(['allModels' => $model->groupMembershipsVisibleToUser]),
         'summary' => '',
-        'rowOptions' => function (\common\models\GroupMembership $model, $key, $index, $grid) {
+        'rowOptions' => function (GroupMembership $model, $key, $index, $grid) {
             $options = [];
-            if ($model->visibility === \common\models\core\Visibility::VISIBILITY_GM) {
+            if ($model->visibility === Visibility::VISIBILITY_GM) {
                 $options['class'] = 'table-row-hidden secret';
             }
             return $options;
@@ -20,7 +28,7 @@
                 'attribute' => 'group.name',
                 'label' => Yii::t('app', 'LABEL_GROUP'),
                 'format' => 'raw',
-                'value' => function (\common\models\GroupMembership $model, $key, $index, $widget) {
+                'value' => function (GroupMembership $model, $key, $index, $widget) {
                     return $model->group . ($model->group->master_group_id ? ' (' . $model->group->masterGroup . ')' : '');
                 },
             ],
@@ -31,7 +39,7 @@
             [
                 'attribute' => 'status',
                 'label' => Yii::t('app', 'GROUP_MEMBERSHIP_STATUS'),
-                'value' => function (\common\models\GroupMembership $model, $key, $index, $widget) {
+                'value' => function (GroupMembership $model, $key, $index, $widget) {
                     return $model->getStatus();
                 },
             ]

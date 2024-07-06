@@ -1,16 +1,18 @@
 <?php
 
+use common\models\Group;
 use common\models\GroupMembership;
 use yii\data\ArrayDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $header string */
-/* @var $models \common\models\Group[] */
+/* @var $models Group[] */
 ?>
 
 <?php if ($models): ?>
-    <?= \yii\grid\GridView::widget([
+    <?= GridView::widget([
         'dataProvider' => new ArrayDataProvider(['allModels' => $models]),
         'summary' => '',
         'rowOptions' => function (GroupMembership $model, $key, $index, $grid) {

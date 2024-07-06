@@ -64,20 +64,23 @@ final class Visibility
 
     /**
      * Provides visibility name
+     *
      * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         $names = self::visibilityNames(self::allowedVisibilities());
-        return isset($names[$this->visibility]) ? $names[$this->visibility] : null;
+        return $names[$this->visibility] ?? null;
     }
 
     /**
      * Provides visibilities names
+     *
      * @param array $allowed
+     *
      * @return string[]
      */
-    static public function visibilityNames($allowed): array
+    static public function visibilityNames(array $allowed): array
     {
         $names = [
             Visibility::VISIBILITY_NONE => Yii::t('app', 'VISIBILITY_NONE'),
@@ -98,6 +101,7 @@ final class Visibility
 
     /**
      * Lists allowed visibilities
+     *
      * @return string[]
      */
     static public function allowedVisibilities(): array
@@ -113,12 +117,13 @@ final class Visibility
 
     /**
      * Provides visibility name in lowercase
+     *
      * @return string|null
      */
-    public function getNameLowercase()
+    public function getNameLowercase(): ?string
     {
         $names = self::visibilityNamesLowercase();
-        return isset($names[$this->visibility]) ? $names[$this->visibility] : null;
+        return $names[$this->visibility] ?? null;
     }
 
     /**
