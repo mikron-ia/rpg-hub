@@ -119,7 +119,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     {
         if (!$this->is_off_the_record_change) {
             $this->seenPack->updateRecord();
-            $this->utilityBag->flagAsChanged();
         }
         parent::afterSave($insert, $changedAttributes);
     }

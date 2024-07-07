@@ -202,7 +202,6 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     {
         if (!$this->is_off_the_record_change) {
             $this->seenPack->updateRecord();
-            $this->utilityBag->flagAsChanged();
         }
         $this->importancePack->flagForRecalculation();
         parent::afterSave($insert, $changedAttributes);

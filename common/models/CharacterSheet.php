@@ -105,7 +105,6 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     public function afterSave($insert, $changedAttributes)
     {
         $this->seenPack->updateRecord();
-        $this->utilityBag->flagAsChanged();
         parent::afterSave($insert, $changedAttributes);
     }
 

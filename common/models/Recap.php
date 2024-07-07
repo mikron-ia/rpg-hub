@@ -91,7 +91,6 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     public function afterSave($insert, $changedAttributes)
     {
         $this->seenPack->updateRecord();
-        $this->utilityBag->flagAsChanged();
         parent::afterSave($insert, $changedAttributes);
     }
 

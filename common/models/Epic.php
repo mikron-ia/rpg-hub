@@ -243,7 +243,6 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     public function afterSave($insert, $changedAttributes)
     {
         $this->seenPack->updateRecord();
-        $this->utilityBag->flagAsChanged();
         parent::afterSave($insert, $changedAttributes);
     }
 

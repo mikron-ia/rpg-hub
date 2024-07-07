@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Flag;
 use yii\db\Migration;
 
 /**
@@ -23,10 +24,16 @@ class m240601_230544_v1_2_0 extends Migration
             'flagged',
             $this->boolean()->notNull()->defaultValue(false)->comment('Is flagged for recalculation?')
         );
+
+        // remove old UtilityBag flags from database - #404
+        Flag::deleteAll(['type' => Flag::TYPE_CHANGED]);
+        Flag::deleteAll(['type' => Flag::TYPE_IMPORTANCE_RECALCULATE]);
     }
 
     public function safeDown()
     {
+        // remove UtilityBag flags from database - #404 - is not reversible
+
         // move recalculation flag to ImportancePack - #403
         $this->dropColumn('{{%importance_pack}}', 'flagged');
 

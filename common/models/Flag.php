@@ -18,6 +18,7 @@ use yii\db\ActiveRecord;
  */
 class Flag extends ActiveRecord
 {
+    /** @deprecated v1.2.0, use SeenPack instead */
     public const TYPE_CHANGED = 'changed';
 
     /** @deprecated v1.2.0, use ImportancePack instead */

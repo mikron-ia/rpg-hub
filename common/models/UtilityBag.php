@@ -72,6 +72,8 @@ class UtilityBag extends ActiveRecord
 
     /**
      * @return bool
+     *
+     * @deprecated v1.2.0, use SeenPack->updateRecord() and appropriate object's updated_at / modified_at field
      */
     public function flagAsChanged(): bool
     {

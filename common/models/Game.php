@@ -128,7 +128,6 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
 
     public function afterSave($insert, $changedAttributes): void
     {
-        $this->utilityBag->flagAsChanged();
         parent::afterSave($insert, $changedAttributes);
     }
 
