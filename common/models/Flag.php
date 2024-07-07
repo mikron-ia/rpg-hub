@@ -23,12 +23,12 @@ class Flag extends ActiveRecord
     /** @deprecated v1.2.0, use ImportancePack instead */
     public const TYPE_IMPORTANCE_RECALCULATE = 'imp-rec';
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'flag';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['utility_bag_id', 'type'], 'required'],
@@ -45,7 +45,7 @@ class Flag extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'flag_id' => Yii::t('app', 'FLAG_ID'),
@@ -55,10 +55,7 @@ class Flag extends ActiveRecord
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getUtilityBag()
+    public function getUtilityBag(): ActiveQuery
     {
         return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
@@ -74,22 +71,19 @@ class Flag extends ActiveRecord
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         $names = self::typeNames();
         return isset($names[$this->type]) ? $names[$this->type] : '?';
     }
 
-    static public function create(int $bag_id, string $flagType)
+    static public function create(int $bag_id, string $flagType): bool
     {
         self::remove($bag_id, $flagType);
         return (new Flag(['utility_bag_id' => $bag_id, 'type' => $flagType]))->save();
     }
 
-    static public function remove(int $bag_id, string $flagType)
+    static public function remove(int $bag_id, string $flagType): void
     {
         Flag::deleteAll(['utility_bag_id' => $bag_id, 'type' => $flagType]);
     }

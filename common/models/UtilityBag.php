@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "utility_bag".
@@ -16,12 +17,12 @@ use yii\db\ActiveRecord;
  */
 class UtilityBag extends ActiveRecord
 {
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'utility_bag';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['class'], 'required'],
@@ -29,7 +30,7 @@ class UtilityBag extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG_ID'),
@@ -39,7 +40,10 @@ class UtilityBag extends ActiveRecord
 
     /**
      * @param string $class
+     *
      * @return UtilityBag
+     *
+     * @throws Exception
      */
     public static function create(string $class): UtilityBag
     {
@@ -51,10 +55,7 @@ class UtilityBag extends ActiveRecord
         return $bag;
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getFlags()
+    public function getFlags(): ActiveQuery
     {
         return $this->hasMany(Flag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
@@ -64,9 +65,9 @@ class UtilityBag extends ActiveRecord
         return Flag::create($this->utility_bag_id, $flag);
     }
 
-    public function removeFlag(string $flag): bool
+    public function removeFlag(string $flag): void
     {
-        return Flag::remove($this->utility_bag_id, $flag);
+        Flag::remove($this->utility_bag_id, $flag);
     }
 
     /**
