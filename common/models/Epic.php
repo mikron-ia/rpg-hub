@@ -229,7 +229,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
 
     public function getStyle(): FrontStyles
     {
-        return FrontStyles::tryFrom($this->style) ?? FrontStyles::Default;
+        return FrontStyles::tryFrom($this->style ?? FrontStyles::Default->value) ?? FrontStyles::Default;
     }
 
     public function afterFind()
