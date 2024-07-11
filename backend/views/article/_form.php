@@ -32,6 +32,10 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-12">
+        <?= $form->field($model, 'outline_raw')->textarea(['rows' => 6]) ?>
+    </div>
+
+    <div class="col-md-12">
         <?= $form->field($model, 'text_raw')->textarea(['rows' => 12]) ?>
     </div>
 

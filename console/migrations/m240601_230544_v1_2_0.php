@@ -28,10 +28,18 @@ class m240601_230544_v1_2_0 extends Migration
         // remove old UtilityBag flags from database - #404
         Flag::deleteAll(['type' => Flag::TYPE_CHANGED]);
         Flag::deleteAll(['type' => Flag::TYPE_IMPORTANCE_RECALCULATE]);
+
+        // Improvements to Article - #387
+        $this->addColumn('{{%article}}', 'outline_raw', $this->text()->after('position'));
+        $this->addColumn('{{%article}}', 'outline_ready', $this->text()->after('outline_raw'));
     }
 
     public function safeDown()
     {
+        // Improvements to Article - #387
+        $this->dropColumn('{{%article}}', 'outline_ready');
+        $this->dropColumn('{{%article}}', 'outline_raw');
+
         // remove UtilityBag flags from database - #404 - is not reversible
 
         // move recalculation flag to ImportancePack - #403

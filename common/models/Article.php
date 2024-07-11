@@ -27,6 +27,8 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $seen_pack_id
  * @property string $description_pack_id
  * @property integer $position
+ * @property string $outline_raw
+ * @property string $outline_ready
  * @property string $text_raw
  * @property string $text_ready
  * @property string $utility_bag_id
@@ -53,7 +55,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return [
             [['epic_id'], 'integer'],
             [['title', 'text_raw'], 'required'],
-            [['text_raw'], 'string'],
+            [['text_raw', 'outline_raw'], 'string'],
             [['title', 'subtitle'], 'string', 'max' => 120],
             [['visibility'], 'string', 'max' => 20],
             [['is_off_the_record_change'], 'boolean'],
@@ -91,6 +93,8 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             'subtitle' => Yii::t('app', 'ARTICLE_SUBTITLE'),
             'visibility' => Yii::t('app', 'ARTICLE_VISIBILITY'),
             'position' => Yii::t('app', 'ARTICLE_POSITION'),
+            'outline_raw' => Yii::t('app', 'ARTICLE_OUTLINE'),
+            'outline_ready' => Yii::t('app', 'ARTICLE_OUTLINE'),
             'text_raw' => Yii::t('app', 'ARTICLE_TEXT'),
             'text_ready' => Yii::t('app', 'ARTICLE_TEXT'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
@@ -139,6 +143,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         }
 
         $this->text_ready = Markdown::process(Html::encode($this->processAllInOrder($this->text_raw)), 'gfm');
+        $this->outline_ready = Markdown::process(Html::encode($this->processAllInOrder($this->outline_raw)), 'gfm');
 
         return parent::beforeSave($insert);
     }
