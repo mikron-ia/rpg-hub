@@ -13,6 +13,7 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
+use yii\helpers\StringHelper;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
@@ -170,6 +171,16 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
+    }
+
+    public function getOutlineWordCount(): int
+    {
+        return StringHelper::countWords($this->outline_raw ?? '');
+    }
+
+    public function getTextWordCount(): int
+    {
+        return StringHelper::countWords($this->text_raw ?? '');
     }
 
     public function recordSighting(): bool

@@ -27,12 +27,20 @@ use yii\widgets\DetailView;
                 'value' => $model->getVisibility()
             ],
             [
-                'label' => Yii::t('app', 'ARTICLE_CHARACTER_COUNT'),
-                'value' => '?'
+                'label' => Yii::t('app', 'ARTICLE_OUTLINE_CHARACTER_COUNT'),
+                'value' => strlen($model->outline_raw ?? ''),
             ],
             [
-                'label' => Yii::t('app', 'ARTICLE_WORD_COUNT'),
-                'value' => '?'
+                'label' => Yii::t('app', 'ARTICLE_TEXT_CHARACTER_COUNT'),
+                'value' => strlen($model->text_raw ?? ''),
+            ],
+            [
+                'label' => Yii::t('app', 'ARTICLE_OUTLINE_WORD_COUNT'),
+                'value' => $model->getOutlineWordCount(),
+            ],
+            [
+                'label' => Yii::t('app', 'ARTICLE_TEXT_WORD_COUNT'),
+                'value' => $model->getTextWordCount(),
             ],
         ],
     ]) ?>
