@@ -64,7 +64,7 @@ use yii\widgets\DetailView;
             );
             ?>
             <?= Html::a(
-                Yii::t('app', 'BUTTON_MARK_AS_CHANGED'),
+                Yii::t('app', 'BUTTON_MARK_AS_CHANGED_F'),
                 ['mark-changed', 'key' => $model->key],
                 [
                     'class' => 'btn btn-primary',

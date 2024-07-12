@@ -40,33 +40,6 @@ $items = [
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
-        <?= Html::a(
-            Yii::t('app', 'BUTTON_MARK_AS_CHANGED'),
-            ['mark-changed', 'key' => $model->key],
-            [
-                'class' => 'btn btn-primary',
-                'data' => [
-                    'confirm' => Yii::t('app', 'CONFIRMATION_MARK_AS_CHANGED'),
-                    'method' => 'post',
-                ],
-            ]
-        ) ?>
-        <?= Html::a(
-            Yii::t('app', 'BUTTON_UPDATE'),
-            ['update', 'key' => $model->key],
-            ['class' => 'btn btn-primary']
-        ) ?>
-        <?= Html::a(
-            Yii::t('app', 'BUTTON_DELETE'),
-            ['delete', 'key' => $model->key],
-            [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
-                    'method' => 'post',
-                ],
-            ]
-        ) ?>
     </div>
 
     <p class="subtitle"><?= $model->subtitle ?></p>
