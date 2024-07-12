@@ -77,7 +77,7 @@ ArticleAsset::register($this);
 
 <div class="col-md-6">
     <h2 class="text-center"><?= Yii::t('app', 'ARTICLE_OUTLINE_TITLE') ?></h2>
-    <?php if (!empty($model->outline_ready)): ?>
+    <?php if (!empty($model->outline_raw)): ?>
         <?= $model->outline_ready ?>
     <?php else: ?>
         <p class="error-box"><?= Yii::t('app', 'ARTICLE_OUTLINE_EMPTY') ?></p>

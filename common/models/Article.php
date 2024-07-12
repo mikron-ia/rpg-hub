@@ -143,8 +143,14 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             $this->description_pack_id = $pack->description_pack_id;
         }
 
-        $this->text_ready = Markdown::process(Html::encode($this->processAllInOrder($this->text_raw)), 'gfm');
-        $this->outline_ready = Markdown::process(Html::encode($this->processAllInOrder($this->outline_raw)), 'gfm');
+        $this->text_ready = Markdown::process(
+            Html::encode($this->processAllInOrder($this->text_raw)),
+            'gfm'
+        );
+        $this->outline_ready = Markdown::process(
+            Html::encode($this->processAllInOrder($this->outline_raw ?? '')),
+            'gfm'
+        );
 
         return parent::beforeSave($insert);
     }
