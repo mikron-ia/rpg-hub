@@ -2,7 +2,9 @@
 
 namespace backend\controllers\tools;
 
+use common\models\Epic;
 use Yii;
+use yii\web\NotFoundHttpException;
 
 trait EpicAssistance
 {
@@ -26,5 +28,19 @@ trait EpicAssistance
                 Yii::t('app', 'EPIC_CHANGED_BASED_ON_OBJECT {epic}', ['epic' => $name])
             );
         }
+    }
+
+    /**
+     * @throws NotFoundHttpException
+     */
+    protected function findEpicByKey(string $key): Epic
+    {
+        $model = Epic::findOne(['key' => $key]);
+
+        if ($model === null) {
+            throw new NotFoundHttpException(Yii::t('app', 'EPIC_NOT_AVAILABLE'));
+        }
+
+        return $model;
     }
 }

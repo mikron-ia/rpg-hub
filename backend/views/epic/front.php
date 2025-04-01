@@ -1,14 +1,17 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $epic \common\models\Epic */
-/* @var $sessions \yii\data\ActiveDataProvider */
-/* @var $stories \yii\data\ActiveDataProvider */
+/* @var $epic Epic */
+/* @var $sessions ActiveDataProvider */
+/* @var $stories ActiveDataProvider */
 
-/* @var $recap \common\models\Recap */
+/* @var $recap Recap */
 
+use common\models\Epic;
 use common\models\Participant;
+use common\models\Recap;
 use yii\bootstrap\Html;
+use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
 
 $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
@@ -20,25 +23,32 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
         <h1><?= $epic->name ?></h1>
 
         <div class="btn-group btn-group-lg">
-            <?= Html::a(Yii::t('app', 'BUTTON_STORIES'), ['story/index'], ['class' => 'btn btn-lg btn-primary']); ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_RECAPS'), ['recap/index'], ['class' => 'btn btn-lg btn-primary']); ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_STORIES'),
+                ['story/index', 'key' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary']
+            ); ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_RECAPS'),
+                ['recap/index', 'key' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary']
+            ); ?>
         </div>
 
         <div class="btn-group btn-group-lg">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_CHARACTERS'),
-                ['character/index'],
-                ['class' => 'btn btn-lg btn-primary']
+                ['character/index', 'key' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary'],
             ); ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_CHARACTER_SHEETS'),
-                ['character-sheet/index'],
-                ['class' => 'btn btn-lg btn-primary']
+                ['character-sheet/index', 'key' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary'],
             ); ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_GROUP'),
-                ['group/index'],
-                ['class' => 'btn btn-lg btn-primary']
+                ['group/index', 'key' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary'],
             ); ?>
         </div>
 
@@ -46,15 +56,31 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
             <?= Html::a(
                 Yii::t('app', 'BUTTON_DETAILS'),
                 ['epic/view', 'key' => $epic->key],
-                ['class' => 'btn btn-lg btn-primary'])
-            ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_SESSIONS'), ['game/index'], ['class' => 'btn btn-lg btn-primary']); ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_SCENARIOS'), ['scenario/index'], ['class' => 'btn btn-lg btn-primary']); ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_POINTS_IN_TIME'), ['point-in-time/index'], ['class' => 'btn btn-lg btn-primary']); ?>
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_SESSIONS'),
+                ['game/index', 'key' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_SCENARIOS'),
+                ['scenario/index', 'key' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_POINTS_IN_TIME'),
+                ['point-in-time/index', 'key' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
         </div>
 
         <div class="btn-group btn-group-lg">
-            <?= Html::a(Yii::t('app', 'BUTTON_ARTICLES'), ['article/index'], ['class' => 'btn btn-lg btn-primary']); ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_ARTICLES'),
+                ['article/index', 'key' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
         </div>
 
     </div>
@@ -91,7 +117,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                         'itemOptions' => ['class' => 'item'],
                         'itemView' => function ($model, $key, $index, $widget) {
                             return $this->render(
-                                '../epic/story/_index_box',
+                                'story/_index_box',
                                 ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
                             );
                         },
@@ -117,8 +143,8 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                         'itemOptions' => ['class' => 'item'],
                         'itemView' => function ($model, $key, $index, $widget) {
                             return $this->render(
-                                '../epic/session/_index_box',
-                                ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                                'session/_index_box',
+                                ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget],
                             );
                         },
                     ]) ?>
@@ -131,7 +157,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                 <h2><?= Yii::t('app', 'EPIC_CARD_PARTICIPANTS'); ?></h2>
 
                 <?= ListView::widget([
-                    'dataProvider' => new \yii\data\ActiveDataProvider(['query' => $epic->getParticipants()]),
+                    'dataProvider' => new ActiveDataProvider(['query' => $epic->getParticipants()]),
                     'itemOptions' => ['class' => 'item'],
                     'layout' => '{items}',
                     'itemView' => function (Participant $model, $key, $index, $widget) {

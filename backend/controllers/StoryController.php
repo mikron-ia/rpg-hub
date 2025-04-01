@@ -5,6 +5,7 @@ namespace backend\controllers;
 use backend\controllers\tools\EpicAssistance;
 use backend\controllers\tools\MarkChangeTrait;
 use common\models\core\Visibility;
+use common\models\Epic;
 use common\models\Story;
 use common\models\StoryQuery;
 use Yii;
@@ -57,10 +58,19 @@ final class StoryController extends Controller
 
     /**
      * Lists all stories
-     * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex(?string $key = null): string
     {
+        if (!empty($key)) {
+            $epic = $this->findEpicByKey($key);
+
+            if (!$epic->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epic->key, $epic->epic_id, $epic->name);
+        }
+
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection');
         }

@@ -101,21 +101,30 @@ final class RecapQuery extends Recap
         return $recap;
     }
 
+    public function mostRecentForEpic(Epic $epic): ?Recap
+    {
+        /** @var Recap|null $recap */
+        $recap = Recap::find()->andWhere(['epic_id' => $epic->epic_id])->orderBy(['position' => SORT_DESC])->one();
+
+        return $recap;
+    }
+
     /**
      * @param array $userIds
      * @return ArrayDataProvider|null
      */
     public function mostRecentByPlayerDataProvider(array $userIds): ?ArrayDataProvider
     {
-        $query = Recap::find()->where(['in', 'epic_id', $userIds])->orderBy(['position' => SORT_DESC, 'recap_id' => SORT_DESC]);
+        $query = Recap::find()->where(['in', 'epic_id', $userIds])->orderBy([
+            'position' => SORT_DESC,
+            'recap_id' => SORT_DESC
+        ]);
 
         $mostRecentRecaps = [];
 
-        foreach ($query->all() as $recap)
-        {
+        foreach ($query->all() as $recap) {
             /** @var Recap $recap */
-            if(!isset($mostRecentRecaps[$recap->epic_id]))
-            {
+            if (!isset($mostRecentRecaps[$recap->epic_id])) {
                 $mostRecentRecaps[$recap->epic_id] = $recap;
             }
         }

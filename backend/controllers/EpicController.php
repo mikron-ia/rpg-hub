@@ -5,12 +5,16 @@ namespace backend\controllers;
 use backend\controllers\tools\EpicAssistance;
 use common\models\Epic;
 use common\models\EpicQuery;
+use common\models\GameQuery;
 use common\models\Participant;
 use common\models\ParticipantRole;
+use common\models\RecapQuery;
+use common\models\StoryQuery;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -29,6 +33,7 @@ final class EpicController extends Controller
                     [
                         'actions' => [
                             'create',
+                            'front',
                             'index',
                             'update',
                             'view',
@@ -93,6 +98,44 @@ final class EpicController extends Controller
         return $this->render('manage', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Displays the Epic's main page
+     *
+     * @throws HttpException
+     */
+    public function actionFront(string $key): string
+    {
+        $model = $this->findModel($key);
+        $model->canUserViewYou();
+
+        $model->recordSighting();
+
+        /* Get Recap */
+        $recapQuery = new RecapQuery();
+        $recap = $recapQuery->mostRecentForEpic($model);
+
+        $recap?->recordSighting();
+
+        /* Get Stories */
+        $searchModel = new StoryQuery(4);
+        $stories = $searchModel->searchForEpic(Yii::$app->request->queryParams, $model);
+
+        /* Get Sessions */
+        $sessionQuery = new GameQuery();
+        $sessions = $sessionQuery->mostRecentDataProvider($model);
+
+        /* Get News */
+        $news = [];
+
+        return $this->render('front', [
+            'epic' => $model,
+            'sessions' => $sessions,
+            'stories' => $stories,
+            'news' => $news,
+            'recap' => $recap,
         ]);
     }
 

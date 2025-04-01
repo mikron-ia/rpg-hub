@@ -7,6 +7,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
+use yii\db\ActiveQuery;
 
 /**
  * StoryQuery represents the model behind the search form about `common\models\Story`.
@@ -51,12 +52,8 @@ final class StoryQuery extends Story
 
     /**
      * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params): ActiveDataProvider
     {
         $query = Story::find();
 
@@ -70,28 +67,18 @@ final class StoryQuery extends Story
             ]);
         }
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'sort' => ['defaultOrder' => ['position' => SORT_DESC]],
-            'pagination' => ['pageSize' => $this->pageCount],
-        ]);
+        return $this->getDataProviderForSearch($params, $query);
+    }
 
-        $this->load($params);
-
-        if (!$this->validate()) {
-            $query->where('0=1');
-            return $dataProvider;
-        }
-
-        $query
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere([
-                'or',
-                ['like', 'short', $this->descriptions],
-                ['like', 'long', $this->descriptions]
-            ]);
-
-        return $dataProvider;
+    /**
+     * Creates data provider instance with search query applied and data limited to given Epic
+     */
+    public function searchForEpic(array $params, Epic $epic = null): ActiveDataProvider
+    {
+        return $this->getDataProviderForSearch($params, Story::find()->andWhere([
+            'epic_id' => $epic->epic_id,
+            'visibility' => Visibility::determineVisibilityVector($epic),
+        ]));
     }
 
     /**
@@ -123,6 +110,32 @@ final class StoryQuery extends Story
             'allModels' => $mostRecentStories,
             'pagination' => false,
         ]);
+
+        return $dataProvider;
+    }
+
+    private function getDataProviderForSearch($params, ActiveQuery $query): ActiveDataProvider
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => ['defaultOrder' => ['position' => SORT_DESC]],
+            'pagination' => ['pageSize' => $this->pageCount],
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere([
+                'or',
+                ['like', 'short', $this->descriptions],
+                ['like', 'long', $this->descriptions]
+            ]);
 
         return $dataProvider;
     }
