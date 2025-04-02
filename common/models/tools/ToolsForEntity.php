@@ -89,11 +89,16 @@ trait ToolsForEntity
         throw new HttpException(403, $message);
     }
 
-    public function setCurrentEpicOnEmpty()
+    public function setCurrentEpicOnEmpty(): void
     {
         if (isset(Yii::$app->params['activeEpic']) && $this->epic_id === null) {
             $this->epic_id = Yii::$app->params['activeEpic']->epic_id;
         }
+    }
+
+    public function setEpicOnEmpty(Epic $epic): void
+    {
+        $this->epic_id = $epic->epic_id;
     }
 
     /**

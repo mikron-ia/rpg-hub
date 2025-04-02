@@ -43,4 +43,18 @@ trait EpicAssistance
 
         return $model;
     }
+
+    protected function getEpicByKeyWithCheck(string $key): Epic
+    {
+        $epic = $this->findEpicByKey($key);
+
+        if (!$epic->canUserViewYou()) {
+            Epic::throwExceptionAboutView();
+        }
+
+        $this->selectEpic($epic->key, $epic->epic_id, $epic->name);
+
+        return $epic;
+
+    }
 }
