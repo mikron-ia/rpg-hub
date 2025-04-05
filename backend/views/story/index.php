@@ -1,6 +1,7 @@
 <?php
 
 use backend\assets\StoryAsset;
+use common\models\Epic;
 use common\models\Story;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -8,22 +9,27 @@ use yii\grid\GridView;
 StoryAsset::register($this);
 
 /* @var $this yii\web\View */
+/* @var $epic Epic */
 /* @var $searchModel common\models\RecapQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'STORY_TITLE_INDEX');
-$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
+$this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="story-index">
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
-        <?= Html::a(Yii::t('app', 'BUTTON_STORY_CREATE'), ['create'], ['class' => 'btn btn-success']); ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_STORY_CREATE'),
+            ['create', 'epicKey' => $epic->key],
+            ['class' => 'btn btn-success'],
+        ); ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_GOTO_FILTER'),
             ['#filter'],
-            ['class' => 'btn btn-default hidden-lg hidden-md']
+            ['class' => 'btn btn-default hidden-lg hidden-md'],
         ) ?>
     </div>
 

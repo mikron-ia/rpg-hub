@@ -2,7 +2,10 @@
 
 namespace backend\controllers\tools;
 
+use common\models\core\HasEpicControl;
 use common\models\Epic;
+use Error;
+use Exception;
 use Yii;
 use yii\web\NotFoundHttpException;
 
@@ -55,6 +58,16 @@ trait EpicAssistance
         $this->selectEpic($epic->key, $epic->epic_id, $epic->name);
 
         return $epic;
+    }
 
+    protected function setEpicIfFound(?string $epicKey, HasEpicControl $model): void
+    {
+        try {
+            $epic = $this->findEpicByKey($epicKey);
+            $epic->canUserViewYou();
+            $model->setEpicOnEmpty($epic);
+        } catch (Exception|Error) {
+            $model->setCurrentEpicOnEmpty();
+        }
     }
 }

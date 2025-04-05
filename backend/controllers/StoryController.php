@@ -72,7 +72,7 @@ final class StoryController extends Controller
         }
 
         if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection');
+            return $this->render('../epic-list');
         }
 
         if (!Story::canUserIndexThem()) {
@@ -83,6 +83,7 @@ final class StoryController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'epic' => $epic ?? Yii::$app->params['activeEpic'],
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -118,9 +119,8 @@ final class StoryController extends Controller
 
     /**
      * Creates a new story
-     * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate(?string $epicKey = null): Response|string
     {
         if (!Story::canUserCreateThem()) {
             Story::throwExceptionAboutCreate();
@@ -128,10 +128,13 @@ final class StoryController extends Controller
 
         $model = new Story();
 
-        $model->setCurrentEpicOnEmpty();
+        $this->setEpicIfFound($epicKey, $model);
+        if (!$model->isEpicSet()) {
+            return $this->render('../epic-list');
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'key' => $model->key]);
+            return $this->redirect(['story/view', 'key' => $model->key]);
         } else {
             return $this->render('create', [
                 'model' => $model,

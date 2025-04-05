@@ -9,8 +9,11 @@ StoryAsset::register($this);
 /* @var $model common\models\Story */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'STORY_TITLE_INDEX'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'STORY_TITLE_INDEX'),
+    'url' => ['story/index', 'key' => $model->epic->key]
+];
 $this->params['breadcrumbs'][] = $this->title;
 
 $items = [

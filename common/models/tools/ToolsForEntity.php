@@ -101,6 +101,11 @@ trait ToolsForEntity
         $this->epic_id = $epic->epic_id;
     }
 
+    public function isEpicSet(): bool
+    {
+        return !empty($this->epic_id);
+    }
+
     /**
      * @param $identifier
      * @return string

@@ -2,6 +2,7 @@
 
 namespace common\models\core;
 
+use common\models\Epic;
 use yii\web\HttpException;
 
 /**
@@ -66,4 +67,10 @@ interface HasEpicControl
      * Provides Epic
      */
     public function getEpic();
+
+    public function setCurrentEpicOnEmpty(): void;
+
+    public function setEpicOnEmpty(Epic $epic): void;
+
+    public function isEpicSet(): bool;
 }
