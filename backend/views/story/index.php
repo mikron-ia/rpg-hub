@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(
             Yii::t('app', 'BUTTON_STORY_CREATE'),
-            ['create', 'epicKey' => $epic->key],
+            ['create', 'epic' => $epic->key],
             ['class' => 'btn btn-success'],
         ); ?>
         <?= Html::a(

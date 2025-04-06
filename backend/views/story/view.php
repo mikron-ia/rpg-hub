@@ -12,7 +12,7 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = [
     'label' => Yii::t('app', 'STORY_TITLE_INDEX'),
-    'url' => ['story/index', 'key' => $model->epic->key]
+    'url' => ['story/index', 'epic' => $model->epic->key]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 

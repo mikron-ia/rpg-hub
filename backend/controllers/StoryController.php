@@ -108,7 +108,7 @@ final class StoryController extends Controller
     /**
      * Creates a new story
      */
-    public function actionCreate(string $epicKey = null): Response|string
+    public function actionCreate(string $epic = null): Response|string
     {
         if (!Story::canUserCreateThem()) {
             Story::throwExceptionAboutCreate();
@@ -116,7 +116,7 @@ final class StoryController extends Controller
 
         $model = new Story();
 
-        $this->setEpicOnObject($epicKey, $model);
+        $this->setEpicOnObject($epic, $model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['story/view', 'key' => $model->key]);
