@@ -111,6 +111,8 @@ final class EpicController extends Controller
         $model = $this->findModel($key);
         $model->canUserViewYou();
 
+        $this->selectEpic($model->key, $model->epic_id, $model->name, false);
+
         $model->recordSighting();
 
         /* Get Recap */

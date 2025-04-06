@@ -59,16 +59,16 @@ final class StoryController extends Controller
     /**
      * Lists all stories
      */
-    public function actionIndex(?string $key = null): string
+    public function actionIndex(?string $epic = null): string
     {
-        if (!empty($key)) {
-            $epic = $this->findEpicByKey($key);
+        if (!empty($epic)) {
+            $epicObject = $this->findEpicByKey($epic);
 
-            if (!$epic->canUserViewYou()) {
+            if (!$epicObject->canUserViewYou()) {
                 Epic::throwExceptionAboutView();
             }
 
-            $this->selectEpic($epic->key, $epic->epic_id, $epic->name);
+            $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
         }
 
         if (empty(Yii::$app->params['activeEpic'])) {
@@ -83,7 +83,7 @@ final class StoryController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'epic' => $epic ?? Yii::$app->params['activeEpic'],
+            'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -91,25 +91,13 @@ final class StoryController extends Controller
 
     /**
      * Displays a single story
-     * @param string $key
-     * @return mixed
      */
-    public function actionView($key)
+    public function actionView(string $key): string
     {
         $model = $this->findModel($key);
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
-        }
-
         if (!$model->canUserViewYou()) {
             Story::throwExceptionAboutView();
-        }
-
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
         }
 
         return $this->render('view', [
@@ -120,7 +108,7 @@ final class StoryController extends Controller
     /**
      * Creates a new story
      */
-    public function actionCreate(?string $epicKey = null): Response|string
+    public function actionCreate(string $epicKey = null): Response|string
     {
         if (!Story::canUserCreateThem()) {
             Story::throwExceptionAboutCreate();
@@ -128,17 +116,12 @@ final class StoryController extends Controller
 
         $model = new Story();
 
-        $this->setEpicIfFound($epicKey, $model);
-        if (!$model->isEpicSet()) {
-            return $this->render('../epic-list');
-        }
+        $this->setEpicOnObject($epicKey, $model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['story/view', 'key' => $model->key]);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $this->render('create', ['model' => $model]);
         }
     }
 

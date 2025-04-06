@@ -24,7 +24,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
 
         <div class="btn-group btn-group-lg">
             <?= Html::a(Yii::t('app', 'BUTTON_STORIES'),
-                ['story/index', 'key' => $epic->key],
+                ['story/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary']
             ); ?>
             <?= Html::a(

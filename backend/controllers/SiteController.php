@@ -88,47 +88,14 @@ final class SiteController extends Controller
 
     /**
      * Displays the main page
-     * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): Response|string
     {
         if (!isset(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-list');
-        } else {
-            /** @var Epic $epic */
-            $epic = Yii::$app->params['activeEpic'];
-
-            $epic->recordSighting();
-
-            /* Get Recap */
-            $recapQuery = new RecapQuery();
-            $recap = $recapQuery->mostRecent();
-
-            if ($recap) {
-                $recap->recordSighting();
-            }
-
-            /* Get Stories */
-            $searchModel = new StoryQuery(4);
-            $stories = $searchModel->search(Yii::$app->request->queryParams);
-
-            /* Get Sessions */
-            $sessionQuery = new GameQuery();
-            $sessions = $sessionQuery->mostRecentDataProvider();
         }
 
-        /* Get News */
-        $news = [];
-
-        $epic->recordSighting();
-
-        return $this->render('index', [
-            'epic' => $epic,
-            'sessions' => $sessions,
-            'stories' => $stories,
-            'news' => $news,
-            'recap' => $recap,
-        ]);
+        return $this->redirect(['epic/front', 'key' => Yii::$app->params['activeEpic']->key]);
     }
 
     /**
