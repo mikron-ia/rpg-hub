@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
+use common\models\Epic;
 use common\models\Recap;
 use common\models\RecapQuery;
 use Yii;
@@ -10,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * RecapController implements the CRUD actions for Recap model.
@@ -52,14 +54,22 @@ final class RecapController extends Controller
 
     /**
      * Lists all Recap models.
-     * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex(string $epic): string
     {
-        if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection');
+        if (!empty($epic)) {
+            $epicObject = $this->findEpicByKey($epic);
+
+            if (!$epicObject->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
         }
 
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-list');
+        }
         if (!Recap::canUserIndexThem()) {
             Recap::throwExceptionAboutIndex();
         }
@@ -68,6 +78,7 @@ final class RecapController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -75,25 +86,13 @@ final class RecapController extends Controller
 
     /**
      * Displays a single Recap model.
-     * @param string $key
-     * @return mixed
      */
-    public function actionView($key)
+    public function actionView(string $key): string
     {
         $model = $this->findModel($key);
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
-        }
-
         if (!$model->canUserViewYou()) {
             Recap::throwExceptionAboutView();
-        }
-
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
         }
 
         return $this->render('view', [
@@ -104,9 +103,8 @@ final class RecapController extends Controller
     /**
      * Creates a new Recap model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate(string $epic = null): Response|string
     {
         if (!Recap::canUserCreateThem()) {
             Recap::throwExceptionAboutCreate();
@@ -114,7 +112,7 @@ final class RecapController extends Controller
 
         $model = new Recap();
 
-        $model->setCurrentEpicOnEmpty();
+        $this->setEpicOnObject($epic, $model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
@@ -128,8 +126,6 @@ final class RecapController extends Controller
     /**
      * Updates an existing Recap model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $key
-     * @return mixed
      */
     public function actionUpdate($key)
     {
@@ -210,19 +206,18 @@ final class RecapController extends Controller
     }
 
     /**
-     * Finds the Recap model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $key
-     * @return Recap the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * Finds the Recap model based on its primary key value
      */
-    protected function findModel($key)
+    protected function findModel(string $key): Recap
     {
-        if (($model = Recap::findOne(['key' => $key])) !== null) {
-            $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
-            return $model;
-        } else {
+        $model = Recap::findOne(['key' => $key]);
+
+        if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'RECAP_NOT_AVAILABLE'));
         }
+
+        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
+
+        return $model;
     }
 }

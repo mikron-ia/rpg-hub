@@ -29,7 +29,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
             ); ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_RECAPS'),
-                ['recap/index', 'key' => $epic->key],
+                ['recap/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary']
             ); ?>
         </div>
@@ -37,17 +37,17 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
         <div class="btn-group btn-group-lg">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_CHARACTERS'),
-                ['character/index', 'key' => $epic->key],
+                ['character/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],
             ); ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_CHARACTER_SHEETS'),
-                ['character-sheet/index', 'key' => $epic->key],
+                ['character-sheet/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],
             ); ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_GROUP'),
-                ['group/index', 'key' => $epic->key],
+                ['group/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],
             ); ?>
         </div>
@@ -60,17 +60,17 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
             ); ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_SESSIONS'),
-                ['game/index', 'key' => $epic->key],
+                ['game/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],
             ); ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_SCENARIOS'),
-                ['scenario/index', 'key' => $epic->key],
+                ['scenario/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],
             ); ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_POINTS_IN_TIME'),
-                ['point-in-time/index', 'key' => $epic->key],
+                ['point-in-time/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],
             ); ?>
         </div>
@@ -78,7 +78,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
         <div class="btn-group btn-group-lg">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_ARTICLES'),
-                ['article/index', 'key' => $epic->key],
+                ['article/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],
             ); ?>
         </div>
