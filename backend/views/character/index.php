@@ -2,22 +2,20 @@
 
 use backend\assets\CharacterAsset;
 use common\models\Character;
+use common\models\Epic;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 
 CharacterAsset::register($this);
 
-
+/* @var $epic Epic */
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\CharacterQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_CHARACTER_INDEX');
-$this->params['breadcrumbs'][] = [
-    'label' => Yii::$app->params['activeEpic']->name,
-    'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]
-];
+$this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -26,7 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
-        <?= Html::a(Yii::t('app', 'CHARACTER_BUTTON_CREATE'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(
+            Yii::t('app', 'CHARACTER_BUTTON_CREATE'),
+            ['create', 'epic' => $epic->key],
+            ['class' => 'btn btn-success']
+        ) ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_GOTO_FILTER'),
             ['#filter'],

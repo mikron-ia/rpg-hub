@@ -8,6 +8,7 @@ use common\models\Character;
 use common\models\CharacterQuery;
 use common\models\CharacterSheet;
 use common\models\core\Visibility;
+use common\models\Epic;
 use common\models\EpicQuery;
 use common\models\Parameter;
 use common\models\tools\Retriever;
@@ -57,15 +58,21 @@ final class CharacterController extends Controller
 
     /**
      * Lists all characters
-     *
-     * @return string
-     *
-     * @throws HttpException
      */
-    public function actionIndex(): string
+    public function actionIndex(?string $epic = null): string
     {
+        if (!empty($epic)) {
+            $epicObject = $this->findEpicByKey($epic);
+
+            if (!$epicObject->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
+        }
+
         if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection');
+            return $this->render('../epic-list');
         }
 
         if (!Character::canUserIndexThem()) {
@@ -76,6 +83,7 @@ final class CharacterController extends Controller
         $dataProvider = $searchModel->searchForOperator(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -95,16 +103,8 @@ final class CharacterController extends Controller
     {
         $model = $this->findModelByKey($key);
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
-        }
-
         if (!$model->canUserViewYou()) {
             Character::throwExceptionAboutView();
-        }
-
-        if (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
         }
 
         if ($model->external_data_pack_id) {
@@ -122,12 +122,8 @@ final class CharacterController extends Controller
     /**
      * Creates a new character
      * If creation is successful, the browser will be redirected to the 'view' page.
-     *
-     * @return Response|string
-     *
-     * @throws HttpException
      */
-    public function actionCreate(): Response|string
+    public function actionCreate(string $epic = null): Response|string
     {
         if (!Character::canUserCreateThem()) {
             Character::throwExceptionAboutCreate();
@@ -137,7 +133,7 @@ final class CharacterController extends Controller
 
         $epicListForSelector = EpicQuery::getListOfEpicsForSelector();
 
-        $model->setCurrentEpicOnEmpty();
+        $this->setEpicOnObject($epic, $model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
