@@ -1,25 +1,31 @@
 <?php
 
 use backend\assets\GroupAsset;
+use common\models\Epic;
 use common\models\Group;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
 GroupAsset::register($this);
 
+/* @var $epic Epic */
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\GroupQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_GROUPS_INDEX');
-$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
+$this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-index">
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
-        <?= Html::a(Yii::t('app', 'BUTTON_GROUP_CREATE'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_GROUP_CREATE'),
+            ['create', 'epic' => $epic->key],
+            ['class' => 'btn btn-success']
+        ) ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_GOTO_FILTER'),
             ['#filter'],

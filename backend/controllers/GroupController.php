@@ -5,6 +5,7 @@ namespace backend\controllers;
 use backend\controllers\tools\EpicAssistance;
 use backend\controllers\tools\MarkChangeTrait;
 use common\models\core\Visibility;
+use common\models\Epic;
 use common\models\Group;
 use common\models\GroupQuery;
 use Yii;
@@ -56,8 +57,18 @@ final class GroupController extends Controller
      */
     public function actionIndex(): string
     {
+        if (!empty($epic)) {
+            $epicObject = $this->findEpicByKey($epic);
+
+            if (!$epicObject->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
+        }
+
         if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection');
+            return $this->render('../epic-list');
         }
 
         if (!Group::canUserIndexThem()) {
@@ -68,37 +79,21 @@ final class GroupController extends Controller
         $dataProvider = $searchModel->searchForOperator(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Group model.
-     *
-     * @param string $key
-     *
-     * @return string
-     *
-     * @throws HttpException
-     * @throws NotFoundHttpException
+     * Displays a single Group model
      */
     public function actionView(string $key): string
     {
         $model = $this->findModelByKey($key);
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
-        }
-
         if (!$model->canUserViewYou()) {
             Group::throwExceptionAboutView();
-        }
-
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
         }
 
         return $this->render('view', [
@@ -109,12 +104,8 @@ final class GroupController extends Controller
     /**
      * Creates a new Group model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     *
-     * @return Response|string
-     *
-     * @throws HttpException
      */
-    public function actionCreate(): Response|string
+    public function actionCreate(string $epic = null): Response|string
     {
         if (!Group::canUserCreateThem()) {
             Group::throwExceptionAboutCreate();
@@ -122,15 +113,13 @@ final class GroupController extends Controller
 
         $model = new Group();
 
-        $model->setCurrentEpicOnEmpty();
+        $this->setEpicOnObject($epic, $model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('create', ['model' => $model]);
     }
 
     /**
@@ -201,6 +190,8 @@ final class GroupController extends Controller
         if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
             throw new NotFoundHttpException(Yii::t('app', 'GROUP_NOT_AVAILABLE'));
         }
+
+        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
 
         return $model;
     }
