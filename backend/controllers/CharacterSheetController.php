@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
 use common\models\Character;
+use common\models\Epic;
 use Yii;
 use common\models\CharacterSheet;
 use common\models\CharacterSheetQuery;
@@ -11,6 +12,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * CharacterSheetController implements the CRUD actions for CharacterSheet model.
@@ -44,18 +46,28 @@ final class CharacterSheetController extends Controller
 
     /**
      * Lists all CharacterSheet models.
-     * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex(?string $epic = null): string
     {
+        if (!empty($epic)) {
+            $epicObject = $this->findEpicByKey($epic);
+
+            if (!$epicObject->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
+        }
+
         if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection');
+            return $this->render('../epic-list');
         }
 
         $searchModel = new CharacterSheetQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -68,21 +80,11 @@ final class CharacterSheetController extends Controller
      * @throws NotFoundHttpException
      * @throws \yii\web\HttpException
      */
-    public function actionView($key)
+    public function actionView(string $key): string
     {
         $model = $this->findModelByKey($key);
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
-        }
-
         $model->canUserViewYou();
-
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
-        }
 
         return $this->render('view', [
             'model' => $model,
@@ -92,15 +94,14 @@ final class CharacterSheetController extends Controller
     /**
      * Creates a new CharacterSheet model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate(string $epic = null): Response|string
     {
         CharacterSheet::canUserCreateThem();
 
         $model = new CharacterSheet();
 
-        $model->setCurrentEpicOnEmpty();
+        $this->setEpicOnObject($epic, $model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
@@ -149,12 +150,8 @@ final class CharacterSheetController extends Controller
     /**
      * Updates an existing CharacterSheet model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $key
-     * @return mixed
-     * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
      */
-    public function actionUpdate($key)
+    public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModelByKey($key);
 
@@ -197,19 +194,18 @@ final class CharacterSheetController extends Controller
     }
 
     /**
-     * Finds the CharacterSheet model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $key
-     * @return CharacterSheet the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * Finds the CharacterSheet model based on its primary key value
      */
-    protected function findModelByKey($key)
+    protected function findModelByKey(string $key): CharacterSheet
     {
-        if (($model = CharacterSheet::findOne(['key' => $key])) !== null) {
-            $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
-            return $model;
-        } else {
+        $model = CharacterSheet::findOne(['key' => $key]);
+
+        if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_SHEET_NOT_AVAILABLE'));
         }
+
+        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
+
+        return $model;
     }
 }
