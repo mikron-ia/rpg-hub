@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
+use common\models\Epic;
 use common\models\Game;
 use common\models\GameQuery;
 use Yii;
@@ -10,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * GameController implements the CRUD actions for Game model.
@@ -41,13 +43,22 @@ class GameController extends Controller
     }
 
     /**
-     * Lists all Game models.
-     * @return mixed
+     * Lists all Game models
      */
-    public function actionIndex()
+    public function actionIndex(?string $epic = null): string
     {
+        if (!empty($epic)) {
+            $epicObject = $this->findEpicByKey($epic);
+
+            if (!$epicObject->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
+        }
+
         if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection');
+            return $this->render('../epic-list');
         }
 
         if (!Game::canUserIndexThem()) {
@@ -58,6 +69,7 @@ class GameController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -65,23 +77,13 @@ class GameController extends Controller
 
     /**
      * Displays a single Game model.
-     * @param string $id
-     * @return mixed
      */
-    public function actionView($id)
+    public function actionView(int $id): string
     {
         $model = $this->findModel($id);
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
-        }
-
         if (!$model->canUserViewYou()) {
             Game::throwExceptionAboutView();
-        }
-
-        if (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
         }
 
         return $this->render('view', [
@@ -92,9 +94,8 @@ class GameController extends Controller
     /**
      * Creates a new Game model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate(string $epic = null): Response|string
     {
         if (!Game::canUserCreateThem()) {
             Game::throwExceptionAboutCreate();
@@ -102,15 +103,13 @@ class GameController extends Controller
 
         $model = new Game();
 
-        $model->setCurrentEpicOnEmpty();
+        $this->setEpicOnObject($epic, $model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->game_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $this->redirect(['game/view', 'id' => $model->game_id]);
         }
+
+        return $this->render('create', ['model' => $model]);
     }
 
     /**
@@ -139,10 +138,8 @@ class GameController extends Controller
     /**
      * Deletes an existing Game model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete(int $id): Response
     {
         $model = $this->findModel($id);
 
@@ -152,15 +149,13 @@ class GameController extends Controller
 
         $model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['game/index', 'epic' => $model->epic->key]);
     }
 
     /**
      * Moves game up in order; this means lower position on the list
-     * @param int $id Story ID
-     * @return \yii\web\Response
      */
-    public function actionMoveUp($id)
+    public function actionMoveUp(int $id): Response
     {
         $model = $this->findModel($id);
         if (!$model->canUserControlYou()) {
@@ -178,10 +173,8 @@ class GameController extends Controller
 
     /**
      * Moves game down in order; this means higher position on the list
-     * @param int $id Story ID
-     * @return \yii\web\Response
      */
-    public function actionMoveDown($id)
+    public function actionMoveDown(int $id): Response
     {
         $model = $this->findModel($id);
         if (!$model->canUserControlYou()) {
@@ -200,17 +193,17 @@ class GameController extends Controller
     /**
      * Finds the Game model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Game the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel(int $id): Game
     {
-        if (($model = Game::findOne($id)) !== null) {
-            $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
-            return $model;
-        } else {
+        $model = Game::findOne($id);
+
+        if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'GAME_SESSION_NOT_AVAILABLE'));
         }
+
+        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
+
+        return $model;
     }
 }

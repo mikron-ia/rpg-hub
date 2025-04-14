@@ -7,8 +7,11 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Game */
 
 $this->title = Html::encode($model->basics);
-$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_GAME_INDEX'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'TITLE_GAME_INDEX'),
+    'url' => ['game/index', 'epic' => $model->epic->key]
+];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="game-view">
