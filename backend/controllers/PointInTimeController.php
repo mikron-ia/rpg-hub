@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
+use common\models\Epic;
 use common\models\PointInTime;
 use common\models\PointInTimeQuery;
 use Yii;
@@ -10,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * PointInTimeController implements the CRUD actions for PointInTime model.
@@ -42,12 +44,21 @@ class PointInTimeController extends Controller
 
     /**
      * Lists all PointInTime models.
-     * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex(string $epic): string
     {
+        if (!empty($epic)) {
+            $epicObject = $this->findEpicByKey($epic);
+
+            if (!$epicObject->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
+        }
+
         if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection');
+            return $this->render('../epic-list');
         }
 
         if (!PointInTime::canUserIndexThem()) {
@@ -58,6 +69,7 @@ class PointInTimeController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -65,36 +77,23 @@ class PointInTimeController extends Controller
 
     /**
      * Displays a single PointInTime model.
-     * @param string $id
-     * @return mixed
      */
-    public function actionView($id)
+    public function actionView(int $id): string
     {
         $model = $this->findModel($id);
-
-        if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
-        }
 
         if (!$model->canUserViewYou()) {
             PointInTime::throwExceptionAboutView();
         }
 
-        if (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
-        }
-
-        return $this->render('view', [
-            'model' => $model,
-        ]);
+        return $this->render('view', ['model' => $model]);
     }
 
     /**
      * Creates a new PointInTime model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate(string $epic = null): Response|string
     {
         if (!PointInTime::canUserCreateThem()) {
             PointInTime::throwExceptionAboutCreate();
@@ -102,24 +101,20 @@ class PointInTimeController extends Controller
 
         $model = new PointInTime();
 
-        $model->setCurrentEpicOnEmpty();
+        $this->setEpicOnObject($epic, $model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->point_in_time_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('create', ['model' => $model]);
     }
 
     /**
      * Updates an existing PointInTime model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
-     * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate(int $id): Response|string
     {
         $model = $this->findModel($id);
 
@@ -129,20 +124,16 @@ class PointInTimeController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->point_in_time_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('update', ['model' => $model]);
     }
 
     /**
      * Deletes an existing PointInTime model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete(int $id): Response
     {
         $model = $this->findModel($id);
 
@@ -152,15 +143,13 @@ class PointInTimeController extends Controller
 
         $model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'epic' => $model->epic->key]);
     }
 
     /**
-     * Moves game up in order; this means lower position on the list
-     * @param int $id Story ID
-     * @return \yii\web\Response
+     * Moves PointInTime up in order; this means lower position on the list
      */
-    public function actionMoveUp($id)
+    public function actionMoveUp(int $id): Response
     {
         $model = $this->findModel($id);
         if (!$model->canUserControlYou()) {
@@ -177,11 +166,9 @@ class PointInTimeController extends Controller
     }
 
     /**
-     * Moves game down in order; this means higher position on the list
-     * @param int $id Story ID
-     * @return \yii\web\Response
+     * Moves PointInTime down in order; this means higher position on the list
      */
-    public function actionMoveDown($id)
+    public function actionMoveDown(int $id): Response
     {
         $model = $this->findModel($id);
         if (!$model->canUserControlYou()) {
@@ -200,17 +187,17 @@ class PointInTimeController extends Controller
     /**
      * Finds the PointInTime model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return PointInTime the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel(int $id): PointInTime
     {
-        if (($model = PointInTime::findOne($id)) !== null) {
-            $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
-            return $model;
-        } else {
+        $model = PointInTime::findOne($id);
+
+        if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'POINT_IN_TIME_NOT_AVAILABLE'));
         }
+
+        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
+
+        return $model;
     }
 }
