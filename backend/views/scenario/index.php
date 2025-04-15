@@ -1,25 +1,31 @@
 <?php
 
 use backend\assets\ScenarioAsset;
+use common\models\Epic;
 use common\models\Scenario;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
 ScenarioAsset::register($this);
 
+/* @var $epic Epic */
 /* @var $this yii\web\View */
 /* @var $searchModel \common\models\ScenarioQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'SCENARIO_INDEX_TITLE');
-$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
+$this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="scenario-index">
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
-        <?= Html::a(Yii::t('app', 'SCENARIO_BUTTON_CREATE'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(
+            Yii::t('app', 'SCENARIO_BUTTON_CREATE'),
+            ['create', 'epic' => $epic->key],
+            ['class' => 'btn btn-success']
+        ) ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_GOTO_FILTER'),
             ['#filter'],

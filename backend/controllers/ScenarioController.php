@@ -3,14 +3,19 @@
 namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
+use common\models\Epic;
 use common\models\Scenario;
 use common\models\ScenarioQuery;
 use common\models\tools\ToolsForEntity;
+use Throwable;
 use Yii;
+use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * ScenarioController implements the CRUD actions for Scenario model.
@@ -42,10 +47,20 @@ class ScenarioController extends Controller
         ];
     }
 
-    public function actionIndex()
+    public function actionIndex(string $epic): string
     {
+        if (!empty($epic)) {
+            $epicObject = $this->findEpicByKey($epic);
+
+            if (!$epicObject->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
+        }
+
         if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection');
+            return $this->render('../epic-list');
         }
 
         if (!Scenario::canUserIndexThem()) {
@@ -56,6 +71,7 @@ class ScenarioController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -63,27 +79,13 @@ class ScenarioController extends Controller
 
     /**
      * Displays a single Scenario model.
-     * @param string $key
-     * @return mixed
-     * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
      */
-    public function actionView($key)
+    public function actionView(string $key): string
     {
         $model = $this->findModel($key);
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
-        }
-
         if (!$model->canUserViewYou()) {
             Scenario::throwExceptionAboutView();
-        }
-
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
         }
 
         return $this->render('view', [
@@ -94,10 +96,8 @@ class ScenarioController extends Controller
     /**
      * Creates a new Scenario model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     * @throws \yii\web\HttpException
      */
-    public function actionCreate()
+    public function actionCreate(string $epic = null): Response|string
     {
         if (!Scenario::canUserCreateThem()) {
             Scenario::throwExceptionAboutCreate();
@@ -105,7 +105,7 @@ class ScenarioController extends Controller
 
         $model = new Scenario();
 
-        $model->setCurrentEpicOnEmpty();
+        $this->setEpicOnObject($epic, $model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
@@ -119,10 +119,6 @@ class ScenarioController extends Controller
     /**
      * Updates an existing Scenario model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $key
-     * @return mixed
-     * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
      */
     public function actionUpdate($key)
     {
@@ -144,14 +140,13 @@ class ScenarioController extends Controller
     /**
      * Deletes an existing Scenario model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $key
-     * @return mixed
+     *
      * @throws NotFoundHttpException
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
-     * @throws \yii\web\HttpException
+     * @throws Throwable
+     * @throws StaleObjectException
+     * @throws HttpException
      */
-    public function actionDelete($key)
+    public function actionDelete(string $key): Response
     {
         $model = $this->findModel($key);
 
@@ -161,23 +156,24 @@ class ScenarioController extends Controller
 
         $model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'epic' => $model->epic->key]);
     }
 
     /**
      * Finds the Scenario model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $key
-     * @return Scenario the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($key)
+    protected function findModel(string $key): Scenario
     {
-        if (($model = Scenario::findOne(['key' => $key])) !== null) {
-            $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
-            return $model;
-        } else {
+        $model = Scenario::findOne(['key' => $key]);
+
+        if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'SCENARIO_NOT_AVAILABLE'));
         }
+
+        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
+
+        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
+        return $model;
     }
 }
