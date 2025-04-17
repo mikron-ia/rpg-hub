@@ -6,8 +6,11 @@ use yii\helpers\Html;
 /* @var $model common\models\Article */
 
 $this->title = Yii::t('app', 'LABEL_UPDATE') . ': ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ARTICLE_TITLE_INDEX'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'ARTICLE_TITLE_INDEX'),
+    'url' => ['article/index', 'epic' => $model->epic->key]
+];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'key' => $model->key]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_UPDATE');
 ?>

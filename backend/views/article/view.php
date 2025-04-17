@@ -8,8 +8,11 @@ use yii\helpers\Html;
 
 $this->title = $model->title;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ARTICLE_TITLE_INDEX'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'ARTICLE_TITLE_INDEX'),
+    'url' => ['article/index', 'epic' => $model->epic->key]
+];
 $this->params['breadcrumbs'][] = $this->title;
 
 $items = [

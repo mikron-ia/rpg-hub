@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\controllers\tools\EpicAssistance;
 use backend\controllers\tools\MarkChangeTrait;
+use common\models\Epic;
 use Throwable;
 use Yii;
 use common\models\Article;
@@ -58,26 +59,35 @@ class ArticleController extends Controller
     }
 
     /**
-     * Lists all Article models.
-     *
-     * @return string
+     * Lists all Article models
      *
      * @throws HttpException
      */
-    public function actionIndex(): string
+    public function actionIndex(?string $epic = null): string
     {
+        if (!empty($epic)) {
+            $epicObject = $this->findEpicByKey($epic);
+
+            if (!$epicObject->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
+        }
+
         if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection');
+            return $this->render('../epic-list');
         }
 
         if (!Article::canUserIndexThem()) {
             Article::throwExceptionAboutIndex();
         }
-        
+
         $searchModel = new ArticleQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -97,35 +107,21 @@ class ArticleController extends Controller
     {
         $model = $this->findModelByKey($key);
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            return $this->render('../epic-selection', ['objectEpic' => $model->epic]);
-        }
-
         if (!$model->canUserViewYou()) {
             Article::throwExceptionAboutView();
         }
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
-        }
-
-        return $this->render('view', [
-            'model' => $model,
-        ]);
+        return $this->render('view', ['model' => $model]);
     }
 
     /**
      * Creates a new Article model
      * If creation is successful, the browser will be redirected to the 'view' page.
      *
-     * @return Response|string
-     *
      * @throws Exception
      * @throws HttpException
      */
-    public function actionCreate(): Response|string
+    public function actionCreate(?string $epic = null): Response|string
     {
         if (!Article::canUserCreateThem()) {
             Article::throwExceptionAboutCreate();
@@ -133,24 +129,21 @@ class ArticleController extends Controller
 
         $model = new Article();
 
-        $model->setCurrentEpicOnEmpty();
+        $this->setEpicOnObject($epic, $model);
+        if (!$model->isEpicSet()) {
+            return $this->render('../epic-list');
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $this->redirect(['article/view', 'key' => $model->key]);
         }
+
+        return $this->render('create', ['model' => $model]);
     }
 
     /**
      * Updates an existing Article model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     *
-     * @param string $key
-     *
-     * @return Response|string
      *
      * @throws NotFoundHttpException
      * @throws Exception
@@ -166,11 +159,9 @@ class ArticleController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('update', ['model' => $model]);
     }
 
     /**
@@ -196,7 +187,7 @@ class ArticleController extends Controller
 
         $model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'epic' => $model->epic->key]);
     }
 
     /**
@@ -269,24 +260,22 @@ class ArticleController extends Controller
     }
 
     /**
-     * Finds the Article model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
+     * Finds the Article model based on its key value
      *
-     * @param string $key
-     *
-     * @return Article the loaded model
-     *
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
-    protected function findModelByKey($key): Article
+    protected function findModelByKey(string $key): Article
     {
-        if (($model = Article::findOne(['key' => $key])) !== null) {
-            if($model->epic_id) {
-                $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
-            }
-            return $model;
-        } else {
+        $model = Article::findOne(['key' => $key]);
+
+        if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'ARTICLE_NOT_AVAILABLE'));
         }
+
+        if ($model->isEpicSet()) {
+            $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
+        }
+
+        return $model;
     }
 }
