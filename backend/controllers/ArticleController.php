@@ -191,15 +191,13 @@ class ArticleController extends Controller
     }
 
     /**
-     * Moves game up in order; this means lower position on the list
-     *
-     * @param int $key Story ID
+     * Moves Article up in order; this means lower position on the list
      *
      * @throws NotFoundHttpException
      * @throws HttpException
      * @throws InvalidRouteException
      */
-    public function actionMoveUp(int $key): Response|\yii\console\Response
+    public function actionMoveUp(string $key): Response
     {
         $model = $this->findModelByKey($key);
         if (!$model->canUserControlYou()) {
@@ -210,23 +208,19 @@ class ArticleController extends Controller
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
         }
+
+        return $this->redirect(['index', 'epic' => $model->epic->key]);
     }
 
     /**
-     * Moves game down in order; this means higher position on the list
-     *
-     * @param int $key Story ID
-     *
-     * @return Response
+     * Moves Article down in order; this means higher position on the list
      *
      * @throws NotFoundHttpException
      * @throws HttpException
      * @throws InvalidRouteException
      */
-    public function actionMoveDown(int $key): Response
+    public function actionMoveDown(string $key): Response
     {
         $model = $this->findModelByKey($key);
         if (!$model->canUserControlYou()) {
@@ -237,9 +231,9 @@ class ArticleController extends Controller
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
         }
+
+        return $this->redirect(['index', 'epic' => $model->epic->key]);
     }
 
     /**
