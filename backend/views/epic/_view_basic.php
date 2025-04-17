@@ -19,37 +19,60 @@ use yii\widgets\DetailView;
     <div class="col-lg-12 text-center">
 
         <div class="btn-group btn-group-lg">
-            <?= Html::a(Yii::t('app', 'BUTTON_STORIES'), ['story/index'], ['class' => 'btn btn-primary']); ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_RECAPS'), ['recap/index'], ['class' => 'btn btn-primary']); ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_STORIES'),
+                ['story/index', 'epic' => $model->key],
+                ['class' => 'btn btn-primary']
+            ); ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_RECAPS'),
+                ['recap/index', 'epic' => $model->key],
+                ['class' => 'btn btn-primary']
+            ); ?>
         </div>
 
         <div class="btn-group btn-group-lg">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_CHARACTERS'),
-                ['character/index'],
+                ['character/index', 'epic' => $model->key],
                 ['class' => 'btn btn-primary']
             ); ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_CHARACTER_SHEETS'),
-                ['character-sheet/index'],
+                ['character-sheet/index', 'epic' => $model->key],
                 ['class' => 'btn btn-primary']
             ); ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_GROUP'),
-                ['group/index'],
+                ['group/index', 'epic' => $model->key],
                 ['class' => 'btn btn-primary']
             ); ?>
         </div>
 
         <div class="btn-group btn-group-lg">
-            <?= Html::a(Yii::t('app', 'BUTTON_SESSIONS'), ['game/index'], ['class' => 'btn btn-primary']); ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_SCENARIOS'), ['scenario/index'], ['class' => 'btn btn-primary']); ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_POINTS_IN_TIME'), ['point-in-time/index'],
-                ['class' => 'btn btn-primary']); ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_SESSIONS'),
+                ['game/index', 'epic' => $model->key],
+                ['class' => 'btn btn-primary']
+            ); ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_SCENARIOS'),
+                ['scenario/index', 'epic' => $model->key],
+                ['class' => 'btn btn-primary']
+            ); ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_POINTS_IN_TIME'),
+                ['point-in-time/index', 'epic' => $model->key],
+                ['class' => 'btn btn-primary']
+            ); ?>
         </div>
 
         <div class="btn-group btn-group-lg">
-            <?= Html::a(Yii::t('app', 'BUTTON_ARTICLES'), ['article/index'], ['class' => 'btn btn-primary']); ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_ARTICLES'),
+                ['article/index', 'epic' => $model->key],
+                ['class' => 'btn btn-primary']
+            ); ?>
         </div>
 
         <div class="btn-group btn-group-lg">

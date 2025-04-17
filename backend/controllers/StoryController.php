@@ -12,7 +12,6 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
-use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -100,9 +99,7 @@ final class StoryController extends Controller
             Story::throwExceptionAboutView();
         }
 
-        return $this->render('view', [
-            'model' => $model,
-        ]);
+        return $this->render('view', ['model' => $model]);
     }
 
     /**
@@ -120,17 +117,15 @@ final class StoryController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['story/view', 'key' => $model->key]);
-        } else {
-            return $this->render('create', ['model' => $model]);
         }
+
+        return $this->render('create', ['model' => $model]);
     }
 
     /**
      * Updates an existing story
-     * @param string $key
-     * @return mixed
      */
-    public function actionUpdate($key)
+    public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModel($key);
 
@@ -140,11 +135,9 @@ final class StoryController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('update', ['model' => $model]);
     }
 
     /**
@@ -191,27 +184,18 @@ final class StoryController extends Controller
 
     /**
      * Saves the model to mark it as changed
-     *
-     * @param string $key
-     *
-     * @return Response
-     *
-     * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionMarkChanged(string $key): Response
     {
         $model = $this->findModel($key);
         $this->markChange($model);
+
         return $this->redirect(['view', 'key' => $model->key]);
     }
 
     /**
      * Finds the Story model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $key
-     * @return Story the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel(string $key): Story
     {

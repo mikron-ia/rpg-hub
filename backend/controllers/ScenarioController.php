@@ -88,9 +88,7 @@ class ScenarioController extends Controller
             Scenario::throwExceptionAboutView();
         }
 
-        return $this->render('view', [
-            'model' => $this->findModel($key),
-        ]);
+        return $this->render('view', ['model' => $this->findModel($key)]);
     }
 
     /**
@@ -109,18 +107,16 @@ class ScenarioController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('create', ['model' => $model]);
     }
 
     /**
      * Updates an existing Scenario model.
      * If update is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionUpdate($key)
+    public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModel($key);
 
@@ -130,11 +126,9 @@ class ScenarioController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('update', ['model' => $model]);
     }
 
     /**
@@ -173,7 +167,6 @@ class ScenarioController extends Controller
 
         $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
 
-        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
         return $model;
     }
 }

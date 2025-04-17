@@ -115,10 +115,8 @@ class GameController extends Controller
     /**
      * Updates an existing Game model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
-     * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate(int $id): Response|string
     {
         $model = $this->findModel($id);
 
@@ -128,11 +126,9 @@ class GameController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->game_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('update', ['model' => $model]);
     }
 
     /**

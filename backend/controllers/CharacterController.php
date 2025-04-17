@@ -91,13 +91,6 @@ final class CharacterController extends Controller
 
     /**
      * Displays a single character
-     *
-     * @param string $key
-     *
-     * @return string
-     *
-     * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionView(string $key): string
     {
@@ -137,24 +130,17 @@ final class CharacterController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                'epicListForSelector' => $epicListForSelector,
-            ]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+            'epicListForSelector' => $epicListForSelector,
+        ]);
     }
 
     /**
      * Creates a new character
      * If creation is successful, the browser will be redirected to the 'view' page.
-     *
-     * @param string $key
-     *
-     * @return Response
-     *
-     * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionCreateSheet(string $key): Response
     {
@@ -188,13 +174,6 @@ final class CharacterController extends Controller
     /**
      * Updates an existing character
      * If update is successful, the browser will be redirected to the 'view' page.
-     *
-     * @param string $key
-     *
-     * @return Response|string
-     *
-     * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionUpdate(string $key): Response|string
     {
@@ -322,15 +301,13 @@ final class CharacterController extends Controller
     {
         $model = $this->findModelByKey($key);
         $this->markChange($model);
+
         return $this->redirect(['view', 'key' => $model->key]);
     }
 
     /**
      * Finds the Character model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $key
-     * @return Character the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModelByKey(string $key): Character
     {

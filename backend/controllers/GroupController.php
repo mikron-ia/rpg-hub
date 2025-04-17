@@ -50,12 +50,8 @@ final class GroupController extends Controller
 
     /**
      * Lists all Group models.
-     *
-     * @return string
-     *
-     * @throws HttpException
      */
-    public function actionIndex(): string
+    public function actionIndex(?string $epic = null): string
     {
         if (!empty($epic)) {
             $epicObject = $this->findEpicByKey($epic);
@@ -96,9 +92,7 @@ final class GroupController extends Controller
             Group::throwExceptionAboutView();
         }
 
-        return $this->render('view', [
-            'model' => $model,
-        ]);
+        return $this->render('view', ['model' => $model]);
     }
 
     /**
@@ -125,13 +119,6 @@ final class GroupController extends Controller
     /**
      * Updates an existing Group model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     *
-     * @param string $key
-     *
-     * @return Response|string
-     *
-     * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionUpdate(string $key): Response|string
     {
@@ -143,11 +130,9 @@ final class GroupController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('update', ['model' => $model]);
     }
 
     /**
@@ -164,6 +149,7 @@ final class GroupController extends Controller
     {
         $model = $this->findModelByKey($key);
         $this->markChange($model);
+
         return $this->redirect(['view', 'key' => $model->key]);
     }
 

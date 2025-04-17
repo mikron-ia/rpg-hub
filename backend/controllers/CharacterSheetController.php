@@ -75,10 +75,6 @@ final class CharacterSheetController extends Controller
 
     /**
      * Displays a single CharacterSheet model.
-     * @param string $key
-     * @return mixed
-     * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
      */
     public function actionView(string $key): string
     {
@@ -86,9 +82,7 @@ final class CharacterSheetController extends Controller
 
         $model->canUserViewYou();
 
-        return $this->render('view', [
-            'model' => $model,
-        ]);
+        return $this->render('view', ['model' => $model]);
     }
 
     /**
@@ -105,22 +99,16 @@ final class CharacterSheetController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('create', ['model' => $model]);
     }
 
     /**
      * Creates a new character
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @param $key
-     * @return mixed
-     * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
      */
-    public function actionCreateCharacter($key)
+    public function actionCreateCharacter(string $key): Response
     {
         if (!Character::canUserCreateThem()) {
             Character::throwExceptionAboutCreate();
@@ -168,12 +156,8 @@ final class CharacterSheetController extends Controller
 
     /**
      * Loads external data via paste box
-     * @param string $key Key of the object the loading is performed for
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
      */
-    public function actionLoadData($key)
+    public function actionLoadData(string $key): Response|string
     {
         $model = $this->findModelByKey($key);
 
@@ -186,11 +170,9 @@ final class CharacterSheetController extends Controller
                 Yii::$app->session->setFlash('error', Yii::t('app', 'EXTERNAL_DATA_LOAD_FAILURE'));
             }
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('load_external', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('load_external', ['model' => $model]);
     }
 
     /**

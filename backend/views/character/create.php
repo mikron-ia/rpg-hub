@@ -10,7 +10,10 @@ CharacterAsset::register($this);
 
 $this->title = Yii::t('app', 'TITLE_CHARACTER_CREATE');
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_CHARACTER_INDEX'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'TITLE_CHARACTER_INDEX'),
+    'url' => ['character/index', 'epic' => $model->epic->key]
+];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="person-create">

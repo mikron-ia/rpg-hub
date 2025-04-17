@@ -160,9 +160,9 @@ class PointInTimeController extends Controller
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
         }
+
+        return $this->redirect(['index', 'epic' => $model->epic->key]);
     }
 
     /**
@@ -179,9 +179,9 @@ class PointInTimeController extends Controller
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
         }
+
+        return $this->redirect(['index', 'epic' => $model->epic->key]);
     }
 
     /**

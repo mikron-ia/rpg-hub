@@ -70,6 +70,7 @@ final class RecapController extends Controller
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-list');
         }
+
         if (!Recap::canUserIndexThem()) {
             Recap::throwExceptionAboutIndex();
         }
@@ -95,9 +96,7 @@ final class RecapController extends Controller
             Recap::throwExceptionAboutView();
         }
 
-        return $this->render('view', [
-            'model' => $model,
-        ]);
+        return $this->render('view', ['model' => $model]);
     }
 
     /**
@@ -116,18 +115,16 @@ final class RecapController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('create', ['model' => $model]);
     }
 
     /**
      * Updates an existing Recap model.
      * If update is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionUpdate($key)
+    public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModel($key);
 
@@ -137,11 +134,9 @@ final class RecapController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('update', ['model' => $model]);
     }
 
     /**

@@ -5,8 +5,8 @@ use common\models\Recap;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
 /* @var $epic Epic */
+/* @var $this yii\web\View */
 /* @var $searchModel common\models\RecapQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
