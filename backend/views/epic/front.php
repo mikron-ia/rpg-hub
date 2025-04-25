@@ -131,6 +131,12 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
 
                 <span class="epic-status <?= $epic->getStatusClass(); ?>"><?= $epic->getStatus(); ?></span>
 
+                <?php if (isset($epic->current_story_id)): ?>
+                    <h2><?= Yii::t('app', 'EPIC_CURRENT_STORY'); ?></h2>
+
+                    <span><?= $epic->getCurrentStory()->one(); ?></span>
+                <?php endif; ?>
+
                 <h2><?= Yii::t('app', 'EPIC_CARD_SESSIONS'); ?></h2>
 
                 <div>

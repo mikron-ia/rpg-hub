@@ -93,6 +93,7 @@ use yii\widgets\DetailView;
                 'key',
                 'system',
                 ['attribute' => 'status', 'value' => $model->getStatus()],
+                ['attribute' => 'current_story_id', 'format' => 'raw', 'value' => $model->currentStory],
                 ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_STORIES'), 'value' => count($model->stories)],
                 ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_CHARACTERS'), 'value' => count($model->people)],
                 ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_GROUPS'), 'value' => count($model->groups)],

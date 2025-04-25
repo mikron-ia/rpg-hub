@@ -7,6 +7,7 @@ use common\models\core\FrontStyles;
 use common\models\core\HasParameters;
 use common\models\core\HasSightings;
 use common\models\core\HasStatus;
+use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\base\Exception;
@@ -25,6 +26,7 @@ use yii\web\HttpException;
  * @property string $system Code for the system used
  * @property string|null $style Default style
  * @property string $status Epic status
+ * @property int|null $current_story_id
  * @property string $parameter_pack_id
  * @property string $seen_pack_id
  * @property string $utility_bag_id
@@ -45,6 +47,7 @@ use yii\web\HttpException;
  * @property Recap[] $recaps
  * @property Scenario[] $scenarios
  * @property Story[] $stories
+ * @property Story $currentStory
  *
  * @todo: Someday, system field will have to come from a closed list of supported systems
  */
@@ -77,6 +80,14 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             [['name'], 'string', 'max' => 80],
             [['system', 'style'], 'string', 'max' => 20],
             [['status'], 'string', 'max' => 20],
+            [['current_story_id'], 'integer'],
+            [
+                ['current_story_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Story::class,
+                'targetAttribute' => ['current_story_id' => 'story_id']
+            ],
             [
                 ['status'],
                 'in',
@@ -106,6 +117,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             'system' => Yii::t('app', 'EPIC_GAME_SYSTEM'),
             'style' => Yii::t('app', 'EPIC_STYLE_FOR_FRONT'),
             'status' => Yii::t('app', 'EPIC_STATUS'),
+            'current_story_id' => Yii::t('app', 'CURRENT_STORY'),
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
             'seen_pack_id' => Yii::t('app', 'SEEN_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
@@ -227,6 +239,18 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         }, ARRAY_FILTER_USE_KEY);
     }
 
+    public function getAllowedStoriesForDropDown(): array
+    {
+        $list = [];
+        foreach ($this->getStories()->where([
+            'visibility' => Visibility::VISIBILITY_FULL
+        ])->orderBy('position DESC')->all() as $story) {
+            /** @var Story $story */
+            $list[$story->story_id] = $story->name;
+        }
+        return $list;
+    }
+
     public function getStyle(): FrontStyles
     {
         return FrontStyles::tryFrom($this->style ?? FrontStyles::Default->value) ?? FrontStyles::Default;
@@ -292,6 +316,11 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     public function getCharacters()
     {
         return $this->hasMany(CharacterSheet::class, ['epic_id' => 'epic_id']);
+    }
+
+    public function getCurrentStory(): ActiveQuery
+    {
+        return $this->hasOne(Story::class, ['story_id' => 'current_story_id']);
     }
 
     /**

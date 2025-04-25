@@ -84,6 +84,12 @@ if ($epic) {
         </h2>
 
         <?php if ($epic): ?>
+            <?php if (isset($epic->current_story_id)): ?>
+                <h3><?= Yii::t('app', 'EPIC_CURRENT_STORY'); ?></h3>
+
+                <span><?= $epic->getCurrentStory()->one(); ?></span>
+            <?php endif; ?>
+
             <div>
                 <?= $this->render('../recap/_epic_box', ['model' => $recap]) ?>
             </div>

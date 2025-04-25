@@ -8,7 +8,7 @@ use yii\db\Migration;
  */
 class m240601_230544_v1_2_0 extends Migration
 {
-    public function safeUp()
+    public function safeUp(): void
     {
         // modified_at separated from updated_at - #399
         $this->addColumn('{{%character}}', 'modified_at', $this->integer()->notNull()->after('updated_at'));
@@ -32,10 +32,28 @@ class m240601_230544_v1_2_0 extends Migration
         // Improvements to Article - #387
         $this->addColumn('{{%article}}', 'outline_raw', $this->text()->after('position'));
         $this->addColumn('{{%article}}', 'outline_ready', $this->text()->after('outline_raw'));
+
+        // Current story - #371
+        $this->addColumn('{{%epic}}', 'current_story_id', $this->integer(10)->unsigned()->after('status'));
+
+        $this->addForeignKey(
+            'current_story_ibfk_1',
+            '{{%epic}}',
+            'current_story_id',
+            '{{%story}}',
+            'story_id',
+            'RESTRICT',
+            'CASCADE'
+        );
     }
 
-    public function safeDown()
+    public function safeDown(): void
     {
+        // Current story - #371
+        $this->dropForeignKey('current_story_ibfk_1', '{{%epic}}');
+
+        $this->dropColumn('{{%epic}}', 'current_story_id');
+
         // Improvements to Article - #387
         $this->dropColumn('{{%article}}', 'outline_ready');
         $this->dropColumn('{{%article}}', 'outline_raw');

@@ -12,6 +12,7 @@ use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 use yii\helpers\Markdown;
 use yii\helpers\StringHelper;
 use yii2tech\ar\position\PositionBehavior;
@@ -421,5 +422,10 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             self::TYPE_MISSION => Yii::t('app', 'STORY_TYPE_MISSION'),
             self::TYPE_READING => Yii::t('app', 'STORY_TYPE_READING'),
         ];
+    }
+
+    public function __toString()
+    {
+        return Html::a($this->name, ['story/view', 'key' => $this->key]);
     }
 }
