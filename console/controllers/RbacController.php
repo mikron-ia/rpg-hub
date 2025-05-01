@@ -77,6 +77,8 @@ class RbacController extends Controller
 
         /* Load v1.2.0 */
         $this->actionV1020();
+
+        /* Nothing to load in v1.3.0 */
     }
 
     /**
