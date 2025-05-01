@@ -6,7 +6,7 @@ use common\models\core\Visibility;
 use common\models\Epic;
 use common\models\Story;
 use common\models\StoryQuery;
-use frontend\controllers\tools\EpicAssistance;
+use common\components\EpicAssistance;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;

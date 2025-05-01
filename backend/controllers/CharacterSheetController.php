@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
-use backend\controllers\tools\EpicAssistance;
+use common\components\EpicAssistance;
 use common\models\Character;
-use common\models\Epic;
-use Yii;
 use common\models\CharacterSheet;
 use common\models\CharacterSheetQuery;
+use common\models\Epic;
+use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\Response;
 
 /**

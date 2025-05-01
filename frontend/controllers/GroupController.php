@@ -7,7 +7,7 @@ use common\models\Epic;
 use common\models\Group;
 use common\models\GroupQuery;
 use frontend\controllers\external\ReputationToolsForControllerTrait;
-use frontend\controllers\tools\EpicAssistance;
+use common\components\EpicAssistance;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;

@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use backend\controllers\tools\EpicAssistance;
+use common\components\EpicAssistance;
 use common\models\Epic;
 use common\models\Scenario;
 use common\models\ScenarioQuery;

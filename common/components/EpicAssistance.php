@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers\tools;
+namespace common\components;
 
 use common\models\core\HasEpicControl;
 use common\models\Epic;

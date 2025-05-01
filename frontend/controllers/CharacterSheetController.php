@@ -4,7 +4,7 @@ namespace frontend\controllers;
 
 use common\models\CharacterSheet;
 use common\models\CharacterSheetQuery;
-use frontend\controllers\tools\EpicAssistance;
+use common\components\EpicAssistance;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;

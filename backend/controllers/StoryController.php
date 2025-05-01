@@ -2,8 +2,8 @@
 
 namespace backend\controllers;
 
-use backend\controllers\tools\EpicAssistance;
 use backend\controllers\tools\MarkChangeTrait;
+use common\components\EpicAssistance;
 use common\models\core\Visibility;
 use common\models\Epic;
 use common\models\Story;

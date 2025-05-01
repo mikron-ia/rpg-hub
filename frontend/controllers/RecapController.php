@@ -5,7 +5,7 @@ namespace frontend\controllers;
 use common\models\Epic;
 use common\models\Recap;
 use common\models\RecapQuery;
-use frontend\controllers\tools\EpicAssistance;
+use common\components\EpicAssistance;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

@@ -2,8 +2,8 @@
 
 namespace backend\controllers;
 
-use backend\controllers\tools\EpicAssistance;
 use backend\controllers\tools\MarkChangeTrait;
+use common\components\EpicAssistance;
 use common\models\Character;
 use common\models\CharacterQuery;
 use common\models\CharacterSheet;

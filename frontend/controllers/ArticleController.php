@@ -6,7 +6,7 @@ use common\models\Article;
 use common\models\ArticleQuery;
 use common\models\core\Visibility;
 use common\models\Epic;
-use frontend\controllers\tools\EpicAssistance;
+use common\components\EpicAssistance;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
