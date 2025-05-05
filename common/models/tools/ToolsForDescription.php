@@ -12,45 +12,50 @@ use yii\helpers\Markdown;
  */
 trait ToolsForDescription
 {
+    /** @var array<string,string> */
+    private static array $headerReplacements = [
+        '|^##### |m' => '###### ',
+        '|^#### |m' => '##### ',
+        '|^### |m' => '#### ',
+        '|^## |m' => '### ',
+        '|^# |m' => '## ',
+    ];
+
+    /** @var array<string,string> */
+    private static array $linkBases = [
+        'Character' => '/index.php/character/view?key=',
+        'Group' => '/index.php/group/view?key=',
+        'Story' => '/index.php/story/view?key=',
+    ];
+
     /**
      * Processes text thorough all decorators
-     * @param string $text Text to be processed
-     * @return string
      */
     private function processAllInOrder(string $text): string
     {
-        $textWithProcessedKeys = $this->processKeys($text);
-        $textWithExpandedHeaders = $this->expandHeaders($textWithProcessedKeys);
-        return $textWithExpandedHeaders;
+        return $this->expandHeaders($this->processKeys($text));
     }
 
     /**
-     * Turns keys in format of NN:key to []() markdown links
-     * @param string $text
-     * @return string
+     * Turns keys in format of NN:key to []() Markdown links
      */
     private function processKeys(string $text): string
     {
-        /* Define bases */
-        $linkBases = [
-            'Character' => '/index.php/character/view?key=',
-            'Group' => '/index.php/group/view?key=',
-            'Story' => '/index.php/story/view?key=',
-        ];
-
         /* Solve cases of [name](CODE:key) */
-        $textWithProcessedComplexKeys = $this->processKeysInLinks($text, $linkBases);
+        $textWithProcessedComplexKeys = $this->processKeysInLinks($text, self::$linkBases);
 
         /* Solve cases of CODE:key format */
-        $textWithProcessedKeys = $this->processKeysInTheOpen($textWithProcessedComplexKeys, $linkBases);
+        $textWithProcessedKeys = $this->processKeysInTheOpen($textWithProcessedComplexKeys, self::$linkBases);
 
         return $textWithProcessedKeys;
     }
 
     /**
-     * Turns keys in format of [name](NN:key) and [name](code:key) to []() markdown links
+     * Turns keys in format of [name](NN:key) and [name](code:key) to []() Markdown links
+     *
      * @param string $text
      * @param string[] $linkBases
+     *
      * @return string
      */
     private function processKeysInLinks(string $text, array $linkBases): string
@@ -67,15 +72,15 @@ trait ToolsForDescription
             'Story' => '[$1](' . $linkBases['Story'] . '$3)',
         ];
 
-        $textWithProcessedComplexKeys = preg_replace($complexPatterns, $complexReplacements, $text);
-
-        return $textWithProcessedComplexKeys;
+        return preg_replace($complexPatterns, $complexReplacements, $text);
     }
 
     /**
-     * Turns keys in format of NN:key and code:key to []() markdown links
+     * Turns keys in format of NN:key and code:key to []() Markdown links
+     *
      * @param string $text
      * @param string[] $linkBases
+     *
      * @return string
      */
     private function processKeysInTheOpen(string $text, array $linkBases): string
@@ -118,39 +123,17 @@ trait ToolsForDescription
 
     /**
      * Expands headers by a step
-     * @param string $text Text to be processed
-     * @return string
      */
     private function expandHeaders(string $text): string
     {
-        $replacements = [
-            '|^##### |m' => '###### ',
-            '|^#### |m' => '##### ',
-            '|^### |m' => '#### ',
-            '|^## |m' => '### ',
-            '|^# |m' => '## ',
-        ];
-
-        $text = preg_replace(array_keys($replacements), $replacements, $text);
-
-        return $text;
+        return preg_replace(array_keys(self::$headerReplacements), self::$headerReplacements, $text);
     }
 
-    /**
-     * @param string|null $textToFormat Text to expand
-     *
-     * @return string
-     */
     private function expandText(?string $textToFormat): string
     {
         return $this->processAllInOrder($textToFormat ?? '');
     }
 
-    /**
-     * @param string $textToFormat
-     *
-     * @return string
-     */
     private function formatText(string $textToFormat): string
     {
         return Markdown::process(str_ireplace('&gt;', '>', Html::encode($textToFormat)), 'gfm');

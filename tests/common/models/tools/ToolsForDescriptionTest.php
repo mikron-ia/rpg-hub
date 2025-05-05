@@ -11,9 +11,6 @@ class ToolsForDescriptionTest extends TestCase
 
     /**
      * @dataProvider complexConversionDataProvider
-     *
-     * @param string $text
-     * @param string $result
      */
     public function testComplexConversion(string $text, string $result)
     {
@@ -29,59 +26,51 @@ class ToolsForDescriptionTest extends TestCase
     static public function complexConversionDataProvider(): array
     {
         return [
-            [
-                /* Correct character */
+            'Correct character - short' => [
                 '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a1)',
-                '[Character\'s name](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1)'
+                '[Character\'s name](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
             ],
-            [
-                /* Correct group */
+            'Correct group - short' => [
                 '[Group\'s name](GR:184e5117955e384ca1e68dd731637bb8988782a1)',
-                '[Group\'s name](/index.php/group/view/key=184e5117955e384ca1e68dd731637bb8988782a1)'
-
+                '[Group\'s name](/index.php/group/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
             ],
-            [
-                /* Correct story */
+            'Correct story - short' => [
                 '[Story\'s name](ST:184e5117955e384ca1e68dd731637bb8988782a1)',
-                '[Story\'s name](/index.php/story/view/key=184e5117955e384ca1e68dd731637bb8988782a1)'
+                '[Story\'s name](/index.php/story/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
             ],
-            [
-                /* Correct character */
+            'Correct character - long' => [
                 '[Character\'s name](CHARACTER:184e5117955e384ca1e68dd731637bb8988782a1)',
-                '[Character\'s name](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1)'
+                '[Character\'s name](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
             ],
-            [
-                /* Correct group */
+            'Correct group - long' => [
                 '[Group\'s name](GROUP:184e5117955e384ca1e68dd731637bb8988782a1)',
-                '[Group\'s name](/index.php/group/view/key=184e5117955e384ca1e68dd731637bb8988782a1)'
+                '[Group\'s name](/index.php/group/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
             ],
-            [
-                /* Correct story */
+            'Correct story - long' => [
                 '[Story\'s name](STORY:184e5117955e384ca1e68dd731637bb8988782a1)',
-                '[Story\'s name](/index.php/story/view/key=184e5117955e384ca1e68dd731637bb8988782a1)'
+                '[Story\'s name](/index.php/story/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
             ],
-            [
-                /* Unprocessed - key is too long */
+            'Unprocessed - key is too long' => [
                 '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a15)',
-                '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a15)'
+                '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a15)',
             ],
-            [
-                /* Unprocessed - key has invalid characters */
+            'Unprocessed - key has invalid characters' => [
                 '[Character\'s name](CH:184e5117A55e384ca1e68dd731637bb8988782a1)',
-                '[Character\'s name](CH:184e5117A55e384ca1e68dd731637bb8988782a1)'
+                '[Character\'s name](CH:184e5117A55e384ca1e68dd731637bb8988782a1)',
             ],
-            [
-                /* Unprocessed - wrong code */
+            'Unprocessed - wrong code' => [
                 '[Character\'s name](CHA:184e5117955e384ca1e68dd731637bb8988782a1)',
-                '[Character\'s name](CHA:184e5117955e384ca1e68dd731637bb8988782a1)'
+                '[Character\'s name](CHA:184e5117955e384ca1e68dd731637bb8988782a1)',
             ],
-            [
-                /* Unprocessed - unnecessary space */
+            'Unprocessed - unnecessary space - beginning' => [
+                '[Character\'s name]( CH:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Character\'s name]( CH:184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Unprocessed - unnecessary space - inside' => [
                 '[Character\'s name](CH: 184e5117955e384ca1e68dd731637bb8988782a1)',
-                '[Character\'s name](CH: 184e5117955e384ca1e68dd731637bb8988782a1)'
+                '[Character\'s name](CH: 184e5117955e384ca1e68dd731637bb8988782a1)',
             ],
-            [
-                /* Unprocessed - unnecessary space */
+            'Unprocessed - unnecessary space - end' => [
                 '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a1 )',
                 '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a1 )',
             ],
@@ -90,8 +79,6 @@ class ToolsForDescriptionTest extends TestCase
 
     /**
      * @dataProvider headerConversionDataProvider
-     * @param string $text
-     * @param string $result
      */
     public function testHeaderConversion(string $text, string $result)
     {
