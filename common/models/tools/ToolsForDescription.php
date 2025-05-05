@@ -61,9 +61,9 @@ trait ToolsForDescription
     private function processKeysInLinks(string $text, array $linkBases): string
     {
         $complexPatterns = [
-            'Character' => '|\[(.+)\]\(CH(ARACTER)?:([a-z\d]{40})\)|',
-            'Group' => '|\[(.+)\]\(GR(OUP)?:([a-z\d]{40})\)|',
-            'Story' => '|\[(.+)\]\(ST(ORY)?:([a-z\d]{40})\)|',
+            'Character' => '|\[(.+?)\]\(CH(ARACTER)?:([a-z\d]{40})\)|',
+            'Group' => '|\[(.+?)\]\(GR(OUP)?:([a-z\d]{40})\)|',
+            'Story' => '|\[(.+?)\]\(ST(ORY)?:([a-z\d]{40})\)|',
         ];
 
         $complexReplacements = [

@@ -74,6 +74,14 @@ class ToolsForDescriptionTest extends TestCase
                 '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a1 )',
                 '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a1 )',
             ],
+            'Correct double - long - same type' => [
+                '[Alpha](CH:184e5117955e384ca1e68dd731637bb8988782a1) [Beta](CH:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Alpha](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1) [Beta](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Correct double - long - different type' => [
+                '[Alpha](CH:184e5117955e384ca1e68dd731637bb8988782a1) [Beta](GR:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Alpha](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1) [Beta](/index.php/group/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
         ];
     }
 
