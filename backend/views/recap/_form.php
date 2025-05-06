@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-12">
-        <?= $form->field($model, 'data')->textarea(['rows' => 8]) ?>
+        <?= $form->field($model, 'content')->textarea(['rows' => 8]) ?>
     </div>
 
     <div class="form-group col-md-2">

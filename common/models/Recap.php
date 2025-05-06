@@ -5,6 +5,7 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\core\HasSightings;
+use common\models\tools\ToolsForLinkTags;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
@@ -19,7 +20,8 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $epic_id
  * @property string $key
  * @property string $name
- * @property string $data
+ * @property string $content
+ * @property string $content_expanded
  * @property string $seen_pack_id
  * @property string $point_in_time_id
  * @property int $position
@@ -34,8 +36,9 @@ use yii2tech\ar\position\PositionBehavior;
 class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSightings
 {
     use ToolsForEntity;
+    use ToolsForLinkTags;
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'recap';
     }
@@ -43,9 +46,9 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     public function rules()
     {
         return [
-            [['epic_id', 'name', 'data'], 'required'],
+            [['epic_id', 'name', 'content'], 'required'],
             [['epic_id', 'point_in_time_id', 'position'], 'integer'],
-            [['data'], 'string'],
+            [['content', 'content_expanded'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
             [
@@ -65,14 +68,15 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'recap_id' => Yii::t('app', 'RECAP_ID'),
             'epic_id' => Yii::t('app', 'LABEL_EPIC'),
             'key' => Yii::t('app', 'RECAP_KEY'),
             'name' => Yii::t('app', 'RECAP_NAME'),
-            'data' => Yii::t('app', 'RECAP_DATA'),
+            'content' => Yii::t('app', 'RECAP_CONTENT'),
+            'content_expanded' => Yii::t('app', 'RECAP_CONTENT_EXPANDED'),
             'point_in_time_id' => Yii::t('app', 'LABEL_POINT_IN_TIME'),
             'pointInTime' => Yii::t('app', 'LABEL_POINT_IN_TIME'),
             'position' => Yii::t('app', 'RECAP_POSITION'),
@@ -80,7 +84,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         ];
     }
 
-    public function afterFind()
+    public function afterFind(): void
     {
         if ($this->seen_pack_id) {
             $this->seenPack->recordNotification();
@@ -88,13 +92,13 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         parent::afterFind();
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): void
     {
         $this->seenPack->updateRecord();
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if ($insert) {
             $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
@@ -109,6 +113,8 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
             $pack = UtilityBag::create('Recap');
             $this->utility_bag_id = $pack->utility_bag_id;
         }
+
+        $this->content_expanded = $this->expandText($this->content);
 
         return parent::beforeSave($insert);
     }
@@ -131,16 +137,12 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
 
     /**
      * Provides recap content formatted in HTML
-     * @return string HTML formatted text
      */
-    public function getDataFormatted(): string
+    public function getContentFormatted(): string
     {
-        return Markdown::process($this->data, 'gfm');
+        return Markdown::process($this->content_expanded ?? $this->content, 'gfm');
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
@@ -148,39 +150,28 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
 
     /**
      * Gets query for [[Games]]
-     *
-     * @return ActiveQuery
      */
     public function getGames(): ActiveQuery
     {
         return $this->hasMany(Game::class, ['recap_id' => 'recap_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getPointInTime(): ActiveQuery
     {
         return $this->hasOne(PointInTime::class, ['point_in_time_id' => 'point_in_time_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getUtilityBag()
+    public function getUtilityBag(): ActiveQuery
     {
         return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
-    public function getSimpleDataForApi()
+    public function getSimpleDataForApi(): array
     {
         return [
             'name' => $this->name,
@@ -188,18 +179,17 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         ];
     }
 
-    public function getCompleteDataForApi()
+    public function getCompleteDataForApi(): array
     {
-        $basicData = [
+        return [
             'name' => $this->name,
             'key' => $this->key,
             'help' => [],
-            'short' => $this->getDataFormatted(),
+            'short' => $this->getContentFormatted(),
         ];
-        return $basicData;
     }
 
-    public function isVisibleInApi()
+    public function isVisibleInApi(): bool
     {
         return true;
     }
@@ -224,22 +214,22 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         return self::canUserViewInEpic($this->epic);
     }
 
-    static function throwExceptionAboutCreate()
+    static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_RECAP'));
     }
 
-    static function throwExceptionAboutControl()
+    static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_RECAP'));
     }
 
-    static function throwExceptionAboutIndex()
+    static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_RECAP'));
     }
 
-    static function throwExceptionAboutView()
+    static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_RECAP'));
     }

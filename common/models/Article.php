@@ -6,7 +6,7 @@ use common\models\core\HasEpicControl;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
-use common\models\tools\ToolsForDescription;
+use common\models\tools\ToolsForLinkTags;
 use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
@@ -42,7 +42,7 @@ use yii2tech\ar\position\PositionBehavior;
 class Article extends ActiveRecord implements HasEpicControl, HasVisibility, HasSightings
 {
     use ToolsForEntity;
-    use ToolsForDescription;
+    use ToolsForLinkTags;
 
     public bool $is_off_the_record_change = false;
 

@@ -13,7 +13,7 @@ use yii\helpers\Html;
             ['epic/view', 'key' => $model->epic->key]
         ) . ($model->point_in_time_id ? ' / ' . $model->pointInTime->name : '') ?>
     </p>
-    <?= $model->getDataFormatted(); ?>
+    <?= $model->getContentFormatted(); ?>
     <?php if (!empty($model->games)): ?>
         <p>
             <strong><?= Yii::t('app', 'LABEL_GAMES') ?>: </strong>

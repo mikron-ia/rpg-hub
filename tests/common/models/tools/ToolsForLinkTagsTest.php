@@ -2,12 +2,12 @@
 
 namespace tests\common\models\tools;
 
-use common\models\tools\ToolsForDescription;
+use common\models\tools\ToolsForLinkTags;
 use PHPUnit\Framework\TestCase;
 
-class ToolsForDescriptionTest extends TestCase
+class ToolsForLinkTagsTest extends TestCase
 {
-    use ToolsForDescription;
+    use ToolsForLinkTags;
 
     /**
      * @dataProvider complexConversionDataProvider

@@ -22,7 +22,7 @@ use yii\helpers\Html;
         if ($model->point_in_time_id) {
             echo '<p class="recap-box-time">' . $model->pointInTime . '</p>';
         }
-        echo $model->getDataFormatted();
+        echo $model->getContentFormatted();
         if (!empty($model->games)) {
             echo '<p>'
                 . '<strong>' . Yii::t('app', 'LABEL_GAMES') . ': </strong>'

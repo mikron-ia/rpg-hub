@@ -12,12 +12,9 @@ use yii\data\ArrayDataProvider;
  */
 final class RecapQuery extends Recap
 {
-    /**
-     * @var int
-     */
-    private $pageCount;
+    private int $pageCount;
 
-    public function __construct($pagination = 4, array $config = [])
+    public function __construct(int $pagination = 4, array $config = [])
     {
         $this->pageCount = $pagination;
         parent::__construct($config);
@@ -27,7 +24,7 @@ final class RecapQuery extends Recap
     {
         return [
             [['recap_id'], 'integer'],
-            [['key', 'name', 'data', 'time'], 'safe'],
+            [['key', 'name', 'content', 'time'], 'safe'],
         ];
     }
 
@@ -39,10 +36,8 @@ final class RecapQuery extends Recap
 
     /**
      * Creates data provider instance with search query applied
-     * @param array $params
-     * @return ActiveDataProvider
      */
-    public function search($params): ActiveDataProvider
+    public function search(array $params): ActiveDataProvider
     {
         $query = Recap::find();
 
@@ -77,15 +72,12 @@ final class RecapQuery extends Recap
 
         $query->andFilterWhere(['like', 'key', $this->key])
             ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'data', $this->data]);
+            ->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }
 
-    /**
-     * @return Recap|null
-     */
-    public function mostRecent()
+    public function mostRecent(): ?Recap
     {
         $query = Recap::find();
 
@@ -109,10 +101,6 @@ final class RecapQuery extends Recap
         return $recap;
     }
 
-    /**
-     * @param array $userIds
-     * @return ArrayDataProvider|null
-     */
     public function mostRecentByPlayerDataProvider(array $userIds): ?ArrayDataProvider
     {
         $query = Recap::find()->where(['in', 'epic_id', $userIds])->orderBy([
@@ -129,12 +117,10 @@ final class RecapQuery extends Recap
             }
         }
 
-        $dataProvider = new ArrayDataProvider([
+        return new ArrayDataProvider([
             'allModels' => $mostRecentRecaps,
             'pagination' => false,
         ]);
-
-        return $dataProvider;
     }
 
     /**

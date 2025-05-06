@@ -19,7 +19,7 @@ use yii\helpers\Html;
         <p class="recap-box-time-view">
             <?= $model->point_in_time_id ? $model->pointInTime->name : '' ?>
         </p>
-        <?php echo $model->getDataFormatted(); ?>
+        <?php echo $model->getContentFormatted(); ?>
         <?php if (!empty($model->games)): ?>
             <p>
                 <strong><?= Yii::t('app', 'LABEL_GAMES') ?>: </strong>

@@ -17,7 +17,7 @@ YiiAsset::register($this);
         <p class="recap-box-time-view">
             <?= $model->point_in_time_id ? $model->pointInTime->name : '' ?>
         </p>
-        <?= $model->getDataFormatted(); ?>
+        <?= $model->getContentFormatted(); ?>
         <?php if (!empty($model->games)): ?>
             <strong class="text-center"><?= Yii::t('app', 'LABEL_GAMES') ?>:</strong>
             <?= $model->getSessionNamesFormatted() ?>

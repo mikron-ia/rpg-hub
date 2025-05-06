@@ -6,7 +6,7 @@ use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasVisibility;
 use common\models\core\Language;
 use common\models\core\Visibility;
-use common\models\tools\ToolsForDescription;
+use common\models\tools\ToolsForLinkTags;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -46,7 +46,7 @@ use yii2tech\ar\position\PositionBehavior;
  */
 class Description extends ActiveRecord implements Displayable, HasVisibility
 {
-    use ToolsForDescription;
+    use ToolsForLinkTags;
 
     const TYPE_APPEARANCE = 'appearance';       // For Character; The looks
     const TYPE_ASPECTS = 'aspects';             // For Character, Scenario, Story; Aspects - this is for FATE-like games

@@ -74,7 +74,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                         if ($recap->point_in_time_id) {
                             echo '<p class="recap-box-time">' . $recap->pointInTime . '</p>';
                         }
-                        echo $recap->getDataFormatted();
+                        echo $recap->getContentFormatted();
                     } else {
                         echo '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_RECAP_NOT_AVAILABLE') . '</p>';
                     } ?>

@@ -7,10 +7,10 @@ use yii\helpers\Html;
 use yii\helpers\Markdown;
 
 /**
- * Trait ToolsForDescription
+ * Trait ToolsForLinkTags
  * @package common\models\tools
  */
-trait ToolsForDescription
+trait ToolsForLinkTags
 {
     /** @var array<string,string> */
     private static array $headerReplacements = [
