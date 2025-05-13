@@ -8,41 +8,51 @@ The project's main license is `GNU General Public License v3.0` - see the `LICEN
 framework is `BSD 3-Clause "New" or "Revised" License`; particular libraries can have their own licenses, see
 attribution section of this file for details.
 
+## Project state
+
+The project is being still maintained and (ocassionally) developed since it is quite useful for me in its main purpose
+(keeping the campaign data for my own purposes), but due to its age (started in 2016), state of the `yii2` framework
+(effectively limited to maintenance), and overall effort that would be required to bring the codebase to a decent
+standard (immense and not very useful for practical purposes), it is firmly in its legacy stage.
+
 ## Background
 
-[Role-playing games](https://en.wikipedia.org/wiki/Role-playing_game) are a very wide category, ranging from very
-simplistic systems to extremely complex mechanical solutions. What they do have in common, though, is the story - you
-can play a game without mechanics, but even a primitive dungeon crawl is going to have some story. Managing this story,
-its cast, threads, and - if present - mechanical components - is the role of this project.
+[Role-playing games](https://en.wikipedia.org/wiki/Role-playing_game) are a very wide concept, ranging from very
+simplistic systems fitting in one page to extremely complex mechanical solutions spanning hundreds of books. What they
+do have in common, though, is the presence of a story - one can play a game without mechanics, but even a primitive
+dungeon crawl is going to have at least some story. Managing this story, its cast, threads, and (if present)
+mechanical components is the main role of this project.
 
-## Set up instruction
+## Set up instructions
 
 1. Make sure you have the proper stack installed; the current requirements are:
     * PHP 8.2+
         * Since there are no components from 8.2 used so far, the current code will run on 8.1 as well with minimal
           tweaking -- but there is no gurarantee this behavior will be maintained
     * MySQL 5.6+ database or MariaDB equivalent
+        * The current project was tested and found working up to MySQL 8.0 and MariaDB 10.6
 1. If you have no composer, install it via instructions from [here](https://getcomposer.org/download/)
-1. Clone the project to the desired directory
+1. Clone the project into the desired directory
 1. Run `composer install`
     * for a production deployment, add `--no-dev` option to avoid adding unnecessary libraries
 1. Copy `.env.example` to `.env` and fill it with configuration data
-    * Database access data is mandatory; without it, the hub will fail to start
-    * Language configuration and key generators can be left with their default values
+    * Database access data is mandatory
+      * without that the hub will fail to start
+    * Language configuration and key generators can be left on their default values
         * change them only if you have a good reason to
-    * API key must be set up to make API accessible from outside
-    * URIs are needed - without them mailing will fail, and a few redirects may not work
-    * mailing data and invitation validity are optional, but their lack will make inviting users impossible
+    * API key must be set up to make API accessible from outside and can be ignored if API is unused
+    * the URIs are needed - without them the mailing will fail and a few redirects may not work
+    * mailing data and invitation validity are optional but their lack will make inviting users via e-mail impossible
 1. [optional] If you wish to add data, create the `console/migrations/data.sql` file with SQL inserts that should be
    loaded into the database; this is intended for development/test work on larger data sets and is not needed for
    normal, initial deployment of a fresh project
 1. Initialise the project
     * For development: `./init --env=Development --overwrite=All`
     * For production: `./init --env=Production --overwrite=All`
-1. [on empty database] Run `./yii migrate/up`; `data.sql` will be automatically loaded if present
-1. [on empty database] Run `./yii rbac/init`; this will set up the access rights for the roles
-1. [on empty database] Run `./yii install/add-administrator` to add the administrator user
-1. [optional] Set-up cron tasks with content of `scripts/`
+1. [on an empty database] Run `./yii migrate/up`; `data.sql` will be automatically loaded if present
+1. [on an empty database] Run `./yii rbac/init`; this will set up the access rights for the roles
+1. [on an empty database] Run `./yii install/add-administrator` to add the administrator user
+1. [optional] Set-up cron tasks in your system with the content of `scripts/`
 1. Access the entry points as needed:
     * `backend/web` for the content management page
     * `frontend/web` for the presentation page
@@ -72,14 +82,15 @@ As partially mentioned at the setup instructions, the project is composed of sev
 
 The hub allows handling of the following:
 
-* `Epic` - the basic campaign, containing virtually everything else that is not an user
+* `Epic` - the basic container, representing the campaign / epic and containing virtually everything else that is not an
+  user
 * `Story` - an adventure, plot, etc. - in other words, a time-limited element of the `Epic`
 * `Recap` - a description of events, intended to keep the players up to date
-    * It can encompass from one to any number of sessions
+    * It can encompass any number of sessions
 * `Game` - a discrete gaming session, often associated with a `Recap`
 * `Character` - a character (either a Player Character or an NPC) present in the story, most often described from the
   perspective of the players
-* `CharacterSheet` - a detailed set of data on `Character`, usually in a form of numbers and traits
+* `CharacterSheet` - a detailed set of mechanical data on `Character`, usually in a form of numbers and traits
     * This is still a very underdeveloped component, requiring using a dedicated and undocumented data format to display
       properly
     * It is linked to a single `Character`
@@ -93,11 +104,12 @@ The hub allows handling of the following:
 * `User` - as the name suggests, this is the user, i.e. person accessing the hub; no further explanation should be
   needed
 
-Other components serve only auxiliary roles and are not directly editable.
+Other components serve auxiliary roles only and are not directly editable.
 
-Use of most components is optional; for example, an `Epic` can be conceivably run with use of `Recap`s and `Game`s only
-or just with `Character` gallery. There are, of course, limits to that - for example,`Group` functionality is limited
-without any `Character`s. Still, most elements can be used entirely independently of each other.
+Use of most components is optional; for example, an `Epic` can be conceivably run with the use of `Recap`s and `Game`s
+only or just with `Character` gallery. There are, of course, limits to that - for example, the `Group` functionality is
+limited (but not unusable) without any `Character`s. Still, most elements can be used entirely independently of each
+other.
 
 ## Attributions
 
