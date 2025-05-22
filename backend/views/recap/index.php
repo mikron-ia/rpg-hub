@@ -73,7 +73,7 @@ $mostRecent = $searchModel->mostRecent();
     </div>
 
     <div class="col-md-3" id="filter">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?php echo $this->render('_search', ['model' => $searchModel, 'epic' => $epic]); ?>
     </div>
 
 </div>

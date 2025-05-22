@@ -1,17 +1,21 @@
 <?php
 
+use common\models\Epic;
+use common\models\Scenario;
+use common\models\ScenarioQuery;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model \common\models\ScenarioQuery */
+/* @var $model ScenarioQuery */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $epic Epic */
 ?>
 
 <div class="scenario-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'action' => ['index', 'epic' => $epic->key],
         'method' => 'get',
     ]); ?>
 
@@ -22,7 +26,7 @@ use yii\widgets\ActiveForm;
     <?php echo $form->field($model, 'status')->widget(
         kartik\select2\Select2::class,
         [
-            'data' => \common\models\Scenario::statusNames(),
+            'data' => Scenario::statusNames(),
             'options' => ['multiple' => true],
         ]
     ) ?>

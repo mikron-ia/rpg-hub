@@ -2,19 +2,21 @@
 
 use common\models\Character;
 use common\models\core\Visibility;
+use common\models\Epic;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\CharacterQuery */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $epic Epic */
 
 ?>
 
 <div class="person-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'action' => ['index', 'epic' => $epic->key],
         'method' => 'get',
     ]); ?>
 
