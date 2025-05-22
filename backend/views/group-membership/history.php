@@ -25,7 +25,7 @@ $this->title = Yii::t('app', 'GROUP_MEMBERSHIP_HISTORY_TITLE_INDEX');
             [
                 'attribute' => 'visibility',
                 'value' => function (GroupMembershipHistory $model) {
-                    return $model->getVisibility();
+                    return $model->getVisibilityName();
                 }
             ],
             [

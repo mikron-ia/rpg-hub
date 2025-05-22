@@ -100,7 +100,7 @@ final class StoryQuery extends Story
             if (
                 !isset($mostRecentStories[$story->epic_id]) &&
                 $story->canUserViewYou() &&
-                $story->visibility === Visibility::VISIBILITY_FULL
+                $story->getVisibility() === Visibility::VISIBILITY_FULL
             ) {
                 $mostRecentStories[$story->epic_id] = $story;
             }

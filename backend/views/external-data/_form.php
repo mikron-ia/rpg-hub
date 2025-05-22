@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
 
     <p><?= '<b>' . $model->getAttributeLabel('code') . ':</b> ' . $model->code ?></p>
 
-    <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(Visibility::allowedVisibilities())); ?>
+    <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(Visibility::allowedVisibilities)); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),

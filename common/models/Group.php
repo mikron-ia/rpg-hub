@@ -15,6 +15,7 @@ use common\models\core\Visibility;
 use common\models\external\HasReputations;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
+use common\models\tools\ToolsForHasVisibility;
 use DateTimeImmutable;
 use ReflectionClass;
 use Yii;
@@ -62,6 +63,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
+    use ToolsForHasVisibility;
 
     public bool $is_off_the_record_change = false;
 
@@ -101,7 +103,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
                 ['visibility'],
                 'in',
                 'range' => function () {
-                    return $this->allowedVisibilities();
+                    return $this->allowedVisibilitiesForValidator();
                 }
             ],
             [
@@ -427,14 +429,6 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $this->seenPack->getCSSForCurrentUser();
     }
 
-    static public function allowedVisibilities(): array
-    {
-        return [
-            Visibility::VISIBILITY_GM,
-            Visibility::VISIBILITY_FULL
-        ];
-    }
-
     public function getImportanceCategory(): string
     {
         return $this->getImportanceCategoryObject()->getName();
@@ -454,18 +448,6 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     {
         $importance = ImportanceCategory::from($this->importance_category);
         return $importance->getNameLowercase();
-    }
-
-    public function getVisibility(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getName();
-    }
-
-    public function getVisibilityLowercase(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getNameLowercase();
     }
 
     public function getLastModified(): DateTimeImmutable

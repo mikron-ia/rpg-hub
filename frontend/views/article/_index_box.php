@@ -13,7 +13,7 @@ use yii\helpers\Html;
         <span class="text-center <?= $model->showSightingCSS() ?> seen-tag-header">
             <?= $model->showSightingStatus() ?>
         </span>
-        <?php if ($model->visibility !== Visibility::VISIBILITY_FULL): ?>
+        <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
             <span class="text-center unpublished-tag">
                 <?= Yii::t('app', 'TAG_UNPUBLISHED_M') ?>
             </span>

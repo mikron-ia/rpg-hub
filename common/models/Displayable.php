@@ -22,7 +22,6 @@ interface Displayable
 
     /**
      * Answers whether the object should be visible via API
-     * @return boolean
      */
-    public function isVisibleInApi();
+    public function isVisibleInApi(): bool;
 }

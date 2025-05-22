@@ -5,6 +5,7 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
+use common\models\tools\ToolsForHasVisibility;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -31,6 +32,8 @@ use yii2tech\ar\position\PositionBehavior;
  */
 class GroupMembership extends ActiveRecord implements HasVisibility
 {
+    use ToolsForHasVisibility;
+
     const STATUS_ACTIVE = 'active';
     const STATUS_PASSIVE = 'passive';
     const STATUS_PAST = 'past';
@@ -62,6 +65,11 @@ class GroupMembership extends ActiveRecord implements HasVisibility
                 'skipOnError' => true,
                 'targetClass' => Group::class,
                 'targetAttribute' => ['group_id' => 'group_id']
+            ],
+            [
+                ['visibility'],
+                'in',
+                'range' => fn() => $this->allowedVisibilitiesForValidator(),
             ],
         ];
     }
@@ -128,26 +136,6 @@ class GroupMembership extends ActiveRecord implements HasVisibility
     public function getGroupMembershipHistories()
     {
         return $this->hasMany(GroupMembershipHistory::class, ['group_membership_id' => 'group_membership_id']);
-    }
-
-    static public function allowedVisibilities(): array
-    {
-        return [
-            Visibility::VISIBILITY_GM,
-            Visibility::VISIBILITY_FULL
-        ];
-    }
-
-    public function getVisibility(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getName();
-    }
-
-    public function getVisibilityLowercase(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getNameLowercase();
     }
 
     /**

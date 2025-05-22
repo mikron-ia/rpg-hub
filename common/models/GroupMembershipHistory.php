@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
+use common\models\tools\ToolsForHasVisibility;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -27,6 +28,8 @@ use yii\helpers\Markdown;
  */
 class GroupMembershipHistory extends ActiveRecord implements HasVisibility
 {
+    use ToolsForHasVisibility;
+
     public static function tableName()
     {
         return 'group_membership_history';
@@ -119,26 +122,6 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
         } else {
             return null;
         }
-    }
-
-    static public function allowedVisibilities(): array
-    {
-        return [
-            Visibility::VISIBILITY_GM,
-            Visibility::VISIBILITY_FULL
-        ];
-    }
-
-    public function getVisibility(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getName();
-    }
-
-    public function getVisibilityLowercase(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getNameLowercase();
     }
 
     /**

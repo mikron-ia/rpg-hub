@@ -107,7 +107,7 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
         return $descriptions;
     }
 
-    public function isVisibleInApi()
+    public function isVisibleInApi(): bool
     {
         return true;
     }

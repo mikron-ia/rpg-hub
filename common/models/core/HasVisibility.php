@@ -10,19 +10,22 @@ interface HasVisibility
 {
     /**
      * Provides list of all types of visibilities applicable to this class
-     * @return array
+     * @return array<string,string>
      */
     static public function allowedVisibilities(): array;
 
     /**
-     * Provides name of visibility category for the object as it is
-     * @return string
+     * Provides the Visibility object
      */
-    public function getVisibility(): string;
+    public function getVisibility(): Visibility;
+
+    /**
+     * Provides name of visibility category for the object as it is
+     */
+    public function getVisibilityName(): string;
 
     /**
      * Provides name of visibility category for the object in lowercase
-     * @return string
      */
     public function getVisibilityLowercase(): string;
 }

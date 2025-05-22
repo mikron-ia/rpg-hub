@@ -209,7 +209,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         return $decodedData;
     }
 
-    public function isVisibleInApi()
+    public function isVisibleInApi(): bool
     {
         return true;
     }

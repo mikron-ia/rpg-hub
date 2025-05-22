@@ -52,7 +52,7 @@ use yii\helpers\StringHelper;
             [
                 'attribute' => 'visibility',
                 'value' => function (GroupMembership $model) {
-                    return $model->getVisibility();
+                    return $model->getVisibilityName();
                 },
                 'enableSorting' => false
             ],

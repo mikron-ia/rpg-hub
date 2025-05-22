@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'visibility',
                 'value' => function (Article $model) {
-                    return $model->getVisibility();
+                    return $model->getVisibilityName();
                 }
             ],
             [

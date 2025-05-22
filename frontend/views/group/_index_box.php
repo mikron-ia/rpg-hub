@@ -7,7 +7,7 @@ use yii\helpers\StringHelper;
 
 /** @var $model Group */
 
-switch ($model->visibility) {
+switch ($model->getVisibility()) {
     case Visibility::VISIBILITY_GM :
         $additionalBoxClasses = 'index-box-gm';
         $additionalTitleText = '('

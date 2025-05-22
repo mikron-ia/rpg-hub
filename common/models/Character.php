@@ -15,12 +15,14 @@ use common\models\core\Visibility;
 use common\models\external\HasReputations;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
+use common\models\tools\ToolsForHasVisibility;
 use DateTimeImmutable;
 use ReflectionClass;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "person".
@@ -59,6 +61,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
+    use ToolsForHasVisibility;
 
     public bool $is_off_the_record_change = false;
 
@@ -115,7 +118,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
                 ['visibility'],
                 'in',
                 'range' => function () {
-                    return $this->allowedVisibilities();
+                    return $this->allowedVisibilitiesForValidator();
                 }
             ],
         ];
@@ -222,14 +225,6 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ];
     }
 
-    static public function allowedVisibilities(): array
-    {
-        return [
-            Visibility::VISIBILITY_GM,
-            Visibility::VISIBILITY_FULL
-        ];
-    }
-
     /**
      * @return ActiveQuery
      */
@@ -326,24 +321,13 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
     public function isVisibleInApi(): bool
     {
-        return ($this->visibility === Visibility::VISIBILITY_FULL);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getVisibilityName(): ?string
-    {
-        $list = Visibility::visibilityNames(self::allowedVisibilities());
-        return $list[$this->visibility] ?? null;
+        return ($this->getVisibility() === Visibility::VISIBILITY_FULL);
     }
 
     /**
      * Creates character record for character sheet
      *
-     * @param CharacterSheet $characterSheet
-     *
-     * @return null|Character
+     * @throws Exception
      */
     static public function createForCharacterSheet(CharacterSheet $characterSheet): ?Character
     {
@@ -452,18 +436,6 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     {
         $importance = ImportanceCategory::from($this->importance_category);
         return $importance->getNameLowercase();
-    }
-
-    public function getVisibility(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getName();
-    }
-
-    public function getVisibilityLowercase(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getNameLowercase();
     }
 
     public function recordSighting(): bool

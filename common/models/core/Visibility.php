@@ -7,38 +7,26 @@ use common\models\Participant;
 use common\models\ParticipantRole;
 use Yii;
 
-/**
- * Class Visibility
- * @package common\models\tools
- */
-final class Visibility
+enum Visibility: string
 {
-    const VISIBILITY_NONE = 'none';
-    const VISIBILITY_GM = 'gm';
-    const VISIBILITY_DESIGNATED = 'designated';
-    const VISIBILITY_LOGGED = 'logged';
-    const VISIBILITY_FULL = 'full';
+    case VISIBILITY_NONE = 'none';
+    case VISIBILITY_GM = 'gm';
+    case VISIBILITY_DESIGNATED = 'designated';
+    case VISIBILITY_LOGGED = 'logged';
+    case VISIBILITY_FULL = 'full';
 
-    /**
-     * @var string
-     */
-    public $visibility;
-
-    /**
-     * @param $code
-     * @return Visibility
-     */
-    static public function create($code): Visibility
-    {
-        $visibility = new Visibility();
-        $visibility->visibility = $code;
-        return $visibility;
-    }
+    public const allowedVisibilities =  [
+        //Visibility::VISIBILITY_NONE,
+        Visibility::VISIBILITY_GM,
+        //Visibility::VISIBILITY_DESIGNATED,
+        //Visibility::VISIBILITY_LOGGED,
+        Visibility::VISIBILITY_FULL
+    ];
 
     /**
      * Determines range of accessible objects for the user
-     * @param Epic $epic
-     * @return array|\string[]
+     *
+     * @return array<int,string>
      */
     static public function determineVisibilityVector(Epic $epic): array
     {
@@ -46,16 +34,11 @@ final class Visibility
             /* No epic and no user makes bad business */
             $visibilityVector = [];
         } else {
-            $visibilityVector = [Visibility::VISIBILITY_FULL, Visibility::VISIBILITY_LOGGED];
+            $visibilityVector = [Visibility::VISIBILITY_FULL->value, Visibility::VISIBILITY_LOGGED->value];
 
-            if (Participant::participantHasRole(
-                Yii::$app->user->identity,
-                $epic,
-                ParticipantRole::ROLE_GM
-            )
-            ) {
-                $visibilityVector[] = Visibility::VISIBILITY_GM;
-                $visibilityVector[] = Visibility::VISIBILITY_DESIGNATED;
+            if (Participant::participantHasRole(Yii::$app->user->identity, $epic, ParticipantRole::ROLE_GM)) {
+                $visibilityVector[] = Visibility::VISIBILITY_GM->value;
+                $visibilityVector[] = Visibility::VISIBILITY_DESIGNATED->value;
             }
         }
 
@@ -64,56 +47,30 @@ final class Visibility
 
     /**
      * Provides visibility name
-     *
-     * @return string|null
      */
     public function getName(): ?string
     {
-        $names = self::visibilityNames(self::allowedVisibilities());
-        return $names[$this->visibility] ?? null;
+        return self::visibilityNames(self::allowedVisibilities)[$this->value] ?? null;
     }
 
     /**
      * Provides visibilities names
      *
-     * @param array $allowed
+     * @param array<int,Visibility> $allowed
      *
-     * @return string[]
+     * @return array<string,string>
      */
     static public function visibilityNames(array $allowed): array
     {
-        $names = [
-            Visibility::VISIBILITY_NONE => Yii::t('app', 'VISIBILITY_NONE'),
-            Visibility::VISIBILITY_GM => Yii::t('app', 'VISIBILITY_GM'),
-            Visibility::VISIBILITY_DESIGNATED => Yii::t('app', 'VISIBILITY_DESIGNATED'),
-            Visibility::VISIBILITY_LOGGED => Yii::t('app', 'VISIBILITY_LOGGED'),
-            Visibility::VISIBILITY_FULL => Yii::t('app', 'VISIBILITY_FULL'),
-        ];
-
-        foreach ($names as $key => $name) {
-            if (!in_array($key, $allowed)) {
-                unset($names[$key]);
-            }
-        }
-
-        return $names;
+        return self::filterNames($allowed, [
+            Visibility::VISIBILITY_NONE->value => Yii::t('app', 'VISIBILITY_NONE'),
+            Visibility::VISIBILITY_GM->value => Yii::t('app', 'VISIBILITY_GM'),
+            Visibility::VISIBILITY_DESIGNATED->value => Yii::t('app', 'VISIBILITY_DESIGNATED'),
+            Visibility::VISIBILITY_LOGGED->value => Yii::t('app', 'VISIBILITY_LOGGED'),
+            Visibility::VISIBILITY_FULL->value => Yii::t('app', 'VISIBILITY_FULL'),
+        ]);
     }
 
-    /**
-     * Lists allowed visibilities
-     *
-     * @return string[]
-     */
-    static public function allowedVisibilities(): array
-    {
-        return [
-            //Visibility::VISIBILITY_NONE,
-            Visibility::VISIBILITY_GM,
-            //Visibility::VISIBILITY_DESIGNATED,
-            //Visibility::VISIBILITY_LOGGED,
-            Visibility::VISIBILITY_FULL
-        ];
-    }
 
     /**
      * Provides visibility name in lowercase
@@ -122,22 +79,37 @@ final class Visibility
      */
     public function getNameLowercase(): ?string
     {
-        $names = self::visibilityNamesLowercase();
-        return $names[$this->visibility] ?? null;
+        return self::visibilityNamesLowercase(self::allowedVisibilities)[$this->value] ?? null;
     }
 
     /**
      * Provides visibilities names in lowercase
-     * @return string[]
+     *
+     * @return array<string,string>
      */
-    static public function visibilityNamesLowercase(): array
+    static public function visibilityNamesLowercase($allowed): array
     {
-        return [
-            Visibility::VISIBILITY_NONE => Yii::t('app', 'VISIBILITY_NONE_LOWERCASE'),
-            Visibility::VISIBILITY_GM => Yii::t('app', 'VISIBILITY_GM_LOWERCASE'),
-            Visibility::VISIBILITY_DESIGNATED => Yii::t('app', 'VISIBILITY_DESIGNATED_LOWERCASE'),
-            Visibility::VISIBILITY_LOGGED => Yii::t('app', 'VISIBILITY_LOGGED_LOWERCASE'),
-            Visibility::VISIBILITY_FULL => Yii::t('app', 'VISIBILITY_FULL_LOWERCASE'),
-        ];
+        return self::filterNames($allowed, [
+            Visibility::VISIBILITY_NONE->value => Yii::t('app', 'VISIBILITY_NONE_LOWERCASE'),
+            Visibility::VISIBILITY_GM->value => Yii::t('app', 'VISIBILITY_GM_LOWERCASE'),
+            Visibility::VISIBILITY_DESIGNATED->value => Yii::t('app', 'VISIBILITY_DESIGNATED_LOWERCASE'),
+            Visibility::VISIBILITY_LOGGED->value => Yii::t('app', 'VISIBILITY_LOGGED_LOWERCASE'),
+            Visibility::VISIBILITY_FULL->value => Yii::t('app', 'VISIBILITY_FULL_LOWERCASE'),
+        ]);
+    }
+
+    static private function filterNames(array $allowed, array $names): array
+    {
+        $allowedArray = array_map(function (Visibility $visibility) {
+            return $visibility->value;
+        }, $allowed);
+
+        foreach ($names as $key => $name) {
+            if (!in_array($key, $allowedArray)) {
+                unset($names[$key]);
+            }
+        }
+
+        return $names;
     }
 }

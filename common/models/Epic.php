@@ -469,7 +469,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         ];
     }
 
-    public function isVisibleInApi()
+    public function isVisibleInApi(): bool
     {
         return true;
     }

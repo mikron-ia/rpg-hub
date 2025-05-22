@@ -6,6 +6,7 @@ use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasVisibility;
 use common\models\core\Language;
 use common\models\core\Visibility;
+use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -47,6 +48,7 @@ use yii2tech\ar\position\PositionBehavior;
 class Description extends ActiveRecord implements Displayable, HasVisibility
 {
     use ToolsForLinkTags;
+    use ToolsForHasVisibility;
 
     const TYPE_APPEARANCE = 'appearance';       // For Character; The looks
     const TYPE_ASPECTS = 'aspects';             // For Character, Scenario, Story; Aspects - this is for FATE-like games
@@ -131,9 +133,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             [
                 ['visibility'],
                 'in',
-                'range' => function () {
-                    return $this->allowedVisibilities();
-                }
+                'range' => fn() => $this->allowedVisibilitiesForValidator(),
             ],
             [
                 ['point_in_time_start_id'],
@@ -362,26 +362,6 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         return $language->getName();
     }
 
-    static public function allowedVisibilities(): array
-    {
-        return [
-            Visibility::VISIBILITY_GM,
-            Visibility::VISIBILITY_FULL
-        ];
-    }
-
-    public function getVisibility(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getName();
-    }
-
-    public function getVisibilityLowercase(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getNameLowercase();
-    }
-
     /**
      * @return string
      */
@@ -419,9 +399,9 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
 
     /**
      * Provides complete representation of public parts of object content, fit for full card display
-     * @return array
+     * @return array<string,string>
      */
-    public function getCompleteDataForApi()
+    public function getCompleteDataForApi(): array
     {
         return [
             'title' => $this->getTypeName(),
@@ -429,15 +409,12 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         ];
     }
 
-    public function isVisibleInApi()
+    public function isVisibleInApi(): bool
     {
-        return ($this->visibility === Visibility::VISIBILITY_FULL);
+        return ($this->getVisibility() === Visibility::VISIBILITY_FULL);
     }
 
-    /**
-     * @return DescriptionHistory|null
-     */
-    public function createHistoryRecord()
+    public function createHistoryRecord(): ?DescriptionHistory
     {
         $description = Description::findOne(['description_id' => $this->description_id]);
 

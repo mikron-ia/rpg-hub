@@ -27,7 +27,7 @@ ArticleAsset::register($this);
             'key',
             [
                 'attribute' => 'visibility',
-                'value' => $model->getVisibility()
+                'value' => $model->getVisibilityName()
             ],
             [
                 'label' => Yii::t('app', 'ARTICLE_OUTLINE_CHARACTER_COUNT'),

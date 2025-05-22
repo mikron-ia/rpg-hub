@@ -6,6 +6,7 @@ use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasVisibility;
 use common\models\core\Language;
 use common\models\core\Visibility;
+use common\models\tools\ToolsForHasVisibility;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -28,6 +29,8 @@ use yii2tech\ar\position\PositionBehavior;
  */
 class Parameter extends ActiveRecord implements HasVisibility
 {
+    use ToolsForHasVisibility;
+
     const STORY_NUMBER = 'story-number';
     const TIME_RANGE = 'time-range';
     const LOCATION_POINT_START = 'point-start';
@@ -60,6 +63,11 @@ class Parameter extends ActiveRecord implements HasVisibility
                 'skipOnError' => true,
                 'targetClass' => ParameterPack::class,
                 'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id']
+            ],
+            [
+                ['visibility'],
+                'in',
+                'range' => fn() => $this->allowedVisibilitiesForValidator(),
             ],
         ];
     }
@@ -203,26 +211,6 @@ class Parameter extends ActiveRecord implements HasVisibility
         return $language->getName();
     }
 
-    static public function allowedVisibilities(): array
-    {
-        return [
-            Visibility::VISIBILITY_GM,
-            Visibility::VISIBILITY_FULL
-        ];
-    }
-
-    public function getVisibility(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getName();
-    }
-
-    public function getVisibilityLowercase(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getNameLowercase();
-    }
-
     /**
      * @return string Code name in chosen language
      */
@@ -230,14 +218,5 @@ class Parameter extends ActiveRecord implements HasVisibility
     {
         $codes = self::typeNames();
         return isset($codes[$this->code]) ? $codes[$this->code] : $this->code;
-    }
-
-    /**
-     * @return string Visibility name in chosen language
-     */
-    public function getVisibilityName(): string
-    {
-        $visibilities = Visibility::visibilityNames(self::allowedVisibilities());
-        return isset($visibilities[$this->visibility]) ? $visibilities[$this->visibility] : $this->visibility;
     }
 }

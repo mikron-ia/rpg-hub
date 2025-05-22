@@ -37,7 +37,7 @@ use yii\widgets\DetailView;
                 ],
                 [
                     'attribute' => 'visibility',
-                    'value' => $model->getVisibility(),
+                    'value' => $model->getVisibilityName(),
                 ],
                 [
                     'label' => Yii::t('app', 'STORY_SHORT_SIZE'),

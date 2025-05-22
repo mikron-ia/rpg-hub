@@ -4,11 +4,13 @@ namespace common\models;
 
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
+use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "description_history".
@@ -33,6 +35,7 @@ use yii\db\ActiveRecord;
 class DescriptionHistory extends ActiveRecord implements HasVisibility
 {
     use ToolsForLinkTags;
+    use ToolsForHasVisibility;
 
     public static function tableName()
     {
@@ -109,31 +112,10 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         ];
     }
 
-    static public function allowedVisibilities(): array
-    {
-        return [
-            Visibility::VISIBILITY_GM,
-            Visibility::VISIBILITY_FULL
-        ];
-    }
-
-    public function getVisibility(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getName();
-    }
-
-    public function getVisibilityLowercase(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getNameLowercase();
-    }
-
     /**
-     * @param Description $description
-     * @return DescriptionHistory
+     * @throws Exception
      */
-    static public function createFromDescription(Description $description)
+    static public function createFromDescription(Description $description): ?DescriptionHistory
     {
         $history = new DescriptionHistory();
 
@@ -147,9 +129,9 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         if ($history->save()) {
             $history->refresh();
             return $history;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**

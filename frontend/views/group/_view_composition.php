@@ -18,7 +18,7 @@ use yii\helpers\Html;
         'summary' => '',
         'rowOptions' => function (GroupMembership $model, $key, $index, $grid) {
             $options = [];
-            if ($model->visibility === Visibility::VISIBILITY_GM) {
+            if ($model->getVisibility() === Visibility::VISIBILITY_GM) {
                 $options['class'] = 'table-row-hidden secret';
             }
             return $options;

@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'LABEL_UPDATE');
             [
                 'attribute' => 'visibility',
                 'value' => function (DescriptionHistory $model) {
-                    return $model->getVisibility();
+                    return $model->getVisibilityName();
                 }
             ],
             [

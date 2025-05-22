@@ -9,6 +9,7 @@ use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
+use common\models\tools\ToolsForHasVisibility;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -41,6 +42,7 @@ use yii2tech\ar\position\PositionBehavior;
 class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl, HasSightings, HasVisibility
 {
     use ToolsForEntity;
+    use ToolsForHasVisibility;
 
     const TYPE_CHAPTER = 'chapter';         // Part of larger story; interactive
     const TYPE_EPISODE = 'episode';         // Self-standing episode; interactive
@@ -86,6 +88,11 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
                 'skipOnError' => true,
                 'targetClass' => ParameterPack::class,
                 'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id']
+            ],
+            [
+                ['visibility'],
+                'in',
+                'range' => fn() => $this->allowedVisibilitiesForValidator(),
             ],
         ];
     }
@@ -225,7 +232,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             $parameters = [];
 
             foreach ($this->parameterPack->parameters as $parameter) {
-                if ($parameter->visibility == Visibility::VISIBILITY_FULL) {
+                if ($parameter->getVisibility() === Visibility::VISIBILITY_FULL) {
                     $parameters[$parameter->code] = [
                         'name' => $parameter->getCodeName(),
                         'value' => $parameter->content,
@@ -263,18 +270,9 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return $basicData;
     }
 
-    public function isVisibleInApi()
+    public function isVisibleInApi(): bool
     {
-        return ($this->visibility === Visibility::VISIBILITY_FULL);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getVisibilityName(): ?string
-    {
-        $list = Visibility::visibilityNames(self::allowedVisibilities());
-        return $list[$this->visibility] ?? null;
+        return ($this->getVisibility() === Visibility::VISIBILITY_FULL);
     }
 
     static public function allowedParameterTypes(): array
@@ -380,26 +378,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();
-    }
-
-    static public function allowedVisibilities(): array
-    {
-        return [
-            Visibility::VISIBILITY_GM,
-            Visibility::VISIBILITY_FULL
-        ];
-    }
-
-    public function getVisibility(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getName();
-    }
-
-    public function getVisibilityLowercase(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getNameLowercase();
     }
 
     public function getLongDescriptionWordCount()

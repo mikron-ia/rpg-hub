@@ -114,7 +114,7 @@ use yii\widgets\DetailView;
                     'enableSorting' => false,
                     'label' => Yii::t('app', 'LABEL_VISIBILITY'),
                     'value' => function (ExternalData $model) {
-                        return $model->getVisibility();
+                        return $model->getVisibilityName();
                     },
                 ],
                 [

@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'headerOptions' => ['class' => 'text-center'],
                     'contentOptions' => ['class' => 'text-center'],
                     'value' => function (Group $model) {
-                        return $model->getVisibility();
+                        return $model->getVisibilityName();
                     }
                 ],
                 [

@@ -6,6 +6,7 @@ use common\models\core\HasEpicControl;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
+use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use common\models\tools\ToolsForEntity;
 use Yii;
@@ -43,6 +44,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
 {
     use ToolsForEntity;
     use ToolsForLinkTags;
+    use ToolsForHasVisibility;
 
     public bool $is_off_the_record_change = false;
 
@@ -209,29 +211,9 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return $this->seenPack->getCSSForCurrentUser();
     }
 
-    static public function allowedVisibilities(): array
-    {
-        return [
-            Visibility::VISIBILITY_GM,
-            Visibility::VISIBILITY_FULL
-        ];
-    }
-
     public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
-    }
-
-    public function getVisibility(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getName();
-    }
-
-    public function getVisibilityLowercase(): string
-    {
-        $visibility = Visibility::create($this->visibility);
-        return $visibility->getNameLowercase();
     }
 
     static public function canUserIndexThem(): bool

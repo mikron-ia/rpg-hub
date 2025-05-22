@@ -14,7 +14,7 @@ use yii\widgets\DetailView;
             'attributes' => [
                 [
                     'attribute' => 'visibility',
-                    'value' => $model->getVisibility(),
+                    'value' => $model->getVisibilityName(),
                 ],
                 [
                     'attribute' => 'importance_category',

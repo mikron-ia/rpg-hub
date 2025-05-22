@@ -1,11 +1,13 @@
 <?php
 
 use common\models\core\Visibility;
+use common\models\Parameter;
+use common\models\Story;
 use yii\helpers\Html;
 
-/** @var $model \common\models\Story */
+/** @var $model Story */
 
-$storyNumberRaw = $model->getParameter(\common\models\Parameter::STORY_NUMBER);
+$storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
 
 if ($storyNumberRaw) {
     $storyNumber = $storyNumberRaw . ' ';
@@ -18,7 +20,7 @@ if ($storyNumberRaw) {
 <div id="story-<?php echo $model->story_id; ?>">
     <h4 class="center">
         <?php echo Html::a(Html::encode($storyNumber . $model->name), ['story/view', 'key' => $model->key]); ?>
-        <?php if ($model->visibility !== Visibility::VISIBILITY_FULL): ?>
+        <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
             <span class="text-center unpublished-tag tag-smaller">
                 <?= Yii::t('app', 'TAG_UNPUBLISHED_F') ?>
             </span>
