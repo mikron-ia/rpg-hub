@@ -1,8 +1,7 @@
 <?php
 
-namespace tests\common\models\tools;
+namespace common\models\tools;
 
-use common\models\tools\ToolsForLinkTags;
 use PHPUnit\Framework\TestCase;
 
 class ToolsForLinkTagsTest extends TestCase

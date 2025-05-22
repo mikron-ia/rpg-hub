@@ -38,6 +38,7 @@
     },
     "autoload-dev": {
         "classmap": [
+            "common/models/core/",
             "common/models/tools/"
         ]
     }
