@@ -99,7 +99,7 @@ final class User extends ActiveRecord implements IdentityInterface
             [
                 'status',
                 'in',
-                'range' => [UserStatus::Deleted->value, UserStatus::Active->value],
+                'range' => [UserStatus::Deleted->value, UserStatus::Disabled->value, UserStatus::Active->value],
             ],
             [
                 'user_role',
@@ -429,6 +429,11 @@ final class User extends ActiveRecord implements IdentityInterface
     static public function operatorUserRoles(): array
     {
         return [self::USER_ROLE_OPERATOR, self::USER_ROLE_MANAGER, self::USER_ROLE_ADMINISTRATOR];
+    }
+
+    public function hasProtectedRole(): bool
+    {
+        return $this->user_role === self::USER_ROLE_ADMINISTRATOR;
     }
 
     public function getParticipants(): ActiveQuery

@@ -33,6 +33,7 @@ final class UserController extends Controller
                         'actions' => [
                             'create',
                             'delete',
+                            'disable',
                             'index',
                             'invitations',
                             'renew',
@@ -50,6 +51,7 @@ final class UserController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
+                    'disable' => ['post'],
                     'renew' => ['post'],
                     'revoke' => ['post'],
                 ],
@@ -140,7 +142,7 @@ final class UserController extends Controller
     }
 
     /**
-     * Deletes an existing user
+     * Deletes the user
      *
      * @throws NotFoundHttpException
      * @throws Throwable
@@ -148,9 +150,49 @@ final class UserController extends Controller
      */
     public function actionDelete(int $id): Response
     {
-        $this->findModel($id)->update(false, ['status' => UserStatus::Deleted->value]);
+        $model = $this->findModel($id);
 
-        return $this->redirect(['index']);
+        if ($model->hasProtectedRole()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_DELETE_FAILED_PROTECTED'));
+            return $this->redirect(['user/view', 'id' => $id]);
+        }
+
+        $model->setAttribute('status', UserStatus::Deleted->value);
+
+        if ($model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_DELETE_SUCCESS'));
+            return $this->redirect(['user/index']);
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_DELETE_FAILED'));
+            return $this->redirect(['user/view', 'id' => $id]);
+        }
+    }
+
+    /**
+     * Disables the user
+     *
+     * @throws NotFoundHttpException
+     * @throws Throwable
+     * @throws StaleObjectException
+     */
+    public function actionDisable(int $id): Response
+    {
+        $model = $this->findModel($id);
+
+        if ($model->hasProtectedRole()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_DISABLE_FAILED_PROTECTED'));
+            return $this->redirect(['user/view', 'id' => $id]);
+        }
+
+        $model->setAttribute('status', UserStatus::Disabled->value);
+
+        if ($model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_DISABLE_SUCCESS'));
+            return $this->redirect(['user/index']);
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_DISABLE_FAILED'));
+            return $this->redirect(['user/view', 'id' => $id]);
+        }
     }
 
     /**

@@ -1,6 +1,5 @@
 <?php
 
-use common\models\User;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -18,10 +17,19 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
 
         <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'BUTTON_DISABLE'), ['disable', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'title' => Yii::t('app', 'BUTTON_DISABLE_USER_TITLE'),
+            'data' => [
+                'confirm' => 'Are you sure you want to disable this user?',
+                'method' => 'post',
+            ],
+        ]) ?>
         <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
+            'title' => Yii::t('app', 'BUTTON_DELETE_USER_TITLE'),
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Are you sure you want to delete this user?',
                 'method' => 'post',
             ],
         ]) ?>
