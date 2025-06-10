@@ -3,6 +3,7 @@
 namespace common\models\user;
 
 use common\models\core\Language;
+use common\models\core\UserStatus;
 use common\models\User;
 use Yii;
 use yii\base\Model;
@@ -62,7 +63,7 @@ final class UserSettingsForm extends Model
                 'targetClass' => '\common\models\User',
                 'message' => Yii::t('app', 'USER_CREATION_USERNAME_TAKEN'),
                 'filter' => function (ActiveQuery $query) {
-                    $query->andWhere(['=', 'status', User::STATUS_ACTIVE]);
+                    $query->andWhere(['=', 'status', UserStatus::Active->value]);
                     $query->andWhere(['<>', 'id', $this->user->id]);
                 },
             ],
@@ -76,7 +77,7 @@ final class UserSettingsForm extends Model
                 'targetClass' => '\common\models\User',
                 'message' => Yii::t('app', 'USER_CREATION_EMAIL_TAKEN'),
                 'filter' => function (ActiveQuery $query) {
-                    $query->andWhere(['=', 'status', User::STATUS_ACTIVE]);
+                    $query->andWhere(['=', 'status', UserStatus::Active->value]);
                     $query->andWhere(['<>', 'id', $this->user->id]);
                 },
             ],

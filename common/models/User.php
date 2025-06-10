@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\Language;
+use common\models\core\UserStatus;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -39,9 +40,6 @@ use yii\web\IdentityInterface;
  */
 final class User extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
-
     const USER_ROLE_NONE = 'none';
     const USER_ROLE_USER = 'user';
     const USER_ROLE_OPERATOR = 'operator';
@@ -100,8 +98,12 @@ final class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['status', 'default', 'value' => UserStatus::Active->value],
+            [
+                'status',
+                'in',
+                'range' => [UserStatus::Deleted->value, UserStatus::Active->value],
+            ],
             [
                 'user_role',
                 'in',
@@ -131,7 +133,7 @@ final class User extends ActiveRecord implements IdentityInterface
 
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id, 'status' => UserStatus::Active->value]);
     }
 
     public static function findIdentityByAccessToken($token, $type = null)
@@ -146,7 +148,7 @@ final class User extends ActiveRecord implements IdentityInterface
      */
     public static function findById($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id, 'status' => UserStatus::Active->value]);
     }
 
     /**
@@ -156,7 +158,7 @@ final class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, 'status' => UserStatus::Active->value]);
     }
 
     /**
@@ -172,7 +174,7 @@ final class User extends ActiveRecord implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
+            'status' => UserStatus::Active->value,
         ]);
     }
 
@@ -375,8 +377,9 @@ final class User extends ActiveRecord implements IdentityInterface
     static public function statusNames(): array
     {
         return [
-            self::STATUS_DELETED => Yii::t('app', 'USER_STATUS_DELETED'),
-            self::STATUS_ACTIVE => Yii::t('app', 'USER_STATUS_ACTIVE'),
+            UserStatus::Deleted->value => Yii::t('app', 'USER_STATUS_DELETED'),
+            UserStatus::Suspended->value => Yii::t('app', 'USER_STATUS_SUSPENDED'),
+            UserStatus::Active->value => Yii::t('app', 'USER_STATUS_ACTIVE'),
         ];
     }
 

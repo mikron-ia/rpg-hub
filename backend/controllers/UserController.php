@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\UserCreateForm;
+use common\models\core\UserStatus;
 use common\models\exceptions\InvalidBackendConfigurationException;
 use common\models\UserInvitation;
 use Throwable;
@@ -165,7 +166,7 @@ final class UserController extends Controller
      */
     public function actionDelete(int $id): Response
     {
-        $this->findModel($id)->update(false, ['status' => User::STATUS_DELETED]);
+        $this->findModel($id)->update(false, ['status' => UserStatus::Deleted->value]);
 
         return $this->redirect(['index']);
     }

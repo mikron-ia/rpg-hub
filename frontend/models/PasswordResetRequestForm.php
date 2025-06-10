@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use common\models\core\UserStatus;
 use common\models\User;
 use Yii;
 use yii\base\Model;
@@ -23,7 +24,7 @@ final class PasswordResetRequestForm extends Model
                 'email',
                 'exist',
                 'targetClass' => '\common\models\User',
-                'filter' => ['status' => User::STATUS_ACTIVE],
+                'filter' => ['status' => UserStatus::Active->value],
                 'message' => Yii::t('app', 'PASSWORD_RESET_NO_USER'),
             ],
         ];
@@ -45,7 +46,7 @@ final class PasswordResetRequestForm extends Model
     {
         /* @var $user User */
         $user = User::findOne([
-            'status' => User::STATUS_ACTIVE,
+            'status' => UserStatus::Active->value,
             'email' => $this->email,
         ]);
 

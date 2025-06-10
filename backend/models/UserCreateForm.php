@@ -2,6 +2,7 @@
 namespace backend\models;
 
 use common\models\core\Language;
+use common\models\core\UserStatus;
 use common\models\User;
 use common\models\UserInvitation;
 use Yii;
@@ -66,7 +67,7 @@ final class UserCreateForm extends Model
                 'unique',
                 'targetClass' => '\common\models\User',
                 'message' => Yii::t('app', 'USER_CREATION_EMAIL_TAKEN'),
-                'filter' => ['status' => User::STATUS_ACTIVE],
+                'filter' => ['status' => UserStatus::Active->value],
             ],
             ['language', 'in', 'range' => Language::supportedLanguages()],
             [['note'], 'string', 'max' => 255],

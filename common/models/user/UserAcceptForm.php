@@ -3,6 +3,7 @@
 namespace common\models\user;
 
 use common\models\core\Language;
+use common\models\core\UserStatus;
 use common\models\User;
 use common\models\UserInvitation;
 use kartik\password\StrengthValidator;
@@ -82,7 +83,7 @@ final class UserAcceptForm extends Model
                 'unique',
                 'targetClass' => '\common\models\User',
                 'message' => Yii::t('app', 'USER_CREATION_USERNAME_TAKEN'),
-                'filter' => ['status' => User::STATUS_ACTIVE],
+                'filter' => ['status' => UserStatus::Active->value],
             ],
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
@@ -93,7 +94,7 @@ final class UserAcceptForm extends Model
                 'unique',
                 'targetClass' => '\common\models\User',
                 'message' => Yii::t('app', 'USER_CREATION_EMAIL_TAKEN'),
-                'filter' => ['status' => User::STATUS_ACTIVE],
+                'filter' => ['status' => UserStatus::Active->value],
             ],
             ['language', 'in', 'range' => Language::supportedLanguages()],
             ['password', 'required'],
