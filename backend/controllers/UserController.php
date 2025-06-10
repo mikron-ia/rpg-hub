@@ -59,8 +59,6 @@ final class UserController extends Controller
 
     /**
      * Lists all users
-     *
-     * @return string
      */
     public function actionIndex(): string
     {
@@ -75,8 +73,6 @@ final class UserController extends Controller
 
     /**
      * Lists all invitations
-     *
-     * @return string
      */
     public function actionInvitations(): string
     {
@@ -93,10 +89,6 @@ final class UserController extends Controller
     /**
      * Displays a single user
      *
-     * @param integer $id
-     *
-     * @return string
-     *
      * @throws NotFoundHttpException
      */
     public function actionView(int $id): string
@@ -108,8 +100,6 @@ final class UserController extends Controller
 
     /**
      * Sends an invitation to a new user
-     *
-     * @return Response|string
      */
     public function actionCreate(): Response|string
     {
@@ -133,10 +123,6 @@ final class UserController extends Controller
     /**
      * Updates an existing user
      *
-     * @param int $id
-     *
-     * @return Response|string
-     *
      * @throws NotFoundHttpException
      * @throws Exception
      */
@@ -156,10 +142,6 @@ final class UserController extends Controller
     /**
      * Deletes an existing user
      *
-     * @param int $id
-     *
-     * @return Response
-     *
      * @throws NotFoundHttpException
      * @throws Throwable
      * @throws StaleObjectException
@@ -173,10 +155,6 @@ final class UserController extends Controller
 
     /**
      * Revokes an invitation
-     *
-     * @param int $id
-     *
-     * @return Response
      *
      * @throws Exception
      */
@@ -195,10 +173,6 @@ final class UserController extends Controller
 
     /**
      * Renews an invitation
-     *
-     * @param int $id
-     *
-     * @return Response
      *
      * @throws Exception
      */
@@ -222,10 +196,6 @@ final class UserController extends Controller
     /**
      * Re-sends an invitation
      *
-     * @param integer $id
-     *
-     * @return Response
-     *
      * @throws InvalidBackendConfigurationException
      */
     public function actionResend(int $id): Response
@@ -248,10 +218,6 @@ final class UserController extends Controller
     /**
      * Finds the User model based on its primary key value
      * If the model is not found, a 404 HTTP exception will be thrown
-     *
-     * @param integer $id
-     *
-     * @return User the loaded model
      *
      * @throws NotFoundHttpException if the model cannot be found
      */

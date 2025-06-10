@@ -11,25 +11,13 @@ use yii\db\ActiveQuery;
 
 final class UserSettingsForm extends Model
 {
-    /**
-     * @var \common\models\User
-     */
-    private $user;
+    private ?User $user;
 
-    /**
-     * @var string
-     */
-    public $email;
+    public string $email;
 
-    /**
-     * @var string
-     */
-    public $language;
+    public string $language;
 
-    /**
-     * @var string
-     */
-    public $username;
+    public string $username;
 
     public function __construct($config = [])
     {
@@ -41,7 +29,10 @@ final class UserSettingsForm extends Model
         parent::__construct($config);
     }
 
-    final public function attributeLabels()
+    /**
+     * @return array<string,string>
+     */
+    final public function attributeLabels(): array
     {
         return [
             'email' => Yii::t('app', 'USER_EMAIL'),
@@ -50,7 +41,7 @@ final class UserSettingsForm extends Model
         ];
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             ['language', 'in', 'range' => Language::supportedLanguages()],
@@ -84,10 +75,7 @@ final class UserSettingsForm extends Model
         ];
     }
 
-    /**
-     * @return bool
-     */
-    public function save()
+    public function save(): bool
     {
         if ($this->validate()) {
             $this->user->language = $this->language;

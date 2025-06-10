@@ -40,29 +40,26 @@ use yii\web\IdentityInterface;
  */
 final class User extends ActiveRecord implements IdentityInterface
 {
-    const USER_ROLE_NONE = 'none';
-    const USER_ROLE_USER = 'user';
-    const USER_ROLE_OPERATOR = 'operator';
-    const USER_ROLE_MANAGER = 'manager';
-    const USER_ROLE_ADMINISTRATOR = 'administrator';
+    public const USER_ROLE_NONE = 'none';
+    public const USER_ROLE_USER = 'user';
+    public const USER_ROLE_OPERATOR = 'operator';
+    public const USER_ROLE_MANAGER = 'manager';
+    public const USER_ROLE_ADMINISTRATOR = 'administrator';
 
-    /**
-     * @var string
-     */
-    public $user_role;
+    public string $user_role;
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%user}}';
     }
 
-    public function afterFind()
+    public function afterFind(): void
     {
         $this->user_role = $this->getUserRoleCode();
         parent::afterFind();
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): void
     {
         if (!$this->hasErrors()) {
             $roleCode = $this->getUserRoleCode();
@@ -81,7 +78,7 @@ final class User extends ActiveRecord implements IdentityInterface
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'performedActionBehavior' => [
@@ -95,7 +92,7 @@ final class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             ['status', 'default', 'value' => UserStatus::Active->value],
@@ -118,7 +115,7 @@ final class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'email' => Yii::t('app', 'USER_EMAIL'),
@@ -131,7 +128,7 @@ final class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    public static function findIdentity($id)
+    public static function findIdentity($id): User|IdentityInterface|null
     {
         return static::findOne(['id' => $id, 'status' => UserStatus::Active->value]);
     }
@@ -143,36 +140,30 @@ final class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds user by ID
-     * @param int $id
-     * @return static|null
      */
-    public static function findById($id)
+    public static function findById(int $id): null|static
     {
         return static::findOne(['id' => $id, 'status' => UserStatus::Active->value]);
     }
 
     /**
      * Finds user by username
-     * @param string $username
-     * @return static|null
      */
-    public static function findByUsername($username)
+    public static function findByUsername(string $username): ?User
     {
-        return static::findOne(['username' => $username, 'status' => UserStatus::Active->value]);
+        return User::findOne(['username' => $username, 'status' => UserStatus::Active->value]);
     }
 
     /**
      * Finds user by password reset token
-     * @param string $token password reset token
-     * @return static|null
      */
-    public static function findByPasswordResetToken($token)
+    public static function findByPasswordResetToken(string $token): ?User
     {
-        if (!static::isPasswordResetTokenValid($token)) {
+        if (!User::isPasswordResetTokenValid($token)) {
             return null;
         }
 
-        return static::findOne([
+        return User::findOne([
             'password_reset_token' => $token,
             'status' => UserStatus::Active->value,
         ]);
@@ -180,10 +171,8 @@ final class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds out if password reset token is valid
-     * @param string $token password reset token
-     * @return boolean
      */
-    public static function isPasswordResetTokenValid($token): bool
+    public static function isPasswordResetTokenValid(string $token): bool
     {
         if (empty($token)) {
             return false;
@@ -199,14 +188,11 @@ final class User extends ActiveRecord implements IdentityInterface
         return $this->getPrimaryKey();
     }
 
-    public function getAuthKey()
+    public function getAuthKey(): string
     {
         return $this->auth_key;
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getEpicsAssisted(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
@@ -214,9 +200,6 @@ final class User extends ActiveRecord implements IdentityInterface
         ]);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getEpicsManaged(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
@@ -224,9 +207,6 @@ final class User extends ActiveRecord implements IdentityInterface
         ]);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getEpicsGameMasteredAndManaged(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
@@ -235,9 +215,6 @@ final class User extends ActiveRecord implements IdentityInterface
         ]);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getEpicsGameMastered(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
@@ -245,9 +222,6 @@ final class User extends ActiveRecord implements IdentityInterface
         ]);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getEpicsOperated(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
@@ -256,9 +230,6 @@ final class User extends ActiveRecord implements IdentityInterface
         ]);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getEpicsPlayed(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
@@ -266,9 +237,6 @@ final class User extends ActiveRecord implements IdentityInterface
         ]);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getEpicsVisible(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
@@ -279,9 +247,6 @@ final class User extends ActiveRecord implements IdentityInterface
         ]);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getEpics(): ActiveQuery
     {
 
@@ -303,7 +268,7 @@ final class User extends ActiveRecord implements IdentityInterface
             ->where(['user_id' => $this->id, 'role' => $roles]);
     }
 
-    public function validateAuthKey($authKey)
+    public function validateAuthKey($authKey): bool
     {
         return $this->getAuthKey() === $authKey;
     }
@@ -312,19 +277,18 @@ final class User extends ActiveRecord implements IdentityInterface
      * Validates password
      *
      * @param string $password password to validate
+     *
      * @return boolean if password provided is valid for current user
      */
-    public function validatePassword($password)
+    public function validatePassword(string $password): bool
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
     /**
      * Generates password hash from password and sets it to the model
-     *
-     * @param string $password
      */
-    public function setPassword($password)
+    public function setPassword(string $password): void
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
@@ -332,7 +296,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * Generates "remember me" authentication key
      */
-    public function generateAuthKey()
+    public function generateAuthKey(): void
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
@@ -340,7 +304,7 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * Generates new password reset token
      */
-    public function generatePasswordResetToken()
+    public function generatePasswordResetToken(): void
     {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
@@ -348,13 +312,13 @@ final class User extends ActiveRecord implements IdentityInterface
     /**
      * Removes password reset token
      */
-    public function removePasswordResetToken()
+    public function removePasswordResetToken(): void
     {
         $this->password_reset_token = null;
     }
 
     /**
-     * @return \string[]
+     * @return array<int,string>
      */
     static public function getAllForDropDown(): array
     {
@@ -372,27 +336,21 @@ final class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
      */
     static public function statusNames(): array
     {
         return [
             UserStatus::Deleted->value => Yii::t('app', 'USER_STATUS_DELETED'),
-            UserStatus::Suspended->value => Yii::t('app', 'USER_STATUS_SUSPENDED'),
             UserStatus::Active->value => Yii::t('app', 'USER_STATUS_ACTIVE'),
         ];
     }
 
     public function getUserRoleName(): string
     {
-        $names = self::userRoleNames();
-        $code = $this->getUserRoleCode();
-        return isset($names[$code]) ? $names[$code] : '?';
+        return (self::userRoleNames())[$this->getUserRoleCode()] ?? '?';
     }
 
-    /**
-     * @return string
-     */
     public function getUserRoleCode(): string
     {
         if (Yii::$app->authManager->checkAccess($this->id, 'administrator')) {
@@ -409,7 +367,7 @@ final class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return string[]
+     * @return array<int,string>
      */
     static public function getFullUserList(): array
     {
@@ -427,7 +385,7 @@ final class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
      */
     static public function userRoleNames(): array
     {
@@ -441,12 +399,12 @@ final class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
      */
     static public function allowedUserRoleNames(): array
     {
-        $roles = static::userRoleNames();
-        $allowedRoles = static::allowedUserRoles();
+        $roles = User::userRoleNames();
+        $allowedRoles = User::allowedUserRoles();
 
         foreach ($roles as $key => $role) {
             if (!in_array($key, $allowedRoles)) {
@@ -458,7 +416,7 @@ final class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return string[]
+     * @return array<int,string>
      */
     static public function allowedUserRoles(): array
     {
@@ -466,25 +424,19 @@ final class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return string[]
+     * @return array<int,string>
      */
     static public function operatorUserRoles(): array
     {
         return [self::USER_ROLE_OPERATOR, self::USER_ROLE_MANAGER, self::USER_ROLE_ADMINISTRATOR];
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getParticipants()
+    public function getParticipants(): ActiveQuery
     {
         return $this->hasMany(Participant::class, ['user_id' => 'id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTasks()
+    public function getTasks(): ActiveQuery
     {
         return $this->hasMany(Task::class, ['user_id' => 'id']);
     }
