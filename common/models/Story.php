@@ -44,28 +44,19 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     use ToolsForEntity;
     use ToolsForHasVisibility;
 
-    const TYPE_CHAPTER = 'chapter';         // Part of larger story; interactive
-    const TYPE_EPISODE = 'episode';         // Self-standing episode; interactive
-    const TYPE_MISSION = 'mission';         // Self-standing episode; interactive
-    const TYPE_PROLOGUE = 'prologue';       // Prologue to an arc; interactive or not
-    const TYPE_INTERLUDE = 'interlude';     // Interlude in an arc; rarely interactive
-    const TYPE_EPILOGUE = 'epilogue';       // Epilogue to an arc; interactive or not
-    const TYPE_PART = 'part';               // Part of larger story; interactive
-    const TYPE_READING = 'reading';         // Narration to give context; not interactive
-
     /**
-     * @var string[]
+     * @var array<string,string>
      */
-    private $parametersFormatted;
+    private array $parametersFormatted;
 
     public bool $is_off_the_record_change = false;
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'story';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['epic_id', 'name', 'short'], 'required'],
@@ -97,7 +88,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'story_id' => Yii::t('app', 'STORY_ID'),
@@ -115,7 +106,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
-    public function afterFind()
+    public function afterFind(): void
     {
         if ($this->seen_pack_id) {
             $this->seenPack->recordNotification();
@@ -131,7 +122,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if ($insert) {
             $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
@@ -156,7 +147,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return parent::beforeSave($insert);
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'positionBehavior' => [
@@ -172,41 +163,28 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getParameterPack(): ActiveQuery
     {
         return $this->hasOne(ParameterPack::class, ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getUtilityBag()
+    public function getUtilityBag(): ActiveQuery
     {
         return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
     /**
      * Provides story summary formatted in HTML
-     * @return string Short summary formatted to HTML
      */
     public function getShortFormatted(): string
     {
@@ -215,7 +193,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
 
     /**
      * Provides story summary formatted in HTML
-     * @return string Long summary formatted to HTML
      */
     public function getLongFormatted(): string
     {
@@ -246,7 +223,10 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return $this->parametersFormatted;
     }
 
-    public function getSimpleDataForApi()
+    /**
+     * @return array<string,string>
+     */
+    public function getSimpleDataForApi(): array
     {
         return [
             'name' => $this->name,
@@ -256,10 +236,12 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
-    public function getCompleteDataForApi()
+    /**
+     * @return array<string,string|array>
+     */
+    public function getCompleteDataForApi(): array
     {
-
-        $basicData = [
+        return [
             'name' => $this->name,
             'key' => $this->key,
             'help' => [],
@@ -267,7 +249,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             'short' => $this->getShortFormatted(),
             'long' => $this->getLongFormatted(),
         ];
-        return $basicData;
     }
 
     public function isVisibleInApi(): bool
@@ -323,30 +304,26 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return self::canUserViewInEpic($this->epic);
     }
 
-    static function throwExceptionAboutCreate()
+    static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_STORY'));
     }
 
-    static function throwExceptionAboutControl()
+    static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_STORY'));
     }
 
-    static function throwExceptionAboutIndex()
+    static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_STORY'));
     }
 
-    static function throwExceptionAboutView()
+    static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_STORY'));
     }
 
-    /**
-     * @param string $parameterName
-     * @return string
-     */
     public function getParameter(string $parameterName): string
     {
         if (!$this->parametersFormatted) {
@@ -355,9 +332,9 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
 
         if (isset($this->parametersFormatted[$parameterName])) {
             return $this->parametersFormatted[$parameterName]['value'];
-        } else {
-            return '';
         }
+
+        return '';
     }
 
     public function recordSighting(): bool
@@ -380,26 +357,9 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return $this->seenPack->getCSSForCurrentUser();
     }
 
-    public function getLongDescriptionWordCount()
+    public function getLongDescriptionWordCount(): int
     {
         return StringHelper::countWords($this->long);
-    }
-
-    /**
-     * @return string[]
-     */
-    static public function typeNames(): array
-    {
-        return [
-            self::TYPE_CHAPTER => Yii::t('app', 'STORY_TYPE_CHAPTER'),
-            self::TYPE_PART => Yii::t('app', 'STORY_TYPE_PART'),
-            self::TYPE_PROLOGUE => Yii::t('app', 'STORY_TYPE_PROLOGUE'),
-            self::TYPE_INTERLUDE => Yii::t('app', 'STORY_TYPE_INTERLUDE'),
-            self::TYPE_EPILOGUE => Yii::t('app', 'STORY_TYPE_EPILOGUE'),
-            self::TYPE_EPISODE => Yii::t('app', 'STORY_TYPE_EPISODE'),
-            self::TYPE_MISSION => Yii::t('app', 'STORY_TYPE_MISSION'),
-            self::TYPE_READING => Yii::t('app', 'STORY_TYPE_READING'),
-        ];
     }
 
     public function __toString()

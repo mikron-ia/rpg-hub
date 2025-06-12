@@ -8,16 +8,14 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\db\ActiveQuery;
+use yii\web\HttpException;
 
 /**
  * StoryQuery represents the model behind the search form about `common\models\Story`.
  */
 final class StoryQuery extends Story
 {
-    /**
-     * @var int
-     */
-    private $pageCount;
+    private int $pageCount;
 
     public function __construct($pagination = 4, array $config = [])
     {
@@ -25,9 +23,9 @@ final class StoryQuery extends Story
         parent::__construct($config);
     }
 
-    public $descriptions;
+    public string $descriptions;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['story_id'], 'integer'],
@@ -36,7 +34,7 @@ final class StoryQuery extends Story
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         $attributeLabels = parent::attributeLabels();
 
@@ -45,7 +43,7 @@ final class StoryQuery extends Story
         return $attributeLabels;
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
@@ -84,7 +82,7 @@ final class StoryQuery extends Story
     /**
      * @param array $userIds
      * @return ArrayDataProvider|null
-     * @throws \yii\web\HttpException
+     * @throws HttpException
      */
     public function mostRecentByPlayerDataProvider(array $userIds): ?ArrayDataProvider
     {
@@ -106,12 +104,10 @@ final class StoryQuery extends Story
             }
         }
 
-        $dataProvider = new ArrayDataProvider([
+        return new ArrayDataProvider([
             'allModels' => $mostRecentStories,
             'pagination' => false,
         ]);
-
-        return $dataProvider;
     }
 
     private function getDataProviderForSearch($params, ActiveQuery $query): ActiveDataProvider
