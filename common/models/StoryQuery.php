@@ -23,7 +23,7 @@ final class StoryQuery extends Story
         parent::__construct($config);
     }
 
-    public string $descriptions;
+    public ?string $descriptions = null;
 
     public function rules(): array
     {

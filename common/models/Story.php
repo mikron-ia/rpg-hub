@@ -47,7 +47,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     /**
      * @var array<string,string>
      */
-    private array $parametersFormatted;
+    private array $parametersFormatted = [];
 
     public bool $is_off_the_record_change = false;
 
