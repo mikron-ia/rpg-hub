@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use frontend\assets\StoryAsset;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
@@ -41,7 +42,12 @@ if ($this->params['showPrivates']) {
 
 ?>
 <div class="story-view">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>
+        <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
+            <span class="unpublished-tag tag-view-page"><?= Yii::t('app', 'TAG_UNPUBLISHED_F') ?></span>
+        <?php endif; ?>
+        <?= Html::encode($this->title) ?>
+    </h1>
     <?= Tabs::widget([
         'items' => $items
     ]) ?>

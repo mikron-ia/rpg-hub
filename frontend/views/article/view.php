@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -16,7 +17,12 @@ $this->params['showPrivates'] = $model->canUserControlYou();
 <div class="article-view">
 
     <div class="buttoned-header">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1>
+            <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
+                <span class="unpublished-tag tag-view-page"><?= Yii::t('app', 'TAG_UNPUBLISHED_M') ?></span>
+            <?php endif; ?>
+            <?= Html::encode($this->title) ?>
+        </h1>
         <?php if ($this->params['showPrivates']): ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_SEE_BACKEND'),

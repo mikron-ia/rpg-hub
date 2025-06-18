@@ -382,6 +382,22 @@ a:focus {
     vertical-align: middle;
 }
 
+.tag-view-page {
+    font-size: 80%;
+    margin: 0 5px 2px 5px;
+    padding: 2px 20px;
+    text-align: center;
+}
+
+@media (max-width: 383px) {
+    .tag-view-page {
+        font-size: 50%;
+        margin: 5px 0;
+        padding: 5px 10px;
+        width: 100%;
+    }
+}
+
 .tag-smaller {
     font-size: 1.25rem;
     margin: -1px 0 0 5px;

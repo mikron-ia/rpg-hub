@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use frontend\assets\CharacterAsset;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
@@ -57,7 +58,12 @@ if ($this->params['showPrivates']) {
 <div class="person-view">
 
     <div class="buttoned-header">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1>
+            <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
+                <span class="unpublished-tag tag-view-page"><?= Yii::t('app', 'TAG_UNPUBLISHED_F') ?></span>
+            <?php endif; ?>
+            <?= Html::encode($this->title) ?>
+        </h1>
         <?php if ($this->params['showPrivates']): ?>
             <?= Html::a(Yii::t('app', 'BUTTON_SECRETS_SHOW'), '#', [
                 'class' => 'btn btn-default',
