@@ -12,19 +12,17 @@ if ($pointInTimeStartExists || $pointInTimeEndExists) {
     if ($pointInTimeStartExists && $pointInTimeEndExists) {
         $message = Yii::t(
             'app', 'DESCRIPTION_VALID_BOTH {start} {end}',
-            ['start' => $model->pointInTimeStart->name, 'end' => $model->pointInTimeEnd->name]
+            ['start' => $model->pointInTimeStart->name, 'end' => $model->pointInTimeEnd->name],
         );
         $position = $model->pointInTimeStart->position; // use start whenever possible
-        $displayPointsInTime = true;
     } elseif ($pointInTimeStartExists) {
         $message = Yii::t('app', 'DESCRIPTION_VALID_START {start}', ['start' => $model->pointInTimeStart->name]);
         $position = $model->pointInTimeStart->position;
-        $displayPointsInTime = true;
     } elseif ($pointInTimeEndExists) {
         $message = Yii::t('app', 'DESCRIPTION_VALID_END {end}', ['end' => $model->pointInTimeEnd->name]);
         $position = $model->pointInTimeEnd->position;
-        $displayPointsInTime = true;
     }
+    $displayPointsInTime = true;
 }
 
 ?>
@@ -33,8 +31,8 @@ if ($pointInTimeStartExists || $pointInTimeEndExists) {
     <h2><?= $model->getTypeName(); ?></h2>
 
     <?php if ($displayPointsInTime): ?>
-        <div class="tag-box description-timestamp" data-type="<?= $model->code ?>" data-order="<?= $position ?>">
-            <?= $message ?>
+        <div class="tag-box description-timestamp" data-type="<?= $model->code ?>" data-order="<?= $position ?? 0 ?>">
+            <?= $message ?? '?' ?>
         </div>
         <div class="tag-box description-outdated" style="display: none;">
             <?= Yii::t('app', 'DESCRIPTION_REPLACED'); ?>

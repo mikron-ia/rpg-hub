@@ -80,12 +80,12 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     const TYPE_INTERLUDE = 'interlude';         // For Scenario, Story; events in-between
     const TYPE_POSTLUDE = 'postlude';           // For Scenario, Story; events following
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'description';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [
@@ -97,7 +97,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
                     'created_by',
                     'updated_by',
                     'point_in_time_start_id',
-                    'point_in_time_end_id'
+                    'point_in_time_end_id',
                 ],
                 'integer'
             ],
@@ -109,7 +109,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
                     'private_text',
                     'public_text_expanded',
                     'protected_text_expanded',
-                    'private_text_expanded'
+                    'private_text_expanded',
                 ],
                 'string'
             ],
@@ -121,52 +121,42 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => DescriptionPack::class,
-                'targetAttribute' => ['description_pack_id' => 'description_pack_id']
+                'targetAttribute' => ['description_pack_id' => 'description_pack_id'],
             ],
-            [
-                ['code'],
-                'in',
-                'range' => function () {
-                    return $this->allowedTypes();
-                }
-            ],
-            [
-                ['visibility'],
-                'in',
-                'range' => fn() => $this->allowedVisibilitiesForValidator(),
-            ],
+            [['code'], 'in', 'range' => fn() => $this->allowedTypes()],
+            [['visibility'], 'in', 'range' => fn() => $this->allowedVisibilitiesForValidator()],
             [
                 ['point_in_time_start_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => PointInTime::class,
-                'targetAttribute' => ['point_in_time_start_id' => 'point_in_time_id']
+                'targetAttribute' => ['point_in_time_start_id' => 'point_in_time_id'],
             ],
             [
                 ['point_in_time_end_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => PointInTime::class,
-                'targetAttribute' => ['point_in_time_end_id' => 'point_in_time_id']
+                'targetAttribute' => ['point_in_time_end_id' => 'point_in_time_id'],
             ],
             [
                 ['created_by'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => User::class,
-                'targetAttribute' => ['created_by' => 'id']
+                'targetAttribute' => ['created_by' => 'id'],
             ],
             [
                 ['updated_by'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => User::class,
-                'targetAttribute' => ['updated_by' => 'id']
+                'targetAttribute' => ['updated_by' => 'id'],
             ],
         ];
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if (!$insert) {
             $this->createHistoryRecord();
@@ -179,7 +169,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         return parent::beforeSave($insert);
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): void
     {
         if (!empty($changedAttributes)) {
             $this->descriptionPack->touch('updated_at');
@@ -188,7 +178,10 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function attributeLabels()
+    /**
+     * @return array<string,string>
+     */
+    public function attributeLabels(): array
     {
         return [
             'description_id' => Yii::t('app', 'DESCRIPTION_ID'),
@@ -208,7 +201,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         ];
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'positionBehavior' => [
@@ -231,7 +224,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
      */
     static public function typeNames(): array
     {
@@ -299,24 +292,18 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     }
 
     /**
-     * @return string[]
+     * @return array<int,string>
      */
     public function allowedTypes(): array
     {
         return array_keys(self::typeNames());
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getCreatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getDescriptionPack(): ActiveQuery
     {
         return $this->hasOne(DescriptionPack::class, ['description_pack_id' => 'description_pack_id']);
@@ -332,55 +319,33 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         return $this->hasOne(PointInTime::class, ['point_in_time_id' => 'point_in_time_end_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getUpdatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTypeName()
+    public function getTypeName(): string
     {
         $names = self::typeNames();
-        if (isset($names[$this->code])) {
-            return $names[$this->code];
-        } else {
-            return "?";
-        }
+        return isset($names[$this->code]) ? $names[$this->code] : "?";
     }
 
-    /**
-     * @return null|string
-     */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         $language = Language::create($this->lang);
         return $language->getName();
     }
 
-    /**
-     * @return string
-     */
     public function getPublicFormatted(): string
     {
         return $this->formatText($this->public_text_expanded);
     }
 
-    /**
-     * @return string
-     */
     public function getProtectedFormatted(): string
     {
         return $this->formatText($this->protected_text_expanded);
     }
 
-    /**
-     * @return string
-     */
     public function getPrivateFormatted(): string
     {
         return $this->formatText($this->private_text_expanded);
@@ -388,9 +353,9 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
 
     /**
      * Provides simple representation of the object content, fit for basic display in an index or a summary
-     * @return array
+     * @return array<string,string>
      */
-    public function getSimpleDataForApi()
+    public function getSimpleDataForApi(): array
     {
         return [
             'title' => $this->getTypeName(),
@@ -430,7 +395,6 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
 
     /**
      * Provides word count that player can see
-     * @return int
      */
     public function getWordCount(): int
     {
@@ -439,7 +403,6 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
 
     /**
      * Provides word count for public part
-     * @return int
      */
     public function getWordCountForPublic(): int
     {
@@ -448,7 +411,6 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
 
     /**
      * Provides word count for protected part
-     * @return int
      */
     public function getWordCountForProtected(): int
     {
@@ -457,7 +419,6 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
 
     /**
      * Provides word count for private part
-     * @return int
      */
     public function getWordCountForPrivate(): int
     {

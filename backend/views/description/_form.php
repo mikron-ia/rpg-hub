@@ -3,6 +3,7 @@
 use common\models\core\Language;
 use common\models\core\Visibility;
 use common\models\Description;
+use common\models\PointInTimeQuery;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -39,29 +40,35 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model,
-            'visibility')->dropDownList(Visibility::visibilityNames(Description::allowedVisibilities())); ?>
+        <?= $form
+            ->field($model, 'visibility')
+            ->dropDownList(Visibility::visibilityNames(Description::allowedVisibilities()));
+        ?>
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model,
-            'point_in_time_start_id')->dropDownList(
-                    \common\models\PointInTimeQuery::getListOfPointsInTimeForSelector(),
-                    ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_POINT_IN_TIME') . ' --- ']
-        ) ?>
+        <?= $form
+            ->field($model, 'point_in_time_start_id')
+            ->dropDownList(
+                PointInTimeQuery::getListOfPointsInTimeForSelector(),
+                ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_POINT_IN_TIME') . ' --- '],
+            ); ?>
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model,
-            'point_in_time_end_id')->dropDownList(
-            \common\models\PointInTimeQuery::getListOfPointsInTimeForSelector(),
-            ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_POINT_IN_TIME') . ' --- ']
-        ) ?>
+        <?= $form
+            ->field($model, 'point_in_time_end_id')
+            ->dropDownList(
+                PointInTimeQuery::getListOfPointsInTimeForSelector(),
+                ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_POINT_IN_TIME') . ' --- '],
+            ); ?>
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),
-            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton(
+            $model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+        ); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

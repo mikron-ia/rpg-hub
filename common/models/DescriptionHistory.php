@@ -3,7 +3,6 @@
 namespace common\models;
 
 use common\models\core\HasVisibility;
-use common\models\core\Visibility;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use Yii;
@@ -37,12 +36,12 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
     use ToolsForLinkTags;
     use ToolsForHasVisibility;
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'description_history';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['description_id'], 'integer'],
@@ -55,26 +54,26 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Description::class,
-                'targetAttribute' => ['description_id' => 'description_id']
+                'targetAttribute' => ['description_id' => 'description_id'],
             ],
             [
                 ['point_in_time_start_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => PointInTime::class,
-                'targetAttribute' => ['point_in_time_start_id' => 'point_in_time_id']
+                'targetAttribute' => ['point_in_time_start_id' => 'point_in_time_id'],
             ],
             [
                 ['point_in_time_end_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => PointInTime::class,
-                'targetAttribute' => ['point_in_time_end_id' => 'point_in_time_id']
+                'targetAttribute' => ['point_in_time_end_id' => 'point_in_time_id'],
             ],
         ];
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         $this->public_text_expanded = $this->expandText($this->public_text);
         $this->protected_text_expanded = $this->expandText($this->protected_text);
@@ -83,7 +82,10 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         return parent::beforeSave($insert);
     }
 
-    public function attributeLabels()
+    /**
+     * @return array<string,string>
+     */
+    public function attributeLabels(): array
     {
         return [
             'description_history_id' => Yii::t('app', 'DESCRIPTION_HISTORY_ID'),
@@ -102,7 +104,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         ];
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'timestampBehavior' => [
@@ -134,10 +136,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         return null;
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getDescription()
+    public function getDescription(): ActiveQuery
     {
         return $this->hasOne(Description::class, ['description_id' => 'description_id']);
     }
@@ -152,25 +151,16 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         return $this->hasOne(PointInTime::class, ['point_in_time_id' => 'point_in_time_end_id']);
     }
 
-    /**
-     * @return string
-     */
     public function getPublicFormatted(): string
     {
         return $this->formatText($this->public_text_expanded);
     }
 
-    /**
-     * @return string
-     */
     public function getProtectedFormatted(): string
     {
         return $this->formatText($this->protected_text_expanded);
     }
 
-    /**
-     * @return string
-     */
     public function getPrivateFormatted(): string
     {
         return $this->formatText($this->private_text_expanded);

@@ -14,12 +14,9 @@ use yii\db\ActiveQuery;
  */
 final class DescriptionQuery extends Description
 {
-    /**
-     * @var string
-     */
-    public $text;
+    public ?string $text;
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['description_pack_id'], 'integer'],
@@ -27,7 +24,7 @@ final class DescriptionQuery extends Description
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         $attributeLabels = parent::attributeLabels();
 
@@ -36,25 +33,19 @@ final class DescriptionQuery extends Description
         return $attributeLabels;
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
 
     /**
      * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params): ActiveDataProvider
     {
         $query = Description::find();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $dataProvider = new ActiveDataProvider(['query' => $query]);
 
         $this->load($params);
 
@@ -63,9 +54,7 @@ final class DescriptionQuery extends Description
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'description_pack_id' => $this->description_pack_id,
-        ]);
+        $query->andFilterWhere(['description_pack_id' => $this->description_pack_id]);
 
         $query->andFilterWhere(['in', 'code', $this->code])
             ->andFilterWhere(['in', 'visibility', $this->visibility])
@@ -73,17 +62,12 @@ final class DescriptionQuery extends Description
                 'or',
                 ['like', 'public_text', $this->public_text],
                 ['like', 'public_text', $this->text],
-                ['like', 'private_text', $this->text]
-            ]);;
+                ['like', 'private_text', $this->text],
+            ]);
 
         return $dataProvider;
     }
 
-    /**
-     * @param DescriptionPack $descriptionPack
-     * @param Language $language
-     * @return ActiveQuery
-     */
     static public function listDescriptionsInLanguage(DescriptionPack $descriptionPack, Language $language): ActiveQuery
     {
         $query = Description::find();
@@ -97,10 +81,6 @@ final class DescriptionQuery extends Description
         return $query;
     }
 
-    /**
-     * @param DescriptionPack $descriptionPack
-     * @return ActiveQuery
-     */
     static public function listDescriptions(DescriptionPack $descriptionPack): ActiveQuery
     {
         $query = Description::find();
