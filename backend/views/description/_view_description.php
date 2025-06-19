@@ -6,6 +6,10 @@ use yii\helpers\StringHelper;
 /* @var $this yii\web\View */
 /* @var $model common\models\Description */
 
+$messageForStillValid = isset($model->point_in_time_still_valid_id) && isset($model->point_in_time_end_id)
+    ? Yii::t('app', 'DESCRIPTION_STILL_VALID_IC_CMS_HIDDEN {when}', ['when' => $model->pointInTimeStillValid->name ?? '?'])
+    : Yii::t('app', 'DESCRIPTION_STILL_VALID_IC_CMS {when}', ['when' => $model->pointInTimeStillValid->name ?? '?']);
+
 ?>
 
 <div class="col-md-6 description-box" data-description-id="<?= $model->description_id ?>">
@@ -66,19 +70,23 @@ use yii\helpers\StringHelper;
         </span>
 
         <span class="tag-box">
-            <?= Yii::t('app', 'DESCRIPTION_UPDATED_IC {when}', [
+            <?= Yii::t('app', 'LABEL_VISIBLE') . ' ' . $model->getVisibilityLowercase(); ?>
+        </span>
+
+        <span class="tag-box">
+            <?= Yii::t('app', 'DESCRIPTION_SINCE_IC {when}', [
                 'when' => $model->pointInTimeStart->name ?? '?',
             ]); ?>
+        </span>
+
+        <span class="tag-box">
+            <?= $messageForStillValid ?>
         </span>
 
         <span class="tag-box">
             <?= Yii::t('app', 'DESCRIPTION_EXPIRED_IC {when}', [
                 'when' => $model->pointInTimeEnd->name ?? '?',
             ]); ?>
-        </span>
-
-        <span class="tag-box">
-            <?= Yii::t('app', 'LABEL_VISIBLE') . ' ' . $model->getVisibilityLowercase(); ?>
         </span>
 
         <span class="tag-box">

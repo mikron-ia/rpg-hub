@@ -38,12 +38,14 @@ use yii2tech\ar\position\PositionBehavior;
  * @property int $updated_by
  * @property int|null $point_in_time_start_id
  * @property int|null $point_in_time_end_id
+ * @property int|null $point_in_time_still_valid_id
  *
  * @property User $createdBy
  * @property DescriptionPack $descriptionPack
  * @property User $updatedBy
  * @property PointInTime $pointInTimeStart
  * @property PointInTime $pointInTimeEnd
+ * @property PointInTime $pointInTimeStillValid
  */
 class Description extends ActiveRecord implements Displayable, HasVisibility
 {
@@ -98,6 +100,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
                     'updated_by',
                     'point_in_time_start_id',
                     'point_in_time_end_id',
+                    'point_in_time_still_valid_id',
                 ],
                 'integer'
             ],
@@ -138,6 +141,13 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
                 'skipOnError' => true,
                 'targetClass' => PointInTime::class,
                 'targetAttribute' => ['point_in_time_end_id' => 'point_in_time_id'],
+            ],
+            [
+                ['point_in_time_still_valid_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => PointInTime::class,
+                'targetAttribute' => ['point_in_time_still_valid_id' => 'point_in_time_id'],
             ],
             [
                 ['created_by'],
@@ -198,6 +208,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
             'point_in_time_start_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME_START'),
             'point_in_time_end_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME_END'),
+            'point_in_time_still_valid_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME_STILL_VALID'),
         ];
     }
 
@@ -317,6 +328,11 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     public function getPointInTimeEnd(): ActiveQuery
     {
         return $this->hasOne(PointInTime::class, ['point_in_time_id' => 'point_in_time_end_id']);
+    }
+
+    public function getPointInTimeStillValid(): ActiveQuery
+    {
+        return $this->hasOne(PointInTime::class, ['point_in_time_id' => 'point_in_time_still_valid_id']);
     }
 
     public function getUpdatedBy(): ActiveQuery

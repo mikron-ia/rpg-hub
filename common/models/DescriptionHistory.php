@@ -26,6 +26,7 @@ use yii\db\Exception;
  * @property string $visibility
  * @property int|null $point_in_time_start_id
  * @property int|null $point_in_time_end_id
+ * @property int|null $point_in_time_still_valid_id
  *
  * @property Description $description
  * @property PointInTime $pointInTimeStart
@@ -70,6 +71,13 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
                 'targetClass' => PointInTime::class,
                 'targetAttribute' => ['point_in_time_end_id' => 'point_in_time_id'],
             ],
+            [
+                ['point_in_time_still_valid_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => PointInTime::class,
+                'targetAttribute' => ['point_in_time_still_valid_id' => 'point_in_time_id'],
+            ],
         ];
     }
 
@@ -101,6 +109,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
             'point_in_time_start_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME_START'),
             'point_in_time_end_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME_END'),
+            'point_in_time_still_valid_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME_STILL_VALID'),
         ];
     }
 
@@ -127,6 +136,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         $history->visibility = $description->visibility;
         $history->point_in_time_start_id = $description->point_in_time_start_id;
         $history->point_in_time_end_id = $description->point_in_time_end_id;
+        $history->point_in_time_still_valid_id = $description->point_in_time_still_valid_id;
 
         if ($history->save()) {
             $history->refresh();
@@ -149,6 +159,11 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
     public function getPointInTimeEnd(): ActiveQuery
     {
         return $this->hasOne(PointInTime::class, ['point_in_time_id' => 'point_in_time_end_id']);
+    }
+
+    public function getPointInTimeStillValid(): ActiveQuery
+    {
+        return $this->hasOne(PointInTime::class, ['point_in_time_id' => 'point_in_time_still_valid_id']);
     }
 
     public function getPublicFormatted(): string

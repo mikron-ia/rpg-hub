@@ -35,11 +35,11 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'private_text')->textarea(['rows' => 8]); ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form->field($model, 'lang')->dropDownList(Language::languagesLong()); ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form
             ->field($model, 'visibility')
             ->dropDownList(Visibility::visibilityNames(Description::allowedVisibilities()));
@@ -49,6 +49,15 @@ use yii\widgets\ActiveForm;
     <div class="col-md-6">
         <?= $form
             ->field($model, 'point_in_time_start_id')
+            ->dropDownList(
+                PointInTimeQuery::getListOfPointsInTimeForSelector(),
+                ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_POINT_IN_TIME') . ' --- '],
+            ); ?>
+    </div>
+
+    <div class="col-md-6">
+        <?= $form
+            ->field($model, 'point_in_time_still_valid_id')
             ->dropDownList(
                 PointInTimeQuery::getListOfPointsInTimeForSelector(),
                 ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_POINT_IN_TIME') . ' --- '],
