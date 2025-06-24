@@ -1,5 +1,8 @@
 <?php
 
+use common\models\core\Language;
+use common\models\core\UserStatus;
+use common\models\User;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -10,47 +13,74 @@ $this->title = Yii::t('app', 'USER_VIEW_TITLE {user_name}', ['user_name' => $mod
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'USER_INDEX_TITLE'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
+$confirmDisable = Yii::t('app', 'USER_CONFIRM_DISABLE');
+$confirmDelete = Yii::t('app', 'USER_CONFIRM_DELETE');
+
 ?>
 <div class="user-view">
-
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
-
-        <?= Html::a(Yii::t('app', 'BUTTON_UPDATE'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'BUTTON_DISABLE'), ['disable', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'title' => Yii::t('app', 'BUTTON_DISABLE_USER_TITLE'),
-            'data' => [
-                'confirm' => 'Are you sure you want to disable this user?',
-                'method' => 'post',
-            ],
-        ]) ?>
-        <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'title' => Yii::t('app', 'BUTTON_DELETE_USER_TITLE'),
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this user?',
-                'method' => 'post',
-            ],
-        ]) ?>
     </div>
 
-    <div class="col-md-6>">
+    <div class="col-md-6">
+        <h2 class="text-center"><?= Yii::t('app', 'LABEL_BASIC_DATA_AND_OPERATIONS'); ?></h2>
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
                 'email:email',
                 'created_at:datetime',
                 'updated_at:datetime',
-                [
-                    'attribute' => 'language',
-                    'value' => (\common\models\core\Language::create($model->language))->getName()
-                ],
+                ['attribute' => 'language', 'value' => (Language::create($model->language))->getName()],
                 [
                     'attribute' => 'role',
                     'label' => Yii::t('app', 'USER_ROLE_NAME'),
-                    'value' => $model->getUserRoleName()
+                    'value' => $model->getUserRoleName(),
                 ],
+                [
+                    'attribute' => 'status',
+                    'label' => Yii::t('app', 'USER_STATUS_LABEL'),
+                    'value' => fn(User $model) => UserStatus::from($model->status)->getName()
+                ],
+            ],
+        ]) ?>
+    </div>
+
+    <div class="col-md-6">
+        <h2 class="text-center"><?= Yii::t('app', 'LABEL_ACTIONS'); ?></h2>
+        <div class="buttons-on-view">
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_UPDATE'),
+                ['update', 'id' => $model->id], ['class' => 'btn btn-primary'],
+            ) ?>
+
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_DISABLE'),
+                ['disable', 'id' => $model->id],
+                [
+                    'class' => 'btn btn-danger',
+                    'title' => Yii::t('app', 'BUTTON_DISABLE_USER_TITLE'),
+                    'data' => [
+                        'confirm' => $confirmDisable,
+                        'method' => 'post',
+                    ],
+                ]
+            ) ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'title' => Yii::t('app', 'BUTTON_DELETE_USER_TITLE'),
+                'data' => [
+                    'confirm' => $confirmDelete,
+                    'method' => 'post',
+                ],
+            ]) ?>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <h2 class="text-center"><?= Yii::t('app', 'LABEL_EPICS'); ?></h2>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
                 [
                     'label' => Yii::t('app', 'USER_EPICS_PLAYED'),
                     'format' => 'raw',

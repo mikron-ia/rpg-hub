@@ -99,7 +99,12 @@ final class User extends ActiveRecord implements IdentityInterface
             [
                 'status',
                 'in',
-                'range' => [UserStatus::Deleted->value, UserStatus::Disabled->value, UserStatus::Active->value],
+                'range' => [
+                    UserStatus::Forgotten->value,
+                    UserStatus::Deleted->value,
+                    UserStatus::Disabled->value,
+                    UserStatus::Active->value,
+                ],
             ],
             [
                 'user_role',
@@ -108,7 +113,7 @@ final class User extends ActiveRecord implements IdentityInterface
                     self::USER_ROLE_USER,
                     self::USER_ROLE_OPERATOR,
                     self::USER_ROLE_MANAGER,
-                    self::USER_ROLE_ADMINISTRATOR
+                    self::USER_ROLE_ADMINISTRATOR,
                 ]
             ],
             ['language', 'in', 'range' => Language::supportedLanguages()]
@@ -333,17 +338,6 @@ final class User extends ActiveRecord implements IdentityInterface
         }
 
         return $list;
-    }
-
-    /**
-     * @return array<string,string>
-     */
-    static public function statusNames(): array
-    {
-        return [
-            UserStatus::Deleted->value => Yii::t('app', 'USER_STATUS_DELETED'),
-            UserStatus::Active->value => Yii::t('app', 'USER_STATUS_ACTIVE'),
-        ];
     }
 
     public function getUserRoleName(): string

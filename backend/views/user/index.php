@@ -1,6 +1,6 @@
 <?php
 
-use common\models\core\Language;
+use common\models\core\UserStatus;
 use common\models\User;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -12,8 +12,6 @@ $this->title = Yii::t('app', 'USER_INDEX_TITLE');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
-
-
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(Yii::t('app', 'BUTTON_USER_INVITE'), ['create'], ['class' => 'btn btn-success']) ?>
@@ -26,24 +24,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'username',
             'email:email',
             [
-                'attribute' => 'language',
-                'value' => function (User $model) {
-                    return (Language::create($model->language))->getName();
-                }
-            ],
-            [
                 'attribute' => 'role',
                 'label' => Yii::t('app', 'USER_ROLE_NAME'),
-                'value' => function (User $model) {
-                    return $model->getUserRoleName();
-                }
+                'value' => fn(User $model) => $model->getUserRoleName(),
+            ],
+            [
+                'attribute' => 'status',
+                'label' => Yii::t('app', 'USER_STATUS_LABEL'),
+                'value' => fn(User $model) => UserStatus::from($model->status)->getName(),
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => ['class' => 'text-center'],
-                'template' => '{view} {update}'
+                'template' => '{view} {update}',
             ],
         ],
     ]); ?>
-
 </div>
