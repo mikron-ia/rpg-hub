@@ -36,12 +36,12 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 {
     use ToolsForEntity;
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'character_sheet';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['epic_id', 'name'], 'required'],
@@ -52,16 +52,14 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Epic::class,
-                'targetAttribute' => ['epic_id' => 'epic_id']
+                'targetAttribute' => ['epic_id' => 'epic_id'],
             ],
             [
                 ['currently_delivered_character_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Character::class,
-                'targetAttribute' => [
-                    'currently_delivered_character_id' => 'character_id'
-                ]
+                'targetAttribute' => ['currently_delivered_character_id' => 'character_id'],
             ],
             [
                 ['currently_delivered_character_id'],
@@ -75,12 +73,15 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => User::class,
-                'targetAttribute' => ['player_id' => 'id']
+                'targetAttribute' => ['player_id' => 'id'],
             ],
         ];
     }
 
-    public function attributeLabels()
+    /**
+     * @return array<string,string>
+     */
+    public function attributeLabels(): array
     {
         return [
             'character_sheet_id' => Yii::t('app', 'CHARACTER_SHEET_ID'),
@@ -94,7 +95,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         ];
     }
 
-    public function afterFind()
+    public function afterFind(): void
     {
         if ($this->seen_pack_id) {
             $this->seenPack->recordNotification();
@@ -102,13 +103,13 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         parent::afterFind();
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): void
     {
         $this->seenPack->updateRecord();
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if ($insert) {
             $this->key = $this->generateKey('characterSheet');
@@ -128,7 +129,10 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         return parent::beforeSave($insert);
     }
 
-    public function behaviors()
+    /**
+     * @return array<string,array<string,string>>
+     */
+    public function behaviors(): array
     {
         return [
             'performedActionBehavior' => [
@@ -139,9 +143,6 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
@@ -155,39 +156,30 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         return $this->hasOne(Character::class, ['character_id' => 'currently_delivered_character_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getCharacters()
+    public function getCharacters(): ActiveQuery
     {
         return $this->hasMany(Character::class, ['character_sheet_id' => 'character_sheet_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getPlayer(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'player_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getUtilityBag(): ActiveQuery
     {
         return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
-    public function getSimpleDataForApi()
+    /**
+     * @return array<string,string>
+     */
+    public function getSimpleDataForApi(): array
     {
         return [
             'name' => $this->name,
@@ -195,7 +187,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         ];
     }
 
-    public function getCompleteDataForApi()
+    public function getCompleteDataForApi(): array
     {
         $decodedData = json_decode($this->data, true);
 
@@ -214,7 +206,10 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         return true;
     }
 
-    public function getPeopleAvailableToThisCharacterAsDropDownList()
+    /**
+     * @return array<string,string>
+     */
+    public function getPeopleAvailableToThisCharacterAsDropDownList(): array
     {
         $query = new ActiveDataProvider([
             'query' => $this->getCharacters()
@@ -233,10 +228,8 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 
     /**
      * Creates character sheet record for character
-     * @param Character $character
-     * @return null|CharacterSheet
      */
-    static public function createForCharacter(Character $character)
+    static public function createForCharacter(Character $character): ?CharacterSheet
     {
         $characterSheet = new CharacterSheet();
         $characterSheet->epic_id = $character->epic_id;
@@ -245,13 +238,13 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         if ($characterSheet->save()) {
             $characterSheet->refresh();
             return $characterSheet;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
-     * @return int[]
+     * @return array<int,int>
      */
     public function getPeopleAvailableToThisCharacterAsIdList(): array
     {
@@ -276,32 +269,31 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     public function canUserViewYou(): bool
     {
         return self::canUserViewInEpic($this->epic)
-            AND (
+            && (
                 Participant::participantHasRole(
                     Yii::$app->user->identity,
                     Yii::$app->params['activeEpic'],
                     ParticipantRole::ROLE_GM
-                )
-                OR $this->player_id === Yii::$app->user->id
+                ) || $this->player_id === Yii::$app->user->id
             );
     }
 
-    static function throwExceptionAboutCreate()
+    static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_CHARACTER'));
     }
 
-    static function throwExceptionAboutControl()
+    static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_CHARACTER'));
     }
 
-    static function throwExceptionAboutIndex()
+    static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_CHARACTER'));
     }
 
-    static function throwExceptionAboutView()
+    static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
     }
@@ -328,8 +320,6 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 
     /**
      * Loads and saves external data
-     * @param string $data Data to be saved
-     * @return bool Success of the operation
      */
     public function loadExternal(string $data): bool
     {
@@ -349,11 +339,12 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         if (!$array) {
             /* If invalid JSON */
             return false;
-        } else {
-            /* If valid JSON */
-            $this->data = json_encode($array);
-            return $this->save();
         }
+
+        /* If valid JSON */
+        $this->data = json_encode($array);
+
+        return $this->save();
     }
 
     /**
@@ -366,11 +357,8 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         $data = json_decode($this->data, true);
 
         foreach ($data as $row) {
-
             if (is_array($row)) {
-                if (is_array($row)) {
-                    $tabs[] = Tab::createFromData($row);
-                }
+                $tabs[] = Tab::createFromData($row);
             }
         }
 

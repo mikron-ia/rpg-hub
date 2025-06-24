@@ -27,10 +27,6 @@ final class CharacterSheetQuery extends CharacterSheet
 
     /**
      * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
      */
     public function search(array $params): ActiveDataProvider
     {
@@ -76,8 +72,11 @@ final class CharacterSheetQuery extends CharacterSheet
     {
         $search = $this->search($params);
 
-        if (!Participant::participantHasRole(Yii::$app->user->identity, Yii::$app->params['activeEpic'],
-            ParticipantRole::ROLE_GM)) {
+        if (!Participant::participantHasRole(
+            Yii::$app->user->identity,
+            Yii::$app->params['activeEpic'],
+            ParticipantRole::ROLE_GM)
+        ) {
             $search->query->andWhere(['player_id' => Yii::$app->user->id]);
         }
 

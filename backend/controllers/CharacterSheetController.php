@@ -15,13 +15,13 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
- * CharacterSheetController implements the CRUD actions for CharacterSheet model.
+ * CharacterSheetController implements the CRUD actions for CharacterSheet model
  */
 final class CharacterSheetController extends Controller
 {
     use EpicAssistance;
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -45,7 +45,7 @@ final class CharacterSheetController extends Controller
     }
 
     /**
-     * Lists all CharacterSheet models.
+     * Lists all CharacterSheet models
      */
     public function actionIndex(?string $epic = null): string
     {
@@ -74,7 +74,7 @@ final class CharacterSheetController extends Controller
     }
 
     /**
-     * Displays a single CharacterSheet model.
+     * Displays a single CharacterSheet model
      */
     public function actionView(string $key): string
     {
@@ -86,8 +86,7 @@ final class CharacterSheetController extends Controller
     }
 
     /**
-     * Creates a new CharacterSheet model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * Creates a new CharacterSheet model
      */
     public function actionCreate(string $epic = null): Response|string
     {
@@ -106,7 +105,6 @@ final class CharacterSheetController extends Controller
 
     /**
      * Creates a new character
-     * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreateCharacter(string $key): Response
     {
@@ -136,8 +134,7 @@ final class CharacterSheetController extends Controller
     }
 
     /**
-     * Updates an existing CharacterSheet model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * Updates an existing CharacterSheet model
      */
     public function actionUpdate(string $key): Response|string
     {
@@ -164,7 +161,7 @@ final class CharacterSheetController extends Controller
         $model->canUserControlYou();
 
         if (!empty(Yii::$app->request->post())) {
-            if($model->loadExternal(Yii::$app->request->post('external-data', ''))) {
+            if ($model->loadExternal(Yii::$app->request->post('external-data', ''))) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'EXTERNAL_DATA_LOAD_SUCCESS'));
             } else {
                 Yii::$app->session->setFlash('error', Yii::t('app', 'EXTERNAL_DATA_LOAD_FAILURE'));
