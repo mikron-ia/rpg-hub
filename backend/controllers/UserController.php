@@ -6,6 +6,7 @@ use backend\models\UserCreateForm;
 use common\models\core\UserStatus;
 use common\models\exceptions\InvalidBackendConfigurationException;
 use common\models\UserInvitation;
+use common\models\UserQuery;
 use Throwable;
 use Yii;
 use common\models\User;
@@ -64,13 +65,10 @@ final class UserController extends Controller
      */
     public function actionIndex(): string
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => User::find(),
-        ]);
+        $searchModel = new UserQuery();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->render('index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
     }
 
     /**

@@ -38,7 +38,7 @@ use yii\web\IdentityInterface;
  * @property Participant[] $participants
  * @property Task[] $tasks
  */
-final class User extends ActiveRecord implements IdentityInterface
+class User extends ActiveRecord implements IdentityInterface
 {
     public const USER_ROLE_NONE = 'none';
     public const USER_ROLE_USER = 'user';
@@ -46,7 +46,7 @@ final class User extends ActiveRecord implements IdentityInterface
     public const USER_ROLE_MANAGER = 'manager';
     public const USER_ROLE_ADMINISTRATOR = 'administrator';
 
-    public string $user_role;
+    public ?string $user_role = null;
 
     public static function tableName(): string
     {
