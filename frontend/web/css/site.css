@@ -678,3 +678,51 @@ tr.table-row-hidden > td {
     width: 44%;
     margin: 0 2.5%;
 }
+
+.view-state-tag {
+    background-color: white;
+    border-radius: 15px;
+    float: right;
+    display: block;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 80%;
+    font-weight: bold;
+    margin: 0 15px;
+    padding: 5px 20px;
+    text-align: center;
+}
+
+.view-state-tag-incomplete {
+    background-color: lightgrey;
+}
+
+.view-state-tag-ready {
+    background-color: green;
+    color: white;
+}
+
+.view-state-tag-confirm {
+    background-color: yellow;
+}
+
+.view-state-tag-fix {
+    background-color: orange;
+}
+
+.view-state-tag-update {
+    background-color: greenyellow;
+}
+
+.view-state-tag-unknown {
+    background-color: red;
+    color: white;
+}
+
+.view-state-tag-frozen {
+    background-color: lightcyan;
+}
+
+.view-state-tag-closed {
+    background-color: black;
+    color: white;
+}

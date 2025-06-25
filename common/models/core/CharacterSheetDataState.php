@@ -93,7 +93,10 @@ enum CharacterSheetDataState: string
                 self::Frozen,
                 self::Closed,
             ],
-            self::Closed => [],
+            self::Closed => [
+                self::Unknown,
+                self::Closed,
+            ],
         };
     }
 
@@ -118,10 +121,5 @@ enum CharacterSheetDataState: string
         }
 
         return $allowed;
-    }
-
-    public function canProceedTo(self $nextStatus): bool
-    {
-        return in_array($nextStatus, $this->allowedSuccessors());
     }
 }

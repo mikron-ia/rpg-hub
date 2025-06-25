@@ -39,7 +39,10 @@ foreach ($tabs as $tabName => $tabData) {
 <div class="character-sheet-view">
 
     <div class="buttoned-header">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h1>
+            <?= Html::encode($this->title) ?>
+            <span class="view-state-tag <?= $model->getDataState()->getClass() ?>"><?= $model->getDataState()->getName() ?></span>
+        </h1>
     </div>
 
     <?php if ($items): ?>
