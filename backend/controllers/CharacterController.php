@@ -158,10 +158,9 @@ final class CharacterController extends Controller
             Yii::$app->session->setFlash('success', Yii::t('app', 'CHARACTER_SHEET_CREATE_FROM_CHARACTER_SUCCESS'));
             if (!$model->character_sheet_id) {
                 $model->character_sheet_id = $sheet->character_sheet_id;
+                $model->is_off_the_record_change = true;
                 $model->save();
             }
-            $sheet->currently_delivered_character_id = $model->character_id;
-            $sheet->save();
         } else {
             Yii::$app->session->setFlash('error', Yii::t('app', 'CHARACTER_SHEET_CREATE_FROM_CHARACTER_FAILURE'));
         }

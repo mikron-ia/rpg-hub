@@ -130,7 +130,7 @@ return [
     'CHARACTER_NOT_AVAILABLE' => 'Postać nie istnieje lub nie masz do niej dostępu.',
     'CHARACTER_SHEETS_NOT_AVAILABLE' => 'Nie znaleziono dostępnych kart postaci.',
     'CHARACTER_SHEET_CREATE_FROM_CHARACTER_FAILURE' => 'Tworzenie karty postaci nieudane.',
-    'CHARACTER_SHEET_CREATE_FROM_CHARACTER_SUCCESS' => 'Tworzenie karty postaci udane.',
+    'CHARACTER_SHEET_CREATE_FROM_CHARACTER_SUCCESS' => 'Tworzenie karty postaci udane. Link do niej znajdziesz w tabeli z podstawowymi danymi.',
     'CHARACTER_SHEET_DATA' => 'Dane zewnętrzne postaci',
     'CHARACTER_SHEET_DATA_STATE' => 'Stan karty',
     'CHARACTER_SHEET_DELIVERED_CHARACTER_ID' => 'Aktualnie używana postać/tożsamość',

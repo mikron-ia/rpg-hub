@@ -253,8 +253,11 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         $characterSheet = new CharacterSheet();
         $characterSheet->epic_id = $character->epic_id;
         $characterSheet->name = $character->name;
+        $characterSheet->currently_delivered_character_id = $character->character_id;
+        $characterSheet->data_state = CharacterSheetDataState::Incomplete->value;
 
-        if ($characterSheet->save()) {
+        // validation is disabled because data is internal and ID assignment is mutual
+        if ($characterSheet->save(false)) {
             $characterSheet->refresh();
             return $characterSheet;
         }

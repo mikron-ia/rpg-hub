@@ -130,7 +130,7 @@ return [
     'CHARACTER_NOT_AVAILABLE' => 'Character does not exist or you have not right to access it.',
     'CHARACTER_SHEETS_NOT_AVAILABLE' => 'Character sheets not found.',
     'CHARACTER_SHEET_CREATE_FROM_CHARACTER_FAILURE' => 'Character sheet creation failed.',
-    'CHARACTER_SHEET_CREATE_FROM_CHARACTER_SUCCESS' => 'Character sheet creation successful.',
+    'CHARACTER_SHEET_CREATE_FROM_CHARACTER_SUCCESS' => 'Character sheet creation successful. You will find the link to it in the base data table.',
     'CHARACTER_SHEET_DATA' => 'Character external data',
     'CHARACTER_SHEET_DATA_STATE' => 'Sheet state',
     'CHARACTER_SHEET_DELIVERED_CHARACTER_ID' => 'Currently delivered character/identity',
