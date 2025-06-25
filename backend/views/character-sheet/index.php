@@ -40,6 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'name',
                 ],
                 [
+                    'label' => Yii::t('app', 'CHARACTER_SHEET_DATA_STATE'),
+                    'format' => 'raw',
+                    'value' => function (CharacterSheet $model) {
+                        return $model->getDataState()->getName();
+                    },
+                ],
+                [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {update}',
                     'buttons' => [

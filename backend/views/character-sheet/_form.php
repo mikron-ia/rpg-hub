@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
     </div>
 
@@ -22,6 +22,9 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php if (!$model->isNewRecord): ?>
+        <div class="col-md-2">
+            <?= $form->field($model, 'data_state')->dropDownList($model->getDataState()->allowedSuccessorsAsStrings()); ?>
+        </div>
 
         <div class="col-md-6">
             <?= $form->field($model, 'currently_delivered_character_id')->dropDownList(
@@ -33,7 +36,6 @@ use yii\widgets\ActiveForm;
                 ]
             ); ?>
         </div>
-
     <?php endif; ?>
 
     <div class="col-md-6">

@@ -114,7 +114,6 @@ final class CharacterController extends Controller
 
     /**
      * Creates a new character
-     * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate(string $epic = null): Response|string
     {
@@ -139,8 +138,7 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Creates a new character
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * Creates a new CharacterSheet for given Character
      */
     public function actionCreateSheet(string $key): Response
     {
@@ -173,7 +171,6 @@ final class CharacterController extends Controller
 
     /**
      * Updates an existing character
-     * If update is successful, the browser will be redirected to the 'view' page.
      */
     public function actionUpdate(string $key): Response|string
     {
@@ -290,10 +287,6 @@ final class CharacterController extends Controller
     /**
      * Saves the model to mark it as changed
      *
-     * @param string $key
-     *
-     * @return Response
-     *
      * @throws HttpException
      * @throws NotFoundHttpException
      */
@@ -306,8 +299,7 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Finds the Character model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
+     * Finds the Character model based on its key value
      */
     protected function findModelByKey(string $key): Character
     {

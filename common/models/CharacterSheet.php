@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\CharacterSheetDataState;
 use common\models\core\HasEpicControl;
 use common\models\core\HasSightings;
 use common\models\external\Tab;
@@ -20,6 +21,7 @@ use yii\db\ActiveRecord;
  * @property string $key
  * @property string $name
  * @property string $data
+ * @property string $data_state
  * @property string $currently_delivered_character_id
  * @property string $player_id
  * @property string $seen_pack_id
@@ -47,6 +49,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             [['epic_id', 'name'], 'required'],
             [['epic_id', 'currently_delivered_character_id', 'player_id'], 'integer'],
             [['name'], 'string', 'max' => 120],
+            [['data_state'], 'string', 'max' => 10],
             [
                 ['epic_id'],
                 'exist',
@@ -75,6 +78,16 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
                 'targetClass' => User::class,
                 'targetAttribute' => ['player_id' => 'id'],
             ],
+            [
+                ['data_state'],
+                'in',
+                'range' => $this->getDataState()->allowedSuccessorsAsKeys(),
+                'message' => Yii::t(
+                    'app',
+                    'CHARACTER_SHEET_STATE_NOT_ALLOWED {allowed}',
+                    ['allowed' => implode(', ', $this->getDataState()->allowedSuccessorsAsStrings())],
+                ),
+            ],
         ];
     }
 
@@ -89,6 +102,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             'key' => Yii::t('app', 'CHARACTER_SHEET_KEY'),
             'name' => Yii::t('app', 'CHARACTER_SHEET_NAME'),
             'data' => Yii::t('app', 'CHARACTER_SHEET_DATA'),
+            'data_state' => Yii::t('app', 'CHARACTER_SHEET_DATA_STATE'),
             'currently_delivered_character_id' => Yii::t('app', 'CHARACTER_SHEET_DELIVERED_CHARACTER_ID'),
             'player_id' => Yii::t('app', 'CHARACTER_SHEET_PLAYER'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
@@ -174,6 +188,11 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     public function getUtilityBag(): ActiveQuery
     {
         return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
+    }
+
+    public function getDataState(): CharacterSheetDataState
+    {
+        return CharacterSheetDataState::from($this->data_state);
     }
 
     /**

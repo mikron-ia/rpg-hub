@@ -6,6 +6,7 @@ use common\components\EpicAssistance;
 use common\models\Character;
 use common\models\CharacterSheet;
 use common\models\CharacterSheetQuery;
+use common\models\core\CharacterSheetDataState;
 use common\models\Epic;
 use Yii;
 use yii\filters\AccessControl;
@@ -95,6 +96,7 @@ final class CharacterSheetController extends Controller
         $model = new CharacterSheet();
 
         $this->setEpicOnObject($epic, $model);
+        $model->data_state = CharacterSheetDataState::Incomplete->value;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);

@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\CharacterSheetDataState;
 use yii\db\Migration;
 
 class m250501_163847_v1_3_0 extends Migration
@@ -25,10 +26,18 @@ class m250501_163847_v1_3_0 extends Migration
             'point_in_time', 'point_in_time_id',
             'RESTRICT', 'CASCADE'
         );
+
+        $this->addColumn(
+            '{{%character_sheet}}',
+            'data_state',
+            $this->char(10)->after('data')->defaultValue(CharacterSheetDataState::Incomplete->value),
+        );
     }
 
     public function safeDown(): void
     {
+        $this->dropColumn('{{%character_sheet}}', 'data_state');
+
         $this->dropForeignKey('description_history_point_in_time_still_valid', 'description_history');
         $this->dropForeignKey('description_point_in_time_still_valid', 'description');
 

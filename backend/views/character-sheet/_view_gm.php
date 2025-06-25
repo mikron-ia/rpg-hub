@@ -31,6 +31,11 @@ use yii\widgets\DetailView;
                     'value' => strlen($model->data),
                 ],
                 [
+                    'label' => Yii::t('app', 'CHARACTER_SHEET_DATA_STATE'),
+                    'format' => 'raw',
+                    'value' => $model->getDataState()->getName(),
+                ],
+                [
                     'attribute' => 'currently_delivered_character_id',
                     'format' => 'raw',
                     'value' => isset($model->currently_delivered_character_id) ?
