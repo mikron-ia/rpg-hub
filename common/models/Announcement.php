@@ -7,6 +7,7 @@ use common\models\tools\ToolsForLinkTags;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
@@ -26,6 +27,10 @@ use yii\helpers\Markdown;
  * @property int $updated_by
  * @property int $created_at
  * @property int $updated_at
+ *
+ * @property Epic $epic
+ * @property User $createdBy
+ * @property User $updatedBy
  */
 class Announcement extends ActiveRecord
 {
@@ -41,11 +46,10 @@ class Announcement extends ActiveRecord
     {
         return [
             [['epic_id', 'visible_from', 'visible_to'], 'default', 'value' => null],
-            [['key', 'title', 'text_raw', 'text_ready'], 'required'],
+            [['title', 'text_raw'], 'required'],
             [['epic_id'], 'integer'],
             [['visible_from', 'visible_to'], 'safe'],
             [['text_raw'], 'string'],
-            [['key'], 'string', 'max' => 80],
             [['title'], 'string', 'max' => 120],
             [
                 ['epic_id'],
@@ -89,5 +93,20 @@ class Announcement extends ActiveRecord
         $this->text_ready = Markdown::process(Html::encode($this->processAllInOrder($this->text_raw)), 'gfm');
 
         return parent::beforeSave($insert);
+    }
+
+    public function  getEpic(): ActiveQuery
+    {
+        return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
+    }
+
+    public function getCreatedBy(): ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'created_by']);
+    }
+
+    public function getUpdatedBy(): ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 }
