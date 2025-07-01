@@ -23,6 +23,21 @@ class AnnouncementQuery extends Announcement
         return Model::scenarios();
     }
 
+    public function mostRecentDataProvider(): ?ActiveDataProvider
+    {
+        $query = Announcement::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => ['defaultOrder' => ['announcement_id' => SORT_DESC]],
+            'pagination' => false,
+        ]);
+
+        $query->limit(4);
+
+        return $dataProvider;
+    }
+
     /**
      * Creates data provider instance with search query applied
      *
@@ -39,6 +54,7 @@ class AnnouncementQuery extends Announcement
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['announcement_id' => SORT_DESC]],
         ]);
 
         $this->load($params, $formName);

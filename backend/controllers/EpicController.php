@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\components\EpicAssistance;
+use common\models\AnnouncementQuery;
 use common\models\Epic;
 use common\models\EpicQuery;
 use common\models\GameQuery;
@@ -129,14 +130,15 @@ final class EpicController extends Controller
         $sessionQuery = new GameQuery();
         $sessions = $sessionQuery->mostRecentDataProvider($model);
 
-        /* Get News */
-        $news = [];
+        /* Get Announcements */
+        $announcementQuery = new AnnouncementQuery();
+        $announcements = $announcementQuery->mostRecentDataProvider($model);
 
         return $this->render('front', [
             'epic' => $model,
+            'announcements' => $announcements,
             'sessions' => $sessions,
             'stories' => $stories,
-            'news' => $news,
             'recap' => $recap,
         ]);
     }

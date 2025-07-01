@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $epic Epic */
+/* @var $announcements ActiveDataProvider */
 /* @var $sessions ActiveDataProvider */
 /* @var $stories ActiveDataProvider */
 
@@ -83,6 +84,14 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
             ); ?>
         </div>
 
+        <div class="btn-group btn-group-lg">
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_ANNOUNCEMENTS'),
+                ['announcement/index', 'epic' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
+        </div>
+
     </div>
 
     <div class="body-content">
@@ -90,9 +99,6 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
         <div class="row">
 
             <div class="col-md-8">
-
-                <h2><?= Yii::t('app', 'EPIC_CARD_ANNOUNCEMENTS'); ?></h2>
-                <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></i></p>
 
                 <h2><?= Yii::t('app', 'EPIC_CARD_RECENT_EVENTS'); ?></h2>
                 <div>
@@ -150,6 +156,24 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                         'itemView' => function ($model, $key, $index, $widget) {
                             return $this->render(
                                 'session/_index_box',
+                                ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget],
+                            );
+                        },
+                    ]) ?>
+                </div>
+
+                <h2><?= Yii::t('app', 'EPIC_CARD_ANNOUNCEMENTS'); ?></h2>
+                <div>
+                    <?= ListView::widget([
+                        'dataProvider' => $announcements,
+                        'emptyText' => '<p class="error-box">'
+                            . Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_NOT_AVAILABLE')
+                            . '</p>',
+                        'layout' => '{items}',
+                        'itemOptions' => ['class' => 'item'],
+                        'itemView' => function ($model, $key, $index, $widget) {
+                            return $this->render(
+                                'announcement/_index_box',
                                 ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget],
                             );
                         },
