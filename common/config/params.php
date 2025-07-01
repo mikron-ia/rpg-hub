@@ -57,6 +57,7 @@ return [
     ],
     'invitation.isValidFor' => $invitationValidityMultiplier * 86400,
     'keyGeneration' => [
+        'announcement' => getenv('KEY_GENERATION_ANNOUNCEMENT'),
         'article' => getenv('KEY_GENERATION_ARTICLE'),
         'character' => getenv('KEY_GENERATION_CHARACTER'),
         'characterSheet' => getenv('KEY_GENERATION_CHARACTER_SHEET'),

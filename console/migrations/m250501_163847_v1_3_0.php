@@ -37,9 +37,11 @@ class m250501_163847_v1_3_0 extends Migration
 
         $this->createTable('{{%announcement}}', [
             'announcement_id' => $this->primaryKey()->unsigned(),
+            'key' => $this->string(80)->notNull(),
             'epic_id' => $this->integer()->unsigned(),
-            'title' => $this->string(),
-            'content' => $this->text(),
+            'title' => $this->string(120)->notNull(),
+            'text_raw' => $this->text()->notNull(),
+            'text_ready' => $this->text()->notNull(),
             'visible_from' => $this->integer()->unsigned(),
             'visible_to' => $this->integer()->unsigned(),
             'created_by' => $this->integer(10)->notNull()->unsigned(),

@@ -17,6 +17,18 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'ANNOUNCEMENT_CREATED_AT' => 'Created at',
+    'ANNOUNCEMENT_CREATED_BY' => 'Created by',
+    'ANNOUNCEMENT_ID' => 'ID',
+    'ANNOUNCEMENT_KEY' => 'Key',
+    'ANNOUNCEMENT_NOT_AVAILABLE' => 'Announcements not available',
+    'ANNOUNCEMENT_TEXT_RAW' => 'Text',
+    'ANNOUNCEMENT_TEXT_READY' => 'Text',
+    'ANNOUNCEMENT_TITLE' => 'Title',
+    'ANNOUNCEMENT_UPDATED_AT' => 'Updated at',
+    'ANNOUNCEMENT_UPDATED_BY' => 'Updated by',
+    'ANNOUNCEMENT_VISIBLE_FROM' => 'Visible since',
+    'ANNOUNCEMENT_VISIBLE_TO' => 'Visible to',
     'ARTICLES_NOT_FOUND' => 'Articles not found',
     'ARTICLE_BASICS' => 'Article basic data',
     'ARTICLE_BASIC_TAB' => 'Basics',

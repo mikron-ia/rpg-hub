@@ -2,18 +2,24 @@
 
 namespace common\models;
 
+use common\models\tools\ToolsForEntity;
+use common\models\tools\ToolsForLinkTags;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
+use yii\helpers\Markdown;
 
 /**
  * This is the model class for table "announcement".
  *
  * @property int $announcement_id
+ * @property string $key
  * @property int|null $epic_id
- * @property string|null $title
- * @property string|null $content
+ * @property string $title
+ * @property string $text_raw
+ * @property string $text_ready
  * @property int|null $visible_from
  * @property int|null $visible_to
  * @property int $created_by
@@ -23,6 +29,8 @@ use yii\db\ActiveRecord;
  */
 class Announcement extends ActiveRecord
 {
+    use ToolsForEntity;
+    use ToolsForLinkTags;
 
     public static function tableName(): string
     {
@@ -32,14 +40,13 @@ class Announcement extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['epic_id', 'title', 'content', 'visible_from', 'visible_to'], 'default', 'value' => null],
-            [
-                ['epic_id', 'visible_from', 'visible_to', 'created_by', 'updated_by', 'created_at', 'updated_at'],
-                'integer'
-            ],
-            [['content'], 'string'],
-            [['created_by', 'updated_by', 'created_at', 'updated_at'], 'required'],
-            [['title'], 'string', 'max' => 255],
+            [['epic_id', 'visible_from', 'visible_to'], 'default', 'value' => null],
+            [['key', 'title', 'text_raw', 'text_ready'], 'required'],
+            [['epic_id'], 'integer'],
+            [['visible_from', 'visible_to'], 'safe'],
+            [['text_raw'], 'string'],
+            [['key'], 'string', 'max' => 80],
+            [['title'], 'string', 'max' => 120],
             [
                 ['epic_id'],
                 'exist',
@@ -54,9 +61,11 @@ class Announcement extends ActiveRecord
     {
         return [
             'announcement_id' => Yii::t('app', 'ANNOUNCEMENT_ID'),
+            'key' => Yii::t('app', 'ANNOUNCEMENT_KEY'),
             'epic_id' => Yii::t('app', 'LABEL_EPIC'),
             'title' => Yii::t('app', 'ANNOUNCEMENT_TITLE'),
-            'content' => Yii::t('app', 'ANNOUNCEMENT_CONTENT'),
+            'text_raw' => Yii::t('app', 'ANNOUNCEMENT_TEXT_RAW'),
+            'text_ready' => Yii::t('app', 'ANNOUNCEMENT_TEXT_READY'),
             'visible_from' => Yii::t('app', 'ANNOUNCEMENT_VISIBLE_FROM'),
             'visible_to' => Yii::t('app', 'ANNOUNCEMENT_VISIBLE_TO'),
             'created_by' => Yii::t('app', 'ANNOUNCEMENT_CREATED_BY'),
@@ -69,5 +78,16 @@ class Announcement extends ActiveRecord
     public function behaviors(): array
     {
         return [['class' => TimestampBehavior::class], ['class' => BlameableBehavior::class]];
+    }
+
+    public function beforeSave($insert): bool
+    {
+        if ($insert) {
+            $this->key = $this->generateKey('announcement');
+        }
+
+        $this->text_ready = Markdown::process(Html::encode($this->processAllInOrder($this->text_raw)), 'gfm');
+
+        return parent::beforeSave($insert);
     }
 }

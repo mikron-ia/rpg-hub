@@ -17,6 +17,18 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'ANNOUNCEMENT_CREATED_AT' => 'Stworzono',
+    'ANNOUNCEMENT_CREATED_BY' => 'Autorstwa',
+    'ANNOUNCEMENT_ID' => 'ID',
+    'ANNOUNCEMENT_KEY' => 'Klucz',
+    'ANNOUNCEMENT_NOT_AVAILABLE' => 'Ogłoszenia niedostępne',
+    'ANNOUNCEMENT_TEXT_RAW' => 'Tekst',
+    'ANNOUNCEMENT_TEXT_READY' => 'Tekst',
+    'ANNOUNCEMENT_TITLE' => 'Tytuł',
+    'ANNOUNCEMENT_UPDATED_AT' => 'Ostatnio zmieniono',
+    'ANNOUNCEMENT_UPDATED_BY' => 'Modyfikowane przez',
+    'ANNOUNCEMENT_VISIBLE_FROM' => 'Widoczne od',
+    'ANNOUNCEMENT_VISIBLE_TO' => 'Widoczne do',
     'ARTICLES_NOT_FOUND' => 'Tekstów nie znaleziono',
     'ARTICLE_BASICS' => 'Podstawowe dane',
     'ARTICLE_BASIC_TAB' => 'Podstawowe dane',
