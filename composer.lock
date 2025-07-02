@@ -1540,16 +1540,16 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.52",
+            "version": "2.0.53",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "540e7387d934c52e415614aa081fb38d04c72d9a"
+                "reference": "6c622fb8243181d7912b62ad80821cc0e1c745db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/540e7387d934c52e415614aa081fb38d04c72d9a",
-                "reference": "540e7387d934c52e415614aa081fb38d04c72d9a",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/6c622fb8243181d7912b62ad80821cc0e1c745db",
+                "reference": "6c622fb8243181d7912b62ad80821cc0e1c745db",
                 "shasum": ""
             },
             "require": {
@@ -1657,7 +1657,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-13T20:02:28+00:00"
+            "time": "2025-06-27T07:42:53+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -1978,16 +1978,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.4.0",
+            "version": "v5.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "447a020a1f875a434d62f2a401f53b82a396e494"
+                "reference": "ae59794362fe85e051a58ad36b289443f57be7a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/447a020a1f875a434d62f2a401f53b82a396e494",
-                "reference": "447a020a1f875a434d62f2a401f53b82a396e494",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/ae59794362fe85e051a58ad36b289443f57be7a9",
+                "reference": "ae59794362fe85e051a58ad36b289443f57be7a9",
                 "shasum": ""
             },
             "require": {
@@ -2030,9 +2030,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.4.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.5.0"
             },
-            "time": "2024-12-30T11:07:19+00:00"
+            "time": "2025-05-31T08:24:38+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -2516,16 +2516,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.46",
+            "version": "10.5.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "8080be387a5be380dda48c6f41cee4a13aadab3d"
+                "reference": "3637b3e50d32ab3a0d1a33b3b6177169ec3d95a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/8080be387a5be380dda48c6f41cee4a13aadab3d",
-                "reference": "8080be387a5be380dda48c6f41cee4a13aadab3d",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3637b3e50d32ab3a0d1a33b3b6177169ec3d95a3",
+                "reference": "3637b3e50d32ab3a0d1a33b3b6177169ec3d95a3",
                 "shasum": ""
             },
             "require": {
@@ -2597,7 +2597,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.46"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.47"
             },
             "funding": [
                 {
@@ -2621,7 +2621,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-05-02T06:46:24+00:00"
+            "time": "2025-06-20T11:29:11+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -3591,16 +3591,16 @@
         },
         {
             "name": "yiisoft/yii2-debug",
-            "version": "2.1.26",
+            "version": "2.1.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "e4b28a1d295fc977d8399db544336dd5b2764397"
+                "reference": "44e158914911ef81cd7111fd6d46b918f65fae7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/e4b28a1d295fc977d8399db544336dd5b2764397",
-                "reference": "e4b28a1d295fc977d8399db544336dd5b2764397",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/44e158914911ef81cd7111fd6d46b918f65fae7c",
+                "reference": "44e158914911ef81cd7111fd6d46b918f65fae7c",
                 "shasum": ""
             },
             "require": {
@@ -3678,7 +3678,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-13T21:27:29+00:00"
+            "time": "2025-06-08T13:32:11+00:00"
         },
         {
             "name": "yiisoft/yii2-gii",
