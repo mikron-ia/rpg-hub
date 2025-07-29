@@ -60,7 +60,7 @@ return [
     'BACKEND_FRONT_PAGE_MAIN_EMPTY_EPIC_LIST {link}' => 'Welcome to the epic data hub. To have epics to choose from, add an epic from <a href="{link}">the epic menu</a> or contact a person that can grant you access to an existing epic.',
     'BACKEND_FRONT_PAGE_MAIN_EPIC_LIST' => 'Other epics',
     'BACKEND_FRONT_PAGE_MAIN_EPIC_SUGGESTED' => 'Epic suggested according to accessed object',
-    'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC' => 'Welcome to the epic data hub. Please choose an epic to work with from the menu below or from the top menu.',
+    'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC' => 'Welcome to the epic data hub. Please choose an epic.',
     'BACKEND_FRONT_PAGE_TITLE' => 'RPG Hub Control',
     'BREADCRUMBS_HOME' => 'Hub',
     'BREADCRUMBS_PARTICIPANT_ADD' => 'Add participant',

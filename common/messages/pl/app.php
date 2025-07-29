@@ -60,7 +60,7 @@ return [
     'BACKEND_FRONT_PAGE_MAIN_EMPTY_EPIC_LIST {link}' => 'Witamy w centrum kontroli kampanii. By mieć z czego wybierać, dodaj kampanię z <a href="{link}">menu kampanii</a> lub skontaktuj się z osobą, która udostępni Ci istniejącą kampanię.',
     'BACKEND_FRONT_PAGE_MAIN_EPIC_LIST' => 'Pozostałe kampanie',
     'BACKEND_FRONT_PAGE_MAIN_EPIC_SUGGESTED' => 'Kampania sugerowana na podstawie aktywnego obiektu',
-    'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC' => 'Witamy w centrum kontroli kampanii. Wybierz kampanię do pracy z menu poniżej lub z menu górnego.',
+    'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC' => 'Witamy w centrum kontroli kampanii. Wybierz kampanię.',
     'BACKEND_FRONT_PAGE_TITLE' => 'Centrum kontroli',
     'BREADCRUMBS_HOME' => 'Hub',
     'BREADCRUMBS_PARTICIPANT_ADD' => 'Dodawanie uczestnika',

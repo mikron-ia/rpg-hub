@@ -4,10 +4,7 @@ namespace backend\controllers;
 
 use common\models\Epic;
 use common\models\EpicQuery;
-use common\models\GameQuery;
 use common\models\LoginForm;
-use common\models\RecapQuery;
-use common\models\StoryQuery;
 use common\models\user\PasswordChange;
 use common\models\user\UserAcceptForm;
 use common\models\user\UserSettingsForm;
@@ -171,7 +168,7 @@ final class SiteController extends Controller
 
     }
 
-    public function actionSetEpicInSilence($epicKey)
+    public function actionSetEpicInSilence($epicKey): void
     {
         /* @var $chosenEpic Epic */
         $chosenEpic = EpicQuery::findOne(['key' => $epicKey]);

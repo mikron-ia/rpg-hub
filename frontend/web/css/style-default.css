@@ -51,6 +51,15 @@ a:focus {
     color: mediumseagreen;
 }
 
+.dropdown-menu > .active > a {
+    background-color: green;
+}
+
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+    background-color: mediumseagreen;
+}
+
 .pagination > li > a, .pagination > li > span {
     color: green;
 }

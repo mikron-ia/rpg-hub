@@ -98,10 +98,9 @@ final class EpicQuery extends Epic
     }
 
     /**
-     * @param bool $limitToControlled
      * @return ActiveRecord[]
      */
-    static public function activeEpicsAsModels(bool $limitToControlled = true): array
+    static public function activeEpicsAsModels(bool $limitToControlled): array
     {
         if (Yii::$app->user->isGuest) {
             return [];

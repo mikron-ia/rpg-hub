@@ -1,16 +1,19 @@
 <?php
 
-/* @var $this \yii\web\View */
+/* @var $this View */
 
 /* @var $content string */
 
 use common\models\core\FrontStyles;
+use common\models\Epic;
+use common\models\EpicQuery;
 use frontend\assets\AppAsset;
 use common\components\FooterHelper;
 use common\widgets\Alert;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
@@ -58,24 +61,13 @@ AppAsset::register($this);
             ]
         ];
 
-        $epics = \common\models\EpicQuery::activeEpicsAsModels(false);
-
-        $items = [];
-
-        foreach ($epics as $epic) {
-            $items[] = '<li>'
-                . Html::beginForm(['/site/set-epic'], 'post', ['id' => 'epic-switch-' . $epic->key])
-                . Html::input('hidden', 'epic', $epic->key)
-                . Html::submitButton($epic->name, ['class' => 'btn btn-link'])
-                . Html::endForm()
-                . '</li>';
-        }
-
         $epicChoice = [
             'label' => empty(Yii::$app->params['activeEpic'])
                 ? Yii::t('app', 'MENU_TOP_CHOOSE_EPIC')
                 : Yii::t('app', 'MENU_TOP_CHANGE_EPIC'),
-            'items' => $items,
+            'items' => array_map(function (Epic $epic) {
+                return ['label' => $epic->name, 'url' => ['/epic/view', 'key' => $epic->key]];
+            }, EpicQuery::activeEpicsAsModels(false)),
             'options' => [],
         ];
 

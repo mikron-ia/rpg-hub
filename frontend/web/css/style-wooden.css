@@ -51,6 +51,15 @@ a:focus {
     color: chocolate;
 }
 
+.dropdown-menu > .active > a {
+    background-color: saddlebrown;
+}
+
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+    background-color: chocolate;
+}
+
 .pagination > li > a, .pagination > li > span {
     color: saddlebrown;
 }

@@ -1,15 +1,18 @@
 <?php
 
-/* @var $this \yii\web\View */
+/* @var $this View */
 
 /* @var $content string */
 
 use backend\assets\AppAsset;
 use common\components\FooterHelper;
+use common\models\Epic;
+use common\models\EpicQuery;
 use common\widgets\Alert;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
@@ -82,24 +85,13 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => Yii::t('app', 'MENU_TOP_LOGIN'), 'url' => ['/site/login']];
     } else {
-        $epics = \common\models\EpicQuery::activeEpicsAsModels(true);
-
-        $items = [];
-
-        foreach ($epics as $epic) {
-            $items[] = '<li>'
-                . Html::beginForm(['/site/set-epic'], 'post', ['id' => 'epic-switch-' . $epic->key])
-                . Html::input('hidden', 'epic', $epic->key)
-                . Html::submitButton($epic->name, ['class' => 'btn btn-link'])
-                . Html::endForm()
-                . '</li>';
-        }
-
         $epicChoice = [
             'label' => empty(Yii::$app->params['activeEpic'])
                 ? Yii::t('app', 'MENU_TOP_CHOOSE_EPIC')
                 : Yii::t('app', 'MENU_TOP_CHANGE_EPIC'),
-            'items' => $items,
+            'items' => array_map(function (Epic $epic) {
+                return ['label' => $epic->name, 'url' => ['/epic/front', 'key' => $epic->key]];
+            }, EpicQuery::activeEpicsAsModels(true)),
             'options' => [],
         ];
 
