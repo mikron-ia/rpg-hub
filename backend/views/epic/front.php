@@ -42,11 +42,6 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                 ['class' => 'btn btn-lg btn-primary'],
             ); ?>
             <?= Html::a(
-                Yii::t('app', 'BUTTON_CHARACTER_SHEETS'),
-                ['character-sheet/index', 'epic' => $epic->key],
-                ['class' => 'btn btn-lg btn-primary'],
-            ); ?>
-            <?= Html::a(
                 Yii::t('app', 'BUTTON_GROUP'),
                 ['group/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],
@@ -55,23 +50,32 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
 
         <div class="btn-group btn-group-lg">
             <?= Html::a(
-                Yii::t('app', 'BUTTON_DETAILS'),
-                ['epic/view', 'key' => $epic->key],
+                Yii::t('app', 'BUTTON_CHARACTER_SHEETS'),
+                ['character-sheet/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],
             ); ?>
+        </div>
+
+        <div class="btn-group btn-group-lg">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_SESSIONS'),
                 ['game/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],
             ); ?>
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_SCENARIOS'),
-                ['scenario/index', 'epic' => $epic->key],
-                ['class' => 'btn btn-lg btn-primary'],
-            ); ?>
+        </div>
+
+        <div class="btn-group btn-group-lg">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_POINTS_IN_TIME'),
                 ['point-in-time/index', 'epic' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
+        </div>
+
+        <div class="btn-group btn-group-lg">
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_SCENARIOS'),
+                ['scenario/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],
             ); ?>
         </div>
@@ -88,6 +92,14 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
             <?= Html::a(
                 Yii::t('app', 'BUTTON_ANNOUNCEMENTS'),
                 ['announcement/index', 'epic' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
+        </div>
+
+        <div class="btn-group btn-group-lg">
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_DETAILS'),
+                ['epic/view', 'key' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],
             ); ?>
         </div>

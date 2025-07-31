@@ -19,15 +19,14 @@ use yii\widgets\DetailView;
     <div class="col-lg-12 text-center">
 
         <div class="btn-group btn-group-lg">
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_STORIES'),
+            <?= Html::a(Yii::t('app', 'BUTTON_STORIES'),
                 ['story/index', 'epic' => $model->key],
-                ['class' => 'btn btn-primary']
+                ['class' => 'btn btn-lg btn-primary']
             ); ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_RECAPS'),
                 ['recap/index', 'epic' => $model->key],
-                ['class' => 'btn btn-primary']
+                ['class' => 'btn btn-lg btn-primary']
             ); ?>
         </div>
 
@@ -35,17 +34,20 @@ use yii\widgets\DetailView;
             <?= Html::a(
                 Yii::t('app', 'BUTTON_CHARACTERS'),
                 ['character/index', 'epic' => $model->key],
-                ['class' => 'btn btn-primary']
-            ); ?>
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_CHARACTER_SHEETS'),
-                ['character-sheet/index', 'epic' => $model->key],
-                ['class' => 'btn btn-primary']
+                ['class' => 'btn btn-lg btn-primary'],
             ); ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_GROUP'),
                 ['group/index', 'epic' => $model->key],
-                ['class' => 'btn btn-primary']
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
+        </div>
+
+        <div class="btn-group btn-group-lg">
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_CHARACTER_SHEETS'),
+                ['character-sheet/index', 'epic' => $model->key],
+                ['class' => 'btn btn-lg btn-primary'],
             ); ?>
         </div>
 
@@ -53,17 +55,23 @@ use yii\widgets\DetailView;
             <?= Html::a(
                 Yii::t('app', 'BUTTON_SESSIONS'),
                 ['game/index', 'epic' => $model->key],
-                ['class' => 'btn btn-primary']
+                ['class' => 'btn btn-lg btn-primary'],
             ); ?>
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_SCENARIOS'),
-                ['scenario/index', 'epic' => $model->key],
-                ['class' => 'btn btn-primary']
-            ); ?>
+        </div>
+
+        <div class="btn-group btn-group-lg">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_POINTS_IN_TIME'),
                 ['point-in-time/index', 'epic' => $model->key],
-                ['class' => 'btn btn-primary']
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
+        </div>
+
+        <div class="btn-group btn-group-lg">
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_SCENARIOS'),
+                ['scenario/index', 'epic' => $model->key],
+                ['class' => 'btn btn-lg btn-primary'],
             ); ?>
         </div>
 
@@ -71,16 +79,24 @@ use yii\widgets\DetailView;
             <?= Html::a(
                 Yii::t('app', 'BUTTON_ARTICLES'),
                 ['article/index', 'epic' => $model->key],
-                ['class' => 'btn btn-primary']
+                ['class' => 'btn btn-lg btn-primary'],
             ); ?>
         </div>
 
         <div class="btn-group btn-group-lg">
             <?= Html::a(
-                Yii::t('app', 'BUTTON_UPDATE'),
-                ['update', 'key' => $model->key],
-                ['class' => 'btn btn-primary']);
-            ?>
+                Yii::t('app', 'BUTTON_ANNOUNCEMENTS'),
+                ['announcement/index', 'epic' => $model->key],
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
+        </div>
+
+        <div class="btn-group btn-group-lg">
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_DETAILS'),
+                ['epic/view', 'key' => $model->key],
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
         </div>
 
     </div>

@@ -17,16 +17,14 @@ foreach ($epics as $epic) {
     $items[] = Html::a(
         $epic->name,
         Url::to(['epic/front', 'key' => $epic->key]),
-        ['class' => 'btn btn-primary btn-block']
+        ['class' => 'btn btn-primary btn-block btn-epic-choice']
     );
 }
 
 ?>
 
 <div class="site-index">
-
     <div class="jumbotron">
-
         <h1><?= Yii::t('app', 'BACKEND_FRONT_PAGE_TITLE'); ?></h1>
 
         <p class="lead text-center">
@@ -42,13 +40,9 @@ foreach ($epics as $epic) {
         </p>
 
         <div class="site-index">
-
             <?php foreach ($items as $item): ?>
-                <p><?= $item; ?></p>
+                <?= $item; ?>
             <?php endforeach; ?>
-
         </div>
-
     </div>
-
 </div>

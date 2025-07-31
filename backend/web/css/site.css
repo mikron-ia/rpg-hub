@@ -159,6 +159,31 @@ p {
     margin: 5px 5px;
 }
 
+.btn-epic-choice {
+    border-radius: 10px;
+    display: inline-block;
+    margin: 0 1% 10px 0;
+    white-space: break-spaces;
+    width: 31%;
+}
+
+@media (max-width: 1024px) {
+    .btn-epic-choice {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+@media (max-width: 1600px) {
+    .btn-epic-choice {
+        width: 47%;
+    }
+}
+
+.btn-block + .btn-block {
+    margin-top: 0;
+}
+
 .public-notes {
     border: 4px dotted lightblue;
     border-radius: 15px;
