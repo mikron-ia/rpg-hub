@@ -17,11 +17,15 @@ standard (immense and not very useful for practical purposes), it is firmly in i
 
 ## Background
 
-[Role-playing games](https://en.wikipedia.org/wiki/Role-playing_game) are a very wide concept, ranging from very
-simplistic systems fitting in one page to extremely complex mechanical solutions spanning hundreds of books. What they
-do have in common, though, is the presence of a story - one can play a game without mechanics, but even a primitive
-dungeon crawl is going to have at least some story. Managing this story, its cast, threads, and (if present)
-mechanical components is the main role of this project.
+Role-playing games are a very wide concept that ranges from very simplistic systems that fit on one page up to
+extremely complex systems spanning hundreds of books; see
+the [Wikipedia definition](https://en.wikipedia.org/wiki/Role-playing_game) for details. What they do have in common,
+though, is the presence of a story - one can play a game without mechanics, but even a simple dungeon crawl is going to
+have at some story. Managing this story, its cast, threads, and mechanical components is the main role of this project.
+
+The project itself was originally thought of as a learning experience and a coding exercise. Unfortunately, due to
+changes in the technological landscape (primarily change in popularity of frameworks and shifting design philosophies)
+can no longer fulfill those goals. It is now maintained mostly for its practical uses and minor coding experiments.
 
 ## Set up instructions
 
@@ -31,17 +35,16 @@ mechanical components is the main role of this project.
           tweaking -- but there is no gurarantee this behavior will be maintained
     * MySQL 5.6+ database or MariaDB equivalent
         * The current project was tested and found working up to MySQL 8.0 and MariaDB 10.6
-1. If you have no composer, install it via instructions from [here](https://getcomposer.org/download/)
+1. If you have no composer, install it via [instructions from here](https://getcomposer.org/download/)
 1. Clone the project into the desired directory
 1. Run `composer install`
     * for a production deployment, add `--no-dev` option to avoid adding unnecessary libraries
 1. Copy `.env.example` to `.env` and fill it with configuration data
-    * Database access data is mandatory
-      * without that the hub will fail to start
-    * Language configuration and key generators can be left on their default values
-        * change them only if you have a good reason to
-    * API key must be set up to make API accessible from outside and can be ignored if API is unused
-    * the URIs are needed - without them the mailing will fail and a few redirects may not work
+    * Database access data is mandatory -- without that the hub will fail to start
+    * Language configuration and key generators can be left on their default values -- change them only if you have a
+      good reason to
+    * API key must be set up to make API accessible from outside and can be ignored if API is not used
+    * the URIs are needed -- without them the mailing will fail and a few redirects may not work
     * mailing data and invitation validity are optional but their lack will make inviting users via e-mail impossible
 1. [optional] If you wish to add data, create the `console/migrations/data.sql` file with SQL inserts that should be
    loaded into the database; this is intended for development/test work on larger data sets and is not needed for
@@ -60,8 +63,8 @@ mechanical components is the main role of this project.
 ## Upgrading between versions
 
 1. Update the code base from an archive pack or a git tag
-    * If you are feeling adventurous, use the `master` branch, but its content is **not** guaranteed to work at all
-      times; to be safe, use the latest release
+    * If you are feeling adventurous, use the `master` branch, but its content, while usually free of breaking bugs, is
+      not guaranteed to work at all times; to be safe, use the latest release
 1. Run `composer install`
 1. Ensure your `.env` file is up to date, based on `.env.example`
 1. Run migrations with `./yii migrate/up`
@@ -93,18 +96,19 @@ The hub allows handling of the following:
 * `CharacterSheet` - a detailed set of mechanical data on `Character`, usually in a form of numbers and traits
     * This is still a very underdeveloped component, requiring using a dedicated and undocumented data format to display
       properly
-    * It is linked to a single `Character`
+    * It is linked to a single `Character` from a list of `Character`s that have it set as their sheet
 * `Group` - a group of `Character`s - a party, an organization, or anything that justifies putting a few `Character`s
   together; can have other `Groups` as members as well
 * `Scenario` - a plan for events for a `Story`
     * This is the only "large" component that exists solely on the Game Master side and cannot be displayed on the
       presentation/front side
 * `Article` - miscellaneous texts
+* `Announcement` - news, information, and other OOC updates directed at users
 * `PointInTime` - auxiliary information, used to put in-story date/time on descriptions
 * `User` - as the name suggests, this is the user, i.e. person accessing the hub; no further explanation should be
   needed
 
-Other components serve auxiliary roles only and are not directly editable.
+All the other components serve auxiliary roles only and are not directly editable.
 
 Use of most components is optional; for example, an `Epic` can be conceivably run with the use of `Recap`s and `Game`s
 only or just with `Character` gallery. There are, of course, limits to that - for example, the `Group` functionality is
