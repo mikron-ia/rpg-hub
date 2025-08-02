@@ -30,8 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterPosition' => null,
             'columns' => [
                 'title',
-                'visible_from:datetime',
-                'visible_to:datetime',
+                [
+                    'label' => Yii::t('app', 'ANNOUNCEMENT_VISIBLE_FROM'),
+                    'value' => fn(Announcement $model) => $model->visible_from,
+                ],
+                [
+                    'label' => Yii::t('app', 'ANNOUNCEMENT_VISIBLE_TO'),
+                    'value' => fn(Announcement $model) => $model->visible_to,
+                ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {update}',

@@ -1,5 +1,7 @@
 <?php
 
+use kartik\date\DatePicker;
+use kartik\datetime\DateTimePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -9,7 +11,6 @@ use yii\widgets\ActiveForm;
 
 $datePickerConfig = [
     'pluginOptions' => [
-        'format' => 'yyyy-mm-dd',
         'autoclose' => true,
         'weekStart' => 1,
         'todayHighlight' => true,
@@ -30,11 +31,11 @@ $datePickerConfig = [
     </div>
 
     <div class="col-md-6">
-        <?= ''; //$form->field($model, 'visible_from')->textInput()->widget(DatePicker::class, $datePickerConfig) ?>
+        <?= $form->field($model, 'visible_from')->textInput()->widget(DateTimePicker::class, $datePickerConfig) ?>
     </div>
 
     <div class="col-md-6">
-        <?= ''; //$form->field($model, 'visible_to')->textInput()->widget(DatePicker::class, $datePickerConfig) ?>
+        <?= $form->field($model, 'visible_to')->textInput()->widget(DateTimePicker::class, $datePickerConfig) ?>
     </div>
 
     <div class="form-group">

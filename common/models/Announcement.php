@@ -84,6 +84,14 @@ class Announcement extends ActiveRecord
         return [['class' => TimestampBehavior::class], ['class' => BlameableBehavior::class]];
     }
 
+    public function afterFind(): void
+    {
+        $this->visible_from === null ?: $this->visible_from = (new \DateTimeImmutable())->setTimestamp($this->visible_from)->format('Y-m-d H:i');
+        $this->visible_to === null ?: $this->visible_to = (new \DateTimeImmutable())->setTimestamp($this->visible_to)->format('Y-m-d H:i');
+
+        parent::afterFind();
+    }
+
     public function beforeSave($insert): bool
     {
         if ($insert) {
@@ -92,10 +100,13 @@ class Announcement extends ActiveRecord
 
         $this->text_ready = Markdown::process(Html::encode($this->processAllInOrder($this->text_raw)), 'gfm');
 
+        $this->visible_from === null ?: $this->visible_from = (new \DateTimeImmutable($this->visible_from))->getTimestamp();
+        $this->visible_to === null ?: $this->visible_to = (new \DateTimeImmutable($this->visible_to))->getTimestamp();
+
         return parent::beforeSave($insert);
     }
 
-    public function  getEpic(): ActiveQuery
+    public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }

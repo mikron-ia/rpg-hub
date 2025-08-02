@@ -37,8 +37,14 @@ YiiAsset::register($this);
                     'label' => Yii::t('app', 'LABEL_EPIC'),
                     'value' => $model->epic?->name,
                 ],
-                'visible_from:datetime',
-                'visible_to:datetime',
+                [
+                    'label' => Yii::t('app', 'ANNOUNCEMENT_VISIBLE_TO'),
+                    'value' => $model->visible_from,
+                ],
+                [
+                    'label' => Yii::t('app', 'ANNOUNCEMENT_VISIBLE_FROM'),
+                    'value' => $model->visible_to,
+                ],
                 [
                     'label' => Yii::t('app', 'ANNOUNCEMENT_CREATED_BY'),
                     'value' => $model->createdBy?->username,

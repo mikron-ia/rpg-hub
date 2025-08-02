@@ -54,7 +54,7 @@ class AnnouncementQuery extends Announcement
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['announcement_id' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['visible_from' => SORT_DESC, 'announcement_id' => SORT_DESC]],
         ]);
 
         $this->load($params, $formName);
