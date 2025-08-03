@@ -4,6 +4,7 @@ use common\dto\CharacterListDataObject;
 use frontend\assets\IndexBoxesCharacterAsset;
 use yii\bootstrap\Modal;
 use yii\bootstrap\Tabs;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 
 IndexBoxesCharacterAsset::register($this);
@@ -12,6 +13,7 @@ IndexBoxesCharacterAsset::register($this);
 /* @var $searchModel common\models\CharacterQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $tabsFromGroupData yii\data\ActiveDataProvider[] */
+/* @var $favorites ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_CHARACTER_INDEX');
 $this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
@@ -40,6 +42,13 @@ $allTab = [
     'url' => ['character/index'],
 ];
 
+$favoriteTab = [
+    'label' => Yii::t('app', 'CHARACTER_LABEL_FAVORITES'),
+    'content' => $this->render('_index_characters', ['dataProvider' => $favorites]),
+    'encode' => false,
+    'active' => false,
+];
+
 $groupTabs = array_map(function (CharacterListDataObject $tabData) {
     return [
         'label' => $tabData->name,
@@ -50,9 +59,9 @@ $groupTabs = array_map(function (CharacterListDataObject $tabData) {
 }, $tabsFromGroupData);
 
 if (isset(Yii::$app->request->queryParams['CharacterQuery'])) {
-    $items = array_merge([$allTab], $groupTabs, [$searchTab, $mainTab]);
+    $items = array_merge([$allTab, $favoriteTab], $groupTabs, [$searchTab, $mainTab]);
 } else {
-    $items = array_merge([$mainTab], $groupTabs, [$searchTab]);
+    $items = array_merge([$mainTab, $favoriteTab], $groupTabs, [$searchTab]);
 }
 
 ?>

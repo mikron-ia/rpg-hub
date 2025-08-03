@@ -140,6 +140,7 @@ return [
     'CHARACTER_IMPORTANCE' => 'Podstawowa ważność',
     'CHARACTER_KEY' => 'Klucz',
     'CHARACTER_LABEL_ALL' => 'Wszystkie',
+    'CHARACTER_LABEL_FAVORITES' => 'Ulubione',
     'CHARACTER_LABEL_SEARCH' => 'Wyszukaj',
     'CHARACTER_LABEL_SEARCH_RESULTS' => 'Wyniki wyszukiwania',
     'CHARACTER_MODIFIED_AT' => 'Ostatnio oficjalnie zmieniono',

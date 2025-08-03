@@ -2,13 +2,10 @@
 
 namespace frontend\controllers;
 
-use common\dto\CharacterListDataObject;
 use common\models\Character;
 use common\models\CharacterQuery;
 use common\models\core\Visibility;
 use common\models\Epic;
-use common\models\Group;
-use common\models\GroupQuery;
 use frontend\controllers\external\ReputationToolsForControllerTrait;
 use common\components\EpicAssistance;
 use Yii;
@@ -84,11 +81,13 @@ final class CharacterController extends Controller
         $searchModel = new CharacterQuery(self::POSITIONS_PER_PAGE);
         $dataProvider = $searchModel->searchForUser(Yii::$app->request->queryParams);
         $groupTabs = CharacterQuery::getCharactersToShowInGroupTabAsDataObjects();
+        $favoritesTab = CharacterQuery::getCharactersToShowInFavoritesTab();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'tabsFromGroupData' => $groupTabs,
+            'favorites' => $favoritesTab,
         ]);
     }
 

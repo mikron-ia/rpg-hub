@@ -140,6 +140,7 @@ return [
     'CHARACTER_IMPORTANCE' => 'Base importance',
     'CHARACTER_KEY' => 'Key',
     'CHARACTER_LABEL_ALL' => 'All characters',
+    'CHARACTER_LABEL_FAVORITES' => 'Favorites',
     'CHARACTER_LABEL_SEARCH' => 'Search',
     'CHARACTER_LABEL_SEARCH_RESULTS' => 'Search results',
     'CHARACTER_MODIFIED_AT' => 'Last changed officially',

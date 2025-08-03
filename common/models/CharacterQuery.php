@@ -117,6 +117,22 @@ final class CharacterQuery extends Character
         }, GroupQuery::listGroupsToShowAsTabs());
     }
 
+    static function getCharactersToShowInFavoritesTab(): ActiveDataProvider
+    {
+        $query = Character::find()
+            ->joinWith('scribblePack', true, 'JOIN')
+            ->joinWith('scribblePack.scribbles', true, 'JOIN')
+            ->where([
+                'scribble_pack.class' => 'Character',
+                'scribble.user_id' => Yii::$app->user->id,
+                'scribble.favorite' => false,
+            ]);
+
+        self::setUpQuery($query, 'character');
+
+        return new ActiveDataProvider(['query' => $query, 'pagination' => false]);
+    }
+
     /**
      * @return string[]
      */
