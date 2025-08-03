@@ -1,18 +1,20 @@
 <?php
 
 use common\dto\CharacterListDataObject;
+use common\models\CharacterQuery;
 use frontend\assets\IndexBoxesCharacterAsset;
 use yii\bootstrap\Modal;
 use yii\bootstrap\Tabs;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\web\View;
 
 IndexBoxesCharacterAsset::register($this);
 
-/* @var $this yii\web\View */
-/* @var $searchModel common\models\CharacterQuery */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $tabsFromGroupData yii\data\ActiveDataProvider[] */
+/* @var $this View */
+/* @var $searchModel CharacterQuery */
+/* @var $dataProvider ActiveDataProvider */
+/* @var $tabsFromGroupData ActiveDataProvider[] */
 /* @var $favorites ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_CHARACTER_INDEX');
@@ -20,8 +22,8 @@ $this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->na
 $this->params['breadcrumbs'][] = $this->title;
 
 $labelForMain = isset(Yii::$app->request->queryParams['CharacterQuery'])
-    ? Yii::t('app', 'CHARACTER_LABEL_SEARCH_RESULTS')
-    : Yii::t('app', 'CHARACTER_LABEL_ALL');
+    ? Yii::t('app', 'CHARACTER_TAB_SEARCH_RESULTS')
+    : Yii::t('app', 'CHARACTER_TAB_ALL');
 
 $mainTab = [
     'label' => $labelForMain,
@@ -31,19 +33,19 @@ $mainTab = [
 ];
 
 $searchTab = [
-    'label' => Yii::t('app', 'CHARACTER_LABEL_SEARCH'),
+    'label' => Yii::t('app', 'CHARACTER_TAB_SEARCH'),
     'content' => $this->render('_search', ['model' => $searchModel]),
     'encode' => false,
     'active' => false,
 ];
 
 $allTab = [
-    'label' => Yii::t('app', 'CHARACTER_LABEL_ALL'),
+    'label' => Yii::t('app', 'CHARACTER_TAB_ALL'),
     'url' => ['character/index'],
 ];
 
 $favoriteTab = [
-    'label' => Yii::t('app', 'CHARACTER_LABEL_FAVORITES'),
+    'label' => Yii::t('app', 'CHARACTER_TAB_FAVORITES'),
     'content' => $this->render('_index_characters', ['dataProvider' => $favorites]),
     'encode' => false,
     'active' => false,

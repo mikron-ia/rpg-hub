@@ -36,7 +36,7 @@ trait ToolsForImportanceInQueries
     /**
      * Sets up the basic query - checks for Epic, filters by Epic and visibility
      */
-    private static function setUpQuery(ActiveQuery $query, ?string $disambiguationPrefix = null): ActiveQuery
+    private static function secureQuery(ActiveQuery $query, ?string $disambiguationPrefix = null): ActiveQuery
     {
         $prefix = $disambiguationPrefix === null ? '' : $disambiguationPrefix . '.';
 

@@ -41,15 +41,13 @@ final class GroupQuery extends Group
     /**
      * Creates data provider instance with search query applied
      *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
+     * @param string[] $params
      */
     public function search(array $params): ActiveDataProvider
     {
         $query = Group::find()->joinWith('seenPack', true, 'LEFT JOIN');
 
-        $this->setUpQuery($query);
+        $this->secureQuery($query);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -95,13 +93,15 @@ final class GroupQuery extends Group
     }
 
     /**
+     * Provides Groups that should be shown as tabs in Character index page
+     *
      * @return Group[]
      */
     public static function listGroupsToShowAsTabs(): array
     {
         $query = Group::find()->where(['display_as_tab' => true]);
 
-        self::setUpQuery($query);
+        self::secureQuery($query);
 
         return (new ActiveDataProvider(['query' => $query]))->getModels();
     }

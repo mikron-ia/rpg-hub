@@ -42,15 +42,13 @@ final class CharacterQuery extends Character
     /**
      * Creates data provider instance with search query applied
      *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
+     * @param string[] $params
      */
     public function search(array $params): ActiveDataProvider
     {
         $query = Character::find()->joinWith('seenPack', true, 'LEFT JOIN');
 
-        $this->setUpQuery($query);
+        $this->secureQuery($query);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -75,8 +73,7 @@ final class CharacterQuery extends Character
      * Creates data provider instance with search query applied and applies default order according to importance
      * This list is more suitable for front section
      *
-     * @param array $params
-     * @return ActiveDataProvider
+     * @param string[] $params
      */
     public function searchForUser(array $params): ActiveDataProvider
     {
@@ -87,14 +84,19 @@ final class CharacterQuery extends Character
      * Creates data provider instance with search query applied and applies default order according to time of the last modification
      * This list is more suitable for operator section
      *
-     * @param array $params
-     * @return ActiveDataProvider
+     * @param string[] $params
      */
     public function searchForOperator(array $params): ActiveDataProvider
     {
         return $this->setUpSearchForOperator($this->search($params));
     }
 
+    /**
+     * Provide all Characters belonging to the given group and visible to the user
+     *
+     * Note: this method does not account for Group or GroupMembership visibility, only for Character
+     * Note: pagination is disabled to avoid conflicts with main tab pagination
+     */
     static private function getCharactersToShowInGroupTab(string $groupKey): ActiveDataProvider
     {
         $query = Character::find()
@@ -102,12 +104,14 @@ final class CharacterQuery extends Character
             ->joinWith('groupMembership.group', true, 'JOIN')
             ->where(['group.key' => $groupKey]);
 
-        self::setUpQuery($query, 'character');
+        self::secureQuery($query, 'character');
 
-        return new ActiveDataProvider(['query' => $query]);
+        return new ActiveDataProvider(['query' => $query, 'pagination' => false]);
     }
 
     /**
+     * Provides data to construct Group tabs with Characters
+     *
      * @return CharacterListDataObject[]
      */
     static public function getCharactersToShowInGroupTabAsDataObjects(): array
@@ -117,6 +121,11 @@ final class CharacterQuery extends Character
         }, GroupQuery::listGroupsToShowAsTabs());
     }
 
+    /**
+     * Provides list of favorite/starred Characters for active user
+     *
+     * Note: pagination is disabled to avoid conflicts with main tab pagination
+     */
     static function getCharactersToShowInFavoritesTab(): ActiveDataProvider
     {
         $query = Character::find()
@@ -125,10 +134,10 @@ final class CharacterQuery extends Character
             ->where([
                 'scribble_pack.class' => 'Character',
                 'scribble.user_id' => Yii::$app->user->id,
-                'scribble.favorite' => false,
+                'scribble.favorite' => true,
             ]);
 
-        self::setUpQuery($query, 'character');
+        self::secureQuery($query, 'character');
 
         return new ActiveDataProvider(['query' => $query, 'pagination' => false]);
     }
