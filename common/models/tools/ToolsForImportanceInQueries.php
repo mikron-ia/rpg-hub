@@ -11,10 +11,6 @@ trait ToolsForImportanceInQueries
 {
     /**
      * Adds sorting by importance to the data provider
-     *
-     * @param ActiveDataProvider $search
-     *
-     * @return ActiveDataProvider
      */
     private function setUpSearchForUser(ActiveDataProvider $search): ActiveDataProvider
     {
@@ -29,9 +25,6 @@ trait ToolsForImportanceInQueries
 
     /**
      * Adds sorting by last update to the data provider
-     *
-     * @param ActiveDataProvider $search
-     * @return ActiveDataProvider
      */
     private function setUpSearchForOperator(ActiveDataProvider $search): ActiveDataProvider
     {
@@ -42,19 +35,18 @@ trait ToolsForImportanceInQueries
 
     /**
      * Sets up the basic query - checks for Epic, filters by Epic and visibility
-     *
-     * @param ActiveQuery $query
-     * @return ActiveQuery
      */
-    private function setUpQuery(ActiveQuery $query): ActiveQuery
+    private static function setUpQuery(ActiveQuery $query, ?string $disambiguationPrefix = null): ActiveQuery
     {
+        $prefix = $disambiguationPrefix === null ? '' : $disambiguationPrefix . '.';
+
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
             $query->where('0=1');
         } else {
             $query->andWhere([
-                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-                'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
+                $prefix . 'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+                $prefix . 'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
             ]);
         }
 

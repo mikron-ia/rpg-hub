@@ -1,5 +1,6 @@
 <?php
 
+use common\dto\CharacterListDataObject;
 use frontend\assets\IndexBoxesCharacterAsset;
 use yii\bootstrap\Modal;
 use yii\bootstrap\Tabs;
@@ -10,6 +11,7 @@ IndexBoxesCharacterAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\CharacterQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $tabsFromGroupData yii\data\ActiveDataProvider[] */
 
 $this->title = Yii::t('app', 'TITLE_CHARACTER_INDEX');
 $this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
@@ -38,10 +40,19 @@ $allTab = [
     'url' => ['character/index'],
 ];
 
+$groupTabs = array_map(function (CharacterListDataObject $tabData) {
+    return [
+        'label' => $tabData->name,
+        'content' => $this->render('_index_characters', ['dataProvider' => $tabData->dataProvider]),
+        'encode' => false,
+        'active' => false,
+    ];
+}, $tabsFromGroupData);
+
 if (isset(Yii::$app->request->queryParams['CharacterQuery'])) {
-    $items = [$allTab, $searchTab, $mainTab];
+    $items = array_merge([$allTab], $groupTabs, [$searchTab, $mainTab]);
 } else {
-    $items = [$mainTab, $searchTab];
+    $items = array_merge([$mainTab], $groupTabs, [$searchTab]);
 }
 
 ?>

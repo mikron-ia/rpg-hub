@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\dto\CharacterListDataObject;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForImportanceInQueries;
 use Yii;
@@ -15,9 +16,11 @@ final class CharacterQuery extends Character
 {
     use ToolsForImportanceInQueries;
 
+    private const DEFAULT_PAGE_SIZE = 24;
+
     private int $pageCount;
 
-    public function __construct(int $pagination = 24, array $config = [])
+    public function __construct(int $pagination = self::DEFAULT_PAGE_SIZE, array $config = [])
     {
         $this->pageCount = $pagination;
         parent::__construct($config);
@@ -90,6 +93,28 @@ final class CharacterQuery extends Character
     public function searchForOperator(array $params): ActiveDataProvider
     {
         return $this->setUpSearchForOperator($this->search($params));
+    }
+
+    static private function getCharactersToShowInGroupTab(string $groupKey): ActiveDataProvider
+    {
+        $query = Character::find()
+            ->joinWith('groupMembership', true, 'JOIN')
+            ->joinWith('groupMembership.group', true, 'JOIN')
+            ->where(['group.key' => $groupKey]);
+
+        self::setUpQuery($query, 'character');
+
+        return new ActiveDataProvider(['query' => $query]);
+    }
+
+    /**
+     * @return CharacterListDataObject[]
+     */
+    static public function getCharactersToShowInGroupTabAsDataObjects(): array
+    {
+        return array_map(function (Group $group) {
+            return new CharacterListDataObject($group->name, self::getCharactersToShowInGroupTab($group->key));
+        }, GroupQuery::listGroupsToShowAsTabs());
     }
 
     /**

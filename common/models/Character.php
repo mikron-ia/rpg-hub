@@ -278,6 +278,11 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return $this->hasMany(CharacterSheet::class, ['currently_delivered_character_id' => 'character_id']);
     }
 
+    public function getGroupMembership(): ActiveQuery
+    {
+        return $this->getGroupMemberships();
+    }
+
     public function getGroupMemberships(): ActiveQuery
     {
         return $this->hasMany(GroupMembership::class, ['character_id' => 'character_id']);

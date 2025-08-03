@@ -15,9 +15,11 @@ final class GroupQuery extends Group
 {
     use ToolsForImportanceInQueries;
 
+    private const DEFAULT_PAGE_SIZE = 24;
+
     private int $pageCount;
 
-    public function __construct(int $pagination = 24, array $config = [])
+    public function __construct(int $pagination = self::DEFAULT_PAGE_SIZE, array $config = [])
     {
         $this->pageCount = $pagination;
         parent::__construct($config);
@@ -77,9 +79,6 @@ final class GroupQuery extends Group
     /**
      * Creates data provider instance with search query applied and applies default order according to importance
      * This list is more suitable for front section
-     *
-     * @param array $params
-     * @return ActiveDataProvider
      */
     public function searchForUser(array $params): ActiveDataProvider
     {
@@ -89,13 +88,22 @@ final class GroupQuery extends Group
     /**
      * Creates data provider instance with search query applied and applies default order according to time of the last modification
      * This list is more suitable for operator section
-     *
-     * @param array $params
-     * @return ActiveDataProvider
      */
     public function searchForOperator(array $params): ActiveDataProvider
     {
         return $this->setUpSearchForOperator($this->search($params));
+    }
+
+    /**
+     * @return Group[]
+     */
+    public static function listGroupsToShowAsTabs(): array
+    {
+        $query = Group::find()->where(['display_as_tab' => true]);
+
+        self::setUpQuery($query);
+
+        return (new ActiveDataProvider(['query' => $query]))->getModels();
     }
 
     /**
