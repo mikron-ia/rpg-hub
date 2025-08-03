@@ -43,6 +43,7 @@ use yii\helpers\Html;
  * @property int|null $master_group_id
  * @property int|null $scribble_pack_id
  * @property int|null $utility_bag_id
+ * @property int $display_as_tab
  *
  * @property DescriptionPack $descriptionPack
  * @property ExternalDataPack $externalDataPack
@@ -85,7 +86,8 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
                     'importance_pack_id',
                     'scribble_pack_id',
                     'utility_bag_id',
-                    'master_group_id'
+                    'master_group_id',
+                    'display_as_tab',
                 ],
                 'integer'
             ],
@@ -170,6 +172,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             'master_group_id' => Yii::t('app', 'GROUP_MASTER_GROUP'),
             'scribble_pack_id' => Yii::t('app', 'SCRIBBLE_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
+            'display_as_tab' => Yii::t('app', 'GROUP_DISPLAY_AS_TAB_LONG'),
             'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
         ];
     }

@@ -78,6 +78,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 ],
                 [
+                    'label' => Yii::t('app', 'GROUP_DISPLAY_AS_TAB_SHORT'),
+                    'headerOptions' => ['class' => 'text-center'],
+                    'contentOptions' => ['class' => 'text-center'],
+                    'format' => 'boolean',
+                    'value' => fn(Group $model) => $model->display_as_tab,
+                ],
+                [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {update}',
                     'buttons' => [

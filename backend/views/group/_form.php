@@ -53,6 +53,10 @@ use yii\widgets\ActiveForm;
         ) ?>
     </div>
 
+    <div class="col-md-12">
+        <?= $form->field($model, 'display_as_tab')->checkbox() ?>
+    </div>
+
     <?php if (!$model->isNewRecord): ?>
         <div class="col-md-12">
             <?= $form->field($model, 'is_off_the_record_change')->checkbox() ?>

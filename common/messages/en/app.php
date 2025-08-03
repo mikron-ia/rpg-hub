@@ -394,6 +394,8 @@ return [
     'GROUP_BASIC' => 'Details',
     'GROUP_DATA' => 'Group data',
     'GROUP_DESCRIPTIONS_TAB' => 'Descriptions',
+    'GROUP_DISPLAY_AS_TAB_LONG' => 'Display as tab in Character list',
+    'GROUP_DISPLAY_AS_TAB_SHORT' => 'Tab?',
     'GROUP_GM_TAB' => 'GM data',
     'GROUP_ID' => 'Group ID',
     'GROUP_IMPORTANCE' => 'Base importance',

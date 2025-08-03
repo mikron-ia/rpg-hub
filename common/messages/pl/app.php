@@ -394,6 +394,8 @@ return [
     'GROUP_BASIC' => 'Szczegóły',
     'GROUP_DATA' => 'Dane grupy',
     'GROUP_DESCRIPTIONS_TAB' => 'Opisy',
+    'GROUP_DISPLAY_AS_TAB_LONG' => 'Wyświetl jako zakładkę na liście postaci',
+    'GROUP_DISPLAY_AS_TAB_SHORT' => 'Zakładka?',
     'GROUP_GM_TAB' => 'Dane MG',
     'GROUP_ID' => 'ID grupy',
     'GROUP_IMPORTANCE' => 'Podstawowa ważność',

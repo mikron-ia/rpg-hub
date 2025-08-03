@@ -71,6 +71,7 @@ use yii\widgets\DetailView;
                         implode(',', $model->subGroups) :
                         '<em>' . Yii::t('app', 'GROUP_WITHOUT_SUBGROUPS') . '</em>',
                 ],
+                'display_as_tab:boolean',
             ],
         ]) ?>
 
