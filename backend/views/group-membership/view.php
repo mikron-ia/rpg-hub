@@ -6,9 +6,6 @@ use yii\helpers\Html;
 /* @var $model common\models\GroupMembership */
 
 $this->title = Yii::t('app', 'GROUP_MEMBERSHIP_TITLE_VIEW {name}', ['name' => $model->character->name]);
-$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'GROUP_MEMBERSHIP_TITLE_INDEX'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-membership-view">
 
