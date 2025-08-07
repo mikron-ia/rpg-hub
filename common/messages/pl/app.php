@@ -286,6 +286,7 @@ return [
     'EPIC_COUNT_GROUPS' => 'Liczba grup',
     'EPIC_CREATION_WARNING' => '<b>Uwaga:</b> wykonanie tej akcji doda Cię jako Mistrza Gry dodanej kampanii. Rolę tę będzie można później zmienić.',
     'EPIC_CURRENT_STORY' => 'Aktualna historia',
+    'EPIC_DETAILS' => 'Szczegóły',
     'EPIC_GAME_SYSTEM' => 'System',
     'EPIC_ID' => 'ID kampanii',
     'EPIC_KEY' => 'Identyfikator kampanii',

@@ -286,6 +286,7 @@ return [
     'EPIC_COUNT_GROUPS' => 'Group count',
     'EPIC_CREATION_WARNING' => '<b>Warning:</b> performing this action will add you as the Game Master of the newly-created Epic. This can be later changed.',
     'EPIC_CURRENT_STORY' => 'Current story',
+    'EPIC_DETAILS' => 'Details',
     'EPIC_GAME_SYSTEM' => 'Game system',
     'EPIC_ID' => 'Epic ID',
     'EPIC_KEY' => 'Key',

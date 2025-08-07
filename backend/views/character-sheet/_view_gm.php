@@ -23,7 +23,7 @@ use yii\widgets\DetailView;
                 [
                     'attribute' => 'epic_id',
                     'format' => 'raw',
-                    'value' => Html::a($model->epic->name, ['epic/view', 'key' => $model->epic->key], []),
+                    'value' => Html::a($model->epic->name, ['epic/front', 'key' => $model->epic->key], []),
                 ],
                 [
                     'label' => Yii::t('app', 'LABEL_DATA_SIZE'),
