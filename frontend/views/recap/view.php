@@ -7,7 +7,10 @@ use yii\web\YiiAsset;
 /** @var common\models\Recap $model */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'RECAP_TITLE_INDEX'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'RECAP_TITLE_INDEX'),
+    'url' => ['index', 'key' => $model->epic->key],
+];
 $this->params['breadcrumbs'][] = $this->title;
 YiiAsset::register($this);
 ?>

@@ -10,7 +10,10 @@ $this->params['breadcrumbs'][] = [
     'label' => Yii::$app->params['activeEpic']->name,
     'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]
 ];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'CHARACTER_SHEET_TITLE_INDEX'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'CHARACTER_SHEET_TITLE_INDEX'),
+    'url' => ['index', 'key' => $model->epic->key],
+];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['showPrivates'] = $model->canUserControlYou();
 

@@ -2,6 +2,7 @@
 
 use common\dto\CharacterListDataObject;
 use common\models\CharacterQuery;
+use common\models\Epic;
 use frontend\assets\IndexBoxesCharacterAsset;
 use yii\bootstrap\Modal;
 use yii\bootstrap\Tabs;
@@ -12,6 +13,7 @@ use yii\web\View;
 IndexBoxesCharacterAsset::register($this);
 
 /* @var $this View */
+/* @var $epic Epic */
 /* @var $searchModel CharacterQuery */
 /* @var $dataProvider ActiveDataProvider */
 /* @var $tabsFromGroupData ActiveDataProvider[] */
@@ -41,7 +43,7 @@ $searchTab = [
 
 $allTab = [
     'label' => Yii::t('app', 'CHARACTER_TAB_ALL'),
-    'url' => ['character/index'],
+    'url' => ['character/index', 'key' => $epic->key],
 ];
 
 $favoriteTab = [

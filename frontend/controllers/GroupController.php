@@ -75,6 +75,8 @@ class GroupController extends Controller
 
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection');
+        } else {
+            $epic = Yii::$app->params['activeEpic'];
         }
 
         if (!Group::canUserIndexThem()) {
@@ -87,6 +89,7 @@ class GroupController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'epic' => $epic,
         ]);
     }
 

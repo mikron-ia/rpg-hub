@@ -31,12 +31,12 @@ if ($epic) {
             <div class="btn-group btn-group-lg">
                 <?= Html::a(
                     Yii::t('app', 'BUTTON_STORIES'),
-                    ['story/index'],
+                    ['story/index', 'key' => $epic->key],
                     ['class' => 'btn btn-lg btn-primary']
                 ); ?>
                 <?= Html::a(
                     Yii::t('app', 'BUTTON_RECAPS'),
-                    ['recap/index'],
+                    ['recap/index', 'key' => $epic->key],
                     ['class' => 'btn btn-lg btn-primary']
                 ); ?>
             </div>
@@ -44,12 +44,12 @@ if ($epic) {
             <div class="btn-group btn-group-lg">
                 <?= Html::a(
                     Yii::t('app', 'BUTTON_CHARACTERS'),
-                    ['character/index'],
+                    ['character/index', 'key' => $epic->key],
                     ['class' => 'btn btn-lg btn-primary']
                 ); ?>
                 <?= Html::a(
                     Yii::t('app', 'BUTTON_GROUP'),
-                    ['group/index'],
+                    ['group/index', 'key' => $epic->key],
                     ['class' => 'btn btn-lg btn-primary']
                 ); ?>
             </div>
@@ -57,7 +57,7 @@ if ($epic) {
             <div class="btn-group btn-group-lg">
                 <?= Html::a(
                     Yii::t('app', 'BUTTON_CHARACTER_SHEETS'),
-                    ['character-sheet/index'],
+                    ['character-sheet/index', 'key' => $epic->key],
                     ['class' => 'btn btn-primary']
                 ); ?>
             </div>
@@ -65,7 +65,7 @@ if ($epic) {
             <div class="btn-group btn-group-lg">
                 <?= Html::a(
                     Yii::t('app', 'BUTTON_ARTICLES'),
-                    ['article/index'],
+                    ['article/index', 'key' => $epic->key],
                     ['class' => 'btn btn-lg btn-primary']
                 ); ?>
             </div>
@@ -101,7 +101,7 @@ if ($epic) {
                     </h3>
                     <?= Html::a(
                         Yii::t('app', 'BUTTON_STORY_VIEW_ALL'),
-                        ['story/index'],
+                        ['story/index', 'key' => $epic->key],
                         ['class' => 'btn btn-primary']
                     ); ?>
                 </div>

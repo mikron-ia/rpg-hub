@@ -12,7 +12,7 @@ use yii\helpers\Html;
     </h3>
     <?= Html::a(
         Yii::t('app', 'BUTTON_RECAP_VIEW_ALL'),
-        ['recap/index'],
+        ['recap/index', 'key' => $model->epic->key],
         ['class' => 'btn btn-primary']
     ); ?>
 </div>

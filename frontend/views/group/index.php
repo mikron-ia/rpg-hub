@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Epic;
 use frontend\assets\IndexBoxesGroupAsset;
 use yii\bootstrap\Modal;
 use yii\bootstrap\Tabs;
@@ -8,6 +9,7 @@ use yii\helpers\Html;
 IndexBoxesGroupAsset::register($this);
 
 /* @var $this yii\web\View */
+/* @var $epic Epic */
 /* @var $searchModel common\models\CharacterQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -35,7 +37,7 @@ $searchTab = [
 
 $allTab = [
     'label' => Yii::t('app', 'GROUP_LABEL_ALL'),
-    'url' => ['group/index'],
+    'url' => ['group/index', 'key' => $epic->key],
 ];
 
 if (isset(Yii::$app->request->queryParams['GroupQuery'])) {
