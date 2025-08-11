@@ -439,4 +439,14 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Task::class, ['user_id' => 'id']);
     }
+
+    public function canBeDisabled(): bool
+    {
+        return $this->status === UserStatus::Active->value;
+    }
+
+    public function canBeEnabled(): bool
+    {
+        return in_array($this->status, [UserStatus::Disabled->value, UserStatus::Deleted->value]);
+    }
 }

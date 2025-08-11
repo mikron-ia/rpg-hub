@@ -35,6 +35,7 @@ final class UserController extends Controller
                             'create',
                             'delete',
                             'disable',
+                            'enable',
                             'index',
                             'invitations',
                             'renew',
@@ -53,6 +54,7 @@ final class UserController extends Controller
                 'actions' => [
                     'delete' => ['post'],
                     'disable' => ['post'],
+                    'enable' => ['post'],
                     'renew' => ['post'],
                     'revoke' => ['post'],
                 ],
@@ -189,6 +191,33 @@ final class UserController extends Controller
             return $this->redirect(['user/index']);
         } else {
             Yii::$app->session->setFlash('error', Yii::t('app', 'USER_DISABLE_FAILED'));
+            return $this->redirect(['user/view', 'id' => $id]);
+        }
+    }
+
+    /**
+     * Enables the user again
+     *
+     * @throws NotFoundHttpException
+     * @throws Throwable
+     * @throws StaleObjectException
+     */
+    public function actionEnable(int $id): Response
+    {
+        $model = $this->findModel($id);
+
+        if (!$model->canBeEnabled()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_ENABLE_ERROR_MUST_BE_DISABLED'));
+            return $this->redirect(['user/view', 'id' => $id]);
+        }
+
+        $model->setAttribute('status', UserStatus::Active->value);
+
+        if ($model->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_ENABLE_SUCCESS'));
+            return $this->redirect(['user/index']);
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_ENABLE_FAILED'));
             return $this->redirect(['user/view', 'id' => $id]);
         }
     }

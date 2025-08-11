@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $confirmDisable = Yii::t('app', 'USER_CONFIRM_DISABLE');
 $confirmDelete = Yii::t('app', 'USER_CONFIRM_DELETE');
+$confirmRestore = Yii::t('app', 'USER_CONFIRM_ENABLE');
 
 ?>
 <div class="user-view">
@@ -53,18 +54,36 @@ $confirmDelete = Yii::t('app', 'USER_CONFIRM_DELETE');
                 ['update', 'id' => $model->id], ['class' => 'btn btn-primary'],
             ) ?>
 
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_DISABLE'),
-                ['disable', 'id' => $model->id],
-                [
-                    'class' => 'btn btn-danger',
-                    'title' => Yii::t('app', 'BUTTON_DISABLE_USER_TITLE'),
-                    'data' => [
-                        'confirm' => $confirmDisable,
-                        'method' => 'post',
-                    ],
-                ]
-            ) ?>
+            <?php if($model->canBeDisabled()): ?>
+                <?= Html::a(
+                    Yii::t('app', 'BUTTON_DISABLE'),
+                    ['disable', 'id' => $model->id],
+                    [
+                        'class' => 'btn btn-danger',
+                        'title' => Yii::t('app', 'BUTTON_DISABLE_USER_TITLE'),
+                        'data' => [
+                            'confirm' => $confirmDisable,
+                            'method' => 'post',
+                        ],
+                    ]
+                ) ?>
+            <?php endif; ?>
+
+            <?php if($model->canBeEnabled()): ?>
+                <?= Html::a(
+                    Yii::t('app', 'BUTTON_ENABLE'),
+                    ['enable', 'id' => $model->id],
+                    [
+                        'class' => 'btn btn-primary',
+                        'title' => Yii::t('app', 'BUTTON_ENABLE_USER_TITLE'),
+                        'data' => [
+                            'confirm' => $confirmRestore,
+                            'method' => 'post',
+                        ],
+                    ]
+                ) ?>
+            <?php endif; ?>
+
             <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'title' => Yii::t('app', 'BUTTON_DELETE_USER_TITLE'),
