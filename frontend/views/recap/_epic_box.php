@@ -1,5 +1,5 @@
 <?php
-/* @var $model Recap */
+/* @var $model Recap|null */
 
 use common\models\Recap;
 use yii\helpers\Html;
@@ -10,11 +10,13 @@ use yii\helpers\Html;
     <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
         <?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?>
     </h3>
-    <?= Html::a(
-        Yii::t('app', 'BUTTON_RECAP_VIEW_ALL'),
-        ['recap/index', 'key' => $model->epic->key],
-        ['class' => 'btn btn-primary']
-    ); ?>
+    <?php if (isset($model)): ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_RECAP_VIEW_ALL'),
+            ['recap/index', 'key' => $model->epic->key],
+            ['class' => 'btn btn-primary']
+        ); ?>
+    <?php endif; ?>
 </div>
 
 <div>
