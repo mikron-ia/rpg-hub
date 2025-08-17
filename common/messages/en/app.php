@@ -38,6 +38,8 @@ return [
     'ARTICLE_BASIC_TAB' => 'Basics',
     'ARTICLE_BUTTON_CREATE' => 'Add article',
     'ARTICLE_EPIC_ID' => 'Epic',
+    'ARTICLE_HINT_OUTLINE' => 'Article\'s summary, visible in the index and above the text in article\'s view. The field accepts Markdown and object references.',
+    'ARTICLE_HINT_TEXT' => 'Article\'s text, visible in the article\'s view only. The field accepts Markdown and object references.',
     'ARTICLE_ID' => 'ID',
     'ARTICLE_KEY' => 'Key',
     'ARTICLE_NOT_AVAILABLE' => 'Article not found.',

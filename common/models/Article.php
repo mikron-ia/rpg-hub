@@ -86,6 +86,14 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         ];
     }
 
+    public function attributeHints(): array
+    {
+        return [
+            'text_raw' => Yii::t('app', 'ARTICLE_HINT_TEXT'),
+            'outline_raw' => Yii::t('app', 'ARTICLE_HINT_OUTLINE'),
+        ];
+    }
+
     public function attributeLabels(): array
     {
         return [

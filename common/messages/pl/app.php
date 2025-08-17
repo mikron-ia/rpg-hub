@@ -38,6 +38,8 @@ return [
     'ARTICLE_BASIC_TAB' => 'Podstawowe dane',
     'ARTICLE_BUTTON_CREATE' => 'Dodaj artykuł',
     'ARTICLE_EPIC_ID' => 'Kampania',
+    'ARTICLE_HINT_OUTLINE' => 'Podsumowanie artykułu, widoczne w spisie artykułów oraz ponad artykułem na jego stronie. Pole przyjmuje Markdown i odnośniki do obiektów.',
+    'ARTICLE_HINT_TEXT' => 'Treść właściwa artykułu, widoczna na jego stronie. Pole przyjmuje Markdown i odnośniki do obiektów.',
     'ARTICLE_ID' => 'ID',
     'ARTICLE_KEY' => 'Klucz',
     'ARTICLE_NOT_AVAILABLE' => 'Nie znaleziono artykułu.',
