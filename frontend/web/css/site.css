@@ -243,6 +243,12 @@ a:focus {
     position: relative;
 }
 
+.outline-box {
+    padding: 10px 15px 0;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
 @media (max-width: 383px) {
     .index-box {
         min-width: 240px;

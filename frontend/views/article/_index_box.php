@@ -1,9 +1,10 @@
 <?php
 
+use common\models\Article;
 use common\models\core\Visibility;
 use yii\helpers\Html;
 
-/** @var $model \common\models\Article */
+/** @var $model Article */
 ?>
 
 <div id="article-<?php echo $model->article_id; ?>">
@@ -21,6 +22,10 @@ use yii\helpers\Html;
     </h2>
 
     <p class="subtitle"><?= $model->subtitle ?></p>
+
+    <div class="col-md-12 text-justify">
+        <?= $model->outline_ready ?>
+    </div>
 
 </div>
 

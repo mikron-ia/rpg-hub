@@ -97,6 +97,10 @@ a:focus {
     border: 3px solid chocolate;
 }
 
+.outline-box {
+    border: 4px solid saddlebrown;
+}
+
 .seen-tag-new {
     background-color: chocolate;
     color: white;

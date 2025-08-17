@@ -1,11 +1,12 @@
 <?php
 
+use common\models\Article;
 use common\models\core\Visibility;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Article */
+/* @var $this View */
+/* @var $model Article */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/view', 'key' => $model->epic->key]];
@@ -14,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $this->params['showPrivates'] = $model->canUserControlYou();
 ?>
-<div class="article-view">
+<div class="article-view col-lg-10 col-lg-offset-1 col-md-12">
 
     <div class="buttoned-header">
         <h1>
@@ -34,7 +35,13 @@ $this->params['showPrivates'] = $model->canUserControlYou();
 
     <p class="subtitle"><?= $model->subtitle ?></p>
 
-    <div class="col-md-12">
+    <?php if (!empty($model->outline_ready)): ?>
+        <div class="outline-box">
+            <?= $model->outline_ready ?>
+        </div>
+    <?php endif; ?>
+
+    <div>
         <?= $model->text_ready ?>
     </div>
 
