@@ -10,6 +10,7 @@ use common\models\core\HasVisibility;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
+use common\models\tools\ToolsForLinkTags;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -27,6 +28,8 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $name
  * @property string $short
  * @property string $long
+ * @property string $short_expanded
+ * @property string $long_expanded
  * @property int $position
  * @property string $visibility
  * @property string $data
@@ -43,6 +46,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
 {
     use ToolsForEntity;
     use ToolsForHasVisibility;
+    use ToolsForLinkTags;
 
     /**
      * @var array<string,string>
@@ -97,6 +101,8 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             'name' => Yii::t('app', 'STORY_NAME'),
             'short' => Yii::t('app', 'STORY_SHORT'),
             'long' => Yii::t('app', 'STORY_LONG'),
+            'short_expanded' => Yii::t('app', 'STORY_SHORT'),
+            'long_expanded' => Yii::t('app', 'STORY_LONG'),
             'position' => Yii::t('app', 'STORY_POSITION'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
             'data' => Yii::t('app', 'STORY_DATA'),
@@ -144,6 +150,9 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             $this->utility_bag_id = $pack->utility_bag_id;
         }
 
+        $this->short_expanded = $this->expandText($this->short);
+        $this->long_expanded = $this->expandText($this->long);
+
         return parent::beforeSave($insert);
     }
 
@@ -188,7 +197,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      */
     public function getShortFormatted(): string
     {
-        return Markdown::process($this->short, 'gfm');
+        return Markdown::process($this->short_expanded ?? $this->short, 'gfm');
     }
 
     /**
@@ -196,7 +205,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      */
     public function getLongFormatted(): string
     {
-        return Markdown::process($this->long, 'gfm');
+        return Markdown::process($this->long_expanded ?? $this->long, 'gfm');
     }
 
     /**
