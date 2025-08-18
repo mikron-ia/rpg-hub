@@ -61,6 +61,18 @@ class Announcement extends ActiveRecord
         ];
     }
 
+    /**
+     * @return array<string,string>
+     */
+    public function attributeHints(): array
+    {
+        return [
+            'text_raw' => Yii::t('app', 'ANNOUNCEMENT_HINT_TEXT'),
+            'visible_from' => Yii::t('app', 'ANNOUNCEMENT_HINT_VISIBLE_FROM'),
+            'visible_to' => Yii::t('app', 'ANNOUNCEMENT_HINT_VISIBLE_TO'),
+        ];
+    }
+
     public function attributeLabels(): array
     {
         return [

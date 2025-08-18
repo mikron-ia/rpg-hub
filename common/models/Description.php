@@ -191,6 +191,18 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return array<string,string>
      */
+    public function attributeHints(): array
+    {
+        return [
+            'public_text' => Yii::t('app', 'DESCRIPTION_HINT_TEXT_PUBLIC'),
+            'protected_text' => Yii::t('app', 'DESCRIPTION_HINT_TEXT_PROTECTED'),
+            'private_text' => Yii::t('app', 'DESCRIPTION_HINT_TEXT_PRIVATE'),
+        ];
+    }
+
+    /**
+     * @return array<string,string>
+     */
     public function attributeLabels(): array
     {
         return [

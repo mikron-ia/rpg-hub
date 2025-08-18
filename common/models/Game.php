@@ -98,7 +98,18 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
+     */
+    public function attributeHints(): array
+    {
+        return [
+            'basics' => Yii::t('app', 'GAME_HINT_BASICS'),
+            'notes' => Yii::t('app', 'GAME_HINT_NOTES'),
+        ];
+    }
+
+    /**
+     * @return array<string,string>
      */
     public function attributeLabels(): array
     {

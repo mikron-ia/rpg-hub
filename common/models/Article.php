@@ -86,6 +86,9 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         ];
     }
 
+    /**
+     * @return array<string,string>
+     */
     public function attributeHints(): array
     {
         return [
@@ -94,6 +97,9 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         ];
     }
 
+    /**
+     * @return array<string,string>
+     */
     public function attributeLabels(): array
     {
         return [

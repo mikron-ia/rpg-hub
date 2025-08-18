@@ -124,6 +124,19 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ];
     }
 
+    /**
+     * @return array<string,string>
+     */
+    public function attributeHints(): array
+    {
+        return [
+            'data' => Yii::t('app', 'CHARACTER_HINT_DATA'),
+        ];
+    }
+
+    /**
+     * @return array<string,string>
+     */
     public function attributeLabels(): array
     {
         return [
@@ -137,7 +150,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'importance_category' => Yii::t('app', 'CHARACTER_IMPORTANCE'),
             'updated_at' => Yii::t('app', 'CHARACTER_UPDATED_AT'),
             'modified_at' => Yii::t('app', 'CHARACTER_MODIFIED_AT'),
-            'character_sheet_id' => Yii::t('app', 'LABEL_CHARACTER'),
+            'character_sheet_id' => Yii::t('app', 'CHARACTER_CHARACTER_SHEET'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
             'external_data_pack_id' => Yii::t('app', 'EXTERNAL_DATA_PACK'),
             'seen_pack_id' => Yii::t('app', 'SEEN_PACK_ID'),

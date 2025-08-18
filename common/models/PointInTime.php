@@ -60,7 +60,22 @@ class PointInTime extends ActiveRecord implements HasEpicControl
         ];
     }
 
-    public function attributeLabels()
+    /**
+     * @return array<string,string>
+     */
+    public function attributeHints(): array
+    {
+        return [
+            'text_public' => Yii::t('app', 'POINT_IN_TIME_HINT_TEXT_PUBLIC'),
+            'text_protected' => Yii::t('app', 'POINT_IN_TIME_HINT_TEXT_PROTECTED'),
+            'text_private' => Yii::t('app', 'POINT_IN_TIME_HINT_TEXT_PRIVATE'),
+        ];
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    public function attributeLabels(): array
     {
         return [
             'point_in_time_id' => Yii::t('app', 'POINT_IN_TIME_ID'),

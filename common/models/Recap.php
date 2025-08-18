@@ -68,6 +68,19 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         ];
     }
 
+    /**
+     * @return string[]
+     */
+    public function attributeHints(): array
+    {
+        return [
+            'content' => Yii::t('app', 'RECAP_HINT_CONTEXT'),
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
     public function attributeLabels(): array
     {
         return [
