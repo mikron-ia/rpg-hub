@@ -30,6 +30,13 @@ $items = [
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
+        <div>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_UPDATE'),
+                ['update', 'key' => $model->key],
+                ['class' => 'btn btn-primary'],
+            ) ?>
+        </div>
     </div>
 
     <?= Tabs::widget([

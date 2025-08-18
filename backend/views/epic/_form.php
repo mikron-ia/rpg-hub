@@ -13,27 +13,27 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <?= $form->field($model, 'system')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <?= $form->field($model, 'style')->dropDownList(FrontStyles::provideStyleNames()) ?>
     </div>
 
-    <div class="col-md-6">
-        <?= $form->field($model, 'current_story_id')->dropDownList(
+    <?php if (!$model->isNewRecord): ?>
+        <div class="col-md-6">
+            <?= $form->field($model, 'current_story_id')->dropDownList(
                 $model->getAllowedStoriesForDropDown(),
                 ['prompt' => ' --- ' . Yii::t('app', 'EPIC_SELECT_CURRENT_STORY') . ' --- '],
-        ) ?>
-    </div>
+            ) ?>
+        </div>
 
-    <?php if (!$model->isNewRecord): ?>
-        <div class="col-md-12">
+        <div class="col-md-6">
             <?= $form->field($model, 'status')->dropDownList($model->getAllowedChangeNames()) ?>
         </div>
     <?php endif; ?>
