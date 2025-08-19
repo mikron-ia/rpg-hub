@@ -109,6 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div>
         <span class="hidden" id="button-message-copy-base"><?= Yii::t('app', 'BUTTON_COPY_INVITE') ?></span>
         <span class="hidden" id="button-message-copy-confirm"><?= Yii::t('app', 'BUTTON_COPY_IN_PROGRESS') ?></span>
+        <span class="hidden" id="button-message-copy-failure"><?= Yii::t('app', 'BUTTON_COPY_FAILED') ?></span>
         <?= Html::textarea(
             name: 'link-content',
             options: [

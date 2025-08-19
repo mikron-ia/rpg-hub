@@ -76,6 +76,7 @@ return [
     'BUTTON_CHARACTERS' => 'Characters',
     'BUTTON_CHARACTER_SHEETS' => 'Character sheets',
     'BUTTON_CHARACTER_SHEET_CREATE' => 'Add character sheet',
+    'BUTTON_COPY_FAILED' => 'Copy failed',
     'BUTTON_COPY_INVITE' => 'Copy link',
     'BUTTON_COPY_IN_PROGRESS' => 'Key copied',
     'BUTTON_COPY_KEY' => 'Copy key',

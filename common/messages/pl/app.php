@@ -76,6 +76,7 @@ return [
     'BUTTON_CHARACTERS' => 'Postacie',
     'BUTTON_CHARACTER_SHEETS' => 'Karty postaci',
     'BUTTON_CHARACTER_SHEET_CREATE' => 'Dodaj kartę postaci',
+    'BUTTON_COPY_FAILED' => 'Błąd kopiowania',
     'BUTTON_COPY_INVITE' => 'Skopiuj link',
     'BUTTON_COPY_IN_PROGRESS' => 'Skopiowany',
     'BUTTON_COPY_KEY' => 'Skopiuj klucz',

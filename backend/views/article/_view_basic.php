@@ -101,6 +101,7 @@ ArticleAsset::register($this);
         <span class="hidden" id="key-value" data-key="ST:<?= $model->key ?>"></span>
         <span class="hidden" id="button-message-copy-base"><?= Yii::t('app', 'BUTTON_COPY_KEY') ?></span>
         <span class="hidden" id="button-message-copy-confirm"><?= Yii::t('app', 'BUTTON_COPY_IN_PROGRESS') ?></span>
+        <span class="hidden" id="button-message-copy-failure"><?= Yii::t('app', 'BUTTON_COPY_FAILED') ?></span>
         <?= Html::a(
             Yii::t('app', 'BUTTON_COPY_KEY'),
             '#',
