@@ -381,7 +381,6 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             Description::TYPE_ATTITUDE,
             Description::TYPE_BACKGROUND,
             Description::TYPE_DOMAIN,
-            Description::TYPE_FAME,
             Description::TYPE_FACTIONS,
             Description::TYPE_HISTORY,
             Description::TYPE_INTERACTIONS,

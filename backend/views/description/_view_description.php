@@ -16,7 +16,7 @@ $messageForStillValid = isset($model->point_in_time_still_valid_id) && isset($mo
 
     <div class="buttoned-header">
 
-        <h2><?= $model->position; ?>. <?= $model->getTypeName(); ?></h2>
+        <h2><?= $model->position; ?>. <?= htmlspecialchars($model->getTypeName()); ?></h2>
 
         <div>
             <span class="btn btn-default move-down"
