@@ -2,8 +2,10 @@
 
 namespace common\models;
 
+use common\models\core\HasEpicControl;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForLinkTags;
+use DateTimeImmutable;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -32,7 +34,7 @@ use yii\helpers\Markdown;
  * @property User $createdBy
  * @property User $updatedBy
  */
-class Announcement extends ActiveRecord
+class Announcement extends ActiveRecord implements HasEpicControl
 {
     use ToolsForEntity;
     use ToolsForLinkTags;
@@ -98,8 +100,8 @@ class Announcement extends ActiveRecord
 
     public function afterFind(): void
     {
-        $this->visible_from === null ?: $this->visible_from = (new \DateTimeImmutable())->setTimestamp($this->visible_from)->format('Y-m-d H:i');
-        $this->visible_to === null ?: $this->visible_to = (new \DateTimeImmutable())->setTimestamp($this->visible_to)->format('Y-m-d H:i');
+        $this->visible_from === null ?: $this->visible_from = (new DateTimeImmutable())->setTimestamp($this->visible_from)->format('Y-m-d H:i');
+        $this->visible_to === null ?: $this->visible_to = (new DateTimeImmutable())->setTimestamp($this->visible_to)->format('Y-m-d H:i');
 
         parent::afterFind();
     }
@@ -112,8 +114,8 @@ class Announcement extends ActiveRecord
 
         $this->text_ready = Markdown::process(Html::encode($this->processAllInOrder($this->text_raw)), 'gfm');
 
-        $this->visible_from === null ?: $this->visible_from = (new \DateTimeImmutable($this->visible_from))->getTimestamp();
-        $this->visible_to === null ?: $this->visible_to = (new \DateTimeImmutable($this->visible_to))->getTimestamp();
+        $this->visible_from === null ?: $this->visible_from = (new DateTimeImmutable($this->visible_from))->getTimestamp();
+        $this->visible_to === null ?: $this->visible_to = (new DateTimeImmutable($this->visible_to))->getTimestamp();
 
         return parent::beforeSave($insert);
     }
@@ -131,5 +133,45 @@ class Announcement extends ActiveRecord
     public function getUpdatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
+    }
+
+    static public function canUserIndexThem(): bool
+    {
+        return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
+    }
+
+    static public function canUserCreateThem(): bool
+    {
+        return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
+    }
+
+    public function canUserControlYou(): bool
+    {
+        return self::canUserControlInEpic($this->epic);
+    }
+
+    public function canUserViewYou(): bool
+    {
+        return self::canUserViewInEpic($this->epic);
+    }
+
+    static function throwExceptionAboutCreate(): void
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_ANNOUNCEMENT'));
+    }
+
+    static function throwExceptionAboutControl(): void
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_ANNOUNCEMENT'));
+    }
+
+    static function throwExceptionAboutIndex(): void
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_ANNOUNCEMENT'));
+    }
+
+    static function throwExceptionAboutView(): void
+    {
+        self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_ANNOUNCEMENT'));
     }
 }

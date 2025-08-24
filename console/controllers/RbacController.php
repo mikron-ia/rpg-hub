@@ -79,6 +79,9 @@ class RbacController extends Controller
         $this->actionV1020();
 
         /* Nothing to load in v1.3.0 */
+
+        /* Load v1.4.0 */
+        $this->actionV1040();
     }
 
     /**
@@ -367,5 +370,34 @@ class RbacController extends Controller
 
         $auth->addChild($operator, $controlArticle);
         $auth->addChild($user, $viewArticle);
+    }
+
+    /**
+     * Adds rights from v1.4.0
+    */
+    public function actionV1040(): void
+    {
+        $auth = Yii::$app->authManager;
+
+        $gameMasterRule = $auth->getRule('epicGameMaster');
+        $watcherRule = $auth->getRule('epicWatcher');
+
+        $controlAnnouncement = $auth->createPermission('controlAnnouncement');
+        $controlAnnouncement->description = 'Able to add, edit, or remove an announcement for Epic';
+        $controlAnnouncement->ruleName = $gameMasterRule->name;
+
+        $auth->add($controlAnnouncement);
+
+        $viewAnnouncement = $auth->createPermission('viewAnnouncement');
+        $viewAnnouncement->description = 'Able to view an announcement';
+        $viewAnnouncement->ruleName = $watcherRule->name;
+
+        $auth->add($viewAnnouncement);
+
+        $user = $auth->getRole('user');
+        $operator = $auth->getRole('operator');
+
+        $auth->addChild($operator, $controlAnnouncement);
+        $auth->addChild($user, $viewAnnouncement);
     }
 }

@@ -20,7 +20,7 @@ class AnnouncementController extends Controller
 {
     use EpicAssistance;
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -68,9 +68,9 @@ class AnnouncementController extends Controller
             return $this->render('../epic-selection');
         }
 
-//        if (!Announcement::canUserIndexThem()) {
-//            Announcement::throwExceptionAboutIndex();
-//        }
+        if (!Announcement::canUserIndexThem()) {
+            Announcement::throwExceptionAboutIndex();
+        }
 
         $searchModel = new AnnouncementQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

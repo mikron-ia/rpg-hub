@@ -68,6 +68,10 @@ class AnnouncementController extends Controller
             return $this->render('../epic-list');
         }
 
+        if (!Announcement::canUserIndexThem()) {
+            Announcement::throwExceptionAboutIndex();
+        }
+
         $searchModel = new AnnouncementQuery();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -104,9 +108,15 @@ class AnnouncementController extends Controller
 
     /**
      * @throws Exception
+     * @throws HttpException
+     * @throws NotFoundHttpException
      */
     public function actionCreate(string $epic = null): Response|string
     {
+        if (!Announcement::canUserCreateThem()) {
+            Announcement::throwExceptionAboutCreate();
+        }
+
         if (!empty($epic)) {
             $epicObject = $this->findEpicByKey($epic);
 
@@ -118,6 +128,11 @@ class AnnouncementController extends Controller
         }
 
         $model = new Announcement();
+
+        $this->setEpicOnObject($epic, $model);
+        if (!$model->isEpicSet()) {
+            return $this->render('../epic-list');
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['announcement/view', 'key' => $model->key]);
@@ -136,6 +151,10 @@ class AnnouncementController extends Controller
     public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModelByKey($key);
+
+        if (!$model->canUserControlYou()) {
+            Announcement::throwExceptionAboutControl();
+        }
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
