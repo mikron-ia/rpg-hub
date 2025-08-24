@@ -36,6 +36,7 @@ class AnnouncementController extends Controller
                                 'index',
                                 'update',
                                 'view',
+                                'delete',
                             ],
                             'allow' => true,
                             'roles' => ['operator'],
@@ -163,6 +164,19 @@ class AnnouncementController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionDelete(string $key): Response
+    {
+        $model = $this->findModelByKey($key);
+
+        if (!$model->canUserControlYou()) {
+            Announcement::throwExceptionAboutControl();
+        }
+
+        $model->delete();
+
+        return $this->redirect(['index', 'epic' => $model->epic->key]);
     }
 
     /**
