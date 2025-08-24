@@ -4,6 +4,7 @@
 /* @var $epic Epic */
 /* @var $sessions ActiveDataProvider */
 /* @var $stories ActiveDataProvider */
+/* @var $announcements ActiveDataProvider */
 
 /* @var $recap Recap */
 
@@ -153,10 +154,36 @@ if ($epic) {
         </div>
 
         <div>
-            <h3 title="<?= Yii::t('app', 'FRONTPAGE_NEWS_TITLE_TEXT') ?>">
-                <?= Yii::t('app', 'FRONTPAGE_NEWS') ?>
-            </h3>
-            <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></i></p>
+            <div class="buttoned-header">
+                <h3 title="<?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_TITLE_TEXT') ?>">
+                    <?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT') ?>
+                </h3>
+                <?php if ($announcements->count > 0): ?>
+                    <?= Html::a(
+                        Yii::t('app', 'BUTTON_ANNOUNCEMENT_VIEW_ALL'),
+                        ['announcement/index', 'key' => $epic->key],
+                        ['class' => 'btn btn-primary']
+                    ); ?>
+                <?php endif; ?>
+            </div>
+
+            <?php if ($announcements->count > 0): ?>
+                <?= ListView::widget([
+                    'dataProvider' => $announcements,
+                    'emptyText' => '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_NOT_AVAILABLE') . '</p>',
+                    'layout' => '{items}',
+                    'separator' => '<hr />',
+                    'itemOptions' => ['class' => 'item'],
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        return $this->render(
+                            '../announcement/_epic_box',
+                            ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                        );
+                    },
+                ]) ?>
+            <?php else: ?>
+                <p class="no-data-box"><?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_NOT_AVAILABLE') ?></p>
+            <?php endif; ?>
         </div>
 
         <h3><?= Yii::t('app', 'EPIC_CARD_EPIC_ATTRIBUTES'); ?></h3>

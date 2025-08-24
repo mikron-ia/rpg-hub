@@ -184,6 +184,14 @@ p {
     margin: 0 0 15px 0;
 }
 
+.no-data-box {
+    background: whitesmokee;
+    border-radius: 10px;
+    font-style: italic;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
@@ -416,6 +424,11 @@ a:focus {
     font-size: 1.25rem;
     margin: -1px 0 0 5px;
     padding: 3px 10px;
+}
+
+.announcement-box-time {
+    font-style: italic;
+    text-align: right;
 }
 
 .recap-box-time {

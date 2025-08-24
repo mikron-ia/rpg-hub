@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\AnnouncementQuery;
 use common\models\Epic;
 use common\models\GameQuery;
 use common\models\RecapQuery;
@@ -91,20 +92,21 @@ final class EpicController extends Controller
 
         /* Get Sessions */
         $sessionQuery = new GameQuery();
-        $sessions = $sessionQuery->mostRecentDataProvider($model);
+        $sessions = $sessionQuery->mostRecentDataProvider($model, true);
 
         if ($recap) {
             $recap->recordSighting();
         }
 
         /* Get News */
-        $news = [];
+        $announcementsQuery = new AnnouncementQuery();
+        $announcements = $announcementsQuery->mostRecentDataProvider($model);
 
         return $this->render('view', [
             'epic' => $model,
             'sessions' => $sessions,
             'stories' => $stories,
-            'news' => $news,
+            'announcements' => $announcements,
             'recap' => $recap,
         ]);
     }

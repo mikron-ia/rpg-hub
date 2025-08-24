@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\AnnouncementQuery;
 use common\models\Epic;
 use common\models\EpicQuery;
 use common\models\GameQuery;
@@ -24,6 +25,7 @@ use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Cookie;
+use yii\web\HttpException;
 use yii\web\Response;
 
 /**
@@ -96,10 +98,12 @@ final class SiteController extends Controller
 
     /**
      * Displays front page
+     *
      * @return string
-     * @throws \yii\web\HttpException
+     *
+     * @throws HttpException
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $user = User::findOne(['id' => \Yii::$app->user->id]);
 
@@ -111,7 +115,7 @@ final class SiteController extends Controller
         $sessions = (new GameQuery())->mostRecentByPlayerDataProvider($userEpicIDs);
         $recaps = (new RecapQuery())->mostRecentByPlayerDataProvider($userEpicIDs);
         $stories = (new StoryQuery(4))->mostRecentByPlayerDataProvider($userEpicIDs);
-        $news = [];
+        $announcements = (new AnnouncementQuery())->mostRecentByPlayerDataProvider($userEpicIDs);
 
         // @todo Recap sighting
 
@@ -119,7 +123,7 @@ final class SiteController extends Controller
             'epics' => $epics,
             'sessions' => $sessions,
             'stories' => $stories,
-            'news' => $news,
+            'announcements' => $announcements,
             'recaps' => $recaps,
         ]);
     }

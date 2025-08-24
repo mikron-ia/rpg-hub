@@ -2,12 +2,15 @@
 
 /* @var $this yii\web\View */
 /* @var $epics Epic[] */
-/* @var $recaps \common\models\Recap[] */
-/* @var $sessions \yii\data\ActiveDataProvider */
+/* @var $recaps Recap[] */
+/* @var $announcements ActiveDataProvider */
+/* @var $sessions ActiveDataProvider */
 
-/* @var $stories \yii\data\ActiveDataProvider */
+/* @var $stories ActiveDataProvider */
 
 use common\models\Epic;
+use common\models\Recap;
+use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
 
 $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
@@ -93,10 +96,32 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
             <?php endif; ?>
         </div>
         <div>
-            <h3 title="<?= Yii::t('app', 'FRONTPAGE_NEWS_TITLE_TEXT') ?>">
-                <?= Yii::t('app', 'FRONTPAGE_NEWS') ?>
-            </h3>
-            <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></i></p>
+            <div class="buttoned-header">
+                <h3 title="<?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_TITLE_TEXT') ?>">
+                    <?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT') ?>
+                </h3>
+            </div>
+
+            <?php if ($announcements->count > 0): ?>
+                <?= ListView::widget([
+                    'dataProvider' => $announcements,
+                    'emptyText' =>
+                        '<p class="error-box">'
+                        . Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_NOT_AVAILABLE')
+                        . '</p>',
+                    'layout' => '{items}',
+                    'separator' => '<hr />',
+                    'itemOptions' => ['class' => 'item'],
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        return $this->render(
+                            '../announcement/_site_box',
+                            ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                        );
+                    },
+                ]) ?>
+            <?php else: ?>
+                <p class="no-data-box"><?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_NOT_AVAILABLE') ?></p>
+            <?php endif; ?>
         </div>
     </div>
 </div>
