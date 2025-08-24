@@ -1,14 +1,17 @@
 <?php
 
 use common\models\Announcement;
+use common\models\Epic;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
+/** @var $epic Epic */
 /** @var common\models\AnnouncementQuery $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = Yii::t('app', 'ANNOUNCEMENT_TITLE_INDEX');
+$this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

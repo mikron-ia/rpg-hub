@@ -2,12 +2,15 @@
 
 namespace backend\controllers;
 
+use common\components\EpicAssistance;
 use common\models\Announcement;
 use common\models\AnnouncementQuery;
+use common\models\Epic;
 use Yii;
 use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
@@ -17,6 +20,8 @@ use yii\web\Response;
  */
 class AnnouncementController extends Controller
 {
+    use EpicAssistance;
+
     public function behaviors(): array
     {
         return array_merge(
@@ -49,10 +54,25 @@ class AnnouncementController extends Controller
 
     public function actionIndex(): string
     {
+        if (!empty($epic)) {
+            $epicObject = $this->findEpicByKey($epic);
+
+            if (!$epicObject->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
+        }
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-list');
+        }
+
         $searchModel = new AnnouncementQuery();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
+            'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -60,19 +80,43 @@ class AnnouncementController extends Controller
 
     /**
      * @throws NotFoundHttpException
+     * @throws HttpException
      */
     public function actionView(string $key): string
     {
+        if (!empty($epic)) {
+            $epicObject = $this->findEpicByKey($epic);
+
+            if (!$epicObject->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
+        }
+
+        $model = $this->findModelByKey($key);
+
         return $this->render('view', [
-            'model' => $this->findModelByKey($key),
+            'model' => $model,
+            'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
         ]);
     }
 
     /**
      * @throws Exception
      */
-    public function actionCreate(): Response|string
+    public function actionCreate(string $epic = null): Response|string
     {
+        if (!empty($epic)) {
+            $epicObject = $this->findEpicByKey($epic);
+
+            if (!$epicObject->canUserViewYou()) {
+                Epic::throwExceptionAboutView();
+            }
+
+            $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
+        }
+
         $model = new Announcement();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -80,6 +124,7 @@ class AnnouncementController extends Controller
         }
 
         return $this->render('create', [
+            'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
             'model' => $model,
         ]);
     }

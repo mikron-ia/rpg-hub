@@ -132,7 +132,7 @@ final class EpicController extends Controller
 
         /* Get Announcements */
         $announcementQuery = new AnnouncementQuery();
-        $announcements = $announcementQuery->mostRecentDataProvider($model);
+        $announcements = $announcementQuery->mostRecentDataProvider($model, false);
 
         return $this->render('front', [
             'epic' => $model,

@@ -1,6 +1,6 @@
 <?php
 
-use kartik\date\DatePicker;
+use common\models\EpicQuery;
 use kartik\datetime\DateTimePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -22,7 +22,11 @@ $datePickerConfig = [
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-12">
+    <div class="col-md-5">
+        <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
+    </div>
+
+    <div class="col-md-7">
         <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
     </div>
 
