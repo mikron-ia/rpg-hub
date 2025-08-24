@@ -31,6 +31,8 @@ return [
     'ANNOUNCEMENT_TEXT' => 'Text',
     'ANNOUNCEMENT_TEXT_RAW' => 'Text',
     'ANNOUNCEMENT_TEXT_READY' => 'Text',
+    'ANNOUNCEMENT_TIME_FORMAT_FROM {from}}' => 'Visible from {from} (UTC)',
+    'ANNOUNCEMENT_TIME_FORMAT_FROM_TO {from} {to}' => 'Visible from {from} to {to} (UTC)',
     'ANNOUNCEMENT_TITLE' => 'Title',
     'ANNOUNCEMENT_TITLE_INDEX' => 'Announcements',
     'ANNOUNCEMENT_UPDATED_AT' => 'Updated at',

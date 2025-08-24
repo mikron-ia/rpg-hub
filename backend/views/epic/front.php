@@ -189,6 +189,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                                 ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget],
                             );
                         },
+                        'separator' => '<hr />',
                     ]) ?>
                 </div>
 

@@ -259,8 +259,21 @@ p {
     margin: 0 0 15px 0;
 }
 
+.no-data-box {
+    background: whitesmokee;
+    border-radius: 10px;
+    font-style: italic;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
 .glyphicon {
     margin: 0 8px;
+}
+
+.announcement-box-time {
+    font-style: italic;
+    text-align: right;
 }
 
 .recap-box-time {
