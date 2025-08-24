@@ -1,13 +1,15 @@
 <?php
 
+use common\models\Announcement;
 use common\models\Epic;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
-/** @var $epic Epic */
-/** @var yii\web\View $this */
-/** @var common\models\Announcement $model */
+/** @var Epic $epic */
+/** @var View $this */
+/** @var Announcement $model */
 
 $this->title = $model->title;
 
@@ -18,7 +20,10 @@ if (isset($model->epic_id)) {
     ];
 }
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ANNOUNCEMENT_TITLE_INDEX'), 'url' => ['index', 'key' => $model->epic->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'ANNOUNCEMENT_TITLE_INDEX'),
+    'url' => ['index', 'key' => $model->epic->key],
+];
 $this->params['breadcrumbs'][] = $this->title;
 
 YiiAsset::register($this);

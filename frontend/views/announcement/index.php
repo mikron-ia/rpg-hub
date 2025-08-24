@@ -11,7 +11,10 @@ use yii\widgets\ListView;
 /* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'ANNOUNCEMENT_TITLE_INDEX');
-$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::$app->params['activeEpic']->name,
+    'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key],
+];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="announcement-index col-lg-10 col-lg-offset-1 col-md-12">

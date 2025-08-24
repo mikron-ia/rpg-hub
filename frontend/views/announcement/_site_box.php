@@ -5,7 +5,6 @@ use common\models\Announcement;
 use yii\helpers\Html;
 
 ?>
-
 <div data-key="<?= $model->key ?>">
     <h4>
         <?php if ($model->epic_id): ?>

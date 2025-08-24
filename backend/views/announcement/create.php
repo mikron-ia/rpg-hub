@@ -10,7 +10,10 @@ use yii\web\View;
 /** @var Announcement $model */
 
 $this->title = Yii::t('app', 'TITLE_ANNOUNCEMENT_CREATE');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ANNOUNCEMENT_TITLE_INDEX'), 'url' => ['index', 'key' => $epic->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'ANNOUNCEMENT_TITLE_INDEX'),
+    'url' => ['index', 'key' => $epic->key],
+];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

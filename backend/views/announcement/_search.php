@@ -1,11 +1,14 @@
 <?php
 
+use common\models\AnnouncementQuery;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/** @var yii\web\View $this */
-/** @var common\models\AnnouncementQuery $model */
-/** @var yii\widgets\ActiveForm $form */
+
+/** @var View $this */
+/** @var AnnouncementQuery $model */
+/** @var ActiveForm $form */
 ?>
 
 <div class="announcement-search">
