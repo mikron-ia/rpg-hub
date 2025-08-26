@@ -1,20 +1,21 @@
 <?php
 
 use yii\i18n\PhpMessageSource;
+use yii\symfonymailer\Mailer;
 
 $mailer = [
-    'class' => 'yii\swiftmailer\Mailer',
+    'class' => Mailer::class,
     'viewPath' => '@common/mail',
 ];
 
 if (getenv('MAIL_SMTP')) {
     $mailer['useFileTransport'] = false;
     $mailer['transport'] = [
-        'class' => 'Swift_SmtpTransport',
+        'scheme' => getenv('MAIL_SCHEME'),
         'host' => getenv('MAIL_HOST'),
         'username' => getenv('MAIL_USER'),
         'password' => getenv('MAIL_PASS'),
-        'port' => getenv('MAIL_PORT'),
+        'port' => (int)getenv('MAIL_PORT'),
         'encryption' => getenv('MAIL_ENCRYPTION'),
     ];
 } else {

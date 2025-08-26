@@ -10,7 +10,7 @@
 		"yidas/yii2-bower-asset": "~2.0.5",
         "yiisoft/yii2": "^2.0",
         "yiisoft/yii2-bootstrap": "*",
-        "yiisoft/yii2-swiftmailer": "*",
+        "yiisoft/yii2-symfonymailer": "^4.0",
         "kartik-v/yii2-krajee-base": "^3.0",
         "kartik-v/yii2-widget-select2": "^2.0",
         "kartik-v/yii2-password": "^1.5",
