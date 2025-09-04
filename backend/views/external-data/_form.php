@@ -15,11 +15,16 @@ use yii\widgets\ActiveForm;
 
     <p><?= '<b>' . $model->getAttributeLabel('code') . ':</b> ' . $model->code ?></p>
 
-    <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(Visibility::allowedVisibilities)); ?>
+    <?= $form
+        ->field($model, 'visibility')
+        ->dropDownList(Visibility::visibilityNames(Visibility::allowedVisibilities));
+    ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),
-            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton(
+            $model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+        ) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

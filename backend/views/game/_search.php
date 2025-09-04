@@ -1,6 +1,8 @@
 <?php
 
 use common\models\Epic;
+use common\models\Game;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -20,6 +22,11 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'time') ?>
 
     <?= $form->field($model, 'status') ?>
+
+    <?= $form->field($model, 'status')->widget(
+        Select2::class,
+        ['data' => Game::statusNames(), 'options' => ['multiple' => true]]
+    ) ?>
 
     <?php echo $form->field($model, 'details') ?>
 

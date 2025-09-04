@@ -5,6 +5,7 @@ use common\models\EpicQuery;
 use common\models\Game;
 use common\models\RecapQuery;
 use kartik\date\DatePicker;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -20,25 +21,28 @@ GameAsset::register($this);
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-6 col-lg-4">
-        <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
+        <?= $form->field($model, 'epic_id')->widget(
+            Select2::class,
+            ['data' => EpicQuery::getListOfEpicsForSelector()]
+        ); ?>
     </div>
 
     <div class="col-md-6 col-lg-2">
         <?= $form
             ->field($model, 'status')
-            ->dropDownList(
-                $model->isNewRecord
-                    ? Game::statusNames()
-                    : $model->getAllowedChangeNames()
-            )
+            ->dropDownList($model->isNewRecord ? Game::statusNames() : $model->getAllowedChangeNames())
         ?>
     </div>
 
     <div class="col-md-6 col-lg-6">
-        <?= $form->field($model, 'recap_id')->dropDownList(
-            RecapQuery::allFromCurrentEpicForSelector(),
-            ['prompt' => ' --- ' . Yii::t('app', 'RECAP_PROMPT') . ' --- ']
-        ) ?>
+        <?= $form->field($model, 'recap_id')->widget(
+            Select2::class,
+            [
+                'data' => RecapQuery::allFromCurrentEpicForSelector(),
+                'options' => ['placeholder' => ' --- ' . Yii::t('app', 'RECAP_PROMPT') . ' --- '],
+                'pluginOptions' => ['allowClear' => true],
+            ]
+        ); ?>
     </div>
 
     <div class="col-md-6 col-lg-6">

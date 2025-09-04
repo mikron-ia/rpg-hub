@@ -5,6 +5,7 @@ use common\models\core\Visibility;
 use common\models\EpicQuery;
 use common\models\Group;
 use common\models\GroupQuery;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -19,38 +20,36 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-4">
-        <?= $form->field(
-            $model,
-            'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()
+        <?= $form->field($model, 'epic_id')->widget(
+            Select2::class,
+            ['data' => EpicQuery::getListOfEpicsForSelector()]
         ); ?>
     </div>
 
     <div class="col-md-4">
-        <?= $form->field(
-            $model,
-            'visibility')->dropDownList(Visibility::visibilityNames(Group::allowedVisibilities())
-        ) ?>
+        <?= $form
+            ->field($model, 'visibility')
+            ->dropDownList(Visibility::visibilityNames(Group::allowedVisibilities())
+            ) ?>
     </div>
 
     <div class="col-md-4">
-        <?= $form->field($model, 'master_group_id')->dropDownList(
-            GroupQuery::getAllFromCurrentEpicForSelector(),
-            ['prompt' => ' --- ' . Yii::t('app', 'MASTER_GROUP_PROMPT') . ' --- ']
-        ) ?>
+        <?= $form->field($model, 'master_group_id')->widget(
+            Select2::class,
+            [
+                'data' => GroupQuery::getAllFromCurrentEpicForSelector(),
+                'options' => ['placeholder' => ' --- ' . Yii::t('app', 'MASTER_GROUP_PROMPT') . ' --- '],
+                'pluginOptions' => ['allowClear' => true],
+            ]
+        ); ?>
     </div>
 
     <div class="col-md-3">
-        <?= $form->field(
-            $model,
-            'importance_category')->dropDownList(ImportanceCategory::importanceNames()
-        ) ?>
+        <?= $form->field($model, 'importance_category')->dropDownList(ImportanceCategory::importanceNames()) ?>
     </div>
 
     <div class="col-md-9">
-        <?= $form->field(
-            $model,
-            'name')->textInput(['maxlength' => true]
-        ) ?>
+        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
 
     <div class="col-md-12">

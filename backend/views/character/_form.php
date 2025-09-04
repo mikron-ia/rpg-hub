@@ -5,6 +5,7 @@ use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
 use common\models\EpicQuery;
 use common\models\Character;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -19,7 +20,10 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-4">
-        <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
+        <?= $form->field($model, 'epic_id')->widget(
+            Select2::class,
+            ['data' => EpicQuery::getListOfEpicsForSelector()]
+        ); ?>
     </div>
 
     <div class="col-md-8">
@@ -39,10 +43,14 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-4 col-lg-5">
-        <?= $form->field($model, 'character_sheet_id')->dropDownList(
-            CharacterSheetQuery::getListOfCharactersForSelector(),
-            ['prompt' => ' --- ' . Yii::t('app', 'CHARACTER_SHEET_PROMPT') . ' --- ']
-        ) ?>
+        <?= $form->field($model, 'character_sheet_id')->widget(
+            Select2::class,
+            [
+                'data' => CharacterSheetQuery::getListOfCharactersForSelector(),
+                'options' => ['placeholder' => ' --- ' . Yii::t('app', 'CHARACTER_SHEET_PROMPT') . ' --- '],
+                'pluginOptions' => ['allowClear' => true],
+            ]
+        ); ?>
     </div>
 
     <?php if (!$model->isNewRecord): ?>

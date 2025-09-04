@@ -1,6 +1,7 @@
 <?php
 
 use common\models\EpicQuery;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -14,7 +15,10 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-4">
-        <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
+        <?= $form->field($model, 'epic_id')->widget(
+            Select2::class,
+            ['data' => EpicQuery::getListOfEpicsForSelector()]
+        ); ?>
     </div>
 
     <div class="col-md-6">
@@ -23,7 +27,10 @@ use yii\widgets\ActiveForm;
 
     <?php if (!$model->isNewRecord): ?>
         <div class="col-md-2">
-            <?= $form->field($model, 'data_state')->dropDownList($model->getDataState()->allowedSuccessorsAsStrings()); ?>
+            <?= $form
+                ->field($model, 'data_state')
+                ->dropDownList($model->getDataState()->allowedSuccessorsAsStrings());
+            ?>
         </div>
 
         <div class="col-md-6">
@@ -39,12 +46,12 @@ use yii\widgets\ActiveForm;
     <?php endif; ?>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'player_id')->dropDownList(
-            $model->epic->getPlayerListForDropDown(),
+        <?= $form->field($model, 'player_id')->widget(
+            Select2::class,
             [
-                'prompt' => ' --- '
-                    . Yii::t('app', 'CHARACTER_SHEET_FORM_SELECT_PLAYER')
-                    . ' --- ',
+                'data' => $model->epic->getPlayerListForDropDown(),
+                'options' => ['placeholder' => ' --- ' . Yii::t('app', 'CHARACTER_SHEET_FORM_SELECT_PLAYER') . ' --- '],
+                'pluginOptions' => ['allowClear' => true],
             ]
         ); ?>
     </div>
@@ -52,8 +59,10 @@ use yii\widgets\ActiveForm;
     <div class="clearfix"></div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),
-            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton(
+            $model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+        ) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

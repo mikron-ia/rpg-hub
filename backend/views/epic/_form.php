@@ -1,6 +1,7 @@
 <?php
 
 use common\models\core\FrontStyles;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -22,15 +23,19 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-4">
-        <?= $form->field($model, 'style')->dropDownList(FrontStyles::provideStyleNames()) ?>
+        <?= $form->field($model, 'style')->widget(Select2::class, ['data' => FrontStyles::provideStyleNames()]); ?>
     </div>
 
     <?php if (!$model->isNewRecord): ?>
         <div class="col-md-6">
-            <?= $form->field($model, 'current_story_id')->dropDownList(
-                $model->getAllowedStoriesForDropDown(),
-                ['prompt' => ' --- ' . Yii::t('app', 'EPIC_SELECT_CURRENT_STORY') . ' --- '],
-            ) ?>
+            <?= $form->field($model, 'current_story_id')->widget(
+                Select2::class,
+                [
+                    'data' => $model->getAllowedStoriesForDropDown(),
+                    'options' => ['placeholder' => ' --- ' . Yii::t('app', 'EPIC_SELECT_CURRENT_STORY') . ' --- '],
+                    'pluginOptions' => ['allowClear' => true],
+                ]
+            ); ?>
         </div>
 
         <div class="col-md-6">

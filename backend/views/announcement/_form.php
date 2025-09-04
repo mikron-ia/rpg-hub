@@ -3,6 +3,7 @@
 use common\models\Announcement;
 use common\models\EpicQuery;
 use kartik\datetime\DateTimePicker;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -25,7 +26,10 @@ $datePickerConfig = [
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-5">
-        <?= $form->field($model, 'epic_id')->dropDownList(EpicQuery::getListOfEpicsForSelector()); ?>
+        <?= $form->field($model, 'epic_id')->widget(
+            Select2::class,
+            ['data' => EpicQuery::getListOfEpicsForSelector()]
+        ); ?>
     </div>
 
     <div class="col-md-7">
