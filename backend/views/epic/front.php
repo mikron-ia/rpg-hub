@@ -193,10 +193,6 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                     ]) ?>
                 </div>
 
-                <h2><?= Yii::t('app', 'EPIC_CARD_TODO'); ?></h2>
-
-                <p><i><?= Yii::t('app', 'PLACEHOLDER_NOT_YET_IMPLEMENTED') ?></i></p>
-
                 <h2><?= Yii::t('app', 'EPIC_CARD_PARTICIPANTS'); ?></h2>
 
                 <?= ListView::widget([

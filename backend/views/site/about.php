@@ -29,6 +29,7 @@ This webpage is a hub for role-playing game story/campaign/epic management. This
             <li><a href="https://github.com/kartik-v/yii2-password">yii2-password</a></li>
             <li><a href="https://github.com/kartik-v/strength-meter">strength-meter</a></li>
             <li><a href="https://github.com/kartik-v/yii2-widget-datepicker">yii2-widget-datepicker</a></li>
+            <li><a href="https://github.com/kartik-v/yii2-widget-datetimepicker">yii2-widget-datetimepicker</a></li>
         </ul>
     </li>
     <li><a href="https://github.com/sebastianbergmann/phpunit">phpunit</a></li>
