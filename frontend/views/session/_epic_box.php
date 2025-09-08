@@ -8,12 +8,12 @@ use yii\helpers\Html;
 
 <div id="session-<?= $model->game_id; ?>">
     <?php if (!empty($model->notes) || !empty($model->recap)): ?>
-        <p class="session-box session-box-closed"
+        <p class="session-box session-box-widening session-box-closed"
            data-toggle="collapse"
            data-target="#session-notes-<?php echo $model->game_id; ?>"
            onclick="$(this).toggleClass('session-box-closed session-box-open')"
         >
-            <?= Html::tag('span', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass()]]) ?>
+            <?= Html::tag('span', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass(), 'game-status-widening']]) ?>
             <?php echo Html::tag('span', Html::encode($model->basics), []); ?>
         </p>
 
@@ -30,8 +30,8 @@ use yii\helpers\Html;
             <?php endif; ?>
         </div>
     <?php else: ?>
-        <p class="session-box">
-            <?= Html::tag('span', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass()]]) ?>
+        <p class="session-box session-box-widening">
+            <?= Html::tag('span', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass(), 'game-status-widening']]) ?>
             <?php echo Html::tag('span', Html::encode($model->basics), []); ?>
         </p>
     <?php endif; ?>

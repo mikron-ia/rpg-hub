@@ -297,7 +297,6 @@ return [
     'EPIC_CARD_RECENT_EVENTS' => 'Bieżące wydarzenia',
     'EPIC_CARD_ROLE' => 'Rola',
     'EPIC_CARD_SESSIONS' => 'Sesje',
-    'EPIC_CARD_TODO' => 'Rzeczy do zrobienia',
     'EPIC_CARD_USERNAME' => 'Miano',
     'EPIC_CHANGED_BASED_ON_OBJECT {epic}' => 'Aktywna kampania została zmieniona na {epic}',
     'EPIC_COUNT_GROUPS' => 'Liczba grup',

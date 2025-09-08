@@ -470,6 +470,19 @@ a:focus {
     vertical-align: middle;
 }
 
+@media (max-width: 1199px) {
+    .session-box-widening {
+        text-align: center;
+    }
+
+    .game-status-widening {
+        font-size: 75%;
+        margin: 5px 0;
+        padding: 5px 10px;
+        width: 100%;
+    }
+}
+
 .game-status-proposed {
     background-color: blueviolet;
 }

@@ -164,6 +164,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                             . Yii::t('app', 'FRONTPAGE_SESSION_NOT_AVAILABLE')
                             . '</p>',
                         'layout' => '{items}',
+                        'separator' => '<hr />',
                         'itemOptions' => ['class' => 'item'],
                         'itemView' => function ($model, $key, $index, $widget) {
                             return $this->render(

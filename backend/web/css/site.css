@@ -292,6 +292,7 @@ p {
 
 .session-box {
     font-size: 1.8rem;
+    text-align: left;
 }
 
 .game-status {
@@ -307,6 +308,19 @@ p {
     text-align: center;
     text-transform: uppercase;
     vertical-align: middle;
+}
+
+@media (max-width: 1199px) {
+    .session-box {
+        text-align: center;
+    }
+
+    .game-status {
+        font-size: 75%;
+        margin: 5px 0;
+        padding: 5px 10px;
+        width: 100%;
+    }
 }
 
 .game-status-proposed {
