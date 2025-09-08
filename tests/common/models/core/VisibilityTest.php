@@ -16,6 +16,7 @@ class VisibilityTest extends TestCase
 
     public function testGetName(): void
     {
+        $this->assertSame('VISIBILITY_GM', Visibility::VISIBILITY_GM->getName());
         $this->assertSame('VISIBILITY_FULL', Visibility::VISIBILITY_FULL->getName());
     }
 

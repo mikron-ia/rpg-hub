@@ -8,7 +8,7 @@ trait ToolsForHasVisibility
 {
     /**
      * @note Override as needed, this is the default state
-     * @return array<int,Visibility>
+     * @return array<Visibility>
      */
     static public function allowedVisibilities(): array
     {
@@ -19,7 +19,7 @@ trait ToolsForHasVisibility
     }
 
     /**
-     * @return array<int,string>
+     * @return array<string>
      */
     static public function allowedVisibilitiesForValidator(): array
     {
@@ -35,11 +35,11 @@ trait ToolsForHasVisibility
 
     public function getVisibilityName(): string
     {
-        return $this->getVisibility()->getName();
+        return $this->getVisibility()->getName() ?? '?';
     }
 
     public function getVisibilityLowercase(): string
     {
-        return $this->getVisibility()->getNameLowercase();
+        return $this->getVisibility()->getNameLowercase() ?? '?';
     }
 }

@@ -30,7 +30,7 @@ enum Visibility: string
      */
     static public function determineVisibilityVector(Epic $epic): array
     {
-        if (empty($epic) || Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest) {
             /* No epic and no user makes bad business */
             $visibilityVector = [];
         } else {
@@ -45,9 +45,6 @@ enum Visibility: string
         return $visibilityVector;
     }
 
-    /**
-     * Provides visibility name
-     */
     public function getName(): ?string
     {
         return self::visibilityNames(self::allowedVisibilities)[$this->value] ?? null;

@@ -25,7 +25,7 @@ interface HasVisibility
     public function getVisibilityName(): string;
 
     /**
-     * Provides name of visibility category for the object in lowercase
+     * Provides the name of visibility category for the object in lowercase
      */
     public function getVisibilityLowercase(): string;
 }
