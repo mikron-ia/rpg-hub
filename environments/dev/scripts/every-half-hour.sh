@@ -1,2 +1,1 @@
-#!/bin/bash
-yii importance/recalculate
+./yii importance/recalculate

@@ -1,2 +1,1 @@
-#!/bin/bash
-yii sighting/supplement
+./yii sighting/supplement
