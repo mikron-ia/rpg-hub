@@ -12,11 +12,13 @@ use common\models\ParticipantRole;
 use common\models\RecapQuery;
 use common\models\StoryQuery;
 use Yii;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * EpicController implements the CRUD actions for Epic model.
@@ -231,29 +233,28 @@ final class EpicController extends Controller
     }
 
     /**
-     * Adds a participant
-     * @param string $epic_id
-     * @return mixed
+     * @param string $key
+     * @return string|Response
+     * @throws Exception
+     * @throws NotFoundHttpException
      */
-    public function actionParticipantAdd($epic_id)
+    public function actionParticipantAdd(string $key): Response|string
     {
         $model = new Participant();
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $epic_id) {
+        } elseif (Yii::$app->params['activeEpic']->key <> $key) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC_ACTION'));
         }
 
-        $model->epic_id = $epic_id;
+        $model->epic_id = $this->findModel($key)->epic_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->epic->key]);
-        } else {
-            return $this->render('participant/add', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('participant/add', ['model' => $model]);
     }
 
     /**

@@ -47,7 +47,7 @@ use yii\widgets\DetailView;
             <h2><?= Yii::t('app', 'EPIC_CARD_PARTICIPANTS'); ?></h2>
             <?= Html::a(
                 '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_PARTICIPANT_ADD') . '</span>',
-                ['participant-add', 'epic_id' => $model->epic_id],
+                ['participant-add', 'key' => $model->key],
                 ['title' => Yii::t('app', 'BUTTON_PARTICIPANT_ADD')]
             ); ?>
         </div>
