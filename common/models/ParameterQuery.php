@@ -18,19 +18,15 @@ final class ParameterQuery extends Parameter
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
 
     /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
+     * Creates a data provider instance with a search query applied
      */
-    public function search($params)
+    public function search(array $params): ActiveDataProvider
     {
         $query = Parameter::find();
 

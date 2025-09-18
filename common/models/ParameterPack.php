@@ -9,6 +9,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "parameter_pack".
@@ -28,18 +29,12 @@ use yii\db\ActiveRecord;
  */
 class ParameterPack extends ActiveRecord implements IsEditablePack
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'parameter_pack';
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['class'], 'required'],
@@ -47,10 +42,7 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK_ID'),
@@ -58,7 +50,7 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
         ];
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             ['class' => TimestampBehavior::class],
@@ -66,10 +58,9 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
     }
 
     /**
-     * @param string $className
-     * @return ParameterPack Generated pack
+     * @throws Exception
      */
-    static public function create($className)
+    static public function create(string $className): ParameterPack
     {
         $pack = new ParameterPack();
         $pack->class = $className;
@@ -99,63 +90,41 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
         $this->save();
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getEpics()
+    public function getEpics(): ActiveQuery
     {
         return $this->hasMany(Epic::class, ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getParameters()
+    public function getParameters(): ActiveQuery
     {
         return $this->hasMany(Parameter::class, ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getParametersOrdered()
+    public function getParametersOrdered(): ActiveQuery
     {
         return $this
             ->hasMany(Parameter::class, ['parameter_pack_id' => 'parameter_pack_id'])
             ->orderBy(['position' => SORT_ASC]);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getStories()
+    public function getStories(): ActiveQuery
     {
         return $this->hasMany(Story::class, ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
-    /**
-     * @return HasEpicControl
-     */
-    public function getControllingObject()
+    public function getControllingObject(): HasEpicControl
     {
         $className = 'common\models\\' . $this->class;
         /** @var HasEpicControl $object */
         return ($className)::findOne(['parameter_pack_id' => $this->parameter_pack_id]);
     }
 
-    /**
-     * @return Epic
-     */
     public function getEpic(): Epic
     {
         return $this->getControllingObject()->getEpic()->one();
     }
 
-    /**
-     * @param string $code
-     * @return null|Parameter
-     */
-    public function getParameterByCode($code)
+    public function getParameterByCode(string $code): ?Parameter
     {
         return Parameter::findOne([
             'parameter_pack_id' => $this->parameter_pack_id,
@@ -163,19 +132,9 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
         ]);
     }
 
-    /**
-     * @param $code
-     * @return null|string
-     */
-    public function getParameterValueByCode($code)
+    public function getParameterValueByCode(string $code): ?string
     {
-        $parameter = $this->getParameterByCode($code);
-
-        if ($parameter) {
-            return $parameter->content;
-        } else {
-            return null;
-        }
+        return $this->getParameterByCode($code)?->content;
     }
 
     public function canUserReadYou(): bool

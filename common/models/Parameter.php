@@ -5,7 +5,6 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasVisibility;
 use common\models\core\Language;
-use common\models\core\Visibility;
 use common\models\tools\ToolsForHasVisibility;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -163,8 +162,6 @@ class Parameter extends ActiveRecord implements HasVisibility
     }
 
     /**
-     * @param string $methodToUse
-     *
      * @return string[]
      */
     private function typeNamesForThisClassPerMethod(string $methodToUse): array
@@ -174,11 +171,9 @@ class Parameter extends ActiveRecord implements HasVisibility
 
         $class = 'common\models\\' . $this->parameterPack->class;
 
-        if (method_exists($class, $methodToUse)) {
-            $typesAllowed = call_user_func([$class, $methodToUse]);
-        } else {
-            $typesAllowed = array_keys($typeNamesAll);
-        }
+        $typesAllowed = method_exists($class, $methodToUse)
+            ? call_user_func([$class, $methodToUse])
+            : array_keys($typeNamesAll);
 
         foreach ($typeNamesAll as $typeKey => $typeName) {
             if (in_array($typeKey, $typesAllowed, true)) {
@@ -197,24 +192,16 @@ class Parameter extends ActiveRecord implements HasVisibility
     public function getTypeName(): string
     {
         $names = self::typeNames();
-        if (isset($names[$this->code])) {
-            return $names[$this->code];
-        } else {
-            return '?';
-        }
+        return isset($names[$this->code]) ? $names[$this->code] : '?';
     }
 
-    /**
-     * @return string|null Language name
-     */
     public function getLanguage(): ?string
     {
-        $language = Language::create($this->lang);
-        return $language->getName();
+        return Language::create($this->lang)->getName();
     }
 
     /**
-     * @return string Code name in chosen language
+     * @return string Code name in the chosen language
      */
     public function getCodeName(): string
     {
