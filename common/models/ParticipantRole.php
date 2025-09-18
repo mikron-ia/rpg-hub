@@ -22,12 +22,12 @@ final class ParticipantRole extends ActiveRecord
     const ROLE_WATCHER = 'watcher';
     const ROLE_MANAGER = 'manager';
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'participant_role';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['participant_id', 'role'], 'required'],
@@ -43,7 +43,7 @@ final class ParticipantRole extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'participant_id' => Yii::t('app', 'PARTICIPANT_ID'),
@@ -52,7 +52,7 @@ final class ParticipantRole extends ActiveRecord
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
      */
     static public function roleNames(): array
     {
@@ -65,17 +65,13 @@ final class ParticipantRole extends ActiveRecord
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getParticipant(): ActiveQuery
     {
         return $this->hasOne(Participant::class, ['participant_id' => 'participant_id']);
     }
 
     /**
-     * Provides description of the role
-     * @return string
+     * Provides a description of the role
      */
     public function getRoleDescribed(): string
     {

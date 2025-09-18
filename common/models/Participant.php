@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "participant".
@@ -19,9 +20,9 @@ use yii\db\ActiveRecord;
  */
 class Participant extends ActiveRecord
 {
-    public $roleChoices;
+    public array $roleChoices = [];
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'participant';
     }
@@ -55,7 +56,10 @@ class Participant extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    /**
+     * @return array<string,string>
+     */
+    public function attributeLabels(): array
     {
         return [
             'participant_id' => Yii::t('app', 'PARTICIPANT_ID'),
@@ -66,50 +70,43 @@ class Participant extends ActiveRecord
         ];
     }
 
-    public function afterFind()
+    public function afterFind(): void
     {
         $this->roleChoices = $this->getRoles();
+
         parent::afterFind();
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): void
     {
         if (!$this->roleChoices) {
             $this->roleChoices = [];
         }
 
         $this->setRoles();
+
         parent::afterSave($insert, $changedAttributes);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getUser()
+    public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getEpic()
+    public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getParticipantRoles()
+    public function getParticipantRoles(): ActiveQuery
     {
         return $this->hasMany(ParticipantRole::class, ['participant_id' => 'participant_id']);
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
      */
-    public function getRolesList()
+    public function getRolesList(): array
     {
         $roles = [];
 
@@ -121,9 +118,9 @@ class Participant extends ActiveRecord
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = [];
 
@@ -133,7 +130,7 @@ class Participant extends ActiveRecord
         return $roles;
     }
 
-    public function setRoles()
+    public function setRoles(): void
     {
         ParticipantRole::deleteAll(['participant_id' => $this->participant_id]);
 
@@ -144,12 +141,7 @@ class Participant extends ActiveRecord
     }
 
     /**
-     * Informs whether a given user is a participant of given epic
-     *
-     * @param User $user
-     * @param Epic $epic
-     *
-     * @return bool
+     * Informs whether a given user is a participant of a given epic
      */
     static public function participantExists(User $user, Epic $epic): bool
     {
@@ -161,13 +153,7 @@ class Participant extends ActiveRecord
     }
 
     /**
-     * Informs whether a given user has a given role in given epic
-     *
-     * @param User $user
-     * @param Epic $epic
-     * @param string $role
-     *
-     * @return bool
+     * Informs whether a given user has a given role in a given epic
      */
     static public function participantHasRole(User $user, Epic $epic, string $role): bool
     {
@@ -189,11 +175,7 @@ class Participant extends ActiveRecord
     /**
      * Creates Game Master participant for an epic
      *
-     * @param int $epic_id
-     * @param int $user_id
-     * @param string $role
-     *
-     * @return bool
+     * @throws Exception
      */
     static public function createForEpic(int $epic_id, int $user_id, string $role): bool
     {
