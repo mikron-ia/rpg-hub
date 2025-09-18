@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\core\HasEpicControl;
 use common\models\core\IsEditablePack;
+use common\models\core\Visibility;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -14,6 +15,10 @@ use yii\db\ActiveRecord;
  *
  * @property string $parameter_pack_id
  * @property string $class
+ * @property int $created_at
+ * @property int $updated_at
+ * @property string $parameters_full
+ * @property string $parameters_gm
  *
  * @property Epic[] $epics
  * @property Parameter[] $parameters
@@ -73,6 +78,25 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
         $pack->refresh();
 
         return $pack;
+    }
+
+    public function updateSearchableFields(): void
+    {
+        $parametersFull = [];
+        $parametersGM = [];
+
+        foreach ($this->parameters as $parameter) {
+            if ($parameter->visibility === Visibility::VISIBILITY_FULL->value) {
+                $parametersFull[$parameter->code] = $parameter->content;
+            }
+
+            $parametersGM[$parameter->code] = $parameter->content;
+        }
+
+        $this->parameters_full = json_encode($parametersFull);
+        $this->parameters_gm = json_encode($parametersGM);
+
+        $this->save();
     }
 
     /**

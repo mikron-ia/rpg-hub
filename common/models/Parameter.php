@@ -90,6 +90,8 @@ class Parameter extends ActiveRecord implements HasVisibility
             $this->parameterPack->touch('updated_at');
         }
 
+        $this->parameterPack->updateSearchableFields();
+
         parent::afterSave($insert, $changedAttributes);
     }
 

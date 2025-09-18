@@ -10,7 +10,7 @@ use yii\data\ActiveDataProvider;
  */
 final class ParameterQuery extends Parameter
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             [['parameter_id', 'parameter_pack_id', 'position'], 'integer'],

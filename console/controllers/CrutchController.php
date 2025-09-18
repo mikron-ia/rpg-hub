@@ -8,11 +8,13 @@ use common\models\CharacterSheet;
 use common\models\Epic;
 use common\models\Game;
 use common\models\Group;
+use common\models\Parameter;
 use common\models\Recap;
 use common\models\Story;
 use yii\base\InvalidRouteException;
 use yii\console\Controller;
 use yii\console\Exception;
+use yii\db\Exception as DbException;
 
 /**
  * Class CrutchController
@@ -146,6 +148,19 @@ class CrutchController extends Controller
     }
 
     /**
+     * Saves all parameters
+     */
+    public function actionSaveParameters(): void
+    {
+        $objects = Parameter::find()->all();
+
+        foreach ($objects as $object) {
+            /** @var Parameter $object */
+            $object->save(false);
+        }
+    }
+
+    /**
      * Saves everything - to be used to trigger beforeSave() or afterSave() on all
      *
      * @return void
@@ -163,5 +178,6 @@ class CrutchController extends Controller
         $this->runAction('save-groups');
         $this->runAction('save-articles');
         $this->runAction('save-games');
+        $this->runAction('save-parameters');
     }
 }

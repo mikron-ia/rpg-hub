@@ -745,6 +745,7 @@ return [
     'STORY_LONG_TAB' => 'Wydarzenia',
     'STORY_NAME' => 'Tytuł',
     'STORY_NOT_AVAILABLE' => 'Historia nie istnieje lub nie masz do niej dostępu.',
+    'STORY_PARAMETERS' => 'Parametry',
     'STORY_POSITION' => 'Pozycja na liście (od dołu)',
     'STORY_SHORT' => 'Opis',
     'STORY_SHORT_SIZE' => 'Rozmiar skrótu',

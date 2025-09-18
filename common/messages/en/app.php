@@ -745,6 +745,7 @@ return [
     'STORY_LONG_TAB' => 'Story events',
     'STORY_NAME' => 'Story title',
     'STORY_NOT_AVAILABLE' => 'Story does not exist or you have not right to access it.',
+    'STORY_PARAMETERS' => 'Parameters',
     'STORY_POSITION' => 'Position on the list (from the bottom)',
     'STORY_SHORT' => 'Short description',
     'STORY_SHORT_SIZE' => 'Short description size',

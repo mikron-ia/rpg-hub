@@ -25,11 +25,13 @@ final class StoryQuery extends Story
 
     public ?string $descriptions = null;
 
+    public ?string $parameters = null;
+
     public function rules(): array
     {
         return [
             [['story_id'], 'integer'],
-            [['descriptions'], 'string'],
+            [['descriptions', 'parameters'], 'string'],
             [['key', 'name', 'short', 'long', 'data'], 'safe'],
         ];
     }
@@ -39,6 +41,7 @@ final class StoryQuery extends Story
         $attributeLabels = parent::attributeLabels();
 
         $attributeLabels['descriptions'] = Yii::t('app', 'STORY_DESCRIPTIONS');
+        $attributeLabels['parameters'] = Yii::t('app', 'STORY_PARAMETERS');
 
         return $attributeLabels;
     }
@@ -53,7 +56,7 @@ final class StoryQuery extends Story
      */
     public function search(array $params): ActiveDataProvider
     {
-        $query = Story::find();
+        $query = Story::find()->joinWith('parameterPack', true, 'JOIN');
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
@@ -125,13 +128,18 @@ final class StoryQuery extends Story
             return $dataProvider;
         }
 
+        $visibilityColumn = in_array(
+            Visibility::VISIBILITY_GM->value,
+            Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
+        ) ? 'parameters_gm' : 'parameters_full';
+
         $query
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere([
                 'or',
                 ['like', 'short', $this->descriptions],
                 ['like', 'long', $this->descriptions]
-            ]);
+            ])->andFilterWhere(['like', $visibilityColumn, $this->parameters]);
 
         return $dataProvider;
     }
