@@ -18,7 +18,7 @@ use yii\helpers\BaseConsole;
 class InstallController extends Controller
 {
     /**
-     * Adds admin user to an empty database
+     * Adds an admin user to an empty database
      */
     public function actionAddAdministrator(): void
     {
@@ -47,6 +47,7 @@ class InstallController extends Controller
         }
 
         echo 'Admin user created successfully; password: ' . $password;
+
         exit(ExitCode::OK);
     }
 
@@ -69,10 +70,12 @@ class InstallController extends Controller
     private function input(string $label): string
     {
         $input = BaseConsole::input('Enter ' . $label . ': ');
+
         if (empty($input)) {
             BaseConsole::error('The ' . $label . ' must not be empty' . PHP_EOL);
             exit(ExitCode::NOINPUT);
         }
+
         return $input;
     }
 }

@@ -19,7 +19,7 @@ use yii\console\Controller;
  */
 class SightingController extends Controller
 {
-    public function actionSupplement()
+    public function actionSupplement(): void
     {
         LoggingHelper::log("Initiated", 'sighting.completion');
 
@@ -45,7 +45,7 @@ class SightingController extends Controller
     /**
      * @param HasSightings[] $objects
      */
-    private function createAbsentSightingObjects(array $objects)
+    private function createAbsentSightingObjects(array $objects): void
     {
         foreach ($objects as $object) {
             $object->seenPack->createAbsentSightingObjects();

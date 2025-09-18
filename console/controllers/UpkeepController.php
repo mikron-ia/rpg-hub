@@ -20,7 +20,7 @@ class UpkeepController extends Controller
      * Things that should be run often and are cheap
      * Suggested frequency for this action is every hour.
      */
-    public function actionRunsOftenIsCheap()
+    public function actionRunsOftenIsCheap(): void
     {
         /** @todo Automated e-mail sending from the queue */
         exit(0);
@@ -42,9 +42,9 @@ class UpkeepController extends Controller
      * Things that should be run rarely, but are relatively cheap
      * Keep in mind that actions grouped here could be considered expensive if run often. If it is possible, this action
      * should be run outside business hours.
-     * Suggested frequency for this action is every week.
+     * The suggested frequency for this action is every week.
      */
-    public function actionRunsRarelyIsCheap()
+    public function actionRunsRarelyIsCheap(): void
     {
         exit(0);
     }
@@ -53,9 +53,9 @@ class UpkeepController extends Controller
      * Things that should be run rarely and are expensive
      * Those actions put notable strain on the server and should be run only at times of low activity - preferably
      * outside business hours.
-     * Suggested frequency for this action is every month.
+     * The suggested frequency for this action is every month.
      */
-    public function actionRunsRarelyIsExpensive()
+    public function actionRunsRarelyIsExpensive(): void
     {
         /* @todo Database diagnostic and integrity checks */
         exit(0);

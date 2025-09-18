@@ -19,7 +19,7 @@ use yii\db\Exception as DbException;
 /**
  * Class CrutchController
  *
- * Class used for migration operations that can be done only from console
+ * Class used for migration operations that can be done only from the console
  *
  * @package console\controllers
  */
@@ -28,7 +28,7 @@ class CrutchController extends Controller
     /**
      * Saves all characters
      *
-     * @return void
+     * @throws DbException
      */
     public function actionSaveCharacters(): void
     {
@@ -44,7 +44,7 @@ class CrutchController extends Controller
     /**
      * Saves all character sheets
      *
-     * @return void
+     * @throws DbException
      */
     public function actionSaveCharacterSheets(): void
     {
@@ -59,7 +59,7 @@ class CrutchController extends Controller
     /**
      * Saves all groups
      *
-     * @return void
+     * @throws DbException
      */
     public function actionSaveGroups(): void
     {
@@ -75,7 +75,7 @@ class CrutchController extends Controller
     /**
      * Saves all epics
      *
-     * @return void
+     * @throws DbException
      */
     public function actionSaveEpics(): void
     {
@@ -89,7 +89,8 @@ class CrutchController extends Controller
 
     /**
      * Saves all recaps
-     * @return void
+     *
+     * @throws DbException
      */
     public function actionSaveRecaps(): void
     {
@@ -104,7 +105,7 @@ class CrutchController extends Controller
     /**
      * Saves all stories
      *
-     * @return void
+     * @throws DbException
      */
     public function actionSaveStories(): void
     {
@@ -119,7 +120,8 @@ class CrutchController extends Controller
 
     /**
      * Saves all articles
-     * @return void
+     *
+     * @throws DbException
      */
     public function actionSaveArticles(): void
     {
@@ -135,7 +137,7 @@ class CrutchController extends Controller
     /**
      * Saves all games
      *
-     * @return void
+     * @throws DbException
      */
     public function actionSaveGames(): void
     {
@@ -162,8 +164,6 @@ class CrutchController extends Controller
 
     /**
      * Saves everything - to be used to trigger beforeSave() or afterSave() on all
-     *
-     * @return void
      *
      * @throws InvalidRouteException
      * @throws Exception

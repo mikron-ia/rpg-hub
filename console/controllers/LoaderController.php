@@ -12,9 +12,8 @@ class LoaderController extends Controller
 {
     /**
      * Loads data from an external source
-     * @return mixed
      */
-    public function actionPerson()
+    public function actionPerson(): int
     {
         /* @var $models Character[] */
         $models = Character::find()->all();
