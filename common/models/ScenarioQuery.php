@@ -25,11 +25,7 @@ class ScenarioQuery extends Scenario
     }
 
     /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
+     * Creates a data provider instance with a search query applied
      */
     public function search(array $params): ActiveDataProvider
     {

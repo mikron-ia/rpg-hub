@@ -29,9 +29,9 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     use ToolsForEntity;
     use ToolsForHasDescriptions;
 
-    const STATUS_NEW = 'new';
-    const STATUS_REJECTED = 'rejected';
-    const STATUS_USED = 'used';
+    public const STATUS_NEW = 'new';
+    public const STATUS_REJECTED = 'rejected';
+    public const STATUS_USED = 'used';
 
     public static function tableName(): string
     {
@@ -69,7 +69,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
         ];
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if ($insert) {
             $this->key = $this->generateKey('scenario');
@@ -95,17 +95,11 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getDescriptionPack(): ActiveQuery
     {
         return $this->hasOne(DescriptionPack::class, ['description_pack_id' => 'description_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
@@ -151,22 +145,22 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
         return self::canUserViewInEpic($this->epic);
     }
 
-    static function throwExceptionAboutCreate()
+    static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_SCENARIO'));
     }
 
-    static function throwExceptionAboutControl()
+    static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_SCENARIO'));
     }
 
-    static function throwExceptionAboutIndex()
+    static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_SCENARIO'));
     }
 
-    static function throwExceptionAboutView()
+    static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_SCENARIO'));
     }
@@ -177,7 +171,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
      */
     static public function statusNames(): array
     {
@@ -189,7 +183,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
      */
     static public function statusClasses(): array
     {
@@ -200,18 +194,12 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getStatus(): string
     {
         $names = self::statusNames();
         return isset($names[$this->status]) ? $names[$this->status] : '?';
     }
 
-    /**
-     * @return string
-     */
     public function getStatusClass(): string
     {
         $names = self::statusClasses();
