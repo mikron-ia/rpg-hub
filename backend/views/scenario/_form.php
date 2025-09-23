@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form->field($model, 'epic_id')->widget(
             Select2::class,
             ['data' => EpicQuery::getListOfEpicsForSelector()]
@@ -30,8 +30,12 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'status')->dropDownList(Scenario::statusNames()) ?>
     </div>
 
-    <div class="col-md-9">
+    <div class="col-md-12">
         <?= $form->field($model, 'tag_line')->textInput(['maxlength' => true]) ?>
+    </div>
+
+    <div class="col-md-12">
+        <?= $form->field($model, 'content')->textarea(['rows' => 8]); ?>
     </div>
 
     <div class="form-group">

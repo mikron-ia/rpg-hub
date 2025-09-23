@@ -24,6 +24,12 @@ $items = [
         'active' => true,
     ],
     [
+        'label' => Yii::t('app', 'SCENARIO_CONTENT_TAB'),
+        'content' => $this->render('_view_text', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ],
+    [
         'label' => Yii::t('app', 'SCENARIO_TECHNICAL_DETAILS'),
         'content' => $this->render('_view_details', [
             'model' => $model,

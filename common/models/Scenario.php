@@ -6,9 +6,11 @@ use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
+use common\models\tools\ToolsForLinkTags;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\Markdown;
 
 /**
  * This is the model class for table "scenario".
@@ -19,6 +21,8 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property string $status
  * @property string $tag_line
+ * @property string $content
+ * @property string $content_expanded
  * @property string $description_pack_id
  *
  * @property DescriptionPack $descriptionPack
@@ -28,6 +32,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
+    use ToolsForLinkTags;
 
     public const STATUS_NEW = 'new';
     public const STATUS_REJECTED = 'rejected';
@@ -52,6 +57,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
                 }
             ],
             [['tag_line'], 'string', 'max' => 255],
+            [['content'], 'string'],
             [
                 ['description_pack_id'],
                 'exist',
@@ -80,6 +86,8 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
             $this->description_pack_id = $pack->description_pack_id;
         }
 
+        $this->content_expanded = $this->expandText($this->content);
+
         return parent::beforeSave($insert);
     }
 
@@ -91,7 +99,17 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
             'epic_id' => Yii::t('app', 'EPIC_ID'),
             'name' => Yii::t('app', 'SCENARIO_NAME'),
             'tag_line' => Yii::t('app', 'SCENARIO_TAGLINE'),
+            'content' => Yii::t('app', 'SCENARIO_CONTENT'),
+            'content_expanded' => Yii::t('app', 'SCENARIO_CONTENT_EXPANDED'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK_ID'),
+        ];
+    }
+
+    public function attributeHints(): array
+    {
+        return [
+            'content' => Yii::t('app', 'SCENARIO_HINT_CONTENT'),
+            'content_expanded' => Yii::t('app', 'SCENARIO_HINT_CONTENT'),
         ];
     }
 
@@ -204,5 +222,10 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     {
         $names = self::statusClasses();
         return isset($names[$this->status]) ? $names[$this->status] : '';
+    }
+
+    public function getContentFormatted(): string
+    {
+        return Markdown::process($this->content_expanded ?? $this->content, 'gfm');
     }
 }
