@@ -3,22 +3,24 @@
 use backend\assets\ScenarioAsset;
 use common\models\Epic;
 use common\models\Scenario;
+use common\models\ScenarioQuery;
+use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\web\View;
 
 ScenarioAsset::register($this);
 
 /* @var $epic Epic */
-/* @var $this yii\web\View */
-/* @var $searchModel \common\models\ScenarioQuery */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $searchModel ScenarioQuery */
+/* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'SCENARIO_INDEX_TITLE');
 $this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="scenario-index">
-
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(
@@ -38,7 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="col-md-9">
-
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
@@ -80,11 +81,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]); ?>
-
     </div>
 
     <div class="col-md-3" id="filter">
         <?php echo $this->render('_search', ['model' => $searchModel, 'epic' => $epic]); ?>
     </div>
-
 </div>

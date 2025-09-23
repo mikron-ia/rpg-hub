@@ -4,15 +4,15 @@ use common\models\EpicQuery;
 use common\models\Scenario;
 use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Scenario */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model Scenario */
+/* @var $form ActiveForm */
 ?>
 
 <div class="scenario-form">
-
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-3">
@@ -46,5 +46,4 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>

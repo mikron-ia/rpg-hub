@@ -1,18 +1,21 @@
 <?php
 
 use backend\assets\ScenarioAsset;
+use common\models\Scenario;
+use yii\bootstrap\Tabs;
 use yii\helpers\Html;
+use yii\web\View;
 
 ScenarioAsset::register($this);
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Scenario */
+/* @var $this View */
+/* @var $model Scenario */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = [
     'label' => Yii::t('app', 'SCENARIO_INDEX_TITLE'),
-    'url' => ['scenario/index', 'epic' => $model->epic->key]
+    'url' => ['scenario/index', 'epic' => $model->epic->key],
 ];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -31,24 +34,16 @@ $items = [
     ],
     [
         'label' => Yii::t('app', 'SCENARIO_TECHNICAL_DETAILS'),
-        'content' => $this->render('_view_details', [
-            'model' => $model,
-        ]),
+        'content' => $this->render('_view_details', ['model' => $model]),
         'encode' => false,
         'active' => false,
     ],
 ];
 ?>
 <div class="scenario-view">
-
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
     </div>
-
     <p class="subtitle"><?= $model->tag_line; ?></p>
-
-    <?= \yii\bootstrap\Tabs::widget([
-        'items' => $items
-    ]) ?>
-
+    <?= Tabs::widget(['items' => $items]) ?>
 </div>

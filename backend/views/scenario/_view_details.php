@@ -1,16 +1,16 @@
 <?php
 
+use common\models\Scenario;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Scenario */
-/* @var $externalDataDataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $model Scenario */
 
 ?>
 
 <div>
-
     <div class="col-md-6">
         <h2 class="text-center"><?= Yii::t('app', 'LABEL_BASIC_DATA_AND_OPERATIONS'); ?></h2>
         <?= DetailView::widget([
@@ -40,5 +40,4 @@ use yii\widgets\DetailView;
             ) ?>
         </div>
     </div>
-
 </div>

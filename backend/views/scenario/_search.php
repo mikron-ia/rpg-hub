@@ -4,16 +4,16 @@ use common\models\Epic;
 use common\models\Scenario;
 use common\models\ScenarioQuery;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
+/* @var $this View */
 /* @var $model ScenarioQuery */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $form ActiveForm */
 /* @var $epic Epic */
 ?>
 
 <div class="scenario-search">
-
     <?php $form = ActiveForm::begin([
         'action' => ['index', 'epic' => $epic->key],
         'method' => 'get',
@@ -36,5 +36,4 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>

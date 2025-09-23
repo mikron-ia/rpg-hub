@@ -29,7 +29,7 @@ trait ToolsForLinkTags
     ];
 
     /**
-     * Processes text thorough all decorators
+     * Processes text through all decorators
      */
     private function processAllInOrder(string $text): string
     {
