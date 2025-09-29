@@ -24,6 +24,28 @@ class ScenarioQuery extends Scenario
         return Model::scenarios();
     }
 
+    static public function allFromCurrentEpicForSelector(): array
+    {
+        $query = Scenario::find();
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            $query->where('0=1');
+        } else {
+            $query->andWhere(['epic_id' => Yii::$app->params['activeEpic']->epic_id])->orderBy('scenario_id DESC');
+        }
+
+        /** @var Scenario[] $records */
+        $records = $query->all();
+
+        $list = [];
+
+        foreach ($records as $record) {
+            $list[$record->scenario_id] = $record->name;
+        }
+
+        return $list;
+    }
+
     /**
      * Creates a data provider instance with a search query applied
      */

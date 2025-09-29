@@ -13,7 +13,6 @@ use yii\widgets\DetailView;
 ?>
 
 <div>
-
     <div class="col-md-6">
         <h2 class="text-center"><?= Yii::t('app', 'LABEL_BASIC_DATA_AND_OPERATIONS'); ?></h2>
         <?= DetailView::widget([
@@ -38,6 +37,13 @@ use yii\widgets\DetailView;
                 [
                     'attribute' => 'visibility',
                     'value' => $model->getVisibilityName(),
+                ],
+                [
+                    'attribute' => 'based_on_id',
+                    'format' => 'raw',
+                    'value' => $model->based_on_id === null
+                        ? null
+                        : Html::a($model->basedOn->name, ['scenario/view', 'key' => $model->basedOn->key])
                 ],
                 [
                     'label' => Yii::t('app', 'STORY_SHORT_SIZE'),
@@ -230,5 +236,4 @@ use yii\widgets\DetailView;
     ]); ?>
 
     <?php Modal::end(); ?>
-
 </div>

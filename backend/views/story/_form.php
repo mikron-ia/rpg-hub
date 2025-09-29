@@ -2,6 +2,7 @@
 
 use common\models\core\Visibility;
 use common\models\EpicQuery;
+use common\models\ScenarioQuery;
 use common\models\Story;
 use kartik\select2\Select2;
 use yii\helpers\Html;
@@ -16,18 +17,30 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form->field($model, 'epic_id')->widget(
             Select2::class,
             ['data' => EpicQuery::getListOfEpicsForSelector()]
         ); ?>
     </div>
 
-    <div class="col-md-6">
-        <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(Story::allowedVisibilities())) ?>
+    <div class="col-md-3">
+        <?= $form->field($model,
+            'visibility')->dropDownList(Visibility::visibilityNames(Story::allowedVisibilities())) ?>
     </div>
 
     <div class="col-md-6">
+        <?= $form->field($model, 'based_on_id')->widget(
+            Select2::class,
+            [
+                'data' => ScenarioQuery::allFromCurrentEpicForSelector(),
+                'options' => ['placeholder' => ' --- ' . Yii::t('app', 'STORY_FORM_SELECT_SCENARIO') . ' --- '],
+                'pluginOptions' => ['allowClear' => true],
+            ],
+        ); ?>
+    </div>
+
+    <div class="col-md-12">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]); ?>
     </div>
 

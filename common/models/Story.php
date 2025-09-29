@@ -32,12 +32,14 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $long_expanded
  * @property int $position
  * @property string $visibility
+ * @property int|null $based_on_id
  * @property string $data
  * @property string $parameter_pack_id
  * @property string $seen_pack_id
  * @property string $utility_bag_id
  *
  * @property Epic $epic
+ * @property Scenario|null $basedOn
  * @property ParameterPack $parameterPack
  * @property SeenPack $seenPack
  * @property UtilityBag $utilityBag
@@ -78,6 +80,13 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
                 'targetAttribute' => ['epic_id' => 'epic_id']
             ],
             [
+                ['based_on_id'],
+                'exist',
+                'skipOnError' => false,
+                'targetClass' => Scenario::class,
+                'targetAttribute' => ['based_on_id' => 'scenario_id']
+            ],
+            [
                 ['parameter_pack_id'],
                 'exist',
                 'skipOnError' => true,
@@ -105,6 +114,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             'long_expanded' => Yii::t('app', 'STORY_LONG'),
             'position' => Yii::t('app', 'STORY_POSITION'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
+            'based_on_id' => Yii::t('app', 'STORY_SCENARIO'),
             'data' => Yii::t('app', 'STORY_DATA'),
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
@@ -370,6 +380,12 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     {
         return StringHelper::countWords($this->long);
     }
+
+    public function getBasedOn(): ActiveQuery
+    {
+        return $this->hasOne(Scenario::class, ['scenario_id' => 'based_on_id']);
+    }
+
 
     public function __toString()
     {
