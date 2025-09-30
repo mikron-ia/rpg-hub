@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\core\EntityQuery;
 use common\models\core\Visibility;
 use Yii;
 use yii\base\Model;
@@ -10,10 +11,7 @@ use yii\data\ArrayDataProvider;
 use yii\db\ActiveQuery;
 use yii\web\HttpException;
 
-/**
- * StoryQuery represents the model behind the search form about `common\models\Story`.
- */
-final class StoryQuery extends Story
+final class StoryQuery extends Story implements EntityQuery
 {
     private int $pageCount;
 
@@ -51,9 +49,6 @@ final class StoryQuery extends Story
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     */
     public function search(array $params): ActiveDataProvider
     {
         $query = Story::find()->joinWith('parameterPack', true, 'JOIN');
@@ -83,15 +78,14 @@ final class StoryQuery extends Story
     }
 
     /**
-     * @param array $userIds
-     * @return ArrayDataProvider|null
+     * @param array<int> $userIds
      * @throws HttpException
      */
     public function mostRecentByPlayerDataProvider(array $userIds): ?ArrayDataProvider
     {
         $query = Story::find()->where(['in', 'epic_id', $userIds])->orderBy([
             'position' => SORT_DESC,
-            'story_id' => SORT_DESC
+            'story_id' => SORT_DESC,
         ]);
 
         $mostRecentStories = [];
@@ -138,7 +132,7 @@ final class StoryQuery extends Story
             ->andFilterWhere([
                 'or',
                 ['like', 'short', $this->descriptions],
-                ['like', 'long', $this->descriptions]
+                ['like', 'long', $this->descriptions],
             ])->andFilterWhere(['like', $visibilityColumn, $this->parameters]);
 
         return $dataProvider;

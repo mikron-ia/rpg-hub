@@ -2,15 +2,21 @@
 
 namespace common\models;
 
+use common\models\core\EntityQuery;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-/**
- * ScenarioQuery represents the model behind the search form about `common\models\Scenario`.
- */
-class ScenarioQuery extends Scenario
+class ScenarioQuery extends Scenario implements EntityQuery
 {
+    private int $pageCount;
+
+    public function __construct($pagination = 20, array $config = [])
+    {
+        $this->pageCount = $pagination;
+        parent::__construct($config);
+    }
+
     public function rules(): array
     {
         return [
@@ -46,9 +52,6 @@ class ScenarioQuery extends Scenario
         return $list;
     }
 
-    /**
-     * Creates a data provider instance with a search query applied
-     */
     public function search(array $params): ActiveDataProvider
     {
         $query = Scenario::find();
@@ -64,7 +67,8 @@ class ScenarioQuery extends Scenario
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['status' => SORT_ASC]]
+            'sort' => ['defaultOrder' => ['status' => SORT_ASC]],
+            'pagination' => ['pageSize' => $this->pageCount],
         ]);
 
         $this->load($params);
