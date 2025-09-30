@@ -49,7 +49,7 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
     <h3 class="index-box-header-narrow">
         <?= Html::a(
             Html::encode(StringHelper::truncateWords(
-                $model->name, Yii::$app->params['indexBoxWordTrimming']['title'],
+                $model->name, Yii::$app->params['indexBoxWordTrimming']['withTags']['title'],
                 ' (...)',
                 false
             )),
@@ -71,7 +71,7 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
     <p class="subtitle index-box-subtitle-narrow">
         <?= StringHelper::truncateWords(
             $model->tagline,
-            Yii::$app->params['indexBoxWordTrimming']['subtitle'],
+            Yii::$app->params['indexBoxWordTrimming']['withTags']['subtitle'],
             ' (...)',
             false
         ) ?>

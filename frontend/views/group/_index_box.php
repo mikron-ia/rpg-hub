@@ -49,7 +49,7 @@ $titleText = '';
     <h3 class="index-box-header-narrow">
         <?= Html::a(
             Html::encode(StringHelper::truncateWords(
-                $model->name, Yii::$app->params['indexBoxWordTrimming']['title'],
+                $model->name, Yii::$app->params['indexBoxWordTrimming']['withTags']['title'],
                 ' (...)',
                 false
             )),
