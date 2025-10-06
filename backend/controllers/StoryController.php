@@ -15,9 +15,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * StoryController implements the CRUD actions for Story model.
- */
 final class StoryController extends Controller
 {
     use EpicAssistance;
@@ -25,7 +22,7 @@ final class StoryController extends Controller
 
     private const POSITIONS_PER_PAGE = 16;
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -55,9 +52,6 @@ final class StoryController extends Controller
         ];
     }
 
-    /**
-     * Lists all stories
-     */
     public function actionIndex(?string $epic = null): string
     {
         if (!empty($epic)) {
@@ -88,9 +82,6 @@ final class StoryController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single story
-     */
     public function actionView(string $key): string
     {
         $model = $this->findModel($key);
@@ -102,9 +93,6 @@ final class StoryController extends Controller
         return $this->render('view', ['model' => $model]);
     }
 
-    /**
-     * Creates a new story
-     */
     public function actionCreate(string $epic = null): Response|string
     {
         if (!Story::canUserCreateThem()) {
@@ -122,9 +110,6 @@ final class StoryController extends Controller
         return $this->render('create', ['model' => $model]);
     }
 
-    /**
-     * Updates an existing story
-     */
     public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModel($key);
@@ -141,11 +126,9 @@ final class StoryController extends Controller
     }
 
     /**
-     * Moves story up in order; this means lower position on the list
-     * @param int $key Story ID
-     * @return \yii\web\Response
+     * Moves a story up in order; this means a lower position on the list
      */
-    public function actionMoveUp($key)
+    public function actionMoveUp(string $key): Response
     {
         $model = $this->findModel($key);
         if (!$model->canUserControlYou()) {
@@ -162,11 +145,9 @@ final class StoryController extends Controller
     }
 
     /**
-     * Moves story down in order; this means higher position on the list
-     * @param int $key Story ID
-     * @return \yii\web\Response
+     * Moves a story down in order; this means higher position on the list
      */
-    public function actionMoveDown($key)
+    public function actionMoveDown($key): Response
     {
         $model = $this->findModel($key);
         if (!$model->canUserControlYou()) {
@@ -182,9 +163,6 @@ final class StoryController extends Controller
         }
     }
 
-    /**
-     * Saves the model to mark it as changed
-     */
     public function actionMarkChanged(string $key): Response
     {
         $model = $this->findModel($key);
@@ -193,10 +171,6 @@ final class StoryController extends Controller
         return $this->redirect(['view', 'key' => $model->key]);
     }
 
-    /**
-     * Finds the Story model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     */
     protected function findModel(string $key): Story
     {
         $model = Story::findOne(['key' => $key]);

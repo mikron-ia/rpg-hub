@@ -17,15 +17,12 @@ use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * ScenarioController implements the CRUD actions for Scenario model.
- */
 class ScenarioController extends Controller
 {
     use EpicAssistance;
     use ToolsForEntity;
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -77,9 +74,6 @@ class ScenarioController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Scenario model.
-     */
     public function actionView(string $key): string
     {
         $model = $this->findModel($key);
@@ -91,10 +85,6 @@ class ScenarioController extends Controller
         return $this->render('view', ['model' => $this->findModel($key)]);
     }
 
-    /**
-     * Creates a new Scenario model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     */
     public function actionCreate(string $epic = null): Response|string
     {
         if (!Scenario::canUserCreateThem()) {
@@ -112,10 +102,6 @@ class ScenarioController extends Controller
         return $this->render('create', ['model' => $model]);
     }
 
-    /**
-     * Updates an existing Scenario model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     */
     public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModel($key);
@@ -132,9 +118,6 @@ class ScenarioController extends Controller
     }
 
     /**
-     * Deletes an existing Scenario model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     *
      * @throws NotFoundHttpException
      * @throws Throwable
      * @throws StaleObjectException
@@ -153,10 +136,6 @@ class ScenarioController extends Controller
         return $this->redirect(['index', 'epic' => $model->epic->key]);
     }
 
-    /**
-     * Finds the Scenario model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     */
     protected function findModel(string $key): Scenario
     {
         $model = Scenario::findOne(['key' => $key]);
