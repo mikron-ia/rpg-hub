@@ -12,6 +12,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -98,6 +99,12 @@ final class EpicController extends Controller
             $recap->recordSighting();
         }
 
+        try {
+            $showScenarios = $model->canUserControlYou();
+        } catch (HttpException) {
+            $showScenarios = false;
+        }
+
         /* Get News */
         $announcementsQuery = new AnnouncementQuery();
         $announcements = $announcementsQuery->mostRecentDataProvider($model);
@@ -108,6 +115,7 @@ final class EpicController extends Controller
             'stories' => $stories,
             'announcements' => $announcements,
             'recap' => $recap,
+            'showScenarios' => $showScenarios,
         ]);
     }
 

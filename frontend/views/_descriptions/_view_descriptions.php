@@ -29,7 +29,7 @@ $descriptions = $model->getDescriptionsVisible();
                         'key' => $key,
                         'index' => $index,
                         'widget' => $widget,
-                        'showPrivates' => $this->params['showPrivates']
+                        'showPrivates' => $this->params['showPrivates'] ?? false
                     ]
                 );
             },

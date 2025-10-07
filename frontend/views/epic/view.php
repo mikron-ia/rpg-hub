@@ -5,6 +5,7 @@
 /* @var $sessions ActiveDataProvider */
 /* @var $stories ActiveDataProvider */
 /* @var $announcements ActiveDataProvider */
+/* @var $showScenarios bool */
 
 /* @var $recap Recap */
 
@@ -62,6 +63,16 @@ if ($epic) {
                     ['class' => 'btn btn-primary']
                 ); ?>
             </div>
+
+            <?php if ($showScenarios): ?>
+                <div class="btn-group btn-group-lg">
+                    <?= Html::a(
+                        Yii::t('app', 'BUTTON_SCENARIOS'),
+                        ['scenario/index', 'key' => $epic->key],
+                        ['class' => 'btn btn-lg btn-primary']
+                    ); ?>
+                </div>
+            <?php endif; ?>
 
             <div class="btn-group btn-group-lg">
                 <?= Html::a(

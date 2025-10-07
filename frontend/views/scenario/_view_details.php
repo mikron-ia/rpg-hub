@@ -34,16 +34,8 @@ use yii\widgets\DetailView;
 
         <div class="text-center">
             <?= Html::a(
-                Yii::t('app', 'BUTTON_UPDATE'),
-                ['update', 'key' => $model->key],
-                ['class' => 'btn btn-primary']
-            ) ?>
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_SEE_FRONTEND'),
-                Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
-                    'scenario/view',
-                    'key' => $model->key
-                ]),
+                Yii::t('app', 'BUTTON_SEE_BACKEND'),
+                Yii::$app->params['uri.back'] . Yii::$app->urlManager->createUrl(['story/view', 'key' => $model->key]),
                 ['class' => 'btn btn-default']
             ) ?>
         </div>
