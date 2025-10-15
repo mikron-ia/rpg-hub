@@ -26,7 +26,7 @@ class ScenarioController extends Controller
                     [
                         'actions' => ['index', 'view'],
                         'allow' => true,
-                        'roles' => ['operator'], // this is an intentional exception
+                        'roles' => ['user'],
                     ],
                 ],
             ],

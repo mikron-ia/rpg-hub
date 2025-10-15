@@ -145,7 +145,8 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
 
     static public function canUserIndexThem(): bool
     {
-        return self::canUserIndexInEpic(Yii::$app->params['activeEpic']) && self::canUserControlInEpic(Yii::$app->params['activeEpic']);
+        return self::canUserIndexInEpic(Yii::$app->params['activeEpic'])
+            && self::canUserControlInEpic(Yii::$app->params['activeEpic']);
     }
 
     static public function canUserCreateThem(): bool
@@ -160,7 +161,8 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
 
     public function canUserViewYou(): bool
     {
-        return self::canUserViewInEpic($this->epic) && self::canUserControlInEpic($this->epic);
+        return self::canUserViewInEpic($this->epic)
+            && self::canUserControlInEpic(Yii::$app->params['activeEpic']);
     }
 
     static function throwExceptionAboutCreate(): void
