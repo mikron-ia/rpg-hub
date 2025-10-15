@@ -6,85 +6,44 @@ use common\models\Epic;
 use Yii;
 use yii\web\HttpException;
 
-/**
- * Trait ToolsForEntity
- * @package common\models\tools
- */
 trait ToolsForEntity
 {
-    /**
-     * @param $epic
-     * @return bool
-     */
-    static public function canUserCreateInEpic($epic): bool
+    static public function canUserCreateInEpic(Epic $epic): bool
     {
         /* Use of control* right is intentional; there is no need to separate creation from control at this level */
-        if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
-            return true;
-        } else {
-            return false;
-        }
+        return Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic]);
     }
 
     /**
-     * Provides class name that uses the trait
-     * Name comes without namespace
-     * @return string
+     * Provides a class name that uses the trait
+     * Name comes without the namespace
      */
     static private function cleanClassName(): string
     {
         $position = strrpos(static::class, '\\');
-        if ($position !== null) {
+        if ($position !== false) {
             return substr(static::class, $position + 1);
-        } else {
-            return '';
         }
+
+        return '';
     }
 
-    /**
-     * @param Epic $epic
-     * @return bool
-     */
-    static public function canUserControlInEpic($epic): bool
+    static public function canUserControlInEpic(Epic $epic): bool
     {
-        if (Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic])) {
-            return true;
-        } else {
-            return false;
-        }
+        return Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic]);
     }
 
-    /**
-     * @param Epic $epic
-     * @return bool
-     */
-    static public function canUserViewInEpic($epic): bool
+    static public function canUserViewInEpic(Epic $epic): bool
     {
-        if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
-            return true;
-        } else {
-            return false;
-        }
+        return Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic]);
     }
 
-    /**
-     * @param Epic $epic
-     * @return bool
-     */
-    static public function canUserIndexInEpic($epic): bool
+    static public function canUserIndexInEpic(Epic $epic): bool
     {
-        if (Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic])) {
-            return true;
-        } else {
-            return false;
-        }
+        return Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic]);
     }
 
-    /**
-     * @param $message
-     * @throws HttpException
-     */
-    static private function thrownExceptionAbout($message)
+    static private function thrownExceptionAbout(string $message)
     {
         throw new HttpException(403, $message);
     }
@@ -106,12 +65,7 @@ trait ToolsForEntity
         return !empty($this->epic_id);
     }
 
-    /**
-     * @param $identifier
-     * @return string
-     * @throws HttpException
-     */
-    private function generateKey($identifier): string
+    private function generateKey(string $identifier): string
     {
         if (!isset(Yii::$app->params['keyGeneration'][$identifier])) {
             throw new HttpException(500, "Missing configuration for key $identifier");

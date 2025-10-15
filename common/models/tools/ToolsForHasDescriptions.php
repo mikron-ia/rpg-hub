@@ -7,7 +7,7 @@ namespace common\models\tools;
 use yii\db\ActiveQuery;
 
 /**
- * Trait ToolsForHasDescriptions, intended to provided some methods required by common\models\core\HasDescriptions
+ * Trait ToolsForHasDescriptions, intended to provide some methods required by common\models\core\HasDescriptions
  *
  * NOTE: this trait does not have any safeties for a case when the using class does not have the fields; use responsibly
  *
