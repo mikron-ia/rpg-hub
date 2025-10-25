@@ -39,6 +39,10 @@ use yii\widgets\DetailView;
                     'value' => $model->getVisibilityName(),
                 ],
                 [
+                    'attribute' => 'code',
+                    'value' => $model->getCodeName(),
+                ],
+                [
                     'attribute' => 'based_on_id',
                     'format' => 'raw',
                     'value' => $model->based_on_id === null

@@ -4,6 +4,7 @@ use common\models\core\Visibility;
 use common\models\EpicQuery;
 use common\models\ScenarioQuery;
 use common\models\Story;
+use common\models\type\StoryType;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -24,12 +25,19 @@ use yii\widgets\ActiveForm;
         ); ?>
     </div>
 
-    <div class="col-md-3">
-        <?= $form->field($model,
-            'visibility')->dropDownList(Visibility::visibilityNames(Story::allowedVisibilities())) ?>
+    <div class="col-md-2">
+        <?= $form
+            ->field($model, 'visibility')
+            ->dropDownList(Visibility::visibilityNames(Story::allowedVisibilities())) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-2">
+        <?= $form
+            ->field($model, 'code')
+            ->dropDownList(StoryType::namesForDropdown()) ?>
+    </div>
+
+    <div class="col-md-5">
         <?= $form->field($model, 'based_on_id')->widget(
             Select2::class,
             [

@@ -11,6 +11,7 @@ use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
+use common\models\type\StoryType;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -32,6 +33,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $long_expanded
  * @property int $position
  * @property string $visibility
+ * @property string $code
  * @property int|null $based_on_id
  * @property string $data
  * @property string $parameter_pack_id
@@ -70,7 +72,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             [['short', 'long'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
-            [['visibility'], 'string', 'max' => 20],
+            [['code', 'visibility'], 'string', 'max' => 20],
             [['is_off_the_record_change'], 'boolean'],
             [
                 ['epic_id'],
@@ -98,6 +100,11 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
                 'in',
                 'range' => fn() => $this->allowedVisibilitiesForValidator(),
             ],
+            [
+                ['code'],
+                'in',
+                'range' => fn() => StoryType::allowedCodes(),
+            ],
         ];
     }
 
@@ -114,6 +121,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             'long_expanded' => Yii::t('app', 'STORY_LONG'),
             'position' => Yii::t('app', 'STORY_POSITION'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
+            'code' => Yii::t('app', 'STORY_TYPE'),
             'based_on_id' => Yii::t('app', 'STORY_SCENARIO'),
             'data' => Yii::t('app', 'STORY_DATA'),
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
@@ -240,6 +248,11 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         }
 
         return $this->parametersFormatted;
+    }
+
+    public function getCodeName(): ?string
+    {
+        return StoryType::tryFrom($this->code)?->name();
     }
 
     /**
