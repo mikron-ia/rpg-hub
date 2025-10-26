@@ -103,16 +103,19 @@ a:focus {
 
 .seen-tag-new {
     background-color: chocolate;
+    border-color: chocolate;
     color: white;
 }
 
 .seen-tag-updated {
     background-color: goldenrod;
+    border-color: goldenrod;
     color: white;
 }
 
 .seen-tag-seen {
     background-color: lightgrey;
+    border-color: lightgrey;
     color: white;
 }
 
@@ -127,6 +130,11 @@ a:focus {
 .tag-box {
     background-color: chocolate;
     color: white
+}
+
+.type-tag {
+    background-color: chocolate;
+    color: white;
 }
 
 .unpublished-tag {

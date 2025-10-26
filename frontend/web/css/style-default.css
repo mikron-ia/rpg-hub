@@ -103,16 +103,19 @@ a:focus {
 
 .seen-tag-new {
     background-color: yellowgreen;
+    border-color: yellowgreen;
     color: white;
 }
 
 .seen-tag-updated {
     background-color: goldenrod;
+    border-color: goldenrod;
     color: white;
 }
 
 .seen-tag-seen {
     background-color: lightgrey;
+    border-color: lightgrey;
     color: white;
 }
 
@@ -127,6 +130,12 @@ a:focus {
 .tag-box {
     background-color: lightgreen;
     color: inherit;
+}
+
+.type-tag {
+    background-color: white;
+    border-color: green;
+    color: green;
 }
 
 .unpublished-tag {

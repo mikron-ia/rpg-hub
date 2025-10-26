@@ -20,6 +20,9 @@ if ($storyNumberRaw) {
 <div id="story-<?php echo $model->story_id; ?>">
     <h2>
         <?php echo Html::a(Html::encode($storyNumber . $model->name), ['view', 'key' => $model->key]); ?>
+        <?php if (!empty($model->hasCodeName())): ?>
+            <span class="text-center type-tag"><?= $model->getCodeName() ?></span>
+        <?php endif; ?>
         <span class="text-center <?= $model->showSightingCSS() ?> seen-tag-header">
             <?= $model->showSightingStatus() ?>
         </span>

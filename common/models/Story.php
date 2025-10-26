@@ -255,6 +255,11 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return StoryType::tryFrom($this->code)?->name();
     }
 
+    public function hasCodeName(): bool
+    {
+        return !empty($this->code);
+    }
+
     /**
      * @return array<string,string>
      */
