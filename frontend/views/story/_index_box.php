@@ -24,6 +24,9 @@ if ($storyNumberRaw) {
             Html::encode($storyNumber . $model->name),
             ['story/view', 'key' => $model->key]
         ); ?>
+        <?php if (!empty($model->hasCodeName())): ?>
+            <span class="text-center type-tag tag-smaller"><?= $model->getCodeName() ?></span>
+        <?php endif; ?>
     </h4>
     <div class="col-md-12 text-justify">
         <?php echo $model->getShortFormatted(); ?>

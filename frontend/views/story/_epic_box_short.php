@@ -20,6 +20,9 @@ if ($storyNumberRaw) {
 <div id="story-<?php echo $model->story_id; ?>">
     <h4 class="center">
         <?php echo Html::a(Html::encode($storyNumber . $model->name), ['story/view', 'key' => $model->key]); ?>
+        <?php if (!empty($model->hasCodeName())): ?>
+            <span class="text-center type-tag tag-smaller"><?= $model->getCodeName() ?></span>
+        <?php endif; ?>
         <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
             <span class="text-center unpublished-tag tag-smaller">
                 <?= Yii::t('app', 'TAG_UNPUBLISHED_F') ?>
