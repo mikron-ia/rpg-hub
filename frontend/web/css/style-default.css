@@ -140,5 +140,6 @@ a:focus {
 
 .unpublished-tag {
     background-color: darkviolet;
+    border-color: darkviolet;
     color: white;
 }
