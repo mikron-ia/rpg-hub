@@ -1,0 +1,146 @@
+a {
+    color: black;
+}
+
+.btn-primary {
+    background-image: -webkit-linear-gradient(top, grey 0%, black 100%) !important;
+    background-image: -o-linear-gradient(top, grey 0%, black 100%) !important;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(grey), to(black)) !important;
+    background-image: linear-gradient(to bottom, grey 0%, black 100%) !important;
+    border: 1px solid black !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: darkred 0 -15px !important;
+    border: 1px solid darkred !important;
+}
+
+.btn-primary:active,
+.btn-primary.active {
+    background-color: black !important;
+    border-color: black !important;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary.focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+    background: black none !important;
+}
+
+a {
+    color: black;
+}
+
+a:hover,
+a:focus {
+    color: darkred;
+}
+
+.dropdown-menu > .active > a {
+    background-color: black;
+}
+
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+    background-color: darkred;
+}
+
+.pagination > li > a, .pagination > li > span {
+    color: black;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: black;
+    border-color: black;
+}
+
+.public-notes {
+    margin-bottom: 10px;
+}
+
+.protected-notes {
+    border: 4px dotted #dd0022;
+}
+
+.private-notes {
+    border: 4px dashed #dd0022;
+}
+
+.index-box {
+    border: 3px solid black;
+}
+
+.index-box-header-icon {
+    color: black;
+}
+
+.index-box-gm {
+    border: 3px solid darkviolet;
+}
+
+.index-box-designated {
+    border: 3px solid #dd0022;
+}
+
+.outline-box {
+    border: 4px solid #dd0022;
+}
+
+.seen-tag-new {
+    background-color: red;
+    border-color: red;
+    color: white;
+}
+
+.seen-tag-updated {
+    background-color: brown;
+    border-color: brown;
+    color: white;
+}
+
+.seen-tag-seen {
+    background-color: lightgrey;
+    border-color: lightgrey;
+    color: white;
+}
+
+.session-box-closed:after {
+    color: black;
+}
+
+.session-box-open:after {
+    color: black;
+}
+
+.tag-box {
+    background-color: brown;
+    color: white;
+}
+
+.type-tag {
+    background-color: white;
+    border-color: darkred;
+    color: darkred;
+}
+
+.unpublished-tag {
+    background-color: darkviolet;
+    border-color: darkviolet;
+    color: white;
+}

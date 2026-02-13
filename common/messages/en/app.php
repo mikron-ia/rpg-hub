@@ -387,6 +387,7 @@ return [
     'FRONTPAGE_TITLE' => 'RPG Hub',
     'FRONTPAGE_WHAT_HAPPENED' => 'Recent events',
     'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT' => 'General recap of the recent events. For details, please turn to descriptions of specific stories.',
+    'FRONT_STYLE_NAME_BLACK_AND_RED' => 'Black-and-red',
     'FRONT_STYLE_NAME_DEFAULT' => 'Default',
     'FRONT_STYLE_NAME_WOODEN' => 'Wooden',
     'GAME_BASICS' => 'Basic description',

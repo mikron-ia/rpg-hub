@@ -387,6 +387,7 @@ return [
     'FRONTPAGE_TITLE' => 'Centrum RPG-owe',
     'FRONTPAGE_WHAT_HAPPENED' => 'Wydarzenia w kampanii',
     'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT' => 'Ogólne podsumowania niedawnych wydarzeń, przeznaczone do szybkiego odzyskania orientacji w kampanii. Po szczegóły wydarzeń należy zwrócić się do treści poszczególnych historii.',
+    'FRONT_STYLE_NAME_BLACK_AND_RED' => 'Czarno-czerwony',
     'FRONT_STYLE_NAME_DEFAULT' => 'Domyślny',
     'FRONT_STYLE_NAME_WOODEN' => 'Drewniany',
     'GAME_BASICS' => 'Opis podstawowy',
