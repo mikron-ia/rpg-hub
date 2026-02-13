@@ -40,7 +40,7 @@ final class CharacterController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'create-sheet', 'index', 'update', 'view', 'load-data', 'mark-changed'],
+                        'actions' => ['create', 'create-sheet', 'index', 'index-importance', 'update', 'view', 'load-data', 'mark-changed'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -84,6 +84,38 @@ final class CharacterController extends Controller
 
         return $this->render('index', [
             'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Lists all characters with their importances
+     * @throws HttpException
+     */
+    public function actionIndexImportance(string $epic): string
+    {
+        $epicObject = $this->findEpicByKey($epic);
+
+        if (!$epicObject->canUserViewYou()) {
+            Epic::throwExceptionAboutView();
+        }
+
+        $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-list');
+        }
+
+        if (!Character::canUserIndexThem()) {
+            Character::throwExceptionAboutIndex();
+        }
+
+        $searchModel = new CharacterQuery(self::POSITIONS_PER_PAGE);
+        $dataProvider = $searchModel->listForOperatorWithImportances(Yii::$app->request->queryParams);
+
+        return $this->render('index_importances', [
+            'epic' => $epicObject,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

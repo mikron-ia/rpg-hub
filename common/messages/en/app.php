@@ -142,6 +142,8 @@ return [
     'CHARACTERS_NOT_AVAILABLE' => 'Characters not found',
     'CHARACTER_BASIC' => 'Character basic data',
     'CHARACTER_BUTTON_CREATE' => 'Add character',
+    'CHARACTER_BUTTON_SEE_IMPORTANCES' => 'List with importances',
+    'CHARACTER_BUTTON_SEE_MAIN_INDEX' => 'Basic list',
     'CHARACTER_CHARACTER_SHEET' => 'Character sheet',
     'CHARACTER_CREATE_FROM_CHARACTER_SHEET_FAILURE' => 'Character creation failed.',
     'CHARACTER_CREATE_FROM_CHARACTER_SHEET_SUCCESS' => 'Character creation succeeded.',

@@ -142,6 +142,8 @@ return [
     'CHARACTERS_NOT_AVAILABLE' => 'Postaci nie znaleziono',
     'CHARACTER_BASIC' => 'Dane podstawowe',
     'CHARACTER_BUTTON_CREATE' => 'Dodaj postać',
+    'CHARACTER_BUTTON_SEE_IMPORTANCES' => 'Lista z ważnością',
+    'CHARACTER_BUTTON_SEE_MAIN_INDEX' => 'Lista podstawowa',
     'CHARACTER_CHARACTER_SHEET' => 'Karta postaci',
     'CHARACTER_CREATE_FROM_CHARACTER_SHEET_FAILURE' => 'Tworzenie postaci nieudane.',
     'CHARACTER_CREATE_FROM_CHARACTER_SHEET_SUCCESS' => 'Tworzenie postaci udane.',

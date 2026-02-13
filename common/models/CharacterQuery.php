@@ -4,10 +4,13 @@ namespace common\models;
 
 use common\dto\CharacterListDataObject;
 use common\models\core\Visibility;
+use common\models\entities\CharacterWithImportance;
 use common\models\tools\ToolsForImportanceInQueries;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
+use yii\data\DataProviderInterface;
 
 /**
  * CharacterQuery represents the model behind the search form about `common\models\Character`.
@@ -89,6 +92,49 @@ final class CharacterQuery extends Character
     public function searchForOperator(array $params): ActiveDataProvider
     {
         return $this->setUpSearchForOperator($this->search($params));
+    }
+
+    /**
+     * @param string[] $params
+     */
+    public function listForOperatorWithImportances(array $params): DataProviderInterface
+    {
+        $query = Character::find()
+            ->joinWith('importancePack', true, 'LEFT JOIN')
+            ->joinWith('importancePack.importances', true, 'LEFT JOIN');
+
+        $this->secureQuery($query);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => false,
+        ]);
+
+        $this->load($params);
+
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'tagline', $this->tagline])
+            ->andFilterWhere(['in', 'visibility', $this->visibility])
+            ->orderBy(['updated_at' => SORT_DESC]);
+
+        $models = [];
+
+        foreach ($dataProvider->getModels() as $character) {
+            $characterWithImportance = new CharacterWithImportance($character);
+
+            foreach ($character->importancePack->importances as $importance) {
+                $characterWithImportance->setImportance($importance->user_id, $importance->importance);
+            }
+
+            $fields = array_merge($fields ?? [], $characterWithImportance->getImportanceFieldKeys());
+            $models[] = $characterWithImportance;
+        }
+
+        return new ArrayDataProvider([
+            'allModels' => $models,
+            'sort' => ['attributes' => array_merge(['name', 'visibility', 'importance_category'], array_unique($fields ?? []))],
+            'pagination' => ['pageSize' => $this->pageCount],
+        ]);
     }
 
     /**

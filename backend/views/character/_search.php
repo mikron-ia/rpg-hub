@@ -10,13 +10,16 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\CharacterQuery */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $epic Epic */
+/* @var $actionUrl string */
+
+$actionUrl = $actionUrl ?? 'index';
 
 ?>
 
 <div class="person-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index', 'epic' => $epic->key],
+        'action' => [$actionUrl, 'epic' => $epic->key],
         'method' => 'get',
     ]); ?>
 
