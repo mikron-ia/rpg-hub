@@ -14,7 +14,19 @@ use yii\widgets\ActiveForm;
 
 <div class="description-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'description-form',
+        'action' => $model->isNewRecord ?
+            [
+                'description/create',
+                'pack_id' => $model->description_pack_id
+            ] :
+            [
+                'description/update',
+                'id' => $model->description_id
+            ],
+        'method' => 'post',
+    ]); ?>
 
     <div class="col-md-12">
         <?= $form->field($model, 'code')->dropDownList(

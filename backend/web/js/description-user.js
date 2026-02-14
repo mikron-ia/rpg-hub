@@ -1,4 +1,4 @@
-var descriptionBoxesLoad = function ($descriptionContainer) {
+const descriptionBoxesLoad = function ($descriptionContainer) {
     $.ajax(
         '../description/display',
         {
@@ -17,12 +17,12 @@ var descriptionBoxesLoad = function ($descriptionContainer) {
 };
 
 $(document).ready(function () {
-    var $descriptions = $('#description-container');
+    const $descriptions = $('#description-container');
 
     descriptionBoxesLoad($descriptions);
 
     $descriptions.on('click', '.move-up', function () {
-        var $descriptionId = $(this).data('description-id');
+        const $descriptionId = $(this).data('description-id');
         $.ajax(
             '../description/move-up',
             {
@@ -37,7 +37,7 @@ $(document).ready(function () {
     });
 
     $descriptions.on('click', '.move-down', function () {
-        var $descriptionId = $(this).data('description-id');
+        const $descriptionId = $(this).data('description-id');
         $.ajax(
             '../description/move-down',
             {
@@ -88,5 +88,18 @@ $(document).ready(function () {
                 $('#create-description-modal').modal();
             }
         );
+    });
+
+    $(document).on('submit', '#description-form', function (event) {
+        event.preventDefault();
+
+        const descriptionForm = $(this);
+        $.ajax({
+            url: descriptionForm.attr('action'),
+            method: (descriptionForm.attr('method') || 'POST'),
+            data: descriptionForm.serialize()
+        }).done(function (data) {
+            $('.modal-body').html(data);
+        });
     });
 });
