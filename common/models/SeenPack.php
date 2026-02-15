@@ -8,6 +8,7 @@ use yii\console\Application as ConsoleApplication;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\db\Expression;
 
 /**
@@ -127,8 +128,12 @@ class SeenPack extends ActiveRecord
 
     /**
      * Creates a new, empty record
+     *
      * @param int|null $userId
+     *
      * @return Seen|null
+     *
+     * @throws Exception
      */
     public function createRecordForUser(?int $userId): ?Seen
     {
@@ -145,9 +150,11 @@ class SeenPack extends ActiveRecord
     }
 
     /**
-     * @param bool $fullSight Has user seen all data? True for views, false for indexing
+     * @param bool $fullSight Has the user seen all data? True for views, false for indexing
      *
      * @return bool Success of the operation
+     *
+     * @throws Exception
      */
     public function recordSighting(bool $fullSight = true): bool
     {
@@ -187,7 +194,7 @@ class SeenPack extends ActiveRecord
     }
 
     /**
-     * @return bool
+     * @throws Exception
      */
     public function updateRecord(): bool
     {
@@ -208,16 +215,13 @@ class SeenPack extends ActiveRecord
     }
 
     /**
-     * @return bool
+     * @throws Exception
      */
     public function recordNotification(): bool
     {
         return $this->recordSighting(false);
     }
 
-    /**
-     * @return HasSightings
-     */
     public function getControllingObject(): HasSightings
     {
         if (empty($this->controllingObject)) {
@@ -228,9 +232,6 @@ class SeenPack extends ActiveRecord
         return $this->controllingObject;
     }
 
-    /**
-     * @return Epic
-     */
     public function getEpic(): Epic
     {
         return $this->getControllingObject()->getEpic()->one();
@@ -238,9 +239,11 @@ class SeenPack extends ActiveRecord
 
     /**
      * Create sighting packs for listed participants
-     * Intended for use with Participant list from Epic
+     * Intended for use with the Participant list from Epic
+     *
      * @param Participant[] $participants
-     * @return bool
+     *
+     * @throws Exception
      */
     public function createPacksForParticipants(array $participants): bool
     {
@@ -253,7 +256,8 @@ class SeenPack extends ActiveRecord
 
     /**
      * Creates new Sighting objects for users that do not have them
-     * @return bool
+     *
+     * @throws Exception
      */
     public function createAbsentSightingObjects(): bool
     {
@@ -282,8 +286,7 @@ class SeenPack extends ActiveRecord
     }
 
     /**
-     * @param string $class
-     * @return SeenPack
+     * @throws Exception
      */
     public static function create(string $class): SeenPack
     {
@@ -296,9 +299,9 @@ class SeenPack extends ActiveRecord
     }
 
     /**
-     * Fills missing sightings for current user
+     * Fills missing sightings for the current user
      */
-    private function fillSightingForCurrentUser()
+    private function fillSightingForCurrentUser(): void
     {
         if (empty($this->sightingForCurrentUser)) {
             $userId = Yii::$app->user->identity->getId();
@@ -315,9 +318,6 @@ class SeenPack extends ActiveRecord
         }
     }
 
-    /**
-     * @return string
-     */
     public function getStatusForCurrentUser(): string
     {
         $this->fillSightingForCurrentUser();
@@ -330,9 +330,6 @@ class SeenPack extends ActiveRecord
         return $this->sightingForCurrentUser->getName();
     }
 
-    /**
-     * @return string
-     */
     public function getCSSForCurrentUser(): string
     {
         $this->fillSightingForCurrentUser();

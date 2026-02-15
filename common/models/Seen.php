@@ -57,17 +57,11 @@ class Seen extends ActiveRecord
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
@@ -85,9 +79,6 @@ class Seen extends ActiveRecord
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         $names = self::statusNames();
@@ -111,9 +102,6 @@ class Seen extends ActiveRecord
 
     /**
      * Sets the status unless the existing one is already newer
-     *
-     * @param SeenStatus $seenStatus
-     * @return void
      */
     public function setSeenStatusMax(SeenStatus $seenStatus): void
     {
