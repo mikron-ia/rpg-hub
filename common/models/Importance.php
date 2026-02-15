@@ -4,10 +4,12 @@ namespace common\models;
 
 use common\components\ImportanceCalculator;
 use common\components\ImportanceParametersDto;
+use common\models\exceptions\InvalidBackendConfigurationException;
 use DateTimeImmutable;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "importance".
@@ -66,9 +68,6 @@ class Importance extends ActiveRecord
         return $this->hasOne(ImportancePack::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
@@ -84,12 +83,19 @@ class Importance extends ActiveRecord
         return $object;
     }
 
+    /**
+     * @throws InvalidBackendConfigurationException
+     */
     private function calculate(): int
     {
         return (new ImportanceCalculator(ImportanceParametersDto::create(Yii::$app->params['importance'])))
             ->calculate($this->importancePack->getControllingObject(), $this->user, new DateTimeImmutable());
     }
 
+    /**
+     * @throws Exception
+     * @throws InvalidBackendConfigurationException
+     */
     public function calculateAndSave(): bool
     {
         $this->importance = $this->calculate();

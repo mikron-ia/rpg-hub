@@ -3,6 +3,7 @@
 namespace console\controllers;
 
 use common\components\LoggingHelper;
+use common\models\exceptions\InvalidBackendConfigurationException;
 use common\models\ImportancePack;
 use yii\console\Controller;
 use yii\db\Exception;
@@ -16,6 +17,9 @@ class ImportanceController extends Controller
 {
     /**
      * Orders recalculation of every importance pack flagged for recalculation
+     *
+     * @throws Exception
+     * @throws InvalidBackendConfigurationException
      */
     public function actionRecalculate(): void
     {
@@ -29,6 +33,9 @@ class ImportanceController extends Controller
 
     /**
      * Orders recalculation of every importance pack regardless of flagging
+     *
+     * @throws Exception
+     * @throws InvalidBackendConfigurationException
      */
     public function actionRecalculateUnconditionally(): void
     {
@@ -43,11 +50,8 @@ class ImportanceController extends Controller
     /**
      * Recalculates packs
      *
-     * @param bool $considerFlag Whether to consider recalculation flags
-     *
-     * @return bool
-     *
      * @throws Exception
+     * @throws InvalidBackendConfigurationException
      */
     private function recalculate(bool $considerFlag): bool
     {

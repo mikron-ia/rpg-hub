@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\core\HasImportance;
 use common\models\core\IsSelfFillingPack;
+use common\models\exceptions\InvalidBackendConfigurationException;
 use common\models\tools\ToolsForSelfFillingPacks;
 use Yii;
 use yii\db\ActiveQuery;
@@ -25,9 +26,6 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
 {
     use ToolsForSelfFillingPacks;
 
-    /**
-     * @var HasImportance
-     */
     private HasImportance $controllingObject;
 
     public static function tableName(): string
@@ -80,6 +78,7 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
      * @param string $class
      *
      * @return ImportancePack
+     * @throws Exception
      */
     public static function create(string $class): ImportancePack
     {
@@ -94,9 +93,6 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
         return $pack;
     }
 
-    /**
-     * @return HasImportance
-     */
     public function getControllingObject(): HasImportance
     {
         if (empty($this->controllingObject)) {
@@ -107,9 +103,6 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
         return $this->controllingObject;
     }
 
-    /**
-     * @return Epic
-     */
     public function getEpic(): Epic
     {
         return $this->getControllingObject()->getEpic()->one();
@@ -122,7 +115,9 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
 
     /**
      * Recalculates pack importance objects
-     * @return bool
+     *
+     * @throws Exception
+     * @throws InvalidBackendConfigurationException
      */
     public function recalculatePack(): bool
     {
@@ -142,8 +137,6 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
     /**
      * Flags the pack for recalculation
      *
-     * @return bool
-     *
      * @throws Exception
      */
     public function flagForRecalculation(): bool
@@ -155,8 +148,6 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
     /**
      * Removes the recalculation flag
      *
-     * @return bool
-     *
      * @throws Exception
      */
     public function unflagForRecalculation(): bool
@@ -167,8 +158,6 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
 
     /**
      * Reports whether the pack is flagged for recalculation
-     *
-     * @return bool
      */
     public function isFlaggedForRecalculation(): bool
     {
