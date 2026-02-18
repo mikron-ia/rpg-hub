@@ -149,14 +149,16 @@ class SeenPack extends ActiveRecord
         return null;
     }
 
+
     /**
      * @param bool $fullSight Has the user seen all data? True for views, false for indexing
+     * @param ImportancePack|null $importancePack Importance pack to flag in case of status change
      *
-     * @return bool Success of the operation
+     * @return bool
      *
      * @throws Exception
      */
-    public function recordSighting(bool $fullSight = true): bool
+    private function recordNotificationOrSighting(bool $fullSight, ?ImportancePack $importancePack = null): bool
     {
         if (Yii::$app instanceof ConsoleApplication) {
             /* There is no point to record sighting from a console */
@@ -183,14 +185,18 @@ class SeenPack extends ActiveRecord
         if ($record) {
             $record->noted_at = time();
             if ($fullSight) {
+                if ($importancePack !== null && $record->getSeenStatus() !== SeenStatus::STATUS_SEEN) {
+                    // todo This would be a great spot to throw an event, if there was anything to catch it
+                    $importancePack->flagForRecalculation(); // flag only if possible and on status change
+                }
                 $record->seen_at = time();
                 $record->setSeenStatus(SeenStatus::STATUS_SEEN);
             }
 
             return $record->save();
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -219,7 +225,15 @@ class SeenPack extends ActiveRecord
      */
     public function recordNotification(): bool
     {
-        return $this->recordSighting(false);
+        return $this->recordNotificationOrSighting(false);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function recordSighting(?ImportancePack $importancePack = null): bool
+    {
+        return $this->recordNotificationOrSighting(true, $importancePack);
     }
 
     public function getControllingObject(): HasSightings

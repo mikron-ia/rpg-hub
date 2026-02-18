@@ -457,7 +457,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
     public function recordSighting(): bool
     {
-        return $this->seenPack->recordSighting();
+        return $this->seenPack->recordSighting(importancePack: $this->importancePack);
     }
 
     public function recordNotification(): bool
