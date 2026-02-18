@@ -3,9 +3,6 @@ a {
 }
 
 .btn-primary {
-    background-image: -webkit-linear-gradient(top, grey 0%, black 100%) !important;
-    background-image: -o-linear-gradient(top, grey 0%, black 100%) !important;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(grey), to(black)) !important;
     background-image: linear-gradient(to bottom, grey 0%, black 100%) !important;
     border: 1px solid black !important;
 }
