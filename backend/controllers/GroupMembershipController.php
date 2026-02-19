@@ -8,18 +8,21 @@ use common\models\Group;
 use common\models\GroupMembershipHistory;
 use Yii;
 use common\models\GroupMembership;
+use yii\base\InvalidRouteException;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
 /**
- * GroupMembershipController implements the CRUD actions for GroupMembership model.
+ * GroupMembershipController implements the CRUD actions for the GroupMembership model.
  */
-class GroupMembershipController extends Controller
+final class GroupMembershipController extends Controller
 {
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -42,11 +45,11 @@ class GroupMembershipController extends Controller
     }
 
     /**
-     * Displays a single GroupMembership model.
-     * @param string $id
-     * @return mixed
+     * @throws HttpException
+     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
      */
-    public function actionView($id)
+    public function actionView(string $id): Response|string
     {
         $model = $this->findModel($id);
 
@@ -63,11 +66,11 @@ class GroupMembershipController extends Controller
     }
 
     /**
-     * Creates a new GroupMembership model
-     * @param $group_id
-     * @return mixed
+     * @throws Exception
+     * @throws HttpException
+     * @throws InvalidRouteException
      */
-    public function actionCreate($group_id)
+    public function actionCreate(string $group_id): Response|string
     {
         $model = new GroupMembership();
 
@@ -94,19 +97,22 @@ class GroupMembershipController extends Controller
             $charactersForMembership = CharacterQuery::listEpicCharactersAsArray();
 
             if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('create', ['model' => $model, 'charactersForMembership' => $charactersForMembership]);
+                return $this->renderAjax('create',
+                    ['model' => $model, 'charactersForMembership' => $charactersForMembership]);
             } else {
-                return $this->render('create', ['model' => $model, 'charactersForMembership' => $charactersForMembership]);
+                return $this->render('create',
+                    ['model' => $model, 'charactersForMembership' => $charactersForMembership]);
             }
         }
     }
 
     /**
-     * Updates an existing GroupMembership model
-     * @param string $id
-     * @return mixed
+     * @throws Exception
+     * @throws HttpException
+     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
      */
-    public function actionUpdate($id)
+    public function actionUpdate(string $id): Response|string
     {
         $model = $this->findModel($id);
 
@@ -121,18 +127,21 @@ class GroupMembershipController extends Controller
             $charactersForMembership = CharacterQuery::listEpicCharactersAsArray();
 
             if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('update', ['model' => $model, 'charactersForMembership' => $charactersForMembership]);
+                return $this->renderAjax('update',
+                    ['model' => $model, 'charactersForMembership' => $charactersForMembership]);
             } else {
-                return $this->render('update', ['model' => $model, 'charactersForMembership' => $charactersForMembership]);
+                return $this->render('update',
+                    ['model' => $model, 'charactersForMembership' => $charactersForMembership]);
             }
         }
     }
 
     /**
-     * @param string $id
-     * @return mixed
+     * @throws HttpException
+     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
      */
-    public function actionHistory($id)
+    public function actionHistory(string $id): Response|string
     {
         $model = $this->findModel($id);
 
@@ -153,10 +162,10 @@ class GroupMembershipController extends Controller
     }
 
     /**
-     * @param $id
-     * @return Response
+     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
      */
-    public function actionMoveUp($id)
+    public function actionMoveUp(int $id): Response
     {
         $model = $this->findModel($id);
         $model->movePrev();
@@ -170,10 +179,10 @@ class GroupMembershipController extends Controller
     }
 
     /**
-     * @param $id
-     * @return Response
+     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
      */
-    public function actionMoveDown($id)
+    public function actionMoveDown(int $id): Response
     {
         $model = $this->findModel($id);
         $model->moveNext();
@@ -189,11 +198,10 @@ class GroupMembershipController extends Controller
     /**
      * Finds the GroupMembership model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return GroupMembership the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel(string $id): GroupMembership
     {
         if (($model = GroupMembership::findOne($id)) !== null) {
             return $model;
@@ -204,11 +212,11 @@ class GroupMembershipController extends Controller
 
     /**
      * @param string[] $default
-     * @return Response
+     *
+     * @throws InvalidRouteException
      */
-    protected function returnToReferrer(array $default):Response
+    protected function returnToReferrer(array $default): Response
     {
-
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);

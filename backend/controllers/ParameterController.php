@@ -4,7 +4,11 @@ namespace backend\controllers;
 
 use common\models\core\Visibility;
 use common\models\Parameter;
+use Throwable;
 use Yii;
+use yii\base\InvalidRouteException;
+use yii\db\Exception;
+use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -12,11 +16,11 @@ use yii\filters\VerbFilter;
 use yii\web\Response;
 
 /**
- * ParameterController implements the CRUD actions for Parameter model.
+ * ParameterController implements the CRUD actions for the Parameter model.
  */
 final class ParameterController extends Controller
 {
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -39,24 +43,16 @@ final class ParameterController extends Controller
     }
 
     /**
-     * Displays a single Parameter model.
-     * @param string $id
-     * @return mixed
+     * @throws NotFoundHttpException
      */
-    public function actionView($id)
+    public function actionView(string $id): string
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
-    /**
-     * Creates a new Parameter model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @param int $pack_id
-     * @return mixed
-     */
-    public function actionCreate($pack_id)
+    public function actionCreate(int $pack_id): Response|string
     {
         $model = new Parameter();
 
@@ -79,12 +75,11 @@ final class ParameterController extends Controller
     }
 
     /**
-     * Updates an existing Parameter model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
-     * @return mixed
+     * @throws Exception
+     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
      */
-    public function actionUpdate($id)
+    public function actionUpdate(string $id): Response|string
     {
         $model = $this->findModel($id);
 
@@ -110,12 +105,12 @@ final class ParameterController extends Controller
     }
 
     /**
-     * Deletes an existing Parameter model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
+     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
+     * @throws Throwable
+     * @throws StaleObjectException
      */
-    public function actionDelete($id)
+    public function actionDelete(string $id): Response
     {
         $this->findModel($id)->delete();
 
@@ -129,10 +124,11 @@ final class ParameterController extends Controller
 
     /**
      * Moves parameter up in order
-     * @param int $id Story ID
-     * @return Response
+     *
+     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
      */
-    public function actionMoveUp($id)
+    public function actionMoveUp(int $id): Response
     {
         $model = $this->findModel($id);
         $model->movePrev();
@@ -145,7 +141,13 @@ final class ParameterController extends Controller
         }
     }
 
-    public function actionMoveDown($id)
+    /**
+     * Moves parameter down in order
+     *
+     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
+     */
+    public function actionMoveDown(int $id): Response
     {
         $model = $this->findModel($id);
         $model->moveNext();
@@ -160,12 +162,10 @@ final class ParameterController extends Controller
 
     /**
      * Finds the Parameter model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Parameter the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel(string $id): Parameter
     {
         $model = Parameter::findOne(['parameter_id' => $id]);
 
@@ -181,9 +181,13 @@ final class ParameterController extends Controller
     }
 
     /**
-     * Provides return to referrer page; if referrer is empty, default value is used
+     * Provides return to the referrer page; if the referrer is empty, the default value is used
+     *
      * @param string[] $default
+     *
      * @return Response
+     *
+     * @throws InvalidRouteException
      */
     protected function returnToReferrer(array $default):Response
     {
