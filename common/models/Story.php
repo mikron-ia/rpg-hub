@@ -23,27 +23,30 @@ use yii2tech\ar\position\PositionBehavior;
 /**
  * This is the model class for table "story".
  *
- * @property string $story_id
- * @property string $epic_id
+ * @property int $story_id
+ * @property int $epic_id
  * @property string $key
  * @property string $name
  * @property string $short
- * @property string $long
- * @property string $short_expanded
- * @property string $long_expanded
- * @property int $position
+ * @property string|null $long
+ * @property string|null $short_expanded
+ * @property string|null $long_expanded
+ * @property int|null $position
  * @property string $visibility
- * @property string $code
  * @property int|null $based_on_id
- * @property string $data
- * @property string $parameter_pack_id
- * @property string $seen_pack_id
- * @property string $utility_bag_id
+ * @property string $code
+ * @property string|null $data
+ * @property int|null $parameter_pack_id
+ * @property int|null $seen_pack_id
+ * @property int|null $utility_bag_id
  *
  * @property Epic $epic
  * @property Scenario|null $basedOn
  * @property ParameterPack $parameterPack
  * @property SeenPack $seenPack
+ * @property StoryCharacterAssignment[] $storyCharacterAssignments
+ * @property StoryGroupAssignment[] $storyGroupAssignments
+ * @property Parameter[] $storyParameters
  * @property UtilityBag $utilityBag
  */
 class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl, HasSightings, HasVisibility
@@ -203,6 +206,21 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
+    }
+
+    public function getStoryCharacterAssignments(): ActiveQuery
+    {
+        return $this->hasMany(StoryCharacterAssignment::class, ['story_id' => 'story_id']);
+    }
+
+    public function getStoryGroupAssignments(): ActiveQuery
+    {
+        return $this->hasMany(StoryGroupAssignment::class, ['story_id' => 'story_id']);
+    }
+
+    public function getStoryParameters(): ActiveQuery
+    {
+        return $this->hasMany(Parameter::class, ['story_id' => 'story_id']);
     }
 
     public function getUtilityBag(): ActiveQuery

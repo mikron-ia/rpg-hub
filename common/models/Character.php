@@ -52,6 +52,7 @@ use yii\db\Exception;
  * @property ImportancePack $importancePack
  * @property SeenPack $seenPack
  * @property ScribblePack $scribblePack
+ * @property StoryCharacterAssignment[] $storyCharacterAssignments
  * @property UtilityBag $utilityBag
  * @property CharacterSheet[] $characterSheets
  * @property GroupMembership[] $groupMemberships
@@ -238,9 +239,6 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function  getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
@@ -266,11 +264,6 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return $this->hasOne(ImportancePack::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
-    /**
-     * Gets query for [[ScribblePack]].
-     *
-     * @return ActiveQuery|ScribblePackQuery
-     */
     public function getScribblePack(): ActiveQuery|ScribblePackQuery
     {
         return $this->hasOne(ScribblePack::class, ['scribble_pack_id' => 'scribble_pack_id']);
@@ -279,6 +272,16 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
+    }
+
+    public function getStoryCharacterAssignments(): ActiveQuery
+    {
+        return $this->hasMany(StoryCharacterAssignment::class, ['character_id' => 'character_id']);
+    }
+
+    public function getStoryCharacterAssignmentsOrderedByPosition(): ActiveQuery
+    {
+        return $this->hasMany(StoryCharacterAssignment::class, ['character_id' => 'character_id'])->orderBy('position ASC');
     }
 
     public function getUtilityBag(): ActiveQuery

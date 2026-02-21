@@ -53,6 +53,7 @@ use yii\helpers\Html;
  * @property Group[] $subGroups
  * @property SeenPack $seenPack
  * @property ScribblePack $scribblePack
+ * @property StoryGroupAssignment[] $storyGroupAssignments
  * @property UtilityBag $utilityBag
  * @property GroupMembership[] $groupCharacterMemberships
  * @property GroupMembership[] $groupCharacterMembershipsOrderedByPosition
@@ -146,7 +147,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         ];
     }
 
-    public function afterFind()
+    public function afterFind(): void
     {
         if ($this->seen_pack_id) {
             $this->seenPack->recordNotification();
@@ -287,9 +288,6 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $this->hasOne(ImportancePack::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
-    /**
-     * Gets query for [[ScribblePack]]
-     */
     public function getScribblePack(): ActiveQuery|ScribblePackQuery
     {
         return $this->hasOne(ScribblePack::class, ['scribble_pack_id' => 'scribble_pack_id']);
@@ -308,6 +306,16 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
+    }
+
+    public function getStoryGroupAssignments(): ActiveQuery
+    {
+        return $this->hasMany(StoryGroupAssignment::class, ['group_id' => 'group_id']);
+    }
+
+    public function getStoryGroupAssignmentsOrderedByPosition(): ActiveQuery
+    {
+        return $this->hasMany(StoryGroupAssignment::class, ['group_id' => 'group_id'])->orderBy('position ASC');
     }
 
     public function getUtilityBag(): ActiveQuery
