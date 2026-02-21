@@ -56,14 +56,10 @@ class StoryCharacterAssignment extends ActiveRecord
     public function attributeLabels(): array
     {
         return [
-            'STORY_CHARACTER_ASSIGNMENT__id' => Yii::t('app', 'STORY_CHARACTER_ASSIGNMENT_ID'),
+            'story_character_assignment_id' => Yii::t('app', 'STORY_CHARACTER_ASSIGNMENT_ID'),
             'character_id' => Yii::t('app', 'STORY_CHARACTER_ASSIGNMENT_CHARACTER_ID'),
             'story_id' => Yii::t('app', 'STORY_CHARACTER_ASSIGNMENT_STORY_ID'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
-            'position' => Yii::t('app', 'LABEL_POSITION'),
-            'short_text' => Yii::t('app', 'STORY_CHARACTER_ASSIGNMENT_SHORT_TEXT'),
-            'public_text' => Yii::t('app', 'STORY_CHARACTER_ASSIGNMENT_PUBLIC_TEXT'),
-            'private_text' => Yii::t('app', 'STORY_CHARACTER_ASSIGNMENT_PRIVATE_TEXT'),
         ];
     }
 

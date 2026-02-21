@@ -1,6 +1,5 @@
 <?php
 
-use common\models\core\Visibility;
 use yii\db\Migration;
 
 class m250908_000840_v1_5_0 extends Migration
@@ -31,11 +30,7 @@ class m250908_000840_v1_5_0 extends Migration
             'story_character_assignment_id' => $this->primaryKey()->unsigned(),
             'character_id' => $this->integer(11)->unsigned()->notNull(),
             'story_id' => $this->integer(11)->unsigned()->notNull(),
-            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM->value),
-            'position' => $this->integer()->defaultValue(0),
-            'short_text' => $this->string(80),
-            'public_text' => $this->text(),
-            'private_text' => $this->text(),
+            'visibility' => $this->string(20)->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -55,11 +50,7 @@ class m250908_000840_v1_5_0 extends Migration
             'story_group_assignment_id' => $this->primaryKey()->unsigned(),
             'group_id' => $this->integer(11)->unsigned()->notNull(),
             'story_id' => $this->integer(11)->unsigned()->notNull(),
-            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM->value),
-            'position' => $this->integer()->defaultValue(0),
-            'short_text' => $this->string(80),
-            'public_text' => $this->text(),
-            'private_text' => $this->text(),
+            'visibility' => $this->string(20)->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(

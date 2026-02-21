@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use common\models\Parameter;
 use yii\bootstrap\Modal;
 use yii\data\ActiveDataProvider;
@@ -48,6 +49,16 @@ use yii\widgets\DetailView;
                     'value' => $model->based_on_id === null
                         ? null
                         : Html::a($model->basedOn->name, ['scenario/view', 'key' => $model->basedOn->key])
+                ],
+                [
+                    'label' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PUBLIC'),
+                    'format' => 'raw',
+                    'value' => implode(', ', $model->getStoryCharacterAssignmentLinks(Visibility::VISIBILITY_FULL)),
+                ],
+                [
+                    'label' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PRIVATE'),
+                    'format' => 'raw',
+                    'value' => implode(', ', $model->getStoryCharacterAssignmentLinks(Visibility::VISIBILITY_GM)),
                 ],
                 [
                     'label' => Yii::t('app', 'STORY_SHORT_SIZE'),

@@ -11,10 +11,12 @@ use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
+use common\models\tools\ToolsForMultipleChoiceFields;
 use common\models\type\StoryType;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
 use yii\helpers\StringHelper;
@@ -53,7 +55,11 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
 {
     use ToolsForEntity;
     use ToolsForHasVisibility;
+    use ToolsForMultipleChoiceFields;
     use ToolsForLinkTags;
+
+    public array $storyCharacterAssignmentChoicesPublic = [];
+    public array $storyCharacterAssignmentChoicesPrivate = [];
 
     /**
      * @var array<string,string>
@@ -77,6 +83,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             [['name'], 'string', 'max' => 120],
             [['code', 'visibility'], 'string', 'max' => 20],
             [['is_off_the_record_change'], 'boolean'],
+            [['storyCharacterAssignmentChoicesPublic', 'storyCharacterAssignmentChoicesPrivate'], 'safe'],
             [
                 ['epic_id'],
                 'exist',
@@ -130,6 +137,10 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
             'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
+            'storyCharacterAssignmentChoicesPublic' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PUBLIC'),
+            'storyCharacterAssignmentChoicesPrivate' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PRIVATE'),
+            'storyGroupAssignmentChoicesPublic' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PUBLIC'),
+            'storyGroupAssignmentChoicesPrivate' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PRIVATE'),
         ];
     }
 
@@ -138,14 +149,27 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         if ($this->seen_pack_id) {
             $this->seenPack->recordNotification();
         }
+
+        $this->storyCharacterAssignmentChoicesPublic = $this->getStoryCharacterAssignmentIds(Visibility::VISIBILITY_FULL);
+        $this->storyCharacterAssignmentChoicesPrivate = $this->getStoryCharacterAssignmentIds(Visibility::VISIBILITY_GM);
+
         parent::afterFind();
     }
 
+    /**
+     * @throws Exception
+     */
     public function afterSave($insert, $changedAttributes): void
     {
         if (!$this->is_off_the_record_change) {
             $this->seenPack->updateRecord();
         }
+
+        $this->setStoryCharacterAssignmentIds(
+            $this->storyCharacterAssignmentChoicesPublic,
+            $this->storyCharacterAssignmentChoicesPrivate
+        );
+
         parent::afterSave($insert, $changedAttributes);
     }
 
@@ -211,6 +235,33 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function getStoryCharacterAssignments(): ActiveQuery
     {
         return $this->hasMany(StoryCharacterAssignment::class, ['story_id' => 'story_id']);
+    }
+
+    public function getStoryCharacterAssignmentsByVisibility(Visibility $visibility): ActiveQuery
+    {
+        return $this->hasMany(StoryCharacterAssignment::class, ['story_id' => 'story_id'])
+            ->andWhere(['story_character_assignment.visibility' => $visibility->value]);
+    }
+
+    public function getStoryCharacterAssignmentIds(Visibility $visibility): array
+    {
+        return $this->getStoryCharacterAssignmentsByVisibility($visibility)->select('character_id')->column();
+    }
+
+    public function getStoryCharacterAssignmentLinks(Visibility $visibility): array
+    {
+        $assignments = $this
+            ->getStoryCharacterAssignmentsByVisibility($visibility)->joinWith('character')
+            ->orderBy('character.name ASC')
+            ->all();
+
+        return array_map(
+            fn(StoryCharacterAssignment $assignment) => Html::a(
+                $assignment->character->name,
+                ['character/view', 'key' => $assignment->character->key]
+            ),
+            $assignments
+        );
     }
 
     public function getStoryGroupAssignments(): ActiveQuery
@@ -415,6 +466,33 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function getLongDescriptionWordCount(): int
     {
         return StringHelper::countWords($this->long);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function setStoryCharacterAssignmentIds(array $idsPublic, array $idsPrivate): void
+    {
+        // todo consider transactions
+        StoryCharacterAssignment::deleteAll(['story_id' => $this->story_id]);
+
+        foreach ($this->normalizeIntegerInput($idsPublic) as $id) {
+            $assignment = new StoryCharacterAssignment([
+                'story_id' => $this->story_id,
+                'character_id' => $id,
+                'visibility' => Visibility::VISIBILITY_FULL->value,
+            ]);
+            $assignment->save();
+        }
+
+        foreach ($this->normalizeIntegerInput($idsPrivate) as $id) {
+            $assignment = new StoryCharacterAssignment([
+                'story_id' => $this->story_id,
+                'character_id' => $id,
+                'visibility' => Visibility::VISIBILITY_GM->value,
+            ]);
+            $assignment->save();
+        }
     }
 
     public function getBasedOn(): ActiveQuery

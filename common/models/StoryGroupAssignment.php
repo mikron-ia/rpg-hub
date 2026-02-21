@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\models\core\HasVisibility;
+use common\models\tools\ToolsForHasVisibility;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -22,8 +24,10 @@ use yii\db\ActiveRecord;
  * @property Group $group
  * @property Story $story
  */
-class StoryGroupAssignment extends ActiveRecord
+class StoryGroupAssignment extends ActiveRecord implements HasVisibility
 {
+    use ToolsForHasVisibility;
+
     public static function tableName(): string
     {
         return 'story_group_assignment';
@@ -34,9 +38,7 @@ class StoryGroupAssignment extends ActiveRecord
         return [
             [['group_id', 'story_id'], 'required'],
             [['group_id', 'story_id', 'position'], 'integer'],
-            [['public_text', 'private_text'], 'string'],
             [['visibility'], 'string', 'max' => 20],
-            [['short_text'], 'string', 'max' => 80],
             [
                 ['group_id'],
                 'exist',
@@ -61,10 +63,6 @@ class StoryGroupAssignment extends ActiveRecord
             'group_id' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_GROUP_ID'),
             'story_id' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_STORY_ID'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
-            'position' => Yii::t('app', 'LABEL_POSITION'),
-            'short_text' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_SHORT_TEXT'),
-            'public_text' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_PUBLIC_TEXT'),
-            'private_text' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_PRIVATE_TEXT'),
         ];
     }
 
