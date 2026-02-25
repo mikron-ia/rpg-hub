@@ -10,11 +10,10 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Story */
-
-$storyCharacterPublic = $model->getStoryCharacterAssignmentLinks(Visibility::VISIBILITY_FULL);
-$storyCharacterPrivate = $model->getStoryCharacterAssignmentLinks(Visibility::VISIBILITY_GM);
-$storyGroupPublic = $model->getStoryGroupAssignmentLinks(Visibility::VISIBILITY_FULL);
-$storyGroupPrivate = $model->getStoryGroupAssignmentLinks(Visibility::VISIBILITY_GM);
+/* @var $storyCharactersPublic array<string> */
+/* @var $storyCharactersPrivate array<string> */
+/* @var $storyGroupsPublic array<string> */
+/* @var $storyGroupsPrivate array<string> */
 
 ?>
 
@@ -58,22 +57,22 @@ $storyGroupPrivate = $model->getStoryGroupAssignmentLinks(Visibility::VISIBILITY
                 [
                     'label' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PUBLIC'),
                     'format' => 'raw',
-                    'value' => empty($storyCharacterPublic) ? null : implode(', ', $storyCharacterPublic),
+                    'value' => empty($storyCharactersPublic) ? null : implode(', ', $storyCharactersPublic),
                 ],
                 [
                     'label' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PRIVATE'),
                     'format' => 'raw',
-                    'value' => empty($storyCharacterPrivate) ? null : implode(', ', $storyCharacterPrivate),
+                    'value' => empty($storyCharactersPrivate) ? null : implode(', ', $storyCharactersPrivate),
                 ],
                 [
                     'label' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PUBLIC'),
                     'format' => 'raw',
-                    'value' => empty($storyGroupPublic) ? null : implode(', ', $storyGroupPublic),
+                    'value' => empty($storyGroupsPublic) ? null : implode(', ', $storyGroupsPublic),
                 ],
                 [
                     'label' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PRIVATE'),
                     'format' => 'raw',
-                    'value' => empty($storyGroupPrivate) ? null : implode(', ', $storyGroupPrivate),
+                    'value' => empty($storyGroupsPrivate) ? null : implode(', ', $storyGroupsPrivate),
                 ],
                 [
                     'label' => Yii::t('app', 'STORY_SHORT_SIZE'),

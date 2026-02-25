@@ -7,6 +7,8 @@ use common\components\EpicAssistance;
 use common\models\core\Visibility;
 use common\models\Epic;
 use common\models\Story;
+use common\models\StoryCharacterAssignmentQuery;
+use common\models\StoryGroupAssignmentQuery;
 use common\models\StoryQuery;
 use Yii;
 use yii\filters\AccessControl;
@@ -90,7 +92,30 @@ final class StoryController extends Controller
             Story::throwExceptionAboutView();
         }
 
-        return $this->render('view', ['model' => $model]);
+        $storyCharactersPublic = StoryCharacterAssignmentQuery::getCharacterAssignmentLinksForOperator(
+            $model->story_id,
+            Visibility::VISIBILITY_FULL,
+        );
+        $storyCharactersPrivate = StoryCharacterAssignmentQuery::getCharacterAssignmentLinksForOperator(
+            $model->story_id,
+            Visibility::VISIBILITY_GM,
+        );
+        $storyGroupsPublic = StoryGroupAssignmentQuery::getGroupAssignmentLinksForOperator(
+            $model->story_id,
+            Visibility::VISIBILITY_FULL,
+        );
+        $storyGroupsPrivate = StoryGroupAssignmentQuery::getGroupAssignmentLinksForOperator(
+            $model->story_id,
+            Visibility::VISIBILITY_GM,
+        );
+
+        return $this->render('view', [
+            'model' => $model,
+            'storyCharactersPublic' => $storyCharactersPublic,
+            'storyCharactersPrivate' => $storyCharactersPrivate,
+            'storyGroupsPublic' => $storyGroupsPublic,
+            'storyGroupsPrivate' => $storyGroupsPrivate,
+        ]);
     }
 
     public function actionCreate(string $epic = null): Response|string

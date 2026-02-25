@@ -253,31 +253,11 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return $this->hasMany(StoryCharacterAssignment::class, ['story_id' => 'story_id']);
     }
 
-    public function getStoryCharacterAssignmentsByVisibility(Visibility $visibility): ActiveQuery
-    {
-        return $this->hasMany(StoryCharacterAssignment::class, ['story_id' => 'story_id'])
-            ->andWhere(['story_character_assignment.visibility' => $visibility->value]);
-    }
-
     public function getStoryCharacterAssignmentIds(Visibility $visibility): array
     {
-        return $this->getStoryCharacterAssignmentsByVisibility($visibility)->select('character_id')->column();
-    }
-
-    public function getStoryCharacterAssignmentLinks(Visibility $visibility): array
-    {
-        $assignments = $this
-            ->getStoryCharacterAssignmentsByVisibility($visibility)->joinWith('character')
-            ->orderBy('character.name ASC')
-            ->all();
-
-        return array_map(
-            fn(StoryCharacterAssignment $assignment) => Html::a(
-                $assignment->character->name,
-                ['character/view', 'key' => $assignment->character->key]
-            ),
-            $assignments
-        );
+        return $this->getStoryCharacterAssignments()
+            ->andWhere(['story_character_assignment.visibility' => $visibility->value])
+            ->select('character_id')->column();
     }
 
     public function getStoryGroupAssignments(): ActiveQuery
@@ -285,31 +265,12 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return $this->hasMany(StoryGroupAssignment::class, ['story_id' => 'story_id']);
     }
 
-    public function getStoryGroupAssignmentsByVisibility(Visibility $visibility): ActiveQuery
-    {
-        return $this->hasMany(StoryGroupAssignment::class, ['story_id' => 'story_id'])
-            ->andWhere(['story_group_assignment.visibility' => $visibility->value]);
-    }
-
     public function getStoryGroupAssignmentIds(Visibility $visibility): array
     {
-        return $this->getStoryGroupAssignmentsByVisibility($visibility)->select('group_id')->column();
-    }
-
-    public function getStoryGroupAssignmentLinks(Visibility $visibility): array
-    {
-        $assignments = $this
-            ->getStoryGroupAssignmentsByVisibility($visibility)->joinWith('group')
-            ->orderBy('group.name ASC')
-            ->all();
-
-        return array_map(
-            fn(StoryGroupAssignment $assignment) => Html::a(
-                $assignment->group->name,
-                ['group/view', 'key' => $assignment->group->key]
-            ),
-            $assignments
-        );
+        return $this->getStoryGroupAssignments()
+            ->andWhere(['story_group_assignment.visibility' => $visibility->value])
+            ->select('group_id')
+            ->column();
     }
 
     public function getStoryParameters(): ActiveQuery

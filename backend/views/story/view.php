@@ -7,6 +7,10 @@ StoryAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Story */
+/* @var $storyCharactersPublic array<string> */
+/* @var $storyCharactersPrivate array<string> */
+/* @var $storyGroupsPublic array<string> */
+/* @var $storyGroupsPrivate array<string> */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
@@ -21,6 +25,10 @@ $items = [
         'label' => Yii::t('app', 'STORY_BASIC'),
         'content' => $this->render('_view_basic', [
             'model' => $model,
+            'storyCharactersPublic' => $storyCharactersPublic,
+            'storyCharactersPrivate' => $storyCharactersPrivate,
+            'storyGroupsPublic' => $storyGroupsPublic,
+            'storyGroupsPrivate' => $storyGroupsPrivate,
         ]),
         'encode' => false,
         'active' => true,
