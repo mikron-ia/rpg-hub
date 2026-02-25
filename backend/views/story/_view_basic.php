@@ -61,6 +61,16 @@ use yii\widgets\DetailView;
                     'value' => implode(', ', $model->getStoryCharacterAssignmentLinks(Visibility::VISIBILITY_GM)),
                 ],
                 [
+                    'label' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PUBLIC'),
+                    'format' => 'raw',
+                    'value' => implode(', ', $model->getStoryGroupAssignmentLinks(Visibility::VISIBILITY_FULL)),
+                ],
+                [
+                    'label' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PRIVATE'),
+                    'format' => 'raw',
+                    'value' => implode(', ', $model->getStoryGroupAssignmentLinks(Visibility::VISIBILITY_GM)),
+                ],
+                [
                     'label' => Yii::t('app', 'STORY_SHORT_SIZE'),
                     'format' => 'shortSize',
                     'value' => strlen($model->short),

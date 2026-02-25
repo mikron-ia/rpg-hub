@@ -37,7 +37,7 @@ class StoryGroupAssignment extends ActiveRecord implements HasVisibility
     {
         return [
             [['group_id', 'story_id'], 'required'],
-            [['group_id', 'story_id', 'position'], 'integer'],
+            [['group_id', 'story_id'], 'integer'],
             [['visibility'], 'string', 'max' => 20],
             [
                 ['group_id'],

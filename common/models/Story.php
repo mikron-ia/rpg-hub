@@ -58,8 +58,10 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     use ToolsForMultipleChoiceFields;
     use ToolsForLinkTags;
 
-    public array $storyCharacterAssignmentChoicesPublic = [];
-    public array $storyCharacterAssignmentChoicesPrivate = [];
+    public array|string $storyCharacterAssignmentChoicesPublic = [];
+    public array|string $storyCharacterAssignmentChoicesPrivate = [];
+    public array|string $storyGroupAssignmentChoicesPublic = [];
+    public array|string $storyGroupAssignmentChoicesPrivate = [];
 
     /**
      * @var array<string,string>
@@ -84,6 +86,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             [['code', 'visibility'], 'string', 'max' => 20],
             [['is_off_the_record_change'], 'boolean'],
             [['storyCharacterAssignmentChoicesPublic', 'storyCharacterAssignmentChoicesPrivate'], 'safe'],
+            [['storyGroupAssignmentChoicesPublic', 'storyGroupAssignmentChoicesPrivate'], 'safe'],
             [
                 ['epic_id'],
                 'exist',
@@ -153,6 +156,9 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         $this->storyCharacterAssignmentChoicesPublic = $this->getStoryCharacterAssignmentIds(Visibility::VISIBILITY_FULL);
         $this->storyCharacterAssignmentChoicesPrivate = $this->getStoryCharacterAssignmentIds(Visibility::VISIBILITY_GM);
 
+        $this->storyGroupAssignmentChoicesPublic = $this->getStoryGroupAssignmentIds(Visibility::VISIBILITY_FULL);
+        $this->storyGroupAssignmentChoicesPrivate = $this->getStoryGroupAssignmentIds(Visibility::VISIBILITY_GM);
+
         parent::afterFind();
     }
 
@@ -166,8 +172,13 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         }
 
         $this->setStoryCharacterAssignmentIds(
-            $this->storyCharacterAssignmentChoicesPublic,
-            $this->storyCharacterAssignmentChoicesPrivate
+            $this->normalizeInputFromMultiSelect($this->storyCharacterAssignmentChoicesPublic),
+            $this->normalizeInputFromMultiSelect($this->storyCharacterAssignmentChoicesPrivate)
+        );
+
+        $this->setStoryGroupAssignmentIds(
+            $this->normalizeInputFromMultiSelect($this->storyGroupAssignmentChoicesPublic),
+            $this->normalizeInputFromMultiSelect($this->storyGroupAssignmentChoicesPrivate)
         );
 
         parent::afterSave($insert, $changedAttributes);
@@ -267,6 +278,33 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function getStoryGroupAssignments(): ActiveQuery
     {
         return $this->hasMany(StoryGroupAssignment::class, ['story_id' => 'story_id']);
+    }
+
+    public function getStoryGroupAssignmentsByVisibility(Visibility $visibility): ActiveQuery
+    {
+        return $this->hasMany(StoryGroupAssignment::class, ['story_id' => 'story_id'])
+            ->andWhere(['story_group_assignment.visibility' => $visibility->value]);
+    }
+
+    public function getStoryGroupAssignmentIds(Visibility $visibility): array
+    {
+        return $this->getStoryGroupAssignmentsByVisibility($visibility)->select('group_id')->column();
+    }
+
+    public function getStoryGroupAssignmentLinks(Visibility $visibility): array
+    {
+        $assignments = $this
+            ->getStoryGroupAssignmentsByVisibility($visibility)->joinWith('group')
+            ->orderBy('group.name ASC')
+            ->all();
+
+        return array_map(
+            fn(StoryGroupAssignment $assignment) => Html::a(
+                $assignment->group->name,
+                ['group/view', 'key' => $assignment->group->key]
+            ),
+            $assignments
+        );
     }
 
     public function getStoryParameters(): ActiveQuery
@@ -489,6 +527,33 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             $assignment = new StoryCharacterAssignment([
                 'story_id' => $this->story_id,
                 'character_id' => $id,
+                'visibility' => Visibility::VISIBILITY_GM->value,
+            ]);
+            $assignment->save();
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function setStoryGroupAssignmentIds(array $idsPublic, array $idsPrivate): void
+    {
+        // todo consider transactions
+        StoryGroupAssignment::deleteAll(['story_id' => $this->story_id]);
+
+        foreach ($this->normalizeIntegerInput($idsPublic) as $id) {
+            $assignment = new StoryGroupAssignment([
+                'story_id' => $this->story_id,
+                'group_id' => $id,
+                'visibility' => Visibility::VISIBILITY_FULL->value,
+            ]);
+            $assignment->save();
+        }
+
+        foreach ($this->normalizeIntegerInput($idsPrivate) as $id) {
+            $assignment = new StoryGroupAssignment([
+                'story_id' => $this->story_id,
+                'group_id' => $id,
                 'visibility' => Visibility::VISIBILITY_GM->value,
             ]);
             $assignment->save();

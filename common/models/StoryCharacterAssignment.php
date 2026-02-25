@@ -32,7 +32,7 @@ class StoryCharacterAssignment extends ActiveRecord
     {
         return [
             [['character_id', 'story_id'], 'required'],
-            [['character_id', 'story_id', 'position'], 'integer'],
+            [['character_id', 'story_id'], 'integer'],
             [['public_text', 'private_text'], 'string'],
             [['visibility'], 'string', 'max' => 20],
             [['short_text'], 'string', 'max' => 80],
