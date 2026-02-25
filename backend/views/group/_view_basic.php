@@ -1,11 +1,15 @@
 <?php
 
+use common\models\core\Visibility;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Group */
 /* @var $externalDataDataProvider yii\data\ActiveDataProvider */
+
+$storyGroupPublic = $model->getStoryGroupAssignmentLinks(Visibility::VISIBILITY_FULL);
+$storyGroupPrivate = $model->getStoryGroupAssignmentLinks(Visibility::VISIBILITY_GM);
 
 ?>
 
@@ -118,5 +122,27 @@ use yii\widgets\DetailView;
             ) ?>
         </div>
     </div>
+
+    <?php if (!empty($storyGroupPublic)): ?>
+        <div class="col-md-6">
+            <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PUBLIC'); ?></h2>
+            <ul>
+                <?php foreach ($storyGroupPublic as $role): ?>
+                    <li><?= $role; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($storyGroupPrivate)): ?>
+        <div class="col-md-6">
+            <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PRIVATE'); ?></h2>
+            <ul>
+                <?php foreach ($storyGroupPrivate as $role): ?>
+                    <li><?= $role; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
 
 </div>

@@ -747,6 +747,8 @@ return [
     'STORY_ASSIGNMENT_CHARACTERS_PUBLIC' => 'Postacie w historii',
     'STORY_ASSIGNMENT_GROUPS_PRIVATE' => 'Grupy w historii (niejawne)',
     'STORY_ASSIGNMENT_GROUPS_PUBLIC' => 'Grupy w historii',
+    'STORY_ASSIGNMENT_STORY_PRIVATE' => 'Historie z udziałem niejawnym',
+    'STORY_ASSIGNMENT_STORY_PUBLIC' => 'Historie z udziałem jawnym',
     'STORY_BASIC' => 'Podstawowe dane',
     'STORY_CHARACTER_ASSIGNMENT_CHARACTER_ID' => 'Postać',
     'STORY_CHARACTER_ASSIGNMENT_ID' => 'Przypisanie postaci do historii',

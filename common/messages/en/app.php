@@ -747,6 +747,8 @@ return [
     'STORY_ASSIGNMENT_CHARACTERS_PUBLIC' => 'Characters in story',
     'STORY_ASSIGNMENT_GROUPS_PRIVATE' => 'Groups in story (private)',
     'STORY_ASSIGNMENT_GROUPS_PUBLIC' => 'Groups in story',
+    'STORY_ASSIGNMENT_STORY_PRIVATE' => 'Secretly starring in',
+    'STORY_ASSIGNMENT_STORY_PUBLIC' => 'Starring in',
     'STORY_BASIC' => 'Story basic data',
     'STORY_CHARACTER_ASSIGNMENT_CHARACTER_ID' => 'Character',
     'STORY_CHARACTER_ASSIGNMENT_ID' => 'Story character assignment',

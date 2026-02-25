@@ -318,6 +318,29 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $this->hasMany(StoryGroupAssignment::class, ['group_id' => 'group_id'])->orderBy('position ASC');
     }
 
+    public function getStoryGroupAssignmentsByVisibility(Visibility $visibility): ActiveQuery
+    {
+        return $this
+            ->hasMany(StoryGroupAssignment::class, ['group_id' => 'group_id'])
+            ->andWhere(['story_group_assignment.visibility' => $visibility->value]);
+    }
+
+    public function getStoryGroupAssignmentLinks(Visibility $visibility): array
+    {
+        $assignments = $this
+            ->getStoryGroupAssignmentsByVisibility($visibility)->joinWith('story')
+            ->orderBy('story.position DESC')
+            ->all();
+
+        return array_map(
+            fn(StoryGroupAssignment $assignment) => Html::a(
+                $assignment->story->name,
+                ['story/view', 'key' => $assignment->story->key]
+            ),
+            $assignments
+        );
+    }
+
     public function getUtilityBag(): ActiveQuery
     {
         return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);

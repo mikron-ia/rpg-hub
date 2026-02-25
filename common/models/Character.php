@@ -23,6 +23,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "person".
@@ -282,6 +283,29 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public function getStoryCharacterAssignmentsOrderedByPosition(): ActiveQuery
     {
         return $this->hasMany(StoryCharacterAssignment::class, ['character_id' => 'character_id'])->orderBy('position ASC');
+    }
+
+    public function getStoryCharacterAssignmentsByVisibility(Visibility $visibility): ActiveQuery
+    {
+        return $this
+            ->hasMany(StoryCharacterAssignment::class, ['character_id' => 'character_id'])
+            ->andWhere(['story_character_assignment.visibility' => $visibility->value]);
+    }
+
+    public function getStoryCharacterAssignmentLinks(Visibility $visibility): array
+    {
+        $assignments = $this
+            ->getStoryCharacterAssignmentsByVisibility($visibility)->joinWith('story')
+            ->orderBy('story.position DESC')
+            ->all();
+
+        return array_map(
+            fn(StoryCharacterAssignment $assignment) => Html::a(
+                $assignment->story->name,
+                ['story/view', 'key' => $assignment->story->key]
+            ),
+            $assignments
+        );
     }
 
     public function getUtilityBag(): ActiveQuery
