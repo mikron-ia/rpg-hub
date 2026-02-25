@@ -8,10 +8,7 @@ use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
-
 /**
- * This is the model class for table "story_group_assignment".
- *
  * @property int $story_group_assignment_id
  * @property int $group_id
  * @property int $story_id

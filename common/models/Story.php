@@ -20,6 +20,7 @@ use yii\db\Exception;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
 use yii\helpers\StringHelper;
+use yii\web\HttpException;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
@@ -184,6 +185,10 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         parent::afterSave($insert, $changedAttributes);
     }
 
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
     public function beforeSave($insert): bool
     {
         if ($insert) {
@@ -318,7 +323,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     }
 
     /**
-     * Provides story summary formatted in HTML
+     * Provides the story summary formatted in HTML
      */
     public function getShortFormatted(): string
     {
@@ -326,7 +331,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     }
 
     /**
-     * Provides story summary formatted in HTML
+     * Provides the story summary formatted in HTML
      */
     public function getLongFormatted(): string
     {

@@ -36,6 +36,6 @@ trait ToolsForMultipleChoiceFields
             $normalizedIds[] = (int)$value;
         }
 
-        return $normalizedIds;
+        return array_values(array_unique($normalizedIds));
     }
 }

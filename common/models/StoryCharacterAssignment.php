@@ -7,8 +7,6 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "story_character_assignment".
- *
  * @property int $story_character_assignment_id
  * @property int $character_id
  * @property int $story_id

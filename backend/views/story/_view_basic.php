@@ -11,6 +11,11 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Story */
 
+$storyCharacterPublic = $model->getStoryCharacterAssignmentLinks(Visibility::VISIBILITY_FULL);
+$storyCharacterPrivate = $model->getStoryCharacterAssignmentLinks(Visibility::VISIBILITY_GM);
+$storyGroupPublic = $model->getStoryGroupAssignmentLinks(Visibility::VISIBILITY_FULL);
+$storyGroupPrivate = $model->getStoryGroupAssignmentLinks(Visibility::VISIBILITY_GM);
+
 ?>
 
 <div>
@@ -53,22 +58,22 @@ use yii\widgets\DetailView;
                 [
                     'label' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PUBLIC'),
                     'format' => 'raw',
-                    'value' => implode(', ', $model->getStoryCharacterAssignmentLinks(Visibility::VISIBILITY_FULL)),
+                    'value' => empty($storyCharacterPublic) ? null : implode(', ', $storyCharacterPublic),
                 ],
                 [
                     'label' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PRIVATE'),
                     'format' => 'raw',
-                    'value' => implode(', ', $model->getStoryCharacterAssignmentLinks(Visibility::VISIBILITY_GM)),
+                    'value' => empty($storyCharacterPrivate) ? null : implode(', ', $storyCharacterPrivate),
                 ],
                 [
                     'label' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PUBLIC'),
                     'format' => 'raw',
-                    'value' => implode(', ', $model->getStoryGroupAssignmentLinks(Visibility::VISIBILITY_FULL)),
+                    'value' => empty($storyGroupPublic) ? null : implode(', ', $storyGroupPublic),
                 ],
                 [
                     'label' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PRIVATE'),
                     'format' => 'raw',
-                    'value' => implode(', ', $model->getStoryGroupAssignmentLinks(Visibility::VISIBILITY_GM)),
+                    'value' => empty($storyGroupPrivate) ? null : implode(', ', $storyGroupPrivate),
                 ],
                 [
                     'label' => Yii::t('app', 'STORY_SHORT_SIZE'),
