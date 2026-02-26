@@ -11,9 +11,12 @@ use common\models\StoryCharacterAssignmentQuery;
 use common\models\StoryGroupAssignmentQuery;
 use common\models\StoryQuery;
 use Yii;
+use yii\base\InvalidRouteException;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -54,6 +57,10 @@ final class StoryController extends Controller
         ];
     }
 
+    /**
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     */
     public function actionIndex(?string $epic = null): string
     {
         if (!empty($epic)) {
@@ -84,6 +91,10 @@ final class StoryController extends Controller
         ]);
     }
 
+    /**
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     */
     public function actionView(string $key): string
     {
         $model = $this->findModel($key);
@@ -101,6 +112,10 @@ final class StoryController extends Controller
         ]);
     }
 
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
     public function actionCreate(string $epic = null): Response|string
     {
         if (!Story::canUserCreateThem()) {
@@ -118,6 +133,11 @@ final class StoryController extends Controller
         return $this->render('create', ['model' => $model]);
     }
 
+    /**
+     * @throws Exception
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     */
     public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModel($key);
@@ -135,6 +155,10 @@ final class StoryController extends Controller
 
     /**
      * Moves a story up in order; this means a lower position on the list
+     *
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     * @throws InvalidRouteException
      */
     public function actionMoveUp(string $key): Response
     {
@@ -154,6 +178,9 @@ final class StoryController extends Controller
 
     /**
      * Moves a story down in order; this means higher position on the list
+     *
+     * @throws HttpException
+     * @throws InvalidRouteException
      */
     public function actionMoveDown($key): Response
     {
@@ -171,6 +198,10 @@ final class StoryController extends Controller
         }
     }
 
+    /**
+     * @throws NotFoundHttpException
+     * @throws HttpException
+     */
     public function actionMarkChanged(string $key): Response
     {
         $model = $this->findModel($key);
@@ -179,6 +210,9 @@ final class StoryController extends Controller
         return $this->redirect(['view', 'key' => $model->key]);
     }
 
+    /**
+     * @throws NotFoundHttpException
+     */
     protected function findModel(string $key): Story
     {
         $model = Story::findOne(['key' => $key]);

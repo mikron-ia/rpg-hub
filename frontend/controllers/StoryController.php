@@ -16,7 +16,7 @@ use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 /**
- * StoryController implements the CRUD actions for Story model.
+ * StoryController implements the CRUD actions for the Story model.
  */
 final class StoryController extends Controller
 {
@@ -24,7 +24,7 @@ final class StoryController extends Controller
 
     private const POSITIONS_PER_PAGE = 4;
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -42,12 +42,11 @@ final class StoryController extends Controller
 
     /**
      * Lists all Story models
-     * @param null|string $key
-     * @return mixed
+     *
      * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
+     * @throws HttpException
      */
-    public function actionIndex(?string $key = null)
+    public function actionIndex(?string $key = null): string
     {
         if ($key) {
             $epic = $this->findEpicByKey($key);
@@ -115,13 +114,9 @@ final class StoryController extends Controller
     }
 
     /**
-     * Finds the Story model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $key
-     * @return Story the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelByKey($key)
+    protected function findModelByKey(string $key): Story
     {
         $model = Story::findOne(['key' => $key]);
 
@@ -137,13 +132,9 @@ final class StoryController extends Controller
     }
 
     /**
-     * Finds the Story model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Story the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelById($id)
+    protected function findModelById(string $id): Story
     {
         $model = Story::findOne(['story_id' => $id]);
 
