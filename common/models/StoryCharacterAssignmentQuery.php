@@ -43,7 +43,7 @@ final class StoryCharacterAssignmentQuery extends StoryCharacterAssignment
         return self::processIntoLinks($assignments, 'story');
     }
 
-    private static function getCharacterAssignmentLinksForUser(int $storyId): array
+    public static function getCharacterAssignmentLinksForUser(int $storyId): array
     {
         $assignments = self::getCharacterAssignments($storyId, Visibility::VISIBILITY_FULL)
             ->joinWith('character')
@@ -54,12 +54,12 @@ final class StoryCharacterAssignmentQuery extends StoryCharacterAssignment
         return self::processIntoLinks($assignments, 'character');
     }
 
-    private static function getStoryAssignmentLinksForUser(int $characterId): array
+    public static function getStoryAssignmentLinksForUser(int $characterId): array
     {
         $assignments = self::getStoryAssignments($characterId, Visibility::VISIBILITY_FULL)
             ->joinWith('story')
             ->andWhere(['story.visibility' => Visibility::VISIBILITY_FULL->value])
-            ->orderBy('character.name ASC')
+            ->orderBy('story.position DESC')
             ->all();
 
         return self::processIntoLinks($assignments, 'story');

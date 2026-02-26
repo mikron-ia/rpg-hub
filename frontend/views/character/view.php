@@ -9,12 +9,15 @@ CharacterAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Character */
+/* @var $storyCharacterPublic array<string> */
+/* @var $storyCharacterPrivate array<string> */
+/* @var $showPrivates bool */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/view', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_CHARACTER_INDEX'), 'url' => ['index', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['showPrivates'] = $model->canUserControlYou();
+$this->params['showPrivates'] = $showPrivates;
 
 $items = [
     [
@@ -26,6 +29,17 @@ $items = [
     [
         'label' => Yii::t('app', 'CHARACTER_GROUPS_TAB'),
         'content' => $this->render('_view_groups', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ],
+    [
+        'label' => Yii::t('app', 'CHARACTER_STORIES_ASSIGNMENT_TAB'),
+        'content' => $this->render('_view_stories_assigned', [
+            'model' => $model,
+            'storyCharacterPublic' => $storyCharacterPublic,
+            'storyCharacterPrivate' => $storyCharacterPrivate,
+            'showPrivateWarning' => $showPrivates,
+        ]),
         'encode' => false,
         'active' => false,
     ],

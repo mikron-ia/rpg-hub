@@ -6,6 +6,7 @@ use common\models\Character;
 use common\models\CharacterQuery;
 use common\models\core\Visibility;
 use common\models\Epic;
+use common\models\StoryCharacterAssignmentQuery;
 use frontend\controllers\external\ReputationToolsForControllerTrait;
 use common\components\EpicAssistance;
 use Yii;
@@ -116,8 +117,19 @@ final class CharacterController extends Controller
 
         $model->recordSighting();
 
+        if ($model->canUserControlYou()) {
+            $storyCharacterPublic = StoryCharacterAssignmentQuery::getStoryAssignmentPublicLinksForOperator($model->character_id);
+            $storyCharacterPrivate = StoryCharacterAssignmentQuery::getStoryAssignmentPrivateLinksForOperator($model->character_id);
+        } else {
+            $storyCharacterPublic = StoryCharacterAssignmentQuery::getStoryAssignmentLinksForUser($model->character_id);
+            $storyCharacterPrivate = [];
+        }
+
         return $this->render('view', [
             'model' => $model,
+            'storyCharacterPublic' => $storyCharacterPublic,
+            'storyCharacterPrivate' => $storyCharacterPrivate,
+            'showPrivates' => $model->canUserControlYou(),
         ]);
     }
 

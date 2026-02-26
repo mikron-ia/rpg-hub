@@ -60,7 +60,7 @@ final class StoryGroupAssignmentQuery extends StoryGroupAssignment
         $assignments = self::getStoryAssignments($groupId, Visibility::VISIBILITY_FULL)
             ->joinWith('story')
             ->andWhere(['story.visibility' => Visibility::VISIBILITY_FULL->value])
-            ->orderBy('group.name ASC')
+            ->orderBy('story.position DESC')
             ->all();
 
         return self::processIntoLinks($assignments, 'story');

@@ -6,6 +6,7 @@ use common\models\core\Visibility;
 use common\models\Epic;
 use common\models\Group;
 use common\models\GroupQuery;
+use common\models\StoryGroupAssignmentQuery;
 use frontend\controllers\external\ReputationToolsForControllerTrait;
 use common\components\EpicAssistance;
 use Yii;
@@ -115,8 +116,19 @@ class GroupController extends Controller
 
         $model->recordSighting();
 
+        if ($model->canUserControlYou()) { // not the best, but only real possible way of verifying user access level
+            $storyGroupPublic = StoryGroupAssignmentQuery::getStoryAssignmentPublicLinksForOperator($model->group_id);
+            $storyGroupPrivate = StoryGroupAssignmentQuery::getStoryAssignmentPrivateLinksForOperator($model->group_id);
+        } else {
+            $storyGroupPublic = StoryGroupAssignmentQuery::getStoryAssignmentLinksForUser($model->group_id);
+            $storyGroupPrivate = [];
+        }
+
         return $this->render('view', [
             'model' => $model,
+            'storyGroupPublic' => $storyGroupPublic,
+            'storyGroupPrivate' => $storyGroupPrivate,
+            'showPrivates' => $model->canUserControlYou(),
         ]);
     }
 

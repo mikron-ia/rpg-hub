@@ -5,11 +5,14 @@ namespace frontend\controllers;
 use common\models\core\Visibility;
 use common\models\Epic;
 use common\models\Story;
+use common\models\StoryCharacterAssignmentQuery;
+use common\models\StoryGroupAssignmentQuery;
 use common\models\StoryQuery;
 use common\components\EpicAssistance;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -74,10 +77,10 @@ final class StoryController extends Controller
 
     /**
      * Displays a single Story model
-     * @param string $key
-     * @return mixed
+     *
+     * @throws HttpException
      */
-    public function actionView($key)
+    public function actionView(string $key): string
     {
         $model = $this->findModelByKey($key);
 
@@ -89,8 +92,25 @@ final class StoryController extends Controller
 
         $model->recordSighting();
 
+        if ($model->canUserControlYou()) { // not the best, but only real possible way of verifying user access level
+            $storyCharacterPublic = StoryCharacterAssignmentQuery::getCharacterAssignmentPublicLinksForOperator($model->story_id);
+            $storyCharacterPrivate = StoryCharacterAssignmentQuery::getCharacterAssignmentPrivateLinksForOperator($model->story_id);
+            $storyGroupPublic = StoryGroupAssignmentQuery::getGroupAssignmentPublicLinksForOperator($model->story_id);
+            $storyGroupPrivate = StoryGroupAssignmentQuery::getGroupAssignmentPrivateLinksForOperator($model->story_id);
+        } else {
+            $storyCharacterPublic = StoryCharacterAssignmentQuery::getCharacterAssignmentLinksForUser($model->story_id);
+            $storyCharacterPrivate = [];
+            $storyGroupPublic = StoryGroupAssignmentQuery::getGroupAssignmentLinksForUser($model->story_id);
+            $storyGroupPrivate = [];
+        }
+
         return $this->render('view', [
             'model' => $model,
+            'storyCharacterPublic' => $storyCharacterPublic,
+            'storyCharacterPrivate' => $storyCharacterPrivate,
+            'storyGroupPublic' => $storyGroupPublic,
+            'storyGroupPrivate' => $storyGroupPrivate,
+            'showPrivates' => $model->canUserControlYou(),
         ]);
     }
 

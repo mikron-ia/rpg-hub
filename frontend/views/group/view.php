@@ -9,12 +9,15 @@ GroupAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Group */
+/* @var $storyGroupPublic array<string> */
+/* @var $storyGroupPrivate array<string> */
+/* @var $showPrivates bool */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/view', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_GROUPS_INDEX'), 'url' => ['index', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['showPrivates'] = $model->canUserControlYou();
+$this->params['showPrivates'] = $showPrivates;
 
 $items = [
     [
@@ -26,6 +29,17 @@ $items = [
     [
         'label' => Yii::t('app', 'GROUP_MEMBERSHIPS_TAB'),
         'content' => $this->render('_view_compositions', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ],
+    [
+        'label' => Yii::t('app', 'GROUP_STORIES_ASSIGNMENT_TAB'),
+        'content' => $this->render('_view_stories_assigned', [
+            'model' => $model,
+            'storyGroupPublic' => $storyGroupPublic,
+            'storyGroupPrivate' => $storyGroupPrivate,
+            'showPrivateWarning' => $showPrivates,
+        ]),
         'encode' => false,
         'active' => false,
     ],

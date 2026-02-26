@@ -9,12 +9,17 @@ StoryAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Story */
+/* @var $storyCharacterPublic array<string> */
+/* @var $storyCharacterPrivate array<string> */
+/* @var $storyGroupPublic array<string> */
+/* @var $storyGroupPrivate array<string> */
+/* @var $showPrivates bool */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/view', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'STORY_TITLE_INDEX'), 'url' => ['index', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['showPrivates'] = $model->canUserControlYou();
+$this->params['showPrivates'] = $showPrivates;
 
 $items = [
     [
@@ -26,6 +31,19 @@ $items = [
     [
         'label' => Yii::t('app', 'STORY_LONG_TAB'),
         'content' => $this->render('_view_long', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ],
+    [
+        'label' => Yii::t('app', 'STORIES_ASSIGNMENT_ACTORS_TAB'),
+        'content' => $this->render('_view_actors_assigned', [
+            'model' => $model,
+            'storyCharacterPublic' => $storyCharacterPublic,
+            'storyCharacterPrivate' => $storyCharacterPrivate,
+            'storyGroupPublic' => $storyGroupPublic,
+            'storyGroupPrivate' => $storyGroupPrivate,
+            'showPrivateWarning' => $showPrivates,
+        ]),
         'encode' => false,
         'active' => false,
     ],
