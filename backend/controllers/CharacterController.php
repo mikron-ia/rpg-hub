@@ -11,6 +11,8 @@ use common\models\core\Visibility;
 use common\models\Epic;
 use common\models\EpicQuery;
 use common\models\Parameter;
+use common\models\StoryCharacterAssignmentQuery;
+use common\models\StoryGroupAssignmentQuery;
 use common\models\tools\Retriever;
 use Yii;
 use yii\base\Exception;
@@ -141,6 +143,8 @@ final class CharacterController extends Controller
         return $this->render('view', [
             'model' => $model,
             'externalDataDataProvider' => $externalDataDataProvider,
+            'storyCharacterPublic' => StoryCharacterAssignmentQuery::getStoryAssignmentPublicLinksForOperator($model->character_id),
+            'storyCharacterPrivate' => StoryCharacterAssignmentQuery::getStoryAssignmentPrivateLinksForOperator($model->character_id),
         ]);
     }
 

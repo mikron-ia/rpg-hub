@@ -1,15 +1,13 @@
 <?php
 
-use common\models\core\Visibility;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Group */
 /* @var $externalDataDataProvider yii\data\ActiveDataProvider */
-
-$storyGroupPublic = $model->getStoryGroupAssignmentLinks(Visibility::VISIBILITY_FULL);
-$storyGroupPrivate = $model->getStoryGroupAssignmentLinks(Visibility::VISIBILITY_GM);
+/* @var $storyGroupPublic array<string> */
+/* @var $storyGroupPrivate array<string> */
 
 ?>
 

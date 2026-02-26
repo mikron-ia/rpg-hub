@@ -1,6 +1,5 @@
 <?php
 
-use common\models\core\Visibility;
 use common\models\ExternalData;
 use yii\bootstrap\Modal;
 use yii\grid\GridView;
@@ -10,9 +9,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Character */
 /* @var $externalDataDataProvider yii\data\ActiveDataProvider */
-
-$storyCharacterPublic = $model->getStoryCharacterAssignmentLinks(Visibility::VISIBILITY_FULL);
-$storyCharacterPrivate = $model->getStoryCharacterAssignmentLinks(Visibility::VISIBILITY_GM);
+/* @var $storyCharacterPublic array<string> */
+/* @var $storyCharacterPrivate array<string> */
 
 ?>
 

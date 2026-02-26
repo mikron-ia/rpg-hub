@@ -8,6 +8,7 @@ use common\models\core\Visibility;
 use common\models\Epic;
 use common\models\Group;
 use common\models\GroupQuery;
+use common\models\StoryGroupAssignmentQuery;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -92,7 +93,11 @@ final class GroupController extends Controller
             Group::throwExceptionAboutView();
         }
 
-        return $this->render('view', ['model' => $model]);
+        return $this->render('view', [
+            'model' => $model,
+            'storyGroupPublic' => StoryGroupAssignmentQuery::getStoryAssignmentPublicLinksForOperator($model->group_id),
+            'storyGroupPrivate' => StoryGroupAssignmentQuery::getStoryAssignmentPrivateLinksForOperator($model->group_id),
+        ]);
     }
 
     /**

@@ -7,6 +7,8 @@ GroupAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Group */
+/* @var $storyGroupPublic array<string> */
+/* @var $storyGroupPrivate array<string> */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
@@ -21,6 +23,8 @@ $items = [
         'label' => Yii::t('app', 'GROUP_BASIC'),
         'content' => $this->render('_view_basic', [
             'model' => $model,
+            'storyGroupPublic' => $storyGroupPublic,
+            'storyGroupPrivate' => $storyGroupPrivate,
         ]),
         'encode' => false,
         'active' => true,

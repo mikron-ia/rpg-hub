@@ -92,29 +92,12 @@ final class StoryController extends Controller
             Story::throwExceptionAboutView();
         }
 
-        $storyCharactersPublic = StoryCharacterAssignmentQuery::getCharacterAssignmentLinksForOperator(
-            $model->story_id,
-            Visibility::VISIBILITY_FULL,
-        );
-        $storyCharactersPrivate = StoryCharacterAssignmentQuery::getCharacterAssignmentLinksForOperator(
-            $model->story_id,
-            Visibility::VISIBILITY_GM,
-        );
-        $storyGroupsPublic = StoryGroupAssignmentQuery::getGroupAssignmentLinksForOperator(
-            $model->story_id,
-            Visibility::VISIBILITY_FULL,
-        );
-        $storyGroupsPrivate = StoryGroupAssignmentQuery::getGroupAssignmentLinksForOperator(
-            $model->story_id,
-            Visibility::VISIBILITY_GM,
-        );
-
         return $this->render('view', [
             'model' => $model,
-            'storyCharactersPublic' => $storyCharactersPublic,
-            'storyCharactersPrivate' => $storyCharactersPrivate,
-            'storyGroupsPublic' => $storyGroupsPublic,
-            'storyGroupsPrivate' => $storyGroupsPrivate,
+            'storyCharactersPublic' => StoryCharacterAssignmentQuery::getCharacterAssignmentPublicLinksForOperator($model->story_id),
+            'storyCharactersPrivate' => StoryCharacterAssignmentQuery::getCharacterAssignmentPrivateLinksForOperator($model->story_id),
+            'storyGroupsPublic' => StoryGroupAssignmentQuery::getGroupAssignmentPublicLinksForOperator($model->story_id),
+            'storyGroupsPrivate' => StoryGroupAssignmentQuery::getGroupAssignmentPrivateLinksForOperator($model->story_id),
         ]);
     }
 
