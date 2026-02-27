@@ -17,14 +17,14 @@ use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 /**
- * GroupController implements the CRUD actions for Group model.
+ * GroupController implements the CRUD actions for the Group model.
  */
 class GroupController extends Controller
 {
     use EpicAssistance;
     use ReputationToolsForControllerTrait;
 
-    private const POSITIONS_PER_PAGE = 24;
+    private const int POSITIONS_PER_PAGE = 24;
 
     public function behaviors(): array
     {
@@ -53,12 +53,6 @@ class GroupController extends Controller
     }
 
     /**
-     * Lists all Group models.
-     *
-     * @param null|string $key
-     *
-     * @return string
-     *
      * @throws HttpException
      * @throws NotFoundHttpException
      */
@@ -76,9 +70,9 @@ class GroupController extends Controller
 
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection');
-        } else {
-            $epic = Yii::$app->params['activeEpic'];
         }
+
+        $epic = Yii::$app->params['activeEpic'];
 
         if (!Group::canUserIndexThem()) {
             Group::throwExceptionAboutIndex();
@@ -95,12 +89,6 @@ class GroupController extends Controller
     }
 
     /**
-     * Displays a single Group model.
-     *
-     * @param string $key
-     *
-     * @return string
-     *
      * @throws HttpException
      * @throws NotFoundHttpException
      */
@@ -133,10 +121,6 @@ class GroupController extends Controller
     }
 
     /**
-     * @param string $key
-     *
-     * @return string
-     *
      * @throws HttpException
      * @throws NotFoundHttpException
      */
@@ -153,19 +137,15 @@ class GroupController extends Controller
         if ($reputation) {
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('external/reputation', ['reputations' => $reputation]);
-            } else {
-                return $this->render('external/reputation', ['reputations' => $reputation]);
             }
+
+            return $this->render('external/reputation', ['reputations' => $reputation]);
         }
 
         throw new HttpException(204, Yii::t('external', 'NO_DATA'));
     }
 
     /**
-     * @param string $key
-     *
-     * @return string
-     *
      * @throws HttpException
      * @throws NotFoundHttpException
      */
@@ -181,14 +161,18 @@ class GroupController extends Controller
         if ($event) {
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('external/reputation_event', ['events' => $event]);
-            } else {
-                return $this->render('external/reputation_event', ['events' => $event]);
             }
+
+            return $this->render('external/reputation_event', ['events' => $event]);
         }
 
         throw new HttpException(204, Yii::t('external', 'NO_DATA'));
     }
 
+    /**
+     * @throws NotFoundHttpException
+     * @throws HttpException
+     */
     public function actionOpenScribbleModal(string $key): string
     {
         $model = $this->findModelByKey($key);
@@ -201,19 +185,12 @@ class GroupController extends Controller
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('../scribble/_modal_box', ['model' => $scribbleModel]);
-        } else {
-            return $this->render('../scribble/_modal_box', ['model' => $scribbleModel]);
         }
+
+        return $this->render('../scribble/_modal_box', ['model' => $scribbleModel]);
     }
 
     /**
-     * Finds the Group model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     *
-     * @param string $key
-     *
-     * @return Group the loaded model
-     *
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModelByKey(string $key): Group

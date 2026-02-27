@@ -18,14 +18,14 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
- * CharacterController implements the CRUD actions for Character model.
+ * CharacterController implements the CRUD actions for the Character model.
  */
 final class CharacterController extends Controller
 {
     use EpicAssistance;
     use ReputationToolsForControllerTrait;
 
-    private const POSITIONS_PER_PAGE = 24;
+    private const int POSITIONS_PER_PAGE = 24;
 
     public function behaviors(): array
     {
@@ -54,8 +54,6 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Lists all Character models
-     *
      * @throws HttpException
      * @throws NotFoundHttpException
      */
@@ -73,9 +71,9 @@ final class CharacterController extends Controller
 
         if (empty(Yii::$app->params['activeEpic'])) {
             return $this->render('../epic-selection');
-        } else {
-            $epic = Yii::$app->params['activeEpic'];
         }
+
+        $epic = Yii::$app->params['activeEpic'];
 
         if (!Character::canUserIndexThem()) {
             Character::throwExceptionAboutIndex();
@@ -96,12 +94,6 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Displays a single Character model
-     *
-     * @param string $key
-     *
-     * @return string
-     *
      * @throws HttpException
      * @throws NotFoundHttpException
      */
@@ -134,10 +126,6 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Finds the Story model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $key
-     * @return Character the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModelByKey(string $key): Character
@@ -156,10 +144,6 @@ final class CharacterController extends Controller
     }
 
     /**
-     * @param $key
-     *
-     * @return string|Response
-     *
      * @throws HttpException
      */
     public function actionExternalReputation($key): Response|string
@@ -175,19 +159,15 @@ final class CharacterController extends Controller
         if ($reputation) {
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('external/reputation', ['reputations' => $reputation]);
-            } else {
-                return $this->render('external/reputation', ['reputations' => $reputation]);
             }
+
+            return $this->render('external/reputation', ['reputations' => $reputation]);
         }
 
         throw new HttpException(204, Yii::t('external', 'NO_DATA'));
     }
 
     /**
-     * @param string $key
-     *
-     * @return string
-     *
      * @throws HttpException
      * @throws NotFoundHttpException
      */
@@ -203,14 +183,18 @@ final class CharacterController extends Controller
         if ($event) {
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('external/reputation_event', ['events' => $event]);
-            } else {
-                return $this->render('external/reputation_event', ['events' => $event]);
             }
+
+            return $this->render('external/reputation_event', ['events' => $event]);
         }
 
         throw new HttpException(204, Yii::t('external', 'NO_DATA'));
     }
 
+    /**
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     */
     public function actionOpenScribbleModal(string $key): string
     {
         $model = $this->findModelByKey($key);
@@ -223,19 +207,12 @@ final class CharacterController extends Controller
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('../scribble/_modal_box', ['model' => $scribbleModel]);
-        } else {
-            return $this->render('../scribble/_modal_box', ['model' => $scribbleModel]);
         }
+
+        return $this->render('../scribble/_modal_box', ['model' => $scribbleModel]);
     }
 
     /**
-     * Finds the Character model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     *
-     * @param string $id
-     *
-     * @return Character the loaded model
-     *
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModelById(string $id): Character
