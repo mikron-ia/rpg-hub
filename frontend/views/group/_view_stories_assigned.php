@@ -12,7 +12,7 @@ use common\models\Group;
 ?>
 
 <?php if (!empty($storyGroupPublic)): ?>
-    <div class="col-md-12">
+    <div class="col-md-6">
         <?php if ($showPrivateWarning): ?>
             <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PUBLIC'); ?></h2>
             <p class="warning-box"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PRIVATE_WARNING'); ?></p>
@@ -31,7 +31,7 @@ use common\models\Group;
 
 
 <?php if (!empty($storyGroupPrivate)): ?>
-    <div class="col-md-12">
+    <div class="col-md-6">
         <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PRIVATE'); ?></h2>
         <ul>
             <?php foreach ($storyGroupPrivate as $role): ?>
@@ -40,4 +40,3 @@ use common\models\Group;
         </ul>
     </div>
 <?php endif; ?>
-

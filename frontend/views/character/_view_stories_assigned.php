@@ -12,7 +12,7 @@ use common\models\Character;
 ?>
 
 <?php if (!empty($storyCharacterPublic)): ?>
-    <div class="col-md-12">
+    <div class="col-md-6">
         <?php if ($showPrivateWarning): ?>
             <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PUBLIC'); ?></h2>
             <p class="warning-box"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PRIVATE_WARNING'); ?></p>
@@ -30,7 +30,7 @@ use common\models\Character;
 <?php endif; ?>
 
 <?php if (!empty($storyCharacterPrivate)): ?>
-    <div class="col-md-12">
+    <div class="col-md-6">
         <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PRIVATE'); ?></h2>
         <ul>
             <?php foreach ($storyCharacterPrivate as $role): ?>

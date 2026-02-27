@@ -40,6 +40,7 @@ $items = [
             'storyGroupPrivate' => $storyGroupPrivate,
             'showPrivateWarning' => $showPrivates,
         ]),
+        'headerOptions' => ['class' => empty($storyGroupPublic) && empty($storyGroupPrivate) ? 'hidden' : ''],
         'encode' => false,
         'active' => false,
     ],

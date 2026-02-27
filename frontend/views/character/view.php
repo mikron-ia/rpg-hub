@@ -40,6 +40,7 @@ $items = [
             'storyCharacterPrivate' => $storyCharacterPrivate,
             'showPrivateWarning' => $showPrivates,
         ]),
+        'headerOptions' => ['class' => empty($storyCharacterPublic) && empty($storyCharacterPrivate) ? 'hidden' : ''],
         'encode' => false,
         'active' => false,
     ],
