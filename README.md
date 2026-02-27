@@ -5,23 +5,23 @@ This project is a system for role-playing game story/campaign/epic management.
 ## Licensing
 
 The project's main license is `GNU General Public License v3.0` - see the `LICENSE.md` file for the text. The `yii2`
-framework is `BSD 3-Clause "New" or "Revised" License`; particular libraries can have their own licenses, see
-attribution section of this file for details.
+framework is `BSD 3-Clause "New" or "Revised" License` - see the `LICENSE-yii.md` file for the text. Libraries can have
+their own licenses; see the Attributions section of this file for details.
 
 ## Project state
 
 The project is being still maintained and (occasionally) developed since it is quite useful for me in its main purpose
-(keeping the campaign data for my own purposes), but due to its age (started in 2016), state of the `yii2` framework
-(effectively limited to maintenance), and overall effort that would be required to bring the codebase to a decent
-standard (immense and not very useful for practical purposes), it is firmly in its legacy stage.
+(keeping my own campaign data), but due to its age (it started in 2016), state of the `yii2` framework (effectively
+limited to maintenance), and overall effort that would be required to bring the codebase to a decent standard (immense
+yet not very practical), it is firmly in its legacy stage.
 
 ## Background
 
-Role-playing games are a very wide concept that ranges from very simplistic systems that fit on one page up to
-extremely complex systems spanning hundreds of books; see
+Role-playing games are a vast concept that ranges from very simplistic systems that fit on one page up to extremely
+complex systems spanning hundreds of books; see
 the [Wikipedia definition](https://en.wikipedia.org/wiki/Role-playing_game) for details. What they do have in common,
 though, is the presence of a story - one can play a game without mechanics, but even a simple dungeon crawl is going to
-have at some story. Managing this story, its cast, threads, and mechanical components is the main role of this project.
+have some story. Managing this story, its cast, threads, and mechanical components is the main role of this project.
 
 The project itself was originally thought of as a learning experience and a coding exercise. Unfortunately, due to
 changes in the technological landscape (primarily change in popularity of frameworks and shifting design philosophies)
@@ -30,11 +30,12 @@ can no longer fulfill those goals. It is now maintained mostly for its practical
 ## Set up instructions
 
 1. Make sure you have the proper stack installed; the current requirements are:
-    - PHP 8.2+
-        - Since there are no components from 8.2 used so far, the current code will run on 8.1 as well with minimal
+    - PHP 8.3+
+        - Since there are no components from 8.3 used so far, the current code will run on 8.1 and 8.2 with minimal
           tweaking -- but there is no guarantee that this behavior will be maintained
+        - Due to PHP maintaining most of its backwards compatibility, the project also works up to PHP 8.5
     - MySQL 5.6+ database or MariaDB equivalent
-        - The current project was tested and found working up to MySQL 8.0 and MariaDB 10.6
+        - The current project was tested and found working up to MySQL 8.0 and MariaDB 11.0
 1. If you have no composer, install it via [instructions from here](https://getcomposer.org/download/)
 1. Clone the project into the desired directory
 1. Run `composer install`
@@ -45,7 +46,7 @@ can no longer fulfill those goals. It is now maintained mostly for its practical
       good reason to
     - API key must be set up to make API accessible from outside and can be ignored if API is not used
     - the URIs are needed -- without them the mailing will fail and a few redirects may not work
-    - mailing data and invitation validity are optional but their lack will make inviting users via e-mail impossible
+    - mailing data and invitation validity are optional, but their lack will make inviting users via e-mail impossible
 1. [optional] If you wish to add data, create the `console/migrations/data.sql` file with SQL inserts that should be
    loaded into the database; this is intended for development/test work on larger data sets and is not needed for
    normal, initial deployment of a fresh project
@@ -69,16 +70,18 @@ can no longer fulfill those goals. It is now maintained mostly for its practical
 1. Ensure your `.env` file is up to date, based on `.env.example`
 1. Run migrations with `./yii migrate/up`
 1. Run `./yii rbac/v*` sequentially to get up to a proper version
-   - Note: there is, to date, no record on which RBAC migration was run last; running any of those "migrations" twice
+    - Note: there is, to date, no record on which RBAC migration was run last; running any of those "migrations" twice
       will cause an error - it will not damage anything, though, just break the execution
 
 ## Project structure
 
-As partially mentioned at the setup instructions, the project is composed of several modules:
+As mentioned in the setup instructions, the project is composed of several modules:
 
-- `frontend` - the presentation and the only part the players should be accessing
-- `backend` - the content management system, intended for Game Masters' use
-- `console` - purely administrative tools that should not be commonly used except for setup or by `cron` calls
+- `frontend` - the presentation and the only part the players should be accessing; can be used by Game Masters for
+  convenience
+- `backend` - the content management system, intended for Game Masters' and admins use only
+- `console` - administrative and auxiliary tools that should not be commonly used except for setup, deployment, and
+  `cron` calls
 - `common` - components used by other three modules
 
 ## Basic functionalities/components
@@ -121,15 +124,17 @@ What follows is a list of libraries used in the project; only those included dir
 
 All the following libraries are licensed under `BSD-3-Clause license` or a derivative, unless stated otherwise.
 
-- [The yii framework](https://github.com/yiisoft/yii2) is the basis of this project
-    - this includes [yii2-bootstrap](https://github.com/yiisoft/yii2-bootstrap),
-      [yii2-swiftmailer](https://github.com/yiisoft/yii2-swiftmailer),
-      [yii2-debug](https://github.com/yiisoft/yii2-debug), and [yii2-gii](https://github.com/yiisoft/yii2-gii)
-- Tools made by [Kartik Visweswaran](https://github.com/kartik-v/)
-    - those include [yii2-krajee-base](https://github.com/kartik-v/yii2-krajee-base),
-      [yii2-widget-select2](https://github.com/kartik-v/yii2-widget-select2),
-      [yii2-password](https://github.com/kartik-v/yii2-password),
-      [strength-meter](https://github.com/kartik-v/strength-meter),
-      and [yii2-widget-datepicker](https://github.com/kartik-v/yii2-widget-datepicker)
+- [The yii framework](https://github.com/yiisoft/yii2) is the basis of this project, including:
+    - [yii2-bootstrap](https://github.com/yiisoft/yii2-bootstrap)
+    - [yii2-swiftmailer](https://github.com/yiisoft/yii2-swiftmailer)
+    - [yii2-debug](https://github.com/yiisoft/yii2-debug)
+    - [yii2-gii](https://github.com/yiisoft/yii2-gii)
+- Tools made by [Kartik Visweswaran](https://github.com/kartik-v/), including:
+    - [yii2-krajee-base](https://github.com/kartik-v/yii2-krajee-base)
+    - [yii2-widget-select2](https://github.com/kartik-v/yii2-widget-select2)
+    - [yii2-password](https://github.com/kartik-v/yii2-password)
+    - [strength-meter](https://github.com/kartik-v/strength-meter)
+    - [yii2-widget-datepicker](https://github.com/kartik-v/yii2-widget-datepicker)
+    - [yii2-widget-datetimepicker](https://github.com/kartik-v/yii2-widget-datetimepicker)
 - [phpunit](https://github.com/sebastianbergmann/phpunit)
 - [phpdotenv](https://github.com/vlucas/phpdotenv)
