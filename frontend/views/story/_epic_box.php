@@ -9,18 +9,15 @@ use yii\helpers\Html;
 
 $storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
 
-if ($storyNumberRaw) {
-    $storyNumber = $storyNumberRaw . ' ';
-} else {
-    $storyNumber = '';
-}
-
 ?>
 
 <div id="story-<?php echo $model->story_id; ?>">
     <h2>
-        <?php echo Html::a(Html::encode($storyNumber . $model->name), ['view', 'key' => $model->key]); ?>
-        <?php if (!empty($model->hasCodeName())): ?>
+        <?php echo Html::a(
+            Html::encode((empty($storyNumberRaw) ? '' : $storyNumberRaw . ' ') . $model->name),
+            ['view', 'key' => $model->key]
+        ); ?>
+        <?php if ($model->hasCodeName()): ?>
             <span class="text-center type-tag"><?= $model->getCodeName() ?></span>
         <?php endif; ?>
         <span class="text-center <?= $model->showSightingCSS() ?> seen-tag-header">

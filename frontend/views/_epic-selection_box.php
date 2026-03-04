@@ -10,6 +10,7 @@ use yii\helpers\Html;
 $epicButtons = [];
 
 foreach (EpicQuery::activeEpicsAsModels(false) as $epic) {
+    /** @var Epic $epic */
     if (!(isset($objectEpic) && $epic->key == $objectEpic->key)) {
         $epicButtons[] = Html::a(
             $epic->name,

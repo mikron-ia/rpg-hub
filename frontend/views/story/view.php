@@ -49,7 +49,7 @@ $items = [
     ],
 ];
 
-if ($this->params['showPrivates']) {
+if ($showPrivates) {
     $items[] = [
         'label' => Yii::t('app', 'CHARACTER_GM_TAB'),
         'content' => $this->render('_view_gm', ['model' => $model]),

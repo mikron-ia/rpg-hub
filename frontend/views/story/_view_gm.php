@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -18,7 +19,7 @@ use yii\widgets\DetailView;
     ]) ?>
 
     <div class="text-center">
-        <?= \yii\helpers\Html::a(
+        <?= Html::a(
             Yii::t('app', 'BUTTON_SEE_BACKEND'),
             Yii::$app->params['uri.back'] . Yii::$app->urlManager->createUrl(['story/view', 'key' => $model->key]),
             ['class' => 'btn btn-default']
