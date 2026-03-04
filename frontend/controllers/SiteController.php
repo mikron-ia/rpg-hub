@@ -33,7 +33,7 @@ use yii\web\Response;
  */
 final class SiteController extends Controller
 {
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -50,7 +50,7 @@ final class SiteController extends Controller
                             'password-change',
                             'set-epic',
                             'set-epic-in-silence',
-                            'settings'
+                            'settings',
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -75,7 +75,10 @@ final class SiteController extends Controller
         ];
     }
 
-    public function actions()
+    /**
+     * @return array<string, array<string, string|null>>
+     */
+    public function actions(): array
     {
         return [
             'error' => [
@@ -98,8 +101,6 @@ final class SiteController extends Controller
 
     /**
      * Displays front page
-     *
-     * @return string
      *
      * @throws HttpException
      */
@@ -130,9 +131,8 @@ final class SiteController extends Controller
 
     /**
      * Logs in a user
-     * @return Response|string
      */
-    public function actionLogin()
+    public function actionLogin(): Response|string
     {
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -150,9 +150,8 @@ final class SiteController extends Controller
 
     /**
      * Logs out the current user
-     * @return mixed
      */
-    public function actionLogout()
+    public function actionLogout(): Response
     {
         PerformedAction::createSimplifiedRecord(PerformedAction::PERFORMED_ACTION_LOGOUT);
 
@@ -163,10 +162,10 @@ final class SiteController extends Controller
 
     /**
      * Password change action
-     * @return mixed
+     *
      * @throws BadRequestHttpException
      */
-    public function actionPasswordChange()
+    public function actionPasswordChange(): Response|string
     {
         $model = new PasswordChange();
 
@@ -174,9 +173,8 @@ final class SiteController extends Controller
             if ($model->savePassword()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'PASSWORD_CHANGE_FLASH_SUCCESS'));
                 return $this->goHome();
-            } else {
-                Yii::$app->session->setFlash('error', Yii::t('app', 'PASSWORD_CHANGE_FLASH_FAILURE'));
             }
+            Yii::$app->session->setFlash('error', Yii::t('app', 'PASSWORD_CHANGE_FLASH_FAILURE'));
         }
 
         return $this->render('user/password-change', ['model' => $model]);
@@ -184,9 +182,8 @@ final class SiteController extends Controller
 
     /**
      * Requests password reset
-     * @return mixed
      */
-    public function actionRequestPasswordReset()
+    public function actionRequestPasswordReset(): Response|string
     {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -206,11 +203,10 @@ final class SiteController extends Controller
 
     /**
      * Resets password
-     * @param string $token
-     * @return mixed
+     *
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
+    public function actionResetPassword(string $token): Response|string
     {
         try {
             $model = new ResetPasswordForm($token);
@@ -230,8 +226,7 @@ final class SiteController extends Controller
     }
 
     /**
-     * Selects Epic
-     * @return Response
+     * Selects an Epic
      */
     public function actionSetEpic(): Response
     {
@@ -240,7 +235,7 @@ final class SiteController extends Controller
         return $this->redirect(Yii::$app->urlManager->createUrl(['epic/view', 'key' => $chosenEpicKey]));
     }
 
-    public function actionSetEpicInSilence($epicKey)
+    public function actionSetEpicInSilence(string $epicKey): void
     {
         /* @var $chosenEpic Epic */
         $chosenEpic = EpicQuery::findOne(['key' => $epicKey]);
@@ -251,7 +246,6 @@ final class SiteController extends Controller
             if ($chosenEpic) {
                 Yii::$app->params['activeEpic'] = $chosenEpic;
 
-                /* Save to cookie */
                 $cookie = new Cookie([
                     'name' => '_epic',
                     'value' => $chosenEpic->key,
@@ -264,10 +258,8 @@ final class SiteController extends Controller
 
     /**
      * Creates a new User, based on an invitation
-     * @param string $token
-     * @return mixed
      */
-    public function actionAccept($token)
+    public function actionAccept(string $token): Response|string
     {
         if (!Yii::$app->user->isGuest) {
             Yii::$app->user->logout();
@@ -277,12 +269,16 @@ final class SiteController extends Controller
         try {
             $model = new UserAcceptForm($token);
         } catch (InvalidArgumentException $e) {
-            Yii::$app->session->setFlash('error',
-                Yii::t('app', 'USER_CREATION_FAILED_WRONG_TOKEN {reason}', ['reason' => $e->getMessage()]));
+            Yii::$app->session->setFlash(
+                'error',
+                Yii::t('app', 'USER_CREATION_FAILED_WRONG_TOKEN {reason}', ['reason' => $e->getMessage()])
+            );
             return $this->redirect(['site/index']);
         } catch (Exception $e) {
-            Yii::$app->session->setFlash('error',
-                Yii::t('app', 'USER_CREATION_FAILED_OTHER {reason}', ['reason' => $e->getMessage()]));
+            Yii::$app->session->setFlash(
+                'error',
+                Yii::t('app', 'USER_CREATION_FAILED_OTHER {reason}', ['reason' => $e->getMessage()])
+            );
             return $this->redirect(['site/index']);
         }
 
@@ -298,10 +294,7 @@ final class SiteController extends Controller
         }
     }
 
-    /**
-     * @return mixed
-     */
-    public function actionSettings()
+    public function actionSettings(): Response|string
     {
         $model = new UserSettingsForm();
 
