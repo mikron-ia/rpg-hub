@@ -3,15 +3,18 @@
 use backend\assets\GroupAsset;
 use common\models\Epic;
 use common\models\Group;
+use common\models\GroupQuery;
+use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\web\View;
 
 GroupAsset::register($this);
 
 /* @var $epic Epic */
-/* @var $this yii\web\View */
-/* @var $searchModel common\models\GroupQuery */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $searchModel GroupQuery */
+/* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_GROUPS_INDEX');
 $this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];

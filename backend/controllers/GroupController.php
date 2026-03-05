@@ -10,6 +10,7 @@ use common\models\Group;
 use common\models\GroupQuery;
 use common\models\StoryGroupAssignmentQuery;
 use Yii;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -18,16 +19,16 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
- * GroupController implements the CRUD actions for Group model.
+ * GroupController implements the CRUD actions for the Group model.
  */
 final class GroupController extends Controller
 {
     use EpicAssistance;
     use MarkChangeTrait;
 
-    private const POSITIONS_PER_PAGE = 16;
+    private const int POSITIONS_PER_PAGE = 16;
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -51,6 +52,9 @@ final class GroupController extends Controller
 
     /**
      * Lists all Group models.
+     *
+     * @throws HttpException
+     * @throws NotFoundHttpException
      */
     public function actionIndex(?string $epic = null): string
     {
@@ -117,6 +121,9 @@ final class GroupController extends Controller
 
     /**
      * Displays a single Group model
+     *
+     * @throws HttpException
+     * @throws NotFoundHttpException
      */
     public function actionView(string $key): string
     {
@@ -134,8 +141,10 @@ final class GroupController extends Controller
     }
 
     /**
-     * Creates a new Group model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * Creates a new Group model
+     *
+     * @throws Exception
+     * @throws HttpException
      */
     public function actionCreate(string $epic = null): Response|string
     {
@@ -155,8 +164,10 @@ final class GroupController extends Controller
     }
 
     /**
-     * Updates an existing Group model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * Updates an existing Group model
+     *
+     * @throws Exception
+     * @throws HttpException
      */
     public function actionUpdate(string $key): Response|string
     {
@@ -192,12 +203,7 @@ final class GroupController extends Controller
     }
 
     /**
-     * Finds the Group model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     *
-     * @param string $key
-     *
-     * @return Group the loaded model
+     * Finds the Group model based on its primary key value
      *
      * @throws NotFoundHttpException if the model cannot be found
      */

@@ -22,7 +22,9 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\helpers\Html;
+use yii\web\HttpException;
 
 /**
  * This is the model class for table "group".
@@ -178,6 +180,9 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         ];
     }
 
+    /**
+     * @throws Exception
+     */
     public function afterSave($insert, $changedAttributes): void
     {
         if (!$this->is_off_the_record_change) {
@@ -187,6 +192,10 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         parent::afterSave($insert, $changedAttributes);
     }
 
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
     public function beforeSave($insert): bool
     {
         if ($insert) {
@@ -496,9 +505,9 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
 
         if (!$sighting) {
             return 'none';
-        } else {
-            return $sighting->status;
         }
+
+        return $sighting->status;
     }
 
     public function __toString()

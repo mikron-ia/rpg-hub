@@ -1,13 +1,17 @@
 <?php
 
 use backend\assets\CharacterAsset;
+use common\models\Character;
+use yii\bootstrap\Tabs;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\web\View;
 
 CharacterAsset::register($this);
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Character */
-/* @var $externalDataDataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $model Character */
+/* @var $externalDataDataProvider ActiveDataProvider */
 /* @var $storyCharacterPublic array<string> */
 /* @var $storyCharacterPrivate array<string> */
 
@@ -15,7 +19,7 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = [
     'label' => Yii::t('app', 'TITLE_CHARACTER_INDEX'),
-    'url' => ['character/index', 'epic' => $model->epic->key]
+    'url' => ['character/index', 'epic' => $model->epic->key],
 ];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -52,16 +56,12 @@ $items = [
 ];
 ?>
 <div class="character-view">
-
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
     </div>
 
     <p class="subtitle"><?= $model->tagline; ?></p>
 
-    <?= \yii\bootstrap\Tabs::widget([
-        'items' => $items
-    ]) ?>
-
+    <?= Tabs::widget(['items' => $items]) ?>
 </div>
 

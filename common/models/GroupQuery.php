@@ -18,7 +18,7 @@ final class GroupQuery extends Group
 {
     use ToolsForImportanceInQueries;
 
-    private const DEFAULT_PAGE_SIZE = 24;
+    private const int DEFAULT_PAGE_SIZE = 24;
 
     private int $pageCount;
 
@@ -42,7 +42,7 @@ final class GroupQuery extends Group
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates a data provider instance with the search query applied
      *
      * @param string[] $params
      */
@@ -78,8 +78,8 @@ final class GroupQuery extends Group
     }
 
     /**
-     * Creates data provider instance with search query applied and applies default order according to importance
-     * This list is more suitable for front section
+     * Creates data provider instance with a search query applied and applies default order according to importance
+     * This list is more suitable for the presentation section
      */
     public function searchForUser(array $params): ActiveDataProvider
     {
@@ -139,7 +139,7 @@ final class GroupQuery extends Group
     }
 
     /**
-     * Provides Groups that should be shown as tabs in Character index page
+     * Provides Groups that should be shown as tabs in the Character index page
      *
      * @return Group[]
      */

@@ -6,7 +6,7 @@ use common\models\Character;
 
 class CharacterWithImportance
 {
-    public const USER_NAME_PATTERN = 'user_id_%d';
+    public const string USER_NAME_PATTERN = 'user_id_%d';
 
     public readonly int $character_id;
     public readonly int $epic_id;

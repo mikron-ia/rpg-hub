@@ -1,12 +1,15 @@
 <?php
 
 use backend\assets\GroupAsset;
+use common\models\Group;
+use yii\bootstrap\Tabs;
 use yii\helpers\Html;
+use yii\web\View;
 
 GroupAsset::register($this);
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Group */
+/* @var $this View */
+/* @var $model Group */
 /* @var $storyGroupPublic array<string> */
 /* @var $storyGroupPrivate array<string> */
 
@@ -52,13 +55,8 @@ $items = [
 ];
 ?>
 <div class="group-view">
-
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
     </div>
-
-    <?= \yii\bootstrap\Tabs::widget([
-        'items' => $items
-    ]) ?>
-
+    <?= Tabs::widget(['items' => $items]) ?>
 </div>
