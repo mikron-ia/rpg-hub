@@ -34,7 +34,7 @@ final class GroupController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'update', 'view', 'mark-changed'],
+                        'actions' => ['create', 'index', 'index-importance', 'update', 'view', 'mark-changed'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -77,6 +77,39 @@ final class GroupController extends Controller
 
         return $this->render('index', [
             'epic' => $epicObject ?? Yii::$app->params['activeEpic'],
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Lists all groups with their importances
+     *
+     * @throws HttpException
+     */
+    public function actionIndexImportance(string $epic): string
+    {
+        $epicObject = $this->findEpicByKey($epic);
+
+        if (!$epicObject->canUserViewYou()) {
+            Epic::throwExceptionAboutView();
+        }
+
+        $this->selectEpic($epicObject->key, $epicObject->epic_id, $epicObject->name);
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            return $this->render('../epic-list');
+        }
+
+        if (!Group::canUserIndexThem()) {
+            Group::throwExceptionAboutIndex();
+        }
+
+        $searchModel = new GroupQuery(self::POSITIONS_PER_PAGE);
+        $dataProvider = $searchModel->listForOperatorWithImportances(Yii::$app->request->queryParams);
+
+        return $this->render('index_importances', [
+            'epic' => $epicObject,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

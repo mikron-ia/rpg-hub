@@ -1,19 +1,24 @@
 <?php
 
 use common\models\Epic;
+use common\models\GroupQuery;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\GroupQuery */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model GroupQuery */
+/* @var $form ActiveForm */
 /* @var $epic Epic */
+/* @var $actionUrl string */
+
+$actionUrl = $actionUrl ?? 'index';
+
 ?>
 
 <div class="group-search">
-
     <?php $form = ActiveForm::begin([
-        'action' => ['index', 'epic' => $epic->key],
+        'action' => [$actionUrl, 'epic' => $epic->key],
         'method' => 'get',
     ]); ?>
 
@@ -25,5 +30,4 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>

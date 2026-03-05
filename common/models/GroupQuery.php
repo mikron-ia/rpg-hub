@@ -3,10 +3,13 @@
 namespace common\models;
 
 use common\models\core\Visibility;
+use common\models\entities\GroupWithImportance;
 use common\models\tools\ToolsForImportanceInQueries;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
+use yii\data\DataProviderInterface;
 
 /**
  * GroupQuery represents the model behind the search form about `common\models\Group`.
@@ -90,6 +93,49 @@ final class GroupQuery extends Group
     public function searchForOperator(array $params): ActiveDataProvider
     {
         return $this->setUpSearchForOperator($this->search($params));
+    }
+
+    /**
+     * @param string[] $params
+     */
+    public function listForOperatorWithImportances(array $params): DataProviderInterface
+    {
+        $query = Group::find()
+            ->joinWith('importancePack', true, 'LEFT JOIN')
+            ->joinWith('importancePack.importances', true, 'LEFT JOIN');
+
+        $this->secureQuery($query);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => false,
+        ]);
+
+        $this->load($params);
+
+        $query
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['in', 'visibility', $this->visibility])
+            ->orderBy(['updated_at' => SORT_DESC]);
+
+        $models = [];
+
+        foreach ($dataProvider->getModels() as $group) {
+            $groupWithImportance = new GroupWithImportance($group);
+
+            foreach ($group->importancePack->importances as $importance) {
+                $groupWithImportance->setImportance($importance->user_id, $importance->importance);
+            }
+
+            $fields = array_merge($fields ?? [], $groupWithImportance->getImportanceFieldKeys());
+            $models[] = $groupWithImportance;
+        }
+
+        return new ArrayDataProvider([
+            'allModels' => $models,
+            'sort' => ['attributes' => array_merge(['name', 'visibility', 'importance_category'], array_unique($fields ?? []))],
+            'pagination' => ['pageSize' => $this->pageCount],
+        ]);
     }
 
     /**

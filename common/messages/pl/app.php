@@ -418,6 +418,8 @@ return [
     'GAME_STATUS_UNPLANNED' => 'Niezorganizowana',
     'GROUPS_NOT_FOUND' => 'Grup nie znaleziono',
     'GROUP_BASIC' => 'Szczegóły',
+    'GROUP_BUTTON_SEE_IMPORTANCES' => 'Lista z ważnością',
+    'GROUP_BUTTON_SEE_MAIN_INDEX' => 'Lista podstawowa',
     'GROUP_DATA' => 'Dane grupy',
     'GROUP_DESCRIPTIONS_TAB' => 'Opisy',
     'GROUP_DISPLAY_AS_TAB_LONG' => 'Wyświetl jako zakładkę na liście postaci',

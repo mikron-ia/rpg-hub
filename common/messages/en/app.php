@@ -418,6 +418,8 @@ return [
     'GAME_STATUS_UNPLANNED' => 'Not organised',
     'GROUPS_NOT_FOUND' => 'Groups not found',
     'GROUP_BASIC' => 'Details',
+    'GROUP_BUTTON_SEE_IMPORTANCES' => 'List with importances',
+    'GROUP_BUTTON_SEE_MAIN_INDEX' => 'Basic list',
     'GROUP_DATA' => 'Group data',
     'GROUP_DESCRIPTIONS_TAB' => 'Descriptions',
     'GROUP_DISPLAY_AS_TAB_LONG' => 'Display as tab in Character list',

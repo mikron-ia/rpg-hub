@@ -22,6 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(
+            Yii::t('app', 'GROUP_BUTTON_SEE_IMPORTANCES'),
+            ['index-importance', 'epic' => $epic->key],
+            ['class' => 'btn btn-primary']
+        ) ?>
+        <?= Html::a(
             Yii::t('app', 'BUTTON_GROUP_CREATE'),
             ['create', 'epic' => $epic->key],
             ['class' => 'btn btn-success']
