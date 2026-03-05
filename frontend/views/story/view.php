@@ -1,14 +1,16 @@
 <?php
 
 use common\models\core\Visibility;
+use common\models\Story;
 use frontend\assets\StoryAsset;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
+use yii\web\View;
 
 StoryAsset::register($this);
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Story */
+/* @var $this View */
+/* @var $model Story */
 /* @var $storyCharacterPublic array<string> */
 /* @var $storyCharacterPrivate array<string> */
 /* @var $storyGroupPublic array<string> */
@@ -17,7 +19,10 @@ StoryAsset::register($this);
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/view', 'key' => $model->epic->key]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'STORY_TITLE_INDEX'), 'url' => ['index', 'key' => $model->epic->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'STORY_TITLE_INDEX'),
+    'url' => ['index', 'key' => $model->epic->key],
+];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['showPrivates'] = $showPrivates;
 
@@ -66,7 +71,5 @@ if ($showPrivates) {
         <?php endif; ?>
         <?= Html::encode($this->title) ?>
     </h1>
-    <?= Tabs::widget([
-        'items' => $items
-    ]) ?>
+    <?= Tabs::widget(['items' => $items]) ?>
 </div>

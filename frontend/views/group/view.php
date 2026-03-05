@@ -1,21 +1,26 @@
 <?php
 
 use common\models\core\Visibility;
+use common\models\Group;
 use frontend\assets\GroupAsset;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
+use yii\web\View;
 
 GroupAsset::register($this);
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Group */
+/* @var $this View */
+/* @var $model Group */
 /* @var $storyGroupPublic array<string> */
 /* @var $storyGroupPrivate array<string> */
 /* @var $showPrivates bool */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/view', 'key' => $model->epic->key]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_GROUPS_INDEX'), 'url' => ['index', 'key' => $model->epic->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'TITLE_GROUPS_INDEX'),
+    'url' => ['index', 'key' => $model->epic->key],
+];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['showPrivates'] = $showPrivates;
 
@@ -94,12 +99,10 @@ if ($this->params['showPrivates']) {
         <?php endif; ?>
     </div>
 
-    <?= Tabs::widget([
-        'items' => $items
-    ]) ?>
+    <?= Tabs::widget(['items' => $items]) ?>
 
     <?php if ($this->params['showPrivates']): ?>
-        <?= $this->registerJs('$(".secret").hide();'); ?>
+        <?php $this->registerJs('$(".secret").hide();'); ?>
     <?php endif; ?>
 
 </div>

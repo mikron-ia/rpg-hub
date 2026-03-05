@@ -1,21 +1,26 @@
 <?php
 
+use common\models\Character;
 use common\models\core\Visibility;
 use frontend\assets\CharacterAsset;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
+use yii\web\View;
 
 CharacterAsset::register($this);
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Character */
+/* @var $this View */
+/* @var $model Character */
 /* @var $storyCharacterPublic array<string> */
 /* @var $storyCharacterPrivate array<string> */
 /* @var $showPrivates bool */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/view', 'key' => $model->epic->key]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_CHARACTER_INDEX'), 'url' => ['index', 'key' => $model->epic->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'TITLE_CHARACTER_INDEX'),
+    'url' => ['index', 'key' => $model->epic->key],
+];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['showPrivates'] = $showPrivates;
 

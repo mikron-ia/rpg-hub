@@ -1,18 +1,22 @@
 <?php
 
+use common\models\Recap;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\web\YiiAsset;
 
-/** @var yii\web\View $this */
-/** @var common\models\Recap $model */
+/** @var View $this */
+/** @var Recap $model */
 
 $this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/view', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = [
     'label' => Yii::t('app', 'RECAP_TITLE_INDEX'),
     'url' => ['index', 'key' => $model->epic->key],
 ];
 $this->params['breadcrumbs'][] = $this->title;
 YiiAsset::register($this);
+
 ?>
 <div class="recap-view">
     <h1><?= Html::encode($this->title) ?></h1>
