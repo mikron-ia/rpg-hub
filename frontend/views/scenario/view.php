@@ -22,7 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
 $items = [
     [
         'label' => Yii::t('app', 'SCENARIO_DESCRIPTIONS_TAB'),
-        'content' => $this->render('../_descriptions/_view_descriptions', ['model' => $model]),
+        'content' => $this->render('../_descriptions/_view_descriptions', [
+            'model' => $model,
+            'showPrivates' => false,
+        ]),
         'encode' => false,
         'active' => true,
     ],

@@ -12,9 +12,8 @@ use yii\db\ActiveQuery;
 interface HasDescriptions
 {
     /**
-     * Provides list of types allowed by this class
-     *
-     * Types should be listed in order desired in select
+     * Provides the list of types allowed by this class
+     * Types will be displayed in form selector in the same order they are provided in this method
      *
      * @return string[]
      */
@@ -26,7 +25,7 @@ interface HasDescriptions
     public function getDescriptionPackId(): int;
 
     /**
-     * Provides list of visible descriptions from Description Pack
+     * Provides the list of visible descriptions from Description Pack
      */
     public function getDescriptionsVisible(): ActiveQuery;
 }
