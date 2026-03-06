@@ -26,8 +26,8 @@ $this->params['showPrivates'] = $showPrivates;
 
 $items = [
     [
-        'label' => Yii::t('app', 'CHARACTER_DESCRIPTIONS_TAB'),
-        'content' => $this->render('../_descriptions/_view_descriptions', [
+        'label' => Yii::t('app', 'CHARACTER_DESCRIPTIONS_COMPACT_TAB'),
+        'content' => $this->render('../_descriptions-compact/_view_descriptions', [
             'model' => $model,
             'showPrivates' => $showPrivates,
         ]),
@@ -35,8 +35,8 @@ $items = [
         'active' => true,
     ],
     [
-        'label' => Yii::t('app', 'CHARACTER_DESCRIPTIONS_COMPACT_TAB'),
-        'content' => $this->render('../_descriptions-compact/_view_descriptions', [
+        'label' => Yii::t('app', 'CHARACTER_DESCRIPTIONS_TAB'),
+        'content' => $this->render('../_descriptions/_view_descriptions', [
             'model' => $model,
             'showPrivates' => $showPrivates,
         ]),
