@@ -92,4 +92,17 @@ final class DescriptionQuery extends Description
 
         return $query;
     }
+
+    static public function listDescriptionsUnexpired(DescriptionPack $descriptionPack): ActiveQuery
+    {
+        $query = Description::find();
+
+        $query->andWhere([
+            'description_pack_id' => $descriptionPack->description_pack_id,
+            'point_in_time_end_id' => null,
+            'visibility' => Visibility::determineVisibilityVector($descriptionPack->epic),
+        ]);
+
+        return $query;
+    }
 }

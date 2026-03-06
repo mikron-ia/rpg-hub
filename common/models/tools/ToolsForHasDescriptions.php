@@ -24,4 +24,9 @@ trait ToolsForHasDescriptions
     {
         return $this->descriptionPack->getDescriptionsVisible();
     }
+
+    public function getDescriptionsVisibleForCompact(): ActiveQuery
+    {
+        return $this->descriptionPack->getDescriptionsVisibleUnexpired();
+    }
 }

@@ -35,6 +35,15 @@ $items = [
         'active' => true,
     ],
     [
+        'label' => Yii::t('app', 'GROUP_DESCRIPTIONS_COMPACT_TAB'),
+        'content' => $this->render('../_descriptions-compact/_view_descriptions', [
+            'model' => $model,
+            'showPrivates' => $showPrivates,
+        ]),
+        'encode' => false,
+        'active' => false,
+    ],
+    [
         'label' => Yii::t('app', 'GROUP_MEMBERSHIPS_TAB'),
         'content' => $this->render('_view_compositions', ['model' => $model]),
         'encode' => false,

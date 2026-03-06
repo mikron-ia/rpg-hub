@@ -28,4 +28,9 @@ interface HasDescriptions
      * Provides the list of visible descriptions from Description Pack
      */
     public function getDescriptionsVisible(): ActiveQuery;
+
+    /**
+     * Provides the list of visible and unexpired descriptions from Description Pack
+     */
+    public function getDescriptionsVisibleForCompact(): ActiveQuery;
 }

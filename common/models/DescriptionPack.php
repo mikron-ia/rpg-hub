@@ -129,6 +129,11 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
         return DescriptionQuery::listDescriptions($this);
     }
 
+    public function getDescriptionsVisibleUnexpired(): ActiveQuery
+    {
+        return DescriptionQuery::listDescriptionsUnexpired($this);
+    }
+
     /**
      * @param User $user
      * @return ActiveQuery
