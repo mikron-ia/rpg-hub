@@ -1,19 +1,20 @@
 <?php
 
-/* @var $this yii\web\View */
+use common\models\Epic;
+use common\models\Participant;
+use common\models\Recap;
+use yii\bootstrap\Html;
+use yii\data\ActiveDataProvider;
+use yii\web\View;
+use yii\widgets\ListView;
+
+/* @var $this View */
 /* @var $epic Epic */
 /* @var $announcements ActiveDataProvider */
 /* @var $sessions ActiveDataProvider */
 /* @var $stories ActiveDataProvider */
 
 /* @var $recap Recap */
-
-use common\models\Epic;
-use common\models\Participant;
-use common\models\Recap;
-use yii\bootstrap\Html;
-use yii\data\ActiveDataProvider;
-use yii\widgets\ListView;
 
 $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
 ?>

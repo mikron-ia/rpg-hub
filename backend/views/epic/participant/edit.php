@@ -1,12 +1,14 @@
 <?php
 
+use common\models\Participant;
 use common\models\ParticipantRole;
 use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Participant */
+/* @var $this View */
+/* @var $model Participant */
 
 $this->title = Yii::t('app', 'TITLE_PARTICIPANT_EDIT {epic}', ['epic' => $model->epic->name]) .
     ': ' . $model->user->username;
@@ -16,7 +18,6 @@ $this->params['breadcrumbs'][] = $model->user->username;
 $this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_PARTICIPANT_UPDATE');
 ?>
 <div class="participant-edit">
-
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php $form = ActiveForm::begin([
@@ -39,5 +40,4 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_PARTICIPANT_UPDATE')
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>

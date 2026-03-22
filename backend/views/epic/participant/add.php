@@ -1,13 +1,15 @@
 <?php
 
+use common\models\Participant;
 use common\models\ParticipantRole;
 use common\models\User;
 use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Participant */
+/* @var $this View */
+/* @var $model Participant */
 
 $this->title = Yii::t('app', 'TITLE_PARTICIPANT_ADD {epic}', ['epic' => $model->epic->name]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_EPICS'), 'url' => ['index']];
@@ -15,7 +17,6 @@ $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['view
 $this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_PARTICIPANT_ADD');
 ?>
 <div class="participant-add">
-
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php $form = ActiveForm::begin(); ?>
@@ -43,5 +44,4 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_PARTICIPANT_ADD');
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>

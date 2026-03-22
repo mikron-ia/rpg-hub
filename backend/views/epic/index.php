@@ -1,12 +1,15 @@
 <?php
 
 use common\models\Epic;
+use common\models\EpicQuery;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $searchModel common\models\EpicQuery */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $searchModel EpicQuery */
+/* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_EPICS');
 $this->params['breadcrumbs'][] = $this->title;

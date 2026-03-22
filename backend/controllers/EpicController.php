@@ -11,8 +11,10 @@ use common\models\Participant;
 use common\models\ParticipantRole;
 use common\models\RecapQuery;
 use common\models\StoryQuery;
+use Throwable;
 use Yii;
 use yii\db\Exception;
+use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -20,14 +22,11 @@ use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * EpicController implements the CRUD actions for Epic model.
- */
 final class EpicController extends Controller
 {
     use EpicAssistance;
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -69,11 +68,9 @@ final class EpicController extends Controller
     }
 
     /**
-     * Lists all Epic models user can access
-     * @return mixed
-     * @throws \yii\web\HttpException
+     * @throws HttpException
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         Epic::canUserIndexEpic();
 
@@ -88,10 +85,10 @@ final class EpicController extends Controller
 
     /**
      * Lists all Epic models for management purposes
-     * @return mixed
-     * @throws \yii\web\HttpException
+     *
+     * @throws HttpException
      */
-    public function actionManage()
+    public function actionManage(): string
     {
         Epic::canUserIndexEpic();
 
@@ -146,13 +143,10 @@ final class EpicController extends Controller
     }
 
     /**
-     * Displays a single Epic model.
-     * @param string $key
-     * @return mixed
      * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
+     * @throws HttpException
      */
-    public function actionView($key)
+    public function actionView(string $key): string
     {
         $model = $this->findModel($key);
         $model->canUserViewYou();
@@ -164,12 +158,10 @@ final class EpicController extends Controller
     }
 
     /**
-     * Creates a new Epic model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     * @throws \yii\web\HttpException
+     * @throws HttpException
+     * @throws Exception
      */
-    public function actionCreate()
+    public function actionCreate(): Response|string
     {
         Epic::canUserCreateEpic();
 
@@ -188,14 +180,11 @@ final class EpicController extends Controller
     }
 
     /**
-     * Updates an existing Epic model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $key
-     * @return mixed
      * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
+     * @throws HttpException
+     * @throws Exception
      */
-    public function actionUpdate($key)
+    public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModel($key);
 
@@ -217,15 +206,11 @@ final class EpicController extends Controller
     }
 
     /**
-     * Deletes an existing Epic model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $key
-     * @return mixed
      * @throws NotFoundHttpException
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws StaleObjectException
+     * @throws Throwable
      */
-    public function actionDelete($key)
+    public function actionDelete(string $key): Response
     {
         $this->findModel($key)->delete();
 
@@ -233,8 +218,6 @@ final class EpicController extends Controller
     }
 
     /**
-     * @param string $key
-     * @return string|Response
      * @throws Exception
      * @throws NotFoundHttpException
      */
@@ -258,12 +241,10 @@ final class EpicController extends Controller
     }
 
     /**
-     * Edits a participant
-     * @param string $participant_id
-     * @return mixed
      * @throws NotFoundHttpException
+     * @throws Exception
      */
-    public function actionParticipantEdit($participant_id)
+    public function actionParticipantEdit(string $participant_id): Response|string
     {
         $model = $this->findParticipantModel($participant_id);
 
@@ -275,14 +256,14 @@ final class EpicController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->epic->key]);
-        } else {
-            return $this->render('participant/edit', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('participant/edit', [
+            'model' => $model,
+        ]);
     }
 
-    public function actionManagerAttach($key)
+    public function actionManagerAttach(string $key): Response
     {
         $model = $this->findModel($key);
 
@@ -295,7 +276,7 @@ final class EpicController extends Controller
         return $this->redirect(['manage']);
     }
 
-    public function actionManagerDetach($key)
+    public function actionManagerDetach(string $key): Response
     {
         $model = $this->findModel($key);
 
@@ -309,34 +290,26 @@ final class EpicController extends Controller
     }
 
     /**
-     * Finds the Epic model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $key
-     * @return Epic the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
-    protected function findModel($key)
+    protected function findModel(string $key): Epic
     {
         if (($model = Epic::findOne(['key' => $key])) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException(Yii::t('app', 'EPIC_NOT_FOUND'));
         }
+
+        throw new NotFoundHttpException(Yii::t('app', 'EPIC_NOT_FOUND'));
     }
 
     /**
-     * Finds the UserEpic model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Participant the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
-    protected function findParticipantModel($id)
+    protected function findParticipantModel(string $id): Participant
     {
         if (($model = Participant::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException(Yii::t('app', 'PARTICIPANT_NOT_FOUND'));
         }
+
+        throw new NotFoundHttpException(Yii::t('app', 'PARTICIPANT_NOT_FOUND'));
     }
 }

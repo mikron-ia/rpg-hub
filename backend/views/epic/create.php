@@ -1,10 +1,11 @@
 <?php
 
+use common\models\Epic;
 use yii\helpers\Html;
+use yii\web\View;
 
-
-/* @var $this yii\web\View */
-/* @var $model common\models\Epic */
+/* @var $this View */
+/* @var $model Epic */
 
 $this->title = Yii::t('app', 'TITLE_EPIC_CREATE');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_EPICS'), 'url' => ['index']];

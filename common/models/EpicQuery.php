@@ -13,24 +13,22 @@ use yii\db\ActiveRecord;
  */
 final class EpicQuery extends Epic
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             [['epic_id', 'key', 'name', 'system'], 'safe'],
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
 
     /**
-     * Creates data provider instance with search query applied
-     * @param array $params
-     * @return ActiveDataProvider
+     * Creates the data provider instance with the search query applied
      */
-    public function search($params): ActiveDataProvider
+    public function search(array $params): ActiveDataProvider
     {
         $query = Epic::find();
 
@@ -133,7 +131,6 @@ final class EpicQuery extends Epic
     }
 
     /**
-     * @param bool $limitToControlled
      * @return string[]
      */
     static public function allowedEpics(bool $limitToControlled = true): array
@@ -149,8 +146,7 @@ final class EpicQuery extends Epic
     }
 
     /**
-     * Provides list of all epics, with indication of user's role in them
-     * @return ActiveDataProvider
+     * Provides a list of all epics with indication of the user's role in them
      */
     static public function manageableEpicsAsActiveDataProvider(): ActiveDataProvider
     {

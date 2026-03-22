@@ -1,10 +1,12 @@
 <?php
 
+use common\models\Epic;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Epic */
+/* @var $this View */
+/* @var $model Epic */
 
 $this->title = Yii::t('app', 'LABEL_EPIC') . ' ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_EPICS'), 'url' => ['index']];
@@ -27,7 +29,6 @@ $items = [
 ];
 ?>
 <div class="epic-view">
-
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
         <div>
@@ -38,9 +39,7 @@ $items = [
             ) ?>
         </div>
     </div>
-
     <?= Tabs::widget([
         'items' => $items
     ]) ?>
-
 </div>

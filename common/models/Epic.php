@@ -9,11 +9,13 @@ use common\models\core\HasSightings;
 use common\models\core\HasStatus;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
+use Throwable;
 use Yii;
 use yii\base\Exception;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception as DbException;
 use yii\helpers\Html;
 use yii\web\HttpException;
 
@@ -55,25 +57,25 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
 {
     use ToolsForEntity;
 
-    const STATUS_PROPOSED = 'proposed';       // idea is created; next: PREPARED, SCRAPPED
-    const STATUS_PLANNED = 'planning';        // epic is being planned; next: PREPARED, SCRAPPED
-    const STATUS_PREPARED = 'preparation';    // epic is being prepared; next: READY, SCRAPPED
-    const STATUS_READY = 'ready';             // epic is ready to run; next: PLAYED, SCRAPPED
-    const STATUS_SCRAPPED = 'scrapped';       // epic failed to achieve readiness; next: PLANNED, CLOSED
-    const STATUS_CANCELLED = 'cancelled';     // epic ran, but failed to complete; next: RESUMING, CLOSED
-    const STATUS_PLAYED = 'played';           // in progress; next: LAPSED, ON HOLD, CANCELLED, FINISHED
-    const STATUS_LAPSED = 'lapsed';           // sessions stopped, but nothing was said yet; next: ON HOLD, CANCELLED, RESUMING
-    const STATUS_ON_HOLD = 'on hold';         // epic was officially suspended; next: RESUMING, CANCELLED
-    const STATUS_RESUMING = 'resuming';       // resuming after some trouble; next: PLAYED, ON HOLD
-    const STATUS_FINISHED = 'finished';       // epic was completed; next: CLOSED
-    const STATUS_CLOSED = 'closed';           // epic is documented and done; next: none
+    const string STATUS_PROPOSED = 'proposed';       // idea is created; next: PREPARED, SCRAPPED
+    const string STATUS_PLANNED = 'planning';        // epic is being planned; next: PREPARED, SCRAPPED
+    const string STATUS_PREPARED = 'preparation';    // epic is being prepared; next: READY, SCRAPPED
+    const string STATUS_READY = 'ready';             // epic is ready to run; next: PLAYED, SCRAPPED
+    const string STATUS_SCRAPPED = 'scrapped';       // epic failed to achieve readiness; next: PLANNED, CLOSED
+    const string STATUS_CANCELLED = 'cancelled';     // epic ran but failed to complete; next: RESUMING, CLOSED
+    const string STATUS_PLAYED = 'played';           // in progress; next: LAPSED, ON HOLD, CANCELLED, FINISHED
+    const string STATUS_LAPSED = 'lapsed';           // sessions stopped, but nothing was said yet; next: ON HOLD, CANCELLED, RESUMING
+    const string STATUS_ON_HOLD = 'on hold';         // epic was officially suspended; next: RESUMING, CANCELLED
+    const string STATUS_RESUMING = 'resuming';       // resuming after some trouble; next: PLAYED, ON HOLD
+    const string STATUS_FINISHED = 'finished';       // epic was completed; next: CLOSED
+    const string STATUS_CLOSED = 'closed';           // epic is documented and done; next: none
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'epic';
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['name', 'system'], 'required'],
@@ -86,7 +88,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Story::class,
-                'targetAttribute' => ['current_story_id' => 'story_id']
+                'targetAttribute' => ['current_story_id' => 'story_id'],
             ],
             [
                 ['status'],
@@ -95,7 +97,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
                 'message' => Yii::t(
                     'app',
                     'EPIC_STATUS_NOT_ALLOWED {allowed}',
-                    ['allowed' => implode(', ', $this->getAllowedChangeNames())]
+                    ['allowed' => implode(', ', $this->getAllowedChangeNames())],
                 )
             ],
             [
@@ -103,12 +105,15 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => ParameterPack::class,
-                'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id']
+                'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id'],
             ],
         ];
     }
 
-    public function attributeLabels()
+    /**
+     * @return array<string, string>
+     */
+    public function attributeLabels(): array
     {
         return [
             'epic_id' => Yii::t('app', 'EPIC_ID'),
@@ -124,6 +129,9 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     static public function statusNames(): array
     {
         return [
@@ -142,6 +150,10 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         ];
     }
 
+
+    /**
+     * @return array<string, string>
+     */
     static public function statusClasses(): array
     {
         return [
@@ -160,6 +172,10 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         ];
     }
 
+
+    /**
+     * @return array<string,string[]>
+     */
     public function statusAllowedChanges(): array
     {
         return [
@@ -174,7 +190,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
                 self::STATUS_LAPSED,
                 self::STATUS_ON_HOLD,
                 self::STATUS_CANCELLED,
-                self::STATUS_FINISHED
+                self::STATUS_FINISHED,
             ],
             self::STATUS_PROPOSED => [self::STATUS_PLANNED, self::STATUS_SCRAPPED],
             self::STATUS_READY => [self::STATUS_PLAYED, self::STATUS_SCRAPPED],
@@ -264,13 +280,16 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         parent::afterFind();
     }
 
-    public function afterSave($insert, $changedAttributes)
+    /**
+     * @throws DbException
+     */
+    public function afterSave($insert, $changedAttributes): void
     {
         $this->seenPack->updateRecord();
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if ($insert) {
             $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
@@ -310,10 +329,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return $this->hasMany(Article::class, ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getCharacters()
+    public function getCharacters(): ActiveQuery
     {
         return $this->hasMany(CharacterSheet::class, ['epic_id' => 'epic_id']);
     }
@@ -323,106 +339,67 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return $this->hasOne(Story::class, ['story_id' => 'current_story_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getParameterPack()
+    public function getParameterPack(): ActiveQuery
     {
         return $this->hasOne(ParameterPack::class, ['parameter_pack_id' => 'parameter_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getUtilityBag()
+    public function getUtilityBag(): ActiveQuery
     {
         return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getGames()
+    public function getGames(): ActiveQuery
     {
         return $this->hasMany(Game::class, ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getPointsInTime()
+    public function getPointsInTime(): ActiveQuery
     {
         return $this->hasMany(PointInTime::class, ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getGroups()
+    public function getGroups(): ActiveQuery
     {
         return $this->hasMany(Group::class, ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getGms()
+    public function getGms(): ActiveQuery
     {
         return $this->getParticipants()->joinWith('participantRoles')->onCondition("role = 'gm'");
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getPlayers()
+    public function getPlayers(): ActiveQuery
     {
         return $this->getParticipants()->joinWith('participantRoles')->onCondition("role = 'player'");
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getParticipants()
+    public function getParticipants(): ActiveQuery
     {
         return $this->hasMany(Participant::class, ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getPeople()
+    public function getPeople(): ActiveQuery
     {
         return $this->hasMany(Character::class, ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getRecaps()
+    public function getRecaps(): ActiveQuery
     {
         return $this->hasMany(Recap::class, ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getSeenPack(): ActiveQuery
     {
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getStories()
+    public function getStories(): ActiveQuery
     {
         return $this->hasMany(Story::class, ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return Recap|null
-     */
-    public function getCurrentRecap()
+    public function getCurrentRecap(): ?Recap
     {
         $query = new ActiveDataProvider(['query' => $this->getRecaps()->orderBy('time ASC')]);
         $recaps = $query->getModels();
@@ -436,7 +413,10 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return $recap;
     }
 
-    public function getSimpleDataForApi()
+    /**
+     * @return array<string, string>
+     */
+    public function getSimpleDataForApi(): array
     {
         return [
             'name' => $this->name,
@@ -444,7 +424,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         ];
     }
 
-    public function getCompleteDataForApi()
+    public function getCompleteDataForApi(): array
     {
         $query = new ActiveDataProvider(['query' => $this->getStories()->orderBy('story_id DESC')]);
 
@@ -475,7 +455,6 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     }
 
     /**
-     * Provides list of types allowed by this class
      * @return string[]
      */
     static public function allowedParameterTypes(): array
@@ -588,11 +567,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return Participant::participantExists($user, $this);
     }
 
-    /**
-     * @param User|null $user
-     * @return bool
-     */
-    public function isUserYourManager($user): bool
+    public function isUserYourManager(?User $user): bool
     {
         if (!$user) {
             return false;
@@ -601,7 +576,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return Participant::participantHasRole($user, $this, ParticipantRole::ROLE_MANAGER);
     }
 
-    public function attachCurrentUserAsManager()
+    public function attachCurrentUserAsManager(): bool
     {
         try {
             /** @var User $user */
@@ -634,7 +609,10 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return true;
     }
 
-    public function detachCurrentUserAsManager()
+    /**
+     * @throws Throwable
+     */
+    public function detachCurrentUserAsManager(): bool
     {
         try {
             /** @var User $user */
@@ -679,11 +657,17 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return $list;
     }
 
+    /**
+     * @throws DbException
+     */
     public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
     }
 
+    /**
+     * @throws DbException
+     */
     public function recordNotification(): bool
     {
         return $this->seenPack->recordNotification();
@@ -748,7 +732,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      * @param Epic[] $epics
      * @return Epic[]
      */
-    static public function sortByStatus(array $epics)
+    static public function sortByStatus(array $epics): array
     {
         uasort($epics, function (Epic $a, Epic $b) {
             if ($a->getOwnSortPriority() === $b->getOwnSortPriority()) {

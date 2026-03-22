@@ -1,13 +1,15 @@
 <?php
 
 use common\models\core\FrontStyles;
+use common\models\Epic;
 use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Epic */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model Epic */
+/* @var $form ActiveForm */
 ?>
 
 <div class="epic-form">

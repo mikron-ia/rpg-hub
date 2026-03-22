@@ -1,16 +1,18 @@
 <?php
 
+use common\models\Epic;
 use common\models\Parameter;
 use common\models\Participant;
 use yii\bootstrap\Modal;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Epic */
-/* @var $externalDataDataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $model Epic */
+/* @var $externalDataDataProvider ActiveDataProvider */
 
 ?>
 

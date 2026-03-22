@@ -1,16 +1,19 @@
 <?php
 
 use common\models\core\SeenStatus;
+use common\models\Epic;
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Epic */
-
+/* @var $this View */
+/* @var $model Epic */
 ?>
 
 <div class="col-md-6">
     <h2 class="text-center"><?= Yii::t('app', 'SEEN_READ') ?></h2>
-    <?= \yii\grid\GridView::widget([
-        'dataProvider' => new \yii\data\ActiveDataProvider([
+    <?= GridView::widget([
+        'dataProvider' => new ActiveDataProvider([
             'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_SEEN),
             'pagination' => false,
         ]),
@@ -28,8 +31,8 @@ use common\models\core\SeenStatus;
 
 <div class="col-md-6">
     <h2 class="text-center"><?= Yii::t('app', 'SEEN_BEFORE_UPDATE') ?></h2>
-    <?= \yii\grid\GridView::widget([
-        'dataProvider' => new \yii\data\ActiveDataProvider([
+    <?= GridView::widget([
+        'dataProvider' => new ActiveDataProvider([
             'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_UPDATED),
             'pagination' => false,
         ]),
@@ -47,8 +50,8 @@ use common\models\core\SeenStatus;
 
 <div class="col-md-6">
     <h2 class="text-center"><?= Yii::t('app', 'SEEN_NEW') ?></h2>
-    <?= \yii\grid\GridView::widget([
-        'dataProvider' => new \yii\data\ActiveDataProvider([
+    <?= GridView::widget([
+        'dataProvider' => new ActiveDataProvider([
             'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_NEW),
             'pagination' => false,
         ]),
