@@ -7,21 +7,26 @@ use common\models\Description;
 use common\models\DescriptionHistory;
 use common\models\DescriptionPack;
 use common\models\Parameter;
+use Exception;
+use Override;
+use Throwable;
 use Yii;
+use yii\base\InvalidRouteException;
+use yii\db\Exception as DbException;
+use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
+use yii\web\HttpException;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * DescriptionController implements the CRUD actions for Description model.
- */
 final class DescriptionController extends Controller
 {
-    public function behaviors()
+    #[Override]
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -36,7 +41,7 @@ final class DescriptionController extends Controller
                             'move-up',
                             'move-down',
                             'history',
-                            'display'
+                            'display',
                         ],
                         'allow' => true,
                         'roles' => ['operator'],
@@ -53,12 +58,9 @@ final class DescriptionController extends Controller
     }
 
     /**
-     * Displays a single Description model.
-     * @param string $id
-     * @return mixed
      * @throws NotFoundHttpException
      */
-    public function actionView($id)
+    public function actionView(int $id): string
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -66,12 +68,11 @@ final class DescriptionController extends Controller
     }
 
     /**
-     * Creates a new Description model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @param int $pack_id
-     * @return mixed
+     * @throws DbException
+     * @throws HttpException
+     * @throws InvalidRouteException
      */
-    public function actionCreate($pack_id)
+    public function actionCreate(int $pack_id): Response|string
     {
         $model = new Description();
 
@@ -96,23 +97,22 @@ final class DescriptionController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->returnToReferrer(['site/index']);
-        } else {
-            if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('create', ['model' => $model]);
-            } else {
-                return $this->render('create', ['model' => $model]);
-            }
         }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create', ['model' => $model]);
+        }
+
+        return $this->render('create', ['model' => $model]);
     }
 
     /**
-     * Updates an existing Description model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
-     * @return mixed
+     * @throws DbException
+     * @throws HttpException
+     * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
-    public function actionUpdate($id)
+    public function actionUpdate(int $id): Response|string
     {
         $model = $this->findModel($id);
 
@@ -123,21 +123,21 @@ final class DescriptionController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->returnToReferrer(['site/index']);
-        } else {
-            if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('update', ['model' => $model]);
-            } else {
-                return $this->render('update', ['model' => $model]);
-            }
         }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('update', ['model' => $model]);
+        }
+
+        return $this->render('update', ['model' => $model]);
     }
 
     /**
-     * @param string $id
-     * @return mixed
+     * @throws HttpException
+     * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
-    public function actionHistory($id)
+    public function actionHistory(int $id): Response|string
     {
         $model = $this->findModel($id);
 
@@ -152,40 +152,34 @@ final class DescriptionController extends Controller
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('history', ['model' => $model, 'historyRecords' => $historyRecords]);
-        } else {
-            return $this->render('history', ['model' => $model, 'historyRecords' => $historyRecords]);
         }
+
+        return $this->render('history', ['model' => $model, 'historyRecords' => $historyRecords]);
     }
 
     /**
-     * Deletes an existing Description model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
+     * @throws Exception
      * @throws NotFoundHttpException
-     * @throws \Exception
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws StaleObjectException
+     * @throws Throwable
      */
-    public function actionDelete($id)
+    public function actionDelete(int $id): Response
     {
         $this->findModel($id)->delete();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
         }
+
+        return $this->redirect(['index']);
     }
 
     /**
-     * @param $id
-     * @return bool
-     * @throws NotFoundHttpException
      * @throws MethodNotAllowedHttpException
+     * @throws NotFoundHttpException
      */
-    public function actionMoveUp($id)
+    public function actionMoveUp(int $id): bool
     {
         if (!Yii::$app->request->isAjax) {
             throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
@@ -196,12 +190,10 @@ final class DescriptionController extends Controller
     }
 
     /**
-     * @param $id
-     * @return bool
      * @throws NotFoundHttpException
      * @throws MethodNotAllowedHttpException
      */
-    public function actionMoveDown($id)
+    public function actionMoveDown(int $id): bool
     {
         if (!Yii::$app->request->isAjax) {
             throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
@@ -211,7 +203,13 @@ final class DescriptionController extends Controller
         return $model->moveNext();
     }
 
-    public function actionDisplay($id)
+    /**
+     * @throws ForbiddenHttpException
+     * @throws HttpException
+     * @throws MethodNotAllowedHttpException
+     * @throws NotFoundHttpException
+     */
+    public function actionDisplay(int $id): string
     {
         if (!Yii::$app->request->isAjax) {
             throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
@@ -222,13 +220,9 @@ final class DescriptionController extends Controller
     }
 
     /**
-     * Finds the Description model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Description the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
-    protected function findModel($id): Description
+    protected function findModel(int $id): Description
     {
         $model = Description::findOne(['description_id' => $id]);
 
@@ -244,12 +238,11 @@ final class DescriptionController extends Controller
     }
 
     /**
-     * @param $id
-     * @return DescriptionPack
-     * @throws NotFoundHttpException
      * @throws ForbiddenHttpException
+     * @throws HttpException
+     * @throws NotFoundHttpException
      */
-    protected function findPack($id): DescriptionPack
+    protected function findPack(int $id): DescriptionPack
     {
         $model = DescriptionPack::findOne(['description_pack_id' => $id]);
 
@@ -266,15 +259,16 @@ final class DescriptionController extends Controller
 
     /**
      * @param string[] $default
-     * @return Response
+     *
+     * @throws InvalidRouteException
      */
     protected function returnToReferrer(array $default): Response
     {
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect($default);
         }
+
+        return $this->redirect($default);
     }
 }

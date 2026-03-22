@@ -1,5 +1,8 @@
 <?php
-/* @var $model common\models\core\HasDescriptions */
+
+use common\models\core\HasDescriptions;
+
+/* @var $model HasDescriptions */
 ?>
 
 <?php if ($model->getDescriptionPackId()): ?>

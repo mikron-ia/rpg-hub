@@ -1,10 +1,12 @@
 <?php
 
+use common\models\Description;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Description */
+/* @var $this View */
+/* @var $model Description */
 
 $messageForStillValid = isset($model->point_in_time_still_valid_id) && isset($model->point_in_time_end_id)
     ? Yii::t('app', 'DESCRIPTION_STILL_VALID_IC_CMS_HIDDEN {when}', ['when' => $model->pointInTimeStillValid->name ?? '?'])

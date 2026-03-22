@@ -1,18 +1,23 @@
 <?php
 
-/* @var $this yii\web\View */
+use common\models\Description;
 use common\models\DescriptionHistory;
+use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
+use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $model common\models\Description */
-/* @var $historyRecords \yii\db\ActiveQuery */
+/* @var $this View */
+/* @var $model Description */
+/* @var $historyRecords ActiveQuery */
 
 $this->title = Yii::t('app', 'DESCRIPTION_TITLE_UPDATE');
 ?>
 <div class="description-update">
 
-    <?= \yii\grid\GridView::widget([
-        'dataProvider' => new \yii\data\ActiveDataProvider([
+    <?= GridView::widget([
+        'dataProvider' => new ActiveDataProvider([
             'query' => $historyRecords,
             'sort' => false,
             'pagination' => false,

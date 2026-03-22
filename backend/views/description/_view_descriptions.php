@@ -1,10 +1,14 @@
 <?php
 
+use common\models\Description;
+use common\models\DescriptionPack;
 use yii\bootstrap\Modal;
-use yii\helpers\Html;
+use yii\data\ActiveDataProvider;
+use yii\web\View;
+use yii\widgets\ListView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\DescriptionPack */
+/* @var $this View */
+/* @var $model DescriptionPack */
 /* @var $showPrivates bool */
 
 ?>
@@ -15,14 +19,14 @@ use yii\helpers\Html;
 
 <?php if ($model): ?>
     <div id="descriptions">
-        <?= \yii\widgets\ListView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider([
+        <?= ListView::widget([
+            'dataProvider' => new ActiveDataProvider([
                 'query' => $model->getDescriptions(),
                 'sort' => ['defaultOrder' => ['position' => SORT_ASC]]
             ]),
             'itemOptions' => ['class' => 'item'],
             'summary' => '',
-            'itemView' => function (\common\models\Description $model, $key, $index, $widget) {
+            'itemView' => function (Description $model, $key, $index, $widget) {
                 return $this->render(
                     '_view_description',
                     [

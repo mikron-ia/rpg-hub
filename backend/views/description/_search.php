@@ -3,12 +3,14 @@
 use common\models\core\Language;
 use common\models\core\Visibility;
 use common\models\Description;
+use common\models\DescriptionQuery;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\DescriptionQuery */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model DescriptionQuery */
+/* @var $form ActiveForm */
 ?>
 
 <div class="description-search">

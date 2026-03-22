@@ -8,11 +8,13 @@ use common\models\core\Language;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
+use Override;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\helpers\StringHelper;
 use yii2tech\ar\position\PositionBehavior;
 
@@ -24,14 +26,14 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $title
  * @property string $code
  * @property string $public_text
- * @property string $protected_text
- * @property string $private_text
- * @property string $public_text_expanded
- * @property string $protected_text_expanded
- * @property string $private_text_expanded
+ * @property string|null $protected_text
+ * @property string|null $private_text
+ * @property string|null $public_text_expanded
+ * @property string|null $protected_text_expanded
+ * @property string|null $private_text_expanded
  * @property string $lang
  * @property string $visibility
- * @property int $position
+ * @property int|null $position
  * @property int $created_at
  * @property int $updated_at
  * @property int $created_by
@@ -41,54 +43,60 @@ use yii2tech\ar\position\PositionBehavior;
  * @property int|null $point_in_time_still_valid_id
  *
  * @property User $createdBy
+ * @property DescriptionHistory[] $descriptionHistories
  * @property DescriptionPack $descriptionPack
- * @property User $updatedBy
  * @property PointInTime $pointInTimeStart
  * @property PointInTime $pointInTimeEnd
  * @property PointInTime $pointInTimeStillValid
+ * @property User $updatedBy
+ *
+ * @method movePrev()
+ * @method moveNext()
  */
 class Description extends ActiveRecord implements Displayable, HasVisibility
 {
     use ToolsForLinkTags;
     use ToolsForHasVisibility;
 
-    const TYPE_APPEARANCE = 'appearance';       // For Character; The looks
-    const TYPE_ASPECTS = 'aspects';             // For Character, Group, Scenario, Story; Aspects (for FATE-like games) and Moves (for Powered by Apocalypse games)
-    const TYPE_ATTITUDE = 'attitude';           // For Character, Group; Attitude towards different people / groups and connections with them
-    const TYPE_BACKGROUND = 'background';       // For Character, Group, Story; Origin, education, the like
-    const TYPE_COMMENTARY = 'commentary';       // For Character, Group, Story; GM commentary
-    const TYPE_DOMAIN = 'domain';               // For Character, Group; Places where the person reigns, dominates, or frequents
-    const TYPE_FAME = 'fame';                   // For Character; Famous deeds or events; REMOVED
-    const TYPE_FACTIONS = 'factions';           // For Character, Group; Factions associated with; this includes nations
-    const TYPE_HISTORY = 'history';             // For Character, Group; History of the person or group
-    const TYPE_INTERACTIONS = 'interactions';   // For Character, Group; Interactions / encounters with the group or person NAMES
-    const TYPE_PERSONALITY = 'personality';     // For Character; Personality, character behaviour, mental issues
-    const TYPE_RESOURCES = 'resources';         // For Character, Group; Resources the person wields, flaunts, can offer
-    const TYPE_REPUTATION = 'reputation';       // For Character; Character's reputation
-    const TYPE_RETINUE = 'retinue';             // For Character, Group; Friends, allies, etc.
-    const TYPE_RUMOURS = 'rumours';             // For Character, Group; Unproven rumours collected about character
-    const TYPE_STORIES = 'stories';             // For Character, Group; Stories person participated in
-    const TYPE_THREADS = 'threads';             // For Character, Group, Scenario, Story; Threads attached
-    const TYPE_WHO = 'who';                     // For Character, Group; Who is this?
+    const string TYPE_APPEARANCE = 'appearance';       // For Character; The looks
+    const string TYPE_ASPECTS = 'aspects';             // For Character, Group, Scenario, Story; Aspects (for FATE-like games) and Moves (for Powered by Apocalypse games)
+    const string TYPE_ATTITUDE = 'attitude';           // For Character, Group; Attitude towards different people / groups and connections with them
+    const string TYPE_BACKGROUND = 'background';       // For Character, Group, Story; Origin, education, the like
+    const string TYPE_COMMENTARY = 'commentary';       // For Character, Group, Story; GM commentary
+    const string TYPE_DOMAIN = 'domain';               // For Character, Group; Places where the person reigns, dominates, or frequents
+    const string TYPE_FAME = 'fame';                   // For Character; Famous deeds or events; REMOVED
+    const string TYPE_FACTIONS = 'factions';           // For Character, Group; Factions associated with; this includes nations
+    const string TYPE_HISTORY = 'history';             // For Character, Group; History of the person or group
+    const string TYPE_INTERACTIONS = 'interactions';   // For Character, Group; Interactions / encounters with the group or person NAMES
+    const string TYPE_PERSONALITY = 'personality';     // For Character; Personality, character behaviour, mental issues
+    const string TYPE_RESOURCES = 'resources';         // For Character, Group; Resources the person wields, flaunts, can offer
+    const string TYPE_REPUTATION = 'reputation';       // For Character; Character's reputation
+    const string TYPE_RETINUE = 'retinue';             // For Character, Group; Friends, allies, etc.
+    const string TYPE_RUMOURS = 'rumours';             // For Character, Group; Unproven rumours collected about character
+    const string TYPE_STORIES = 'stories';             // For Character, Group; Stories person participated in
+    const string TYPE_THREADS = 'threads';             // For Character, Group, Scenario, Story; Threads attached
+    const string TYPE_WHO = 'who';                     // For Character, Group; Who is this?
 
-    const TYPE_STRUCTURE = 'structure';         // For Group: what is the structure and basic workings?
+    const string TYPE_STRUCTURE = 'structure';         // For Group: what is the structure and basic workings?
 
-    const TYPE_PREMISE = 'premise';             // For Scenario, Story; what is the main concept?
-    const TYPE_ACTORS = 'actors';               // For Scenario, Story; who is going to participate?
-    const TYPE_PLAN = 'plan';                   // For Scenario; what is going to happen?
-    const TYPE_SCENE = 'scene';                 // For Scenario, Story; a particular scene
-    const TYPE_ACT = 'act';                     // For Scenario, Story; a particular act
-    const TYPE_BRIEFING = 'briefing';           // For Scenario, Story; briefing / introduction scene
-    const TYPE_DEBRIEFING = 'debriefing';       // For Scenario, Story; debriefing / aftermath scene
-    const TYPE_PRELUDE = 'prelude';             // For Scenario, Story; events leading to or introducing
-    const TYPE_INTERLUDE = 'interlude';         // For Scenario, Story; events in-between
-    const TYPE_POSTLUDE = 'postlude';           // For Scenario, Story; events following
+    const string TYPE_PREMISE = 'premise';             // For Scenario, Story; what is the main concept?
+    const string TYPE_ACTORS = 'actors';               // For Scenario, Story; who is going to participate?
+    const string TYPE_PLAN = 'plan';                   // For Scenario; what is going to happen?
+    const string TYPE_SCENE = 'scene';                 // For Scenario, Story; a particular scene
+    const string TYPE_ACT = 'act';                     // For Scenario, Story; a particular act
+    const string TYPE_BRIEFING = 'briefing';           // For Scenario, Story; briefing / introduction scene
+    const string TYPE_DEBRIEFING = 'debriefing';       // For Scenario, Story; debriefing / aftermath scene
+    const string TYPE_PRELUDE = 'prelude';             // For Scenario, Story; events leading to or introducing
+    const string TYPE_INTERLUDE = 'interlude';         // For Scenario, Story; events in-between
+    const string TYPE_POSTLUDE = 'postlude';           // For Scenario, Story; events following
 
+    #[Override]
     public static function tableName(): string
     {
         return 'description';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -104,7 +112,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
                     'point_in_time_end_id',
                     'point_in_time_still_valid_id',
                 ],
-                'integer'
+                'integer',
             ],
             [['description_pack_id', 'code', 'public_text', 'lang', 'visibility'], 'required'],
             [
@@ -116,7 +124,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
                     'protected_text_expanded',
                     'private_text_expanded',
                 ],
-                'string'
+                'string',
             ],
             [['code'], 'string', 'max' => 40],
             [['lang'], 'string', 'max' => 5],
@@ -168,6 +176,10 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         ];
     }
 
+    /**
+     * @throws Exception
+     */
+    #[Override]
     public function beforeSave($insert): bool
     {
         if (!$insert) {
@@ -181,6 +193,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         return parent::beforeSave($insert);
     }
 
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         if (!empty($changedAttributes)) {
@@ -193,6 +206,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function attributeHints(): array
     {
         return [
@@ -205,6 +219,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -226,6 +241,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         ];
     }
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -286,8 +302,8 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     }
 
     /**
-     * Provides list of allowed description types for the class the object belongs to
-     * List is provided as full names in current language keyed by codes
+     * Provides a list of allowed description types for the class the object belongs to
+     * List is provided as full names in the current language keyed by codes
      *
      * Fallback mechanism: if the method is not implemented, a full list is provided, which will allow the object to be
      * used, but will reduce the user experience.
@@ -382,9 +398,11 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     }
 
     /**
-     * Provides simple representation of the object content, fit for basic display in an index or a summary
+     * Provides a simple representation of the object content, fit for basic display in an index or a summary
+     *
      * @return array<string,string>
      */
+    #[Override]
     public function getSimpleDataForApi(): array
     {
         return [
@@ -394,8 +412,10 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
 
     /**
      * Provides complete representation of public parts of object content, fit for full card display
+     *
      * @return array<string,string>
      */
+    #[Override]
     public function getCompleteDataForApi(): array
     {
         return [
@@ -404,11 +424,15 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         ];
     }
 
+    #[Override]
     public function isVisibleInApi(): bool
     {
         return ($this->getVisibility() === Visibility::VISIBILITY_FULL);
     }
 
+    /**
+     * @throws Exception
+     */
     public function createHistoryRecord(): ?DescriptionHistory
     {
         $description = Description::findOne(['description_id' => $this->description_id]);
@@ -424,7 +448,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     }
 
     /**
-     * Provides word count that player can see
+     * Provides word count that a player can see
      */
     public function getWordCount(): int
     {
@@ -432,7 +456,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     }
 
     /**
-     * Provides word count for public part
+     * Provides word count for the public part
      */
     public function getWordCountForPublic(): int
     {
@@ -440,7 +464,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     }
 
     /**
-     * Provides word count for protected part
+     * Provides word count for the protected part
      */
     public function getWordCountForProtected(): int
     {
@@ -448,7 +472,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
     }
 
     /**
-     * Provides word count for private part
+     * Provides word count for the private part
      */
     public function getWordCountForPrivate(): int
     {

@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\core\Language;
 use common\models\core\Visibility;
+use Override;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -16,6 +17,7 @@ final class DescriptionQuery extends Description
 {
     public ?string $text;
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -24,6 +26,7 @@ final class DescriptionQuery extends Description
         ];
     }
 
+    #[Override]
     public function attributeLabels(): array
     {
         $attributeLabels = parent::attributeLabels();
@@ -33,13 +36,14 @@ final class DescriptionQuery extends Description
         return $attributeLabels;
     }
 
+    #[Override]
     public function scenarios(): array
     {
         return Model::scenarios();
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates a data provider instance with the search query applied
      */
     public function search(array $params): ActiveDataProvider
     {

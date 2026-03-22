@@ -5,11 +5,12 @@ use common\models\core\Visibility;
 use common\models\Description;
 use common\models\PointInTimeQuery;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Description */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model Description */
+/* @var $form ActiveForm */
 ?>
 
 <div class="description-form">

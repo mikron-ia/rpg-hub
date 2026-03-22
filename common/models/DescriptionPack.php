@@ -5,10 +5,12 @@ namespace common\models;
 use common\models\core\HasEpicControl;
 use common\models\core\IsEditablePack;
 use common\models\core\Language;
+use Override;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\web\HttpException;
 
 /**
@@ -20,15 +22,19 @@ use yii\web\HttpException;
  * @property Description[] $descriptions
  * @property Character[] $people
  * @property Epic $epic
+ *
+ * @method touch(string $string)
  */
 final class DescriptionPack extends ActiveRecord implements Displayable, IsEditablePack
 {
-    public static function tableName()
+    #[Override]
+    public static function tableName(): string
     {
         return 'description_pack';
     }
 
-    public function rules()
+    #[Override]
+    public function rules(): array
     {
         return [
             [['class'], 'required'],
@@ -36,7 +42,8 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
         ];
     }
 
-    public function attributeLabels()
+    #[Override]
+    public function attributeLabels(): array
     {
         return [
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK_ID'),
@@ -44,7 +51,8 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
         ];
     }
 
-    public function behaviors()
+    #[Override]
+    public function behaviors(): array
     {
         return [
             ['class' => TimestampBehavior::class],
@@ -67,12 +75,10 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
         return $this->hasMany(Character::class, ['description_pack_id' => 'description_pack_id']);
     }
 
-
     /**
-     * @param string $className
-     * @return DescriptionPack
+     * @throws Exception
      */
-    static public function create($className)
+    public static function create(string $className): DescriptionPack
     {
         $pack = new DescriptionPack();
         $pack->class = $className;
@@ -83,7 +89,8 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
         return $pack;
     }
 
-    public function getSimpleDataForApi()
+    #[Override]
+    public function getSimpleDataForApi(): array
     {
         $descriptions = [];
 
@@ -94,7 +101,8 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
         return $descriptions;
     }
 
-    public function getCompleteDataForApi()
+    #[Override]
+    public function getCompleteDataForApi(): array
     {
         $descriptions = [];
 
@@ -107,23 +115,17 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
         return $descriptions;
     }
 
+    #[Override]
     public function isVisibleInApi(): bool
     {
         return true;
     }
 
-    /**
-     * @param Language $language
-     * @return ActiveQuery
-     */
     public function getDescriptionsInLanguage(Language $language): ActiveQuery
     {
         return DescriptionQuery::listDescriptionsInLanguage($this, $language);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getDescriptionsVisible(): ActiveQuery
     {
         return DescriptionQuery::listDescriptions($this);
@@ -134,10 +136,6 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
         return DescriptionQuery::listDescriptionsUnexpired($this);
     }
 
-    /**
-     * @param User $user
-     * @return ActiveQuery
-     */
     public function getDescriptionsInLanguageOfTheUser(User $user): ActiveQuery
     {
         $language = Language::create($user->language);
@@ -145,7 +143,6 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
     }
 
     /**
-     * @return ActiveQuery
      * @throws HttpException
      */
     public function getDescriptionsInLanguageOfTheActiveUser(): ActiveQuery
@@ -160,21 +157,11 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
         return $this->getDescriptionsInLanguageOfTheUser($user);
     }
 
-    /**
-     * @param Language $language
-     * @param string $code
-     * @return ActiveQuery
-     */
     public function getDescriptionInLanguage(Language $language, string $code): ActiveQuery
     {
         return $this->getDescriptions()->where(['lang' => $language->language, 'code' => $code]);
     }
 
-    /**
-     * @param User $user
-     * @param string $code
-     * @return ActiveQuery
-     */
     public function getDescriptionInLanguageOfTheUser(User $user, string $code): ActiveQuery
     {
         $language = Language::create($user->language);
@@ -182,8 +169,6 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
     }
 
     /**
-     * @param string $code
-     * @return ActiveQuery
      * @throws HttpException
      */
     public function getDescriptionInLanguageOfTheActiveUser(string $code): ActiveQuery
@@ -198,9 +183,6 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
         return $this->getDescriptionInLanguageOfTheUser($user, $code);
     }
 
-    /**
-     * @return HasEpicControl
-     */
     public function getControllingObject(): HasEpicControl
     {
         $className = 'common\models\\' . $this->class;
@@ -208,14 +190,15 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
         return ($className)::findOne(['description_pack_id' => $this->description_pack_id]);
     }
 
-    /**
-     * @return Epic
-     */
     public function getEpic(): Epic
     {
         return $this->getControllingObject()->getEpic()->one();
     }
 
+    /**
+     * @throws HttpException
+     */
+    #[Override]
     public function canUserReadYou(): bool
     {
         $className = 'common\models\\' . $this->class;
@@ -224,6 +207,10 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
         return $object->canUserViewYou();
     }
 
+    /**
+     * @throws HttpException
+     */
+    #[Override]
     public function canUserControlYou(): bool
     {
         $className = 'common\models\\' . $this->class;
@@ -234,8 +221,6 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
 
     /**
      * Counts every type of description once
-     *
-     * @return int
      */
     public function getUniqueDescriptionTypesCount(): int
     {
