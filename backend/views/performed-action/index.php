@@ -1,12 +1,15 @@
 <?php
 
 use common\models\PerformedAction;
+use common\models\PerformedActionQuery;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $searchModel common\models\PerformedActionQuery */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $searchModel PerformedActionQuery */
+/* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'PERFORMED_ACTIONS_TITLE_INDEX');
 $this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/front', 'key' => Yii::$app->params['activeEpic']->key]];

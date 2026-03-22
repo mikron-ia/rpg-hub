@@ -3,23 +3,29 @@
 namespace common\behaviours;
 
 use common\models\PerformedAction;
+use Override;
 use yii\base\Behavior;
 use yii\base\Event;
 use yii\db\BaseActiveRecord;
+use yii\db\Exception;
 
 class PerformedActionBehavior extends Behavior
 {
     /**
      * @var string Name of the ID field in the table
      */
-    public $idName = 'id';
+    public string $idName = 'id';
 
     /**
      * @var string Class name to be used in records
      */
-    public $className = 'Unknown';
+    public string $className = 'Unknown';
 
-    public function events()
+    /**
+     * @return array<string,string>
+     */
+    #[Override]
+    public function events(): array
     {
         return [
             BaseActiveRecord::EVENT_AFTER_INSERT => 'createRecord',
@@ -28,25 +34,20 @@ class PerformedActionBehavior extends Behavior
     }
 
     /**
-     * @param Event $event
+     * This method looks unused to IDE because it is called via the framework - see events()
+     *
+     * @throws Exception
      */
-    public function createRecord(Event $event)
+    public function createRecord(Event $event): void
     {
-        $idName = $this->idName;
-        $id = $this->owner->$idName;
-
-        switch ($event->name) {
-            case BaseActiveRecord::EVENT_AFTER_INSERT :
-                $action = PerformedAction::PERFORMED_ACTION_CREATE;
-                break;
-            case BaseActiveRecord::EVENT_AFTER_UPDATE :
-                $action = PerformedAction::PERFORMED_ACTION_UPDATE;
-                break;
-            default :
-                $action = PerformedAction::PERFORMED_ACTION_OTHER;
-                break;
-        }
-
-        PerformedAction::createRecord($action, $this->className, $id);
+        PerformedAction::createRecord(
+            operation: match ($event->name) {
+                BaseActiveRecord::EVENT_AFTER_INSERT => PerformedAction::PERFORMED_ACTION_CREATE,
+                BaseActiveRecord::EVENT_AFTER_UPDATE => PerformedAction::PERFORMED_ACTION_UPDATE,
+                default => PerformedAction::PERFORMED_ACTION_OTHER,
+            },
+            class: $this->className,
+            object_id: $this->owner->{$this->idName}
+        );
     }
 }

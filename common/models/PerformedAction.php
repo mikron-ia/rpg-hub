@@ -4,11 +4,13 @@ namespace common\models;
 
 use common\models\tools\IP;
 use common\models\tools\UserAgent;
+use Override;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\console\Application as ConsoleApplication;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "performed_action".
@@ -28,20 +30,25 @@ use yii\db\ActiveRecord;
  */
 class PerformedAction extends ActiveRecord
 {
-    const PERFORMED_ACTION_CREATE = 'create';
-    const PERFORMED_ACTION_UPDATE = 'update';
-    const PERFORMED_ACTION_LOGIN = 'login';
-    const PERFORMED_ACTION_LOGOUT = 'logout';
-    const PERFORMED_ACTION_MANAGER_ATTACH = 'manager-attach';
-    const PERFORMED_ACTION_MANAGER_DETACH = 'manager-detach';
-    const PERFORMED_ACTION_OTHER = 'other';
+    const string PERFORMED_ACTION_CREATE = 'create';
+    const string PERFORMED_ACTION_UPDATE = 'update';
+    const string PERFORMED_ACTION_LOGIN = 'login';
+    const string PERFORMED_ACTION_LOGOUT = 'logout';
+    const string PERFORMED_ACTION_MANAGER_ATTACH = 'manager-attach';
+    const string PERFORMED_ACTION_MANAGER_DETACH = 'manager-detach';
+    const string PERFORMED_ACTION_OTHER = 'other';
 
-    public static function tableName()
+    #[Override]
+    public static function tableName(): string
     {
         return 'performed_action';
     }
 
-    public function behaviors()
+    /**
+     * @return array<array<string,string|int|null>>
+     */
+    #[Override]
+    public function behaviors(): array
     {
         return [
             [
@@ -52,7 +59,8 @@ class PerformedAction extends ActiveRecord
         ];
     }
 
-    public function rules()
+    #[Override]
+    public function rules(): array
     {
         return [
             [['operation'], 'required'],
@@ -81,7 +89,11 @@ class PerformedAction extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
+    /**
+     * @return array<string,string>
+     */
+    #[Override]
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'PERFORMED_ACTION_ID'),
@@ -93,93 +105,61 @@ class PerformedAction extends ActiveRecord
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getIp()
+    public function getIp(): ActiveQuery
     {
         return $this->hasOne(IP::class, ['id' => 'ip_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getUserAgent()
+    public function getUserAgent(): ActiveQuery
     {
         return $this->hasOne(UserAgent::class, ['id' => 'user_agent_id']);
     }
 
     /**
      * @param string $operation Operation performed
-     * @param string $class Class of the object influenced
-     * @param int $object_id ID of the object
+     * @param string|null $class Class of the object influenced
+     * @param int|null $object_id ID of the object
+     *
      * @return bool Success of the operation
+     *
+     * @throws Exception
      */
-    static public function createRecord($operation, $class, $object_id): bool
+    public static function createRecord(string $operation, ?string $class, ?int $object_id): bool
     {
         if (Yii::$app instanceof ConsoleApplication) {
-            /* There is no point to record sighting from a console call */
+            /* There is no point to record an action from a console call */
             return false;
         }
 
         $record = new PerformedAction();
 
-        $ipAddress = Yii::$app->request->userIP;
-        $ip = IP::findOne(['content' => $ipAddress]);
-        if (!$ip) {
-            $ip = new IP(['content' => $ipAddress]);
-            $ip->save();
-            $ip->refresh();
-        }
-
-        $userAgentString = Yii::$app->request->getUserAgent();
-
-        $userAgent = UserAgent::findOne(['content' => $userAgentString]);
-        if (!$userAgent) {
-            $userAgent = new UserAgent(['content' => $userAgentString]);
-            $userAgent->save();
-            $userAgent->refresh();
-        }
-
-        if (!Yii::$app->user->isGuest) {
-            /* If there is an user to act, get their ID */
-            $userId = Yii::$app->user->identity->getId();
-        } else {
-            /* If not - for example, in case of registering a new user - assume non-entity */
-            $userId = null;
-        }
-
-        $record->user_id = $userId;
+        $record->user_id = self::makeUserId();
         $record->operation = $operation;
         $record->class = $class;
         $record->object_id = $object_id;
-        $record->ip_id = $ip->id;
-        $record->user_agent_id = $userAgent->id;
+        $record->ip_id = self::makeIp()->id;
+        $record->user_agent_id = self::makeAgent()->id;
 
         return $record->save();
     }
 
     /**
-     * @param string $operation Operation performed
-     * @return bool Success of the operation
+     * @throws Exception
      */
-    static public function createSimplifiedRecord($operation): bool
+    public static function createSimplifiedRecord(string $operation): bool
     {
         return self::createRecord($operation, null, null);
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
      */
-    static public function actionNames(): array
+    public static function actionNames(): array
     {
         return [
             self::PERFORMED_ACTION_CREATE => Yii::t('app', 'PERFORMED_ACTION_CREATE'),
@@ -195,17 +175,59 @@ class PerformedAction extends ActiveRecord
     /**
      * @return string[]
      */
-    static public function allowedActions(): array
+    public static function allowedActions(): array
     {
         return array_keys(self::actionNames());
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         $names = self::actionNames();
         return isset($names[$this->operation]) ? $names[$this->operation] : '?';
+    }
+
+    /**
+     * @throws Exception
+     */
+    private static function makeAgent(): ?UserAgent
+    {
+        $userAgentString = Yii::$app->request->getUserAgent();
+
+        $userAgent = UserAgent::findOne(['content' => $userAgentString]);
+        if (!$userAgent) {
+            $userAgent = new UserAgent(['content' => $userAgentString]);
+            $userAgent->save();
+            $userAgent->refresh();
+        }
+
+        return $userAgent;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private static function makeIp(): ?IP
+    {
+        $ipAddress = Yii::$app->request->userIP;
+        $ip = IP::findOne(['content' => $ipAddress]);
+        if (!$ip) {
+            $ip = new IP(['content' => $ipAddress]);
+            $ip->save();
+            $ip->refresh();
+        }
+
+        return $ip;
+    }
+
+    private static function makeUserId(): string|int|null
+    {
+        /* If there is no user - for example, in the case of registering a new user - assume non-entity by default */
+        $userId = null;
+        if (!Yii::$app->user->isGuest) {
+            /* If there is a user to act, though, get their ID */
+            $userId = Yii::$app->user->identity->getId();
+        }
+
+        return $userId;
     }
 }

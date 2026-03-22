@@ -2,20 +2,23 @@
 
 namespace backend\controllers;
 
+use Throwable;
 use Yii;
 use common\models\PerformedAction;
 use common\models\PerformedActionQuery;
+use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * PerformedActionController implements the CRUD actions for PerformedAction model.
  */
 final class PerformedActionController extends Controller
 {
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -37,11 +40,7 @@ final class PerformedActionController extends Controller
         ];
     }
 
-    /**
-     * Lists all PerformedAction models.
-     * @return mixed
-     */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $searchModel = new PerformedActionQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -53,12 +52,11 @@ final class PerformedActionController extends Controller
     }
 
     /**
-     * Deletes an existing PerformedAction model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
+     * @throws NotFoundHttpException
+     * @throws StaleObjectException
+     * @throws Throwable
      */
-    public function actionDelete($id)
+    public function actionDelete($id): Response
     {
         $this->findModel($id)->delete();
 
@@ -66,18 +64,14 @@ final class PerformedActionController extends Controller
     }
 
     /**
-     * Finds the PerformedAction model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return PerformedAction the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
-    protected function findModel($id)
+    protected function findModel(string $id): PerformedAction
     {
         if (($model = PerformedAction::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

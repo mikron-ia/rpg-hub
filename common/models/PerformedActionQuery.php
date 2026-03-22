@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Override;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -10,7 +11,8 @@ use yii\data\ActiveDataProvider;
  */
 class PerformedActionQuery extends PerformedAction
 {
-    public function rules()
+    #[Override]
+    public function rules(): array
     {
         return [
             [['id', 'object_id', 'performed_at'], 'integer'],
@@ -18,7 +20,8 @@ class PerformedActionQuery extends PerformedAction
         ];
     }
 
-    public function scenarios()
+    #[Override]
+    public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
@@ -26,10 +29,11 @@ class PerformedActionQuery extends PerformedAction
 
     /**
      * Creates data provider instance with search query applied
+     *
      * @param array $params
      * @return ActiveDataProvider
      */
-    public function search($params): ActiveDataProvider
+    public function search(array $params): ActiveDataProvider
     {
         $query = PerformedAction::find();
 
