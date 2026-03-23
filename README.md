@@ -31,8 +31,6 @@ can no longer fulfill those goals. It is now maintained mostly for its practical
 
 1. Make sure you have the proper stack installed; the current requirements are:
     - PHP 8.3+
-        - Since there are no components from 8.3 used so far, the current code will run on 8.1 and 8.2 with minimal
-          tweaking -- but there is no guarantee that this behavior will be maintained
         - Due to PHP maintaining most of its backwards compatibility, the project also works up to PHP 8.5
     - MySQL 5.6+ database or MariaDB equivalent
         - The current project was tested and found working up to MySQL 8.0 and MariaDB 11.0

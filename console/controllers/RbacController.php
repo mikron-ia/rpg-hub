@@ -84,6 +84,8 @@ class RbacController extends Controller
         $this->actionV1040();
 
         /* Nothing to load in v1.5.0 */
+
+        /* Nothing to load in v1.6.0 */
     }
 
     /**
