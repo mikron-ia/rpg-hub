@@ -104,6 +104,7 @@ final class DescriptionQuery extends Description
         $query->andWhere([
             'description_pack_id' => $descriptionPack->description_pack_id,
             'point_in_time_end_id' => null,
+            'outdated' => false,
             'visibility' => Visibility::determineVisibilityVector($descriptionPack->epic),
         ]);
 

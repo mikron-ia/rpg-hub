@@ -29,6 +29,6 @@ $descriptionTimestamps.each(function (index, element) {
     if (descriptions[type] && descriptions[type].length > 1) {
         var min = Math.min.apply(null, descriptions[type]);
         descriptions[type].splice(descriptions[type].indexOf(min), 1);
-        $('[data-type=' + type + '][data-order=' + min + ']').parent().find('.description-outdated').show();
+        $('[data-type=' + type + '][data-order=' + min + ']').parent().find('.description-replaced').show();
     }
 });

@@ -91,6 +91,12 @@ $messageForStillValid = isset($model->point_in_time_still_valid_id) && isset($mo
             ]); ?>
         </span>
 
+        <?php if ($model->outdated): ?>
+            <div class="tag-box">
+                <?= Yii::t('app', 'DESCRIPTION_OUTDATED_TAG_CMS'); ?>
+            </div>
+        <?php endif; ?>
+
         <span class="tag-box">
             <?= $model->getLanguage(); ?>
         </span>

@@ -32,7 +32,6 @@ if ($pointInTimeStartExists || $pointInTimeEndExists || $pointInTimeStillValidEx
         $displayStillValid = true;
     }
 }
-
 ?>
 
 <div class="col-md-6">
@@ -50,10 +49,17 @@ if ($pointInTimeStartExists || $pointInTimeEndExists || $pointInTimeStillValidEx
                 ) ?>
             </div>
         <?php endif; ?>
-        <div class="tag-box description-outdated" style="display: none;">
-            <?= Yii::t('app', 'DESCRIPTION_REPLACED'); ?>
+    <?php endif; ?>
+
+    <?php if ($model->outdated): ?>
+        <div class="tag-box">
+            <?= Yii::t('app', 'DESCRIPTION_OUTDATED_TAG_PRESENTATION'); ?>
         </div>
     <?php endif; ?>
+
+    <div class="tag-box description-replaced" style="display: none;">
+        <?= Yii::t('app', 'DESCRIPTION_REPLACED'); ?>
+    </div>
 
     <div class="public-notes">
         <?= $model->getPublicFormatted(); ?>

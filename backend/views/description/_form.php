@@ -29,11 +29,22 @@ use yii\widgets\ActiveForm;
         'method' => 'post',
     ]); ?>
 
-    <div class="col-md-12">
+    <div class="col-md-6 col-xs-12">
         <?= $form->field($model, 'code')->dropDownList(
             $model->typeNamesForThisClass(),
             ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_TYPE') . ' --- ']
         ); ?>
+    </div>
+
+    <div class="col-md-3 col-xs-6">
+        <?= $form->field($model, 'lang')->dropDownList(Language::languagesLong()); ?>
+    </div>
+
+    <div class="col-md-3 col-xs-6">
+        <?= $form
+            ->field($model, 'visibility')
+            ->dropDownList(Visibility::visibilityNames(Description::allowedVisibilities()));
+        ?>
     </div>
 
     <div class="col-md-12">
@@ -46,17 +57,6 @@ use yii\widgets\ActiveForm;
 
     <div class="col-md-12">
         <?= $form->field($model, 'private_text')->textarea(['rows' => 8]); ?>
-    </div>
-
-    <div class="col-md-3">
-        <?= $form->field($model, 'lang')->dropDownList(Language::languagesLong()); ?>
-    </div>
-
-    <div class="col-md-3">
-        <?= $form
-            ->field($model, 'visibility')
-            ->dropDownList(Visibility::visibilityNames(Description::allowedVisibilities()));
-        ?>
     </div>
 
     <div class="col-md-6">
@@ -85,6 +85,12 @@ use yii\widgets\ActiveForm;
                 ['prompt' => ' --- ' . Yii::t('app', 'PROMPT_SELECT_POINT_IN_TIME') . ' --- '],
             ); ?>
     </div>
+
+    <div class="col-md-6">
+        <?= $form->field($model, 'outdated')->checkbox(); ?>
+    </div>
+
+    <div class="clearfix"></div>
 
     <div class="form-group">
         <?= Html::submitButton(

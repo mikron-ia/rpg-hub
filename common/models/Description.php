@@ -41,6 +41,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property int|null $point_in_time_start_id
  * @property int|null $point_in_time_end_id
  * @property int|null $point_in_time_still_valid_id
+ * @property int $outdated
  *
  * @property User $createdBy
  * @property DescriptionHistory[] $descriptionHistories
@@ -129,6 +130,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             [['code'], 'string', 'max' => 40],
             [['lang'], 'string', 'max' => 5],
             [['visibility'], 'string', 'max' => 20],
+            [['outdated'], 'default', 'value' => 0],
             [
                 ['description_pack_id'],
                 'exist',
@@ -213,6 +215,8 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             'public_text' => Yii::t('app', 'DESCRIPTION_HINT_TEXT_PUBLIC'),
             'protected_text' => Yii::t('app', 'DESCRIPTION_HINT_TEXT_PROTECTED'),
             'private_text' => Yii::t('app', 'DESCRIPTION_HINT_TEXT_PRIVATE'),
+            'point_in_time_end_id' => Yii::t('app', 'DESCRIPTION_HINT_POINT_IN_TIME_END'),
+            'outdated' => Yii::t('app', 'DESCRIPTION_HINT_OUTDATED'),
         ];
     }
 
@@ -238,6 +242,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
             'point_in_time_start_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME_START'),
             'point_in_time_end_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME_END'),
             'point_in_time_still_valid_id' => Yii::t('app', 'DESCRIPTION_POINT_IN_TIME_STILL_VALID'),
+            'outdated' => Yii::t('app', 'DESCRIPTION_OUTDATED'),
         ];
     }
 
