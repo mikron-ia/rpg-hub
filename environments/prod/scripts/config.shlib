@@ -1,0 +1,9 @@
+#!/bin/bash
+
+runner="php"
+yii="./yii"
+log="upkeep.log"
+
+export runner
+export yii
+export log
