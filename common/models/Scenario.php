@@ -27,6 +27,7 @@ use yii\helpers\Markdown;
  *
  * @property DescriptionPack $descriptionPack
  * @property Epic $epic
+ * @property Story[] $stories
  */
 class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
 {
@@ -121,6 +122,11 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
+    }
+
+    public function getStories(): ActiveQuery
+    {
+        return $this->hasMany(Story::class, ['based_on_id' => 'scenario_id']);
     }
 
     static public function allowedDescriptionTypes(): array

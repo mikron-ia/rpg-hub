@@ -728,6 +728,7 @@ return [
     'SCENARIO_STATUS_DISCARDED' => 'Odrzucony',
     'SCENARIO_STATUS_NEW' => 'Nowy',
     'SCENARIO_STATUS_USED' => 'Użyty',
+    'SCENARIO_STORIES' => 'Historie oparte na scenariuszu',
     'SCENARIO_TAGLINE' => 'Skrót',
     'SCENARIO_TECHNICAL_DETAILS' => 'Szczegóły techniczne',
     'SCENARIO_TITLE_CREATE' => 'Dodaj scenariusz',

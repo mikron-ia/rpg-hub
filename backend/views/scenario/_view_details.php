@@ -48,4 +48,15 @@ use yii\widgets\DetailView;
             ) ?>
         </div>
     </div>
+
+    <?php if (!empty($model->stories)): ?>
+        <div class="col-md-6">
+            <h2 class="text-center"><?= Yii::t('app', 'SCENARIO_STORIES'); ?></h2>
+            <ul>
+                <?php foreach ($model->stories as $story): ?>
+                    <li><?= $story ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
 </div>

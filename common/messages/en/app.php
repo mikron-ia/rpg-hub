@@ -728,6 +728,7 @@ return [
     'SCENARIO_STATUS_DISCARDED' => 'Discarded',
     'SCENARIO_STATUS_NEW' => 'New',
     'SCENARIO_STATUS_USED' => 'Used',
+    'SCENARIO_STORIES' => 'Stories based on scenario',
     'SCENARIO_TAGLINE' => 'Short note',
     'SCENARIO_TECHNICAL_DETAILS' => 'Technical details',
     'SCENARIO_TITLE_CREATE' => 'Create scenario',
