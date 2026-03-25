@@ -9,6 +9,7 @@ use common\models\core\HasSightings;
 use common\models\core\HasStatus;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
+use Override;
 use Throwable;
 use Yii;
 use yii\base\Exception;
@@ -70,11 +71,13 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     const string STATUS_FINISHED = 'finished';       // epic was completed; next: CLOSED
     const string STATUS_CLOSED = 'closed';           // epic is documented and done; next: none
 
+    #[Override]
     public static function tableName(): string
     {
         return 'epic';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -113,6 +116,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     /**
      * @return array<string, string>
      */
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -132,6 +136,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     /**
      * @return array<string, string>
      */
+    #[Override]
     static public function statusNames(): array
     {
         return [
@@ -154,6 +159,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     /**
      * @return array<string, string>
      */
+    #[Override]
     static public function statusClasses(): array
     {
         return [
@@ -176,6 +182,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     /**
      * @return array<string,string[]>
      */
+    #[Override]
     public function statusAllowedChanges(): array
     {
         return [
@@ -202,6 +209,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     /**
      * Provides sorting priorities based on status
      * Note: most important statuses have the lowest numbers
+     *
      * @return int[]
      */
     public function sortPriorities(): array
@@ -224,30 +232,33 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
 
     /**
      * Provides Epic's own priority
-     * @return int
      */
     public function getOwnSortPriority(): int
     {
         return $this->sortPriorities()[$this->status];
     }
 
+    #[Override]
     public function getStatus(): string
     {
         $names = self::statusNames();
         return isset($names[$this->status]) ? $names[$this->status] : '?';
     }
 
+    #[Override]
     public function getStatusClass(): string
     {
         $names = self::statusClasses();
         return isset($names[$this->status]) ? $names[$this->status] : '';
     }
 
+    #[Override]
     public function getAllowedChange(): array
     {
         return array_merge(($this->statusAllowedChanges()[$this->status] ?? []), [$this->status]);
     }
 
+    #[Override]
     public function getAllowedChangeNames(): array
     {
         return array_filter(self::statusNames(), function ($key) {
@@ -272,7 +283,11 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return FrontStyles::tryFrom($this->style ?? FrontStyles::Default->value) ?? FrontStyles::Default;
     }
 
-    public function afterFind()
+    /**
+     * @throws DbException
+     */
+    #[Override]
+    public function afterFind(): void
     {
         if ($this->seen_pack_id) {
             $this->seenPack->recordNotification();
@@ -283,12 +298,18 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     /**
      * @throws DbException
      */
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         $this->seenPack->updateRecord();
         parent::afterSave($insert, $changedAttributes);
     }
 
+    /**
+     * @throws DbException
+     * @throws HttpException
+     */
+    #[Override]
     public function beforeSave($insert): bool
     {
         if ($insert) {
@@ -313,7 +334,8 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return parent::beforeSave($insert);
     }
 
-    public function behaviors()
+    #[Override]
+    public function behaviors(): array
     {
         return [
             'performedActionBehavior' => [
@@ -416,6 +438,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     /**
      * @return array<string, string>
      */
+    #[Override]
     public function getSimpleDataForApi(): array
     {
         return [
@@ -424,6 +447,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         ];
     }
 
+    #[Override]
     public function getCompleteDataForApi(): array
     {
         $query = new ActiveDataProvider(['query' => $this->getStories()->orderBy('story_id DESC')]);
@@ -437,18 +461,16 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             }
         }
 
-        $recap = $this->getCurrentRecap();
-        $recapData = ($recap ? $recap->getCompleteDataForApi() : null);
-
         return [
             'name' => $this->name,
             'key' => $this->key,
             'help' => [],
-            'current' => $recapData,
+            'current' => $this->getCurrentRecap()?->getCompleteDataForApi(),
             'stories' => $storyData,
         ];
     }
 
+    #[Override]
     public function isVisibleInApi(): bool
     {
         return true;
@@ -457,6 +479,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     /**
      * @return string[]
      */
+    #[Override]
     static public function allowedParameterTypes(): array
     {
         return [
@@ -470,6 +493,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         ];
     }
 
+    #[Override]
     static public function availableParameterTypes(): array
     {
         return [
@@ -483,64 +507,64 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     }
 
     /**
-     * Determines whether user can list epics
-     * @return bool
+     * Determines whether the user can list epics
+     *
      * @throws HttpException
      */
     static public function canUserIndexEpic(): bool
     {
         if (Yii::$app->user->can('indexEpic')) {
             return true;
-        } else {
-            throw new HttpException(403, Yii::t('app', 'NO_RIGHT_TO_LIST_EPIC'));
         }
+
+        throw new HttpException(403, Yii::t('app', 'NO_RIGHT_TO_LIST_EPIC'));
     }
 
     /**
-     * Determines whether user can create an epic
-     * @return bool
+     * Determines whether the user can create an epic
+     *
      * @throws HttpException
      */
     static public function canUserCreateEpic(): bool
     {
         if (Yii::$app->user->can('openEpic')) {
             return true;
-        } else {
-            throw new HttpException(403, Yii::t('app', 'NO_RIGHT_TO_CREATE_EPIC'));
         }
+
+        throw new HttpException(403, Yii::t('app', 'NO_RIGHT_TO_CREATE_EPIC'));
     }
 
     /**
-     * Determines whether user can make changes to this epic
-     * @return bool
+     * Determines whether the user can make changes to this epic
+     *
      * @throws HttpException
      */
     public function canUserControlYou(): bool
     {
         if (Yii::$app->user->can('controlEpic', ['epic' => $this])) {
             return true;
-        } else {
-            throw new HttpException(403, Yii::t('app', 'NO_RIGHT_TO_CONTROL_EPIC'));
         }
+
+        throw new HttpException(403, Yii::t('app', 'NO_RIGHT_TO_CONTROL_EPIC'));
     }
 
     /**
-     * Determines whether user can view this epic
-     * @return bool
+     * Determines whether the user can view this epic
+     *
      * @throws HttpException
      */
     public function canUserViewYou(): bool
     {
         if (Yii::$app->user->can('viewEpic', ['epic' => $this])) {
             return true;
-        } else {
-            throw new HttpException(403, Yii::t('app', 'NO_RIGHT_TO_VIEW_EPIC'));
         }
+
+        throw new HttpException(403, Yii::t('app', 'NO_RIGHT_TO_VIEW_EPIC'));
     }
 
     /**
-     * Determines whether user can view active epic
-     * @return bool
+     * Determines whether the user can view active epic
+     *
      * @throws HttpException
      */
     static public function canUserViewActiveEpic(): bool
@@ -549,16 +573,12 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             /** @var Epic $activeEpic */
             $activeEpic = Yii::$app->params['activeEpic'];
             return $activeEpic->canUserViewYou();
-        } else {
-            return false;
         }
+
+        return false;
     }
 
-    /**
-     * @param User|null $user
-     * @return bool
-     */
-    public function isUserYourParticipant($user): bool
+    public function isUserYourParticipant(?User $user): bool
     {
         if (!$user) {
             return false;
@@ -601,7 +621,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             $participant->setRoles();
 
             PerformedAction::createRecord(PerformedAction::PERFORMED_ACTION_MANAGER_ATTACH, 'Epic', $this->epic_id);
-        } catch (Exception $e) {
+        } catch (Exception) {
             /* @todo Add logging */
             return false;
         }
@@ -636,7 +656,8 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             }
 
             PerformedAction::createRecord(PerformedAction::PERFORMED_ACTION_MANAGER_DETACH, 'Epic', $this->epic_id);
-        } catch (Exception $e) {
+        } catch (Exception) {
+            /** @todo Add logging */
             return false;
         }
 
@@ -645,6 +666,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
 
     /**
      * Provides list of players for a drop down
+     *
      * @return string[]
      */
     public function getPlayerListForDropDown(): array
@@ -660,6 +682,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     /**
      * @throws DbException
      */
+    #[Override]
     public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
@@ -668,37 +691,52 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     /**
      * @throws DbException
      */
+    #[Override]
     public function recordNotification(): bool
     {
         return $this->seenPack->recordNotification();
     }
 
+    #[Override]
     public function showSightingStatus(): string
     {
         return $this->seenPack->getStatusForCurrentUser();
     }
 
+    #[Override]
     public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();
     }
 
-    static function throwExceptionAboutCreate()
+    /**
+     * @throws HttpException
+     */
+    static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_EPIC'));
     }
 
-    static function throwExceptionAboutControl()
+    /**
+     * @throws HttpException
+     */
+    static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_EPIC'));
     }
 
-    static function throwExceptionAboutIndex()
+    /**
+     * @throws HttpException
+     */
+    static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_EPIC'));
     }
 
-    static function throwExceptionAboutView()
+    /**
+     * @throws HttpException
+     */
+    static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_EPIC'));
     }
@@ -711,10 +749,8 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     /**
      * Provides this object's ActiveQuery
      * NOTE: this is a workaround for `Parameter` class to work on Epic without giving it HasEpic control
-     *
-     * @return ActiveQuery
      */
-    public function getEpic()
+    public function getEpic(): ActiveQuery
     {
         return Epic::find()->where(['epic_id' => $this->epic_id]);
     }

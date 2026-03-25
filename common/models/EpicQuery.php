@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Override;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -13,6 +14,7 @@ use yii\db\ActiveRecord;
  */
 final class EpicQuery extends Epic
 {
+    #[Override]
     public function rules(): array
     {
         return [
@@ -20,6 +22,7 @@ final class EpicQuery extends Epic
         ];
     }
 
+    #[Override]
     public function scenarios(): array
     {
         return Model::scenarios();
@@ -51,7 +54,8 @@ final class EpicQuery extends Epic
             'epic_id' => $this->epic_id,
         ]);
 
-        $query->andFilterWhere(['like', 'key', $this->key])
+        $query
+            ->andFilterWhere(['like', 'key', $this->key])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'system', $this->system]);
 
@@ -81,10 +85,6 @@ final class EpicQuery extends Epic
         return $query;
     }
 
-    /**
-     * @param bool $limitToControlled
-     * @return ActiveDataProvider
-     */
     static public function activeEpicsAsActiveDataProvider(bool $limitToControlled = true): ActiveDataProvider
     {
         $query = self::activeEpicsAsActiveRecord($limitToControlled);
@@ -106,7 +106,7 @@ final class EpicQuery extends Epic
 
         $query = self::activeEpicsAsActiveRecord($limitToControlled);
 
-        if (!$query) {
+        if (!$query->exists()) {
             return [];
         }
 
@@ -123,8 +123,9 @@ final class EpicQuery extends Epic
         /** @var string[] $epicListForSelector */
         $epicListForSelector = [];
 
-        foreach ($epicList as $story) {
-            $epicListForSelector[$story->epic_id] = $story->name;
+        foreach ($epicList as $epic) {
+            /** @var Epic $epic */
+            $epicListForSelector[$epic->epic_id] = $epic->name;
         }
 
         return $epicListForSelector;
@@ -139,6 +140,7 @@ final class EpicQuery extends Epic
         $epics = self::activeEpicsAsModels($limitToControlled);
 
         foreach ($epics as $epic) {
+            /** @var Epic $epic */
             $ids[] = (int)$epic->epic_id;
         }
 

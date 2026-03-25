@@ -104,6 +104,7 @@ final class EpicController extends Controller
     /**
      * Displays the Epic's main page
      *
+     * @throws Exception
      * @throws HttpException
      */
     public function actionFront(string $key): string
@@ -263,6 +264,9 @@ final class EpicController extends Controller
         ]);
     }
 
+    /**
+     * @throws NotFoundHttpException
+     */
     public function actionManagerAttach(string $key): Response
     {
         $model = $this->findModel($key);
@@ -276,6 +280,10 @@ final class EpicController extends Controller
         return $this->redirect(['manage']);
     }
 
+    /**
+     * @throws NotFoundHttpException
+     * @throws Throwable
+     */
     public function actionManagerDetach(string $key): Response
     {
         $model = $this->findModel($key);

@@ -8,7 +8,9 @@ use common\models\GameQuery;
 use common\models\RecapQuery;
 use common\models\StoryQuery;
 use common\components\EpicAssistance;
+use Override;
 use Yii;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -22,7 +24,8 @@ final class EpicController extends Controller
 {
     use EpicAssistance;
 
-    public function behaviors()
+    #[Override]
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -50,7 +53,11 @@ final class EpicController extends Controller
         ];
     }
 
-    public function actions()
+    /**
+     * @return array<string, array<string,string|null>>
+     */
+    #[Override]
+    public function actions(): array
     {
         return [
             'error' => [
@@ -60,13 +67,11 @@ final class EpicController extends Controller
     }
 
     /**
-     * Displays Epic
-     * @param $key
-     * @return string
+     * @throws Exception
+     * @throws HttpException
      * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
      */
-    public function actionView($key)
+    public function actionView(string $key): string
     {
         /* Get Epic */
         $model = $this->findModelByKey($key);
@@ -82,10 +87,7 @@ final class EpicController extends Controller
         /* Get Recap */
         $recapQuery = new RecapQuery();
         $recap = $recapQuery->mostRecent();
-
-        if ($recap) {
-            $recap->recordSighting();
-        }
+        $recap?->recordSighting();
 
         /* Get Stories */
         $searchModel = new StoryQuery(4);
@@ -94,10 +96,7 @@ final class EpicController extends Controller
         /* Get Sessions */
         $sessionQuery = new GameQuery();
         $sessions = $sessionQuery->mostRecentDataProvider($model, true);
-
-        if ($recap) {
-            $recap->recordSighting();
-        }
+        $recap?->recordSighting();
 
         try {
             $showScenarios = $model->canUserControlYou();
@@ -120,13 +119,9 @@ final class EpicController extends Controller
     }
 
     /**
-     * Finds the Story model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $key
-     * @return Epic the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModelByKey($key)
+    protected function findModelByKey(string $key): Epic
     {
         $model = Epic::findOne(['key' => $key]);
 
