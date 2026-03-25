@@ -10,6 +10,7 @@ use common\models\StoryGroupAssignmentQuery;
 use common\models\StoryQuery;
 use common\components\EpicAssistance;
 use Yii;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\HttpException;
@@ -22,7 +23,7 @@ final class StoryController extends Controller
 {
     use EpicAssistance;
 
-    private const POSITIONS_PER_PAGE = 4;
+    private const int POSITIONS_PER_PAGE = 4;
 
     public function behaviors(): array
     {
@@ -43,8 +44,8 @@ final class StoryController extends Controller
     /**
      * Lists all Story models
      *
-     * @throws NotFoundHttpException
      * @throws HttpException
+     * @throws NotFoundHttpException
      */
     public function actionIndex(?string $key = null): string
     {
@@ -77,6 +78,7 @@ final class StoryController extends Controller
     /**
      * Displays a single Story model
      *
+     * @throws Exception
      * @throws HttpException
      */
     public function actionView(string $key): string
@@ -114,29 +116,11 @@ final class StoryController extends Controller
     }
 
     /**
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
     protected function findModelByKey(string $key): Story
     {
         $model = Story::findOne(['key' => $key]);
-
-        if ($model === null) {
-            throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));
-        }
-
-        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
-            throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));
-        }
-
-        return $model;
-    }
-
-    /**
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModelById(string $id): Story
-    {
-        $model = Story::findOne(['story_id' => $id]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));

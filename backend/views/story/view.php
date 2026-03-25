@@ -1,12 +1,15 @@
 <?php
 
 use backend\assets\StoryAsset;
+use common\models\Story;
+use yii\bootstrap\Tabs;
 use yii\helpers\Html;
+use yii\web\View;
 
 StoryAsset::register($this);
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Story */
+/* @var $this View */
+/* @var $model Story */
 /* @var $storyCharactersPublic array<string> */
 /* @var $storyCharactersPrivate array<string> */
 /* @var $storyGroupsPublic array<string> */
@@ -50,6 +53,6 @@ $items = [
 
 <h1><?= Html::encode($this->title) ?></h1>
 
-<?= \yii\bootstrap\Tabs::widget([
+<?= Tabs::widget([
     'items' => $items
 ]) ?>

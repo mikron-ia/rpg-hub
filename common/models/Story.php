@@ -13,6 +13,7 @@ use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use common\models\tools\ToolsForMultipleChoiceFields;
 use common\models\type\StoryType;
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -51,6 +52,9 @@ use yii2tech\ar\position\PositionBehavior;
  * @property StoryGroupAssignment[] $storyGroupAssignments
  * @property Parameter[] $storyParameters
  * @property UtilityBag $utilityBag
+ *
+ * @method moveNext()
+ * @method movePrev()
  */
 class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl, HasSightings, HasVisibility
 {
@@ -71,11 +75,13 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
 
     public bool $is_off_the_record_change = false;
 
+    #[Override]
     public static function tableName(): string
     {
         return 'story';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -100,14 +106,14 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
                 'exist',
                 'skipOnError' => false,
                 'targetClass' => Scenario::class,
-                'targetAttribute' => ['based_on_id' => 'scenario_id']
+                'targetAttribute' => ['based_on_id' => 'scenario_id'],
             ],
             [
                 ['parameter_pack_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => ParameterPack::class,
-                'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id']
+                'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id'],
             ],
             [
                 ['visibility'],
@@ -122,6 +128,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -148,6 +155,10 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
+    /**
+     * @throws Exception
+     */
+    #[Override]
     public function afterFind(): void
     {
         if ($this->seen_pack_id) {
@@ -166,6 +177,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     /**
      * @throws Exception
      */
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         if (!$this->is_off_the_record_change) {
@@ -217,6 +229,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return parent::beforeSave($insert);
     }
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -336,6 +349,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function getSimpleDataForApi(): array
     {
         return [
@@ -349,6 +363,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     /**
      * @return array<string,string|array>
      */
+    #[Override]
     public function getCompleteDataForApi(): array
     {
         return [
@@ -366,6 +381,10 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return ($this->getVisibility() === Visibility::VISIBILITY_FULL);
     }
 
+    /**
+     * @return string[]
+     */
+    #[Override]
     static public function allowedParameterTypes(): array
     {
         return [
@@ -380,6 +399,10 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
+    /**
+     * @return string[]
+     */
+    #[Override]
     static public function availableParameterTypes(): array
     {
         return [
@@ -394,41 +417,49 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
-    static public function canUserIndexThem(): bool
+    #[Override]
+    public static function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem(): bool
+    #[Override]
+    public static function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
+    #[Override]
     public function canUserControlYou(): bool
     {
         return self::canUserControlInEpic($this->epic);
     }
 
+    #[Override]
     public function canUserViewYou(): bool
     {
         return self::canUserViewInEpic($this->epic);
     }
 
+    #[Override]
     static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_STORY'));
     }
 
+    #[Override]
     static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_STORY'));
     }
 
+    #[Override]
     static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_STORY'));
     }
 
+    #[Override]
     static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_STORY'));
@@ -447,21 +478,31 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return '';
     }
 
+    /**
+     * @throws Exception
+     */
+    #[Override]
     public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
     }
 
+    /**
+     * @throws Exception
+     */
+    #[Override]
     public function recordNotification(): bool
     {
         return $this->seenPack->recordNotification();
     }
 
+    #[Override]
     public function showSightingStatus(): string
     {
         return $this->seenPack->getStatusForCurrentUser();
     }
 
+    #[Override]
     public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();
@@ -530,7 +571,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     {
         return $this->hasOne(Scenario::class, ['scenario_id' => 'based_on_id']);
     }
-
 
     public function __toString()
     {

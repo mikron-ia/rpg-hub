@@ -1,13 +1,15 @@
 <?php
 
 use frontend\assets\StoryAsset;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ListView;
 
 StoryAsset::register($this);
 
-/* @var $this yii\web\View */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'STORY_TITLE_INDEX');
 $this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];

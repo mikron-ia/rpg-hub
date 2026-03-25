@@ -3,8 +3,9 @@
 use common\models\Epic;
 use common\models\EpicQuery;
 use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $this yii\web\View */
+/* @var $this View */
 /* @var $epics Epic[] */
 
 $epicButtons = [];

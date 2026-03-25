@@ -1,7 +1,10 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Story */
+use common\models\Story;
+use yii\web\View;
+
+/* @var $this View */
+/* @var $model Story */
 
 ?>
 

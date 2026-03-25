@@ -2,14 +2,16 @@
 
 use common\models\core\Visibility;
 use common\models\Parameter;
+use common\models\Story;
 use yii\bootstrap\Modal;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Story */
+/* @var $this View */
+/* @var $model Story */
 /* @var $storyCharactersPublic array<string> */
 /* @var $storyCharactersPrivate array<string> */
 /* @var $storyGroupsPublic array<string> */

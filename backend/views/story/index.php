@@ -2,16 +2,20 @@
 
 use backend\assets\StoryAsset;
 use common\models\Epic;
+use common\models\RecapQuery;
 use common\models\Story;
+use yii\data\ActiveDataProvider;
+use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\web\View;
 
 StoryAsset::register($this);
 
-/* @var $this yii\web\View */
+/* @var $this View */
 /* @var $epic Epic */
-/* @var $searchModel common\models\RecapQuery */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $searchModel RecapQuery */
+/* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'STORY_TITLE_INDEX');
 $this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];
@@ -57,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 ],
                 [
-                    'class' => 'yii\grid\ActionColumn',
+                    'class' => ActionColumn::class,
                     'template' => '{view} {update}',
                     'buttons' => [
                         'view' => function ($url, Story $model, $key) {

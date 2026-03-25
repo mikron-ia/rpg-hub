@@ -9,11 +9,12 @@ use common\models\Story;
 use common\models\type\StoryType;
 use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Story */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model Story */
+/* @var $form ActiveForm */
 ?>
 
 <div class="story-form">

@@ -1,8 +1,9 @@
 <?php
 
 use common\models\Epic;
+use yii\web\View;
 
-/* @var $this yii\web\View */
+/* @var $this View */
 /* @var $objectEpic Epic */
 
 $this->title = 'RPG hub';

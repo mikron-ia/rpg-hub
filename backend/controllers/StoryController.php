@@ -25,7 +25,7 @@ final class StoryController extends Controller
     use EpicAssistance;
     use MarkChangeTrait;
 
-    private const POSITIONS_PER_PAGE = 16;
+    private const int POSITIONS_PER_PAGE = 16;
 
     public function behaviors(): array
     {
@@ -157,8 +157,8 @@ final class StoryController extends Controller
      * Moves a story up in order; this means a lower position on the list
      *
      * @throws HttpException
-     * @throws NotFoundHttpException
      * @throws InvalidRouteException
+     * @throws NotFoundHttpException
      */
     public function actionMoveUp(string $key): Response
     {
@@ -199,8 +199,8 @@ final class StoryController extends Controller
     }
 
     /**
-     * @throws NotFoundHttpException
      * @throws HttpException
+     * @throws NotFoundHttpException
      */
     public function actionMarkChanged(string $key): Response
     {

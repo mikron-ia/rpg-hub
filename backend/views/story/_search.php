@@ -1,12 +1,14 @@
 <?php
 
 use common\models\Epic;
+use common\models\StoryQuery;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\StoryQuery */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model StoryQuery */
+/* @var $form ActiveForm */
 /* @var $epic Epic */
 ?>
 

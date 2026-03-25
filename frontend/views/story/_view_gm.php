@@ -1,10 +1,12 @@
 <?php
 
+use common\models\Story;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Story */
+/* @var $this View */
+/* @var $model Story */
 ?>
 
 <div class="col-md-6">
