@@ -42,6 +42,7 @@ final class DescriptionController extends Controller
                             'move-down',
                             'history',
                             'display',
+                            'set-as-current',
                         ],
                         'allow' => true,
                         'roles' => ['operator'],
@@ -51,6 +52,7 @@ final class DescriptionController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
+                    'set-as-current' => ['PATCH'],
                     'delete' => ['POST'],
                 ],
             ],
@@ -217,6 +219,56 @@ final class DescriptionController extends Controller
 
         $model = $this->findPack($id);
         return $this->renderAjax('_view_descriptions', ['model' => $model]);
+    }
+
+    /**
+     * @throws DbException
+     * @throws HttpException
+     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
+     * @throws MethodNotAllowedHttpException
+     */
+    public function actionSetAsCurrent(int $id): Response
+    {
+        if (!Yii::$app->request->isPatch) {
+            throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_PATCH_REQUESTS_ONLY'));
+        }
+
+        $model = $this->findModel($id);
+
+        if (!$model->descriptionPack->canUserControlYou()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
+            return $this->returnToReferrer(['site/index']);
+        }
+
+        $success = true;
+        $outdateCount = 0;
+
+        $descriptionsToCheck = Description::find()
+            ->where(['description_pack_id' => $model->description_pack_id, 'code' => $model->code])
+            ->all();
+
+        foreach ($descriptionsToCheck as $description) {
+            if ($description->description_id === $model->description_id) {
+                $description->outdated = false;
+            } else {
+                $description->outdated = true;
+                $outdateCount++;
+            }
+            $success = $success && $description->save(false);
+        }
+
+        if ($success) {
+            Yii::$app->session->setFlash('success', Yii::t(
+                'app',
+                'DESCRIPTION_SET_AS_CURRENT_SUCCESS {count}',
+                ['count' => $outdateCount])
+            );
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'DESCRIPTION_SET_AS_CURRENT_FAILURE'));
+        }
+
+        return $this->returnToReferrer(['site/index']);
     }
 
     /**

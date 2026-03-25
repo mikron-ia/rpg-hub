@@ -17,49 +17,65 @@ $messageForStillValid = isset($model->point_in_time_still_valid_id) && isset($mo
 <div class="col-md-6 description-box" data-description-id="<?= $model->description_id ?>">
 
     <div class="buttoned-header">
-
         <h2><?= $model->position; ?>. <?= htmlspecialchars($model->getTypeName()); ?></h2>
+    </div>
 
-        <div>
-            <span class="btn btn-default move-down"
-                  data-description-id="<?= $model->description_id ?>"><?= Yii::t('app', 'BUTTON_MOVE_DOWN') ?></span>
-            <span class="btn btn-default move-up" data-description-id="<?= $model->description_id ?>"><?= Yii::t('app',
-                    'BUTTON_MOVE_UP') ?></span>
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_UPDATE'),
-                '#',
-                [
-                    'class' => 'btn btn-primary update-description-link',
-                    'title' => Yii::t('app', 'LABEL_UPDATE'),
-                    'data-toggle' => 'modal',
-                    'data-target' => '#update-description-modal',
-                    'data-id' => $model->description_id,
-                ]
-            ); ?>
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_DELETE'),
-                ['description/delete', 'id' => $model->description_id],
-                [
-                    'class' => 'btn btn-danger',
-                    'data' => [
-                        'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
-                        'method' => 'post',
-                    ],
-                ]
-            ); ?>
+    <div class="buttons-under-header">
+        <span class="btn btn-default move-down" data-description-id="<?= $model->description_id ?>">
+            <?= Yii::t('app', 'BUTTON_MOVE_DOWN') ?>
+        </span>
 
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_SHOW_HISTORY'),
-                '#',
-                [
-                    'class' => 'btn btn-default description-history-link',
-                    'data-toggle' => 'modal',
-                    'data-target' => '#description-history-modal',
-                    'data-id' => $model->description_id,
-                ]
-            ); ?>
-        </div>
+        <span class="btn btn-default move-up" data-description-id="<?= $model->description_id ?>">
+            <?= Yii::t('app', 'BUTTON_MOVE_UP') ?>
+        </span>
 
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_SET_AS_CURRENT'),
+            ['description/set-as-current', 'id' => $model->description_id],
+            [
+                'class' => 'btn btn-default',
+                'title' => Yii::t('app', 'BUTTON_SET_AS_CURRENT_TITLE'),
+                'data' => [
+                    'confirm' => Yii::t('app', 'BUTTON_SET_AS_CURRENT_CONFIRM_REQUEST'),
+                    'method' => 'patch',
+                ],
+            ]
+        ); ?>
+
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_UPDATE'),
+            '#',
+            [
+                'class' => 'btn btn-primary update-description-link',
+                'title' => Yii::t('app', 'LABEL_UPDATE'),
+                'data-toggle' => 'modal',
+                'data-target' => '#update-description-modal',
+                'data-id' => $model->description_id,
+            ]
+        ); ?>
+
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_DELETE'),
+            ['description/delete', 'id' => $model->description_id],
+            [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
+                    'method' => 'post',
+                ],
+            ]
+        ); ?>
+
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_SHOW_HISTORY'),
+            '#',
+            [
+                'class' => 'btn btn-default description-history-link',
+                'data-toggle' => 'modal',
+                'data-target' => '#description-history-modal',
+                'data-id' => $model->description_id,
+            ]
+        ); ?>
     </div>
 
     <div>

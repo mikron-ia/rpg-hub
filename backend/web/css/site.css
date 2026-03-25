@@ -159,6 +159,11 @@ p {
     margin: 5px 5px;
 }
 
+.buttons-under-header {
+    margin: 0 2px 10px 10px;
+    text-align: right;
+}
+
 .btn-epic-choice {
     border-radius: 10px;
     display: inline-block;
