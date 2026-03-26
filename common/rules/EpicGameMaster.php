@@ -3,12 +3,14 @@
 namespace common\rules;
 
 use common\models\ParticipantRole;
+use Override;
 
 final class EpicGameMaster extends EpicUser
 {
     public $name = 'epicGameMaster';
 
-    public function requiredRole()
+    #[Override]
+    public function requiredRole(): array
     {
         return [ParticipantRole::ROLE_GM, ParticipantRole::ROLE_MANAGER];
     }

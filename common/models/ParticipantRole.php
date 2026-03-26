@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -16,17 +17,19 @@ use yii\db\ActiveRecord;
  */
 final class ParticipantRole extends ActiveRecord
 {
-    const ROLE_GM = 'gm';
-    const ROLE_PLAYER = 'player';
-    const ROLE_ASSISTANT = 'assistant';
-    const ROLE_WATCHER = 'watcher';
-    const ROLE_MANAGER = 'manager';
+    const string ROLE_GM = 'gm';
+    const string ROLE_PLAYER = 'player';
+    const string ROLE_ASSISTANT = 'assistant';
+    const string ROLE_WATCHER = 'watcher';
+    const string ROLE_MANAGER = 'manager';
 
+    #[Override]
     public static function tableName(): string
     {
         return 'participant_role';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -38,11 +41,12 @@ final class ParticipantRole extends ActiveRecord
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Participant::class,
-                'targetAttribute' => ['participant_id' => 'participant_id']
+                'targetAttribute' => ['participant_id' => 'participant_id'],
             ],
         ];
     }
 
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -78,8 +82,8 @@ final class ParticipantRole extends ActiveRecord
         $names = self::roleNames();
         if (isset($names[$this->role])) {
             return $names[$this->role];
-        } else {
-            return Yii::t('app', 'PARTICIPANT_ROLE_UNKNOWN');
         }
+
+        return Yii::t('app', 'PARTICIPANT_ROLE_UNKNOWN');
     }
 }

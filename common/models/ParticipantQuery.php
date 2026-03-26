@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Override;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -10,13 +11,15 @@ use yii\data\ActiveDataProvider;
  */
 final class ParticipantQuery extends Participant
 {
-    public function rules()
+    #[Override]
+    public function rules(): array
     {
         return [
             [['participant_id', 'user_id', 'epic_id'], 'integer'],
         ];
     }
 
+    #[Override]
     public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class

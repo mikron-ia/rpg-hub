@@ -15,12 +15,12 @@ enum Visibility: string
     case VISIBILITY_LOGGED = 'logged';
     case VISIBILITY_FULL = 'full';
 
-    public const allowedVisibilities =  [
+    public const array allowedVisibilities =  [
         //Visibility::VISIBILITY_NONE,
         Visibility::VISIBILITY_GM,
         //Visibility::VISIBILITY_DESIGNATED,
         //Visibility::VISIBILITY_LOGGED,
-        Visibility::VISIBILITY_FULL
+        Visibility::VISIBILITY_FULL,
     ];
 
     /**
@@ -51,7 +51,7 @@ enum Visibility: string
     }
 
     /**
-     * Provides visibilities names
+     * Provides visibility names
      *
      * @param array<int,Visibility> $allowed
      *

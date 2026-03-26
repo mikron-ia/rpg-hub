@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -20,14 +21,16 @@ use yii\db\Exception;
  */
 class Participant extends ActiveRecord
 {
-    public array $roleChoices = [];
+    public array|string $roleChoices = [];
 
+    #[Override]
     public static function tableName(): string
     {
         return 'participant';
     }
 
-    public function rules()
+    #[Override]
+    public function rules(): array
     {
         return [
             [['user_id', 'epic_id'], 'required'],
@@ -37,21 +40,21 @@ class Participant extends ActiveRecord
                 ['user_id', 'epic_id'],
                 'unique',
                 'targetAttribute' => ['user_id', 'epic_id'],
-                'comboNotUnique' => Yii::t('app', 'ERROR_PARTICIPANT_EXISTS')
+                'comboNotUnique' => Yii::t('app', 'ERROR_PARTICIPANT_EXISTS'),
             ],
             [
                 ['user_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => User::class,
-                'targetAttribute' => ['user_id' => 'id']
+                'targetAttribute' => ['user_id' => 'id'],
             ],
             [
                 ['epic_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Epic::class,
-                'targetAttribute' => ['epic_id' => 'epic_id']
+                'targetAttribute' => ['epic_id' => 'epic_id'],
             ],
         ];
     }
@@ -77,6 +80,10 @@ class Participant extends ActiveRecord
         parent::afterFind();
     }
 
+    /**
+     * @throws Exception
+     */
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         if (!$this->roleChoices) {
@@ -127,9 +134,13 @@ class Participant extends ActiveRecord
         foreach ($this->participantRoles as $participantRole) {
             $roles[$participantRole->role] = $participantRole->role;
         }
+
         return $roles;
     }
 
+    /**
+     * @throws Exception
+     */
     public function setRoles(): void
     {
         ParticipantRole::deleteAll(['participant_id' => $this->participant_id]);
@@ -143,33 +154,25 @@ class Participant extends ActiveRecord
     /**
      * Informs whether a given user is a participant of a given epic
      */
-    static public function participantExists(User $user, Epic $epic): bool
+    public static function participantExists(User $user, Epic $epic): bool
     {
-        if (Participant::findOne(['user_id' => $user->id, 'epic_id' => $epic->epic_id])) {
-            return true;
-        } else {
-            return false;
-        }
+        return (bool)Participant::findOne(['user_id' => $user->id, 'epic_id' => $epic->epic_id]);
     }
 
     /**
      * Informs whether a given user has a given role in a given epic
      */
-    static public function participantHasRole(User $user, Epic $epic, string $role): bool
+    public static function participantHasRole(User $user, Epic $epic, string $role): bool
     {
         $participant = Participant::find()
             ->joinWith('participantRoles')
             ->andWhere([
                 'user_id' => $user->id,
                 'epic_id' => $epic->epic_id,
-                'role' => $role
+                'role' => $role,
             ]);
 
-        if ($participant->one()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (bool)$participant->one();
     }
 
     /**
@@ -177,12 +180,14 @@ class Participant extends ActiveRecord
      *
      * @throws Exception
      */
-    static public function createForEpic(int $epic_id, int $user_id, string $role): bool
+    public static function createForEpic(int $epic_id, int $user_id, string $role): bool
     {
         $participant = new Participant();
+
         $participant->epic_id = $epic_id;
         $participant->user_id = $user_id;
         $participant->roleChoices = [$role];
+
         return $participant->save();
     }
 }

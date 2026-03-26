@@ -106,7 +106,7 @@ final class SiteController extends Controller
      */
     public function actionIndex(): string
     {
-        $user = User::findOne(['id' => \Yii::$app->user->id]);
+        $user = User::findOne(['id' => Yii::$app->user->id]);
 
         $userEpicIDs = array_map(function (Participant $participation) {
             return $participation->epic_id;
@@ -134,7 +134,7 @@ final class SiteController extends Controller
      */
     public function actionLogin(): Response|string
     {
-        if (!\Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
