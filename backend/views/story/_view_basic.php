@@ -17,6 +17,8 @@ use yii\widgets\DetailView;
 /* @var $storyGroupsPublic array<string> */
 /* @var $storyGroupsPrivate array<string> */
 
+$isStoryCurrent = $model->story_id === $model->epic->current_story_id;
+
 ?>
 
 <div>
@@ -90,10 +92,16 @@ use yii\widgets\DetailView;
                     'label' => Yii::t('app', 'STORY_WORD_COUNT'),
                     'value' => $model->getLongDescriptionWordCount(),
                 ],
+                [
+                    'label' => Yii::t('app', 'STORY_IS_CURRENT'),
+                    'value' => $isStoryCurrent
+                        ? Yii::t('app', 'VALUE_YES')
+                        : Yii::t('app', 'VALUE_NO'),
+                ],
             ],
         ]) ?>
 
-        <div class="text-center">
+        <div class="buttons-under-table">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_UPDATE'),
                 ['update', 'key' => $model->key],
@@ -111,6 +119,19 @@ use yii\widgets\DetailView;
                     ],
                 ]
             ) ?>
+            <?php if (!$isStoryCurrent): ?>
+                <?= Html::a(
+                    Yii::t('app', 'BUTTON_MARK_AS_CURRENT_F'),
+                    ['epic/set-current-story', 'epicKey' => $model->epic->key, 'storyKey' => $model->key],
+                    [
+                        'class' => 'btn btn-primary',
+                        'data' => [
+                            'confirm' => Yii::t('app', 'CONFIRMATION_MARK_AS_CURRENT_STORY'),
+                            'method' => 'patch',
+                        ],
+                    ]
+                ) ?>
+            <?php endif; ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_MOVE_DOWN'),
                 ['story/move-up', 'key' => $model->key],

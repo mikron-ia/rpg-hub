@@ -164,6 +164,15 @@ p {
     text-align: right;
 }
 
+.buttons-under-table {
+    margin: 2px;
+    text-align: center;
+}
+
+.buttons-under-table > a {
+    margin: 5px 5px;
+}
+
 .btn-epic-choice {
     border-radius: 10px;
     display: inline-block;

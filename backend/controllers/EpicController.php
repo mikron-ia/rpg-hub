@@ -10,6 +10,7 @@ use common\models\GameQuery;
 use common\models\Participant;
 use common\models\ParticipantRole;
 use common\models\RecapQuery;
+use common\models\Story;
 use common\models\StoryQuery;
 use Throwable;
 use Yii;
@@ -19,6 +20,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\HttpException;
+use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -41,6 +43,7 @@ final class EpicController extends Controller
                             'view',
                             'participant-add',
                             'participant-edit',
+                            'set-current-story',
                         ],
                         'allow' => true,
                         'roles' => ['operator'],
@@ -62,6 +65,7 @@ final class EpicController extends Controller
                     'delete' => ['POST'],
                     'manager-attach' => ['POST'],
                     'manager-detach' => ['POST'],
+                    'set-current-story' => ['PATCH'],
                 ],
             ],
         ];
@@ -298,6 +302,49 @@ final class EpicController extends Controller
     }
 
     /**
+     * @throws MethodNotAllowedHttpException
+     */
+    public function actionSetCurrentStory(string $epicKey, string $storyKey): Response
+    {
+        if (!Yii::$app->request->isPatch) {
+            throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_PATCH_REQUESTS_ONLY'));
+        }
+
+        try {
+            $model = $this->findModel($epicKey);
+            $model->canUserControlYou();
+        } catch (HttpException) {
+            // @todo Add logging
+            Yii::$app->session->setFlash('error', Yii::t('app', 'EPIC_NOT_AVAILABLE'));
+            return $this->redirect(['story/view', 'key' => $storyKey]);
+        }
+
+        try {
+            $story = $this->findStoryModel($storyKey);
+        } catch (HttpException) {
+            // @todo Add logging
+            Yii::$app->session->setFlash('error', Yii::t('app', 'STORY_NOT_AVAILABLE'));
+            return $this->redirect(['story/index']);
+        }
+
+        $model->current_story_id = $story->story_id;
+
+        $saveSuccessful = false;
+        try {
+            $saveSuccessful = $model->save(false);
+        } catch (Exception) {
+            // @todo Add logging
+        }
+
+        Yii::$app->session->setFlash(
+            $saveSuccessful ? 'success' : 'error',
+            $saveSuccessful ? Yii::t('app', 'EPIC_STORY_SET_SUCCESS') : Yii::t('app', 'EPIC_STORY_SET_FAILED')
+        );
+
+        return $this->redirect(['story/view', 'key' => $story->key]);
+    }
+
+    /**
      * @throws NotFoundHttpException
      */
     protected function findModel(string $key): Epic
@@ -319,5 +366,20 @@ final class EpicController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'PARTICIPANT_NOT_FOUND'));
+    }
+
+    /**
+     * @throws HttpException
+     */
+    private function findStoryModel(string $key): Story
+    {
+        if (($model = Story::findOne(['key' => $key])) !== null) {
+            if (!$model->canUserViewYou()) {
+                Story::throwExceptionAboutView();
+            }
+            return $model;
+        }
+
+        throw new NotFoundHttpException();
     }
 }
