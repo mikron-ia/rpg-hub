@@ -43,6 +43,7 @@ final class EpicController extends Controller
                             'view',
                             'participant-add',
                             'participant-edit',
+                            'participant-delete',
                             'set-current-story',
                         ],
                         'allow' => true,
@@ -63,6 +64,7 @@ final class EpicController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
+                    'participant-delete' => ['DELETE'],
                     'manager-attach' => ['POST'],
                     'manager-detach' => ['POST'],
                     'set-current-story' => ['PATCH'],
@@ -266,6 +268,37 @@ final class EpicController extends Controller
         return $this->render('participant/edit', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * @throws Throwable
+     * @throws StaleObjectException
+     * @throws NotFoundHttpException
+     */
+    public function actionParticipantDelete(string $participant_id): Response
+    {
+        $model = $this->findParticipantModel($participant_id);
+
+        if (!empty($model->participantRoles)) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_PARTICIPANT_REMOVAL_HAS_ROLES'));
+            return $this->redirect(['view', 'key' => Yii::$app->params['activeEpic']->key]);
+        }
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+            return $this->redirect(['view', 'key' => Yii::$app->params['activeEpic']->key]);
+        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
+            return $this->redirect(['view', 'key' => Yii::$app->params['activeEpic']->key]);
+        }
+
+        if ($model->delete() === false) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_PARTICIPANT_DELETE_FAILURE'));
+        } else {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'ERROR_PARTICIPANT_DELETE_SUCCESS'));
+        }
+
+        return $this->redirect(['view', 'key' => Yii::$app->params['activeEpic']->key]);
     }
 
     /**

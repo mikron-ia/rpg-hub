@@ -54,6 +54,10 @@ use yii\widgets\DetailView;
             ); ?>
         </div>
 
+        <div>
+            <?= Yii::t('app', 'PARTICIPANT_REMOVE_INFORMATION') ?>
+        </div>
+
         <?= GridView::widget([
             'dataProvider' => new ActiveDataProvider(['query' => $model->getParticipants()]),
             'summary' => '',
@@ -68,18 +72,36 @@ use yii\widgets\DetailView;
                     'label' => Yii::t('app', 'EPIC_CARD_ROLE'),
                     'enableSorting' => false,
                     'value' => function (Participant $model) {
-                        return implode(', ', $model->getRolesList());
+                        $roles = $model->getRolesList();
+                        return !empty($roles) ? implode(', ', $roles) : null;
                     }
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{update}',
+                    'template' => '{update} {delete}',
                     'buttons' => [
                         'update' => function ($url, Participant $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-pencil"></span>',
                                 ['participant-edit', 'participant_id' => $model->participant_id],
-                                ['title' => Yii::t('app', 'LABEL_UPDATE')]);
+                                ['title' => Yii::t('app', 'LABEL_UPDATE')],
+                            );
+                        },
+                        'delete' => function ($url, Participant $model, $key) {
+                            return empty($model->participantRoles)
+                                ? Html::a(
+                                    '<span class="glyphicon glyphicon-erase"></span>',
+                                    ['participant-delete', 'participant_id' => $model->participant_id],
+                                    [
+                                        'title' => Yii::t('app', 'LABEL_DELETE'),
+                                        'data-confirm' => Yii::t(
+                                            'app',
+                                            'CONFIRMATION_PARTICIPANT_REMOVE {name}',
+                                            ['name' => $model->user->username]
+                                        ),
+                                        'data-method' => 'delete',
+                                    ])
+                                : '';
                         },
                     ],
                 ],

@@ -10,8 +10,11 @@ use yii\widgets\ActiveForm;
 /* @var $this View */
 /* @var $model Participant */
 
-$this->title = Yii::t('app', 'TITLE_PARTICIPANT_EDIT {epic}', ['epic' => $model->epic->name]) .
-    ': ' . $model->user->username;
+$this->title = Yii::t(
+        'app',
+        'TITLE_PARTICIPANT_EDIT {epic}',
+        ['epic' => $model->epic->name]
+    ) . ': ' . $model->user->username;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'TITLE_EPICS'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['view', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = $model->user->username;
@@ -22,7 +25,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_PARTICIPANT_UPDATE')
 
     <?php $form = ActiveForm::begin([
         'id' => 'story-parameter-form',
-        'enableAjaxValidation' => true,
     ]); ?>
 
     <?= $form->field($model, 'roleChoices')->widget(Select2::class, [
