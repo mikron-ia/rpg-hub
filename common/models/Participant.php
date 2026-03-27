@@ -2,16 +2,20 @@
 
 namespace common\models;
 
+use common\models\tools\ToolsForEntity;
 use Override;
+use ReflectionClass;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
+use yii\web\HttpException;
 
 /**
  * This is the model class for table "participant".
  *
  * @property integer $participant_id
+ * @property string $key
  * @property string $user_id
  * @property string $epic_id
  *
@@ -21,6 +25,8 @@ use yii\db\Exception;
  */
 class Participant extends ActiveRecord
 {
+    use ToolsForEntity;
+
     public array|string $roleChoices = [];
 
     #[Override]
@@ -95,6 +101,19 @@ class Participant extends ActiveRecord
         parent::afterSave($insert, $changedAttributes);
     }
 
+    /**
+     * @throws HttpException
+     */
+    #[Override]
+    public function beforeSave($insert): bool
+    {
+        if ($insert) {
+            $this->key = $this->generateKey(strtolower((new ReflectionClass($this))->getShortName()));
+        }
+
+        return parent::beforeSave($insert);
+    }
+
     public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
@@ -136,6 +155,17 @@ class Participant extends ActiveRecord
         }
 
         return $roles;
+    }
+
+    /**
+     * @throws HttpException
+     */
+    public function fillInKey(): Participant
+    {
+        if (empty($this->key)) {
+            $this->key = $this->generateKey('participant');
+        }
+        return $this;
     }
 
     /**

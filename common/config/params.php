@@ -63,6 +63,7 @@ return [
         'characterSheet' => getenv('KEY_GENERATION_CHARACTER_SHEET'),
         'epic' => getenv('KEY_GENERATION_EPIC'),
         'group' => getenv('KEY_GENERATION_GROUP'),
+        'participant' => getenv('KEY_GENERATION_PARTICIPANT'),
         'person' => getenv('KEY_GENERATION_CHARACTER'),
         'recap' => getenv('KEY_GENERATION_RECAP'),
         'scenario' => getenv('KEY_GENERATION_SCENARIO'),

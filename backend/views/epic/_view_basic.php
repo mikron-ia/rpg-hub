@@ -83,7 +83,7 @@ use yii\widgets\DetailView;
                         'update' => function ($url, Participant $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-pencil"></span>',
-                                ['participant-edit', 'participant_id' => $model->participant_id],
+                                ['participant-edit', 'key' => $model->key],
                                 ['title' => Yii::t('app', 'LABEL_UPDATE')],
                             );
                         },
@@ -91,7 +91,7 @@ use yii\widgets\DetailView;
                             return empty($model->participantRoles)
                                 ? Html::a(
                                     '<span class="glyphicon glyphicon-erase"></span>',
-                                    ['participant-delete', 'participant_id' => $model->participant_id],
+                                    ['participant-delete', 'key' => $model->key],
                                     [
                                         'title' => Yii::t('app', 'LABEL_DELETE'),
                                         'data-confirm' => Yii::t(

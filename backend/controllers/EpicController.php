@@ -253,9 +253,9 @@ final class EpicController extends Controller
      * @throws NotFoundHttpException
      * @throws Exception
      */
-    public function actionParticipantEdit(string $participant_id): Response|string
+    public function actionParticipantEdit(string $key): Response|string
     {
-        $participant = $this->findParticipantModel($participant_id);
+        $participant = $this->findParticipantModel($key);
 
         $this->selectEpic($participant->epic->key, $participant->epic_id, $participant->epic->name, false);
 
@@ -273,9 +273,9 @@ final class EpicController extends Controller
      * @throws StaleObjectException
      * @throws NotFoundHttpException
      */
-    public function actionParticipantDelete(string $participant_id): Response
+    public function actionParticipantDelete(string $key): Response
     {
-        $participant = $this->findParticipantModel($participant_id);
+        $participant = $this->findParticipantModel($key);
 
         if (!empty($participant->participantRoles)) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_PARTICIPANT_REMOVAL_HAS_ROLES'));
@@ -389,9 +389,9 @@ final class EpicController extends Controller
     /**
      * @throws NotFoundHttpException
      */
-    protected function findParticipantModel(string $id): Participant
+    protected function findParticipantModel(string $key): Participant
     {
-        if (($model = Participant::findOne($id)) !== null) {
+        if (($model = Participant::findOne(['key' => $key])) !== null) {
             return $model;
         }
 
