@@ -5,7 +5,9 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\Language;
 use common\models\core\UserStatus;
+use Override;
 use Yii;
+use yii\base\Exception;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -37,28 +39,36 @@ use yii\web\IdentityInterface;
  * @property Epic[] $epicsVisible
  * @property Participant[] $participants
  * @property Task[] $tasks
+ *
+ * @method touch(string $string)
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-    public const USER_ROLE_NONE = 'none';
-    public const USER_ROLE_USER = 'user';
-    public const USER_ROLE_OPERATOR = 'operator';
-    public const USER_ROLE_MANAGER = 'manager';
-    public const USER_ROLE_ADMINISTRATOR = 'administrator';
+    public const string USER_ROLE_NONE = 'none';
+    public const string USER_ROLE_USER = 'user';
+    public const string USER_ROLE_OPERATOR = 'operator';
+    public const string USER_ROLE_MANAGER = 'manager';
+    public const string USER_ROLE_ADMINISTRATOR = 'administrator';
 
     public ?string $user_role = null;
 
+    #[Override]
     public static function tableName(): string
     {
         return '{{%user}}';
     }
 
+    #[Override]
     public function afterFind(): void
     {
         $this->user_role = $this->getUserRoleCode();
         parent::afterFind();
     }
 
+    /**
+     * @throws \Exception
+     */
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         if (!$this->hasErrors()) {
@@ -78,6 +88,7 @@ class User extends ActiveRecord implements IdentityInterface
         parent::afterSave($insert, $changedAttributes);
     }
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -92,6 +103,7 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -120,6 +132,10 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    /**
+     * @return array<string,string>
+     */
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -133,11 +149,16 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    #[Override]
     public static function findIdentity($id): User|IdentityInterface|null
     {
         return static::findOne(['id' => $id, 'status' => UserStatus::Active->value]);
     }
 
+    /**
+     * @throws NotSupportedException
+     */
+    #[Override]
     public static function findIdentityByAccessToken($token, $type = null)
     {
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
@@ -261,10 +282,6 @@ class User extends ActiveRecord implements IdentityInterface
             ->where(['user_id' => $this->id]);
     }
 
-    /**
-     * @param array $roles
-     * @return ActiveQuery
-     */
     public function getEpicsLimitedByRoles(array $roles): ActiveQuery
     {
         return Epic::find()
@@ -273,6 +290,7 @@ class User extends ActiveRecord implements IdentityInterface
             ->where(['user_id' => $this->id, 'role' => $roles]);
     }
 
+    #[Override]
     public function validateAuthKey($authKey): bool
     {
         return $this->getAuthKey() === $authKey;
@@ -292,6 +310,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates password hash from password and sets it to the model
+     *
+     * @throws Exception
      */
     public function setPassword(string $password): void
     {
@@ -300,6 +320,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates "remember me" authentication key
+     *
+     * @throws Exception
      */
     public function generateAuthKey(): void
     {
@@ -308,6 +330,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates new password reset token
+     *
+     * @throws Exception
      */
     public function generatePasswordResetToken(): void
     {

@@ -2,12 +2,15 @@
 
 use common\models\core\UserStatus;
 use common\models\User;
+use common\models\UserQuery;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModel common\models\UserQuery */
+/* @var $this View */
+/* @var $dataProvider ActiveDataProvider */
+/* @var $searchModel UserQuery */
 
 $this->title = Yii::t('app', 'USER_INDEX_TITLE');
 $this->params['breadcrumbs'][] = $this->title;

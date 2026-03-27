@@ -372,7 +372,6 @@ return [
     'ERROR_PATCH_REQUESTS_ONLY' => 'Dozwolone są tylko żądania typu PATCH',
     'ERROR_UNABLE_TO_CHECK_RIGHTS_MISSING_EPIC' => 'Sprawdzenie praw niemożliwe. Przyczyna: brak aktywnej kampanii.',
     'ERROR_WRONG_EPIC' => '<b>Uwaga:</b> wyświetlany obiekt nie należy do aktywnej kampanii.',
-    'ERROR_WRONG_EPIC_ACTION' => '<b>Uwaga:</b> operacja zostanie wykonana na kampanii innej niż aktywna.',
     'EXTERNAL_DATA_INDEX_TITLE' => 'Indeks danych zewnętrznych',
     'EXTERNAL_DATA_INSTRUCTION' => 'Wklej treść danych do pola poniżej. Jedyny akceptowany format to JSON - w formie czystej lub kodowany base64.',
     'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Ładowanie zewnętrznych danych nieudane - błąd JSON-a',

@@ -1,9 +1,11 @@
 <?php
 
+use common\models\User;
 use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\User */
+/* @var $this View */
+/* @var $model User */
 
 $this->title = Yii::t('app', 'USER_UPDATE_TITLE {user_name}', ['user_name' => $model->username]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'USER_INDEX_TITLE'), 'url' => ['index']];

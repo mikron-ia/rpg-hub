@@ -372,7 +372,6 @@ return [
     'ERROR_PATCH_REQUESTS_ONLY' => 'Only PATCH requests are allowed',
     'ERROR_UNABLE_TO_CHECK_RIGHTS_MISSING_EPIC' => 'Unable to check rights. Reason: no active epic.',
     'ERROR_WRONG_EPIC' => '<b>Warning: </b> the object you are displaying does not belong to the currently active epic.',
-    'ERROR_WRONG_EPIC_ACTION' => '<b>Warning: </b> operation will be performed on an epic different from the currently active epic.',
     'EXTERNAL_DATA_INDEX_TITLE' => 'External data',
     'EXTERNAL_DATA_INSTRUCTION' => 'Paste the external data content into the field below. Only accepted format is JSON - pure or base64 encoded.',
     'EXTERNAL_DATA_LOAD_ERROR_JSON' => 'Loading operation failed - JSON issue',

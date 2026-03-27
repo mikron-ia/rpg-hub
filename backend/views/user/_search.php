@@ -1,14 +1,14 @@
 <?php
 
-use common\models\Character;
-use common\models\core\Visibility;
 use common\models\Epic;
+use common\models\UserQuery;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\UserQuery */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model UserQuery */
+/* @var $form ActiveForm */
 /* @var $epic Epic */
 
 ?>

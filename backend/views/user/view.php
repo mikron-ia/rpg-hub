@@ -4,10 +4,11 @@ use common\models\core\Language;
 use common\models\core\UserStatus;
 use common\models\User;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\User */
+/* @var $this View */
+/* @var $model User */
 
 $this->title = Yii::t('app', 'USER_VIEW_TITLE {user_name}', ['user_name' => $model->username]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'USER_INDEX_TITLE'), 'url' => ['index']];

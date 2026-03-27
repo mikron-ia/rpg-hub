@@ -2,11 +2,12 @@
 
 namespace common\models;
 
+use Override;
 use yii\data\ActiveDataProvider;
 
 class UserQuery extends User
 {
-    private const PREFERRED_POSITIONS_PER_PAGE = 8;
+    private const int PREFERRED_POSITIONS_PER_PAGE = 8;
 
     private int $pageCount;
 
@@ -16,6 +17,7 @@ class UserQuery extends User
         parent::__construct($config);
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
