@@ -832,6 +832,7 @@ return [
     'STORY_TYPE_STORY' => 'Story',
     'STORY_TYPE_SUMMARY' => 'Summary',
     'STORY_WORD_COUNT' => 'Word count',
+    'STORY_WRONG_EPIC_ERROR' => 'This story does not belong to this epic. Check your request.',
     'ST_PARAM_CS_ACTIVE' => 'Party members',
     'ST_PARAM_PCS_ACTIVE' => 'Active PCs',
     'ST_PARAM_POINT_END' => 'Ending point',

@@ -344,8 +344,8 @@ final class EpicController extends Controller
         }
 
         try {
-            $model = $this->findModel($epicKey);
-            $model->canUserControlYou();
+            $epic = $this->findModel($epicKey);
+            $epic->canUserControlYou();
         } catch (HttpException) {
             // @todo Add logging
             Yii::$app->session->setFlash('error', Yii::t('app', 'EPIC_NOT_AVAILABLE'));
@@ -360,11 +360,16 @@ final class EpicController extends Controller
             return $this->redirect(['story/index']);
         }
 
-        $model->current_story_id = $story->story_id;
+        if ((int)$epic->epic_id !== $story->epic_id) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'STORY_WRONG_EPIC_ERROR'));
+            return $this->redirect(['story/view', 'key' => $storyKey]);
+        }
+
+        $epic->current_story_id = $story->story_id;
 
         $saveSuccessful = false;
         try {
-            $saveSuccessful = $model->save(false);
+            $saveSuccessful = $epic->save(false);
         } catch (Exception) {
             // @todo Add logging
         }

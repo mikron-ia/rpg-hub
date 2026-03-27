@@ -832,6 +832,7 @@ return [
     'STORY_TYPE_STORY' => 'Historia',
     'STORY_TYPE_SUMMARY' => 'Streszczenie',
     'STORY_WORD_COUNT' => 'Słów w opisie',
+    'STORY_WRONG_EPIC_ERROR' => 'Ta historia nie należy do tej kampanii. Sprawdź treść żądania.',
     'ST_PARAM_CS_ACTIVE' => 'Liczebność drużyny',
     'ST_PARAM_PCS_ACTIVE' => 'Aktywni PC',
     'ST_PARAM_POINT_END' => 'Punkt końcowy',
