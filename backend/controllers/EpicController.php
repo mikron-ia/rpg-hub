@@ -53,7 +53,7 @@ final class EpicController extends Controller
                         'actions' => [
                             'manage',
                             'manager-attach',
-                            'manager-detach'
+                            'manager-detach',
                         ],
                         'allow' => true,
                         'roles' => ['manager'],
@@ -219,7 +219,11 @@ final class EpicController extends Controller
      */
     public function actionDelete(string $key): Response
     {
-        $this->findModel($key)->delete();
+        $model = $this->findModel($key);
+
+        $model->canUserControlYou();
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }
@@ -230,21 +234,19 @@ final class EpicController extends Controller
      */
     public function actionParticipantAdd(string $key): Response|string
     {
-        $model = new Participant();
+        $epic = $this->findModel($key);
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-        } elseif (Yii::$app->params['activeEpic']->key <> $key) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC_ACTION'));
+        $participant = new Participant();
+
+        $this->selectEpic($epic->key, $epic->epic_id, $epic->name, false);
+
+        $participant->epic_id = $epic->epic_id;
+
+        if ($participant->load(Yii::$app->request->post()) && $participant->save()) {
+            return $this->redirect(['view', 'key' => $participant->epic->key]);
         }
 
-        $model->epic_id = $this->findModel($key)->epic_id;
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'key' => $model->epic->key]);
-        }
-
-        return $this->render('participant/add', ['model' => $model]);
+        return $this->render('participant/add', ['model' => $participant]);
     }
 
     /**
@@ -253,20 +255,16 @@ final class EpicController extends Controller
      */
     public function actionParticipantEdit(string $participant_id): Response|string
     {
-        $model = $this->findParticipantModel($participant_id);
+        $participant = $this->findParticipantModel($participant_id);
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
-        }
+        $this->selectEpic($participant->epic->key, $participant->epic_id, $participant->epic->name, false);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'key' => $model->epic->key]);
+        if ($participant->load(Yii::$app->request->post()) && $participant->save()) {
+            return $this->redirect(['view', 'key' => $participant->epic->key]);
         }
 
         return $this->render('participant/edit', [
-            'model' => $model,
+            'model' => $participant,
         ]);
     }
 
@@ -277,22 +275,16 @@ final class EpicController extends Controller
      */
     public function actionParticipantDelete(string $participant_id): Response
     {
-        $model = $this->findParticipantModel($participant_id);
+        $participant = $this->findParticipantModel($participant_id);
 
-        if (!empty($model->participantRoles)) {
+        if (!empty($participant->participantRoles)) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_PARTICIPANT_REMOVAL_HAS_ROLES'));
             return $this->redirect(['view', 'key' => Yii::$app->params['activeEpic']->key]);
         }
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-            return $this->redirect(['view', 'key' => Yii::$app->params['activeEpic']->key]);
-        } elseif (Yii::$app->params['activeEpic']->epic_id <> $model->epic_id) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_WRONG_EPIC'));
-            return $this->redirect(['view', 'key' => Yii::$app->params['activeEpic']->key]);
-        }
+        $this->selectEpic($participant->epic->key, $participant->epic_id, $participant->epic->name, false);
 
-        if ($model->delete() === false) {
+        if ($participant->delete() === false) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_PARTICIPANT_DELETE_FAILURE'));
         } else {
             Yii::$app->session->setFlash('success', Yii::t('app', 'ERROR_PARTICIPANT_DELETE_SUCCESS'));
