@@ -1,9 +1,11 @@
 <?php
 
+use common\models\UserInvitation;
 use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $invitation common\models\UserInvitation */
+/* @var $this View */
+/* @var $invitation UserInvitation */
 /* @var $link string */
 
 ?>

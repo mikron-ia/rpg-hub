@@ -1,7 +1,10 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $invitation common\models\UserInvitation */
+use common\models\UserInvitation;
+use yii\web\View;
+
+/* @var $this View */
+/* @var $invitation UserInvitation */
 /* @var $link string */
 
 ?>

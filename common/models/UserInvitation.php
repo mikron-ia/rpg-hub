@@ -3,7 +3,9 @@
 namespace common\models;
 
 use common\models\exceptions\InvalidBackendConfigurationException;
+use Override;
 use Yii;
+use yii\base\Exception as DbException;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -32,11 +34,13 @@ use yii\db\Exception;
  */
 class UserInvitation extends ActiveRecord
 {
+    #[Override]
     public static function tableName(): string
     {
         return 'user_invitation';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -52,11 +56,15 @@ class UserInvitation extends ActiveRecord
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => User::class,
-                'targetAttribute' => ['created_by' => 'id']
+                'targetAttribute' => ['created_by' => 'id'],
             ],
         ];
     }
 
+    /**
+     * @return array<string,string>
+     */
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -77,6 +85,7 @@ class UserInvitation extends ActiveRecord
         ];
     }
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -93,6 +102,10 @@ class UserInvitation extends ActiveRecord
         ];
     }
 
+    /**
+     * @throws DbException
+     */
+    #[Override]
     public function beforeSave($insert): bool
     {
         if ($insert) {
@@ -104,9 +117,6 @@ class UserInvitation extends ActiveRecord
         return parent::beforeSave($insert);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getCreatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
@@ -114,8 +124,6 @@ class UserInvitation extends ActiveRecord
 
     /**
      * Sends an invitation to create an account
-     *
-     * @return bool Success of the operation
      *
      * @throws InvalidBackendConfigurationException
      */
@@ -132,7 +140,7 @@ class UserInvitation extends ActiveRecord
                     'link' => $this->getInvitationLink(),
                 ]
             )
-            ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->name])
+            ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->name])
             ->setTo($this->email)
             ->setSubject(Yii::t('mail', 'INVITATION_EMAIL_SUBJECT'));
 
@@ -155,9 +163,7 @@ class UserInvitation extends ActiveRecord
     }
 
     /**
-     * Finds out if invitation is valid
-     *
-     * @return bool
+     * Finds out if the invitation is valid
      */
     public function isInvitationValid(): bool
     {
@@ -165,9 +171,7 @@ class UserInvitation extends ActiveRecord
     }
 
     /**
-     * Finds out if invitation has not been used
-     *
-     * @return bool
+     * Finds out if the invitation has not been used
      */
     public function isInvitationUnused(): bool
     {
@@ -175,8 +179,7 @@ class UserInvitation extends ActiveRecord
     }
 
     /**
-     * Finds out if invitation has not been revoked
-     * @return bool
+     * Finds out if the invitation has not been revoked
      */
     public function isInvitationUnRevoked(): bool
     {
@@ -184,9 +187,7 @@ class UserInvitation extends ActiveRecord
     }
 
     /**
-     * Finds out if invitation is still active
-     *
-     * @return bool
+     * Finds out if the invitation is still active
      */
     public function isInvitationActive(): bool
     {
@@ -196,7 +197,6 @@ class UserInvitation extends ActiveRecord
     /**
      * Marks the invitation as opened if it was not already marked so
      *
-     * @return bool
      * @throws Exception
      */
     public function markAsOpened(): bool
@@ -204,30 +204,32 @@ class UserInvitation extends ActiveRecord
         if (!$this->opened_at) {
             $this->opened_at = time();
             return $this->save();
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     /**
      * Marks invitation as revoked
      *
-     * @return bool
      * @throws Exception
      */
     public function markAsRevoked(): bool
     {
         $this->revoked_at = time();
+
         return $this->save();
     }
 
     /**
      * Marks invitation as used
-     * @return bool
+     *
+     * @throws Exception
      */
     public function markAsUsed(): bool
     {
         $this->used_at = time();
+
         return $this->save();
     }
 
@@ -244,11 +246,12 @@ class UserInvitation extends ActiveRecord
     {
         $this->valid_to = time() + Yii::$app->params['invitation.isValidFor'];
         $this->revoked_at = null;
+
         return $this->save();
     }
 
     /**
-     * Provides readable name for role intended for the user
+     * Provides a readable name for the role intended for the user
      *
      * @return string
      */
@@ -256,13 +259,13 @@ class UserInvitation extends ActiveRecord
     {
         $names = User::userRoleNames();
         $code = $this->intended_role;
+
         return $names[$code] ?? '?';
     }
 
     /**
      * Provides the invitation link
      *
-     * @return string
      * @throws InvalidBackendConfigurationException
      */
     public function getInvitationLink(): string

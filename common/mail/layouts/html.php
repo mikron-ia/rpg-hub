@@ -1,9 +1,11 @@
 <?php
 
 use yii\helpers\Html;
+use yii\mail\MessageInterface;
+use yii\web\View;
 
-/* @var $this \yii\web\View view component instance */
-/* @var $message \yii\mail\MessageInterface the message being composed */
+/* @var $this View view component instance */
+/* @var $message MessageInterface the message being composed */
 /* @var $content string main view render result */
 ?>
 <?php $this->beginPage() ?>
@@ -20,8 +22,9 @@ use yii\helpers\Html;
 <?php $this->endBody() ?>
 --
 <?= Yii::t('mail', 'SIGNATURE_HTML') ?>
-<?php echo isset(Yii::$app->params['baseUriForMail']) ? \yii\helpers\Html::a(Yii::$app->params['baseUriForMail'],
-    Yii::$app->params['baseUriForMail']) : '' ?>
+<?php echo isset(Yii::$app->params['baseUriForMail'])
+    ? Html::a(Yii::$app->params['baseUriForMail'], Yii::$app->params['baseUriForMail'])
+    : '' ?>
 </body>
 </html>
 <?php $this->endPage() ?>

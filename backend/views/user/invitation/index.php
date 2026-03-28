@@ -4,13 +4,16 @@ use backend\assets\InvitationAsset;
 use common\models\core\Language;
 use common\models\UserInvitation;
 use yii\bootstrap\Modal;
+use yii\data\ActiveDataProvider;
+use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\web\View;
 
 InvitationAsset::register($this);
 
-/* @var $this yii\web\View */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'USER_INVITATION_INDEX_TITLE');
 $this->params['breadcrumbs'][] = $this->title;
@@ -29,16 +32,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'email',
             [
                 'attribute' => 'language',
-                'value' => function (UserInvitation $model) {
-                    return (Language::create($model->language))->getName();
-                }
+                'value' => fn(UserInvitation $model) => (Language::create($model->language))->getName(),
             ],
             [
                 'attribute' => 'role',
                 'label' => Yii::t('app', 'USER_INVITATION_ROLE'),
-                'value' => function (UserInvitation $model) {
-                    return $model->getIntendedRoleName();
-                }
+                'value' => fn(UserInvitation $model) => $model->getIntendedRoleName(),
             ],
             'created_at:datetime',
             'opened_at:datetime',
@@ -46,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'revoked_at:datetime',
             'valid_to:datetime',
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => ActionColumn::class,
                 'template' => '{link} {revoke} {renew} {resend}',
                 'contentOptions' => ['class' => 'text-center'],
                 'buttons' => [
