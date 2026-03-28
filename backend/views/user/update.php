@@ -9,7 +9,7 @@ use yii\web\View;
 
 $this->title = Yii::t('app', 'USER_UPDATE_TITLE {user_name}', ['user_name' => $model->username]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'USER_INDEX_TITLE'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->username, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->username, 'url' => ['view', 'key' => $model->key]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'LABEL_UPDATE');
 ?>
 <div class="user-update">

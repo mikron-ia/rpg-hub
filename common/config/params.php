@@ -68,6 +68,7 @@ return [
         'recap' => getenv('KEY_GENERATION_RECAP'),
         'scenario' => getenv('KEY_GENERATION_SCENARIO'),
         'story' => getenv('KEY_GENERATION_STORY'),
+        'user' => getenv('KEY_GENERATION_USER'),
     ],
     'languagesAvailable' => $languages, // Languages will appear in the order entered here
     'reputationAccessUri' => getenv('REPUTATION_URI'),

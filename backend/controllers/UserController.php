@@ -49,7 +49,7 @@ final class UserController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'delete' => ['post'],
+                    'delete' => ['delete'],
                     'disable' => ['post'],
                     'enable' => ['post'],
                     'renew' => ['post'],
@@ -90,10 +90,10 @@ final class UserController extends Controller
      *
      * @throws NotFoundHttpException
      */
-    public function actionView(int $id): string
+    public function actionView(string $key): string
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($key),
         ]);
     }
 
@@ -124,12 +124,12 @@ final class UserController extends Controller
      * @throws NotFoundHttpException
      * @throws Exception
      */
-    public function actionUpdate(int $id): Response|string
+    public function actionUpdate(string $key): Response|string
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         }
 
         return $this->render('update', [
@@ -144,13 +144,13 @@ final class UserController extends Controller
      * @throws Throwable
      * @throws StaleObjectException
      */
-    public function actionDelete(int $id): Response
+    public function actionDelete(string $key): Response
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if ($model->hasProtectedRole()) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'USER_DELETE_FAILED_PROTECTED'));
-            return $this->redirect(['user/view', 'id' => $id]);
+            return $this->redirect(['user/view', 'key' => $model->key]);
         }
 
         $model->setAttribute('status', UserStatus::Deleted->value);
@@ -161,7 +161,7 @@ final class UserController extends Controller
         }
 
         Yii::$app->session->setFlash('error', Yii::t('app', 'USER_DELETE_FAILED'));
-        return $this->redirect(['user/view', 'id' => $id]);
+        return $this->redirect(['user/view', 'key' => $model->key]);
     }
 
     /**
@@ -171,13 +171,13 @@ final class UserController extends Controller
      * @throws Throwable
      * @throws StaleObjectException
      */
-    public function actionDisable(int $id): Response
+    public function actionDisable(string $key): Response
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if ($model->hasProtectedRole()) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'USER_DISABLE_FAILED_PROTECTED'));
-            return $this->redirect(['user/view', 'id' => $id]);
+            return $this->redirect(['user/view', 'key' => $model->key]);
         }
 
         $model->setAttribute('status', UserStatus::Disabled->value);
@@ -188,7 +188,7 @@ final class UserController extends Controller
         }
 
         Yii::$app->session->setFlash('error', Yii::t('app', 'USER_DISABLE_FAILED'));
-        return $this->redirect(['user/view', 'id' => $id]);
+        return $this->redirect(['user/view', 'key' => $model->key]);
     }
 
     /**
@@ -198,13 +198,13 @@ final class UserController extends Controller
      * @throws Throwable
      * @throws StaleObjectException
      */
-    public function actionEnable(int $id): Response
+    public function actionEnable(string $key): Response
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->canBeEnabled()) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'USER_ENABLE_ERROR_MUST_BE_DISABLED'));
-            return $this->redirect(['user/view', 'id' => $id]);
+            return $this->redirect(['user/view', 'key' => $model->key]);
         }
 
         $model->setAttribute('status', UserStatus::Active->value);
@@ -215,7 +215,7 @@ final class UserController extends Controller
         }
 
         Yii::$app->session->setFlash('error', Yii::t('app', 'USER_ENABLE_FAILED'));
-        return $this->redirect(['user/view', 'id' => $id]);
+        return $this->redirect(['user/view', 'key' => $model->key]);
     }
 
     /**
@@ -281,14 +281,23 @@ final class UserController extends Controller
     }
 
     /**
-     * Finds the User model based on its primary key value
-     * If the model is not found, a 404 HTTP exception will be thrown
-     *
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
-    protected function findModel(int $id): User
+    protected function findModelById(int $id): User
     {
         if (($model = User::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'USER_NOT_AVAILABLE'));
+    }
+
+    /**
+     * @throws NotFoundHttpException
+     */
+    protected function findModel(string $key): User
+    {
+        if (($model = User::findOne(['key' => $key])) !== null) {
             return $model;
         }
 

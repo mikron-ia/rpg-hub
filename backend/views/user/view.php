@@ -52,13 +52,13 @@ $confirmRestore = Yii::t('app', 'USER_CONFIRM_ENABLE');
         <div class="buttons-on-view">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_UPDATE'),
-                ['update', 'id' => $model->id], ['class' => 'btn btn-primary'],
+                ['update', 'key' => $model->key], ['class' => 'btn btn-primary'],
             ) ?>
 
             <?php if($model->canBeDisabled()): ?>
                 <?= Html::a(
                     Yii::t('app', 'BUTTON_DISABLE'),
-                    ['disable', 'id' => $model->id],
+                    ['disable', 'key' => $model->key],
                     [
                         'class' => 'btn btn-danger',
                         'title' => Yii::t('app', 'BUTTON_DISABLE_USER_TITLE'),
@@ -73,7 +73,7 @@ $confirmRestore = Yii::t('app', 'USER_CONFIRM_ENABLE');
             <?php if($model->canBeEnabled()): ?>
                 <?= Html::a(
                     Yii::t('app', 'BUTTON_ENABLE'),
-                    ['enable', 'id' => $model->id],
+                    ['enable', 'key' => $model->key],
                     [
                         'class' => 'btn btn-primary',
                         'title' => Yii::t('app', 'BUTTON_ENABLE_USER_TITLE'),
@@ -85,12 +85,12 @@ $confirmRestore = Yii::t('app', 'USER_CONFIRM_ENABLE');
                 ) ?>
             <?php endif; ?>
 
-            <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->id], [
+            <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'key' => $model->key], [
                 'class' => 'btn btn-danger',
                 'title' => Yii::t('app', 'BUTTON_DELETE_USER_TITLE'),
                 'data' => [
                     'confirm' => $confirmDelete,
-                    'method' => 'post',
+                    'method' => 'delete',
                 ],
             ]) ?>
         </div>

@@ -65,6 +65,17 @@ trait ToolsForEntity
         return !empty($this->epic_id);
     }
 
+    /**
+     * @throws HttpException
+     */
+    public function fillInKey(string $keyName): self
+    {
+        if (empty($this->key)) {
+            $this->key = $this->generateKey($keyName);
+        }
+        return $this;
+    }
+
     private function generateKey(string $identifier): string
     {
         if (!isset(Yii::$app->params['keyGeneration'][$identifier])) {

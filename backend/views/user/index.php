@@ -47,8 +47,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         'view' => function ($url, User $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-eye-open"></span>',
-                                Yii::$app->urlManager->createUrl(['user/view', 'id' => $model->id]),
+                                Yii::$app->urlManager->createUrl(['user/view', 'key' => $model->key]),
                                 ['title' => Yii::t('app', 'BUTTON_VIEW')]
+                            );
+                        },
+                        'update' => function ($url, User $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-pencil"></span>',
+                                Yii::$app->urlManager->createUrl(['user/update', 'key' => $model->key]),
+                                ['title' => Yii::t('app', 'BUTTON_UPDATE')]
                             );
                         },
                     ],

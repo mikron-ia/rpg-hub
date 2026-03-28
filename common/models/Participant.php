@@ -2,9 +2,9 @@
 
 namespace common\models;
 
+use common\models\core\HasKey;
 use common\models\tools\ToolsForEntity;
 use Override;
-use ReflectionClass;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -23,7 +23,7 @@ use yii\web\HttpException;
  * @property Epic $epic
  * @property ParticipantRole[] $participantRoles
  */
-class Participant extends ActiveRecord
+class Participant extends ActiveRecord implements HasKey
 {
     use ToolsForEntity;
 
@@ -34,6 +34,12 @@ class Participant extends ActiveRecord
     {
         return 'participant';
     }
+
+    public static function keyParameterName(): string
+    {
+        return 'participant';
+    }
+
 
     #[Override]
     public function rules(): array
@@ -108,7 +114,7 @@ class Participant extends ActiveRecord
     public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey(strtolower((new ReflectionClass($this))->getShortName()));
+            $this->key = $this->generateKey(self::keyParameterName());
         }
 
         return parent::beforeSave($insert);
@@ -155,17 +161,6 @@ class Participant extends ActiveRecord
         }
 
         return $roles;
-    }
-
-    /**
-     * @throws HttpException
-     */
-    public function fillInKey(): Participant
-    {
-        if (empty($this->key)) {
-            $this->key = $this->generateKey('participant');
-        }
-        return $this;
     }
 
     /**

@@ -3,8 +3,10 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\HasKey;
 use common\models\core\Language;
 use common\models\core\UserStatus;
+use common\models\tools\ToolsForEntity;
 use Override;
 use Yii;
 use yii\base\Exception;
@@ -12,12 +14,14 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\HttpException;
 use yii\web\IdentityInterface;
 
 /**
  * User model
  *
  * @property integer $id
+ * @property string $key
  * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
@@ -42,8 +46,10 @@ use yii\web\IdentityInterface;
  *
  * @method touch(string $string)
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends ActiveRecord implements IdentityInterface, HasKey
 {
+    use ToolsForEntity;
+
     public const string USER_ROLE_NONE = 'none';
     public const string USER_ROLE_USER = 'user';
     public const string USER_ROLE_OPERATOR = 'operator';
@@ -56,6 +62,12 @@ class User extends ActiveRecord implements IdentityInterface
     public static function tableName(): string
     {
         return '{{%user}}';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
+    {
+        return 'user';
     }
 
     #[Override]
@@ -86,6 +98,19 @@ class User extends ActiveRecord implements IdentityInterface
 
         }
         parent::afterSave($insert, $changedAttributes);
+    }
+
+    /**
+     * @throws HttpException
+     */
+    #[Override]
+    public function beforeSave($insert): bool
+    {
+        if ($insert) {
+            $this->key = $this->generateKey(self::keyParameterName());
+        }
+
+        return parent::beforeSave($insert);
     }
 
     #[Override]
