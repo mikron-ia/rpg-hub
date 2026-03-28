@@ -164,6 +164,7 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
     public function attributeLabels(): array
     {
         return [
+            'key' => Yii::t('app', 'USER_KEY'),
             'email' => Yii::t('app', 'USER_EMAIL'),
             'created_at' => Yii::t('app', 'USER_CREATED_AT'),
             'updated_at' => Yii::t('app', 'USER_UPDATED_AT'),

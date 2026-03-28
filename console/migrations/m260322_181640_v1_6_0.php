@@ -2,6 +2,7 @@
 
 use common\models\Participant;
 use common\models\User;
+use common\models\UserInvitation;
 use yii\db\ActiveQuery;
 use yii\db\Migration;
 
@@ -21,10 +22,16 @@ class m260322_181640_v1_6_0 extends Migration
         $this->addColumn('{{%user}}', 'key', $this->string(80)->after('id'));
         $this->fillInKeys(User::find());
         $this->alterColumn('{{%user}}', 'key', $this->string(80)->notNull());
+
+        $this->addColumn('{{%user_invitation}}', 'key', $this->string(80)->after('id'));
+        $this->fillInKeys(UserInvitation::find());
+        $this->alterColumn('{{%user_invitation}}', 'key', $this->string(80)->notNull());
     }
 
     public function safeDown(): void
     {
+        $this->dropColumn('{{%user_invitation}}', 'key');
+
         $this->dropColumn('{{%user}}', 'key');
 
         $this->dropColumn('{{%participant}}', 'key');

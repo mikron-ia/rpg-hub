@@ -79,6 +79,7 @@ class Participant extends ActiveRecord implements HasKey
     {
         return [
             'participant_id' => Yii::t('app', 'PARTICIPANT_ID'),
+            'key' => Yii::t('app', 'PARTICIPANT_KEY'),
             'user_id' => Yii::t('app', 'USER_LABEL'),
             'epic_id' => Yii::t('app', 'EPIC_LABEL'),
             'role' => Yii::t('app', 'PARTICIPANT_ROLE'),

@@ -223,9 +223,9 @@ final class UserController extends Controller
      *
      * @throws Exception
      */
-    public function actionRevoke(int $id): Response
+    public function actionRevoke(string $key): Response
     {
-        $model = UserInvitation::findOne($id);
+        $model = UserInvitation::findOne(['key' => $key]);
 
         if ($model && $model->isInvitationUnRevoked() && $model->markAsRevoked()) {
             Yii::$app->session->setFlash('success', Yii::t('app', 'USER_INVITATION_REVOKED'));
@@ -241,9 +241,9 @@ final class UserController extends Controller
      *
      * @throws Exception
      */
-    public function actionRenew(int $id): Response
+    public function actionRenew(string $key): Response
     {
-        $model = UserInvitation::findOne($id);
+        $model = UserInvitation::findOne(['key' => $key]);
 
         if ($model && $model->isRenewable()) {
             if ($model->renew()) {
@@ -263,9 +263,9 @@ final class UserController extends Controller
      *
      * @throws InvalidBackendConfigurationException
      */
-    public function actionResend(int $id): Response
+    public function actionResend(string $key): Response
     {
-        $model = UserInvitation::findOne($id);
+        $model = UserInvitation::findOne(['key' => $key]);
 
         if ($model && $model->isInvitationValid()) {
             if ($model->sendEmail()) {

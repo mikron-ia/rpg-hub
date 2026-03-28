@@ -655,6 +655,7 @@ return [
     'PARAM_EPIC_SYSTEM_STATE' => 'Stan systemu wg którego prowadzona jest kampania',
     'PARAM_LANGUAGE' => 'Język',
     'PARTICIPANT_ID' => 'ID uczestnika',
+    'PARTICIPANT_KEY' => 'Klucz',
     'PARTICIPANT_NOT_FOUND' => 'Nie znaleziono uczestnika',
     'PARTICIPANT_REMOVE_INFORMATION' => '<p>Aby usunąć uczestnika z kampanii, należy najpierw pozbawić go wszystkich ról.</p>
 <p><strong>Uwaga:</strong> nie istnieje zabezpieczenie przed usunięciem dowolnych uczestników, w tym MG, z kampanii. Zachowaj ostrożność. W razie pomyłki pomóc może tylko administrator.</p>',
@@ -908,6 +909,7 @@ return [
     'USER_INVITATION_HAS_BEEN_REVOKED' => 'zaproszenie zostało odwołane',
     'USER_INVITATION_ID' => 'ID',
     'USER_INVITATION_INDEX_TITLE' => 'Zaproszenia',
+    'USER_INVITATION_KEY' => 'Klucz',
     'USER_INVITATION_LANGUAGE' => 'Język',
     'USER_INVITATION_MESSAGE' => 'Wiadomość',
     'USER_INVITATION_NOTE' => 'Notatki zapraszającego',
@@ -936,6 +938,7 @@ return [
     'USER_INVITATION_USED_AT' => 'Użyto',
     'USER_INVITATION_VALID_TO' => 'Termin ważności',
     'USER_INVITE' => 'Wysyłka zaproszenia',
+    'USER_KEY' => 'Klucz',
     'USER_LABEL' => 'Użytkownik',
     'USER_LANGUAGE' => 'Język',
     'USER_NOT_AVAILABLE' => 'Użytkownik niedostępny',

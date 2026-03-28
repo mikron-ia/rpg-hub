@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'revoke' => function ($url, $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-remove-circle"></span>',
-                            ['user/revoke', 'id' => $model->id],
+                            ['user/revoke', 'key' => $model->key],
                             [
                                 'title' => Yii::t('app', 'USER_INVITATION_REVOKE'),
                                 'data-confirm' => Yii::t('app', 'USER_INVITATION_REVOKE_CONFIRM'),
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'resend' => function ($url, $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-share"></span>',
-                            ['user/resend', 'id' => $model->id],
+                            ['user/resend', 'key' => $model->key],
                             [
                                 'title' => Yii::t('app', 'USER_INVITATION_RESEND'),
                                 'data-confirm' => Yii::t('app', 'USER_INVITATION_RESENDING_CONFIRM'),
@@ -86,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'renew' => function ($url, $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-repeat"></span>',
-                            ['user/renew', 'id' => $model->id],
+                            ['user/renew', 'key' => $model->key],
                             [
                                 'title' => Yii::t('app', 'USER_INVITATION_RENEW'),
                                 'data-confirm' => Yii::t('app', 'USER_INVITATION_RENEWAL_CONFIRM'),

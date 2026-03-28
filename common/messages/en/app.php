@@ -655,6 +655,7 @@ return [
     'PARAM_EPIC_SYSTEM_STATE' => 'Epic system state',
     'PARAM_LANGUAGE' => 'Language',
     'PARTICIPANT_ID' => 'Participant',
+    'PARTICIPANT_KEY' => 'Key',
     'PARTICIPANT_NOT_FOUND' => 'Participant not found',
     'PARTICIPANT_REMOVE_INFORMATION' => '<p>To remove a participant from this list, first remove all their roles.</p>
 <p><strong>Warning:</strong> there are no safety measures against removing everyone, including yourself, from the epic. Proceed with caution. Should you remove yourself, only the administrator would be able to help you.</p>',
@@ -908,6 +909,7 @@ return [
     'USER_INVITATION_HAS_BEEN_REVOKED' => 'invitation has been revoked',
     'USER_INVITATION_ID' => 'ID',
     'USER_INVITATION_INDEX_TITLE' => 'Invites',
+    'USER_INVITATION_KEY' => 'Key',
     'USER_INVITATION_LANGUAGE' => 'Invitee language',
     'USER_INVITATION_MESSAGE' => 'Message',
     'USER_INVITATION_NOTE' => 'Inviter note',
@@ -936,6 +938,7 @@ return [
     'USER_INVITATION_USED_AT' => 'Used',
     'USER_INVITATION_VALID_TO' => 'Expires',
     'USER_INVITE' => 'Send invitation',
+    'USER_KEY' => 'Key',
     'USER_LABEL' => 'User',
     'USER_LANGUAGE' => 'Language',
     'USER_NOT_AVAILABLE' => 'User not available',

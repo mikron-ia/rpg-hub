@@ -2,7 +2,9 @@
 
 namespace common\models;
 
+use common\models\core\HasKey;
 use common\models\exceptions\InvalidBackendConfigurationException;
+use common\models\tools\ToolsForEntity;
 use Override;
 use Yii;
 use yii\base\Exception as DbException;
@@ -16,6 +18,7 @@ use yii\db\Exception;
  * This is the model class for table "user_invitation".
  *
  * @property string $id
+ * @property string $key
  * @property string $email
  * @property string $status
  * @property string $created_by
@@ -32,12 +35,19 @@ use yii\db\Exception;
  *
  * @property User $createdBy
  */
-class UserInvitation extends ActiveRecord
+class UserInvitation extends ActiveRecord implements HasKey
 {
+    use ToolsForEntity;
+
     #[Override]
     public static function tableName(): string
     {
         return 'user_invitation';
+    }
+
+    public static function keyParameterName(): string
+    {
+        return 'userInvitation';
     }
 
     #[Override]
@@ -69,6 +79,7 @@ class UserInvitation extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'USER_INVITATION_ID'),
+            'key' => Yii::t('app', 'USER_INVITATION_KEY'),
             'email' => Yii::t('app', 'USER_INVITATION_EMAIL'),
             'status' => Yii::t('app', 'USER_INVITATION_STATUS'),
             'created_by' => Yii::t('app', 'USER_INVITATION_CREATOR'),
@@ -112,6 +123,7 @@ class UserInvitation extends ActiveRecord
             $this->valid_to = time() + Yii::$app->params['invitation.isValidFor'];
             $this->token = Yii::$app->security->generateRandomString() . '_' . time();
             $this->status = 'new';
+            $this->key = $this->generateKey();
         }
 
         return parent::beforeSave($insert);
