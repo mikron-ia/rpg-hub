@@ -5,9 +5,11 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\CharacterSheetDataState;
 use common\models\core\HasEpicControl;
+use common\models\core\HasKey;
 use common\models\core\HasSightings;
 use common\models\external\Tab;
 use common\models\tools\ToolsForEntity;
+use Override;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
@@ -34,11 +36,17 @@ use yii\db\ActiveRecord;
  * @property SeenPack $seenPack
  * @property UtilityBag $utilityBag
  */
-class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl, HasSightings
+class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl, HasSightings, HasKey
 {
     use ToolsForEntity;
 
     public static function tableName(): string
+    {
+        return 'character_sheet';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
     {
         return 'character_sheet';
     }
@@ -126,7 +134,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey('characterSheet');
+            $this->key = $this->generateKey();
             $this->data = json_encode([]);
         }
 

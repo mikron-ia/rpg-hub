@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
+use common\models\core\HasKey;
 use common\models\core\HasParameters;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
@@ -56,7 +57,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @method moveNext()
  * @method movePrev()
  */
-class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl, HasSightings, HasVisibility
+class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl, HasSightings, HasVisibility, HasKey
 {
     use ToolsForEntity;
     use ToolsForHasVisibility;
@@ -77,6 +78,12 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
 
     #[Override]
     public static function tableName(): string
+    {
+        return 'story';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
     {
         return 'story';
     }
@@ -204,7 +211,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+            $this->key = $this->generateKey();
             $this->data = json_encode([]);
         }
 

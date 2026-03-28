@@ -107,7 +107,7 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
     public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey(self::keyParameterName());
+            $this->key = $this->generateKey();
         }
 
         return parent::beforeSave($insert);

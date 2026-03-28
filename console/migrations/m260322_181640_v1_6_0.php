@@ -2,6 +2,7 @@
 
 use common\models\Participant;
 use common\models\User;
+use yii\db\ActiveQuery;
 use yii\db\Migration;
 
 class m260322_181640_v1_6_0 extends Migration
@@ -14,11 +15,11 @@ class m260322_181640_v1_6_0 extends Migration
         $this->addColumn('{{%description}}', 'outdated', $this->boolean()->defaultValue(false)->notNull());
 
         $this->addColumn('{{%participant}}', 'key', $this->string(80)->after('participant_id'));
-        $this->fillParticipantKeys();
+        $this->fillInKeys(Participant::find());
         $this->alterColumn('{{%participant}}', 'key', $this->string(80)->notNull());
 
         $this->addColumn('{{%user}}', 'key', $this->string(80)->after('id'));
-        $this->fillUserKeys();
+        $this->fillInKeys(User::find());
         $this->alterColumn('{{%user}}', 'key', $this->string(80)->notNull());
     }
 
@@ -34,23 +35,11 @@ class m260322_181640_v1_6_0 extends Migration
     /**
      * @throws Exception
      */
-    private function fillParticipantKeys(): void
+    private function fillInKeys(ActiveQuery $objects): void
     {
-        foreach (Participant::find()->all() as $participant) {
-            if (empty($participant->key)) {
-                $participant->fillInKey(Participant::keyParameterName())->save();
-            }
-        }
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function fillUserKeys(): void
-    {
-        foreach (User::find()->all() as $user) {
-            if (empty($user->key)) {
-                $user->fillInKey(User::keyParameterName())->save();
+        foreach ($objects->all() as $object) {
+            if (empty($object->key)) {
+                $object->fillInKey()->save();
             }
         }
     }

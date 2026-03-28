@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\FrontStyles;
+use common\models\core\HasKey;
 use common\models\core\HasParameters;
 use common\models\core\HasSightings;
 use common\models\core\HasStatus;
@@ -54,7 +55,7 @@ use yii\web\HttpException;
  *
  * @todo: Someday, system field will have to come from a closed list of supported systems
  */
-class Epic extends ActiveRecord implements Displayable, HasParameters, HasSightings, HasStatus
+class Epic extends ActiveRecord implements Displayable, HasParameters, HasSightings, HasStatus, HasKey
 {
     use ToolsForEntity;
 
@@ -73,6 +74,12 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
 
     #[Override]
     public static function tableName(): string
+    {
+        return 'epic';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
     {
         return 'epic';
     }
@@ -313,7 +320,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+            $this->key = $this->generateKey();
         }
 
         if (empty($this->parameter_pack_id)) {

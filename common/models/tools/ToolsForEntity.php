@@ -68,16 +68,27 @@ trait ToolsForEntity
     /**
      * @throws HttpException
      */
-    public function fillInKey(string $keyName): self
+    public function fillInKey(): self
     {
         if (empty($this->key)) {
-            $this->key = $this->generateKey($keyName);
+            $this->key = $this->generateKey();
         }
         return $this;
     }
 
-    private function generateKey(string $identifier): string
+    /**
+     * @throws HttpException
+     */
+    private function generateKey(?string $identifier = null): string
     {
+        if (empty($identifier) && method_exists($this, 'keyParameterName')) {
+            $identifier = self::keyParameterName();
+        }
+
+        if (empty($identifier)) {
+            throw new HttpException(500, "Missing identifier for key generation");
+        }
+
         if (!isset(Yii::$app->params['keyGeneration'][$identifier])) {
             throw new HttpException(500, "Missing configuration for key $identifier");
         }

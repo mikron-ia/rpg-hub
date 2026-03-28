@@ -3,12 +3,14 @@
 namespace common\models;
 
 use common\models\core\HasEpicControl;
+use common\models\core\HasKey;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use common\models\tools\ToolsForEntity;
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -40,7 +42,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property SeenPack $seenPack
  * @property UtilityBag $utilityBag
  */
-class Article extends ActiveRecord implements HasEpicControl, HasVisibility, HasSightings
+class Article extends ActiveRecord implements HasEpicControl, HasVisibility, HasSightings, HasKey
 {
     use ToolsForEntity;
     use ToolsForLinkTags;
@@ -49,6 +51,12 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
     public bool $is_off_the_record_change = false;
 
     public static function tableName(): string
+    {
+        return 'article';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
     {
         return 'article';
     }
@@ -141,7 +149,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
     public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey('article');
+            $this->key = $this->generateKey();
         }
 
         if (empty($this->seen_pack_id)) {

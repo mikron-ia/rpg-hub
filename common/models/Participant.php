@@ -35,6 +35,7 @@ class Participant extends ActiveRecord implements HasKey
         return 'participant';
     }
 
+    #[Override]
     public static function keyParameterName(): string
     {
         return 'participant';
@@ -114,7 +115,7 @@ class Participant extends ActiveRecord implements HasKey
     public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey(self::keyParameterName());
+            $this->key = $this->generateKey();
         }
 
         return parent::beforeSave($insert);

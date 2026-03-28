@@ -4,9 +4,11 @@ namespace common\models;
 
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
+use common\models\core\HasKey;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
 use common\models\tools\ToolsForLinkTags;
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -29,7 +31,7 @@ use yii\helpers\Markdown;
  * @property Epic $epic
  * @property Story[] $stories
  */
-class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
+class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl, HasKey
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
@@ -40,6 +42,12 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     public const STATUS_USED = 'used';
 
     public static function tableName(): string
+    {
+        return 'scenario';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
     {
         return 'scenario';
     }
@@ -79,7 +87,7 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl
     public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey('scenario');
+            $this->key = $this->generateKey();
         }
 
         if (empty($this->description_pack_id)) {

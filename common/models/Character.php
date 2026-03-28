@@ -7,6 +7,7 @@ use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\core\HasImportance;
 use common\models\core\HasImportanceCategory;
+use common\models\core\HasKey;
 use common\models\core\HasScribbles;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
@@ -17,7 +18,7 @@ use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
 use common\models\tools\ToolsForHasVisibility;
 use DateTimeImmutable;
-use ReflectionClass;
+use Override;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -59,7 +60,7 @@ use yii\helpers\Html;
  * @property GroupMembership[] $groupMemberships
  * @property GroupMembership[] $groupMembershipsVisibleToUser
  */
-class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasVisibility, HasScribbles, HasSightings
+class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasVisibility, HasScribbles, HasSightings, HasKey
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
@@ -68,6 +69,12 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public bool $is_off_the_record_change = false;
 
     public static function tableName(): string
+    {
+        return 'character';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
     {
         return 'character';
     }
@@ -175,7 +182,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey(strtolower((new ReflectionClass($this))->getShortName()));
+            $this->key = $this->generateKey();
             $this->data = json_encode([]);
         }
 
@@ -240,7 +247,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ];
     }
 
-    public function  getEpic(): ActiveQuery
+    public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
@@ -282,7 +289,8 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
     public function getStoryCharacterAssignmentsOrderedByPosition(): ActiveQuery
     {
-        return $this->hasMany(StoryCharacterAssignment::class, ['character_id' => 'character_id'])->orderBy('position ASC');
+        return $this->hasMany(StoryCharacterAssignment::class,
+            ['character_id' => 'character_id'])->orderBy('position ASC');
     }
 
     public function getStoryCharacterAssignmentsByVisibility(Visibility $visibility): ActiveQuery

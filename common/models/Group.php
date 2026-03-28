@@ -7,6 +7,7 @@ use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\core\HasImportance;
 use common\models\core\HasImportanceCategory;
+use common\models\core\HasKey;
 use common\models\core\HasScribbles;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
@@ -17,7 +18,7 @@ use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
 use common\models\tools\ToolsForHasVisibility;
 use DateTimeImmutable;
-use ReflectionClass;
+use Override;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -63,7 +64,7 @@ use yii\web\HttpException;
  * @property GroupMembership[] $groupCharacterMembershipsPassive
  * @property GroupMembership[] $groupCharacterMembershipsPast
  */
-class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasScribbles, HasSightings, HasVisibility
+class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasScribbles, HasSightings, HasVisibility, HasKey
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
@@ -72,6 +73,12 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public bool $is_off_the_record_change = false;
 
     public static function tableName(): string
+    {
+        return 'group';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
     {
         return 'group';
     }
@@ -199,7 +206,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey(strtolower((new ReflectionClass($this))->getShortName()));
+            $this->key = $this->generateKey();
             $this->data = json_encode([]);
         }
 

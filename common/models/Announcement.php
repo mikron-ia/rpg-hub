@@ -3,9 +3,11 @@
 namespace common\models;
 
 use common\models\core\HasEpicControl;
+use common\models\core\HasKey;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForLinkTags;
 use DateTimeImmutable;
+use Override;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -34,12 +36,18 @@ use yii\helpers\Markdown;
  * @property User $createdBy
  * @property User $updatedBy
  */
-class Announcement extends ActiveRecord implements HasEpicControl
+class Announcement extends ActiveRecord implements HasEpicControl, HasKey
 {
     use ToolsForEntity;
     use ToolsForLinkTags;
 
     public static function tableName(): string
+    {
+        return 'announcement';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
     {
         return 'announcement';
     }
@@ -109,7 +117,7 @@ class Announcement extends ActiveRecord implements HasEpicControl
     public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey('announcement');
+            $this->key = $this->generateKey();
         }
 
         $this->text_ready = Markdown::process(Html::encode($this->processAllInOrder($this->text_raw)), 'gfm');

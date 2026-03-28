@@ -4,9 +4,11 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
+use common\models\core\HasKey;
 use common\models\core\HasSightings;
 use common\models\tools\ToolsForLinkTags;
 use common\models\tools\ToolsForEntity;
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -33,12 +35,18 @@ use yii2tech\ar\position\PositionBehavior;
  * @property SeenPack $seenPack
  * @property UtilityBag $utilityBag
  */
-class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSightings
+class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSightings, HasKey
 {
     use ToolsForEntity;
     use ToolsForLinkTags;
 
     public static function tableName(): string
+    {
+        return 'recap';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
     {
         return 'recap';
     }
@@ -114,7 +122,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     public function beforeSave($insert): bool
     {
         if ($insert) {
-            $this->key = $this->generateKey(strtolower((new \ReflectionClass($this))->getShortName()));
+            $this->key = $this->generateKey();
         }
 
         if (empty($this->seen_pack_id)) {
