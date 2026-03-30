@@ -841,6 +841,7 @@ return [
     'ST_PARAM_STORY_NUMBER' => 'Story number',
     'ST_PARAM_TIME_RANGE' => 'Time range',
     'ST_PARAM_XP_PARTY' => 'Party experience',
+    'TAG_CURRENT_F' => 'Current',
     'TAG_UNPUBLISHED_F' => 'Hidden',
     'TAG_UNPUBLISHED_M' => 'Hidden',
     'TASK_DETAILS' => 'Details',

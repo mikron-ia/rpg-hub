@@ -129,6 +129,12 @@ a:focus {
     color: inherit;
 }
 
+.current-tag {
+    background-color: white;
+    border-color: green;
+    color: green;
+}
+
 .type-tag {
     background-color: white;
     border-color: green;

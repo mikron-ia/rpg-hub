@@ -129,6 +129,11 @@ a:focus {
     color: white
 }
 
+.current-tag {
+    background-color: chocolate;
+    color: white;
+}
+
 .type-tag {
     background-color: chocolate;
     color: white;

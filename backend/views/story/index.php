@@ -40,6 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-9" id="filter">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
+            'rowOptions' => function (Story $model, $key, $index, $grid) use ($epic) {
+                $isCurrentStory = $model->story_id === $epic->current_story_id;
+                return [
+                    'class' => $isCurrentStory ? 'table-row-story-current' : '',
+                    'title' => $isCurrentStory ? Yii::t('app', 'CURRENT_STORY') : null,
+                ];
+            },
             'columns' => [
                 [
                     'attribute' => 'name',

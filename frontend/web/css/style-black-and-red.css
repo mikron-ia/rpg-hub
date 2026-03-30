@@ -130,6 +130,12 @@ a:focus {
     color: white;
 }
 
+.current-tag {
+    background-color: white;
+    border-color: darkred;
+    color: darkred;
+}
+
 .type-tag {
     background-color: white;
     border-color: darkred;

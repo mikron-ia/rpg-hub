@@ -6,6 +6,7 @@ use common\models\AnnouncementQuery;
 use common\models\Epic;
 use common\models\GameQuery;
 use common\models\RecapQuery;
+use common\models\Story;
 use common\models\StoryQuery;
 use common\components\EpicAssistance;
 use Override;
@@ -92,6 +93,13 @@ final class EpicController extends Controller
         /* Get Stories */
         $searchModel = new StoryQuery(4);
         $stories = $searchModel->search(Yii::$app->request->queryParams);
+        $showCurrentStorySeparately =
+            isset($model->current_story_id) &&
+            !array_reduce(
+                $stories->models,
+                fn(bool $carry, Story $story) => $carry || $story->story_id === $model->current_story_id,
+                false
+            );
 
         /* Get Sessions */
         $sessionQuery = new GameQuery();
@@ -115,6 +123,7 @@ final class EpicController extends Controller
             'announcements' => $announcements,
             'recap' => $recap,
             'showScenarios' => $showScenarios,
+            'showCurrentStorySeparately' => $showCurrentStorySeparately,
         ]);
     }
 

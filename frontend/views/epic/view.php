@@ -6,6 +6,7 @@
 /* @var $stories ActiveDataProvider */
 /* @var $announcements ActiveDataProvider */
 /* @var $showScenarios bool */
+/* @var $showCurrentStorySeparately bool */
 
 /* @var $recap Recap */
 
@@ -99,17 +100,15 @@ if ($epic) {
         </h2>
 
         <?php if ($epic): ?>
-            <?php if (isset($epic->current_story_id)): ?>
-                <h3><?= Yii::t('app', 'EPIC_CURRENT_STORY'); ?></h3>
-
-                <span><?= $epic->getCurrentStory()->one(); ?></span>
-            <?php endif; ?>
-
             <div>
                 <?= $this->render('../recap/_epic_box', ['model' => $recap]) ?>
             </div>
 
             <div>
+                <?php if ($showCurrentStorySeparately): ?>
+                    <h3><?= Yii::t('app', 'EPIC_CURRENT_STORY'); ?></h3>
+                    <p><?= $epic->getCurrentStory()->one(); ?></p>
+                <?php endif; ?>
                 <div class="buttoned-header">
                     <h3 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
                         <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
@@ -184,7 +183,8 @@ if ($epic) {
             <?php if ($announcements->count > 0): ?>
                 <?= ListView::widget([
                     'dataProvider' => $announcements,
-                    'emptyText' => '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_NOT_AVAILABLE') . '</p>',
+                    'emptyText' => '<p class="error-box">' . Yii::t('app',
+                            'FRONTPAGE_ANNOUNCEMENT_NOT_AVAILABLE') . '</p>',
                     'layout' => '{items}',
                     'separator' => '<hr />',
                     'itemOptions' => ['class' => 'item'],

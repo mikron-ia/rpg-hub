@@ -841,6 +841,7 @@ return [
     'ST_PARAM_STORY_NUMBER' => 'Numer Historii',
     'ST_PARAM_TIME_RANGE' => 'Zakres czasowy',
     'ST_PARAM_XP_PARTY' => 'PD drużynowe',
+    'TAG_CURRENT_F' => 'Aktualna',
     'TAG_UNPUBLISHED_F' => 'Ukryta',
     'TAG_UNPUBLISHED_M' => 'Ukryty',
     'TASK_DETAILS' => 'Szczegóły',

@@ -19,6 +19,9 @@ $storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
         <?php if ($model->hasCodeName()): ?>
             <span class="text-center type-tag"><?= $model->getCodeName() ?></span>
         <?php endif; ?>
+        <?php if ($model->story_id === $model->epic->current_story_id): ?>
+            <span class="text-center type-tag"><?= Yii::t('app', 'TAG_CURRENT_F') ?></span>
+        <?php endif; ?>
         <span class="text-center <?= $model->showSightingCSS() ?> seen-tag-header">
             <?= $model->showSightingStatus() ?>
         </span>
