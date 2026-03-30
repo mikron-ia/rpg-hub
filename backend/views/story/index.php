@@ -48,17 +48,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'visibility',
                     'headerOptions' => ['class' => 'text-center'],
                     'contentOptions' => ['class' => 'text-center'],
-                    'value' => function (Story $model) {
-                        return $model->getVisibilityName();
-                    }
+                    'value' => fn(Story $model) => $model->getVisibilityName(),
                 ],
                 [
                     'attribute' => 'code',
                     'headerOptions' => ['class' => 'text-center'],
                     'contentOptions' => ['class' => 'text-center'],
-                    'value' => function (Story $model) {
-                        return $model->getCodeName();
-                    }
+                    'value' => fn(Story $model) => $model->getCodeName(),
                 ],
                 [
                     'class' => ActionColumn::class,

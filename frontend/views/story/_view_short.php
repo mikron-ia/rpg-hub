@@ -14,7 +14,6 @@ use yii\web\View;
 </div>
 
 <div class="col-md-4">
-
     <table class="table table-bordered table-hover">
         <tbody>
         <?php foreach ($model->parameterPack->parametersOrdered as $storyParameter): ?>
@@ -25,5 +24,4 @@ use yii\web\View;
         <?php endforeach; ?>
         </tbody>
     </table>
-
 </div>

@@ -9,6 +9,7 @@ use common\models\StoryCharacterAssignmentQuery;
 use common\models\StoryGroupAssignmentQuery;
 use common\models\StoryQuery;
 use common\components\EpicAssistance;
+use Override;
 use Yii;
 use yii\db\Exception;
 use yii\filters\AccessControl;
@@ -16,15 +17,13 @@ use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
-/**
- * StoryController implements the CRUD actions for the Story model.
- */
 final class StoryController extends Controller
 {
     use EpicAssistance;
 
     private const int POSITIONS_PER_PAGE = 4;
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -93,7 +92,9 @@ final class StoryController extends Controller
 
         $model->recordSighting();
 
-        if ($model->canUserControlYou()) { // not the best, but only real possible way of verifying user access level
+        $canSeePrivates = $model->canUserControlYou(); // not the best, but only real possible way of verifying user access level
+
+        if ($canSeePrivates) {
             $storyCharacterPublic = StoryCharacterAssignmentQuery::getCharacterAssignmentPublicLinksForOperator($model->story_id);
             $storyCharacterPrivate = StoryCharacterAssignmentQuery::getCharacterAssignmentPrivateLinksForOperator($model->story_id);
             $storyGroupPublic = StoryGroupAssignmentQuery::getGroupAssignmentPublicLinksForOperator($model->story_id);
@@ -111,7 +112,7 @@ final class StoryController extends Controller
             'storyCharacterPrivate' => $storyCharacterPrivate,
             'storyGroupPublic' => $storyGroupPublic,
             'storyGroupPrivate' => $storyGroupPrivate,
-            'showPrivates' => $model->canUserControlYou(),
+            'showPrivates' => $canSeePrivates,
         ]);
     }
 

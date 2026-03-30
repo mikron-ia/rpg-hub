@@ -10,6 +10,7 @@ use common\models\Story;
 use common\models\StoryCharacterAssignmentQuery;
 use common\models\StoryGroupAssignmentQuery;
 use common\models\StoryQuery;
+use Override;
 use Yii;
 use yii\base\InvalidRouteException;
 use yii\db\Exception;
@@ -27,6 +28,7 @@ final class StoryController extends Controller
 
     private const int POSITIONS_PER_PAGE = 16;
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -41,7 +43,7 @@ final class StoryController extends Controller
                             'view',
                             'move-down',
                             'move-up',
-                            'mark-changed'
+                            'mark-changed',
                         ],
                         'allow' => true,
                         'roles' => ['operator'],
@@ -171,9 +173,9 @@ final class StoryController extends Controller
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
         }
+
+        return $this->redirect(['index']);
     }
 
     /**
@@ -193,9 +195,9 @@ final class StoryController extends Controller
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
         }
+
+        return $this->redirect(['index']);
     }
 
     /**

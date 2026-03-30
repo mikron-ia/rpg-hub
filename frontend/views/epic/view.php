@@ -9,8 +9,11 @@
 
 /* @var $recap Recap */
 
+use common\models\Announcement;
 use common\models\Epic;
+use common\models\Game;
 use common\models\Recap;
+use common\models\Story;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
@@ -122,7 +125,7 @@ if ($epic) {
                     'emptyText' => '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_STORIES_NOT_AVAILABLE') . '</p>',
                     'layout' => '{items}',
                     'itemOptions' => ['class' => 'item'],
-                    'itemView' => function ($model, $key, $index, $widget) {
+                    'itemView' => function (Story $model, $key, $index, $widget) {
                         return $this->render(
                             '../story/_epic_box_short',
                             ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
@@ -152,7 +155,7 @@ if ($epic) {
                     'emptyText' => '<p class="error-box">' . Yii::t('app', 'EPIC_SESSION_NOT_AVAILABLE') . '</p>',
                     'layout' => '{items}',
                     'itemOptions' => ['class' => 'item'],
-                    'itemView' => function ($model, $key, $index, $widget) {
+                    'itemView' => function (Game $model, $key, $index, $widget) {
                         return $this->render(
                             '../session/_epic_box',
                             ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
@@ -185,7 +188,7 @@ if ($epic) {
                     'layout' => '{items}',
                     'separator' => '<hr />',
                     'itemOptions' => ['class' => 'item'],
-                    'itemView' => function ($model, $key, $index, $widget) {
+                    'itemView' => function (Announcement $model, $key, $index, $widget) {
                         return $this->render(
                             '../announcement/_epic_box',
                             ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]

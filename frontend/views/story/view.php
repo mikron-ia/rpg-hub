@@ -62,7 +62,6 @@ if ($showPrivates) {
         'active' => false,
     ];
 }
-
 ?>
 <div class="story-view">
     <h1>

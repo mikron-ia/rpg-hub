@@ -13,7 +13,7 @@ $storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
 <div id="story-<?= $model->story_id ?>">
     <h4 class="center">
         <?= Html::a(
-            Html::encode((empty($storyNumberRaw) ? '' : $storyNumberRaw . ' ') . $model->name),
+            Html::encode((empty($storyNumberRaw) ? '' : ($storyNumberRaw . ' ')) . $model->name),
             ['story/view', 'key' => $model->key]
         ) ?>
         <?php if (!empty($model->hasCodeName())): ?>

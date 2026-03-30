@@ -8,13 +8,12 @@ use yii\helpers\Html;
 /** @var $model Story */
 
 $storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
-
 ?>
 
 <div id="story-<?php echo $model->story_id; ?>">
     <h2>
         <?php echo Html::a(
-            Html::encode((empty($storyNumberRaw) ? '' : $storyNumberRaw . ' ') . $model->name),
+            Html::encode((empty($storyNumberRaw) ? '' : ($storyNumberRaw . ' ')) . $model->name),
             ['view', 'key' => $model->key]
         ); ?>
         <?php if ($model->hasCodeName()): ?>

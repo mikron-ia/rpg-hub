@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Story;
 use frontend\assets\StoryAsset;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
@@ -12,7 +13,10 @@ StoryAsset::register($this);
 /* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'STORY_TITLE_INDEX');
-$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::$app->params['activeEpic']->name,
+    'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key],
+];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -22,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'emptyText' => '<p class="error-box">' . Yii::t('app', 'STORIES_NOT_FOUND') . '</p>',
         'itemOptions' => ['class' => 'item'],
-        'itemView' => function ($model, $key, $index, $widget) {
+        'itemView' => function (Story $model, $key, $index, $widget) {
             return $this->render(
                 '_epic_box',
                 [
