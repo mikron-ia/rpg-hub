@@ -2,15 +2,14 @@
 
 namespace common\models;
 
+use Override;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-/**
- * GameQuery represents the model behind the search form about `common\models\Game`.
- */
 class GameQuery extends Game
 {
+    #[Override]
     public function rules(): array
     {
         return [
@@ -19,13 +18,14 @@ class GameQuery extends Game
         ];
     }
 
+    #[Override]
     public function scenarios(): array
     {
         return Model::scenarios();
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates a data provider instance with the search query applied
      *
      * @param array $params
      *
@@ -95,7 +95,7 @@ class GameQuery extends Game
 
     /**
      * @param array $userIds
-     * @return null|ActiveDataProvider
+     * @return ActiveDataProvider|null
      */
     public function mostRecentByPlayerDataProvider(array $userIds): ?ActiveDataProvider
     {

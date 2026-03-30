@@ -18,9 +18,6 @@ use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
-/**
- * Site controller
- */
 final class EpicController extends Controller
 {
     use EpicAssistance;
@@ -74,7 +71,6 @@ final class EpicController extends Controller
      */
     public function actionView(string $key): string
     {
-        /* Get Epic */
         $model = $this->findModelByKey($key);
 
         if (!$model->canUserViewYou()) {

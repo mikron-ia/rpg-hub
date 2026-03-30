@@ -3,6 +3,7 @@
 namespace common\models\core;
 
 use common\models\Epic;
+use yii\db\ActiveQuery;
 use yii\web\HttpException;
 
 /**
@@ -12,53 +13,57 @@ use yii\web\HttpException;
 interface HasEpicControl
 {
     /**
-     * Determines whether user can create a new object of the class
-     * @return bool
+     * Determines whether the user can create a new object of the class
+     *
      * @throws HttpException
      */
     static public function canUserCreateThem(): bool;
 
     /**
-     * Determines whether user can list the objects
-     * @return bool
+     * Determines whether the user can list the objects
+     *
      * @throws HttpException
      */
     static public function canUserIndexThem(): bool;
 
     /**
-     * Throws a 403 exception if user cannot create
+     * Throws a 403 exception if the user cannot create
+     *
      * @throws HttpException
      */
     static function throwExceptionAboutCreate();
 
     /**
-     * Throws an exception if user cannot create
+     * Throws an exception if the user cannot create
+     *
      * @throws HttpException
      */
     static function throwExceptionAboutControl();
 
     /**
-     * Throws a 403 exception if user cannot index
+     * Throws a 403 exception if the user cannot index
+     *
      * @throws HttpException
      */
     static function throwExceptionAboutIndex();
 
     /**
-     * Throws a 403 exception if user cannot view
+     * Throws a 403 exception if the user cannot view
+     *
      * @throws HttpException
      */
     static function throwExceptionAboutView();
 
     /**
-     * Determines whether user can alter or delete the object
-     * @return bool
+     * Determines whether the user can alter or delete the object
+     *
      * @throws HttpException
      */
     public function canUserControlYou(): bool;
 
     /**
-     * Determines whether user can view the object
-     * @return bool
+     * Determines whether the user can view the object
+     *
      * @throws HttpException
      */
     public function canUserViewYou(): bool;
@@ -66,7 +71,7 @@ interface HasEpicControl
     /**
      * Provides Epic
      */
-    public function getEpic();
+    public function getEpic(): ActiveQuery;
 
     public function setCurrentEpicOnEmpty(): void;
 

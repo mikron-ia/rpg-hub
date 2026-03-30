@@ -6,9 +6,11 @@ use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\core\HasStatus;
 use common\models\tools\ToolsForEntity;
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
 use yii2tech\ar\position\PositionBehavior;
@@ -16,8 +18,8 @@ use yii2tech\ar\position\PositionBehavior;
 /**
  * This is the model class for table "game".
  *
- * @property string $game_id
- * @property string $epic_id
+ * @property int $game_id
+ * @property int $epic_id
  * @property string $basics
  * @property string $planned_date
  * @property string $planned_location
@@ -31,26 +33,31 @@ use yii2tech\ar\position\PositionBehavior;
  * @property Epic $epic
  * @property Recap $recap
  * @property UtilityBag $utilityBag
+ *
+ * @method movePrev()
+ * @method moveNext()
  */
 class Game extends ActiveRecord implements HasEpicControl, HasStatus
 {
     use ToolsForEntity;
 
-    const STATUS_PROPOSED = 'proposed';       // game was entered on page; next: ANNOUNCED, PLANNED, UNPLANNED
-    const STATUS_ANNOUNCED = 'announced';     // information was propagated; next: PLANNED, UNPLANNED
-    const STATUS_UNPLANNED = 'unplanned';     // game failed to achieve planning stage; next: none
-    const STATUS_PLANNED = 'planned';         // game is planned; next: PROGRESSING, CANCELLED
-    const STATUS_CANCELLED = 'cancelled';     // plans cancelled; next: none
-    const STATUS_PROGRESSING = 'progressing'; // game is in progress; next: COMPLETED, ABORTED
-    const STATUS_ABORTED = 'aborted';         // game was started, but aborted; next: none
-    const STATUS_COMPLETED = 'completed';     // game was completed; next: CLOSED
-    const STATUS_CLOSED = 'closed';           // game was described; next: none
+    const string STATUS_PROPOSED = 'proposed';       // game was entered on page; next: ANNOUNCED, PLANNED, UNPLANNED
+    const string STATUS_ANNOUNCED = 'announced';     // information was propagated; next: PLANNED, UNPLANNED
+    const string STATUS_UNPLANNED = 'unplanned';     // game failed to achieve planning stage; next: none
+    const string STATUS_PLANNED = 'planned';         // game is planned; next: PROGRESSING, CANCELLED
+    const string STATUS_CANCELLED = 'cancelled';     // plans cancelled; next: none
+    const string STATUS_PROGRESSING = 'progressing'; // game is in progress; next: COMPLETED, ABORTED
+    const string STATUS_ABORTED = 'aborted';         // game was started but aborted; next: none
+    const string STATUS_COMPLETED = 'completed';     // game was completed; next: CLOSED
+    const string STATUS_CLOSED = 'closed';           // game was described; next: none
 
+    #[Override]
     public static function tableName(): string
     {
         return 'game';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -69,7 +76,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
                 'message' => Yii::t(
                     'app',
                     'EPIC_STATUS_NOT_ALLOWED {allowed}',
-                    ['allowed' => implode(', ', $this->getAllowedChangeNames())]
+                    ['allowed' => implode(', ', $this->getAllowedChangeNames())],
                 ),
                 'on' => 'update',
             ],
@@ -78,21 +85,21 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Epic::class,
-                'targetAttribute' => ['epic_id' => 'epic_id']
+                'targetAttribute' => ['epic_id' => 'epic_id'],
             ],
             [
                 ['recap_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Recap::class,
-                'targetAttribute' => ['recap_id' => 'recap_id']
+                'targetAttribute' => ['recap_id' => 'recap_id'],
             ],
             [
                 ['utility_bag_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => UtilityBag::class,
-                'targetAttribute' => ['utility_bag_id' => 'utility_bag_id']
+                'targetAttribute' => ['utility_bag_id' => 'utility_bag_id'],
             ],
         ];
     }
@@ -100,6 +107,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function attributeHints(): array
     {
         return [
@@ -111,6 +119,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -127,6 +136,10 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         ];
     }
 
+    /**
+     * @throws Exception
+     */
+    #[Override]
     public function beforeSave($insert): bool
     {
         if (empty($this->utility_bag_id)) {
@@ -137,11 +150,13 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         return parent::beforeSave($insert);
     }
 
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         parent::afterSave($insert, $changedAttributes);
     }
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -158,11 +173,13 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         ];
     }
 
+    #[Override]
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
+    #[Override]
     static public function statusNames(): array
     {
         return [
@@ -178,6 +195,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         ];
     }
 
+    #[Override]
     static public function statusClasses(): array
     {
         return [
@@ -193,6 +211,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         ];
     }
 
+    #[Override]
     public function statusAllowedChanges(): array
     {
         return [
@@ -208,23 +227,27 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         ];
     }
 
+    #[Override]
     public function getStatus(): string
     {
         $names = self::statusNames();
         return $names[$this->status] ?? '?';
     }
 
+    #[Override]
     public function getStatusClass(): string
     {
         $names = self::statusClasses();
         return $names[$this->status] ?? '';
     }
 
+    #[Override]
     public function getAllowedChange(): array
     {
         return array_merge(($this->statusAllowedChanges()[$this->status] ?? []), [$this->status]);
     }
 
+    #[Override]
     public function getAllowedChangeNames(): array
     {
         return array_filter(self::statusNames(), function ($key) {
@@ -242,42 +265,50 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
         return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
+    #[Override]
     static public function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
+    #[Override]
     static public function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
+    #[Override]
     public function canUserControlYou(): bool
     {
         return self::canUserControlInEpic($this->epic);
     }
 
+    #[Override]
     public function canUserViewYou(): bool
     {
         return self::canUserViewInEpic($this->epic);
     }
 
-    static function throwExceptionAboutCreate()
+    #[Override]
+    public static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_SESSION'));
     }
 
-    static function throwExceptionAboutControl()
+    #[Override]
+    public static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_SESSION'));
     }
 
-    static function throwExceptionAboutIndex()
+    #[Override]
+    public static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_SESSION'));
     }
 
-    static function throwExceptionAboutView()
+    #[Override]
+    public static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_SESSION'));
     }

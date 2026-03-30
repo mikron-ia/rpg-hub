@@ -6,6 +6,7 @@ use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\tools\ToolsForEntity;
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii2tech\ar\position\PositionBehavior;
 
@@ -105,10 +106,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEpic()
+    public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }

@@ -3,12 +3,13 @@
 namespace common\models\tools;
 
 use common\models\Epic;
+use Override;
 use Yii;
 use yii\web\HttpException;
 
 trait ToolsForEntity
 {
-    static public function canUserCreateInEpic(Epic $epic): bool
+    public static function canUserCreateInEpic(Epic $epic): bool
     {
         /* Use of control* right is intentional; there is no need to separate creation from control at this level */
         return Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic]);
@@ -16,9 +17,9 @@ trait ToolsForEntity
 
     /**
      * Provides a class name that uses the trait
-     * Name comes without the namespace
+     * The name comes without the namespace
      */
-    static private function cleanClassName(): string
+    private static function cleanClassName(): string
     {
         $position = strrpos(static::class, '\\');
         if ($position !== false) {
@@ -28,26 +29,30 @@ trait ToolsForEntity
         return '';
     }
 
-    static public function canUserControlInEpic(Epic $epic): bool
+    public static function canUserControlInEpic(Epic $epic): bool
     {
         return Yii::$app->user->can('control' . self::cleanClassName(), ['epic' => $epic]);
     }
 
-    static public function canUserViewInEpic(Epic $epic): bool
+    public static function canUserViewInEpic(Epic $epic): bool
     {
         return Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic]);
     }
 
-    static public function canUserIndexInEpic(Epic $epic): bool
+    public static function canUserIndexInEpic(Epic $epic): bool
     {
         return Yii::$app->user->can('view' . self::cleanClassName(), ['epic' => $epic]);
     }
 
-    static private function thrownExceptionAbout(string $message)
+    /**
+     * @throws HttpException
+     */
+    private static function thrownExceptionAbout(string $message)
     {
         throw new HttpException(403, $message);
     }
 
+    #[Override]
     public function setCurrentEpicOnEmpty(): void
     {
         if (isset(Yii::$app->params['activeEpic']) && $this->epic_id === null) {
@@ -55,11 +60,13 @@ trait ToolsForEntity
         }
     }
 
+    #[Override]
     public function setEpicOnEmpty(Epic $epic): void
     {
         $this->epic_id = $epic->epic_id;
     }
 
+    #[Override]
     public function isEpicSet(): bool
     {
         return !empty($this->epic_id);

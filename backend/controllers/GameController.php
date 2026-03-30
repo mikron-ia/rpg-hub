@@ -6,21 +6,24 @@ use common\components\EpicAssistance;
 use common\models\Epic;
 use common\models\Game;
 use common\models\GameQuery;
+use Override;
+use Throwable;
 use Yii;
+use yii\base\InvalidRouteException;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * GameController implements the CRUD actions for Game model.
- */
 class GameController extends Controller
 {
     use EpicAssistance;
 
-    public function behaviors()
+    #[Override]
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -43,7 +46,8 @@ class GameController extends Controller
     }
 
     /**
-     * Lists all Game models
+     * @throws HttpException
+     * @throws NotFoundHttpException
      */
     public function actionIndex(?string $epic = null): string
     {
@@ -76,7 +80,8 @@ class GameController extends Controller
     }
 
     /**
-     * Displays a single Game model.
+     * @throws HttpException
+     * @throws NotFoundHttpException
      */
     public function actionView(int $id): string
     {
@@ -94,6 +99,9 @@ class GameController extends Controller
     /**
      * Creates a new Game model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     *
+     * @throws Exception
+     * @throws HttpException
      */
     public function actionCreate(string $epic = null): Response|string
     {
@@ -113,8 +121,9 @@ class GameController extends Controller
     }
 
     /**
-     * Updates an existing Game model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * @throws Exception
+     * @throws HttpException
+     * @throws NotFoundHttpException
      */
     public function actionUpdate(int $id): Response|string
     {
@@ -132,8 +141,10 @@ class GameController extends Controller
     }
 
     /**
-     * Deletes an existing Game model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @throws Exception
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     * @throws Throwable
      */
     public function actionDelete(int $id): Response
     {
@@ -149,7 +160,11 @@ class GameController extends Controller
     }
 
     /**
-     * Moves game up in order; this means lower position on the list
+     * Moves game up in order; this means a lower position on the list
+     *
+     * @throws HttpException
+     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
      */
     public function actionMoveUp(int $id): Response
     {
@@ -162,13 +177,17 @@ class GameController extends Controller
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
         }
+
+        return $this->redirect(['index']);
     }
 
     /**
      * Moves game down in order; this means higher position on the list
+     *
+     * @throws HttpException
+     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
      */
     public function actionMoveDown(int $id): Response
     {
@@ -181,14 +200,13 @@ class GameController extends Controller
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
         }
+
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Game model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @throws NotFoundHttpException
      */
     protected function findModel(int $id): Game
     {
