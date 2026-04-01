@@ -11,19 +11,17 @@ use Exception;
 use Override;
 use Throwable;
 use Yii;
-use yii\base\InvalidRouteException;
 use yii\db\Exception as DbException;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-final class DescriptionController extends Controller
+final class DescriptionController extends CmsController
 {
     #[Override]
     public function behaviors(): array
@@ -72,7 +70,6 @@ final class DescriptionController extends Controller
     /**
      * @throws DbException
      * @throws HttpException
-     * @throws InvalidRouteException
      */
     public function actionCreate(int $pack_id): Response|string
     {
@@ -111,7 +108,6 @@ final class DescriptionController extends Controller
     /**
      * @throws DbException
      * @throws HttpException
-     * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
     public function actionUpdate(int $id): Response|string
@@ -136,7 +132,6 @@ final class DescriptionController extends Controller
 
     /**
      * @throws HttpException
-     * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
     public function actionHistory(int $id): Response|string
@@ -224,7 +219,6 @@ final class DescriptionController extends Controller
     /**
      * @throws DbException
      * @throws HttpException
-     * @throws InvalidRouteException
      * @throws NotFoundHttpException
      * @throws MethodNotAllowedHttpException
      */
@@ -307,20 +301,5 @@ final class DescriptionController extends Controller
         }
 
         return $model;
-    }
-
-    /**
-     * @param string[] $default
-     *
-     * @throws InvalidRouteException
-     */
-    protected function returnToReferrer(array $default): Response
-    {
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        }
-
-        return $this->redirect($default);
     }
 }

@@ -10,7 +10,6 @@ use yii\base\InvalidRouteException;
 use yii\db\Exception;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
@@ -18,7 +17,7 @@ use yii\web\Response;
 /**
  * ParameterController implements the CRUD actions for the Parameter model.
  */
-final class ParameterController extends Controller
+final class ParameterController extends CmsController
 {
     public function behaviors(): array
     {
@@ -178,24 +177,5 @@ final class ParameterController extends Controller
         }
 
         return $model;
-    }
-
-    /**
-     * Provides return to the referrer page; if the referrer is empty, the default value is used
-     *
-     * @param string[] $default
-     *
-     * @return Response
-     *
-     * @throws InvalidRouteException
-     */
-    protected function returnToReferrer(array $default):Response
-    {
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect($default);
-        }
     }
 }

@@ -11,7 +11,6 @@ use common\models\GroupMembership;
 use yii\base\InvalidRouteException;
 use yii\db\Exception;
 use yii\filters\AccessControl;
-use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,7 +19,7 @@ use yii\web\Response;
 /**
  * GroupMembershipController implements the CRUD actions for the GroupMembership model.
  */
-final class GroupMembershipController extends Controller
+final class GroupMembershipController extends CmsController
 {
     public function behaviors(): array
     {
@@ -224,20 +223,5 @@ final class GroupMembershipController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'GROUP_MEMBERSHIP_NOT_AVAILABLE'));
-    }
-
-    /**
-     * @param string[] $default
-     *
-     * @throws InvalidRouteException
-     */
-    protected function returnToReferrer(array $default): Response
-    {
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect($default);
-        }
     }
 }
