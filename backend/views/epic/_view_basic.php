@@ -124,7 +124,7 @@ use yii\widgets\DetailView;
     $.get(
         '" . Yii::$app->urlManager->createUrl(['parameter/create']) . "',
         {
-            pack_id: " . $model->parameterPack->parameter_pack_id . "
+            packKey: '" . $model->parameterPack->key . "'
         },
         function (data) {
             $('.modal-body').html(data);
@@ -148,7 +148,7 @@ use yii\widgets\DetailView;
     $.get(
         '" . Yii::$app->urlManager->createUrl(['parameter/update']) . "',
         {
-            id: $(this).closest('tr').data('key')
+            id: $(this).data('key')
         },
         function (data) {
             $('.modal-body').html(data);
@@ -208,13 +208,13 @@ use yii\widgets\DetailView;
                                 'title' => Yii::t('app', 'LABEL_UPDATE'),
                                 'data-toggle' => 'modal',
                                 'data-target' => '#update-parameter-modal',
-                                'data-id' => $key,
+                                'data-key' => $model->key,
                             ]);
                         },
                         'delete' => function ($url, Parameter $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-erase"></span>',
-                                ['parameter/delete', 'id' => $model->parameter_id],
+                                ['parameter/delete', 'key' => $model->key],
                                 [
                                     'title' => Yii::t('app', 'LABEL_DELETE'),
                                     'data-confirm' => Yii::t(
@@ -245,7 +245,7 @@ use yii\widgets\DetailView;
     $.get(
         '" . Yii::$app->urlManager->createUrl(['parameter/create']) . "',
         {
-            pack_id: " . $model->parameterPack->parameter_pack_id . "
+            packKey: '" . $model->parameterPack->key . "'
         },
         function (data) {
             $('.modal-body').html(data);
@@ -269,7 +269,7 @@ use yii\widgets\DetailView;
     $.get(
         '" . Yii::$app->urlManager->createUrl(['parameter/update']) . "',
         {
-            id: $(this).closest('tr').data('key')
+            key: $(this).data('key')
         },
         function (data) {
             $('.modal-body').html(data);

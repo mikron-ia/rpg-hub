@@ -3,8 +3,10 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\HasKey;
 use common\models\core\HasVisibility;
 use common\models\core\Language;
+use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
 use Override;
 use Yii;
@@ -12,6 +14,7 @@ use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\HttpException;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
@@ -19,6 +22,7 @@ use yii2tech\ar\position\PositionBehavior;
  *
  * @property string $parameter_id
  * @property string $parameter_pack_id
+ * @property string $key
  * @property string $code
  * @property string $lang
  * @property string $visibility
@@ -30,8 +34,9 @@ use yii2tech\ar\position\PositionBehavior;
  * @method movePrev()
  * @method moveNext()
  */
-class Parameter extends ActiveRecord implements HasVisibility
+class Parameter extends ActiveRecord implements HasVisibility, HasKey
 {
+    use ToolsForEntity;
     use ToolsForHasVisibility;
 
     const string STORY_NUMBER = 'story-number';
@@ -49,6 +54,11 @@ class Parameter extends ActiveRecord implements HasVisibility
 
     #[Override]
     public static function tableName(): string
+    {
+        return 'parameter';
+    }
+
+    public static function keyParameterName(): string
     {
         return 'parameter';
     }
@@ -100,6 +110,19 @@ class Parameter extends ActiveRecord implements HasVisibility
         $this->parameterPack->updateSearchableFields();
 
         parent::afterSave($insert, $changedAttributes);
+    }
+
+    /**
+     * @throws HttpException
+     */
+    #[Override]
+    public function beforeSave($insert): bool
+    {
+        if ($insert) {
+            $this->key = $this->generateKey();
+        }
+
+        return parent::beforeSave($insert);
     }
 
     #[Override]

@@ -2,7 +2,7 @@ $('.create-parameter-link').click(function () {
     $.get(
         '../parameter/create',
         {
-            pack_id: $(this).data('pack-id')
+            packKey: $(this).data('pack-key')
         },
         function (data) {
             $('.modal-body').html(data);
@@ -15,7 +15,7 @@ $('.update-parameter-link').click(function () {
     $.get(
         '../parameter/update',
         {
-            id: $(this).closest('tr').data('key')
+            key: $(this).data('key')
         },
         function (data) {
             $('.modal-body').html(data);

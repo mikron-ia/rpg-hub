@@ -18,11 +18,11 @@ use yii\widgets\ActiveForm;
         'action' => $model->isNewRecord ?
             [
                 'parameter/create',
-                'pack_id' => $model->parameter_pack_id,
+                'packKey' => $model->parameterPack->key,
             ] :
             [
                 'parameter/update',
-                'id' => $model->parameter_id,
+                'key' => $model->key,
             ],
         'method' => 'post',
     ]); ?>

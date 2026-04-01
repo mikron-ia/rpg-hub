@@ -1,6 +1,8 @@
 <?php
 
 use common\models\GroupMembership;
+use common\models\Parameter;
+use common\models\ParameterPack;
 use common\models\Participant;
 use common\models\PointInTime;
 use common\models\User;
@@ -41,10 +43,24 @@ class m260322_181640_v1_6_0 extends Migration
         $this->fillInKeys(PointInTime::find());
         $this->alterColumn('{{%point_in_time}}', 'key', $this->string(80)->notNull());
         $this->createIndex('point_in_time_key', '{{%point_in_time}}', 'key', true);
+
+        $this->addColumn('{{%parameter}}', 'key', $this->string(80)->after('parameter_pack_id'));
+        $this->fillInKeys(Parameter::find());
+        $this->alterColumn('{{%parameter}}', 'key', $this->string(80)->notNull());
+        $this->createIndex('parameter_key', '{{%parameter}}', 'key', true);
+
+        $this->addColumn('{{%parameter_pack}}', 'key', $this->string(80)->after('parameter_pack_id'));
+        $this->fillInKeys(ParameterPack::find());
+        $this->alterColumn('{{%parameter_pack}}', 'key', $this->string(80)->notNull());
+        $this->createIndex('parameter_pack_key', '{{%parameter_pack}}', 'key', true);
     }
 
     public function safeDown(): void
     {
+        $this->dropColumn('{{%parameter_pack}}', 'key');
+
+        $this->dropColumn('{{%parameter}}', 'key');
+
         $this->dropColumn('{{%point_in_time}}', 'key');
 
         $this->dropColumn('{{%group_membership}}', 'key');
@@ -65,7 +81,8 @@ class m260322_181640_v1_6_0 extends Migration
     {
         foreach ($objects->all() as $object) {
             if (empty($object->key)) {
-                $object->fillInKey()->save();
+                $object->detachBehaviors();
+                $object->fillInKey()->save(false);
             }
         }
     }

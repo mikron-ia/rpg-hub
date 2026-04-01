@@ -191,7 +191,7 @@ $isStoryCurrent = $model->story_id === $model->epic->current_story_id;
                     'title' => Yii::t('app', 'BUTTON_PARAMETER_CREATE'),
                     'data-toggle' => 'modal',
                     'data-target' => '#create-parameter-modal',
-                    'data-pack-id' => $model->parameterPack->parameter_pack_id
+                    'data-pack-key' => $model->parameterPack->key,
                 ]
             ); ?>
         </div>
@@ -229,13 +229,13 @@ $isStoryCurrent = $model->story_id === $model->epic->current_story_id;
                                 'title' => Yii::t('app', 'LABEL_UPDATE'),
                                 'data-toggle' => 'modal',
                                 'data-target' => '#update-parameter-modal',
-                                'data-id' => $key,
+                                'data-key' => $model->key,
                             ]);
                         },
                         'delete' => function ($url, Parameter $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-erase"></span>',
-                                ['parameter/delete', 'id' => $model->parameter_id],
+                                ['parameter/delete', 'key' => $model->key],
                                 [
                                     'title' => Yii::t('app', 'LABEL_DELETE'),
                                     'data-confirm' => Yii::t(
@@ -249,7 +249,7 @@ $isStoryCurrent = $model->story_id === $model->epic->current_story_id;
                         'up' => function ($url, Parameter $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-arrow-up"></span>',
-                                ['parameter/move-up', 'id' => $model->parameter_id],
+                                ['parameter/move-up', 'key' => $model->key],
                                 [
                                     'title' => Yii::t('app', 'LABEL_MOVE_UP'),
                                 ]
@@ -258,7 +258,7 @@ $isStoryCurrent = $model->story_id === $model->epic->current_story_id;
                         'down' => function ($url, Parameter $model, $key) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-arrow-down"></span>',
-                                ['parameter/move-down', 'id' => $model->parameter_id],
+                                ['parameter/move-down', 'key' => $model->key],
                                 [
                                     'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
                                 ]

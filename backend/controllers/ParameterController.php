@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\core\Visibility;
 use common\models\Parameter;
+use common\models\ParameterPack;
 use Throwable;
 use Yii;
 use yii\base\InvalidRouteException;
@@ -45,26 +46,30 @@ final class ParameterController extends CmsController
     /**
      * @throws NotFoundHttpException
      */
-    public function actionView(string $id): string
+    public function actionView(string $key): string
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($key),
         ]);
     }
 
-    public function actionCreate(int $pack_id): Response|string
+    /**
+     * @throws Exception
+     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
+     */
+    public function actionCreate(string $packKey): Response|string
     {
         $model = new Parameter();
 
-        $model->parameter_pack_id = $pack_id;
+        $pack = $this->findPackModel($packKey);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $referrer = Yii::$app->getRequest()->getReferrer();
-            if ($referrer) {
-                return Yii::$app->getResponse()->redirect($referrer);
-            } else {
-                return $this->redirect(['index']);
-            }
+        $success = $model->load(Yii::$app->request->post());
+        $model->parameter_pack_id = $pack->parameter_pack_id;
+        $success = $success && $model->save();
+
+        if ($success) {
+            return $this->returnToReferrer(['index']);
         }
 
         if (Yii::$app->request->isAjax) {
@@ -80,9 +85,9 @@ final class ParameterController extends CmsController
      * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
-    public function actionUpdate(string $id): Response|string
+    public function actionUpdate(string $key): Response|string
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->parameterPack->canUserControlYou()) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_PARAMETER_ACCESS_DENIED'));
@@ -106,9 +111,9 @@ final class ParameterController extends CmsController
      * @throws Throwable
      * @throws StaleObjectException
      */
-    public function actionDelete(string $id): Response
+    public function actionDelete(string $key): Response
     {
-        $this->findModel($id)->delete();
+        $this->findModel($key)->delete();
 
         return $this->returnToReferrer(['index']);
     }
@@ -119,9 +124,9 @@ final class ParameterController extends CmsController
      * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
-    public function actionMoveUp(int $id): Response
+    public function actionMoveUp(string $key): Response
     {
-        $this->findModel($id)->movePrev();
+        $this->findModel($key)->movePrev();
 
         return $this->returnToReferrer(['index']);
     }
@@ -132,21 +137,19 @@ final class ParameterController extends CmsController
      * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
-    public function actionMoveDown(int $id): Response
+    public function actionMoveDown(string $key): Response
     {
-        $this->findModel($id)->moveNext();
+        $this->findModel($key)->moveNext();
 
         return $this->returnToReferrer(['index']);
     }
 
     /**
-     * Finds the Parameter model based on its primary key value.
-     *
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
-    protected function findModel(string $id): Parameter
+    protected function findModel(string $key): Parameter
     {
-        $model = Parameter::findOne(['parameter_id' => $id]);
+        $model = Parameter::findOne(['key' => $key]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'PARAMETER_NOT_AVAILABLE'));
@@ -154,6 +157,20 @@ final class ParameterController extends CmsController
 
         if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->parameterPack->epic))) {
             throw new NotFoundHttpException(Yii::t('app', 'PARAMETER_NOT_AVAILABLE'));
+        }
+
+        return $model;
+    }
+
+    /**
+     * @throws NotFoundHttpException
+     */
+    protected function findPackModel(string $key): ParameterPack
+    {
+        $model = ParameterPack::findOne(['key' => $key]);
+
+        if ($model === null) {
+            throw new NotFoundHttpException(Yii::t('app', 'PARAMETER_PACK_NOT_AVAILABLE'));
         }
 
         return $model;
