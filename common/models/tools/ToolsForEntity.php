@@ -3,7 +3,6 @@
 namespace common\models\tools;
 
 use common\models\Epic;
-use Override;
 use Yii;
 use yii\web\HttpException;
 
@@ -52,7 +51,6 @@ trait ToolsForEntity
         throw new HttpException(403, $message);
     }
 
-    #[Override]
     public function setCurrentEpicOnEmpty(): void
     {
         if (isset(Yii::$app->params['activeEpic']) && $this->epic_id === null) {
@@ -60,13 +58,11 @@ trait ToolsForEntity
         }
     }
 
-    #[Override]
     public function setEpicOnEmpty(Epic $epic): void
     {
         $this->epic_id = $epic->epic_id;
     }
 
-    #[Override]
     public function isEpicSet(): bool
     {
         return !empty($this->epic_id);
@@ -80,6 +76,7 @@ trait ToolsForEntity
         if (empty($this->key)) {
             $this->key = $this->generateKey();
         }
+
         return $this;
     }
 

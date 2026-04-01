@@ -6,21 +6,25 @@ use common\components\EpicAssistance;
 use common\models\Epic;
 use common\models\PointInTime;
 use common\models\PointInTimeQuery;
+use Override;
+use Throwable;
 use Yii;
+use yii\base\InvalidRouteException;
+use yii\db\Exception as DbException;
+use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * PointInTimeController implements the CRUD actions for PointInTime model.
- */
 class PointInTimeController extends Controller
 {
     use EpicAssistance;
 
-    public function behaviors()
+    #[Override]
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -43,7 +47,8 @@ class PointInTimeController extends Controller
     }
 
     /**
-     * Lists all PointInTime models.
+     * @throws HttpException
+     * @throws NotFoundHttpException
      */
     public function actionIndex(string $epic): string
     {
@@ -76,7 +81,8 @@ class PointInTimeController extends Controller
     }
 
     /**
-     * Displays a single PointInTime model.
+     * @throws HttpException
+     * @throws NotFoundHttpException
      */
     public function actionView(int $id): string
     {
@@ -90,8 +96,8 @@ class PointInTimeController extends Controller
     }
 
     /**
-     * Creates a new PointInTime model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @throws DbException
+     * @throws HttpException
      */
     public function actionCreate(string $epic = null): Response|string
     {
@@ -111,8 +117,9 @@ class PointInTimeController extends Controller
     }
 
     /**
-     * Updates an existing PointInTime model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * @throws DbException
+     * @throws HttpException
+     * @throws NotFoundHttpException
      */
     public function actionUpdate(int $id): Response|string
     {
@@ -130,8 +137,10 @@ class PointInTimeController extends Controller
     }
 
     /**
-     * Deletes an existing PointInTime model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     * @throws StaleObjectException
+     * @throws Throwable
      */
     public function actionDelete(int $id): Response
     {
@@ -147,7 +156,11 @@ class PointInTimeController extends Controller
     }
 
     /**
-     * Moves PointInTime up in order; this means lower position on the list
+     * Moves PointInTime up in order; this means a lower position on the list
+     *
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     * @throws InvalidRouteException
      */
     public function actionMoveUp(int $id): Response
     {
@@ -166,7 +179,11 @@ class PointInTimeController extends Controller
     }
 
     /**
-     * Moves PointInTime down in order; this means higher position on the list
+     * Moves PointInTime down in order; this means a higher position on the list
+     *
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     * @throws InvalidRouteException
      */
     public function actionMoveDown(int $id): Response
     {
@@ -185,8 +202,7 @@ class PointInTimeController extends Controller
     }
 
     /**
-     * Finds the PointInTime model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @throws NotFoundHttpException
      */
     protected function findModel(int $id): PointInTime
     {

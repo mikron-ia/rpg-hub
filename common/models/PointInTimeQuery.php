@@ -2,38 +2,31 @@
 
 namespace common\models;
 
+use Override;
 use Yii;
-use yii\base\Exception;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
-/**
- * PointInTimeQuery represents the model behind the search form about `common\models\PointInTime`.
- */
 class PointInTimeQuery extends PointInTime
 {
-    public function rules()
+    #[Override]
+    public function rules(): array
     {
         return [
             [['name', 'text_public', 'text_protected', 'text_private'], 'safe'],
         ];
     }
 
-    public function scenarios()
+    #[Override]
+    public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
-    public function search($params)
+    public function search(array $params): ActiveDataProvider
     {
         $query = PointInTime::find();
 
@@ -66,11 +59,7 @@ class PointInTimeQuery extends PointInTime
         return $dataProvider;
     }
 
-    /**
-     * @param bool $limitToActive
-     * @return ActiveQuery
-     */
-    static public function pointsInTimeAsActiveRecord($limitToActive = true): ActiveQuery
+    public static function pointsInTimeAsActiveRecord(bool $limitToActive = true): ActiveQuery
     {
         $query = PointInTime::find();
 
@@ -91,27 +80,20 @@ class PointInTimeQuery extends PointInTime
         return $query;
     }
 
-    /**
-     * @param bool $limitToActive
-     * @return ActiveDataProvider
-     */
-    static public function pointsInTimeAsActiveDataProvider($limitToActive = true): ActiveDataProvider
+    public static function pointsInTimeAsActiveDataProvider(bool $limitToActive = true): ActiveDataProvider
     {
         $query = self::pointsInTimeAsActiveRecord($limitToActive);
 
-        $dataProvider = new ActiveDataProvider([
+        return new ActiveDataProvider([
             'query' => $query,
             'pagination' => false,
         ]);
-
-        return $dataProvider;
     }
 
     /**
-     * @param bool $limitToActive
-     * @return \yii\db\ActiveRecord[]
+     * @return ActiveRecord[]
      */
-    static public function pointsInTimeAsModels($limitToActive = true): array
+    public static function pointsInTimeAsModels(bool $limitToActive = true): array
     {
         if (Yii::$app->user->isGuest) {
             return [];
@@ -119,7 +101,7 @@ class PointInTimeQuery extends PointInTime
 
         $query = self::pointsInTimeAsActiveRecord($limitToActive);
 
-        if (!$query) {
+        if ($query->exists() === false) {
             return [];
         }
 
@@ -127,16 +109,16 @@ class PointInTimeQuery extends PointInTime
     }
 
     /**
-     * @return string[]
+     * @return array<int,string>
      */
-    static public function getListOfPointsInTimeForSelector(): array
+    public static function getListOfPointsInTimeForSelector(): array
     {
         $pointsInTimeList = self::pointsInTimeAsModels(true);
 
-        /** @var string[] $pointsInTimeListForSelector */
+        /** @var array<int,string> $pointsInTimeListForSelector */
         $pointsInTimeListForSelector = [];
-
         foreach ($pointsInTimeList as $pointInTime) {
+            /** @var PointInTime $pointInTime */
             $pointsInTimeListForSelector[$pointInTime->point_in_time_id] = $pointInTime->name;
         }
 

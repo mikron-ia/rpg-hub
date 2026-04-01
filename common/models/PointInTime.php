@@ -5,14 +5,13 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\tools\ToolsForEntity;
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
- * This is the model class for table "point_in_time".
- *
  * @property string $point_in_time_id
  * @property string $epic_id
  * @property string $name
@@ -23,21 +22,26 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $position
  *
  * @property Epic $epic
+ *
+ * @method moveNext()
+ * @method movePrev()
  */
 class PointInTime extends ActiveRecord implements HasEpicControl
 {
     use ToolsForEntity;
 
-    public const STATUS_RETIRED = 'retired';
-    public const STATUS_ACTIVE = 'active';
-    public const STATUS_FUTURE = 'future';
+    public const string STATUS_RETIRED = 'retired';
+    public const string STATUS_ACTIVE = 'active';
+    public const string STATUS_FUTURE = 'future';
 
-    public static function tableName()
+    #[Override]
+    public static function tableName(): string
     {
         return 'point_in_time';
     }
 
-    public function rules()
+    #[Override]
+    public function rules(): array
     {
         return [
             [['epic_id', 'name'], 'required'],
@@ -49,14 +53,14 @@ class PointInTime extends ActiveRecord implements HasEpicControl
             [
                 ['status'],
                 'in',
-                'range' => [PointInTime::STATUS_ACTIVE, PointInTime::STATUS_RETIRED, PointInTime::STATUS_FUTURE]
+                'range' => [PointInTime::STATUS_ACTIVE, PointInTime::STATUS_RETIRED, PointInTime::STATUS_FUTURE],
             ],
             [
                 ['epic_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Epic::class,
-                'targetAttribute' => ['epic_id' => 'epic_id']
+                'targetAttribute' => ['epic_id' => 'epic_id'],
             ],
         ];
     }
@@ -64,6 +68,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function attributeHints(): array
     {
         return [
@@ -76,6 +81,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -90,7 +96,8 @@ class PointInTime extends ActiveRecord implements HasEpicControl
         ];
     }
 
-    public function behaviors()
+    #[Override]
+    public function behaviors(): array
     {
         return [
             'positionBehavior' => [
@@ -106,47 +113,56 @@ class PointInTime extends ActiveRecord implements HasEpicControl
         ];
     }
 
+    #[Override]
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
+    #[Override]
     static public function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
+    #[Override]
     static public function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
+    #[Override]
     public function canUserControlYou(): bool
     {
         return self::canUserControlInEpic($this->epic);
     }
 
+    #[Override]
     public function canUserViewYou(): bool
     {
         return self::canUserViewInEpic($this->epic);
     }
 
-    static function throwExceptionAboutCreate()
+    #[Override]
+    public static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_POINT_IN_TIME'));
     }
 
-    static function throwExceptionAboutControl()
+    #[Override]
+    public static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_POINT_IN_TIME'));
     }
 
-    static function throwExceptionAboutIndex()
+    #[Override]
+    public static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_POINT_IN_TIME'));
     }
 
-    static function throwExceptionAboutView()
+    #[Override]
+    public static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_POINT_IN_TIME'));
     }
@@ -157,7 +173,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
      */
     static public function statusNames(): array
     {
@@ -169,7 +185,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
      */
     static public function statusCSS(): array
     {
@@ -180,19 +196,12 @@ class PointInTime extends ActiveRecord implements HasEpicControl
         ];
     }
 
-
-    /**
-     * @return string
-     */
     public function getStatus(): string
     {
         $names = self::statusNames();
         return isset($names[$this->status]) ? $names[$this->status] : '';
     }
 
-    /**
-     * @return string
-     */
     public function getStatusCSS(): string
     {
         $names = self::statusCSS();

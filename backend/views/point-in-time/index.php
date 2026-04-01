@@ -2,12 +2,14 @@
 
 use common\models\Epic;
 use common\models\PointInTime;
+use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\web\View;
 
 /* @var $epic Epic */
-/* @var $this yii\web\View */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_POINT_IN_TIME_INDEX');
 $this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];
@@ -75,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]
                         );
                     },
-                ]
+                ],
             ],
         ],
     ]); ?>
