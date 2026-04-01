@@ -84,9 +84,9 @@ class PointInTimeController extends Controller
      * @throws HttpException
      * @throws NotFoundHttpException
      */
-    public function actionView(int $id): string
+    public function actionView(string $key): string
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->canUserViewYou()) {
             PointInTime::throwExceptionAboutView();
@@ -110,7 +110,7 @@ class PointInTimeController extends Controller
         $this->setEpicOnObject($epic, $model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->point_in_time_id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         }
 
         return $this->render('create', ['model' => $model]);
@@ -121,16 +121,16 @@ class PointInTimeController extends Controller
      * @throws HttpException
      * @throws NotFoundHttpException
      */
-    public function actionUpdate(int $id): Response|string
+    public function actionUpdate(string $key): Response|string
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->canUserControlYou()) {
             PointInTime::throwExceptionAboutControl();
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->point_in_time_id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         }
 
         return $this->render('update', ['model' => $model]);
@@ -142,9 +142,9 @@ class PointInTimeController extends Controller
      * @throws StaleObjectException
      * @throws Throwable
      */
-    public function actionDelete(int $id): Response
+    public function actionDelete(string $key): Response
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->canUserControlYou()) {
             PointInTime::throwExceptionAboutControl();
@@ -162,9 +162,9 @@ class PointInTimeController extends Controller
      * @throws NotFoundHttpException
      * @throws InvalidRouteException
      */
-    public function actionMoveUp(int $id): Response
+    public function actionMoveUp(string $key): Response
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
         if (!$model->canUserControlYou()) {
             PointInTime::throwExceptionAboutControl();
         }
@@ -185,9 +185,9 @@ class PointInTimeController extends Controller
      * @throws NotFoundHttpException
      * @throws InvalidRouteException
      */
-    public function actionMoveDown(int $id): Response
+    public function actionMoveDown(string $key): Response
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
         if (!$model->canUserControlYou()) {
             PointInTime::throwExceptionAboutControl();
         }
@@ -204,9 +204,26 @@ class PointInTimeController extends Controller
     /**
      * @throws NotFoundHttpException
      */
-    protected function findModel(int $id): PointInTime
+    protected function findModelById(int $id): PointInTime
     {
         $model = PointInTime::findOne($id);
+
+        if ($model === null) {
+            throw new NotFoundHttpException(Yii::t('app', 'POINT_IN_TIME_NOT_AVAILABLE'));
+        }
+
+        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
+
+        return $model;
+    }
+
+    /**
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     */
+    protected function findModel(string $key): PointInTime
+    {
+        $model = PointInTime::findOne(['key' => $key]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'POINT_IN_TIME_NOT_AVAILABLE'));

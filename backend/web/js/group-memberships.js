@@ -2,7 +2,7 @@ $('.add-membership-link').click(function () {
     $.get(
         '../group-membership/create',
         {
-            group_id: $(this).data('group-id')
+            groupKey: $(this).data('group-key')
         },
         function (data) {
             $('.modal-body').html(data);
@@ -15,7 +15,7 @@ $('.view-membership-link').click(function () {
     $.get(
         '../group-membership/view',
         {
-            id: $(this).data('id')
+            key: $(this).data('key')
         },
         function (data) {
             $('.modal-body').html(data);
@@ -28,7 +28,7 @@ $('.update-membership-link').click(function () {
     $.get(
         '../group-membership/update',
         {
-            id: $(this).data('id')
+            key: $(this).data('key')
         },
         function (data) {
             $('.modal-body').html(data);
@@ -41,7 +41,7 @@ $('.membership-history-link').click(function () {
     $.get(
         '../group-membership/history',
         {
-            id: $(this).data('id')
+            key: $(this).data('key')
         },
         function (data) {
             $('.modal-body').html(data);

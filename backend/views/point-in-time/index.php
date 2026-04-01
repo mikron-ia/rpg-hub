@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'view' => function ($url, PointInTime $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-eye-open"></span>',
-                            Yii::$app->urlManager->createUrl(['point-in-time/view', 'id' => $model->point_in_time_id]),
+                            Yii::$app->urlManager->createUrl(['point-in-time/view', 'key' => $model->key]),
                             ['title' => Yii::t('app', 'BUTTON_VIEW')]
                         );
                     },
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             '<span class="glyphicon glyphicon-pencil"></span>',
                             Yii::$app->urlManager->createUrl([
                                 'point-in-time/update',
-                                'id' => $model->point_in_time_id
+                                'key' => $model->key
                             ]),
                             ['title' => Yii::t('app', 'BUTTON_UPDATE')]
                         );
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'up' => function ($url, PointInTime $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-arrow-up"></span>',
-                            ['point-in-time/move-down', 'id' => $model->point_in_time_id],
+                            ['point-in-time/move-down', 'key' => $model->key],
                             [
                                 'title' => Yii::t('app', 'LABEL_MOVE_UP'),
                             ]
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'down' => function ($url, PointInTime $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-arrow-down"></span>',
-                            ['point-in-time/move-up', 'id' => $model->point_in_time_id],
+                            ['point-in-time/move-up', 'key' => $model->key],
                             [
                                 'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
                             ]

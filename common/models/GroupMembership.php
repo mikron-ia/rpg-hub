@@ -3,14 +3,18 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\HasKey;
 use common\models\core\HasVisibility;
 use common\models\core\Visibility;
+use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
+use yii\web\HttpException;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
@@ -22,6 +26,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $visibility
  * @property string $status
  * @property int $position
+ * @property string $key
  * @property string $short_text
  * @property string $public_text
  * @property string $private_text
@@ -30,8 +35,9 @@ use yii2tech\ar\position\PositionBehavior;
  * @property Group $group
  * @property GroupMembershipHistory[] $groupMembershipHistories
  */
-class GroupMembership extends ActiveRecord implements HasVisibility
+class GroupMembership extends ActiveRecord implements HasVisibility, HasKey
 {
+    use ToolsForEntity;
     use ToolsForHasVisibility;
 
     const STATUS_ACTIVE = 'active';
@@ -42,6 +48,12 @@ class GroupMembership extends ActiveRecord implements HasVisibility
     public static function tableName()
     {
         return 'group_membership';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
+    {
+        return 'groupMembership';
     }
 
     public function rules()
@@ -89,8 +101,15 @@ class GroupMembership extends ActiveRecord implements HasVisibility
         ];
     }
 
+    /**
+     * @throws HttpException
+     */
     public function beforeSave($insert)
     {
+        if ($insert) {
+            $this->key = $this->generateKey();
+        }
+
         if (!$insert) {
             $this->createHistoryRecord();
         }

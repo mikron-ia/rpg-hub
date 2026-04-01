@@ -49,9 +49,9 @@ final class GroupMembershipController extends Controller
      * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
-    public function actionView(string $id): Response|string
+    public function actionView(string $key): Response|string
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->group->canUserViewYou() || !$model->character->canUserViewYou()) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_MEMBERSHIP_ACCESS_DENIED'));
@@ -70,11 +70,11 @@ final class GroupMembershipController extends Controller
      * @throws HttpException
      * @throws InvalidRouteException
      */
-    public function actionCreate(string $group_id): Response|string
+    public function actionCreate(string $groupKey): Response|string
     {
         $model = new GroupMembership();
 
-        $group = Group::findOne(['group_id' => $group_id]);
+        $group = Group::findOne(['key' => $groupKey]);
 
         if (!$group) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_GROUP_NOT_FOUND'));
@@ -84,14 +84,16 @@ final class GroupMembershipController extends Controller
             return $this->returnToReferrer(['site/index']);
         }
 
-        $model->group_id = $group_id;
-
         if (!Group::canUserCreateThem() || !Character::canUserCreateThem()) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_MEMBERSHIP_ACCESS_DENIED'));
             return $this->returnToReferrer(['site/index']);
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $success = $model->load(Yii::$app->request->post());
+        $model->group_id = $group->group_id;
+        $success = $success && $model->save();
+
+        if ($success) {
             return $this->returnToReferrer(['site/index']);
         } else {
             $charactersForMembership = CharacterQuery::listEpicCharactersAsArray();
@@ -112,9 +114,9 @@ final class GroupMembershipController extends Controller
      * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
-    public function actionUpdate(string $id): Response|string
+    public function actionUpdate(string $key): Response|string
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->group->canUserControlYou() || !$model->character->canUserControlYou()) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_MEMBERSHIP_ACCESS_DENIED'));
@@ -141,9 +143,9 @@ final class GroupMembershipController extends Controller
      * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
-    public function actionHistory(string $id): Response|string
+    public function actionHistory(string $key): Response|string
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->group->canUserViewYou() || !$model->character->canUserViewYou()) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_MEMBERSHIP_ACCESS_DENIED'));
@@ -165,9 +167,10 @@ final class GroupMembershipController extends Controller
      * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
-    public function actionMoveUp(int $id): Response
+    public function actionMoveUp(string $key): Response
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelById($key);
+
         $model->movePrev();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
@@ -182,9 +185,10 @@ final class GroupMembershipController extends Controller
      * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
-    public function actionMoveDown(int $id): Response
+    public function actionMoveDown(string $key): Response
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
+
         $model->moveNext();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
@@ -201,13 +205,25 @@ final class GroupMembershipController extends Controller
      *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel(string $id): GroupMembership
+    protected function findModelById(string $id): GroupMembership
     {
         if (($model = GroupMembership::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    /**
+     * @throws NotFoundHttpException
+     */
+    protected function findModel(string $key): GroupMembership
+    {
+        if (($model = GroupMembership::findOne(['key' => $key])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'GROUP_MEMBERSHIP_NOT_AVAILABLE'));
     }
 
     /**

@@ -20,7 +20,7 @@ use yii\helpers\StringHelper;
             'title' => Yii::t('app', 'MEMBERSHIP_BUTTON_ADD'),
             'data-toggle' => 'modal',
             'data-target' => '#add-membership-modal',
-            'data-group-id' => $model->group_id,
+            'data-group-key' => $model->key,
         ]
     ); ?>
 </div>
@@ -74,6 +74,7 @@ use yii\helpers\StringHelper;
                             'data-toggle' => 'modal',
                             'data-target' => '#view-membership-modal',
                             'data-id' => $key,
+                            'data-key' => $model->key,
                         ]);
                     },
                     'history' => function ($url, GroupMembership $model, $key) {
@@ -83,6 +84,7 @@ use yii\helpers\StringHelper;
                             'data-toggle' => 'modal',
                             'data-target' => '#membership-history-modal',
                             'data-id' => $key,
+                            'data-key' => $model->key,
                         ]);
                     },
                     'update' => function ($url, GroupMembership $model, $key) {
@@ -92,12 +94,13 @@ use yii\helpers\StringHelper;
                             'data-toggle' => 'modal',
                             'data-target' => '#update-membership-modal',
                             'data-id' => $key,
+                            'data-key' => $model->key,
                         ]);
                     },
                     'up' => function ($url, GroupMembership $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-arrow-up"></span>',
-                            ['group-membership/move-up', 'id' => $model->group_membership_id],
+                            ['group-membership/move-up', 'key' => $model->key],
                             [
                                 'title' => Yii::t('app', 'LABEL_MOVE_UP'),
                             ]
@@ -106,7 +109,7 @@ use yii\helpers\StringHelper;
                     'down' => function ($url, GroupMembership $model, $key) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-arrow-down"></span>',
-                            ['group-membership/move-down', 'id' => $model->group_membership_id],
+                            ['group-membership/move-down', 'key' => $model->key],
                             [
                                 'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
                             ]

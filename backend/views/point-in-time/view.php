@@ -22,12 +22,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
-            ['update', 'id' => $model->point_in_time_id],
+            ['update', 'key' => $model->key],
             ['class' => 'btn btn-primary']
         ) ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_MOVE_DOWN'),
-            ['move-up', 'id' => $model->point_in_time_id],
+            ['move-up', 'key' => $model->key],
             [
                 'class' => 'btn btn-default',
                 'data' => [
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ); ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_MOVE_UP'),
-            ['move-down', 'id' => $model->point_in_time_id],
+            ['move-down', 'key' => $model->key],
             [
                 'class' => 'btn btn-default',
                 'data' => [
@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ); ?>
         <?= Html::a(
             Yii::t('app', 'BUTTON_DELETE'),
-            ['delete', 'id' => $model->point_in_time_id],
+            ['delete', 'key' => $model->key],
             [
                 'class' => 'btn btn-danger',
                 'data' => [

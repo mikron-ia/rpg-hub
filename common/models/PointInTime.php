@@ -4,15 +4,18 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
+use common\models\core\HasKey;
 use common\models\tools\ToolsForEntity;
 use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\HttpException;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
  * @property string $point_in_time_id
+ * @property string $key
  * @property string $epic_id
  * @property string $name
  * @property string $text_public
@@ -26,7 +29,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @method moveNext()
  * @method movePrev()
  */
-class PointInTime extends ActiveRecord implements HasEpicControl
+class PointInTime extends ActiveRecord implements HasEpicControl, HasKey
 {
     use ToolsForEntity;
 
@@ -38,6 +41,11 @@ class PointInTime extends ActiveRecord implements HasEpicControl
     public static function tableName(): string
     {
         return 'point_in_time';
+    }
+
+    public static function keyParameterName(): string
+    {
+        return 'pointInTime';
     }
 
     #[Override]
@@ -111,6 +119,19 @@ class PointInTime extends ActiveRecord implements HasEpicControl
                 'className' => 'PointInTime',
             ]
         ];
+    }
+
+    /**
+     * @throws HttpException
+     */
+    #[Override]
+    public function beforeSave($insert): bool
+    {
+        if ($insert) {
+            $this->key = $this->generateKey();
+        }
+
+        return parent::beforeSave($insert);
     }
 
     #[Override]
