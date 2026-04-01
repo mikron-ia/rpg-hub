@@ -10,6 +10,7 @@ use yii\base\InvalidRouteException;
 use yii\db\Exception;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
@@ -64,17 +65,18 @@ final class ParameterController extends CmsController
             } else {
                 return $this->redirect(['index']);
             }
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create', ['model' => $model]);
         } else {
-            if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('create', ['model' => $model]);
-            } else {
-                return $this->render('create', ['model' => $model]);
-            }
+            return $this->render('create', ['model' => $model]);
         }
     }
 
     /**
      * @throws Exception
+     * @throws HttpException
      * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
@@ -88,12 +90,7 @@ final class ParameterController extends CmsController
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $referrer = Yii::$app->getRequest()->getReferrer();
-            if ($referrer) {
-                return Yii::$app->getResponse()->redirect($referrer);
-            } else {
-                return $this->redirect(['index']);
-            }
+            return $this->returnToReferrer(['index']);
         } else {
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('update', ['model' => $model]);
@@ -113,12 +110,7 @@ final class ParameterController extends CmsController
     {
         $this->findModel($id)->delete();
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
-        }
+        return $this->returnToReferrer(['index']);
     }
 
     /**
@@ -129,15 +121,9 @@ final class ParameterController extends CmsController
      */
     public function actionMoveUp(int $id): Response
     {
-        $model = $this->findModel($id);
-        $model->movePrev();
+        $this->findModel($id)->movePrev();
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
-        }
+        return $this->returnToReferrer(['index']);
     }
 
     /**
@@ -148,15 +134,9 @@ final class ParameterController extends CmsController
      */
     public function actionMoveDown(int $id): Response
     {
-        $model = $this->findModel($id);
-        $model->moveNext();
+        $this->findModel($id)->moveNext();
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
-        }
+        return $this->returnToReferrer(['index']);
     }
 
     /**

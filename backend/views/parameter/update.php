@@ -1,14 +1,15 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Parameter */
+use common\models\Parameter;
+use yii\web\View;
 
-$this->title = Yii::t('app', 'PARAMETER_TITLE_UPDATE') . ': ' . $model->parameter_id;
+/* @var $this View */
+/* @var $model Parameter */
+
+$this->title = Yii::t('app', 'PARAMETER_TITLE_UPDATE') . ': ' . $model->getTypeName();
 ?>
 <div class="parameter-update">
-
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
 </div>

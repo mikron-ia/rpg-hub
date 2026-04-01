@@ -3,11 +3,12 @@
 use common\models\core\Visibility;
 use common\models\Parameter;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Parameter */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model Parameter */
+/* @var $form ActiveForm */
 ?>
 
 <div class="parameter-form">
@@ -17,11 +18,11 @@ use yii\widgets\ActiveForm;
         'action' => $model->isNewRecord ?
             [
                 'parameter/create',
-                'pack_id' => $model->parameter_pack_id
+                'pack_id' => $model->parameter_pack_id,
             ] :
             [
                 'parameter/update',
-                'id' => $model->parameter_id
+                'id' => $model->parameter_id,
             ],
         'method' => 'post',
     ]); ?>

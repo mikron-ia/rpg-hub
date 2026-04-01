@@ -6,6 +6,7 @@ use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasVisibility;
 use common\models\core\Language;
 use common\models\tools\ToolsForHasVisibility;
+use Override;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -25,29 +26,34 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $content
  *
  * @property ParameterPack $parameterPack
+ *
+ * @method movePrev()
+ * @method moveNext()
  */
 class Parameter extends ActiveRecord implements HasVisibility
 {
     use ToolsForHasVisibility;
 
-    const STORY_NUMBER = 'story-number';
-    const TIME_RANGE = 'time-range';
-    const LOCATION_POINT_START = 'point-start';
-    const LOCATION_POINT_END = 'point-end';
-    const SESSION_COUNT = 'session-count';
-    const XP_PARTY = 'party-xp';
-    const PCS_ACTIVE = 'active-pcs';
-    const CS_ACTIVE = 'active-cs';
-    const DATA_SOURCE_FOR_REPUTATION = 'source-reputation';
-    const EPIC_STATUS = 'epic-status';
-    const EPIC_SYSTEM_STATE = 'epic-system-state';
-    const LANGUAGE = 'language';
+    const string STORY_NUMBER = 'story-number';
+    const string TIME_RANGE = 'time-range';
+    const string LOCATION_POINT_START = 'point-start';
+    const string LOCATION_POINT_END = 'point-end';
+    const string SESSION_COUNT = 'session-count';
+    const string XP_PARTY = 'party-xp';
+    const string PCS_ACTIVE = 'active-pcs';
+    const string CS_ACTIVE = 'active-cs';
+    const string DATA_SOURCE_FOR_REPUTATION = 'source-reputation';
+    const string EPIC_STATUS = 'epic-status';
+    const string EPIC_SYSTEM_STATE = 'epic-system-state';
+    const string LANGUAGE = 'language';
 
+    #[Override]
     public static function tableName(): string
     {
         return 'parameter';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -61,7 +67,7 @@ class Parameter extends ActiveRecord implements HasVisibility
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => ParameterPack::class,
-                'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id']
+                'targetAttribute' => ['parameter_pack_id' => 'parameter_pack_id'],
             ],
             [
                 ['visibility'],
@@ -71,6 +77,7 @@ class Parameter extends ActiveRecord implements HasVisibility
         ];
     }
 
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -83,6 +90,7 @@ class Parameter extends ActiveRecord implements HasVisibility
         ];
     }
 
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         if (!empty($changedAttributes)) {
@@ -94,6 +102,7 @@ class Parameter extends ActiveRecord implements HasVisibility
         parent::afterSave($insert, $changedAttributes);
     }
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -125,7 +134,7 @@ class Parameter extends ActiveRecord implements HasVisibility
     }
 
     /**
-     * @return string[]
+     * @return array<string,string>
      */
     static public function typeNames(): array
     {

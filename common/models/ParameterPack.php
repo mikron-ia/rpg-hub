@@ -5,11 +5,13 @@ namespace common\models;
 use common\models\core\HasEpicControl;
 use common\models\core\IsEditablePack;
 use common\models\core\Visibility;
+use Override;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
+use yii\web\HttpException;
 
 /**
  * This is the model class for table "parameter_pack".
@@ -26,14 +28,18 @@ use yii\db\Exception;
  * @property Parameter[] $parametersOrdered
  * @property Story[] $stories
  * @property Epic $epic
+ *
+ * @method touch(string $string)
  */
 class ParameterPack extends ActiveRecord implements IsEditablePack
 {
+    #[Override]
     public static function tableName(): string
     {
         return 'parameter_pack';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -42,6 +48,7 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
         ];
     }
 
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -50,6 +57,7 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
         ];
     }
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -71,6 +79,9 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
         return $pack;
     }
 
+    /**
+     * @throws Exception
+     */
     public function updateSearchableFields(): void
     {
         $parametersFull = [];
@@ -137,6 +148,10 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
         return $this->getParameterByCode($code)?->content;
     }
 
+    /**
+     * @throws HttpException
+     */
+    #[Override]
     public function canUserReadYou(): bool
     {
         $className = 'common\models\\' . $this->class;
@@ -145,6 +160,10 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
         return $object->canUserViewYou();
     }
 
+    /**
+     * @throws HttpException
+     */
+    #[Override]
     public function canUserControlYou(): bool
     {
         $className = 'common\models\\' . $this->class;
