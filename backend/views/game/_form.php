@@ -7,13 +7,14 @@ use common\models\RecapQuery;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
 GameAsset::register($this);
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Game */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model Game */
+/* @var $form ActiveForm */
 ?>
 
 <div class="game-form">
@@ -68,7 +69,7 @@ GameAsset::register($this);
             <label class="control-label" for="game-basics-constructed">
                 <?= Yii::t('app', 'GAME_BASICS_CONSTRUCTED') ?>
             </label>
-            <input class="form-control" id="game-basics-constructed" disabled/>
+            <input class="form-control" id="game-basics-constructed" disabled />
         </div>
     </div>
 

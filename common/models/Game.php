@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
+use common\models\core\HasKey;
 use common\models\core\HasStatus;
 use common\models\tools\ToolsForEntity;
 use Override;
@@ -13,6 +14,7 @@ use yii\db\ActiveRecord;
 use yii\db\Exception;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
+use yii\web\HttpException;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
@@ -20,6 +22,7 @@ use yii2tech\ar\position\PositionBehavior;
  *
  * @property int $game_id
  * @property int $epic_id
+ * @property string $key
  * @property string $basics
  * @property string $planned_date
  * @property string $planned_location
@@ -37,7 +40,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @method movePrev()
  * @method moveNext()
  */
-class Game extends ActiveRecord implements HasEpicControl, HasStatus
+class Game extends ActiveRecord implements HasEpicControl, HasKey, HasStatus
 {
     use ToolsForEntity;
 
@@ -53,6 +56,11 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
 
     #[Override]
     public static function tableName(): string
+    {
+        return 'game';
+    }
+
+    public static function keyParameterName(): string
     {
         return 'game';
     }
@@ -138,10 +146,15 @@ class Game extends ActiveRecord implements HasEpicControl, HasStatus
 
     /**
      * @throws Exception
+     * @throws HttpException
      */
     #[Override]
     public function beforeSave($insert): bool
     {
+        if ($insert) {
+            $this->key = $this->generateKey();
+        }
+
         if (empty($this->utility_bag_id)) {
             $pack = UtilityBag::create('Game');
             $this->utility_bag_id = $pack->utility_bag_id;

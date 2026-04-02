@@ -9,16 +9,14 @@ use common\models\GameQuery;
 use Override;
 use Throwable;
 use Yii;
-use yii\base\InvalidRouteException;
 use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-class GameController extends Controller
+class GameController extends CmsController
 {
     use EpicAssistance;
 
@@ -39,7 +37,7 @@ class GameController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['DELETE'],
                 ],
             ],
         ];
@@ -83,9 +81,9 @@ class GameController extends Controller
      * @throws HttpException
      * @throws NotFoundHttpException
      */
-    public function actionView(int $id): string
+    public function actionView(string $key): string
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->canUserViewYou()) {
             Game::throwExceptionAboutView();
@@ -97,9 +95,6 @@ class GameController extends Controller
     }
 
     /**
-     * Creates a new Game model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     *
      * @throws Exception
      * @throws HttpException
      */
@@ -114,7 +109,7 @@ class GameController extends Controller
         $this->setEpicOnObject($epic, $model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['game/view', 'id' => $model->game_id]);
+            return $this->redirect(['game/view', 'key' => $model->key]);
         }
 
         return $this->render('create', ['model' => $model]);
@@ -125,92 +120,89 @@ class GameController extends Controller
      * @throws HttpException
      * @throws NotFoundHttpException
      */
-    public function actionUpdate(int $id): Response|string
+    public function actionUpdate(string $key): Response|string
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->canUserControlYou()) {
             Game::throwExceptionAboutControl();
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->game_id]);
+            return $this->redirect(['view', 'key' => $model->key]);
         }
 
         return $this->render('update', ['model' => $model]);
     }
 
     /**
-     * @throws Exception
      * @throws HttpException
      * @throws NotFoundHttpException
-     * @throws Throwable
      */
-    public function actionDelete(int $id): Response
+    public function actionDelete(string $key): Response
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->canUserControlYou()) {
             Game::throwExceptionAboutControl();
         }
 
-        $model->delete();
+        try {
+            $success = $model->delete();
+        } catch (Throwable) {
+            $success = false;
+        }
 
-        return $this->redirect(['game/index', 'epic' => $model->epic->key]);
+        Yii::$app->session->setFlash(
+            $success ? 'success' : 'error',
+            $success ? Yii::t('app', 'GAME_SESSION_DELETE_SUCCESS') : Yii::t('app', 'GAME_SESSION_DELETE_FAILED')
+        );
+
+        return $success
+            ? $this->redirect(['game/index', 'epic' => $model->epic->key])
+            : $this->redirect(['game/view', 'key' => $model->key]);
     }
 
     /**
      * Moves game up in order; this means a lower position on the list
      *
      * @throws HttpException
-     * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
-    public function actionMoveUp(int $id): Response
+    public function actionMoveUp(string $key): Response
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
         if (!$model->canUserControlYou()) {
             Game::throwExceptionAboutControl();
         }
         $model->movePrev();
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        }
-
-        return $this->redirect(['index']);
+        return $this->returnToReferrer(['index']);
     }
 
     /**
      * Moves game down in order; this means higher position on the list
      *
      * @throws HttpException
-     * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
-    public function actionMoveDown(int $id): Response
+    public function actionMoveDown(string $key): Response
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
         if (!$model->canUserControlYou()) {
             Game::throwExceptionAboutControl();
         }
         $model->moveNext();
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        }
-
-        return $this->redirect(['index']);
+        return $this->returnToReferrer(['index']);
     }
 
     /**
      * @throws NotFoundHttpException
      */
-    protected function findModel(int $id): Game
+    protected function findModel(string $key): Game
     {
-        $model = Game::findOne($id);
+        $model = Game::findOne(['key' => $key]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'GAME_SESSION_NOT_AVAILABLE'));

@@ -1,34 +1,35 @@
 <?php
 
+use common\models\Game;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Game */
+/* @var $this View */
+/* @var $model Game */
 
 $this->title = Html::encode($model->basics);
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = [
     'label' => Yii::t('app', 'TITLE_GAME_INDEX'),
-    'url' => ['game/index', 'epic' => $model->epic->key]
+    'url' => ['game/index', 'epic' => $model->epic->key],
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="game-view">
-
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
         <div>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_UPDATE'),
-                ['update', 'id' => $model->game_id],
+                ['update', 'key' => $model->key],
                 ['class' => 'btn btn-primary']
             ) ?>
-            <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'id' => $model->game_id], [
+            <?= Html::a(Yii::t('app', 'BUTTON_DELETE'), ['delete', 'key' => $model->key], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
-                    'method' => 'post',
+                    'method' => 'delete',
                 ],
             ]) ?>
         </div>
@@ -68,5 +69,4 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $model->notesFormatted; ?>
         </div>
     </div>
-
 </div>

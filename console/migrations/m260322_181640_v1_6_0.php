@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Game;
 use common\models\GroupMembership;
 use common\models\Parameter;
 use common\models\ParameterPack;
@@ -53,10 +54,18 @@ class m260322_181640_v1_6_0 extends Migration
         $this->fillInKeys(ParameterPack::find());
         $this->alterColumn('{{%parameter_pack}}', 'key', $this->string(80)->notNull());
         $this->createIndex('parameter_pack_key', '{{%parameter_pack}}', 'key', true);
+
+        $this->addColumn('{{%game}}', 'key', $this->string(80)->after('game_id'));
+        $this->fillInKeys(Game::find());
+        $this->alterColumn('{{%game}}', 'key', $this->string(80)->notNull());
+        $this->createIndex('game_key', '{{%game}}', 'key', true);
+
     }
 
     public function safeDown(): void
     {
+        $this->dropColumn('{{%game}}', 'key');
+
         $this->dropColumn('{{%parameter_pack}}', 'key');
 
         $this->dropColumn('{{%parameter}}', 'key');

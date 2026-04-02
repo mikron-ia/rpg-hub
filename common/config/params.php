@@ -62,6 +62,7 @@ return [
         'character' => getenv('KEY_GENERATION_CHARACTER'),
         'characterSheet' => getenv('KEY_GENERATION_CHARACTER_SHEET'),
         'epic' => getenv('KEY_GENERATION_EPIC'),
+        'game' => getenv('KEY_GENERATION_GAME'),
         'group' => getenv('KEY_GENERATION_GROUP'),
         'groupMembership' => getenv('KEY_GENERATION_GROUP_MEMBERSHIP'),
         'parameter' => getenv('KEY_GENERATION_PARAMETER'),
