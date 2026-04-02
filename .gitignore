@@ -1,13 +1,9 @@
 # yii console command
 /yii
 
-# phpstorm project files
+# IDE project files
 .idea
-
-# netbeans project files
 nbproject
-
-# zend studio for eclipse project files
 .buildpath
 .project
 .settings
@@ -32,12 +28,16 @@ phpunit.phar
 
 # environment files
 .env
+.env.local
 
 # SQL data
 console/migrations/*.sql
 
 # Working scripts
 /scripts
+
+# Working directory
+/var
 
 # Tests cache
 tests/*.cache
