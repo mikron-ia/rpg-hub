@@ -2,6 +2,8 @@
 
 use common\models\Description;
 use common\models\DescriptionPack;
+use common\models\ExternalData;
+use common\models\ExternalDataPack;
 use common\models\Game;
 use common\models\GroupMembership;
 use common\models\Parameter;
@@ -71,10 +73,24 @@ class m260322_181640_v1_6_0 extends Migration
         $this->fillInKeys(DescriptionPack::find());
         $this->alterColumn('{{%description_pack}}', 'key', $this->string(80)->notNull());
         $this->createIndex('description_pack_key', '{{%description_pack}}', 'key', true);
+
+        $this->addColumn('{{%external_data}}', 'key', $this->string(80)->after('external_data_pack_id'));
+        $this->fillInKeys(ExternalData::find());
+        $this->alterColumn('{{%external_data}}', 'key', $this->string(80)->notNull());
+        $this->createIndex('external_data_key', '{{%external_data}}', 'key', true);
+
+        $this->addColumn('{{%external_data_pack}}', 'key', $this->string(80)->after('external_data_pack_id'));
+        $this->fillInKeys(ExternalDataPack::find());
+        $this->alterColumn('{{%external_data_pack}}', 'key', $this->string(80)->notNull());
+        $this->createIndex('external_data_pack_key', '{{%external_data_pack}}', 'key', true);
     }
 
     public function safeDown(): void
     {
+        $this->dropColumn('{{%external_data_pack}}', 'key');
+
+        $this->dropColumn('{{%external_data}}', 'key');
+        
         $this->dropColumn('{{%description_pack}}', 'key');
 
         $this->dropColumn('{{%description}}', 'key');

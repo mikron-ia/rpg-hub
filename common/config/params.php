@@ -64,6 +64,8 @@ return [
         'description' => getenv('KEY_GENERATION_DESCRIPTION'),
         'descriptionPack' => getenv('KEY_GENERATION_DESCRIPTION_PACK'),
         'epic' => getenv('KEY_GENERATION_EPIC'),
+        'externalData' => getenv('KEY_GENERATION_EXTERNAL_DATA'),
+        'externalDataPack' => getenv('KEY_GENERATION_EXTERNAL_DATA_PACK'),
         'game' => getenv('KEY_GENERATION_GAME'),
         'group' => getenv('KEY_GENERATION_GROUP'),
         'groupMembership' => getenv('KEY_GENERATION_GROUP_MEMBERSHIP'),

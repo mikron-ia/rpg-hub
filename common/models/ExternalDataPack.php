@@ -3,12 +3,16 @@
 namespace common\models;
 
 use common\models\core\HasEpicControl;
+use common\models\core\HasKey;
 use common\models\core\IsEditablePack;
 use common\models\core\Visibility;
+use common\models\tools\ToolsForEntity;
+use Override;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
+use yii\web\HttpException;
 
 /**
  * This is the model class for table "external_data_pack".
@@ -16,15 +20,24 @@ use yii\db\ActiveRecord;
  * External data are information pulled from external sources as JSON, with known, but not well-represented structure, intended for simple display only
  *
  * @property string $external_data_pack_id
+ * @property string $key
  * @property string $class
  *
  * @property Epic $epic
  */
-class ExternalDataPack extends ActiveRecord implements IsEditablePack
+class ExternalDataPack extends ActiveRecord implements HasKey, IsEditablePack
 {
+    use ToolsForEntity;
+
     public static function tableName()
     {
         return 'external_data_pack';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
+    {
+        return 'externalDataPack';
     }
 
     public function rules()
@@ -41,6 +54,19 @@ class ExternalDataPack extends ActiveRecord implements IsEditablePack
             'external_data_pack_id' => Yii::t('external', 'EXTERNAL_DATA_PACK_ID'),
             'class' => Yii::t('external', 'EXTERNAL_DATA_PACK_CLASS'),
         ];
+    }
+
+    /**
+     * @throws HttpException
+     */
+    #[Override]
+    public function beforeSave($insert): bool
+    {
+        if ($insert) {
+            $this->key = $this->generateKey();
+        }
+
+        return parent::beforeSave($insert);
     }
 
     public function behaviors()

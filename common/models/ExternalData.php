@@ -2,13 +2,17 @@
 
 namespace common\models;
 
+use common\models\core\HasKey;
 use common\models\core\HasVisibility;
+use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
+use Override;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\HttpException;
 
 /**
  * This is the model class for table "external_data".
@@ -17,19 +21,27 @@ use yii\db\ActiveRecord;
  *
  * @property string $external_data_id
  * @property string $external_data_pack_id
+ * @property string $key
  * @property string $code
  * @property string $data
  * @property string $visibility
  *
  * @property ExternalDataPack $externalDataPack
  */
-class ExternalData extends ActiveRecord implements HasVisibility
+class ExternalData extends ActiveRecord implements HasKey, HasVisibility
 {
+    use ToolsForEntity;
     use ToolsForHasVisibility;
 
     public static function tableName()
     {
         return 'external_data';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
+    {
+        return 'externalData';
     }
 
     public function afterSave($insert, $changedAttributes)
@@ -39,6 +51,19 @@ class ExternalData extends ActiveRecord implements HasVisibility
         }
 
         parent::afterSave($insert, $changedAttributes);
+    }
+
+    /**
+     * @throws HttpException
+     */
+    #[Override]
+    public function beforeSave($insert): bool
+    {
+        if ($insert) {
+            $this->key = $this->generateKey();
+        }
+
+        return parent::beforeSave($insert);
     }
 
     public function behaviors()
