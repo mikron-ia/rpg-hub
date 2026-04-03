@@ -14,7 +14,9 @@ use yii\widgets\ListView;
 ?>
 
 <div class="buttoned-header">
-    <p class="btn btn-success create-description-link" data-pack-id="<?= $model->description_pack_id ?>"><?= Yii::t('app', 'DESCRIPTION_BUTTON_CREATE') ?></p>
+    <p class="btn btn-success create-description-link" data-pack-key="<?= $model->key ?>">
+        <?= Yii::t('app', 'DESCRIPTION_BUTTON_CREATE') ?>
+    </p>
 </div>
 
 <?php if ($model): ?>

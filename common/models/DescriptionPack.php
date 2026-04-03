@@ -3,8 +3,10 @@
 namespace common\models;
 
 use common\models\core\HasEpicControl;
+use common\models\core\HasKey;
 use common\models\core\IsEditablePack;
 use common\models\core\Language;
+use common\models\tools\ToolsForEntity;
 use Override;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -17,6 +19,7 @@ use yii\web\HttpException;
  * This is the model class for table "description_pack".
  *
  * @property string $description_pack_id
+ * @property string $key
  * @property string $class
  *
  * @property Description[] $descriptions
@@ -25,12 +28,20 @@ use yii\web\HttpException;
  *
  * @method touch(string $string)
  */
-final class DescriptionPack extends ActiveRecord implements Displayable, IsEditablePack
+final class DescriptionPack extends ActiveRecord implements Displayable, HasKey, IsEditablePack
 {
+    use ToolsForEntity;
+
     #[Override]
     public static function tableName(): string
     {
         return 'description_pack';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
+    {
+        return 'descriptionPack';
     }
 
     #[Override]
@@ -47,8 +58,22 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
     {
         return [
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK_ID'),
+            'key' => Yii::t('app', 'DESCRIPTION_PACK_KEY'),
             'class' => Yii::t('app', 'DESCRIPTION_PACK_CLASS'),
         ];
+    }
+
+    /**
+     * @throws HttpException
+     */
+    #[Override]
+    public function beforeSave($insert): bool
+    {
+        if ($insert) {
+            $this->key = $this->generateKey();
+        }
+
+        return parent::beforeSave($insert);
     }
 
     #[Override]

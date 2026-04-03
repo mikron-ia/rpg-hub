@@ -20,11 +20,11 @@ use yii\widgets\ActiveForm;
         'action' => $model->isNewRecord ?
             [
                 'description/create',
-                'pack_id' => $model->description_pack_id
+                'packKey' => $model->descriptionPack->key
             ] :
             [
                 'description/update',
-                'id' => $model->description_id
+                'key' => $model->key
             ],
         'method' => 'post',
     ]); ?>

@@ -51,7 +51,7 @@ final class DescriptionController extends CmsController
                 'class' => VerbFilter::class,
                 'actions' => [
                     'set-as-current' => ['PATCH'],
-                    'delete' => ['POST'],
+                    'delete' => ['DELETE'],
                 ],
             ],
         ];
@@ -60,10 +60,10 @@ final class DescriptionController extends CmsController
     /**
      * @throws NotFoundHttpException
      */
-    public function actionView(int $id): string
+    public function actionView(string $key): string
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($key),
         ]);
     }
 
@@ -71,11 +71,11 @@ final class DescriptionController extends CmsController
      * @throws DbException
      * @throws HttpException
      */
-    public function actionCreate(int $pack_id): Response|string
+    public function actionCreate(string $packKey): Response|string
     {
         $model = new Description();
 
-        $descriptionPack = DescriptionPack::findOne(['description_pack_id' => $pack_id]);
+        $descriptionPack = DescriptionPack::findOne(['key' => $packKey]);
 
         if (!$descriptionPack) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_NO_PACK'));
@@ -85,7 +85,7 @@ final class DescriptionController extends CmsController
             return $this->returnToReferrer(['site/index']);
         }
 
-        $model->description_pack_id = $pack_id;
+        $model->description_pack_id = $descriptionPack->description_pack_id;
 
         $language = $descriptionPack->getEpic()->parameterPack->getParameterValueByCode(Parameter::LANGUAGE);
         if (in_array($language, Yii::$app->params['languagesAvailable'])) {
@@ -110,9 +110,9 @@ final class DescriptionController extends CmsController
      * @throws HttpException
      * @throws NotFoundHttpException
      */
-    public function actionUpdate(int $id): Response|string
+    public function actionUpdate(string $key): Response|string
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->descriptionPack->canUserControlYou()) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
@@ -134,9 +134,9 @@ final class DescriptionController extends CmsController
      * @throws HttpException
      * @throws NotFoundHttpException
      */
-    public function actionHistory(int $id): Response|string
+    public function actionHistory(string $key): Response|string
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->descriptionPack->canUserControlYou()) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
@@ -160,9 +160,9 @@ final class DescriptionController extends CmsController
      * @throws StaleObjectException
      * @throws Throwable
      */
-    public function actionDelete(int $id): Response
+    public function actionDelete(string $key): Response
     {
-        $this->findModel($id)->delete();
+        $this->findModel($key)->delete();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
@@ -176,13 +176,13 @@ final class DescriptionController extends CmsController
      * @throws MethodNotAllowedHttpException
      * @throws NotFoundHttpException
      */
-    public function actionMoveUp(int $id): bool
+    public function actionMoveUp(string $key): bool
     {
         if (!Yii::$app->request->isAjax) {
             throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
         }
 
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
         return $model->movePrev();
     }
 
@@ -190,13 +190,13 @@ final class DescriptionController extends CmsController
      * @throws NotFoundHttpException
      * @throws MethodNotAllowedHttpException
      */
-    public function actionMoveDown(int $id): bool
+    public function actionMoveDown(string $key): bool
     {
         if (!Yii::$app->request->isAjax) {
             throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
         }
 
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
         return $model->moveNext();
     }
 
@@ -206,13 +206,13 @@ final class DescriptionController extends CmsController
      * @throws MethodNotAllowedHttpException
      * @throws NotFoundHttpException
      */
-    public function actionDisplay(int $id): string
+    public function actionDisplay(string $packKey): string
     {
         if (!Yii::$app->request->isAjax) {
             throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
         }
 
-        $model = $this->findPack($id);
+        $model = $this->findPack($packKey);
         return $this->renderAjax('_view_descriptions', ['model' => $model]);
     }
 
@@ -222,13 +222,13 @@ final class DescriptionController extends CmsController
      * @throws NotFoundHttpException
      * @throws MethodNotAllowedHttpException
      */
-    public function actionSetAsCurrent(int $id): Response
+    public function actionSetAsCurrent(string $key): Response
     {
         if (!Yii::$app->request->isPatch) {
             throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_PATCH_REQUESTS_ONLY'));
         }
 
-        $model = $this->findModel($id);
+        $model = $this->findModel($key);
 
         if (!$model->descriptionPack->canUserControlYou()) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
@@ -268,9 +268,9 @@ final class DescriptionController extends CmsController
     /**
      * @throws NotFoundHttpException
      */
-    protected function findModel(int $id): Description
+    protected function findModel(string $key): Description
     {
-        $model = Description::findOne(['description_id' => $id]);
+        $model = Description::findOne(['key' => $key]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'DESCRIPTION_NOT_AVAILABLE'));
@@ -288,9 +288,9 @@ final class DescriptionController extends CmsController
      * @throws HttpException
      * @throws NotFoundHttpException
      */
-    protected function findPack(int $id): DescriptionPack
+    protected function findPack(string $key): DescriptionPack
     {
-        $model = DescriptionPack::findOne(['description_pack_id' => $id]);
+        $model = DescriptionPack::findOne(['key' => $key]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'DESCRIPTION_PACK_NOT_AVAILABLE'));

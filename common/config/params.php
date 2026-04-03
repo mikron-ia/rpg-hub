@@ -61,6 +61,8 @@ return [
         'article' => getenv('KEY_GENERATION_ARTICLE'),
         'character' => getenv('KEY_GENERATION_CHARACTER'),
         'characterSheet' => getenv('KEY_GENERATION_CHARACTER_SHEET'),
+        'description' => getenv('KEY_GENERATION_DESCRIPTION'),
+        'descriptionPack' => getenv('KEY_GENERATION_DESCRIPTION_PACK'),
         'epic' => getenv('KEY_GENERATION_EPIC'),
         'game' => getenv('KEY_GENERATION_GAME'),
         'group' => getenv('KEY_GENERATION_GROUP'),

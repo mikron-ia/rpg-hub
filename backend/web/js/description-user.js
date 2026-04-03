@@ -4,7 +4,7 @@ const descriptionBoxesLoad = function ($descriptionContainer) {
         {
             method: "GET",
             data: {
-                id: $descriptionContainer.data('pack-id')
+                packKey: $descriptionContainer.data('pack-key')
             }
         }
     ).done(function (xhr) {
@@ -22,13 +22,13 @@ $(document).ready(function () {
     descriptionBoxesLoad($descriptions);
 
     $descriptions.on('click', '.move-up', function () {
-        const $descriptionId = $(this).data('description-id');
+        const $descriptionKey = $(this).data('description-key');
         $.ajax(
             '../description/move-up',
             {
                 method: "GET",
                 data: {
-                    id: $descriptionId
+                    key: $descriptionKey
                 }
             }
         ).always(function () {
@@ -37,13 +37,13 @@ $(document).ready(function () {
     });
 
     $descriptions.on('click', '.move-down', function () {
-        const $descriptionId = $(this).data('description-id');
+        const $descriptionKey = $(this).data('description-key');
         $.ajax(
             '../description/move-down',
             {
                 method: "GET",
                 data: {
-                    id: $descriptionId
+                    key: $descriptionKey
                 }
             }
         ).always(function () {
@@ -55,7 +55,7 @@ $(document).ready(function () {
         $.get(
             '../description/history',
             {
-                id: $(this).data('id')
+                key: $(this).data('key')
             },
             function (data) {
                 $('.modal-body').html(data);
@@ -68,7 +68,7 @@ $(document).ready(function () {
         $.get(
             '../description/update',
             {
-                id: $(this).data('id')
+                key: $(this).data('key')
             },
             function (data) {
                 $('.modal-body').html(data);
@@ -81,7 +81,7 @@ $(document).ready(function () {
         $.get(
             '../description/create',
             {
-                pack_id: $(this).data('pack-id')
+                packKey: $(this).data('pack-key')
             },
             function (data) {
                 $('.modal-body').html(data);

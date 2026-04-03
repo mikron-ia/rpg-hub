@@ -20,6 +20,11 @@ trait ToolsForHasDescriptions
         return $this->description_pack_id;
     }
 
+    public function getDescriptionPackKey(): string
+    {
+        return $this->descriptionPack->key;
+    }
+
     public function getDescriptionsVisible(): ActiveQuery
     {
         return $this->descriptionPack->getDescriptionsVisible();

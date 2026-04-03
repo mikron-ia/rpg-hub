@@ -3,9 +3,11 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\HasKey;
 use common\models\core\HasVisibility;
 use common\models\core\Language;
 use common\models\core\Visibility;
+use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use Override;
@@ -16,6 +18,7 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
 use yii\helpers\StringHelper;
+use yii\web\HttpException;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
@@ -23,6 +26,7 @@ use yii2tech\ar\position\PositionBehavior;
  *
  * @property int $description_id
  * @property int $description_pack_id
+ * @property string $key
  * @property string $title
  * @property string $code
  * @property string $public_text
@@ -54,8 +58,9 @@ use yii2tech\ar\position\PositionBehavior;
  * @method movePrev()
  * @method moveNext()
  */
-class Description extends ActiveRecord implements Displayable, HasVisibility
+class Description extends ActiveRecord implements Displayable, HasKey, HasVisibility
 {
+    use ToolsForEntity;
     use ToolsForLinkTags;
     use ToolsForHasVisibility;
 
@@ -93,6 +98,12 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
 
     #[Override]
     public static function tableName(): string
+    {
+        return 'description';
+    }
+
+    #[Override]
+    public static function keyParameterName(): string
     {
         return 'description';
     }
@@ -180,10 +191,15 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
 
     /**
      * @throws Exception
+     * @throws HttpException
      */
     #[Override]
     public function beforeSave($insert): bool
     {
+        if ($insert) {
+            $this->key = $this->generateKey();
+        }
+
         if (!$insert) {
             $this->createHistoryRecord();
         }
@@ -229,6 +245,7 @@ class Description extends ActiveRecord implements Displayable, HasVisibility
         return [
             'description_id' => Yii::t('app', 'DESCRIPTION_ID'),
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK'),
+            'key' => Yii::t('app', 'DESCRIPTION_KEY'),
             'title' => Yii::t('app', 'DESCRIPTION_TITLE'),
             'code' => Yii::t('app', 'DESCRIPTION_CODE'),
             'public_text' => Yii::t('app', 'DESCRIPTION_TEXT_PUBLIC'),

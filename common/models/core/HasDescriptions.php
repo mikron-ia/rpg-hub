@@ -25,6 +25,11 @@ interface HasDescriptions
     public function getDescriptionPackId(): int;
 
     /**
+     * Provides ID of the description pack
+     */
+    public function getDescriptionPackKey(): string;
+
+    /**
      * Provides the list of visible descriptions from Description Pack
      */
     public function getDescriptionsVisible(): ActiveQuery;
