@@ -52,6 +52,7 @@ class ExternalDataPack extends ActiveRecord implements HasKey, IsEditablePack
     {
         return [
             'external_data_pack_id' => Yii::t('external', 'EXTERNAL_DATA_PACK_ID'),
+            'key' => Yii::t('external', 'EXTERNAL_DATA_PACK_KEY'),
             'class' => Yii::t('external', 'EXTERNAL_DATA_PACK_CLASS'),
         ];
     }

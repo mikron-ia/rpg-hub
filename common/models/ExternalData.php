@@ -91,6 +91,7 @@ class ExternalData extends ActiveRecord implements HasKey, HasVisibility
         return [
             'external_data_id' => Yii::t('external', 'EXTERNAL_DATA_ID'),
             'external_data_pack_id' => Yii::t('external', 'EXTERNAL_DATA_PACK_ID'),
+            'key' => Yii::t('external', 'EXTERNAL_DATA_KEY'),
             'code' => Yii::t('external', 'EXTERNAL_DATA_CODE'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
             'data' => Yii::t('external', 'EXTERNAL_DATA_DATA'),

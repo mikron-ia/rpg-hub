@@ -94,6 +94,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl, HasKey
     {
         return [
             'point_in_time_id' => Yii::t('app', 'POINT_IN_TIME_ID'),
+            'key' => Yii::t('app', 'POINT_IN_TIME_KEY'),
             'epic_id' => Yii::t('app', 'POINT_IN_TIME_EPIC_ID'),
             'name' => Yii::t('app', 'POINT_IN_TIME_NAME'),
             'text_public' => Yii::t('app', 'POINT_IN_TIME_NAME_PUBLIC'),

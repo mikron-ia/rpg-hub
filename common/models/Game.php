@@ -133,6 +133,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasKey, HasStatus
         return [
             'game_id' => Yii::t('app', 'GAME_ID'),
             'epic_id' => Yii::t('app', 'LABEL_EPIC'),
+            'key' => Yii::t('app', 'GAME_KEY'),
             'basics' => Yii::t('app', 'GAME_BASICS'),
             'planned_date' => Yii::t('app', 'GAME_PLANNED_DATE'),
             'planned_location' => Yii::t('app', 'GAME_PLANNED_LOCATION'),

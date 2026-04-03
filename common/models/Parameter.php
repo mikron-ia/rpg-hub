@@ -93,6 +93,7 @@ class Parameter extends ActiveRecord implements HasVisibility, HasKey
         return [
             'parameter_id' => Yii::t('app', 'PARAMETER_ID'),
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
+            'key' => Yii::t('app', 'PARAMETER_KEY'),
             'code' => Yii::t('app', 'PARAMETER_CODE'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
             'position' => Yii::t('app', 'LABEL_POSITION'),

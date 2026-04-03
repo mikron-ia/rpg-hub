@@ -63,6 +63,7 @@ class ParameterPack extends ActiveRecord implements IsEditablePack, HasKey
     {
         return [
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK_ID'),
+            'key' => Yii::t('app', 'PARAMETER_PACK_KEY'),
             'class' => Yii::t('app', 'PARAMETER_PACK_CLASS'),
         ];
     }
