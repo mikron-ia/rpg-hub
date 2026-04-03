@@ -7,12 +7,10 @@ use common\models\Description;
 use common\models\DescriptionHistory;
 use common\models\DescriptionPack;
 use common\models\Parameter;
-use Exception;
 use Override;
 use Throwable;
 use Yii;
 use yii\db\Exception as DbException;
-use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
@@ -58,13 +56,17 @@ final class DescriptionController extends CmsController
     }
 
     /**
-     * @throws NotFoundHttpException
+     * @throws HttpException
      */
     public function actionView(string $key): string
     {
-        return $this->render('view', [
-            'model' => $this->findModel($key),
-        ]);
+        $model = $this->findModel($key);
+
+        if (!$model->descriptionPack->canUserControlYou()) {
+            throw new ForbiddenHttpException(Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
+        }
+
+        return $this->render('view', ['model' => $model]);
     }
 
     /**
@@ -85,16 +87,14 @@ final class DescriptionController extends CmsController
             return $this->returnToReferrer(['site/index']);
         }
 
+        $loadSuccess = $model->load(Yii::$app->request->post());
+
         $model->description_pack_id = $descriptionPack->description_pack_id;
 
         $language = $descriptionPack->getEpic()->parameterPack->getParameterValueByCode(Parameter::LANGUAGE);
-        if (in_array($language, Yii::$app->params['languagesAvailable'])) {
-            $model->lang = $language;
-        } else {
-            $model->lang = 'en';
-        }
+        $model->lang = in_array($language, Yii::$app->params['languagesAvailable']) ? $language : 'en';
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($loadSuccess && $model->save()) {
             return $this->returnToReferrer(['site/index']);
         }
 
@@ -155,26 +155,34 @@ final class DescriptionController extends CmsController
     }
 
     /**
-     * @throws Exception
-     * @throws NotFoundHttpException
-     * @throws StaleObjectException
-     * @throws Throwable
+     * @throws HttpException
      */
     public function actionDelete(string $key): Response
     {
-        $this->findModel($key)->delete();
+        $model = $this->findModel($key);
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
+        if (!$model->descriptionPack->canUserControlYou()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
+            return $this->returnToReferrer(['index']);
         }
 
-        return $this->redirect(['index']);
+        try {
+            $result = $model->delete();
+        } catch (Throwable) {
+            $result = false;
+        }
+
+        if ($result === false) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_DELETE_FAILURE'));
+        } else {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'ERROR_DESCRIPTION_DELETE_SUCCESS'));
+        }
+
+        return $this->returnToReferrer(['index']);
     }
 
     /**
-     * @throws MethodNotAllowedHttpException
-     * @throws NotFoundHttpException
+     * @throws HttpException
      */
     public function actionMoveUp(string $key): bool
     {
@@ -183,12 +191,16 @@ final class DescriptionController extends CmsController
         }
 
         $model = $this->findModel($key);
+
+        if (!$model->descriptionPack->canUserControlYou()) {
+            throw new ForbiddenHttpException(Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
+        }
+
         return $model->movePrev();
     }
 
     /**
-     * @throws NotFoundHttpException
-     * @throws MethodNotAllowedHttpException
+     * @throws HttpException
      */
     public function actionMoveDown(string $key): bool
     {
@@ -197,14 +209,16 @@ final class DescriptionController extends CmsController
         }
 
         $model = $this->findModel($key);
+
+        if (!$model->descriptionPack->canUserControlYou()) {
+            throw new ForbiddenHttpException(Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
+        }
+
         return $model->moveNext();
     }
 
     /**
-     * @throws ForbiddenHttpException
      * @throws HttpException
-     * @throws MethodNotAllowedHttpException
-     * @throws NotFoundHttpException
      */
     public function actionDisplay(string $packKey): string
     {
@@ -213,14 +227,19 @@ final class DescriptionController extends CmsController
         }
 
         $model = $this->findPack($packKey);
+
+        if (!$model->canUserControlYou()) {
+            // control criteria is used to check for operator-level rights for the specific object and Epic
+            // this is to stop the operator from viewing Descriptions from Epics they play in but not GM
+            throw new ForbiddenHttpException(Yii::t('app', 'DESCRIPTION_PACK_NOT_ACCESSIBLE'));
+        }
+
         return $this->renderAjax('_view_descriptions', ['model' => $model]);
     }
 
     /**
      * @throws DbException
      * @throws HttpException
-     * @throws NotFoundHttpException
-     * @throws MethodNotAllowedHttpException
      */
     public function actionSetAsCurrent(string $key): Response
     {

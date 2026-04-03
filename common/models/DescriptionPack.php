@@ -16,8 +16,6 @@ use yii\db\Exception;
 use yii\web\HttpException;
 
 /**
- * This is the model class for table "description_pack".
- *
  * @property string $description_pack_id
  * @property string $key
  * @property string $class

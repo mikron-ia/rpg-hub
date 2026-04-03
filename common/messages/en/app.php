@@ -354,6 +354,8 @@ return [
     'EPIC_STYLE_FOR_FRONT' => 'Front style',
     'ERROR_AJAX_REQUESTS_ONLY' => 'AJAX requests only',
     'ERROR_DESCRIPTION_ACCESS_DENIED' => 'Description access denied',
+    'ERROR_DESCRIPTION_DELETE_FAILURE' => 'The description could not be removed. Contact the administrator.',
+    'ERROR_DESCRIPTION_DELETE_SUCCESS' => 'The description has been removed.',
     'ERROR_DESCRIPTION_NO_PACK' => 'Pack identification failed',
     'ERROR_EXTERNAL_DATA_ACCESS_DENIED' => 'External data access denied',
     'ERROR_GROUP_ACCESS_DENIED' => 'Access to group denied',

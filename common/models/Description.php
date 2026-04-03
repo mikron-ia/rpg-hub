@@ -22,8 +22,6 @@ use yii\web\HttpException;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
- * This is the model class for table "description".
- *
  * @property int $description_id
  * @property int $description_pack_id
  * @property string $key

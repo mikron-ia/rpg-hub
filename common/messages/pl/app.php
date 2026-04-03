@@ -354,6 +354,8 @@ return [
     'EPIC_STYLE_FOR_FRONT' => 'Styl frontu',
     'ERROR_AJAX_REQUESTS_ONLY' => 'Dostępne tylko przez żądania AJAX',
     'ERROR_DESCRIPTION_ACCESS_DENIED' => 'Brak dostępu do opisu',
+    'ERROR_DESCRIPTION_DELETE_FAILURE' => 'Usunięcie opisu nieudane. Skontaktuj się z administratorem.',
+    'ERROR_DESCRIPTION_DELETE_SUCCESS' => 'Usunięto opis.',
     'ERROR_DESCRIPTION_NO_PACK' => 'Błędny identyfikator paczki opisów',
     'ERROR_EXTERNAL_DATA_ACCESS_DENIED' => 'Dane zewnętrzne nie są dostępne',
     'ERROR_GROUP_ACCESS_DENIED' => 'Brak dostępu do grupy',

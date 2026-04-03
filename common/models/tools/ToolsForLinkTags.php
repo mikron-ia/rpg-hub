@@ -134,8 +134,8 @@ trait ToolsForLinkTags
         return $this->processAllInOrder($textToFormat ?? '');
     }
 
-    private function formatText(string $textToFormat): string
+    private function formatText(?string $textToFormat): string
     {
-        return Markdown::process(str_ireplace('&gt;', '>', Html::encode($textToFormat)), 'gfm');
+        return Markdown::process(str_ireplace('&gt;', '>', Html::encode($textToFormat ?? '')), 'gfm');
     }
 }
