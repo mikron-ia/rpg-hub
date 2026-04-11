@@ -1,17 +1,15 @@
 <?php
 
-/* @var $model Group */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
 use common\models\Group;
-use yii\helpers\Html;
+use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
+
+/* @var $model Group */
+/* @var $dataProvider ActiveDataProvider */
 
 ?>
 
 <div id="groups">
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'emptyText' => '<p class="error-box">' . Yii::t('app', 'GROUPS_NOT_FOUND') . '</p>',

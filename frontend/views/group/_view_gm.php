@@ -1,13 +1,15 @@
 <?php
 
+use common\models\Group;
+use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Group */
+/* @var $this View */
+/* @var $model Group */
 ?>
 
 <div class="col-md-6">
-
     <?php if ($model->canUserControlYou()) {
         echo DetailView::widget([
             'model' => $model,
@@ -26,7 +28,7 @@ use yii\widgets\DetailView;
     } ?>
 
     <div class="text-center">
-        <?= \yii\helpers\Html::a(
+        <?= Html::a(
             Yii::t('app', 'BUTTON_SEE_BACKEND'),
             Yii::$app->params['uri.back'] . Yii::$app->urlManager->createUrl([
                 'group/view',
@@ -35,5 +37,4 @@ use yii\widgets\DetailView;
             ['class' => 'btn btn-default']
         ) ?>
     </div>
-
 </div>

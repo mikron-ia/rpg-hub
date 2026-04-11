@@ -1,8 +1,9 @@
 <?php
 
 use common\models\Group;
+use yii\web\View;
 
-/* @var $this yii\web\View */
+/* @var $this View */
 /* @var $header string */
 /* @var $model Group */
 /* @var $storyGroupPublic array<string> */

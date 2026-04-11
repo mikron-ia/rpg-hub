@@ -88,7 +88,6 @@ if ($this->params['showPrivates']) {
 
 ?>
 <div class="person-view">
-
     <div class="buttoned-header">
         <h1>
             <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
@@ -116,5 +115,4 @@ if ($this->params['showPrivates']) {
     <?php if ($this->params['showPrivates']): ?>
         <?php $this->registerJs('$(".secret").hide();'); ?>
     <?php endif; ?>
-
 </div>

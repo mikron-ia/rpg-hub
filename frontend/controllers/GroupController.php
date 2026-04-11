@@ -9,16 +9,15 @@ use common\models\GroupQuery;
 use common\models\StoryGroupAssignmentQuery;
 use frontend\controllers\external\ReputationToolsForControllerTrait;
 use common\components\EpicAssistance;
+use Override;
 use Yii;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
-/**
- * GroupController implements the CRUD actions for the Group model.
- */
 class GroupController extends Controller
 {
     use EpicAssistance;
@@ -26,6 +25,7 @@ class GroupController extends Controller
 
     private const int POSITIONS_PER_PAGE = 24;
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -54,7 +54,6 @@ class GroupController extends Controller
 
     /**
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionIndex(?string $key = null): string
     {
@@ -170,7 +169,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @throws NotFoundHttpException
+     * @throws Exception
      * @throws HttpException
      */
     public function actionOpenScribbleModal(string $key): string

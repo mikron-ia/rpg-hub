@@ -1,17 +1,20 @@
 <?php
 
+use common\models\CharacterQuery;
 use common\models\Epic;
 use frontend\assets\IndexBoxesGroupAsset;
 use yii\bootstrap\Modal;
 use yii\bootstrap\Tabs;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\web\View;
 
 IndexBoxesGroupAsset::register($this);
 
-/* @var $this yii\web\View */
+/* @var $this View */
 /* @var $epic Epic */
-/* @var $searchModel common\models\CharacterQuery */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $searchModel CharacterQuery */
+/* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_GROUPS_INDEX');
 $this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
@@ -55,7 +58,7 @@ if (isset(Yii::$app->request->queryParams['GroupQuery'])) {
 
 <?php Modal::begin([
     'id' => 'scribble-modal',
-    'header' => '<h2 class="modal-title modal-title-centered" style="align: center;">' . Yii::t('app', 'SCRIBBLE_TITLE') . '</h2>',
+    'header' => '<h2 class="modal-title modal-title-centered">' . Yii::t('app', 'SCRIBBLE_TITLE') . '</h2>',
     'clientOptions' => ['backdrop' => 'static'],
     'size' => Modal::SIZE_LARGE,
 ]); ?>

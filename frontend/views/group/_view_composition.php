@@ -6,8 +6,9 @@ use common\models\GroupMembership;
 use yii\data\ArrayDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $this yii\web\View */
+/* @var $this View */
 /* @var $header string */
 /* @var $models Group[] */
 ?>
@@ -41,7 +42,7 @@ use yii\helpers\Html;
             [
                 'attribute' => 'short_text',
                 'label' => Yii::t('app', 'GROUP_MEMBERSHIP_SHORT_TEXT'),
-            ]
+            ],
         ],
     ]); ?>
 <?php else: ?>

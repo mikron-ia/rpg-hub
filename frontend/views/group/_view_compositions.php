@@ -1,11 +1,14 @@
 <?php
-/* @var $this yii\web\View */
-/* @var $model common\models\Group */
+
+use common\models\Group;
+use yii\web\View;
+
+/* @var $this View */
+/* @var $model Group */
 /* @var $showPrivates bool */
 ?>
 
 <div>
-
     <h3><?= Yii::t('app', 'GROUP_MEMBERSHIPS_ACTIVE'); ?></h3>
     <div id="members-active">
         <?= $this->render('_view_composition', [
@@ -26,5 +29,4 @@
             'models' => $model->groupCharacterMembershipsPast
         ]) ?>
     </div>
-
 </div>
