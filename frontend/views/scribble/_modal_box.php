@@ -1,9 +1,11 @@
 <?php
 
+use common\models\Scribble;
 use yii\helpers\Html;
+use yii\web\View;
 
-/** @var yii\web\View $this */
-/** @var common\models\Scribble $model */
+/** @var View $this */
+/** @var Scribble $model */
 
 $favoriteButtonTexts = [
     false => Yii::t('app', 'SCRIBBLES_BUTTON_NO'),

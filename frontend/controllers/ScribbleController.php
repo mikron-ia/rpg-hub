@@ -4,17 +4,16 @@ namespace frontend\controllers;
 
 use common\models\Scribble;
 use Yii;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
+use yii\web\HttpException;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\ServerErrorHttpException;
 
-/**
- * ScribbleController implements the CRUD actions for Scribble model.
- */
 class ScribbleController extends Controller
 {
     public function behaviors(): array
@@ -46,6 +45,10 @@ class ScribbleController extends Controller
         );
     }
 
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
     public function actionReverseFavorite(int $id): void
     {
         $scribble = $this->getModelWithValidation($id);
@@ -55,6 +58,10 @@ class ScribbleController extends Controller
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
     public function actionSetAsFavorite(int $id): void
     {
         $scribble = $this->getModelWithValidation($id);
@@ -64,6 +71,10 @@ class ScribbleController extends Controller
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
     public function actionUnsetAsFavorite(int $id): void
     {
         $scribble = $this->getModelWithValidation($id);
@@ -74,13 +85,7 @@ class ScribbleController extends Controller
     }
 
     /**
-     * @param int $scribbleId
-     *
-     * @return Scribble
-     *
-     * @throws ForbiddenHttpException
-     * @throws MethodNotAllowedHttpException
-     * @throws NotFoundHttpException
+     * @throws HttpException
      */
     private function getModelWithValidation(int $scribbleId): Scribble
     {
@@ -102,13 +107,6 @@ class ScribbleController extends Controller
     }
 
     /**
-     * Finds the Scribble model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     *
-     * @param int $scribble_id Scribble ID
-     *
-     * @return Scribble the loaded model
-     *
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel(int $scribble_id): Scribble

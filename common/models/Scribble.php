@@ -3,9 +3,11 @@
 namespace common\models;
 
 use common\models\core\HasOwner;
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\User as YiiUser;
 
 /**
  * This is the model class for table "scribble".
@@ -20,22 +22,37 @@ use yii\db\ActiveRecord;
  */
 class Scribble extends ActiveRecord implements HasOwner
 {
+    #[Override]
     public static function tableName(): string
     {
         return 'scribble';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
             [['scribble_pack_id', 'user_id'], 'integer'],
             [['favorite'], 'boolean'],
-            [['scribble_pack_id'], 'exist', 'skipOnError' => true, 'targetClass' => ScribblePack::class, 'targetAttribute' => ['scribble_pack_id' => 'scribble_pack_id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [
+                ['scribble_pack_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => ScribblePack::class,
+                'targetAttribute' => ['scribble_pack_id' => 'scribble_pack_id'],
+            ],
+            [
+                ['user_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::class,
+                'targetAttribute' => ['user_id' => 'id'],
+            ],
         ];
     }
 
-    public function attributeLabels()
+    #[Override]
+    public function attributeLabels(): array
     {
         return [
             'scribble_id' => Yii::t('app', 'SCRIBBLE_ID'),
@@ -45,27 +62,18 @@ class Scribble extends ActiveRecord implements HasOwner
         ];
     }
 
-    /**
-     * Gets query for [[ScribblePack]].
-     *
-     * @return ActiveQuery|ScribblePackQuery
-     */
     public function getScribblePack(): ActiveQuery|ScribblePackQuery
     {
         return $this->hasOne(ScribblePack::class, ['scribble_pack_id' => 'scribble_pack_id']);
     }
 
-    /**
-     * Gets query for [[User]].
-     *
-     * @return ActiveQuery
-     */
     public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-    public function isOwnedBy(User|\yii\web\User|null $user): bool
+    #[Override]
+    public function isOwnedBy(User|YiiUser|null $user): bool
     {
         if (empty($user)) {
             return false;
@@ -77,6 +85,7 @@ class Scribble extends ActiveRecord implements HasOwner
     /**
      * @return ScribbleQuery the active query used by this AR class.
      */
+    #[Override]
     public static function find(): ScribbleQuery
     {
         return new ScribbleQuery(get_called_class());
@@ -85,6 +94,7 @@ class Scribble extends ActiveRecord implements HasOwner
     public static function createEmptyForPack(int $userId, ScribblePack $pack): Scribble
     {
         $object = new Scribble();
+
         $object->user_id = $userId;
         $object->scribble_pack_id = $pack->scribble_pack_id;
         $object->favorite = false;
