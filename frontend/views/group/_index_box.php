@@ -65,6 +65,7 @@ $titleText = '';
 
     <span class="index-box-header-icon index-box-header-icon-bottom glyphicon <?= $scribbleClass ?> scribble-button"
           data-group-key="<?= $model->key ?>"
+          data-group-name="<?= Yii::t('app', 'SCRIBBLE_TITLE') . ': ' . $model->name ?>"
           title="<?= $scribbleTitle ?>"
     ></span>
 

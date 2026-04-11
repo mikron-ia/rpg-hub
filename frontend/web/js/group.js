@@ -1,5 +1,5 @@
-var tabReputation = $('.tab-reputation');
-var tabReputationEvents = $('.tab-reputation-events');
+const tabReputation = $('.tab-reputation');
+const tabReputationEvents = $('.tab-reputation-events');
 
 $.get(
     '../group/external-reputation',
@@ -22,14 +22,3 @@ $.get(
         }
     }
 );
-
-$(".scribble-button").on('click', function () {
-    $.get(
-        '../group/open-scribble-modal',
-        {key: $(this).data('group-key')},
-        function (data) {
-            $('.modal-body').html(data);
-            $('#scribble-modal').modal();
-        }
-    );
-});

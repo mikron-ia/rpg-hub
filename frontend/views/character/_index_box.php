@@ -65,6 +65,7 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
 
     <span class="index-box-header-icon index-box-header-icon-bottom glyphicon <?= $scribbleClass ?> scribble-button"
           data-character-key="<?= $model->key ?>"
+          data-character-name="<?= Yii::t('app', 'SCRIBBLE_TITLE') . ': ' . $model->name ?>"
           title="<?= $scribbleTitle ?>"
     ></span>
 

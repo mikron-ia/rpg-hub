@@ -23,14 +23,3 @@ $(".favorite-button").on('click', function () {
         button.first().addClass(favorite ? 'glyphicon-star' : 'glyphicon-star-empty');
     });
 });
-
-$(".scribble-button").on('click', function () {
-    $.get(
-        '../character/open-scribble-modal',
-        {key: $(this).data('box-key')},
-        function (data) {
-            $('.modal-body').html(data);
-            $('#scribble-modal').modal();
-        }
-    );
-});
