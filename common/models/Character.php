@@ -16,6 +16,7 @@ use common\models\core\Visibility;
 use common\models\external\HasReputations;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
+use common\models\tools\ToolsForHasScribbles;
 use common\models\tools\ToolsForHasVisibility;
 use DateTimeImmutable;
 use Override;
@@ -64,6 +65,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
+    use ToolsForHasScribbles;
     use ToolsForHasVisibility;
 
     public bool $is_off_the_record_change = false;

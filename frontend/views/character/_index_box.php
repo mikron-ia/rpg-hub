@@ -30,7 +30,7 @@ switch ($model->getVisibility()) {
         break;
 }
 
-$scribbleObject = $model->scribblePack?->getScribbleByUserId(Yii::$app->getUser()->getId());
+$scribbleObject = $model->getScribbleForCurrentUser();
 
 $favorite = $scribbleObject?->favorite;
 $scribble = false; // to be replaced by an actual value based on the database record
