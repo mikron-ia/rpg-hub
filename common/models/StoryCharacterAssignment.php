@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\models\core\HasKey;
+use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -10,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property int $story_character_assignment_id
  * @property int $character_id
  * @property int $story_id
+ * @property string $key
  * @property string $visibility
  * @property int|null $position
  * @property string|null $short_text
@@ -19,11 +22,18 @@ use yii\db\ActiveRecord;
  * @property Character $character
  * @property Story $story
  */
-class StoryCharacterAssignment extends ActiveRecord
+class StoryCharacterAssignment extends ActiveRecord implements HasKey
 {
+    use ToolsForEntity;
+
     public static function tableName(): string
     {
         return 'story_character_assignment';
+    }
+
+    public static function keyParameterName(): string
+    {
+        return 'storyCharacterAssignment';
     }
 
     public function rules(): array
@@ -55,6 +65,7 @@ class StoryCharacterAssignment extends ActiveRecord
             'story_character_assignment_id' => Yii::t('app', 'STORY_CHARACTER_ASSIGNMENT_ID'),
             'character_id' => Yii::t('app', 'STORY_CHARACTER_ASSIGNMENT_CHARACTER_ID'),
             'story_id' => Yii::t('app', 'STORY_CHARACTER_ASSIGNMENT_STORY_ID'),
+            'key' => Yii::t('app', 'STORY_CHARACTER_ASSIGNMENT_KEY'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
         ];
     }

@@ -2,7 +2,9 @@
 
 namespace common\models;
 
+use common\models\core\HasKey;
 use common\models\core\HasVisibility;
+use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
 use Yii;
 use yii\db\ActiveQuery;
@@ -12,6 +14,7 @@ use yii\db\ActiveRecord;
  * @property int $story_group_assignment_id
  * @property int $group_id
  * @property int $story_id
+ * @property string $key
  * @property string $visibility
  * @property int|null $position
  * @property string|null $short_text
@@ -21,13 +24,19 @@ use yii\db\ActiveRecord;
  * @property Group $group
  * @property Story $story
  */
-class StoryGroupAssignment extends ActiveRecord implements HasVisibility
+class StoryGroupAssignment extends ActiveRecord implements HasKey, HasVisibility
 {
+    use ToolsForEntity;
     use ToolsForHasVisibility;
 
     public static function tableName(): string
     {
         return 'story_group_assignment';
+    }
+
+    public static function keyParameterName(): string
+    {
+        return 'storyGroupAssignment';
     }
 
     public function rules(): array
@@ -59,6 +68,7 @@ class StoryGroupAssignment extends ActiveRecord implements HasVisibility
             'story_group_assignment_id' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_ID'),
             'group_id' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_GROUP_ID'),
             'story_id' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_STORY_ID'),
+            'key' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_KEY'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
         ];
     }

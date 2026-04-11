@@ -78,6 +78,8 @@ return [
         'scenario' => getenv('KEY_GENERATION_SCENARIO'),
         'scribble' => getenv('KEY_GENERATION_SCRIBBLE'),
         'story' => getenv('KEY_GENERATION_STORY'),
+        'storyCharacterAssignment' => getenv('KEY_GENERATION_STORY_CHARACTER_ASSIGNMENT'),
+        'storyGroupAssignment' => getenv('KEY_GENERATION_STORY_GROUP_ASSIGNMENT'),
         'user' => getenv('KEY_GENERATION_USER'),
         'userInvitation' => getenv('KEY_GENERATION_USER_INVITATION'),
     ],
