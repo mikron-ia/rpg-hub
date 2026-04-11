@@ -41,6 +41,9 @@ use yii2tech\ar\position\PositionBehavior;
  * @property Epic $epic
  * @property SeenPack $seenPack
  * @property UtilityBag $utilityBag
+ *
+ * @method movePrev()
+ * @method moveNext()
  */
 class Article extends ActiveRecord implements HasEpicControl, HasVisibility, HasSightings, HasKey
 {

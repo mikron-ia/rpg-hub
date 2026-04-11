@@ -12,29 +12,27 @@ use common\models\Epic;
 use common\models\EpicQuery;
 use common\models\Parameter;
 use common\models\StoryCharacterAssignmentQuery;
-use common\models\StoryGroupAssignmentQuery;
 use common\models\tools\Retriever;
+use Override;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidRouteException;
 use yii\data\ArrayDataProvider;
+use yii\db\Exception as DbException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * CharacterController implements the CRUD actions for Character model.
- */
-final class CharacterController extends Controller
+final class CharacterController extends CmsController
 {
     use EpicAssistance;
     use MarkChangeTrait;
 
-    private const POSITIONS_PER_PAGE = 16;
+    private const int POSITIONS_PER_PAGE = 16;
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -205,7 +203,8 @@ final class CharacterController extends Controller
     }
 
     /**
-     * Updates an existing character
+     * @throws DbException
+     * @throws HttpException
      */
     public function actionUpdate(string $key): Response|string
     {
@@ -236,7 +235,6 @@ final class CharacterController extends Controller
      * @return Response|\yii\console\Response
      *
      * @throws HttpException
-     * @throws NotFoundHttpException
      * @throws InvalidRouteException
      */
     public function actionLoadData(string $key): Response|\yii\console\Response
@@ -311,30 +309,25 @@ final class CharacterController extends Controller
             }
         }
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
-        }
+        return $this->returnToReferrer(['index']);
     }
 
     /**
      * Saves the model to mark it as changed
      *
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionMarkChanged(string $key): Response
     {
         $model = $this->findModelByKey($key);
+
         $this->markChange($model);
 
         return $this->redirect(['view', 'key' => $model->key]);
     }
 
     /**
-     * Finds the Character model based on its key value
+     * @throws NotFoundHttpException
      */
     protected function findModelByKey(string $key): Character
     {

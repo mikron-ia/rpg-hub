@@ -34,18 +34,22 @@ use yii2tech\ar\position\PositionBehavior;
  * @property Character $character
  * @property Group $group
  * @property GroupMembershipHistory[] $groupMembershipHistories
+ *
+ * @method movePrev()
+ * @method moveNext()
  */
 class GroupMembership extends ActiveRecord implements HasVisibility, HasKey
 {
     use ToolsForEntity;
     use ToolsForHasVisibility;
 
-    const STATUS_ACTIVE = 'active';
-    const STATUS_PASSIVE = 'passive';
-    const STATUS_PAST = 'past';
-    const STATUS_DELETED = 'deleted';
+    const string STATUS_ACTIVE = 'active';
+    const string STATUS_PASSIVE = 'passive';
+    const string STATUS_PAST = 'past';
+    const string STATUS_DELETED = 'deleted';
 
-    public static function tableName()
+    #[Override]
+    public static function tableName(): string
     {
         return 'group_membership';
     }
@@ -56,7 +60,8 @@ class GroupMembership extends ActiveRecord implements HasVisibility, HasKey
         return 'groupMembership';
     }
 
-    public function rules()
+    #[Override]
+    public function rules(): array
     {
         return [
             [['character_id', 'group_id'], 'required'],
@@ -86,7 +91,8 @@ class GroupMembership extends ActiveRecord implements HasVisibility, HasKey
         ];
     }
 
-    public function attributeLabels()
+    #[Override]
+    public function attributeLabels(): array
     {
         return [
             'group_membership_id' => Yii::t('app', 'GROUP_MEMBERSHIP_ID'),
@@ -105,7 +111,7 @@ class GroupMembership extends ActiveRecord implements HasVisibility, HasKey
     /**
      * @throws HttpException
      */
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if ($insert) {
             $this->key = $this->generateKey();
@@ -118,7 +124,8 @@ class GroupMembership extends ActiveRecord implements HasVisibility, HasKey
         return parent::beforeSave($insert);
     }
 
-    public function behaviors()
+    #[Override]
+    public function behaviors(): array
     {
         return [
             'performedActionBehavior' => [
@@ -134,50 +141,32 @@ class GroupMembership extends ActiveRecord implements HasVisibility, HasKey
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getCharacter()
+    public function getCharacter(): ActiveQuery
     {
         return $this->hasOne(Character::class, ['character_id' => 'character_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getGroup()
+    public function getGroup(): ActiveQuery
     {
         return $this->hasOne(Group::class, ['group_id' => 'group_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getGroupMembershipHistories()
+    public function getGroupMembershipHistories(): ActiveQuery
     {
         return $this->hasMany(GroupMembershipHistory::class, ['group_membership_id' => 'group_membership_id']);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPublicFormatted()
+    public function getPublicFormatted(): ?string
     {
         return Markdown::process(Html::encode($this->public_text), 'gfm');
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPrivateFormatted()
+    public function getPrivateFormatted(): ?string
     {
         return Markdown::process(Html::encode($this->private_text), 'gfm');
     }
 
-    /**
-     * @return GroupMembershipHistory|null
-     */
-    public function createHistoryRecord()
+    public function createHistoryRecord(): ?GroupMembershipHistory
     {
         $membership = GroupMembership::findOne(['group_membership_id' => $this->group_membership_id]);
 
@@ -220,18 +209,12 @@ class GroupMembership extends ActiveRecord implements HasVisibility, HasKey
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getStatus(): string
     {
         $names = self::statusNames();
         return isset($names[$this->status]) ? $names[$this->status] : '?';
     }
 
-    /**
-     * @return string
-     */
     public function getStatusClass(): string
     {
         $names = self::statusClasses();

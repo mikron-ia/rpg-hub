@@ -16,12 +16,11 @@ use yii\base\InvalidRouteException;
 use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-final class StoryController extends Controller
+final class StoryController extends CmsController
 {
     use EpicAssistance;
     use MarkChangeTrait;
@@ -165,17 +164,14 @@ final class StoryController extends Controller
     public function actionMoveUp(string $key): Response
     {
         $model = $this->findModel($key);
+
         if (!$model->canUserControlYou()) {
             Story::throwExceptionAboutControl();
         }
+
         $model->movePrev();
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        }
-
-        return $this->redirect(['index']);
+        return $this->returnToReferrer(['index']);
     }
 
     /**
@@ -187,17 +183,14 @@ final class StoryController extends Controller
     public function actionMoveDown($key): Response
     {
         $model = $this->findModel($key);
+
         if (!$model->canUserControlYou()) {
             Story::throwExceptionAboutControl();
         }
+
         $model->moveNext();
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        }
-
-        return $this->redirect(['index']);
+        return $this->returnToReferrer(['index']);
     }
 
     /**
@@ -207,6 +200,11 @@ final class StoryController extends Controller
     public function actionMarkChanged(string $key): Response
     {
         $model = $this->findModel($key);
+
+        if (!$model->canUserControlYou()) {
+            Story::throwExceptionAboutControl();
+        }
+
         $this->markChange($model);
 
         return $this->redirect(['view', 'key' => $model->key]);

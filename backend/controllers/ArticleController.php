@@ -14,7 +14,6 @@ use yii\db\Exception;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -22,7 +21,7 @@ use yii\web\Response;
 /**
  * ArticleController implements the CRUD actions for Article model.
  */
-class ArticleController extends Controller
+class ArticleController extends CmsController
 {
     use EpicAssistance;
     use MarkChangeTrait;
@@ -200,17 +199,14 @@ class ArticleController extends Controller
     public function actionMoveUp(string $key): Response
     {
         $model = $this->findModelByKey($key);
+
         if (!$model->canUserControlYou()) {
             Article::throwExceptionAboutControl();
         }
+
         $model->movePrev();
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        }
-
-        return $this->redirect(['index', 'epic' => $model->epic->key]);
+        return $this->returnToReferrer(['index', 'epic' => $model->epic->key]);
     }
 
     /**
@@ -223,17 +219,14 @@ class ArticleController extends Controller
     public function actionMoveDown(string $key): Response
     {
         $model = $this->findModelByKey($key);
+
         if (!$model->canUserControlYou()) {
             Article::throwExceptionAboutControl();
         }
+
         $model->moveNext();
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        }
-
-        return $this->redirect(['index', 'epic' => $model->epic->key]);
+        return $this->returnToReferrer(['index', 'epic' => $model->epic->key]);
     }
 
     /**
@@ -249,7 +242,13 @@ class ArticleController extends Controller
     public function actionMarkChanged(string $key): Response
     {
         $model = $this->findModelByKey($key);
+
+        if (!$model->canUserControlYou()) {
+            Article::throwExceptionAboutControl();
+        }
+
         $this->markChange($model);
+
         return $this->redirect(['view', 'key' => $model->key]);
     }
 

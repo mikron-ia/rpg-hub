@@ -6,6 +6,7 @@ use common\models\Character;
 use common\models\CharacterQuery;
 use common\models\Group;
 use common\models\GroupMembershipHistory;
+use Override;
 use Yii;
 use common\models\GroupMembership;
 use yii\base\InvalidRouteException;
@@ -16,11 +17,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
-/**
- * GroupMembershipController implements the CRUD actions for the GroupMembership model.
- */
 final class GroupMembershipController extends CmsController
 {
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -59,9 +58,9 @@ final class GroupMembershipController extends CmsController
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('view', ['model' => $model]);
-        } else {
-            return $this->render('view', ['model' => $model]);
         }
+
+        return $this->render('view', ['model' => $model]);
     }
 
     /**
@@ -98,12 +97,16 @@ final class GroupMembershipController extends CmsController
             $charactersForMembership = CharacterQuery::listEpicCharactersAsArray();
 
             if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('create',
-                    ['model' => $model, 'charactersForMembership' => $charactersForMembership]);
-            } else {
-                return $this->render('create',
-                    ['model' => $model, 'charactersForMembership' => $charactersForMembership]);
+                return $this->renderAjax(
+                    'create',
+                    ['model' => $model, 'charactersForMembership' => $charactersForMembership]
+                );
             }
+
+            return $this->render(
+                'create',
+                ['model' => $model, 'charactersForMembership' => $charactersForMembership]
+            );
         }
     }
 
@@ -128,12 +131,16 @@ final class GroupMembershipController extends CmsController
             $charactersForMembership = CharacterQuery::listEpicCharactersAsArray();
 
             if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('update',
-                    ['model' => $model, 'charactersForMembership' => $charactersForMembership]);
-            } else {
-                return $this->render('update',
-                    ['model' => $model, 'charactersForMembership' => $charactersForMembership]);
+                return $this->renderAjax(
+                    'update',
+                    ['model' => $model, 'charactersForMembership' => $charactersForMembership]
+                );
             }
+
+            return $this->render(
+                'update',
+                ['model' => $model, 'charactersForMembership' => $charactersForMembership]
+            );
         }
     }
 
@@ -163,25 +170,18 @@ final class GroupMembershipController extends CmsController
     }
 
     /**
-     * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
     public function actionMoveUp(string $key): Response
     {
-        $model = $this->findModelById($key);
+        $model = $this->findModel($key);
 
         $model->movePrev();
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
-        }
+        return $this->returnToReferrer(['index']);
     }
 
     /**
-     * @throws InvalidRouteException
      * @throws NotFoundHttpException
      */
     public function actionMoveDown(string $key): Response
@@ -190,12 +190,7 @@ final class GroupMembershipController extends CmsController
 
         $model->moveNext();
 
-        $referrer = Yii::$app->getRequest()->getReferrer();
-        if ($referrer) {
-            return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
-        }
+        return $this->returnToReferrer(['index']);
     }
 
     /**
@@ -208,9 +203,9 @@ final class GroupMembershipController extends CmsController
     {
         if (($model = GroupMembership::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
