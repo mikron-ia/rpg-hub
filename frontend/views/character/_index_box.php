@@ -59,7 +59,7 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
 
     <span class="index-box-header-icon index-box-header-icon-top glyphicon <?= $favoriteClass ?> favorite-button"
           data-character-key="<?= $model->key ?>"
-          data-scribble-id="<?= $scribbleObject?->scribble_id ?>"
+          data-scribble-key="<?= $scribbleObject?->key ?>"
           title="<?= $favoriteTitle ?>"
     ></span>
 

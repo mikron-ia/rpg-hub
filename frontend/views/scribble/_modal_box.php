@@ -18,7 +18,7 @@ $favoriteButtonTexts = [
     <?= Html::button($favoriteButtonTexts[$model->favorite], [
         'id' => 'favorite-button',
         'class' => 'btn btn-primary btn-block',
-        'data-scribble-id' => $model->scribble_id,
+        'data-scribble-key' => $model->key,
     ]) ?>
 
     <hr/>
@@ -43,9 +43,9 @@ $favoriteButtonTexts = [
         $.ajax(
             '../scribble/reverse-favorite',
             {
-                method: 'GET',
+                method: 'PATCH',
                 data: {
-                    id: $(this).data('scribble-id')
+                    key: $(this).data('scribble-key')
                 }
             }
         ).done(function () {

@@ -766,6 +766,7 @@ return [
     'SCRIBBLE_DENIED_ACCESS' => 'You have no rights to access this',
     'SCRIBBLE_ID' => 'ID',
     'SCRIBBLE_IS_FAVORITE' => 'Favorited?',
+    'SCRIBBLE_KEY' => 'Key',
     'SCRIBBLE_NOT_FOUND' => 'Scribble not found',
     'SCRIBBLE_PACK' => 'Pack of scribbles',
     'SCRIBBLE_PACK_CLASS' => 'Class',

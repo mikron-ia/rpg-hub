@@ -2,11 +2,14 @@
 
 namespace common\models;
 
+use common\models\core\HasKey;
 use common\models\core\HasOwner;
+use common\models\tools\ToolsForEntity;
 use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\HttpException;
 use yii\web\User as YiiUser;
 
 /**
@@ -14,16 +17,24 @@ use yii\web\User as YiiUser;
  *
  * @property int $scribble_id
  * @property int|null $scribble_pack_id
+ * @property string $key
  * @property int|null $user_id
  * @property int|null $favorite
  *
  * @property ScribblePack $scribblePack
  * @property User $user
  */
-class Scribble extends ActiveRecord implements HasOwner
+class Scribble extends ActiveRecord implements HasKey, HasOwner
 {
+    use ToolsForEntity;
+
     #[Override]
     public static function tableName(): string
+    {
+        return 'scribble';
+    }
+
+    public static function keyParameterName(): string
     {
         return 'scribble';
     }
@@ -57,9 +68,22 @@ class Scribble extends ActiveRecord implements HasOwner
         return [
             'scribble_id' => Yii::t('app', 'SCRIBBLE_ID'),
             'scribble_pack_id' => Yii::t('app', 'SCRIBBLE_PACK'),
+            'key' => Yii::t('app', 'SCRIBBLE_KEY'),
             'user_id' => Yii::t('app', 'USER_LABEL'),
             'favorite' => Yii::t('app', 'SCRIBBLE_IS_FAVORITE'),
         ];
+    }
+
+    /**
+     * @throws HttpException
+     */
+    public function beforeSave($insert): bool
+    {
+        if ($insert) {
+            $this->key = $this->generateKey();
+        }
+
+        return parent::beforeSave($insert);
     }
 
     public function getScribblePack(): ActiveQuery|ScribblePackQuery

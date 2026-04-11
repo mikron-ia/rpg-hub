@@ -766,6 +766,7 @@ return [
     'SCRIBBLE_DENIED_ACCESS' => 'Brak dostępu',
     'SCRIBBLE_ID' => 'ID',
     'SCRIBBLE_IS_FAVORITE' => 'Ulubione?',
+    'SCRIBBLE_KEY' => 'Klucz',
     'SCRIBBLE_NOT_FOUND' => 'Zapisków nie znaleziono',
     'SCRIBBLE_PACK' => 'Paczka zapisków',
     'SCRIBBLE_PACK_CLASS' => 'Klasa',

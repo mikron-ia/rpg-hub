@@ -10,6 +10,7 @@ use common\models\Parameter;
 use common\models\ParameterPack;
 use common\models\Participant;
 use common\models\PointInTime;
+use common\models\Scribble;
 use common\models\User;
 use common\models\UserInvitation;
 use yii\db\ActiveQuery;
@@ -83,6 +84,11 @@ class m260322_181640_v1_6_0 extends Migration
         $this->fillInKeys(ExternalDataPack::find());
         $this->alterColumn('{{%external_data_pack}}', 'key', $this->string(80)->notNull());
         $this->createIndex('external_data_pack_key', '{{%external_data_pack}}', 'key', true);
+
+        $this->addColumn('{{%scribble}}', 'key', $this->string(80)->after('scribble_pack_id'));
+        $this->fillInKeys(Scribble::find());
+        $this->alterColumn('{{%scribble}}', 'key', $this->string(80)->notNull());
+        $this->createIndex('scribble_key', '{{%scribble}}', 'key', true);
     }
 
     public function safeDown(): void

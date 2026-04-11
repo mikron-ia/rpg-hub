@@ -76,6 +76,7 @@ return [
         'pointInTime' => getenv('KEY_GENERATION_POINT_IN_TIME'),
         'recap' => getenv('KEY_GENERATION_RECAP'),
         'scenario' => getenv('KEY_GENERATION_SCENARIO'),
+        'scribble' => getenv('KEY_GENERATION_SCRIBBLE'),
         'story' => getenv('KEY_GENERATION_STORY'),
         'user' => getenv('KEY_GENERATION_USER'),
         'userInvitation' => getenv('KEY_GENERATION_USER_INVITATION'),

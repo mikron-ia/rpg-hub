@@ -8,9 +8,9 @@ $(".favorite-button").on('click', function () {
     $.ajax(
         '../scribble/reverse-favorite',
         {
-            method: 'GET',
+            method: 'PATCH',
             data: {
-                id: $(this).data('scribble-id')
+                key: $(this).data('scribble-key')
             }
         }
     ).done(function () {

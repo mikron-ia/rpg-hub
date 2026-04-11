@@ -38,7 +38,9 @@ class ScribbleController extends Controller
                 'verbs' => [
                     'class' => VerbFilter::class,
                     'actions' => [
-                        'delete' => ['POST'],
+                        'reverse-favorite' => ['PATCH'],
+                        'set-favorite' => ['PATCH'],
+                        'unset-favorite' => ['PATCH'],
                     ],
                 ],
             ]
@@ -49,9 +51,10 @@ class ScribbleController extends Controller
      * @throws Exception
      * @throws HttpException
      */
-    public function actionReverseFavorite(int $id): void
+    public function actionReverseFavorite(): void
     {
-        $scribble = $this->getModelWithValidation($id);
+        $key = Yii::$app->request->post('key');
+        $scribble = $this->getModelWithValidation($key);
         $scribble->favorite = !$scribble->favorite;
         if (!$scribble->save()) {
             throw new ServerErrorHttpException();
@@ -62,9 +65,10 @@ class ScribbleController extends Controller
      * @throws Exception
      * @throws HttpException
      */
-    public function actionSetAsFavorite(int $id): void
+    public function actionSetAsFavorite(): void
     {
-        $scribble = $this->getModelWithValidation($id);
+        $key = Yii::$app->request->post('key');
+        $scribble = $this->getModelWithValidation($key);
         $scribble->favorite = true;
         if (!$scribble->save()) {
             throw new ServerErrorHttpException();
@@ -75,9 +79,10 @@ class ScribbleController extends Controller
      * @throws Exception
      * @throws HttpException
      */
-    public function actionUnsetAsFavorite(int $id): void
+    public function actionUnsetAsFavorite(): void
     {
-        $scribble = $this->getModelWithValidation($id);
+        $key = Yii::$app->request->post('key');
+        $scribble = $this->getModelWithValidation($key);
         $scribble->favorite = false;
         if (!$scribble->save()) {
             throw new ServerErrorHttpException();
@@ -87,13 +92,13 @@ class ScribbleController extends Controller
     /**
      * @throws HttpException
      */
-    private function getModelWithValidation(int $scribbleId): Scribble
+    private function getModelWithValidation(string $key): Scribble
     {
         if (!Yii::$app->request->isAjax) {
             throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
         }
 
-        $scribble = $this->findModel($scribbleId);
+        $scribble = $this->findModel($key);
 
         if (!$scribble->isOwnedBy(Yii::$app->getUser())) {
             throw new ForbiddenHttpException(Yii::t('app', 'SCRIBBLE_DENIED_ACCESS'));
@@ -109,9 +114,9 @@ class ScribbleController extends Controller
     /**
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel(int $scribble_id): Scribble
+    protected function findModel(string $key): Scribble
     {
-        if (($model = Scribble::findOne(['scribble_id' => $scribble_id])) !== null) {
+        if (($model = Scribble::findOne(['key' => $key])) !== null) {
             return $model;
         }
 
