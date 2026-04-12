@@ -9,6 +9,7 @@ use common\models\Scenario;
 use common\models\ScenarioQuery;
 use common\models\service\DescriptionService;
 use common\models\tools\ToolsForEntity;
+use Override;
 use Throwable;
 use Yii;
 use yii\db\Exception;
@@ -26,6 +27,7 @@ class ScenarioController extends CmsController
     use EpicAssistance;
     use ToolsForEntity;
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -33,7 +35,15 @@ class ScenarioController extends CmsController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'create-description', 'display-descriptions', 'index', 'update', 'view', 'delete'],
+                        'actions' => [
+                            'create',
+                            'create-description',
+                            'display-descriptions',
+                            'index',
+                            'update',
+                            'view',
+                            'delete',
+                        ],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -48,6 +58,9 @@ class ScenarioController extends CmsController
         ];
     }
 
+    /**
+     * @throws HttpException
+     */
     public function actionIndex(string $epic): string
     {
         if (!empty($epic)) {
@@ -78,6 +91,9 @@ class ScenarioController extends CmsController
         ]);
     }
 
+    /**
+     * @throws HttpException
+     */
     public function actionView(string $key): string
     {
         $model = $this->findModel($key);
@@ -106,6 +122,10 @@ class ScenarioController extends CmsController
         return $this->render('create', ['model' => $model]);
     }
 
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
     public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModel($key);
@@ -201,6 +221,9 @@ class ScenarioController extends CmsController
         );
     }
 
+    /**
+     * @throws NotFoundHttpException
+     */
     protected function findModel(string $key): Scenario
     {
         $model = Scenario::findOne(['key' => $key]);

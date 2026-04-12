@@ -5,6 +5,7 @@ namespace common\components;
 use common\models\core\HasEpicControl;
 use common\models\Epic;
 use Yii;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 trait EpicAssistance
@@ -50,6 +51,9 @@ trait EpicAssistance
         return $model;
     }
 
+    /**
+     * @throws HttpException
+     */
     protected function getEpicByKeyWithCheck(string $key): Epic
     {
         $epic = $this->findEpicByKey($key);
@@ -63,6 +67,9 @@ trait EpicAssistance
         return $epic;
     }
 
+    /**
+     * @throws HttpException
+     */
     protected function setEpicOnObject(string $epicKey, HasEpicControl $model): void
     {
         $epic = $this->findEpicByKey($epicKey);

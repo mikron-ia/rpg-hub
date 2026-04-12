@@ -55,7 +55,7 @@ final class CharacterController extends CmsController
                             'update',
                             'view',
                             'load-data',
-                            'mark-changed'
+                            'mark-changed',
                         ],
                         'allow' => true,
                         'roles' => ['operator'],
@@ -73,7 +73,7 @@ final class CharacterController extends CmsController
     }
 
     /**
-     * Lists all characters
+     * @throws HttpException
      */
     public function actionIndex(?string $epic = null): string
     {
@@ -106,7 +106,6 @@ final class CharacterController extends CmsController
     }
 
     /**
-     * Lists all characters with their importances
      * @throws HttpException
      */
     public function actionIndexImportance(string $epic): string
@@ -138,7 +137,7 @@ final class CharacterController extends CmsController
     }
 
     /**
-     * Displays a single character
+     * @throws HttpException
      */
     public function actionView(string $key): string
     {
@@ -163,7 +162,8 @@ final class CharacterController extends CmsController
     }
 
     /**
-     * Creates a new character
+     * @throws DbException
+     * @throws HttpException
      */
     public function actionCreate(string $epic = null): Response|string
     {
@@ -189,6 +189,9 @@ final class CharacterController extends CmsController
 
     /**
      * Creates a new CharacterSheet for given Character
+     *
+     * @throws DbException
+     * @throws HttpException
      */
     public function actionCreateSheet(string $key): Response
     {

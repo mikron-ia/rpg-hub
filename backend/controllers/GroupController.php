@@ -11,6 +11,7 @@ use common\models\Group;
 use common\models\GroupQuery;
 use common\models\service\DescriptionService;
 use common\models\StoryGroupAssignmentQuery;
+use Override;
 use Yii;
 use yii\db\Exception;
 use yii\filters\AccessControl;
@@ -21,9 +22,6 @@ use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * GroupController implements the CRUD actions for the Group model.
- */
 final class GroupController extends CmsController
 {
     use EpicAssistance;
@@ -31,6 +29,7 @@ final class GroupController extends CmsController
 
     private const int POSITIONS_PER_PAGE = 16;
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -38,7 +37,16 @@ final class GroupController extends CmsController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'create-description', 'display-descriptions', 'index', 'index-importance', 'update', 'view', 'mark-changed'],
+                        'actions' => [
+                            'create',
+                            'create-description',
+                            'display-descriptions',
+                            'index',
+                            'index-importance',
+                            'update',
+                            'view',
+                            'mark-changed',
+                        ],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
