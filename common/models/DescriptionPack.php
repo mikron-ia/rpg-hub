@@ -17,7 +17,6 @@ use yii\web\HttpException;
 
 /**
  * @property string $description_pack_id
- * @property string $key
  * @property string $class
  *
  * @property Description[] $descriptions
@@ -26,7 +25,7 @@ use yii\web\HttpException;
  *
  * @method touch(string $string)
  */
-final class DescriptionPack extends ActiveRecord implements Displayable, HasKey, IsEditablePack
+final class DescriptionPack extends ActiveRecord implements Displayable, IsEditablePack
 {
     use ToolsForEntity;
 
@@ -34,12 +33,6 @@ final class DescriptionPack extends ActiveRecord implements Displayable, HasKey,
     public static function tableName(): string
     {
         return 'description_pack';
-    }
-
-    #[Override]
-    public static function keyParameterName(): string
-    {
-        return 'descriptionPack';
     }
 
     #[Override]
@@ -56,22 +49,8 @@ final class DescriptionPack extends ActiveRecord implements Displayable, HasKey,
     {
         return [
             'description_pack_id' => Yii::t('app', 'DESCRIPTION_PACK_ID'),
-            'key' => Yii::t('app', 'DESCRIPTION_PACK_KEY'),
             'class' => Yii::t('app', 'DESCRIPTION_PACK_CLASS'),
         ];
-    }
-
-    /**
-     * @throws HttpException
-     */
-    #[Override]
-    public function beforeSave($insert): bool
-    {
-        if ($insert) {
-            $this->key = $this->generateKey();
-        }
-
-        return parent::beforeSave($insert);
     }
 
     #[Override]

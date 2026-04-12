@@ -105,4 +105,9 @@ trait ToolsForEntity
 
         return sha1($string);
     }
+
+    public function getObjectKey(): string
+    {
+        return $this->key;
+    }
 }

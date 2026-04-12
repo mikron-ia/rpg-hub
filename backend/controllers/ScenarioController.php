@@ -13,7 +13,9 @@ use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
+use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -29,7 +31,7 @@ class ScenarioController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'update', 'view', 'delete'],
+                        'actions' => ['create', 'display-descriptions', 'index', 'update', 'view', 'delete'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -134,6 +136,24 @@ class ScenarioController extends Controller
         $model->delete();
 
         return $this->redirect(['index', 'epic' => $model->epic->key]);
+    }
+
+    /**
+     * @throws HttpException
+     */
+    public function actionDisplayDescriptions(string $key): string
+    {
+        if (!Yii::$app->request->isAjax) {
+            throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
+        }
+
+        $model = $this->findModel($key);
+
+        if (!$model->canUserControlYou()) {
+            throw new ForbiddenHttpException(Yii::t('app', 'DESCRIPTION_PACK_NOT_ACCESSIBLE'));
+        }
+
+        return $this->renderAjax('../description/_view_descriptions', ['model' => $model->descriptionPack]);
     }
 
     protected function findModel(string $key): Scenario

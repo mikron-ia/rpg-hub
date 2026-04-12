@@ -21,7 +21,9 @@ use yii\data\ArrayDataProvider;
 use yii\db\Exception as DbException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
+use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -40,7 +42,7 @@ final class CharacterController extends CmsController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'create-sheet', 'index', 'index-importance', 'update', 'view', 'load-data', 'mark-changed'],
+                        'actions' => ['create', 'create-sheet', 'display-descriptions', 'index', 'index-importance', 'update', 'view', 'load-data', 'mark-changed'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -324,6 +326,24 @@ final class CharacterController extends CmsController
         $this->markChange($model);
 
         return $this->redirect(['view', 'key' => $model->key]);
+    }
+
+    /**
+     * @throws HttpException
+     */
+    public function actionDisplayDescriptions(string $key): string
+    {
+        if (!Yii::$app->request->isAjax) {
+            throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
+        }
+
+        $model = $this->findModelByKey($key);
+
+        if (!$model->canUserControlYou()) {
+            throw new ForbiddenHttpException(Yii::t('app', 'DESCRIPTION_PACK_NOT_ACCESSIBLE'));
+        }
+
+        return $this->renderAjax('../description/_view_descriptions', ['model' => $model->descriptionPack]);
     }
 
     /**

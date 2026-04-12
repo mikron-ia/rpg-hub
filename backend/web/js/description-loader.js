@@ -1,10 +1,11 @@
-const descriptionBoxesLoad = function ($descriptionContainer) {
+function descriptionBoxesLoad(pathToController, $descriptionContainer) {
+    const path = '../' + pathToController + '/display-descriptions';
     $.ajax(
-        '../description/display',
+        path,
         {
             method: "GET",
             data: {
-                packKey: $descriptionContainer.data('pack-key')
+                key: $descriptionContainer.data('object-key'),
             }
         }
     ).done(function (xhr) {
@@ -14,12 +15,12 @@ const descriptionBoxesLoad = function ($descriptionContainer) {
     }).always(function (xhr) {
         //@todo Logging
     });
-};
+}
 
 $(document).ready(function () {
     const $descriptions = $('#description-container');
 
-    descriptionBoxesLoad($descriptions);
+    objectSpecificDescriptionBoxesLoad($descriptions);
 
     $descriptions.on('click', '.move-up', function () {
         const $descriptionKey = $(this).data('description-key');
@@ -28,11 +29,11 @@ $(document).ready(function () {
             {
                 method: "GET",
                 data: {
-                    key: $descriptionKey
+                    key: $descriptionKey,
                 }
             }
         ).always(function () {
-            descriptionBoxesLoad($descriptions);
+            objectSpecificDescriptionBoxesLoad($descriptions);
         });
     });
 
@@ -43,11 +44,11 @@ $(document).ready(function () {
             {
                 method: "GET",
                 data: {
-                    key: $descriptionKey
+                    key: $descriptionKey,
                 }
             }
         ).always(function () {
-            descriptionBoxesLoad($descriptions);
+            objectSpecificDescriptionBoxesLoad($descriptions);
         });
     });
 
@@ -55,7 +56,7 @@ $(document).ready(function () {
         $.get(
             '../description/history',
             {
-                key: $(this).data('key')
+                key: $(this).data('key'),
             },
             function (data) {
                 $('.modal-body').html(data);
@@ -68,7 +69,7 @@ $(document).ready(function () {
         $.get(
             '../description/update',
             {
-                key: $(this).data('key')
+                key: $(this).data('key'),
             },
             function (data) {
                 $('.modal-body').html(data);
@@ -81,7 +82,7 @@ $(document).ready(function () {
         $.get(
             '../description/create',
             {
-                packKey: $(this).data('pack-key')
+                packKey: $(this).data('pack-key'),
             },
             function (data) {
                 $('.modal-body').html(data);

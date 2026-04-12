@@ -62,7 +62,6 @@ return [
         'character' => getenv('KEY_GENERATION_CHARACTER'),
         'characterSheet' => getenv('KEY_GENERATION_CHARACTER_SHEET'),
         'description' => getenv('KEY_GENERATION_DESCRIPTION'),
-        'descriptionPack' => getenv('KEY_GENERATION_DESCRIPTION_PACK'),
         'epic' => getenv('KEY_GENERATION_EPIC'),
         'externalData' => getenv('KEY_GENERATION_EXTERNAL_DATA'),
         'externalDataPack' => getenv('KEY_GENERATION_EXTERNAL_DATA_PACK'),

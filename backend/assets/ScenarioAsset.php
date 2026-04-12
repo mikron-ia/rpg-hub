@@ -10,7 +10,8 @@ class ScenarioAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [];
     public $js = [
-        'js/description-user.js',
+        'js/description-loader.js',
+        'js/loader-for-scenario.js',
         'js/scenario.js',
         'js/tooltip.js',
     ];

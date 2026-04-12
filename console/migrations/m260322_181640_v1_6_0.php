@@ -72,11 +72,6 @@ class m260322_181640_v1_6_0 extends Migration
         $this->alterColumn('{{%description}}', 'key', $this->string(80)->notNull());
         $this->createIndex('description_key', '{{%description}}', 'key', true);
 
-        $this->addColumn('{{%description_pack}}', 'key', $this->string(80)->after('description_pack_id'));
-        $this->fillInKeys(DescriptionPack::find());
-        $this->alterColumn('{{%description_pack}}', 'key', $this->string(80)->notNull());
-        $this->createIndex('description_pack_key', '{{%description_pack}}', 'key', true);
-
         $this->addColumn('{{%external_data}}', 'key', $this->string(80)->after('external_data_pack_id'));
         $this->fillInKeys(ExternalData::find());
         $this->alterColumn('{{%external_data}}', 'key', $this->string(80)->notNull());
@@ -114,8 +109,6 @@ class m260322_181640_v1_6_0 extends Migration
         $this->dropColumn('{{%external_data_pack}}', 'key');
 
         $this->dropColumn('{{%external_data}}', 'key');
-        
-        $this->dropColumn('{{%description_pack}}', 'key');
 
         $this->dropColumn('{{%description}}', 'key');
         

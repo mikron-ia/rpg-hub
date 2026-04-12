@@ -20,16 +20,6 @@ interface HasDescriptions
     static public function allowedDescriptionTypes(): array;
 
     /**
-     * Provides ID of the description pack
-     */
-    public function getDescriptionPackId(): int;
-
-    /**
-     * Provides ID of the description pack
-     */
-    public function getDescriptionPackKey(): string;
-
-    /**
      * Provides the list of visible descriptions from Description Pack
      */
     public function getDescriptionsVisible(): ActiveQuery;
@@ -38,4 +28,6 @@ interface HasDescriptions
      * Provides the list of visible and unexpired descriptions from Description Pack
      */
     public function getDescriptionsVisibleForCompact(): ActiveQuery;
+
+    public function getObjectKey(): string;
 }

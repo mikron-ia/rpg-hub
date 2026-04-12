@@ -15,16 +15,6 @@ use yii\db\ActiveQuery;
  */
 trait ToolsForHasDescriptions
 {
-    public function getDescriptionPackId(): int
-    {
-        return $this->description_pack_id;
-    }
-
-    public function getDescriptionPackKey(): string
-    {
-        return $this->descriptionPack->key;
-    }
-
     public function getDescriptionsVisible(): ActiveQuery
     {
         return $this->descriptionPack->getDescriptionsVisible();

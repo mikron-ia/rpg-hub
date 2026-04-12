@@ -14,7 +14,9 @@ use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
+use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -35,7 +37,7 @@ final class GroupController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'index-importance', 'update', 'view', 'mark-changed'],
+                        'actions' => ['create', 'display-descriptions', 'index', 'index-importance', 'update', 'view', 'mark-changed'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -200,6 +202,24 @@ final class GroupController extends Controller
         $this->markChange($model);
 
         return $this->redirect(['view', 'key' => $model->key]);
+    }
+
+    /**
+     * @throws HttpException
+     */
+    public function actionDisplayDescriptions(string $key): string
+    {
+        if (!Yii::$app->request->isAjax) {
+            throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
+        }
+
+        $model = $this->findModelByKey($key);
+
+        if (!$model->canUserControlYou()) {
+            throw new ForbiddenHttpException(Yii::t('app', 'DESCRIPTION_PACK_NOT_ACCESSIBLE'));
+        }
+
+        return $this->renderAjax('../description/_view_descriptions', ['model' => $model->descriptionPack]);
     }
 
     /**

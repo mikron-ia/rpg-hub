@@ -11,9 +11,10 @@ class GroupAsset extends AssetBundle
     public $css = [];
     public $js = [
         'js/copy-key-button.js',
-        'js/description-user.js',
+        'js/description-loader.js',
         'js/group.js',
         'js/group-memberships.js',
+        'js/loader-for-group.js',
         'js/tooltip.js',
     ];
     public $depends = [
