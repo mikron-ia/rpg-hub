@@ -80,9 +80,9 @@ $(document).ready(function () {
 
     $descriptions.on('click', '.create-description-link', function () {
         $.get(
-            '../description/create',
+            '../' + $(this).data('controller') + '/create-description',
             {
-                packKey: $(this).data('pack-key'),
+                key: $(this).data('key'),
             },
             function (data) {
                 $('.modal-body').html(data);

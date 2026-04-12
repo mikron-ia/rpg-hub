@@ -8,9 +8,12 @@ use common\models\Character;
 use common\models\CharacterQuery;
 use common\models\CharacterSheet;
 use common\models\core\Visibility;
+use common\models\Description;
+use common\models\DescriptionPack;
 use common\models\Epic;
 use common\models\EpicQuery;
 use common\models\Parameter;
+use common\models\service\DescriptionService;
 use common\models\StoryCharacterAssignmentQuery;
 use common\models\tools\Retriever;
 use Override;
@@ -42,7 +45,18 @@ final class CharacterController extends CmsController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'create-sheet', 'display-descriptions', 'index', 'index-importance', 'update', 'view', 'load-data', 'mark-changed'],
+                        'actions' => [
+                            'create',
+                            'create-sheet',
+                            'create-description',
+                            'display-descriptions',
+                            'index',
+                            'index-importance',
+                            'update',
+                            'view',
+                            'load-data',
+                            'mark-changed'
+                        ],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -343,7 +357,50 @@ final class CharacterController extends CmsController
             throw new ForbiddenHttpException(Yii::t('app', 'DESCRIPTION_PACK_NOT_ACCESSIBLE'));
         }
 
-        return $this->renderAjax('../description/_view_descriptions', ['model' => $model->descriptionPack]);
+        return $this->renderAjax(
+            '../description/_view_descriptions',
+            [
+                'model' => $model->descriptionPack,
+                'creatorController' => 'character',
+                'creatorKey' => $model->key,
+            ]
+        );
+    }
+
+    /**
+     * @throws DbException
+     * @throws HttpException
+     */
+    public function actionCreateDescription(string $key): Response|string
+    {
+        $model = $this->findModelByKey($key);
+        if (!$model->canUserControlYou()) {
+            Character::throwExceptionAboutControl();
+        }
+
+        $description = new Description();
+        $loadSuccess = $description->load(Yii::$app->request->post());
+
+        $description = DescriptionService::fillDescription(
+            model: $description,
+            descriptionPack: $model->descriptionPack
+        );
+
+        if ($loadSuccess && $description->save()) {
+            return $this->returnToReferrer(['site/index']);
+        }
+
+        $dataForCreate = [
+            'model' => $description,
+            'creatorController' => 'character',
+            'creatorKey' => $model->key,
+        ];
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('../description/create', $dataForCreate);
+        }
+
+        return $this->render('../description/create', $dataForCreate);
     }
 
     /**

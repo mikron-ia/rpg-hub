@@ -10,13 +10,16 @@ use yii\widgets\ListView;
 /* @var $this View */
 /* @var $model DescriptionPack */
 /* @var $showPrivates bool */
+/* @var $creatorController string */
+/* @var $creatorKey string */
 
 ?>
 
 <div class="buttoned-header">
-    <p class="btn btn-success create-description-link" data-pack-key="<?= $model->key ?>">
-        <?= Yii::t('app', 'DESCRIPTION_BUTTON_CREATE') ?>
-    </p>
+    <p class="btn btn-success create-description-link"
+       data-controller="<?= $creatorController ?>"
+       data-key="<?= $creatorKey ?>"
+    ><?= Yii::t('app', 'DESCRIPTION_BUTTON_CREATE') ?></p>
 </div>
 
 <?php if ($model): ?>

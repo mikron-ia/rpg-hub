@@ -3,23 +3,25 @@
 namespace backend\controllers;
 
 use common\components\EpicAssistance;
+use common\models\Description;
 use common\models\Epic;
 use common\models\Scenario;
 use common\models\ScenarioQuery;
+use common\models\service\DescriptionService;
 use common\models\tools\ToolsForEntity;
 use Throwable;
 use Yii;
+use yii\db\Exception;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-class ScenarioController extends Controller
+class ScenarioController extends CmsController
 {
     use EpicAssistance;
     use ToolsForEntity;
@@ -31,7 +33,7 @@ class ScenarioController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'display-descriptions', 'index', 'update', 'view', 'delete'],
+                        'actions' => ['create', 'create-description', 'display-descriptions', 'index', 'update', 'view', 'delete'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -139,6 +141,42 @@ class ScenarioController extends Controller
     }
 
     /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    public function actionCreateDescription(string $key): Response|string
+    {
+        $model = $this->findModel($key);
+        if (!$model->canUserControlYou()) {
+            Scenario::throwExceptionAboutControl();
+        }
+
+        $description = new Description();
+        $loadSuccess = $description->load(Yii::$app->request->post());
+
+        $description = DescriptionService::fillDescription(
+            model: $description,
+            descriptionPack: $model->descriptionPack
+        );
+
+        if ($loadSuccess && $description->save()) {
+            return $this->returnToReferrer(['site/index']);
+        }
+
+        $dataForCreate = [
+            'model' => $description,
+            'creatorController' => 'scenario',
+            'creatorKey' => $model->key,
+        ];
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('../description/create', $dataForCreate);
+        }
+
+        return $this->render('../description/create', $dataForCreate);
+    }
+
+    /**
      * @throws HttpException
      */
     public function actionDisplayDescriptions(string $key): string
@@ -153,7 +191,14 @@ class ScenarioController extends Controller
             throw new ForbiddenHttpException(Yii::t('app', 'DESCRIPTION_PACK_NOT_ACCESSIBLE'));
         }
 
-        return $this->renderAjax('../description/_view_descriptions', ['model' => $model->descriptionPack]);
+        return $this->renderAjax(
+            '../description/_view_descriptions',
+            [
+                'model' => $model->descriptionPack,
+                'creatorController' => 'scenario',
+                'creatorKey' => $model->key,
+            ]
+        );
     }
 
     protected function findModel(string $key): Scenario

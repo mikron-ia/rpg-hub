@@ -5,15 +5,16 @@ namespace backend\controllers;
 use backend\controllers\tools\MarkChangeTrait;
 use common\components\EpicAssistance;
 use common\models\core\Visibility;
+use common\models\Description;
 use common\models\Epic;
 use common\models\Group;
 use common\models\GroupQuery;
+use common\models\service\DescriptionService;
 use common\models\StoryGroupAssignmentQuery;
 use Yii;
 use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 use yii\web\MethodNotAllowedHttpException;
@@ -23,7 +24,7 @@ use yii\web\Response;
 /**
  * GroupController implements the CRUD actions for the Group model.
  */
-final class GroupController extends Controller
+final class GroupController extends CmsController
 {
     use EpicAssistance;
     use MarkChangeTrait;
@@ -37,7 +38,7 @@ final class GroupController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'display-descriptions', 'index', 'index-importance', 'update', 'view', 'mark-changed'],
+                        'actions' => ['create', 'create-description', 'display-descriptions', 'index', 'index-importance', 'update', 'view', 'mark-changed'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -205,6 +206,42 @@ final class GroupController extends Controller
     }
 
     /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    public function actionCreateDescription(string $key): Response|string
+    {
+        $model = $this->findModelByKey($key);
+        if (!$model->canUserControlYou()) {
+            Group::throwExceptionAboutControl();
+        }
+
+        $description = new Description();
+        $loadSuccess = $description->load(Yii::$app->request->post());
+
+        $description = DescriptionService::fillDescription(
+            model: $description,
+            descriptionPack: $model->descriptionPack
+        );
+
+        if ($loadSuccess && $description->save()) {
+            return $this->returnToReferrer(['site/index']);
+        }
+
+        $dataForCreate = [
+            'model' => $description,
+            'creatorController' => 'group',
+            'creatorKey' => $model->key,
+        ];
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('../description/create', $dataForCreate);
+        }
+
+        return $this->render('../description/create', $dataForCreate);
+    }
+
+    /**
      * @throws HttpException
      */
     public function actionDisplayDescriptions(string $key): string
@@ -219,7 +256,14 @@ final class GroupController extends Controller
             throw new ForbiddenHttpException(Yii::t('app', 'DESCRIPTION_PACK_NOT_ACCESSIBLE'));
         }
 
-        return $this->renderAjax('../description/_view_descriptions', ['model' => $model->descriptionPack]);
+        return $this->renderAjax(
+            '../description/_view_descriptions',
+            [
+                'model' => $model->descriptionPack,
+                'creatorController' => 'group',
+                'creatorKey' => $model->key,
+            ]
+        );
     }
 
     /**

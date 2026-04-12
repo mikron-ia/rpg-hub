@@ -11,6 +11,8 @@ use yii\widgets\ActiveForm;
 /* @var $this View */
 /* @var $model Description */
 /* @var $form ActiveForm */
+/* @var $creatorController string */
+/* @var $creatorKey string */
 ?>
 
 <div class="description-form">
@@ -19,12 +21,12 @@ use yii\widgets\ActiveForm;
         'id' => 'description-form',
         'action' => $model->isNewRecord ?
             [
-                'description/create',
-                'packKey' => $model->descriptionPack->key
+                $creatorController . '/create-description',
+                'key' => $creatorKey,
             ] :
             [
                 'description/update',
-                'key' => $model->key
+                'key' => $model->key,
             ],
         'method' => 'post',
     ]); ?>

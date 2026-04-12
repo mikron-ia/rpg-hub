@@ -30,7 +30,6 @@ final class DescriptionController extends CmsController
                 'rules' => [
                     [
                         'actions' => [
-                            'create',
                             'delete',
                             'update',
                             'view',
@@ -67,42 +66,6 @@ final class DescriptionController extends CmsController
         }
 
         return $this->render('view', ['model' => $model]);
-    }
-
-    /**
-     * @throws DbException
-     * @throws HttpException
-     */
-    public function actionCreate(string $packKey): Response|string
-    {
-        $model = new Description();
-
-        $descriptionPack = DescriptionPack::findOne(['key' => $packKey]);
-
-        if (!$descriptionPack) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_NO_PACK'));
-            return $this->returnToReferrer(['site/index']);
-        } elseif (!$descriptionPack->canUserControlYou()) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_DESCRIPTION_ACCESS_DENIED'));
-            return $this->returnToReferrer(['site/index']);
-        }
-
-        $loadSuccess = $model->load(Yii::$app->request->post());
-
-        $model->description_pack_id = $descriptionPack->description_pack_id;
-
-        $language = $descriptionPack->getEpic()->parameterPack->getParameterValueByCode(Parameter::LANGUAGE);
-        $model->lang = in_array($language, Yii::$app->params['languagesAvailable']) ? $language : 'en';
-
-        if ($loadSuccess && $model->save()) {
-            return $this->returnToReferrer(['site/index']);
-        }
-
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('create', ['model' => $model]);
-        }
-
-        return $this->render('create', ['model' => $model]);
     }
 
     /**
@@ -215,26 +178,6 @@ final class DescriptionController extends CmsController
         }
 
         return $model->moveNext();
-    }
-
-    /**
-     * @throws HttpException
-     */
-    public function actionDisplay(string $packKey): string
-    {
-        if (!Yii::$app->request->isAjax) {
-            throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
-        }
-
-        $model = $this->findPack($packKey);
-
-        if (!$model->canUserControlYou()) {
-            // control criteria is used to check for operator-level rights for the specific object and Epic
-            // this is to stop the operator from viewing Descriptions from Epics they play in but not GM
-            throw new ForbiddenHttpException(Yii::t('app', 'DESCRIPTION_PACK_NOT_ACCESSIBLE'));
-        }
-
-        return $this->renderAjax('_view_descriptions', ['model' => $model]);
     }
 
     /**
