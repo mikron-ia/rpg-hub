@@ -77,11 +77,6 @@ class m260322_181640_v1_6_0 extends Migration
         $this->alterColumn('{{%external_data}}', 'key', $this->string(80)->notNull());
         $this->createIndex('external_data_key', '{{%external_data}}', 'key', true);
 
-        $this->addColumn('{{%external_data_pack}}', 'key', $this->string(80)->after('external_data_pack_id'));
-        $this->fillInKeys(ExternalDataPack::find());
-        $this->alterColumn('{{%external_data_pack}}', 'key', $this->string(80)->notNull());
-        $this->createIndex('external_data_pack_key', '{{%external_data_pack}}', 'key', true);
-
         $this->addColumn('{{%scribble}}', 'key', $this->string(80)->after('scribble_pack_id'));
         $this->fillInKeys(Scribble::find());
         $this->alterColumn('{{%scribble}}', 'key', $this->string(80)->notNull());
@@ -105,8 +100,6 @@ class m260322_181640_v1_6_0 extends Migration
         $this->dropColumn('{{%story_character_assignment}}', 'key');
 
         $this->dropColumn('{{%scribble}}', 'key');
-
-        $this->dropColumn('{{%external_data_pack}}', 'key');
 
         $this->dropColumn('{{%external_data}}', 'key');
 

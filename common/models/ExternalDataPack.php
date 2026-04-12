@@ -3,7 +3,6 @@
 namespace common\models;
 
 use common\models\core\HasEpicControl;
-use common\models\core\HasKey;
 use common\models\core\IsEditablePack;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
@@ -12,6 +11,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\web\HttpException;
 
 /**
@@ -20,27 +20,24 @@ use yii\web\HttpException;
  * External data are information pulled from external sources as JSON, with known, but not well-represented structure, intended for simple display only
  *
  * @property string $external_data_pack_id
- * @property string $key
  * @property string $class
  *
  * @property Epic $epic
+ *
+ * @method touch(string $string)
  */
-class ExternalDataPack extends ActiveRecord implements HasKey, IsEditablePack
+class ExternalDataPack extends ActiveRecord implements IsEditablePack
 {
     use ToolsForEntity;
 
-    public static function tableName()
+    #[Override]
+    public static function tableName(): string
     {
         return 'external_data_pack';
     }
 
     #[Override]
-    public static function keyParameterName(): string
-    {
-        return 'externalDataPack';
-    }
-
-    public function rules()
+    public function rules(): array
     {
         return [
             [['class'], 'required'],
@@ -48,7 +45,8 @@ class ExternalDataPack extends ActiveRecord implements HasKey, IsEditablePack
         ];
     }
 
-    public function attributeLabels()
+    #[Override]
+    public function attributeLabels(): array
     {
         return [
             'external_data_pack_id' => Yii::t('external', 'EXTERNAL_DATA_PACK_ID'),
@@ -57,20 +55,8 @@ class ExternalDataPack extends ActiveRecord implements HasKey, IsEditablePack
         ];
     }
 
-    /**
-     * @throws HttpException
-     */
     #[Override]
-    public function beforeSave($insert): bool
-    {
-        if ($insert) {
-            $this->key = $this->generateKey();
-        }
-
-        return parent::beforeSave($insert);
-    }
-
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             ['class' => TimestampBehavior::class],
@@ -78,10 +64,9 @@ class ExternalDataPack extends ActiveRecord implements HasKey, IsEditablePack
     }
 
     /**
-     * @param string $className
-     * @return ExternalDataPack
+     * @throws Exception
      */
-    static public function create($className): ExternalDataPack
+    public static function create(string $className): ExternalDataPack
     {
         $pack = new ExternalDataPack();
         $pack->class = $className;
@@ -92,9 +77,6 @@ class ExternalDataPack extends ActiveRecord implements HasKey, IsEditablePack
         return $pack;
     }
 
-    /**
-     * @return ActiveDataProvider
-     */
     public function getExternalDataAll(): ActiveDataProvider
     {
         $objectsQuery = ExternalData::find();
@@ -109,8 +91,6 @@ class ExternalDataPack extends ActiveRecord implements HasKey, IsEditablePack
 
     /**
      * Provides content of the desired ExternalData object in a form of an array
-     * @param string $code
-     * @return array
      */
     public function getExternalDataByCode(string $code): array
     {
@@ -129,9 +109,13 @@ class ExternalDataPack extends ActiveRecord implements HasKey, IsEditablePack
 
     /**
      * Saves external data - if absent, adds; if present, updates
+     *
      * @param string $code
      * @param array|string $data
+     *
      * @return bool
+     *
+     * @throws Exception
      */
     public function saveExternalData(string $code, $data): bool
     {
@@ -151,12 +135,12 @@ class ExternalDataPack extends ActiveRecord implements HasKey, IsEditablePack
                 'data' => $dataFormatted,
                 'visibility' => Visibility::VISIBILITY_GM,
             ]);
-            return $externalData->save();
         } else {
             /* Update external data */
             $externalData->data = $dataFormatted;
-            return $externalData->save();
         }
+
+        return $externalData->save();
     }
 
     /**
@@ -169,14 +153,14 @@ class ExternalDataPack extends ActiveRecord implements HasKey, IsEditablePack
         return ($className)::findOne(['external_data_pack_id' => $this->external_data_pack_id]);
     }
 
-    /**
-     * @return Epic
-     */
     public function getEpic(): Epic
     {
         return $this->getControllingObject()->getEpic()->one();
     }
 
+    /**
+     * @throws HttpException
+     */
     public function canUserReadYou(): bool
     {
         $className = 'common\models\\' . $this->class;
@@ -185,6 +169,9 @@ class ExternalDataPack extends ActiveRecord implements HasKey, IsEditablePack
         return $object->canUserViewYou();
     }
 
+    /**
+     * @throws HttpException
+     */
     public function canUserControlYou(): bool
     {
         $className = 'common\models\\' . $this->class;

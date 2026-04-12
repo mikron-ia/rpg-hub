@@ -33,7 +33,8 @@ class ExternalData extends ActiveRecord implements HasKey, HasVisibility
     use ToolsForEntity;
     use ToolsForHasVisibility;
 
-    public static function tableName()
+    #[Override]
+    public static function tableName(): string
     {
         return 'external_data';
     }
@@ -44,7 +45,8 @@ class ExternalData extends ActiveRecord implements HasKey, HasVisibility
         return 'externalData';
     }
 
-    public function afterSave($insert, $changedAttributes)
+    #[Override]
+    public function afterSave($insert, $changedAttributes): void
     {
         if (!empty($changedAttributes)) {
             $this->externalDataPack->touch('updated_at');
@@ -66,7 +68,8 @@ class ExternalData extends ActiveRecord implements HasKey, HasVisibility
         return parent::beforeSave($insert);
     }
 
-    public function behaviors()
+    #[Override]
+    public function behaviors(): array
     {
         return [
             ['class' => TimestampBehavior::class],
@@ -74,7 +77,8 @@ class ExternalData extends ActiveRecord implements HasKey, HasVisibility
         ];
     }
 
-    public function rules()
+    #[Override]
+    public function rules(): array
     {
         return [
             [['visibility'], 'string', 'max' => 20],
@@ -86,7 +90,8 @@ class ExternalData extends ActiveRecord implements HasKey, HasVisibility
         ];
     }
 
-    public function attributeLabels()
+    #[Override]
+    public function attributeLabels(): array
     {
         return [
             'external_data_id' => Yii::t('external', 'EXTERNAL_DATA_ID'),
@@ -98,9 +103,6 @@ class ExternalData extends ActiveRecord implements HasKey, HasVisibility
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getExternalDataPack(): ActiveQuery
     {
         return $this->hasOne(ExternalDataPack::class, ['external_data_pack_id' => 'external_data_pack_id']);
