@@ -364,7 +364,6 @@ return [
     'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_BUTTONS' => '<b>Brak aktywnej kampanii.</b> Dane specyficzne dla kampanii nie są dostępne. Wybierz kampanię z menu górnego.',
     'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_IC' => '<b>Brak aktywnej kampanii.</b> Dane specyficzne dla kampanii nie są dostępne. Wybierz kampanię z menu górnego.',
     'ERROR_NO_GM_ADDED' => 'Dodanie Mistrza Gry do kampanii nieudane. Skontaktuj się z administratorem.',
-    'ERROR_OBJECT_NOT_FOUND' => 'Obiektu nie znaleziono',
     'ERROR_PAGE_CONTACT_US' => 'Skontaktuj się z nami jeżeli masz wrażenie, że nie powinno to się dziać.',
     'ERROR_PAGE_ERROR_HAPPENED' => 'W czasie przetwarzania żądania wystąpił błąd.',
     'ERROR_PARAMETER_ACCESS_DENIED' => 'Brak dostępu do parametru',

@@ -364,7 +364,6 @@ return [
     'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_BUTTONS' => '<b>No active epic.</b> Epic-specific lists are not available. Choose an epic from the top menu.',
     'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_IC' => '<b>No active epic.</b> Epic-specific data not available. Choose an epic from the top menu.',
     'ERROR_NO_GM_ADDED' => 'Adding the Game Master failed. Contact the administrator.',
-    'ERROR_OBJECT_NOT_FOUND' => 'Object not found',
     'ERROR_PAGE_CONTACT_US' => 'Please contact us if you think this should not have happened. Thank you.',
     'ERROR_PAGE_ERROR_HAPPENED' => 'The above error occurred while the Web server was processing your request.',
     'ERROR_PARAMETER_ACCESS_DENIED' => 'Parameter access denied',

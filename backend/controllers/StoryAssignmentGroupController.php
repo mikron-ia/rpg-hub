@@ -85,42 +85,41 @@ class StoryAssignmentGroupController extends StoryAssignmentAbstractController
         $story = $this->findStory($storyKey);
         $groups = $this->findGroups($groupIds, $story->epic);
 
+        $existingAssignments = StoryGroupAssignment::findAll([
+            'story_id' => $story->story_id,
+            'visibility' => $validateVisibility->value,
+        ]);
+
+        $groupIdsToUnassign = array_diff(array_column($existingAssignments, 'group_id'), $groupIds);
+        $groupIdsToSkip = array_intersect($groupIds, array_column($existingAssignments, 'group_id'));
+
         try {
             StoryGroupAssignment::deleteAll([
-                'story_id' => $story->story_id,
+                'group_id' => $groupIdsToUnassign,
                 'visibility' => $validateVisibility->value,
             ]);
 
+            $unassignedGroups = $this->findGroups($groupIdsToUnassign, $story->epic);
+            array_walk($unassignedGroups, function (Group $group) {
+                $group->importancePack->flagForRecalculation();
+            });
+
             foreach ($groups as $groupId => $group) {
-                $assignment = new StoryGroupAssignment();
-                $assignment->group_id = $groupId;
-                $assignment->story_id = $story->story_id;
-                $assignment->visibility = $validateVisibility->value;
-                $assignment->save();
+                if (!in_array($groupId, $groupIdsToSkip)) {
+                    $assignment = new StoryGroupAssignment();
+                    $assignment->group_id = $groupId;
+                    $assignment->story_id = $story->story_id;
+                    $assignment->visibility = $validateVisibility->value;
+                    $assignment->save();
+
+                    $group->importancePack->flagForRecalculation();
+                }
             }
         } catch (Throwable $e) {
             return new Response(['statusCode' => 500, 'content' => $e->getMessage()]);
         }
 
         return new Response(['statusCode' => 200]);
-    }
-
-    /**
-     * @throws HttpException
-     */
-    protected function findGroup(string $key): Group
-    {
-        $model = Group::findOne(['key' => $key]);
-
-        if ($model === null) {
-            throw new NotFoundHttpException(Yii::t('app', 'GROUP_NOT_AVAILABLE'));
-        }
-
-        $this->checkAccess($model);
-
-        $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
-
-        return $model;
     }
 
     /**
