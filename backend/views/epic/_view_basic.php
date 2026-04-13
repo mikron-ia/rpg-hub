@@ -5,6 +5,7 @@ use common\models\Parameter;
 use common\models\Participant;
 use yii\bootstrap\Modal;
 use yii\data\ActiveDataProvider;
+use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\web\View;
@@ -13,11 +14,9 @@ use yii\widgets\DetailView;
 /* @var $this View */
 /* @var $model Epic */
 /* @var $externalDataDataProvider ActiveDataProvider */
-
 ?>
 
 <div>
-
     <div class="col-lg-6">
         <h2><?= Yii::t('app', 'EPIC_BASIC') ?></h2>
         <?= DetailView::widget([
@@ -44,7 +43,6 @@ use yii\widgets\DetailView;
     </div>
 
     <div class="col-lg-6">
-
         <div class="buttoned-header">
             <h2><?= Yii::t('app', 'EPIC_CARD_PARTICIPANTS'); ?></h2>
             <?= Html::a(
@@ -77,7 +75,7 @@ use yii\widgets\DetailView;
                     }
                 ],
                 [
-                    'class' => 'yii\grid\ActionColumn',
+                    'class' => ActionColumn::class,
                     'template' => '{update} {delete}',
                     'buttons' => [
                         'update' => function ($url, Participant $model, $key) {
@@ -107,7 +105,6 @@ use yii\widgets\DetailView;
                 ],
             ],
         ]); ?>
-
     </div>
 
     <?php Modal::begin([
@@ -279,5 +276,4 @@ use yii\widgets\DetailView;
 });"
     );
     ?>
-
 </div>

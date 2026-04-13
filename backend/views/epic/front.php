@@ -19,9 +19,7 @@ use yii\widgets\ListView;
 $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
 ?>
 <div class="site-index">
-
     <div class="text-center">
-
         <h1><?= $epic->name ?></h1>
 
         <div class="btn-group btn-group-lg">
@@ -104,15 +102,11 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                 ['class' => 'btn btn-lg btn-primary'],
             ); ?>
         </div>
-
     </div>
 
     <div class="body-content">
-
         <div class="row">
-
             <div class="col-md-8">
-
                 <h2><?= Yii::t('app', 'EPIC_CARD_RECENT_EVENTS'); ?></h2>
                 <div>
                     <?php if ($recap) {
@@ -142,7 +136,6 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                         },
                     ]) ?>
                 </div>
-
             </div>
 
             <div class="col-md-4">
@@ -206,8 +199,6 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                     }
                 ]) ?>
             </div>
-
         </div>
-
     </div>
 </div>

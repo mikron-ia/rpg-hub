@@ -13,7 +13,6 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="epic-form">
-
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-4">
@@ -53,5 +52,4 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>

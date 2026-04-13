@@ -12,6 +12,7 @@ use common\models\ParticipantRole;
 use common\models\RecapQuery;
 use common\models\Story;
 use common\models\StoryQuery;
+use Override;
 use Throwable;
 use Yii;
 use yii\db\Exception;
@@ -28,6 +29,7 @@ final class EpicController extends Controller
 {
     use EpicAssistance;
 
+    #[Override]
     public function behaviors(): array
     {
         return [

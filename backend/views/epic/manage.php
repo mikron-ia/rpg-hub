@@ -4,6 +4,7 @@ use common\models\Epic;
 use common\models\EpicQuery;
 use common\models\User;
 use yii\data\ActiveDataProvider;
+use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\web\View;
@@ -43,14 +44,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     $user = Yii::$app->user->identity;
 
                     if ($model->isUserYourManager($user)) {
-                        $tags[] = '<span class="table-tag managed-tag">' . Yii::t('app', 'MANAGE_EPIC_TAG_MANAGED') . '</span>';
+                        $tags[] = '<span class="table-tag managed-tag">'
+                            . Yii::t('app', 'MANAGE_EPIC_TAG_MANAGED')
+                            . '</span>';
                     }
 
                     return implode($tags);
-                }
+                },
             ],
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => ActionColumn::class,
                 'template' => '{action}',
                 'buttons' => [
                     'action' => function ($url, Epic $model, $key) {
@@ -69,13 +72,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             $label = Yii::t('app', 'MANAGE_EPIC_LABEL_ATTACH');
                         }
 
-                        return Html::a('<span class="glyphicon ' . $glyph . '"></span>',
+                        return Html::a(
+                            '<span class="glyphicon ' . $glyph . '"></span>',
                             [$action, 'key' => $model->key],
                             [
                                 'title' => $label,
                                 'data-confirm' => $confirmationText,
                                 'data-method' => 'post',
-                            ]);
+                            ]
+                        );
                     },
                 ],
             ],

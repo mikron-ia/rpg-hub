@@ -39,7 +39,5 @@ $items = [
             ) ?>
         </div>
     </div>
-    <?= Tabs::widget([
-        'items' => $items
-    ]) ?>
+    <?= Tabs::widget(['items' => $items]) ?>
 </div>
