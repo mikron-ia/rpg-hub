@@ -179,4 +179,33 @@ final class GroupQuery extends Group
 
         return $list;
     }
+
+    /**
+     * @return string[]
+     */
+    public static function listEpicGroupsAsArray(): array
+    {
+        $query = Group::find();
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+            $query->where('0=1');
+        } else {
+            $query->andWhere([
+                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+                'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
+            ]);
+        }
+
+        $groups = $query->all();
+
+        $arrayOfNames = [];
+
+        foreach ($groups as $group) {
+            /* @var $group Group */
+            $arrayOfNames[$group->group_id] = $group->name;
+        }
+
+        return $arrayOfNames;
+    }
 }

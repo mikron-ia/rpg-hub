@@ -9,6 +9,7 @@ use common\models\tools\ToolsForHasVisibility;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\HttpException;
 
 /**
  * @property int $story_group_assignment_id
@@ -71,6 +72,18 @@ class StoryGroupAssignment extends ActiveRecord implements HasKey, HasVisibility
             'key' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_KEY'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
         ];
+    }
+
+    /**
+     * @throws HttpException
+     */
+    public function beforeSave($insert): bool
+    {
+        if ($insert) {
+            $this->key = $this->generateKey();
+        }
+
+        return parent::beforeSave($insert);
     }
 
     public function getGroup(): ActiveQuery

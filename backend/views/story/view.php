@@ -43,6 +43,18 @@ $items = [
         'active' => false,
     ],
     [
+        'label' => Yii::t('app', 'STORY_ASSIGNED_CHARACTERS_TAB'),
+        'content' => $this->render('_view_characters', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ],
+    [
+        'label' => Yii::t('app', 'STORY_ASSIGNED_GROUPS_TAB'),
+        'content' => $this->render('_view_groups', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ],
+    [
         'label' => Yii::t('app', 'STORY_STATISTICS'),
         'content' => $this->render('_view_statistics', ['model' => $model]),
         'encode' => false,

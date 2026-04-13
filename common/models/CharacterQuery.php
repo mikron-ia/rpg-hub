@@ -191,7 +191,7 @@ final class CharacterQuery extends Character
     /**
      * @return string[]
      */
-    static public function listEpicCharactersAsArray(): array
+    public static function listEpicCharactersAsArray(): array
     {
         $query = Character::find();
 

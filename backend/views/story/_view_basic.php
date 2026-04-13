@@ -59,26 +59,6 @@ $isStoryCurrent = $model->story_id === $model->epic->current_story_id;
                         : Html::a($model->basedOn->name, ['scenario/view', 'key' => $model->basedOn->key])
                 ],
                 [
-                    'label' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PUBLIC'),
-                    'format' => 'raw',
-                    'value' => empty($storyCharactersPublic) ? null : implode(', ', $storyCharactersPublic),
-                ],
-                [
-                    'label' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PRIVATE'),
-                    'format' => 'raw',
-                    'value' => empty($storyCharactersPrivate) ? null : implode(', ', $storyCharactersPrivate),
-                ],
-                [
-                    'label' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PUBLIC'),
-                    'format' => 'raw',
-                    'value' => empty($storyGroupsPublic) ? null : implode(', ', $storyGroupsPublic),
-                ],
-                [
-                    'label' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PRIVATE'),
-                    'format' => 'raw',
-                    'value' => empty($storyGroupsPrivate) ? null : implode(', ', $storyGroupsPrivate),
-                ],
-                [
                     'label' => Yii::t('app', 'STORY_SHORT_SIZE'),
                     'format' => 'shortSize',
                     'value' => strlen($model->short),

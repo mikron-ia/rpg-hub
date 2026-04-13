@@ -7,6 +7,7 @@ use common\models\tools\ToolsForEntity;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\HttpException;
 
 /**
  * @property int $story_character_assignment_id
@@ -68,6 +69,18 @@ class StoryCharacterAssignment extends ActiveRecord implements HasKey
             'key' => Yii::t('app', 'STORY_CHARACTER_ASSIGNMENT_KEY'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
         ];
+    }
+
+    /**
+     * @throws HttpException
+     */
+    public function beforeSave($insert): bool
+    {
+        if ($insert) {
+            $this->key = $this->generateKey();
+        }
+
+        return parent::beforeSave($insert);
     }
 
     public function getCharacter(): ActiveQuery
