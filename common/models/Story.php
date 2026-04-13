@@ -99,8 +99,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             [['name'], 'string', 'max' => 120],
             [['code', 'visibility'], 'string', 'max' => 20],
             [['is_off_the_record_change'], 'boolean'],
-            [['storyCharacterAssignmentChoicesPublic', 'storyCharacterAssignmentChoicesPrivate'], 'safe'],
-            [['storyGroupAssignmentChoicesPublic', 'storyGroupAssignmentChoicesPrivate'], 'safe'],
             [
                 ['epic_id'],
                 'exist',
@@ -190,16 +188,6 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         if (!$this->is_off_the_record_change) {
             $this->seenPack->updateRecord();
         }
-
-        $this->setStoryCharacterAssignmentIds(
-            $this->normalizeInputFromMultiSelect($this->storyCharacterAssignmentChoicesPublic),
-            $this->normalizeInputFromMultiSelect($this->storyCharacterAssignmentChoicesPrivate)
-        );
-
-        $this->setStoryGroupAssignmentIds(
-            $this->normalizeInputFromMultiSelect($this->storyGroupAssignmentChoicesPublic),
-            $this->normalizeInputFromMultiSelect($this->storyGroupAssignmentChoicesPrivate)
-        );
 
         parent::afterSave($insert, $changedAttributes);
     }

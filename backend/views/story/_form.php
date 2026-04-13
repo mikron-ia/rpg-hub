@@ -1,9 +1,7 @@
 <?php
 
-use common\models\CharacterQuery;
 use common\models\core\Visibility;
 use common\models\EpicQuery;
-use common\models\GroupQuery;
 use common\models\ScenarioQuery;
 use common\models\Story;
 use common\models\type\StoryType;
@@ -57,50 +55,6 @@ use yii\widgets\ActiveForm;
 
     <div class="col-md-12">
         <?= $form->field($model, 'short')->textarea(['rows' => 10]); ?>
-    </div>
-
-    <div class="col-md-6">
-        <?= $form->field($model, 'storyCharacterAssignmentChoicesPublic')->widget(
-            Select2::class,
-            [
-                'data' => CharacterQuery::listEpicCharactersAsArray(),
-                'options' => ['multiple' => true],
-                'pluginOptions' => ['allowClear' => true],
-            ],
-        ); ?>
-    </div>
-
-    <div class="col-md-6">
-        <?= $form->field($model, 'storyCharacterAssignmentChoicesPrivate')->widget(
-            Select2::class,
-            [
-                'data' => CharacterQuery::listEpicCharactersAsArray(),
-                'options' => ['multiple' => true],
-                'pluginOptions' => ['allowClear' => true],
-            ],
-        ); ?>
-    </div>
-
-    <div class="col-md-6">
-        <?= $form->field($model, 'storyGroupAssignmentChoicesPublic')->widget(
-            Select2::class,
-            [
-                'data' => GroupQuery::getAllFromCurrentEpicForSelector(),
-                'options' => ['multiple' => true],
-                'pluginOptions' => ['allowClear' => true],
-            ],
-        ); ?>
-    </div>
-
-    <div class="col-md-6">
-        <?= $form->field($model, 'storyGroupAssignmentChoicesPrivate')->widget(
-            Select2::class,
-            [
-                'data' => GroupQuery::getAllFromCurrentEpicForSelector(),
-                'options' => ['multiple' => true],
-                'pluginOptions' => ['allowClear' => true],
-            ],
-        ); ?>
     </div>
 
     <div class="col-md-12">
