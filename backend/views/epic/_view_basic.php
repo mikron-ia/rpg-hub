@@ -135,7 +135,7 @@ use yii\widgets\DetailView;
                 [
                     'class' => 'create-parameter-link',
                     'title' => Yii::t('app', 'BUTTON_PARAMETER_CREATE'),
-                    'data-pack-key' => $model->parameterPack->key,
+                    'data-controller' => 'epic',
                     'data-key' => $model->key,
                     'data-toggle' => 'modal',
                     'data-target' => '#create-parameter-modal'

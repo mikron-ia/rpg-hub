@@ -11,6 +11,7 @@ class EpicAsset extends AssetBundle
     public $css = [];
     public $js = [
         'js/epic.js',
+        'js/parameter-handler.js',
     ];
     public $depends = [
         'backend\assets\AppAsset',

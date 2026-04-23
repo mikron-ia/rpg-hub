@@ -6,6 +6,7 @@ use backend\controllers\tools\MarkChangeTrait;
 use common\components\EpicAssistance;
 use common\models\core\Visibility;
 use common\models\Epic;
+use common\models\Parameter;
 use common\models\Story;
 use common\models\StoryCharacterAssignmentQuery;
 use common\models\StoryGroupAssignmentQuery;
@@ -43,6 +44,7 @@ final class StoryController extends CmsController
                             'move-down',
                             'move-up',
                             'mark-changed',
+                            'create-parameter',
                         ],
                         'allow' => true,
                         'roles' => ['operator'],
@@ -208,6 +210,38 @@ final class StoryController extends CmsController
         $this->markChange($model);
 
         return $this->redirect(['view', 'key' => $model->key]);
+    }
+
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    public function actionCreateParameter(string $key): Response|string
+    {
+        $model = $this->findModel($key);
+        if (!$model->canUserControlYou()) {
+            Story::throwExceptionAboutControl();
+        }
+
+        $parameter = new Parameter();
+        $loadSuccess = $parameter->load(Yii::$app->request->post());
+        $parameter->parameter_pack_id = $model->parameterPack->parameter_pack_id;
+
+        if ($loadSuccess && $parameter->save()) {
+            return $this->returnToReferrer(['site/index']);
+        }
+
+        $dataForCreate = [
+            'model' => $parameter,
+            'creatorController' => 'story',
+            'creatorKey' => $model->key,
+        ];
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('../parameter/create', $dataForCreate);
+        }
+
+        return $this->render('../parameter/create', $dataForCreate);
     }
 
     /**

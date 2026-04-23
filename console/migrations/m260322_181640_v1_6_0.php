@@ -1,13 +1,10 @@
 <?php
 
 use common\models\Description;
-use common\models\DescriptionPack;
 use common\models\ExternalData;
-use common\models\ExternalDataPack;
 use common\models\Game;
 use common\models\GroupMembership;
 use common\models\Parameter;
-use common\models\ParameterPack;
 use common\models\Participant;
 use common\models\PointInTime;
 use common\models\Scribble;
@@ -57,11 +54,6 @@ class m260322_181640_v1_6_0 extends Migration
         $this->alterColumn('{{%parameter}}', 'key', $this->string(80)->notNull());
         $this->createIndex('parameter_key', '{{%parameter}}', 'key', true);
 
-        $this->addColumn('{{%parameter_pack}}', 'key', $this->string(80)->after('parameter_pack_id'));
-        $this->fillInKeys(ParameterPack::find());
-        $this->alterColumn('{{%parameter_pack}}', 'key', $this->string(80)->notNull());
-        $this->createIndex('parameter_pack_key', '{{%parameter_pack}}', 'key', true);
-
         $this->addColumn('{{%game}}', 'key', $this->string(80)->after('game_id'));
         $this->fillInKeys(Game::find());
         $this->alterColumn('{{%game}}', 'key', $this->string(80)->notNull());
@@ -106,8 +98,6 @@ class m260322_181640_v1_6_0 extends Migration
         $this->dropColumn('{{%description}}', 'key');
         
         $this->dropColumn('{{%game}}', 'key');
-
-        $this->dropColumn('{{%parameter_pack}}', 'key');
 
         $this->dropColumn('{{%parameter}}', 'key');
 

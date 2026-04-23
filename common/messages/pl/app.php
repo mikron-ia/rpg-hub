@@ -658,7 +658,6 @@ return [
     'PARAMETER_PACK' => 'Paczka parametrów',
     'PARAMETER_PACK_CLASS' => 'Klasa paczki parametrów',
     'PARAMETER_PACK_ID' => 'ID paczki parametrów',
-    'PARAMETER_PACK_KEY' => 'Klucz',
     'PARAMETER_PACK_NOT_AVAILABLE' => 'Paczka parametrów niedostępna',
     'PARAMETER_TITLE_CREATE' => 'Dodaj parametr',
     'PARAMETER_TITLE_INDEX' => 'Parametry',

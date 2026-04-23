@@ -658,7 +658,6 @@ return [
     'PARAMETER_PACK' => 'Parameter pack',
     'PARAMETER_PACK_CLASS' => 'Parameter pack class',
     'PARAMETER_PACK_ID' => 'Parameter pack ID',
-    'PARAMETER_PACK_KEY' => 'Key',
     'PARAMETER_PACK_NOT_AVAILABLE' => 'Parameter pack not available',
     'PARAMETER_TITLE_CREATE' => 'Add parameter',
     'PARAMETER_TITLE_INDEX' => 'Parameters',

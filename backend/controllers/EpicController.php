@@ -7,6 +7,7 @@ use common\models\AnnouncementQuery;
 use common\models\Epic;
 use common\models\EpicQuery;
 use common\models\GameQuery;
+use common\models\Parameter;
 use common\models\Participant;
 use common\models\ParticipantRole;
 use common\models\RecapQuery;
@@ -19,13 +20,12 @@ use yii\db\Exception;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-final class EpicController extends Controller
+final class EpicController extends CmsController
 {
     use EpicAssistance;
 
@@ -47,6 +47,7 @@ final class EpicController extends Controller
                             'participant-edit',
                             'participant-delete',
                             'set-current-story',
+                            'create-parameter',
                         ],
                         'allow' => true,
                         'roles' => ['operator'],
@@ -374,6 +375,38 @@ final class EpicController extends Controller
         );
 
         return $this->redirect(['story/view', 'key' => $story->key]);
+    }
+
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    public function actionCreateParameter(string $key): Response|string
+    {
+        $model = $this->findModel($key);
+        if (!$model->canUserControlYou()) {
+            Epic::throwExceptionAboutControl();
+        }
+
+        $parameter = new Parameter();
+        $loadSuccess = $parameter->load(Yii::$app->request->post());
+        $parameter->parameter_pack_id = $model->parameterPack->parameter_pack_id;
+
+        if ($loadSuccess && $parameter->save()) {
+            return $this->returnToReferrer(['site/index']);
+        }
+
+        $dataForCreate = [
+            'model' => $parameter,
+            'creatorController' => 'epic',
+            'creatorKey' => $model->key,
+        ];
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('../parameter/create', $dataForCreate);
+        }
+
+        return $this->render('../parameter/create', $dataForCreate);
     }
 
     /**

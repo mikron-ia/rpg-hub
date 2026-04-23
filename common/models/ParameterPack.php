@@ -19,7 +19,6 @@ use yii\web\HttpException;
  * This is the model class for table "parameter_pack".
  *
  * @property string $parameter_pack_id
- * @property string $key
  * @property string $class
  * @property int $created_at
  * @property int $updated_at
@@ -34,7 +33,7 @@ use yii\web\HttpException;
  *
  * @method touch(string $string)
  */
-class ParameterPack extends ActiveRecord implements IsEditablePack, HasKey
+class ParameterPack extends ActiveRecord implements IsEditablePack
 {
     use ToolsForEntity;
 
@@ -42,11 +41,6 @@ class ParameterPack extends ActiveRecord implements IsEditablePack, HasKey
     public static function tableName(): string
     {
         return 'parameter_pack';
-    }
-
-    public static function keyParameterName(): string
-    {
-        return 'parameterPack';
     }
 
     #[Override]
@@ -63,7 +57,6 @@ class ParameterPack extends ActiveRecord implements IsEditablePack, HasKey
     {
         return [
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK_ID'),
-            'key' => Yii::t('app', 'PARAMETER_PACK_KEY'),
             'class' => Yii::t('app', 'PARAMETER_PACK_CLASS'),
         ];
     }

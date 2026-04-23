@@ -68,7 +68,6 @@ return [
         'group' => getenv('KEY_GENERATION_GROUP'),
         'groupMembership' => getenv('KEY_GENERATION_GROUP_MEMBERSHIP'),
         'parameter' => getenv('KEY_GENERATION_PARAMETER'),
-        'parameterPack' => getenv('KEY_GENERATION_PARAMETER_PACK'),
         'participant' => getenv('KEY_GENERATION_PARTICIPANT'),
         'person' => getenv('KEY_GENERATION_CHARACTER'),
         'pointInTime' => getenv('KEY_GENERATION_POINT_IN_TIME'),

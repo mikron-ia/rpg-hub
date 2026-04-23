@@ -11,6 +11,7 @@ class StoryAsset extends AssetBundle
     public $css = [];
     public $js = [
         'js/copy-key-button.js',
+        'js/parameter-handler.js',
         'js/story.js',
         'js/story-starring.js',
     ];

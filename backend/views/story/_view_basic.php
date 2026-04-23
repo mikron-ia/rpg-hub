@@ -171,7 +171,8 @@ $isStoryCurrent = $model->story_id === $model->epic->current_story_id;
                     'title' => Yii::t('app', 'BUTTON_PARAMETER_CREATE'),
                     'data-toggle' => 'modal',
                     'data-target' => '#create-parameter-modal',
-                    'data-pack-key' => $model->parameterPack->key,
+                    'data-controller' => 'story',
+                    'data-key' => $model->key,
                 ]
             ); ?>
         </div>

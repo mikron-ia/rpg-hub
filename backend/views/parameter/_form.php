@@ -9,6 +9,8 @@ use yii\widgets\ActiveForm;
 /* @var $this View */
 /* @var $model Parameter */
 /* @var $form ActiveForm */
+/* @var $creatorController string */
+/* @var $creatorKey string */
 ?>
 
 <div class="parameter-form">
@@ -17,8 +19,8 @@ use yii\widgets\ActiveForm;
         'id' => 'story-parameter-form',
         'action' => $model->isNewRecord ?
             [
-                'parameter/create',
-                'packKey' => $model->parameterPack->key,
+                $creatorController . '/create-parameter',
+                'key' => $creatorKey,
             ] :
             [
                 'parameter/update',

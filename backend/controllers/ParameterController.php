@@ -28,7 +28,7 @@ final class ParameterController extends CmsController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'update', 'view', 'move-up', 'move-down'],
+                        'actions' => ['delete', 'update', 'view', 'move-up', 'move-down'],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -51,32 +51,6 @@ final class ParameterController extends CmsController
         return $this->render('view', [
             'model' => $this->findModel($key),
         ]);
-    }
-
-    /**
-     * @throws Exception
-     * @throws InvalidRouteException
-     * @throws NotFoundHttpException
-     */
-    public function actionCreate(string $packKey): Response|string
-    {
-        $model = new Parameter();
-
-        $pack = $this->findPackModel($packKey);
-
-        $success = $model->load(Yii::$app->request->post());
-        $model->parameter_pack_id = $pack->parameter_pack_id;
-        $success = $success && $model->save();
-
-        if ($success) {
-            return $this->returnToReferrer(['index']);
-        }
-
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('create', ['model' => $model]);
-        } else {
-            return $this->render('create', ['model' => $model]);
-        }
     }
 
     /**
