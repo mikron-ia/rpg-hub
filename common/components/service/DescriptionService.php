@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\service;
+namespace common\components\service;
 
 use common\models\Description;
 use common\models\DescriptionPack;

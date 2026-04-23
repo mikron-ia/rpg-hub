@@ -4,12 +4,12 @@ namespace backend\controllers;
 
 use backend\controllers\tools\MarkChangeTrait;
 use common\components\EpicAssistance;
+use common\components\service\DescriptionService;
 use common\models\core\Visibility;
 use common\models\Description;
 use common\models\Epic;
 use common\models\Group;
 use common\models\GroupQuery;
-use common\models\service\DescriptionService;
 use common\models\StoryGroupAssignmentQuery;
 use Override;
 use Yii;

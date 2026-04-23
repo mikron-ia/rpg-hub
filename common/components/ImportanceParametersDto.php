@@ -3,7 +3,7 @@
 namespace common\components;
 
 use common\models\exceptions\InvalidBackendConfigurationException;
-use ErrorException;
+use TypeError;
 
 final readonly class ImportanceParametersDto
 {
@@ -39,7 +39,7 @@ final readonly class ImportanceParametersDto
                 $importanceParameters['importanceWeights']['date']['initial'],
                 $importanceParameters['importanceWeights']['date']['divider'],
             );
-        } catch (ErrorException $e) {
+        } catch (TypeError $e) {
             throw new InvalidBackendConfigurationException(
                 sprintf('Invalid importance configuration: %s', $e->getMessage())
             );
