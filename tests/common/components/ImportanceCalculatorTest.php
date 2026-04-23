@@ -52,7 +52,7 @@ class ImportanceCalculatorTest extends TestCase
         string $seenStatusForUser,
         int $expectedImportance,
     ): void {
-        $measuredObject = $this->createMock(HasImportance::class);
+        $measuredObject = $this->createStub(HasImportance::class);
 
         $measuredObject->method('getImportanceCategoryObject')->willReturn($importanceCategoryObject);
         $measuredObject->method('getLastModified')->willReturn(new DateTimeImmutable($lastModified));

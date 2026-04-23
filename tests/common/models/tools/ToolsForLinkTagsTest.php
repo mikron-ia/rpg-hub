@@ -2,15 +2,14 @@
 
 namespace common\models\tools;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ToolsForLinkTagsTest extends TestCase
 {
     use ToolsForLinkTags;
 
-    /**
-     * @dataProvider complexConversionDataProvider
-     */
+    #[DataProvider('complexConversionDataProvider')]
     public function testComplexConversion(string $text, string $result)
     {
         $linkBases = [
@@ -22,7 +21,7 @@ class ToolsForLinkTagsTest extends TestCase
         $this->assertEquals($result, $this->processKeysInLinks($text, $linkBases));
     }
 
-    static public function complexConversionDataProvider(): array
+    public static function complexConversionDataProvider(): array
     {
         return [
             'Correct character - short' => [
@@ -84,15 +83,13 @@ class ToolsForLinkTagsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider headerConversionDataProvider
-     */
+    #[DataProvider('headerConversionDataProvider')]
     public function testHeaderConversion(string $text, string $result)
     {
         $this->assertEquals($result, $this->expandHeaders($text));
     }
 
-    static public function headerConversionDataProvider(): array
+    public static function headerConversionDataProvider(): array
     {
         return [
             ['# Lorem ipsum', '## Lorem ipsum'],
