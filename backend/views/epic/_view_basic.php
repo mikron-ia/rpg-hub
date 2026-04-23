@@ -116,21 +116,6 @@ use yii\widgets\DetailView;
 
     <?php Modal::end(); ?>
 
-    <?php $this->registerJs(
-        "$('.create-parameter-link').click(function() {
-    $.get(
-        '" . Yii::$app->urlManager->createUrl(['parameter/create']) . "',
-        {
-            packKey: '" . $model->parameterPack->key . "'
-        },
-        function (data) {
-            $('.modal-body').html(data);
-            $('#create-parameter-modal').modal();
-        }
-    );
-});"
-    ); ?>
-
     <?php Modal::begin([
         'id' => 'update-parameter-modal',
         'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_UPDATE') . '</h2>',
@@ -139,22 +124,6 @@ use yii\widgets\DetailView;
     ]); ?>
 
     <?php Modal::end(); ?>
-
-    <?php $this->registerJs(
-        "$('.update-parameter-link').click(function() {
-    $.get(
-        '" . Yii::$app->urlManager->createUrl(['parameter/update']) . "',
-        {
-            id: $(this).data('key')
-        },
-        function (data) {
-            $('.modal-body').html(data);
-            $('#update-parameter-modal').modal();
-        }
-    );
-});"
-    );
-    ?>
 
     <div class="col-lg-12">
 
@@ -166,6 +135,8 @@ use yii\widgets\DetailView;
                 [
                     'class' => 'create-parameter-link',
                     'title' => Yii::t('app', 'BUTTON_PARAMETER_CREATE'),
+                    'data-pack-key' => $model->parameterPack->key,
+                    'data-key' => $model->key,
                     'data-toggle' => 'modal',
                     'data-target' => '#create-parameter-modal'
                 ]
@@ -237,21 +208,6 @@ use yii\widgets\DetailView;
 
     <?php Modal::end(); ?>
 
-    <?php $this->registerJs(
-        "$('.create-parameter-link').click(function() {
-    $.get(
-        '" . Yii::$app->urlManager->createUrl(['parameter/create']) . "',
-        {
-            packKey: '" . $model->parameterPack->key . "'
-        },
-        function (data) {
-            $('.modal-body').html(data);
-            $('#create-parameter-modal').modal();
-        }
-    );
-});"
-    ); ?>
-
     <?php Modal::begin([
         'id' => 'update-parameter-modal',
         'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_UPDATE') . '</h2>',
@@ -260,20 +216,4 @@ use yii\widgets\DetailView;
     ]); ?>
 
     <?php Modal::end(); ?>
-
-    <?php $this->registerJs(
-        "$('.update-parameter-link').click(function() {
-    $.get(
-        '" . Yii::$app->urlManager->createUrl(['parameter/update']) . "',
-        {
-            key: $(this).data('key')
-        },
-        function (data) {
-            $('.modal-body').html(data);
-            $('#update-parameter-modal').modal();
-        }
-    );
-});"
-    );
-    ?>
 </div>

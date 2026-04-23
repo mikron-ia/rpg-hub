@@ -1,9 +1,12 @@
 <?php
 
+use backend\assets\EpicAsset;
 use common\models\Epic;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
 use yii\web\View;
+
+EpicAsset::register($this);
 
 /* @var $this View */
 /* @var $model Epic */
