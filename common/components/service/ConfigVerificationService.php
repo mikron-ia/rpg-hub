@@ -6,7 +6,7 @@ class ConfigVerificationService
 {
     private static array $expectedNumberedValues = ['number0', 'number1', 'number2', 'number3', 'number4'];
 
-    private static array $importanceConfigKeys = [
+    public const array IMPORTANCE_CONFIG_KEYS = [
         'IMPORTANCE_CATEGORY_IMPORTANCE_EXTREME_VALUE',
         'IMPORTANCE_CATEGORY_IMPORTANCE_HIGH_VALUE',
         'IMPORTANCE_CATEGORY_IMPORTANCE_MEDIUM_VALUE',
@@ -21,7 +21,7 @@ class ConfigVerificationService
         'IMPORTANCE_DATE_DIVIDER_VALUE',
     ];
 
-    private static array $frontFormattingConfigKeys = [
+    public const array FRONT_FORMATTING_CONFIG_KEYS = [
         'INDEX_BOX_TITLE_MAXIMUM_WORDS_WITH_TAGS',
         'INDEX_BOX_SUBTITLE_MAXIMUM_WORDS_WITH_TAGS',
         'INDEX_BOX_TITLE_MAXIMUM_WORDS_WITHOUT_TAGS',
@@ -57,26 +57,26 @@ class ConfigVerificationService
         return $faultyKeys;
     }
 
-    public static function checkImportanceConfigKeys(): array
+    public static function checkImportanceConfigKeys(array $values): array
     {
-        return self::checkKeysPresence(self::$importanceConfigKeys);
+        return self::checkKeysPresence(self::IMPORTANCE_CONFIG_KEYS, $values);
     }
 
-    public static function checkFrontFormattingValues(): array
+    public static function checkFrontFormattingValues(array $values): array
     {
-        return self::checkKeysPresence(self::$frontFormattingConfigKeys);
+        return self::checkKeysPresence(self::FRONT_FORMATTING_CONFIG_KEYS, $values);
     }
 
     private static function isNotEmptyString(?string $string): bool
     {
-        return !empty(trim($string));
+        return $string !== null && !empty(trim($string));
     }
 
-    private static function checkKeysPresence(array $keys): array
+    private static function checkKeysPresence(array $keys, array $values): array
     {
         $faultyKeys = [];
         foreach ($keys as $key) {
-            if (getenv($key) === false) {
+            if (!isset($values[$key]) || $values[$key] === false) {
                 $faultyKeys[] = $key;
             }
         }

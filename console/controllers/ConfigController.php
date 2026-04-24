@@ -31,7 +31,9 @@ class ConfigController extends Controller
 
         // Importance configuration
         echo str_pad('Checking importance configuration...', self::MESSAGE_MAX, self::MESSAGE_FILLER);
-        $faultyImportanceKeys = ConfigVerificationService::checkImportanceConfigKeys();
+        $faultyImportanceKeys = ConfigVerificationService::checkImportanceConfigKeys(
+            $this->getEnvironmentalValues(ConfigVerificationService::IMPORTANCE_CONFIG_KEYS)
+        );
         echo (
             empty($faultyImportanceKeys)
                 ? 'valid'
@@ -50,12 +52,23 @@ class ConfigController extends Controller
 
         //  Front formatting
         echo str_pad('Checking front configuration...', self::MESSAGE_MAX, self::MESSAGE_FILLER);
-        $faultyFrontFormattingKeys = ConfigVerificationService::checkFrontFormattingValues();
+        $faultyFrontFormattingKeys = ConfigVerificationService::checkFrontFormattingValues(
+            $this->getEnvironmentalValues(ConfigVerificationService::FRONT_FORMATTING_CONFIG_KEYS)
+        );
 
         echo (
             empty($faultyFrontFormattingKeys)
                 ? 'valid'
                 : sprintf('INVALID OR MISSING (%s)', implode(', ', $faultyFrontFormattingKeys))
             ) . PHP_EOL;
+    }
+
+    private function getEnvironmentalValues(array $keys): array
+    {
+        $array_map = [];
+        foreach ($keys as $key) {
+            $array_map[$key] = getenv($key);
+        }
+        return $array_map;
     }
 }
