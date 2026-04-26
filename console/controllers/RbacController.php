@@ -86,6 +86,8 @@ class RbacController extends Controller
         /* Nothing to load in v1.5.0 */
 
         /* Nothing to load in v1.6.0 */
+
+        /* Nothing to load in v1.7.0 */
     }
 
     /**

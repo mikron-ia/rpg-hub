@@ -12,13 +12,13 @@ their own licenses; see the Attributions section of this file for details.
 
 The project is being still maintained and (occasionally) developed since it is quite useful for me in its main purpose
 (keeping my own campaign data), but due to its age (it started in 2016), state of the `yii2` framework (effectively
-limited to maintenance), and overall effort that would be required to bring the codebase to a decent standard (immense
-yet not very practical), it is firmly in its legacy stage.
+limited to maintenance with the release of `yii3`, with version 2.2.x being uncertain), and overall effort that would be
+required to bring the codebase to a decent standard (immense yet not very practical), it is firmly in its legacy stage.
 
 ## Background
 
-Role-playing games are a vast concept that ranges from very simplistic systems that fit on one page up to extremely
-complex systems spanning hundreds of books; see
+Role-playing games are a vastly diverse concept that ranges from very simplistic systems that fit on one page up to
+extremely complex systems spanning hundreds of books, with a whole spectrum in-between; see
 the [Wikipedia definition](https://en.wikipedia.org/wiki/Role-playing_game) for details. What they do have in common,
 though, is the presence of a story - one can play a game without mechanics, but even a simple dungeon crawl is going to
 have some story. Managing this story, its cast, threads, and mechanical components is the main role of this project.
@@ -45,6 +45,9 @@ can no longer fulfill those goals. It is now maintained mostly for its practical
     - API key must be set up to make API accessible from outside and can be ignored if API is not used
     - the URIs are needed -- without them the mailing will fail and a few redirects may not work
     - mailing data and invitation validity are optional, but their lack will make inviting users via e-mail impossible
+1. [optional] Run `./yii config/check-env` to see whether configuration variables are set properly
+    - note that this only checks the less obvious variables: the database connection string and mailing data are not
+      verified
 1. [optional] If you wish to add data, create the `console/migrations/data.sql` file with SQL inserts that should be
    loaded into the database; this is intended for development/test work on larger data sets and is not needed for
    normal, initial deployment of a fresh project
@@ -63,9 +66,12 @@ can no longer fulfill those goals. It is now maintained mostly for its practical
 
 1. Update the code base from an archive pack or a git tag
     - If you are feeling adventurous, use the `master` branch, but its content, while usually free of breaking bugs, is
-      not guaranteed to work at all times; to be safe, use the latest release
+      not guaranteed to work at all times; moreover, the migrations are now per-release, which means they can change
+      before given release tag is set; to be safe, use the released/tagged code only
 1. Run `composer install`
 1. Ensure your `.env` file is up to date, based on `.env.example`
+    - `./yii config/check-env` can be helpful here as well since it should include checks for recently introduced
+      mandatory variables
 1. Run migrations with `./yii migrate/up`
 1. Run `./yii rbac/v*` sequentially to get up to a proper version
     - Note: there is, to date, no record on which RBAC migration was run last; running any of those "migrations" twice
@@ -115,6 +121,12 @@ Use of most components is optional; for example, an `Epic` can be conceivably ru
 only or just with `Character` gallery. There are, of course, limits to that - for example, the `Group` functionality is
 limited (but not unusable) without any `Character`s. Still, most elements can be used entirely independently of each
 other.
+
+## Versioning
+
+The project uses [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html) to number its releases, treating its
+list of functionalities as the public API. This means that the major version will likely be incremented only if one of
+the major functionalities is removed, repurposed, or modified beyond recognition.
 
 ## Attributions
 
