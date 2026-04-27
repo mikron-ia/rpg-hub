@@ -15,9 +15,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
-/**
- * AnnouncementController implements the CRUD actions for Announcement model
- */
 class AnnouncementController extends Controller
 {
     use EpicAssistance;

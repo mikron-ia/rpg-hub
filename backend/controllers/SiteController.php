@@ -8,23 +8,21 @@ use common\models\LoginForm;
 use common\models\user\PasswordChange;
 use common\models\user\UserAcceptForm;
 use common\models\user\UserSettingsForm;
+use Override;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Cookie;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 
-/**
- * Site controller
- */
 final class SiteController extends Controller
 {
-    public function behaviors()
+    #[Override]
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -41,7 +39,7 @@ final class SiteController extends Controller
                             'password-change',
                             'set-epic',
                             'set-epic-in-silence',
-                            'settings'
+                            'settings',
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -66,7 +64,8 @@ final class SiteController extends Controller
         ];
     }
 
-    public function actions()
+    #[Override]
+    public function actions(): array
     {
         return [
             'error' => [
@@ -75,17 +74,11 @@ final class SiteController extends Controller
         ];
     }
 
-    /**
-     * Displays the about page
-     */
     public function actionAbout(): string
     {
         return $this->render('about');
     }
 
-    /**
-     * Displays the main page
-     */
     public function actionIndex(): Response|string
     {
         if (!isset(Yii::$app->params['activeEpic'])) {
@@ -95,13 +88,9 @@ final class SiteController extends Controller
         return $this->redirect(['epic/front', 'key' => Yii::$app->params['activeEpic']->key]);
     }
 
-    /**
-     * Displays login form or logs in the user
-     * @return string|Response
-     */
-    public function actionLogin()
+    public function actionLogin(): Response|string
     {
-        if (!\Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
@@ -115,21 +104,12 @@ final class SiteController extends Controller
         }
     }
 
-    /**
-     * Displays the markdown instructions
-     */
     public function actionMarkdownHelp(): string
     {
         return $this->render('markdownHelp');
     }
 
-    /**
-     * Password change action
-     *
-     * @return mixed
-     * @throws BadRequestHttpException
-     */
-    public function actionPasswordChange()
+    public function actionPasswordChange(): Response|string
     {
         $model = new PasswordChange();
 
@@ -145,11 +125,7 @@ final class SiteController extends Controller
         return $this->render('user/password-change', ['model' => $model]);
     }
 
-    /**
-     * Logs out the user
-     * @return Response
-     */
-    public function actionLogout()
+    public function actionLogout(): Response
     {
         Yii::$app->user->logout();
 
@@ -168,6 +144,9 @@ final class SiteController extends Controller
 
     }
 
+    /**
+     * @throws ForbiddenHttpException
+     */
     public function actionSetEpicInSilence($epicKey): void
     {
         /* @var $chosenEpic Epic */
@@ -192,10 +171,8 @@ final class SiteController extends Controller
 
     /**
      * Creates a new User, based on an invitation
-     * @param string $token
-     * @return mixed
      */
-    public function actionAccept($token)
+    public function actionAccept(string $token): Response|string
     {
         if (!Yii::$app->user->isGuest) {
             Yii::$app->user->logout();
@@ -226,11 +203,7 @@ final class SiteController extends Controller
         }
     }
 
-    /**
-     * Allows user to manipulate their settings
-     * @return mixed
-     */
-    public function actionSettings()
+    public function actionSettings(): Response|string
     {
         $model = new UserSettingsForm();
 

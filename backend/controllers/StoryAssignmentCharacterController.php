@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use common\components\EpicAssistance;
 use common\models\Character;
 use common\models\core\Visibility;
 use common\models\Epic;

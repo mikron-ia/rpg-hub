@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use common\components\EpicAssistance;
 use common\models\core\Visibility;
 use common\models\Epic;
 use common\models\Group;
@@ -15,7 +14,6 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
-use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class StoryAssignmentGroupController extends StoryAssignmentAbstractController

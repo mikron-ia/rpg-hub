@@ -18,9 +18,6 @@ use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * ArticleController implements the CRUD actions for Article model.
- */
 class ArticleController extends CmsController
 {
     use EpicAssistance;
