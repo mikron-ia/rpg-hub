@@ -74,9 +74,9 @@ class StoryAssignmentCharacterController extends StoryAssignmentAbstractControll
         $storyKey = Yii::$app->request->post('storyKey');
         $visibility = Yii::$app->request->post('visibility');
 
-        $validateVisibility = Visibility::tryFrom($visibility);
+        $validatedVisibility = Visibility::tryFrom($visibility);
 
-        if ($validateVisibility === null) {
+        if ($validatedVisibility === null) {
             throw new BadRequestHttpException(Yii::t('app', 'ERROR_VISIBILITY_NOT_VALID'));
         }
 
@@ -85,7 +85,7 @@ class StoryAssignmentCharacterController extends StoryAssignmentAbstractControll
 
         $existingAssignments = StoryCharacterAssignment::findAll([
             'story_id' => $story->story_id,
-            'visibility' => $validateVisibility->value,
+            'visibility' => $validatedVisibility->value,
         ]);
 
         $characterIdsToUnassign = array_diff(array_column($existingAssignments, 'character_id'), $characterIds);
@@ -94,7 +94,7 @@ class StoryAssignmentCharacterController extends StoryAssignmentAbstractControll
         try {
             StoryCharacterAssignment::deleteAll([
                 'character_id' => $characterIdsToUnassign,
-                'visibility' => $validateVisibility->value,
+                'visibility' => $validatedVisibility->value,
             ]);
 
             $unassignedCharacters = $this->findCharacters($characterIdsToUnassign, $story->epic);
@@ -104,20 +104,15 @@ class StoryAssignmentCharacterController extends StoryAssignmentAbstractControll
 
             foreach ($characters as $characterId => $character) {
                 if (!in_array($characterId, $characterIdsToSkip)) {
-                    $assignment = new StoryCharacterAssignment();
-                    $assignment->character_id = $characterId;
-                    $assignment->story_id = $story->story_id;
-                    $assignment->visibility = $validateVisibility->value;
-                    $assignment->save();
-
+                    StoryCharacterAssignment::create($characterId, $story->story_id, $validatedVisibility);
                     $character->importancePack->flagForRecalculation();
                 }
             }
         } catch (Throwable $e) {
-            return new Response(['statusCode' => 500, 'content' => $e->getMessage()]);
+            return $this->respondWithError($e->getMessage());
         }
 
-        return new Response(['statusCode' => 200]);
+        return $this->respondWithSuccess();
     }
 
     /**

@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\components\EpicAssistance;
 use common\models\core\HasEpicControl;
 use common\models\Epic;
+use common\models\exceptions\InternalErrorException;
 use common\models\Story;
 use Yii;
 use yii\db\ActiveRecord;
@@ -12,6 +13,7 @@ use yii\db\Exception;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use yii\web\ServerErrorHttpException;
 
 class StoryAssignmentAbstractController extends CmsController
 {
@@ -61,6 +63,19 @@ class StoryAssignmentAbstractController extends CmsController
     protected function respondBasedOnSuccessAndValidity(bool $success, bool $valid): Response
     {
         return new Response(['statusCode' => $success ? 200 : ($valid ? 400 : 500)]);
+    }
+
+    /**
+     * @throws ServerErrorHttpException
+     */
+    protected function respondWithError(string $message): Response
+    {
+        throw new ServerErrorHttpException($message);
+    }
+
+    protected function respondWithSuccess(): Response
+    {
+        return new Response();
     }
 
     protected function save(ActiveRecord $assignment): Response

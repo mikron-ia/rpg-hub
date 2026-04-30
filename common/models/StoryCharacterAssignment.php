@@ -3,10 +3,14 @@
 namespace common\models;
 
 use common\models\core\HasKey;
+use common\models\core\IsAssignment;
+use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\web\HttpException;
 
 /**
@@ -23,20 +27,23 @@ use yii\web\HttpException;
  * @property Character $character
  * @property Story $story
  */
-class StoryCharacterAssignment extends ActiveRecord implements HasKey
+class StoryCharacterAssignment extends ActiveRecord implements HasKey, IsAssignment
 {
     use ToolsForEntity;
 
+    #[Override]
     public static function tableName(): string
     {
         return 'story_character_assignment';
     }
 
+    #[Override]
     public static function keyParameterName(): string
     {
         return 'storyCharacterAssignment';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -48,18 +55,19 @@ class StoryCharacterAssignment extends ActiveRecord implements HasKey
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Character::class,
-                'targetAttribute' => ['character_id' => 'character_id']
+                'targetAttribute' => ['character_id' => 'character_id'],
             ],
             [
                 ['story_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Story::class,
-                'targetAttribute' => ['story_id' => 'story_id']
+                'targetAttribute' => ['story_id' => 'story_id'],
             ],
         ];
     }
 
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -74,6 +82,7 @@ class StoryCharacterAssignment extends ActiveRecord implements HasKey
     /**
      * @throws HttpException
      */
+    #[Override]
     public function beforeSave($insert): bool
     {
         if ($insert) {
@@ -91,5 +100,22 @@ class StoryCharacterAssignment extends ActiveRecord implements HasKey
     public function getStory(): ActiveQuery
     {
         return $this->hasOne(Story::class, ['story_id' => 'story_id']);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function create(int $characterId, int $storyId, Visibility $visibility): self
+    {
+        $assignment = new self();
+
+        $assignment->character_id = $characterId;
+        $assignment->story_id = $storyId;
+        $assignment->visibility = $visibility->value;
+
+        // the value is discarded because this it returns false only on validation error and all data is internal
+        $assignment->save();
+
+        return $assignment;
     }
 }

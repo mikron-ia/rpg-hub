@@ -4,11 +4,15 @@ namespace common\models;
 
 use common\models\core\HasKey;
 use common\models\core\HasVisibility;
+use common\models\core\IsAssignment;
+use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\web\HttpException;
 
 /**
@@ -25,16 +29,18 @@ use yii\web\HttpException;
  * @property Group $group
  * @property Story $story
  */
-class StoryGroupAssignment extends ActiveRecord implements HasKey, HasVisibility
+class StoryGroupAssignment extends ActiveRecord implements HasKey, HasVisibility, IsAssignment
 {
     use ToolsForEntity;
     use ToolsForHasVisibility;
 
+    #[Override]
     public static function tableName(): string
     {
         return 'story_group_assignment';
     }
 
+    #[Override]
     public static function keyParameterName(): string
     {
         return 'storyGroupAssignment';
@@ -51,18 +57,19 @@ class StoryGroupAssignment extends ActiveRecord implements HasKey, HasVisibility
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Group::class,
-                'targetAttribute' => ['group_id' => 'group_id']
+                'targetAttribute' => ['group_id' => 'group_id'],
             ],
             [
                 ['story_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Story::class,
-                'targetAttribute' => ['story_id' => 'story_id']
+                'targetAttribute' => ['story_id' => 'story_id'],
             ],
         ];
     }
 
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -77,6 +84,7 @@ class StoryGroupAssignment extends ActiveRecord implements HasKey, HasVisibility
     /**
      * @throws HttpException
      */
+    #[Override]
     public function beforeSave($insert): bool
     {
         if ($insert) {
@@ -94,5 +102,22 @@ class StoryGroupAssignment extends ActiveRecord implements HasKey, HasVisibility
     public function getStory(): ActiveQuery
     {
         return $this->hasOne(Story::class, ['story_id' => 'story_id']);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function create(int $groupId, int $storyId, Visibility $visibility): self
+    {
+        $assignment = new self();
+
+        $assignment->group_id = $groupId;
+        $assignment->story_id = $storyId;
+        $assignment->visibility = $visibility->value;
+
+        // the value is discarded because this it returns false only on validation error and all data is internal
+        $assignment->save();
+
+        return $assignment;
     }
 }

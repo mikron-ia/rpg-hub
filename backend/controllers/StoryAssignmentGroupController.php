@@ -74,9 +74,9 @@ class StoryAssignmentGroupController extends StoryAssignmentAbstractController
         $storyKey = Yii::$app->request->post('storyKey');
         $visibility = Yii::$app->request->post('visibility');
 
-        $validateVisibility = Visibility::tryFrom($visibility);
+        $validatedVisibility = Visibility::tryFrom($visibility);
 
-        if ($validateVisibility === null) {
+        if ($validatedVisibility === null) {
             throw new BadRequestHttpException(Yii::t('app', 'ERROR_VISIBILITY_NOT_VALID'));
         }
 
@@ -85,7 +85,7 @@ class StoryAssignmentGroupController extends StoryAssignmentAbstractController
 
         $existingAssignments = StoryGroupAssignment::findAll([
             'story_id' => $story->story_id,
-            'visibility' => $validateVisibility->value,
+            'visibility' => $validatedVisibility->value,
         ]);
 
         $groupIdsToUnassign = array_diff(array_column($existingAssignments, 'group_id'), $groupIds);
@@ -94,7 +94,7 @@ class StoryAssignmentGroupController extends StoryAssignmentAbstractController
         try {
             StoryGroupAssignment::deleteAll([
                 'group_id' => $groupIdsToUnassign,
-                'visibility' => $validateVisibility->value,
+                'visibility' => $validatedVisibility->value,
             ]);
 
             $unassignedGroups = $this->findGroups($groupIdsToUnassign, $story->epic);
@@ -104,20 +104,15 @@ class StoryAssignmentGroupController extends StoryAssignmentAbstractController
 
             foreach ($groups as $groupId => $group) {
                 if (!in_array($groupId, $groupIdsToSkip)) {
-                    $assignment = new StoryGroupAssignment();
-                    $assignment->group_id = $groupId;
-                    $assignment->story_id = $story->story_id;
-                    $assignment->visibility = $validateVisibility->value;
-                    $assignment->save();
-
+                    StoryGroupAssignment::create($groupId, $story->story_id, $validatedVisibility);
                     $group->importancePack->flagForRecalculation();
                 }
             }
         } catch (Throwable $e) {
-            return new Response(['statusCode' => 500, 'content' => $e->getMessage()]);
+            return $this->respondWithError($e->getMessage());
         }
 
-        return new Response(['statusCode' => 200]);
+        return $this->respondWithSuccess();
     }
 
     /**
