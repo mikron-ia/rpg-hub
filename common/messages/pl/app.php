@@ -330,6 +330,7 @@ return [
     'EPIC_NOT_ALLOWED_AUTOSELECT' => 'Nie masz dostępu do kampanii do której należy ten obiekt.',
     'EPIC_NOT_AVAILABLE' => 'Kampania niedostępna',
     'EPIC_NOT_FOUND' => 'Nie znaleziono kampanii',
+    'EPIC_PARTICIPANT_ROLES' => 'Twoje role',
     'EPIC_SELECT_CURRENT_STORY' => 'Wybierz aktualną historię',
     'EPIC_SESSION_NOT_AVAILABLE' => 'Brak informacji o sesjach',
     'EPIC_SET_BASED_ON_OBJECT {epic}' => 'Aktywna kampania została ustalona na {epic}',

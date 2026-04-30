@@ -602,6 +602,10 @@ p {
     vertical-align: middle;
 }
 
+.epic-status-in-cell {
+    font-size: 1em;
+}
+
 .epic-status-cancelled {
     background-color: darkslategrey;
     color: white;

@@ -144,7 +144,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      * @return array<string, string>
      */
     #[Override]
-    static public function statusNames(): array
+    public static function statusNames(): array
     {
         return [
             self::STATUS_CANCELLED => Yii::t('app', 'EPIC_STATUS_CANCELLED'),
@@ -167,7 +167,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
      * @return array<string, string>
      */
     #[Override]
-    static public function statusClasses(): array
+    public static function statusClasses(): array
     {
         return [
             self::STATUS_CANCELLED => 'epic-status-cancelled',

@@ -330,6 +330,7 @@ return [
     'EPIC_NOT_ALLOWED_AUTOSELECT' => 'You do not have access to epic this object is from.',
     'EPIC_NOT_AVAILABLE' => 'Epic not available',
     'EPIC_NOT_FOUND' => 'Epic not found',
+    'EPIC_PARTICIPANT_ROLES' => 'Your roles',
     'EPIC_SELECT_CURRENT_STORY' => 'Select current story, if applicable',
     'EPIC_SESSION_NOT_AVAILABLE' => 'Session information not available',
     'EPIC_SET_BASED_ON_OBJECT {epic}' => 'Current epic has been set to {epic}.',

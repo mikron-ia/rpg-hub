@@ -29,6 +29,8 @@ final class EpicController extends CmsController
 {
     use EpicAssistance;
 
+    private const int POSITIONS_PER_PAGE = 8;
+
     #[Override]
     public function behaviors(): array
     {
@@ -84,7 +86,10 @@ final class EpicController extends CmsController
         Epic::canUserIndexEpic();
 
         $searchModel = new EpicQuery();
-        $dataProvider = $searchModel->activeEpicsAsActiveDataProvider();
+        $dataProvider = $searchModel->searchForCmsIndex(
+            params: Yii::$app->request->queryParams,
+            positionsPerPage: self::POSITIONS_PER_PAGE,
+        );
 
         return $this->render('index', [
             'searchModel' => $searchModel,
