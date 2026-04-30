@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use common\models\Character;
 use common\models\core\Visibility;
 use common\models\StoryCharacterAssignment;
 use Override;
@@ -15,7 +14,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\Response;
 
-class StoryAssignmentCharacterController extends AssignmentAbstractController
+class CharacterAssignmentStoryController extends AssignmentAbstractController
 {
     #[Override]
     public function behaviors(): array
@@ -26,8 +25,8 @@ class StoryAssignmentCharacterController extends AssignmentAbstractController
                 'rules' => [
                     [
                         'actions' => [
-                            'get-story-characters',
-                            'set-story-characters',
+                            'get-character-stories',
+                            'set-character-stories',
                         ],
                         'allow' => true,
                         'roles' => ['operator'],
@@ -37,7 +36,7 @@ class StoryAssignmentCharacterController extends AssignmentAbstractController
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'set-story-characters' => ['PUT'],
+                    'set-character-stories' => ['PUT'],
                 ],
             ],
         ];
@@ -46,17 +45,17 @@ class StoryAssignmentCharacterController extends AssignmentAbstractController
     /**
      * @throws HttpException
      */
-    public function actionGetStoryCharacters(string $storyKey): string
+    public function actionGetCharacterStories(string $characterKey): string
     {
-        $model = $this->findStory($storyKey);
+        $model = $this->findCharacter($characterKey);
         $this->checkAccess($model);
 
         $query = StoryCharacterAssignment::find()
-            ->where(['story_id' => $model->story_id])
+            ->where(['story_character_assignment.character_id' => $model->character_id])
             ->joinWith('character')
             ->orderBy('name ASC');
 
-        return $this->renderAjax('_view_character_list', [
+        return $this->renderAjax('_view_story_list', [
             'dataProvider' => new ActiveDataProvider([
                 'query' => $query,
                 'pagination' => false,
@@ -67,10 +66,10 @@ class StoryAssignmentCharacterController extends AssignmentAbstractController
     /**
      * @throws HttpException
      */
-    public function actionSetStoryCharacters(): Response
+    public function actionSetCharacterStories(): Response
     {
-        $characterIds = Yii::$app->request->post('keys', []);
-        $storyKey = Yii::$app->request->post('storyKey');
+        $storyIds = Yii::$app->request->post('keys', []);
+        $characterKey = Yii::$app->request->post('characterKey');
         $visibility = Yii::$app->request->post('visibility');
 
         $validatedVisibility = Visibility::tryFrom($visibility);
@@ -79,35 +78,31 @@ class StoryAssignmentCharacterController extends AssignmentAbstractController
             throw new BadRequestHttpException(Yii::t('app', 'ERROR_VISIBILITY_NOT_VALID'));
         }
 
-        $story = $this->findStory($storyKey);
-        $characters = $this->findCharacters($characterIds, $story->epic);
+        $character = $this->findCharacter($characterKey);
+        $stories = $this->findStories($storyIds, $character->epic);
 
         $existingAssignments = StoryCharacterAssignment::findAll([
-            'story_id' => $story->story_id,
+            'character_id' => $character->character_id,
             'visibility' => $validatedVisibility->value,
         ]);
 
-        $characterIdsToUnassign = array_diff(array_column($existingAssignments, 'character_id'), $characterIds);
-        $characterIdsToSkip = array_intersect($characterIds, array_column($existingAssignments, 'character_id'));
+        $storyIdsToUnassign = array_diff(array_column($existingAssignments, 'story_id'), $storyIds);
+        $storyIdsToSkip = array_intersect($storyIds, array_column($existingAssignments, 'story_id'));
 
         try {
             StoryCharacterAssignment::deleteAll([
-                'character_id' => $characterIdsToUnassign,
-                'story_id' => $story->story_id,
+                'character_id' => $character->character_id,
+                'story_id' => $storyIdsToUnassign,
                 'visibility' => $validatedVisibility->value,
             ]);
 
-            $unassignedCharacters = $this->findCharacters($characterIdsToUnassign, $story->epic);
-            array_walk($unassignedCharacters, function (Character $character) {
-                $character->importancePack->flagForRecalculation();
-            });
-
-            foreach ($characters as $characterId => $character) {
-                if (!in_array($characterId, $characterIdsToSkip)) {
-                    StoryCharacterAssignment::create($characterId, $story->story_id, $validatedVisibility);
-                    $character->importancePack->flagForRecalculation();
+            foreach ($stories as $storyId => $story) {
+                if (!in_array($storyId, $storyIdsToSkip)) {
+                    StoryCharacterAssignment::create($character->character_id, $storyId, $validatedVisibility);
                 }
             }
+
+            $character->importancePack->flagForRecalculation();
         } catch (Throwable $e) {
             return $this->respondWithError($e->getMessage());
         }

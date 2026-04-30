@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 use common\models\core\Visibility;
-use common\models\Epic;
 use common\models\Group;
 use common\models\StoryGroupAssignment;
 use Override;
@@ -16,7 +15,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\Response;
 
-class StoryAssignmentGroupController extends StoryAssignmentAbstractController
+class StoryAssignmentGroupController extends AssignmentAbstractController
 {
     #[Override]
     public function behaviors(): array
@@ -113,30 +112,5 @@ class StoryAssignmentGroupController extends StoryAssignmentAbstractController
         }
 
         return $this->respondWithSuccess();
-    }
-
-    /**
-     * @param array<int> $ids
-     *
-     * @return array<int,Group>
-     *
-     * @throws HttpException
-     */
-    protected function findGroups(array $ids, Epic $epic): array
-    {
-        $models = Group::findAll($ids);
-
-        if ($models === null) {
-            return [];
-        }
-
-        $indexedModels = [];
-        foreach ($models as $model) {
-            $this->checkAccess($model);
-            $this->checkEpicConsistency($model, $epic);
-            $indexedModels[$model->group_id] = $model;
-        }
-
-        return $indexedModels;
     }
 }

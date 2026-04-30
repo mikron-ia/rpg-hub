@@ -69,7 +69,7 @@ final class StoryQuery extends Story implements EntityQuery
     /**
      * Creates data provider instance with search query applied and data limited to given Epic
      */
-    public function searchForEpic(array $params, Epic $epic = null): ActiveDataProvider
+    public function searchForEpic(array $params, ?Epic $epic = null): ActiveDataProvider
     {
         return $this->getDataProviderForSearch($params, Story::find()->andWhere([
             'epic_id' => $epic->epic_id,
@@ -136,5 +136,34 @@ final class StoryQuery extends Story implements EntityQuery
             ])->andFilterWhere(['like', $visibilityColumn, $this->parameters]);
 
         return $dataProvider;
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function listEpicStoriesAsArrayForDropdown(): array
+    {
+        $query = Story::find();
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+            $query->where('0=1');
+        } else {
+            $query->andWhere([
+                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+                'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
+            ])->orderBy('position DESC');
+        }
+
+        $stories = $query->all();
+
+        $arrayOfNames = [];
+
+        foreach ($stories as $story) {
+            /* @var $story Story */
+            $arrayOfNames[$story->story_id] = $story->name;
+        }
+
+        return $arrayOfNames;
     }
 }

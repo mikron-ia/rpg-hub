@@ -13,7 +13,7 @@ class StoryAsset extends AssetBundle
         'js/copy-key-button.js',
         'js/parameter-handler.js',
         'js/story.js',
-        'js/story-starring.js',
+        'js/story-assignments.js',
     ];
     public $depends = [
         'backend\assets\AppAsset',

@@ -107,12 +107,13 @@ class StoryGroupAssignment extends ActiveRecord implements HasKey, HasVisibility
     /**
      * @throws Exception
      */
-    public static function create(int $groupId, int $storyId, Visibility $visibility): self
+    #[Override]
+    public static function create(int $actingSideId, int $narrativeSideId, Visibility $visibility): self
     {
         $assignment = new self();
 
-        $assignment->group_id = $groupId;
-        $assignment->story_id = $storyId;
+        $assignment->group_id = $actingSideId;
+        $assignment->story_id = $narrativeSideId;
         $assignment->visibility = $visibility->value;
 
         // the value is discarded because this it returns false only on validation error and all data is internal

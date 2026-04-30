@@ -105,12 +105,13 @@ class StoryCharacterAssignment extends ActiveRecord implements HasKey, IsAssignm
     /**
      * @throws Exception
      */
-    public static function create(int $characterId, int $storyId, Visibility $visibility): self
+    #[Override]
+    public static function create(int $actingSideId, int $narrativeSideId, Visibility $visibility): self
     {
         $assignment = new self();
 
-        $assignment->character_id = $characterId;
-        $assignment->story_id = $storyId;
+        $assignment->character_id = $actingSideId;
+        $assignment->story_id = $narrativeSideId;
         $assignment->visibility = $visibility->value;
 
         // the value is discarded because this it returns false only on validation error and all data is internal

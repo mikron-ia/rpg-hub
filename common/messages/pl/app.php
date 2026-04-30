@@ -196,6 +196,8 @@ return [
     'CHARACTER_SHEET_TITLE_UPDATE' => 'Zmodyfikuj kartę postaci',
     'CHARACTER_STATISTICS' => 'Dane techniczne',
     'CHARACTER_STORIES_ASSIGNMENT_TAB' => 'Historie z udziałem',
+    'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE' => 'Historie (niejawne)',
+    'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC' => 'Historie',
     'CHARACTER_TAB_ALL' => 'Wszystkie',
     'CHARACTER_TAB_FAVORITES' => 'Ulubione',
     'CHARACTER_TAB_SEARCH' => 'Wyszukaj',

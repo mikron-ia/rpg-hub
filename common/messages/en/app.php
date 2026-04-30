@@ -196,6 +196,8 @@ return [
     'CHARACTER_SHEET_TITLE_UPDATE' => 'Edit character sheet',
     'CHARACTER_STATISTICS' => 'Technical data',
     'CHARACTER_STORIES_ASSIGNMENT_TAB' => 'Starring in',
+    'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE' => 'Stories (private)',
+    'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC' => 'Stories',
     'CHARACTER_TAB_ALL' => 'All characters',
     'CHARACTER_TAB_FAVORITES' => 'Favorites',
     'CHARACTER_TAB_SEARCH' => 'Search',

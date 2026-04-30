@@ -70,6 +70,9 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
     public bool $is_off_the_record_change = false;
 
+    public array|string $characterStoryAssignmentChoicesPublic = [];
+    public array|string $characterStoryAssignmentChoicesPrivate = [];
+
     public static function tableName(): string
     {
         return 'character';
@@ -169,6 +172,8 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'scribble_pack_id' => Yii::t('app', 'SCRIBBLE_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
             'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
+            'characterStoryAssignmentChoicesPublic' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC'),
+            'characterStoryAssignmentChoicesPrivate' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE'),
         ];
     }
 
@@ -177,6 +182,9 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         if ($this->seen_pack_id) {
             $this->seenPack->recordNotification();
         }
+
+        $this->characterStoryAssignmentChoicesPublic = $this->getCharacterStoryAssignmentIds(Visibility::VISIBILITY_FULL);
+        $this->characterStoryAssignmentChoicesPrivate = $this->getCharacterStoryAssignmentIds(Visibility::VISIBILITY_GM);
 
         parent::afterFind();
     }
@@ -316,6 +324,13 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             ),
             $assignments
         );
+    }
+
+    public function getCharacterStoryAssignmentIds(Visibility $visibility): array
+    {
+        return $this->getStoryCharacterAssignments()
+            ->andWhere(['story_character_assignment.visibility' => $visibility->value])
+            ->select('story_id')->column();
     }
 
     public function getUtilityBag(): ActiveQuery
