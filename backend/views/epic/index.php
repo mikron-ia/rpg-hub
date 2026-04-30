@@ -28,25 +28,33 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             [
                 'attribute' => 'name',
+                'contentOptions' => ['class' => 'epic-list-cell'],
             ],
             [
                 'attribute' => 'system',
+                'contentOptions' => ['class' => 'epic-list-cell text-center'],
+                'headerOptions' => ['class' => 'text-center'],
             ],
             [
                 'attribute' => 'status',
+                'contentOptions' => ['class' => 'text-center'],
+                'headerOptions' => ['class' => 'text-center'],
                 'format' => 'raw',
                 'value' => function (Epic $model) {
-                    return $model->getStatus();
+                    return '<span class="epic-status ' . $model->getStatusClass() . '">' . $model->getStatus() . '</span>';
                 }
             ],
             [
-                'label' => Yii::t('app', 'EPIC_COUNT_GROUPS'),
+                'label' => Yii::t('app', 'EPIC_COUNT_PARTICIPANTS'),
                 'value' => function (Epic $model) {
-                    return $model->getGroups()->count();
+                    return sprintf('%d', $model->getParticipants()->count());
                 },
+                'contentOptions' => ['class' => 'epic-list-cell text-center'],
+                'headerOptions' => ['class' => 'text-center'],
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => ['class' => 'epic-list-cell text-center'],
                 'template' => '{view}',
                 'buttons' => [
                     'view' => function ($url, Epic $model, $key) {

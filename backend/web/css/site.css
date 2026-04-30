@@ -274,7 +274,7 @@ p {
 }
 
 .no-data-box {
-    background: whitesmokee;
+    background: whitesmoke;
     border-radius: 10px;
     font-style: italic;
     padding: 10px 20px;
@@ -653,4 +653,8 @@ p {
 
 .epic-status-ready {
     background-color: greenyellow;
+}
+
+.table-bordered > tbody > tr > td.epic-list-cell {
+    vertical-align: middle
 }

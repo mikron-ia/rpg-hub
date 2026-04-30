@@ -317,7 +317,7 @@ return [
     'EPIC_CARD_SESSIONS' => 'Sessions',
     'EPIC_CARD_USERNAME' => 'User',
     'EPIC_CHANGED_BASED_ON_OBJECT {epic}' => 'Current epic has been changed to {epic}.',
-    'EPIC_COUNT_GROUPS' => 'Group count',
+    'EPIC_COUNT_PARTICIPANTS' => 'Participants',
     'EPIC_CREATION_WARNING' => '<b>Warning:</b> performing this action will add you as the Game Master of the newly created Epic. This can be later changed.',
     'EPIC_CURRENT_STORY' => 'Current story',
     'EPIC_DETAILS' => 'Details',
