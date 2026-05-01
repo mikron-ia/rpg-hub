@@ -1,60 +1,33 @@
 <?php
 
-use common\models\CharacterQuery;
 use common\models\Story;
-use yii\helpers\Html;
-use kartik\select2\Select2;
 use yii\web\View;
-use yii\widgets\ActiveForm;
 
 /* @var $this View */
 /* @var $model Story */
+
+$viewFile = '../story-assignment-character/_view_character_form';
 ?>
 
 <div class="col-md-6">
-    <?php $form = ActiveForm::begin(['id' => 'form-story-character-assignment-public']); ?>
+    <h3 class="text-center"><?= Yii::t('app', 'LABEL_CHARACTER_LIST_CONFIGURATION') ?></h3>
 
-    <?= $form->field($model, 'storyCharacterAssignmentChoicesPublic')->widget(
-        Select2::class,
-        [
-            'data' => CharacterQuery::listEpicCharactersAsArray(),
-            'options' => ['multiple' => true, 'data-story-key' => $model->key],
-            'pluginOptions' => ['allowClear' => true],
-        ],
-    ); ?>
+    <?= $this->render($viewFile, [
+        'model' => $model,
+        'formId' => 'form-story-character-assignment-public',
+        'attribute' => 'storyCharacterAssignmentChoicesPublic',
+    ]) ?>
 
-    <div class="form-group text-right">
-        <?= Html::submitButton(
-            Yii::t('app', 'BUTTON_SAVE'),
-            ['class' => 'btn btn-primary']
-        );
-        ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
-    <?php $form = ActiveForm::begin(['id' => 'form-story-character-assignment-private']); ?>
-
-    <?= $form->field($model, 'storyCharacterAssignmentChoicesPrivate')->widget(
-        Select2::class,
-        [
-            'data' => CharacterQuery::listEpicCharactersAsArray(),
-            'options' => ['multiple' => true, 'data-story-key' => $model->key],
-            'pluginOptions' => ['allowClear' => true],
-        ],
-    ); ?>
-
-    <div class="form-group text-right">
-        <?= Html::submitButton(
-            Yii::t('app', 'BUTTON_SAVE'),
-            ['class' => 'btn btn-primary']
-        );
-        ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
+    <?= $this->render($viewFile, [
+        'model' => $model,
+        'formId' => 'form-story-character-assignment-private',
+        'attribute' => 'storyCharacterAssignmentChoicesPrivate',
+    ]) ?>
 </div>
 
-<div class="col-md-6" id="story-character-assignment-list" data-story-key="<?= $model->key ?>">
-    <div class="circle-loader"></div>
+<div class="col-md-6">
+    <h3 class="text-center"><?= Yii::t('app', 'LABEL_CHARACTER_LIST_STATE') ?></h3>
+    <div id="story-character-assignment-list" data-story-key="<?= $model->key ?>">
+        <div class="circle-loader"></div>
+    </div>
 </div>

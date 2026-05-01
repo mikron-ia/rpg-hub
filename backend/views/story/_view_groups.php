@@ -1,60 +1,33 @@
 <?php
 
-use common\models\GroupQuery;
 use common\models\Story;
-use yii\helpers\Html;
-use kartik\select2\Select2;
 use yii\web\View;
-use yii\widgets\ActiveForm;
 
 /* @var $this View */
 /* @var $model Story */
+
+$viewFile = '../story-assignment-group/_view_group_form';
 ?>
 
 <div class="col-md-6">
-    <?php $form = ActiveForm::begin(['id' => 'form-story-group-assignment-public']); ?>
+    <h3 class="text-center"><?= Yii::t('app', 'LABEL_GROUP_LIST_CONFIGURATION') ?></h3>
 
-    <?= $form->field($model, 'storyGroupAssignmentChoicesPublic')->widget(
-        Select2::class,
-        [
-            'data' => GroupQuery::listEpicGroupsAsArray(),
-            'options' => ['multiple' => true, 'data-story-key' => $model->key],
-            'pluginOptions' => ['allowClear' => true],
-        ],
-    ); ?>
+    <?= $this->render($viewFile, [
+        'model' => $model,
+        'formId' => 'form-story-group-assignment-public',
+        'attribute' => 'storyGroupAssignmentChoicesPublic',
+    ]) ?>
 
-    <div class="form-group text-right">
-        <?= Html::submitButton(
-            Yii::t('app', 'BUTTON_SAVE'),
-            ['class' => 'btn btn-primary']
-        );
-        ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
-    <?php $form = ActiveForm::begin(['id' => 'form-story-group-assignment-private']); ?>
-
-    <?= $form->field($model, 'storyGroupAssignmentChoicesPrivate')->widget(
-        Select2::class,
-        [
-            'data' => GroupQuery::listEpicGroupsAsArray(),
-            'options' => ['multiple' => true, 'data-story-key' => $model->key],
-            'pluginOptions' => ['allowClear' => true],
-        ],
-    ); ?>
-
-    <div class="form-group text-right">
-        <?= Html::submitButton(
-            Yii::t('app', 'BUTTON_SAVE'),
-            ['class' => 'btn btn-primary']
-        );
-        ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
+    <?= $this->render($viewFile, [
+        'model' => $model,
+        'formId' => 'form-story-group-assignment-private',
+        'attribute' => 'storyGroupAssignmentChoicesPrivate',
+    ]) ?>
 </div>
 
-<div class="col-md-6" id="story-group-assignment-list" data-story-key="<?= $model->key ?>">
-    <div class="circle-loader"></div>
+<div class="col-md-6">
+    <h3 class="text-center"><?= Yii::t('app', 'LABEL_GROUP_LIST_STATE') ?></h3>
+    <div id="story-group-assignment-list" data-story-key="<?= $model->key ?>">
+        <div class="circle-loader"></div>
+    </div>
 </div>
