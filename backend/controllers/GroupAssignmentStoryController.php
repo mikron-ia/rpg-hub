@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 use common\models\core\Visibility;
-use common\models\Group;
 use common\models\StoryGroupAssignment;
 use Override;
 use Throwable;
@@ -15,7 +14,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\Response;
 
-class StoryAssignmentGroupController extends AssignmentAbstractController
+class GroupAssignmentStoryController extends AssignmentAbstractController
 {
     #[Override]
     public function behaviors(): array
@@ -26,8 +25,8 @@ class StoryAssignmentGroupController extends AssignmentAbstractController
                 'rules' => [
                     [
                         'actions' => [
-                            'get-story-groups',
-                            'set-story-groups',
+                            'get-group-stories',
+                            'set-group-stories',
                         ],
                         'allow' => true,
                         'roles' => ['operator'],
@@ -37,7 +36,7 @@ class StoryAssignmentGroupController extends AssignmentAbstractController
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'set-story-groups' => ['PUT'],
+                    'set-group-stories' => ['PUT'],
                 ],
             ],
         ];
@@ -46,17 +45,17 @@ class StoryAssignmentGroupController extends AssignmentAbstractController
     /**
      * @throws HttpException
      */
-    public function actionGetStoryGroups(string $storyKey): string
+    public function actionGetGroupStories(string $groupKey): string
     {
-        $model = $this->findStory($storyKey);
+        $model = $this->findGroup($groupKey);
         $this->checkAccess($model);
 
         $query = StoryGroupAssignment::find()
-            ->where(['story_id' => $model->story_id])
+            ->where(['story_group_assignment.group_id' => $model->group_id])
             ->joinWith('group')
             ->orderBy('name ASC');
 
-        return $this->renderAjax('_view_group_list', [
+        return $this->renderAjax('_view_story_list', [
             'dataProvider' => new ActiveDataProvider([
                 'query' => $query,
                 'pagination' => false,
@@ -67,10 +66,10 @@ class StoryAssignmentGroupController extends AssignmentAbstractController
     /**
      * @throws HttpException
      */
-    public function actionSetStoryGroups(): Response
+    public function actionSetGroupStories(): Response
     {
-        $groupIds = Yii::$app->request->post('keys');
-        $storyKey = Yii::$app->request->post('storyKey');
+        $storyIds = Yii::$app->request->post('keys', []);
+        $groupKey = Yii::$app->request->post('groupKey');
         $visibility = Yii::$app->request->post('visibility');
 
         $validatedVisibility = Visibility::tryFrom($visibility);
@@ -79,35 +78,31 @@ class StoryAssignmentGroupController extends AssignmentAbstractController
             throw new BadRequestHttpException(Yii::t('app', 'ERROR_VISIBILITY_NOT_VALID'));
         }
 
-        $story = $this->findStory($storyKey);
-        $groups = $this->findGroups($groupIds, $story->epic);
+        $group = $this->findGroup($groupKey);
+        $stories = $this->findStories($storyIds, $group->epic);
 
         $existingAssignments = StoryGroupAssignment::findAll([
-            'story_id' => $story->story_id,
+            'group_id' => $group->group_id,
             'visibility' => $validatedVisibility->value,
         ]);
 
-        $groupIdsToUnassign = array_diff(array_column($existingAssignments, 'group_id'), $groupIds);
-        $groupIdsToSkip = array_intersect($groupIds, array_column($existingAssignments, 'group_id'));
+        $storyIdsToUnassign = array_diff(array_column($existingAssignments, 'story_id'), $storyIds);
+        $storyIdsToSkip = array_intersect($storyIds, array_column($existingAssignments, 'story_id'));
 
         try {
             StoryGroupAssignment::deleteAll([
-                'group_id' => $groupIdsToUnassign,
-                'story_id' => $story->story_id,
+                'group_id' => $group->group_id,
+                'story_id' => $storyIdsToUnassign,
                 'visibility' => $validatedVisibility->value,
             ]);
 
-            $unassignedGroups = $this->findGroups($groupIdsToUnassign, $story->epic);
-            array_walk($unassignedGroups, function (Group $group) {
-                $group->importancePack->flagForRecalculation();
-            });
-
-            foreach ($groups as $groupId => $group) {
-                if (!in_array($groupId, $groupIdsToSkip)) {
-                    StoryGroupAssignment::create($groupId, $story->story_id, $validatedVisibility);
-                    $group->importancePack->flagForRecalculation();
+            foreach ($stories as $storyId => $story) {
+                if (!in_array($storyId, $storyIdsToSkip)) {
+                    StoryGroupAssignment::create($group->group_id, $storyId, $validatedVisibility);
                 }
             }
+
+            $group->importancePack->flagForRecalculation();
         } catch (Throwable $e) {
             return $this->respondWithError($e->getMessage());
         }

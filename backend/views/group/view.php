@@ -47,6 +47,12 @@ $items = [
         'active' => false,
     ],
     [
+        'label' => Yii::t('app', 'GROUP_STORIES_ASSIGNMENT_TAB'),
+        'content' => $this->render('_view_stories', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ],
+    [
         'label' => Yii::t('app', 'GROUP_STATISTICS'),
         'content' => $this->render('_view_statistics', ['model' => $model]),
         'encode' => false,

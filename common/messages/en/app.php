@@ -484,6 +484,8 @@ return [
     'GROUP_NOT_AVAILABLE' => 'Group not available',
     'GROUP_STATISTICS' => 'Technical data',
     'GROUP_STORIES_ASSIGNMENT_TAB' => 'Starring in',
+    'GROUP_STORY_ASSIGNMENT_CHOICES_PRIVATE' => 'Stories (private)',
+    'GROUP_STORY_ASSIGNMENT_CHOICES_PUBLIC' => 'Stories',
     'GROUP_SUBGROUPS' => 'Subgroups',
     'GROUP_UPDATED_AT' => 'Last changed',
     'GROUP_VISIBILITY' => 'Visibility',

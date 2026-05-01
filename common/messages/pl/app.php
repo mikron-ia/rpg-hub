@@ -484,6 +484,8 @@ return [
     'GROUP_NOT_AVAILABLE' => 'Grupa niedostępna',
     'GROUP_STATISTICS' => 'Dane techniczne',
     'GROUP_STORIES_ASSIGNMENT_TAB' => 'Historie z udziałem',
+    'GROUP_STORY_ASSIGNMENT_CHOICES_PRIVATE' => 'Historie (niejawne)',
+    'GROUP_STORY_ASSIGNMENT_CHOICES_PUBLIC' => 'Historie',
     'GROUP_SUBGROUPS' => 'Grupy podrzędne',
     'GROUP_UPDATED_AT' => 'Ostatnio zmieniono',
     'GROUP_VISIBILITY' => 'Widoczność',

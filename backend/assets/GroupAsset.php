@@ -13,6 +13,7 @@ class GroupAsset extends AssetBundle
         'js/copy-key-button.js',
         'js/description-loader.js',
         'js/group.js',
+        'js/group-assignments.js',
         'js/group-memberships.js',
         'js/loader-for-group.js',
         'js/tooltip.js',

@@ -74,6 +74,9 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
 
     public bool $is_off_the_record_change = false;
 
+    public array|string $groupStoryAssignmentChoicesPublic = [];
+    public array|string $groupStoryAssignmentChoicesPrivate = [];
+
     public static function tableName(): string
     {
         return 'group';
@@ -163,6 +166,10 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         if ($this->seen_pack_id) {
             $this->seenPack->recordNotification();
         }
+        
+        $this->groupStoryAssignmentChoicesPublic = $this->getGroupStoryAssignmentIds(Visibility::VISIBILITY_FULL);
+        $this->groupStoryAssignmentChoicesPrivate = $this->getGroupStoryAssignmentIds(Visibility::VISIBILITY_GM);
+        
         parent::afterFind();
     }
 
@@ -186,6 +193,8 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
             'display_as_tab' => Yii::t('app', 'GROUP_DISPLAY_AS_TAB_LONG'),
             'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
+            'groupStoryAssignmentChoicesPublic' => Yii::t('app', 'GROUP_STORY_ASSIGNMENT_CHOICES_PUBLIC'),
+            'groupStoryAssignmentChoicesPrivate' => Yii::t('app', 'GROUP_STORY_ASSIGNMENT_CHOICES_PRIVATE'),
         ];
     }
 
@@ -357,6 +366,13 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             ),
             $assignments
         );
+    }
+
+    public function getGroupStoryAssignmentIds(Visibility $visibility): array
+    {
+        return $this->getStoryGroupAssignments()
+            ->andWhere(['story_group_assignment.visibility' => $visibility->value])
+            ->select('story_id')->column();
     }
 
     public function getUtilityBag(): ActiveQuery
