@@ -662,3 +662,20 @@ p {
 .table-bordered > tbody > tr > td.epic-list-cell {
     vertical-align: middle
 }
+
+/* Assignment buttons */
+
+.assignment-input-group {
+    display: flex;
+    align-items: stretch;
+}
+
+.assignment-input-group .input-group-btn {
+    display: flex;
+    align-items: stretch;
+    width: auto;
+}
+
+.assignment-input-group .input-group-btn .btn {
+    height: auto;
+}
