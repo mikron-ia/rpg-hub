@@ -9,8 +9,6 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Character */
 /* @var $externalDataDataProvider yii\data\ActiveDataProvider */
-/* @var $storyCharacterPublic array<string> */
-/* @var $storyCharacterPrivate array<string> */
 
 ?>
 
@@ -205,27 +203,5 @@ use yii\widgets\DetailView;
             ) ?>
         </div>
     </div>
-
-    <?php if (!empty($storyCharacterPublic)): ?>
-        <div class="col-md-6">
-            <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PUBLIC'); ?></h2>
-            <ul>
-                <?php foreach ($storyCharacterPublic as $role): ?>
-                    <li><?= $role; ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
-
-    <?php if (!empty($storyCharacterPrivate)): ?>
-        <div class="col-md-6">
-            <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PRIVATE'); ?></h2>
-            <ul>
-                <?php foreach ($storyCharacterPrivate as $role): ?>
-                    <li><?= $role; ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
 
 </div>

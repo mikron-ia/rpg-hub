@@ -146,8 +146,6 @@ final class GroupController extends CmsController
 
         return $this->render('view', [
             'model' => $model,
-            'storyGroupPublic' => StoryGroupAssignmentQuery::getStoryAssignmentPublicLinksForOperator($model->group_id),
-            'storyGroupPrivate' => StoryGroupAssignmentQuery::getStoryAssignmentPrivateLinksForOperator($model->group_id),
         ]);
     }
 

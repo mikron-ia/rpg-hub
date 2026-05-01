@@ -155,8 +155,6 @@ final class CharacterController extends CmsController
         return $this->render('view', [
             'model' => $model,
             'externalDataDataProvider' => $externalDataDataProvider,
-            'storyCharacterPublic' => StoryCharacterAssignmentQuery::getStoryAssignmentPublicLinksForOperator($model->character_id),
-            'storyCharacterPrivate' => StoryCharacterAssignmentQuery::getStoryAssignmentPrivateLinksForOperator($model->character_id),
         ]);
     }
 

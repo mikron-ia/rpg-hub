@@ -565,6 +565,8 @@ return [
     'LABEL_POSITION' => 'Position on the list',
     'LABEL_RECAP' => 'Recap',
     'LABEL_STATUS' => 'Status',
+    'LABEL_STORY_LIST_CONFIGURATION' => 'List management',
+    'LABEL_STORY_LIST_STATE' => 'Story list',
     'LABEL_TIME_IC' => 'Epic-based time',
     'LABEL_UPDATE' => 'Modify',
     'LABEL_VIEW' => 'View',

@@ -565,6 +565,8 @@ return [
     'LABEL_POSITION' => 'Pozycja na liście',
     'LABEL_RECAP' => 'Podsumowanie',
     'LABEL_STATUS' => 'Status',
+    'LABEL_STORY_LIST_CONFIGURATION' => 'Zarządzanie historiami',
+    'LABEL_STORY_LIST_STATE' => 'Lista historii',
     'LABEL_TIME_IC' => 'Czas kampanii',
     'LABEL_UPDATE' => 'Edycja',
     'LABEL_VIEW' => 'Podgląd',

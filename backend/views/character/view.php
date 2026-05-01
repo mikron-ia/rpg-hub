@@ -12,8 +12,6 @@ CharacterAsset::register($this);
 /* @var $this View */
 /* @var $model Character */
 /* @var $externalDataDataProvider ActiveDataProvider */
-/* @var $storyCharacterPublic array<string> */
-/* @var $storyCharacterPrivate array<string> */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
@@ -29,8 +27,6 @@ $items = [
         'content' => $this->render('_view_basic', [
             'model' => $model,
             'externalDataDataProvider' => $externalDataDataProvider,
-            'storyCharacterPublic' => $storyCharacterPublic,
-            'storyCharacterPrivate' => $storyCharacterPrivate,
         ]),
         'encode' => false,
         'active' => true,

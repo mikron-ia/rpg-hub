@@ -12,6 +12,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="col-md-6">
+    <h3 class="text-center"><?= Yii::t('app', 'LABEL_STORY_LIST_CONFIGURATION') ?></h3>
     <?php $form = ActiveForm::begin(['id' => 'form-group-story-assignment-public']); ?>
 
     <?= $form->field($model, 'groupStoryAssignmentChoicesPublic')->widget(
@@ -55,6 +56,9 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 </div>
 
-<div class="col-md-6" id="group-story-assignment-list" data-group-key="<?= $model->key ?>">
-    <div class="circle-loader"></div>
+<div class="col-md-6">
+    <h3 class="text-center"><?= Yii::t('app', 'LABEL_STORY_LIST_STATE') ?></h3>
+    <div id="group-story-assignment-list" data-group-key="<?= $model->key ?>">
+        <div class="circle-loader"></div>
+    </div>
 </div>
