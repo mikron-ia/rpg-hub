@@ -52,7 +52,7 @@ class GroupAssignmentStoryController extends AssignmentAbstractController
 
         $query = StoryGroupAssignment::find()
             ->where(['story_group_assignment.group_id' => $model->group_id])
-            ->joinWith('group')
+            ->joinWith('story')
             ->orderBy('name ASC');
 
         return $this->renderAjax('_view_story_list', [

@@ -26,6 +26,7 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
 use yii\helpers\Html;
+use yii\web\HttpException;
 
 /**
  * This is the model class for table "person".
@@ -73,6 +74,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     public array|string $characterStoryAssignmentChoicesPublic = [];
     public array|string $characterStoryAssignmentChoicesPrivate = [];
 
+    #[Override]
     public static function tableName(): string
     {
         return 'character';
@@ -84,6 +86,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return 'character';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -141,6 +144,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function attributeHints(): array
     {
         return [
@@ -151,6 +155,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -177,6 +182,10 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ];
     }
 
+    /**
+     * @throws Exception
+     */
+    #[Override]
     public function afterFind(): void
     {
         if ($this->seen_pack_id) {
@@ -189,6 +198,11 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         parent::afterFind();
     }
 
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    #[Override]
     public function beforeSave($insert): bool
     {
         if ($insert) {
@@ -233,6 +247,9 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return parent::beforeSave($insert);
     }
 
+    /**
+     * @throws Exception
+     */
     public function afterSave($insert, $changedAttributes): void
     {
         if (!$this->is_off_the_record_change) {
@@ -257,6 +274,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ];
     }
 
+    #[Override]
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
@@ -399,7 +417,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      *
      * @throws Exception
      */
-    static public function createForCharacterSheet(CharacterSheet $characterSheet): ?Character
+    public static function createForCharacterSheet(CharacterSheet $characterSheet): ?Character
     {
         $character = new Character();
         $character->epic_id = $characterSheet->epic_id;
@@ -412,9 +430,9 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         if ($character->save()) {
             $character->refresh();
             return $character;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -422,7 +440,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
      *
      * @return string[]
      */
-    static public function allowedDescriptionTypes(): array
+    public static function allowedDescriptionTypes(): array
     {
         return [
             Description::TYPE_WHO,
@@ -446,12 +464,12 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ];
     }
 
-    static public function canUserIndexThem(): bool
+    public static function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem(): bool
+    public static function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
@@ -466,22 +484,22 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return self::canUserViewInEpic($this->epic);
     }
 
-    static function throwExceptionAboutCreate()
+    static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_CHARACTER'));
     }
 
-    static function throwExceptionAboutControl()
+    static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_CHARACTER'));
     }
 
-    static function throwExceptionAboutIndex()
+    static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_CHARACTER'));
     }
 
-    static function throwExceptionAboutView()
+    static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
     }
@@ -542,5 +560,10 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         } else {
             return $sighting->status;
         }
+    }
+
+    public function __toString()
+    {
+        return Html::a($this->name, ['character/view', 'key' => $this->key]);
     }
 }

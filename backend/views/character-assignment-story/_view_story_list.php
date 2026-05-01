@@ -15,10 +15,12 @@ use yii\web\View;
 <div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'summary' => '',
+        'summary' => '<span class="assignment-summary">' . Yii::t('app', 'ASSIGNMENT_SUMMARY {totalCount}') . '</span>',
         'columns' => [
             [
                 'attribute' => 'story.name',
+                'format' => 'raw',
+                'value' => fn(StoryCharacterAssignment $model) => (string)$model->story,
             ],
             [
                 'attribute' => 'story.visibility',

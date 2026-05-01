@@ -52,7 +52,7 @@ class CharacterAssignmentStoryController extends AssignmentAbstractController
 
         $query = StoryCharacterAssignment::find()
             ->where(['story_character_assignment.character_id' => $model->character_id])
-            ->joinWith('character')
+            ->joinWith('story')
             ->orderBy('name ASC');
 
         return $this->renderAjax('_view_story_list', [
