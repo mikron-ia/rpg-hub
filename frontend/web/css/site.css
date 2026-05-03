@@ -163,6 +163,12 @@ p {
     margin-top: 5px;
 }
 
+.beta-feature-warning {
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+    padding: 1px;
+}
+
 .error-box {
     color: #a94442;
     background: #fdf7f7;

@@ -12,6 +12,7 @@ use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\ImportanceCategory;
 use common\models\tools\ToolsForEntity;
+use common\models\tools\ToolsForHasDescriptions;
 use common\models\tools\ToolsForHasScribbles;
 use common\models\tools\ToolsForHasVisibility;
 use DateTimeImmutable;
@@ -50,6 +51,7 @@ use yii\web\HttpException;
 class Location extends ActiveRecord implements HasEpicControl, HasImportance, HasImportanceCategory, HasScribbles, HasSightings, HasVisibility, HasKey
 {
     use ToolsForEntity;
+    use ToolsForHasDescriptions;
     use ToolsForHasScribbles;
     use ToolsForHasVisibility;
 

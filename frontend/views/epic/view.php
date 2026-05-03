@@ -62,6 +62,14 @@ if ($epic) {
 
             <div class="btn-group btn-group-lg">
                 <?= Html::a(
+                    Yii::t('app', 'BUTTON_LOCATION'),
+                    ['location/index', 'key' => $epic->key],
+                    ['class' => 'btn btn-primary']
+                ); ?>
+            </div>
+
+            <div class="btn-group btn-group-lg">
+                <?= Html::a(
                     Yii::t('app', 'BUTTON_CHARACTER_SHEETS'),
                     ['character-sheet/index', 'key' => $epic->key],
                     ['class' => 'btn btn-primary']

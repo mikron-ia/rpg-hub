@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'btn btn-default hidden-lg hidden-md']
         ) ?>
     </div>
+
     <p class="beta-feature-warning" title="<?= Yii::t('app', 'BETA_WARNING_TITLE') ?>">
         <?= Yii::t('app', 'BETA_WARNING_TEXT') ?>
     </p>

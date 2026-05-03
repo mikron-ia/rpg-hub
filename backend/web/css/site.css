@@ -688,5 +688,6 @@ p {
 
 .beta-feature-warning {
     font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
     padding: 1px;
 }
