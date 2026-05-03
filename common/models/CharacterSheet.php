@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\CharacterSheetDataState;
+use common\models\core\Displayable;
 use common\models\core\HasEpicControl;
 use common\models\core\HasKey;
 use common\models\core\HasSightings;
@@ -328,21 +329,25 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
     }
 
+    #[Override]
     public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
     }
 
+    #[Override]
     public function recordNotification(): bool
     {
         return $this->seenPack->recordNotification();
     }
 
+    #[Override]
     public function showSightingStatus(): string
     {
         return $this->seenPack->getStatusForCurrentUser();
     }
 
+    #[Override]
     public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();

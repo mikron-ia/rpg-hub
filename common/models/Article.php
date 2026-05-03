@@ -6,7 +6,6 @@ use common\models\core\HasEpicControl;
 use common\models\core\HasKey;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
-use common\models\core\Visibility;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use common\models\tools\ToolsForEntity;
@@ -216,21 +215,25 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return StringHelper::countWords($this->text_raw ?? '');
     }
 
+    #[Override]
     public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
     }
 
+    #[Override]
     public function recordNotification(): bool
     {
         return $this->seenPack->recordNotification();
     }
 
+    #[Override]
     public function showSightingStatus(): string
     {
         return $this->seenPack->getStatusForCurrentUser();
     }
 
+    #[Override]
     public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();

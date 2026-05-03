@@ -2,8 +2,8 @@
 
 namespace common\models;
 
+use common\models\core\Displayable;
 use common\models\core\HasEpicControl;
-use common\models\core\HasKey;
 use common\models\core\IsEditablePack;
 use common\models\core\Language;
 use common\models\tools\ToolsForEntity;

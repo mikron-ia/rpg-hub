@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\Displayable;
 use common\models\core\HasEpicControl;
 use common\models\core\HasKey;
 use common\models\core\HasParameters;
@@ -473,18 +474,12 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return '';
     }
 
-    /**
-     * @throws Exception
-     */
     #[Override]
     public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
     }
 
-    /**
-     * @throws Exception
-     */
     #[Override]
     public function recordNotification(): bool
     {

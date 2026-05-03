@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\Displayable;
 use common\models\core\HasKey;
 use common\models\core\HasVisibility;
 use common\models\core\Language;

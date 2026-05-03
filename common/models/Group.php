@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\Displayable;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\core\HasImportance;
@@ -422,7 +423,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         ];
     }
 
-    public function getCompleteDataForApi()
+    public function getCompleteDataForApi(): array
     {
         $decodedData = json_decode($this->data, true);
 
@@ -477,21 +478,25 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_GROUP'));
     }
 
+    #[Override]
     public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting(importancePack: $this->importancePack);
     }
 
+    #[Override]
     public function recordNotification(): bool
     {
         return $this->seenPack->recordNotification();
     }
 
+    #[Override]
     public function showSightingStatus(): string
     {
         return $this->seenPack->getStatusForCurrentUser();
     }
 
+    #[Override]
     public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();

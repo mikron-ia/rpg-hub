@@ -3,11 +3,12 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\Displayable;
 use common\models\core\HasEpicControl;
 use common\models\core\HasKey;
 use common\models\core\HasSightings;
-use common\models\tools\ToolsForLinkTags;
 use common\models\tools\ToolsForEntity;
+use common\models\tools\ToolsForLinkTags;
 use Override;
 use Yii;
 use yii\db\ActiveQuery;
@@ -255,21 +256,25 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_RECAP'));
     }
 
+    #[Override]
     public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
     }
 
+    #[Override]
     public function recordNotification(): bool
     {
         return $this->seenPack->recordNotification();
     }
 
+    #[Override]
     public function showSightingStatus(): string
     {
         return $this->seenPack->getStatusForCurrentUser();
     }
 
+    #[Override]
     public function showSightingCSS(): string
     {
         return $this->seenPack->getCSSForCurrentUser();

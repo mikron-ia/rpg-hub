@@ -2,15 +2,15 @@
 
 namespace backend\controllers;
 
-use common\models\Displayable;
-use common\models\Epic;
-use common\models\Character;
-use yii\web\Controller;
-use yii\web\Response;
 use backend\models\security\Authenticator;
+use common\models\Character;
+use common\models\core\Displayable;
+use common\models\Epic;
 use Yii;
 use yii\base\Exception;
+use yii\web\Controller;
 use yii\web\HttpException;
+use yii\web\Response;
 
 final class ApiController extends Controller
 {

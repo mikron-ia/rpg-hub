@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\Displayable;
 use common\models\core\FrontStyles;
 use common\models\core\HasKey;
 use common\models\core\HasParameters;
@@ -686,18 +687,12 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return $list;
     }
 
-    /**
-     * @throws DbException
-     */
     #[Override]
     public function recordSighting(): bool
     {
         return $this->seenPack->recordSighting();
     }
 
-    /**
-     * @throws DbException
-     */
     #[Override]
     public function recordNotification(): bool
     {
