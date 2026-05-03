@@ -87,7 +87,8 @@ class RbacController extends Controller
 
         /* Nothing to load in v1.6.0 */
 
-        /* Nothing to load in v1.7.0 */
+        /* Load v1.7.0 */
+        $this->actionV1070();
     }
 
     /**
@@ -405,5 +406,34 @@ class RbacController extends Controller
 
         $auth->addChild($operator, $controlAnnouncement);
         $auth->addChild($user, $viewAnnouncement);
+    }
+
+    /**
+     * Adds rights from v1.7.0
+     */
+    public function actionV1070(): void
+    {
+        $auth = Yii::$app->authManager;
+
+        $gameMasterRule = $auth->getRule('epicGameMaster');
+        $watcherRule = $auth->getRule('epicWatcher');
+
+        $controlLocation = $auth->createPermission('controlLocation');
+        $controlLocation->description = 'Able to add, edit, or remove a location for Epic';
+        $controlLocation->ruleName = $gameMasterRule->name;
+
+        $auth->add($controlLocation);
+
+        $viewLocation = $auth->createPermission('viewLocation');
+        $viewLocation->description = 'Able to view an location';
+        $viewLocation->ruleName = $watcherRule->name;
+
+        $auth->add($viewLocation);
+
+        $user = $auth->getRole('user');
+        $operator = $auth->getRole('operator');
+
+        $auth->addChild($operator, $controlLocation);
+        $auth->addChild($user, $viewLocation);
     }
 }

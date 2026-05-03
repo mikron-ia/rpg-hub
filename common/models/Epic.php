@@ -45,6 +45,7 @@ use yii\web\HttpException;
  * @property Article[] $articles
  * @property Game[] $games
  * @property Group[] $groups
+ * @property Location[] $locations
  * @property Participant[] $participants
  * @property User[] $users
  * @property PointInTime[] $pointsInTime
@@ -392,6 +393,11 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     public function getGroups(): ActiveQuery
     {
         return $this->hasMany(Group::class, ['epic_id' => 'epic_id']);
+    }
+
+    public function getLocations(): ActiveQuery
+    {
+        return $this->hasMany(Location::class, ['epic_id' => 'epic_id']);
     }
 
     public function getGms(): ActiveQuery

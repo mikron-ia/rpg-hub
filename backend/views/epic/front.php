@@ -49,6 +49,14 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
 
         <div class="btn-group btn-group-lg">
             <?= Html::a(
+                Yii::t('app', 'BUTTON_LOCATION'),
+                ['location/index', 'epic' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
+        </div>
+
+        <div class="btn-group btn-group-lg">
+            <?= Html::a(
                 Yii::t('app', 'BUTTON_CHARACTER_SHEETS'),
                 ['character-sheet/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],

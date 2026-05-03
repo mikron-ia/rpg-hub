@@ -29,6 +29,7 @@ use yii\widgets\DetailView;
                 ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_STORIES'), 'value' => count($model->stories)],
                 ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_CHARACTERS'), 'value' => count($model->people)],
                 ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_GROUPS'), 'value' => count($model->groups)],
+                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_LOCATIONS'), 'value' => count($model->locations)],
                 ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_CHARACTER_SHEETS'), 'value' => count($model->characters)],
                 ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_RECAPS'), 'value' => count($model->recaps)],
                 ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_POINTS_IN_TIME'), 'value' => count($model->pointsInTime)],
