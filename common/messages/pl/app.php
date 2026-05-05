@@ -256,7 +256,6 @@ return [
     'DESCRIPTION_POINT_IN_TIME_END' => 'Nieaktualne po (IC)',
     'DESCRIPTION_POINT_IN_TIME_START' => 'Aktualne od (IC)',
     'DESCRIPTION_POINT_IN_TIME_STILL_VALID' => 'Nadal aktualne w / Stan na (IC)',
-    'DESCRIPTION_REPLACED' => 'Zastąpione',
     'DESCRIPTION_SET_AS_CURRENT_FAILURE' => 'Ustawienie jako aktualny nieudane.',
     'DESCRIPTION_SET_AS_CURRENT_SUCCESS {count}' => 'Opis ustawiony jako aktualny. Opisów tego typu ustawionych jako nieaktualne: {count}.',
     'DESCRIPTION_SINCE_IC {when}' => 'Aktualne od: {when}',

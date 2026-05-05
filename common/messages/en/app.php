@@ -256,7 +256,6 @@ return [
     'DESCRIPTION_POINT_IN_TIME_END' => 'No longer valid since',
     'DESCRIPTION_POINT_IN_TIME_START' => 'Valid since',
     'DESCRIPTION_POINT_IN_TIME_STILL_VALID' => 'Still valid during',
-    'DESCRIPTION_REPLACED' => 'Replaced',
     'DESCRIPTION_SET_AS_CURRENT_FAILURE' => 'Setting as current unsuccessful.',
     'DESCRIPTION_SET_AS_CURRENT_SUCCESS {count}' => 'Set as current. Descriptions now set as outdated: {count}.',
     'DESCRIPTION_SINCE_IC {when}' => 'Valid from: {when}',

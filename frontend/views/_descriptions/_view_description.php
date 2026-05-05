@@ -57,10 +57,6 @@ if ($pointInTimeStartExists || $pointInTimeEndExists || $pointInTimeStillValidEx
         </div>
     <?php endif; ?>
 
-    <div class="tag-box description-replaced" style="display: none;">
-        <?= Yii::t('app', 'DESCRIPTION_REPLACED'); ?>
-    </div>
-
     <div class="public-notes">
         <?= $model->getPublicFormatted(); ?>
     </div>
