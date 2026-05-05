@@ -19,7 +19,9 @@ GroupAsset::register($this);
 $this->title = Yii::t('app', 'TITLE_GROUPS_INDEX');
 $this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
+
 <div class="group-index">
 
     <div class="buttoned-header">
@@ -47,7 +49,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterModel' => $searchModel,
             'filterPosition' => null,
             'columns' => [
-                'name',
+                [
+                    'attribute' => 'name',
+                    'format' => 'raw',
+                    'value' => function (Group $model) {
+                        return $model->name
+                            . ($model->display_as_tab
+                                ? '<span class="glyphicon glyphicon-list-alt table-icon-in-cell" title="' . Yii::t(
+                                    'app',
+                                    'GROUP_IS_DISPLAYED_AS_TAB'
+                                ) . '"></span>'
+                                : '');
+                    }
+                ],
                 [
                     'attribute' => 'master_group_id',
                     'format' => 'raw',
@@ -84,13 +98,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             . ' / ' . $model->getImportanceCategoryObject()->minimum()
                             . '</span>';
                     }
-                ],
-                [
-                    'label' => Yii::t('app', 'GROUP_DISPLAY_AS_TAB_SHORT'),
-                    'headerOptions' => ['class' => 'text-center'],
-                    'contentOptions' => ['class' => 'text-center'],
-                    'format' => 'boolean',
-                    'value' => fn(Group $model) => $model->display_as_tab,
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',

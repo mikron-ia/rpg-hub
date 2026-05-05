@@ -89,7 +89,7 @@ a.desc:after {
 }
 
 .grid-view td {
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .grid-view .filters input,
@@ -511,6 +511,11 @@ p {
     padding: 1.5em;
 }
 
+.table-icon-in-cell {
+    color: #337ab7;
+    float: right;
+}
+
 .table-tag {
     padding: 1px 5px;
     font-size: 0.8em;
@@ -664,7 +669,6 @@ p {
 }
 
 /* Assignment buttons */
-
 .assignment-input-group {
     display: flex;
     align-items: stretch;
