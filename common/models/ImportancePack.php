@@ -26,7 +26,7 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
 {
     use ToolsForSelfFillingPacks;
 
-    private HasImportance $controllingObject;
+    private ?HasImportance $controllingObject = null;
 
     public static function tableName(): string
     {
@@ -93,7 +93,7 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
         return $pack;
     }
 
-    public function getControllingObject(): HasImportance
+    public function getControllingObject(): ?HasImportance
     {
         if (empty($this->controllingObject)) {
             $className = 'common\models\\' . $this->class;
@@ -103,9 +103,9 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
         return $this->controllingObject;
     }
 
-    public function getEpic(): Epic
+    public function getEpic(?HasImportance $controllingObject): Epic
     {
-        return $this->getControllingObject()->getEpic()->one();
+        return ($controllingObject ?? $this->getControllingObject())->getEpic()->one();
     }
 
     public function createEmptyContent(int $userId): Importance
@@ -121,13 +121,17 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
      */
     public function recalculatePack(): bool
     {
+        $controllingObject = $this->getControllingObject();
+
+        if ($controllingObject === null) {
+            return false; // no controlling object means no meaningful data for importance calculations
+        }
+
         $result = $this->createAbsentRecords(
-            $this->getEpic(),
+            $this->getEpic($controllingObject),
             $this,
             Importance::findAll(['importance_pack_id' => $this->importance_pack_id])
         );
-
-        $controllingObject = $this->getControllingObject();
 
         foreach ($this->importances as $importance) {
             $result = $result && $importance->calculateAndSave($controllingObject);
