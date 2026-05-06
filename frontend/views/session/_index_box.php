@@ -1,9 +1,9 @@
 <?php
 
+use common\models\Game;
 use yii\helpers\Html;
 
-/** @var $model \common\models\Game */
-
+/** @var $model Game */
 ?>
 
 <div id="session-<?= $model->game_id; ?>">
@@ -13,12 +13,20 @@ use yii\helpers\Html;
        data-target="#session-notes-<?php echo $model->game_id; ?>"
        onclick="$(this).toggleClass('session-box-closed session-box-open')"
     >
-        <?= Html::tag('span', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass(), 'game-status-in-row']]) ?>
+        <?= Html::tag(
+            'span',
+            $model->getStatus()->getName(),
+            ['class' => ['game-status', $model->getStatus()->getClass(), 'game-status-in-row']]
+        ) ?>
         <?php echo Html::tag('span', Html::encode($model->basics), []); ?>
     </p>
 
     <div class="collapse" id="session-notes-<?php echo $model->game_id; ?>">
-        <?= Html::tag('p', $model->getStatus(), ['class' => ['game-status', $model->getStatusClass(), 'game-status-in-description']]) ?>
+        <?= Html::tag(
+            'p',
+            $model->getStatus()->getName(),
+            ['class' => ['game-status', $model->getStatus()->getClass(), 'game-status-in-description']]
+        ) ?>
         <p>
             <strong><?php echo Yii::t('app', 'LABEL_EPIC'); ?>:</strong> <?php echo Html::encode($model->epic->name); ?>
         </p>

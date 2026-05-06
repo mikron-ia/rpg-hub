@@ -5,7 +5,7 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasEpicControl;
 use common\models\core\HasKey;
-use common\models\core\HasStatus;
+use common\models\state\GameStatus;
 use common\models\tools\ToolsForEntity;
 use Override;
 use Yii;
@@ -18,8 +18,6 @@ use yii\web\HttpException;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
- * This is the model class for table "game".
- *
  * @property int $game_id
  * @property int $epic_id
  * @property string $key
@@ -40,19 +38,9 @@ use yii2tech\ar\position\PositionBehavior;
  * @method movePrev()
  * @method moveNext()
  */
-class Game extends ActiveRecord implements HasEpicControl, HasKey, HasStatus
+class Game extends ActiveRecord implements HasEpicControl, HasKey
 {
     use ToolsForEntity;
-
-    const string STATUS_PROPOSED = 'proposed';       // game was entered on page; next: ANNOUNCED, PLANNED, UNPLANNED
-    const string STATUS_ANNOUNCED = 'announced';     // information was propagated; next: PLANNED, UNPLANNED
-    const string STATUS_UNPLANNED = 'unplanned';     // game failed to achieve planning stage; next: none
-    const string STATUS_PLANNED = 'planned';         // game is planned; next: PROGRESSING, CANCELLED
-    const string STATUS_CANCELLED = 'cancelled';     // plans cancelled; next: none
-    const string STATUS_PROGRESSING = 'progressing'; // game is in progress; next: COMPLETED, ABORTED
-    const string STATUS_ABORTED = 'aborted';         // game was started but aborted; next: none
-    const string STATUS_COMPLETED = 'completed';     // game was completed; next: CLOSED
-    const string STATUS_CLOSED = 'closed';           // game was described; next: none
 
     #[Override]
     public static function tableName(): string
@@ -80,11 +68,11 @@ class Game extends ActiveRecord implements HasEpicControl, HasKey, HasStatus
             [
                 ['status'],
                 'in',
-                'range' => $this->getAllowedChange(),
+                'range' => $this->getStatus()->allowedSuccessorsAsKeys(),
                 'message' => Yii::t(
                     'app',
-                    'EPIC_STATUS_NOT_ALLOWED {allowed}',
-                    ['allowed' => implode(', ', $this->getAllowedChangeNames())],
+                    'GAME_STATE_NOT_ALLOWED {allowed}',
+                    ['allowed' => implode(', ', $this->getStatus()->allowedSuccessorsAsStrings())],
                 ),
                 'on' => 'update',
             ],
@@ -193,82 +181,6 @@ class Game extends ActiveRecord implements HasEpicControl, HasKey, HasStatus
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
-    #[Override]
-    static public function statusNames(): array
-    {
-        return [
-            self::STATUS_PROPOSED => Yii::t('app', 'GAME_STATUS_PROPOSED'),
-            self::STATUS_ANNOUNCED => Yii::t('app', 'GAME_STATUS_ANNOUNCED'),
-            self::STATUS_UNPLANNED => Yii::t('app', 'GAME_STATUS_UNPLANNED'),
-            self::STATUS_PLANNED => Yii::t('app', 'GAME_STATUS_PLANNED'),
-            self::STATUS_CANCELLED => Yii::t('app', 'GAME_STATUS_CANCELLED'),
-            self::STATUS_PROGRESSING => Yii::t('app', 'GAME_STATUS_PROGRESSING'),
-            self::STATUS_ABORTED => Yii::t('app', 'GAME_STATUS_ABORTED'),
-            self::STATUS_COMPLETED => Yii::t('app', 'GAME_STATUS_COMPLETED'),
-            self::STATUS_CLOSED => Yii::t('app', 'GAME_STATUS_CLOSED'),
-        ];
-    }
-
-    #[Override]
-    static public function statusClasses(): array
-    {
-        return [
-            self::STATUS_PROPOSED => 'game-status-proposed',
-            self::STATUS_ANNOUNCED => 'game-status-announced',
-            self::STATUS_UNPLANNED => 'game-status-unplanned',
-            self::STATUS_PLANNED => 'game-status-planned',
-            self::STATUS_CANCELLED => 'game-status-cancelled',
-            self::STATUS_PROGRESSING => 'game-status-progressing',
-            self::STATUS_ABORTED => 'game-status-aborted',
-            self::STATUS_COMPLETED => 'game-status-completed',
-            self::STATUS_CLOSED => 'game-status-closed',
-        ];
-    }
-
-    #[Override]
-    public function statusAllowedChanges(): array
-    {
-        return [
-            self::STATUS_PROPOSED => [self::STATUS_ANNOUNCED, self::STATUS_PLANNED, self::STATUS_UNPLANNED],
-            self::STATUS_ANNOUNCED => [self::STATUS_PLANNED, self::STATUS_UNPLANNED],
-            self::STATUS_UNPLANNED => [],
-            self::STATUS_PLANNED => [self::STATUS_PROGRESSING, self::STATUS_CANCELLED],
-            self::STATUS_CANCELLED => [],
-            self::STATUS_PROGRESSING => [self::STATUS_COMPLETED, self::STATUS_ABORTED],
-            self::STATUS_ABORTED => [],
-            self::STATUS_COMPLETED => [self::STATUS_CLOSED],
-            self::STATUS_CLOSED => [],
-        ];
-    }
-
-    #[Override]
-    public function getStatus(): string
-    {
-        $names = self::statusNames();
-        return $names[$this->status] ?? '?';
-    }
-
-    #[Override]
-    public function getStatusClass(): string
-    {
-        $names = self::statusClasses();
-        return $names[$this->status] ?? '';
-    }
-
-    #[Override]
-    public function getAllowedChange(): array
-    {
-        return array_merge(($this->statusAllowedChanges()[$this->status] ?? []), [$this->status]);
-    }
-
-    #[Override]
-    public function getAllowedChangeNames(): array
-    {
-        return array_filter(self::statusNames(), function ($key) {
-            return in_array($key, $this->getAllowedChange());
-        }, ARRAY_FILTER_USE_KEY);
-    }
-
     public function getRecap(): ActiveQuery
     {
         return $this->hasOne(Recap::class, ['recap_id' => 'recap_id']);
@@ -277,6 +189,11 @@ class Game extends ActiveRecord implements HasEpicControl, HasKey, HasStatus
     public function getUtilityBag(): ActiveQuery
     {
         return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
+    }
+
+    public function getStatus(): GameStatus
+    {
+        return $this->status === null ? GameStatus::Proposed : GameStatus::from($this->status);
     }
 
     #[Override]

@@ -2,6 +2,7 @@
 
 use common\models\core\Visibility;
 use common\models\Scenario;
+use common\models\state\GameStatus;
 use yii\db\Migration;
 
 class m170205_123244_v0_8_0 extends Migration
@@ -71,7 +72,7 @@ class m170205_123244_v0_8_0 extends Migration
             'game_id' => $this->primaryKey()->unsigned(),
             'epic_id' => $this->integer(11)->unsigned()->notNull(),
             'basics' => $this->string()->notNull(),
-            'status' => $this->string(20)->notNull()->defaultValue(\common\models\Game::STATUS_PROPOSED),
+            'status' => $this->string(20)->notNull()->defaultValue(GameStatus::Proposed->value),
             'position' => $this->integer()->defaultValue(0),
             'notes' => $this->text(),
         ], $tableOptions);

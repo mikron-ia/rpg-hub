@@ -127,6 +127,7 @@ class GameController extends CmsController
         if (!$model->canUserControlYou()) {
             Game::throwExceptionAboutControl();
         }
+        $model->setScenario('update');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);

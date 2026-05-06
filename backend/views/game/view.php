@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'status',
                         'format' => 'raw',
-                        'value' => '<span class="table-tag game-status ' . $model->getStatusClass() . '">' . $model->getStatus() . '</span>',
+                        'value' => '<span class="table-tag game-status ' . $model->getStatus()->getClass() . '">' . $model->getStatus()->getName() . '</span>',
                     ]
                 ],
             ]) ?>

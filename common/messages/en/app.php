@@ -439,6 +439,7 @@ return [
     'GAME_SESSION_DELETE_FAILED' => 'Session deletion failed',
     'GAME_SESSION_DELETE_SUCCESS' => 'Session successfully deleted',
     'GAME_SESSION_NOT_AVAILABLE' => 'Session not available',
+    'GAME_STATE_NOT_ALLOWED {allowed}' => 'Allowed states: {allowed}',
     'GAME_STATUS' => 'Status',
     'GAME_STATUS_ABORTED' => 'Interrupted',
     'GAME_STATUS_ANNOUNCED' => 'Announced',

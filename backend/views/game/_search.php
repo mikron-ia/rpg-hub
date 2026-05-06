@@ -1,7 +1,7 @@
 <?php
 
 use common\models\Epic;
-use common\models\Game;
+use common\models\state\GameStatus;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\web\View;
@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status')->widget(
         Select2::class,
-        ['data' => Game::statusNames(), 'options' => ['multiple' => true]]
+        ['data' => GameStatus::namesForDropdown(), 'options' => ['multiple' => true]]
     ) ?>
 
     <?php echo $form->field($model, 'details') ?>

@@ -439,6 +439,7 @@ return [
     'GAME_SESSION_DELETE_FAILED' => 'Usunięcie sesji nieskuteczne',
     'GAME_SESSION_DELETE_SUCCESS' => 'Sesja skutecznie usunięta',
     'GAME_SESSION_NOT_AVAILABLE' => 'Sesja niedostępna',
+    'GAME_STATE_NOT_ALLOWED {allowed}' => 'Dopuszczalne stany wynikające z bieżącego to: {allowed}',
     'GAME_STATUS' => 'Status',
     'GAME_STATUS_ABORTED' => 'Przerwana',
     'GAME_STATUS_ANNOUNCED' => 'Ogłoszona',

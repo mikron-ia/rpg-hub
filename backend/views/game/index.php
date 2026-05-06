@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'status',
                 'format' => 'raw',
-                'value' => fn(Game $model) => $model->getStatus(),
+                'value' => fn(Game $model) => $model->getStatus()->getName(),
             ],
             [
                 'class' => 'yii\grid\ActionColumn',

@@ -4,6 +4,7 @@ use backend\assets\GameAsset;
 use common\models\EpicQuery;
 use common\models\Game;
 use common\models\RecapQuery;
+use common\models\state\GameStatus;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\helpers\Html;
@@ -31,7 +32,7 @@ GameAsset::register($this);
     <div class="col-md-6 col-lg-2">
         <?= $form
             ->field($model, 'status')
-            ->dropDownList($model->isNewRecord ? Game::statusNames() : $model->getAllowedChangeNames())
+            ->dropDownList($model->isNewRecord ? GameStatus::namesForDropdown() : $model->getStatus()->allowedSuccessorsAsStrings())
         ?>
     </div>
 
