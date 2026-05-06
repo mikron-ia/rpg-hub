@@ -114,7 +114,7 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
     }
 
     /**
-     * Recalculates pack importance objects
+     * Recalculates the pack's importance objects
      *
      * @throws Exception
      * @throws InvalidBackendConfigurationException
@@ -127,8 +127,10 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
             Importance::findAll(['importance_pack_id' => $this->importance_pack_id])
         );
 
+        $controllingObject = $this->getControllingObject();
+
         foreach ($this->importances as $importance) {
-            $result = $result && $importance->calculateAndSave();
+            $result = $result && $importance->calculateAndSave($controllingObject);
         }
 
         return $result;

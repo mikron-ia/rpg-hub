@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\components\ImportanceCalculator;
 use common\components\ImportanceParametersDto;
+use common\models\core\HasImportance;
 use common\models\exceptions\InvalidBackendConfigurationException;
 use DateTimeImmutable;
 use Yii;
@@ -86,19 +87,19 @@ class Importance extends ActiveRecord
     /**
      * @throws InvalidBackendConfigurationException
      */
-    private function calculate(): int
+    private function calculate(HasImportance $controllingObject): int
     {
         return (new ImportanceCalculator(ImportanceParametersDto::create(Yii::$app->params['importance'])))
-            ->calculate($this->importancePack->getControllingObject(), $this->user, new DateTimeImmutable());
+            ->calculate($controllingObject, $this->user, new DateTimeImmutable());
     }
 
     /**
      * @throws Exception
      * @throws InvalidBackendConfigurationException
      */
-    public function calculateAndSave(): bool
+    public function calculateAndSave(HasImportance $controllingObject): bool
     {
-        $this->importance = $this->calculate();
+        $this->importance = $this->calculate($controllingObject);
         return $this->save();
     }
 }

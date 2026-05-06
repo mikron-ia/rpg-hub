@@ -20,8 +20,8 @@ trait ToolsForSelfFillingPacks
 
         foreach ($users as $user) {
             if (!isset($objectsOrdered[$user->user_id])) {
-                $scribbleObject = $pack->createEmptyContent($user->user_id);
-                $saveResult = $scribbleObject->save();
+                $newObject = $pack->createEmptyContent($user->user_id);
+                $saveResult = $newObject->save();
                 $result = $result && $saveResult;
             }
         }
