@@ -15,6 +15,8 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
+use yii\web\HttpException;
 
 /**
  * This is the model class for table "character_sheet".
@@ -41,6 +43,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 {
     use ToolsForEntity;
 
+    #[Override]
     public static function tableName(): string
     {
         return 'character_sheet';
@@ -52,6 +55,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         return 'character_sheet';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -103,6 +107,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -118,6 +123,10 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         ];
     }
 
+    /**
+     * @throws Exception
+     */
+    #[Override]
     public function afterFind(): void
     {
         if ($this->seen_pack_id) {
@@ -126,12 +135,21 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         parent::afterFind();
     }
 
+    /**
+     * @throws Exception
+     */
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         $this->seenPack->updateRecord();
         parent::afterSave($insert, $changedAttributes);
     }
 
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    #[Override]
     public function beforeSave($insert): bool
     {
         if ($insert) {
@@ -155,6 +173,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     /**
      * @return array<string,array<string,string>>
      */
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -166,14 +185,13 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         ];
     }
 
+    #[Override]
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
+
     public function getCurrentlyDeliveredPerson(): ActiveQuery
     {
         return $this->hasOne(Character::class, ['character_id' => 'currently_delivered_character_id']);
@@ -207,6 +225,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function getSimpleDataForApi(): array
     {
         return [
@@ -215,6 +234,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         ];
     }
 
+    #[Override]
     public function getCompleteDataForApi(): array
     {
         $decodedData = json_decode($this->data, true);
@@ -229,6 +249,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         return $decodedData;
     }
 
+    #[Override]
     public function isVisibleInApi(): bool
     {
         return true;
@@ -256,6 +277,8 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 
     /**
      * Creates character sheet record for character
+     *
+     * @throws Exception
      */
     static public function createForCharacter(Character $character): ?CharacterSheet
     {

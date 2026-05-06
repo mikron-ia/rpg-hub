@@ -19,6 +19,7 @@ use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
 use common\models\tools\ToolsForHasScribbles;
 use common\models\tools\ToolsForHasVisibility;
+use DateMalformedStringException;
 use DateTimeImmutable;
 use Override;
 use Yii;
@@ -102,43 +103,37 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Epic::class,
-                'targetAttribute' => ['epic_id' => 'epic_id']
+                'targetAttribute' => ['epic_id' => 'epic_id'],
             ],
             [
                 ['character_sheet_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => CharacterSheet::class,
-                'targetAttribute' => ['character_sheet_id' => 'character_sheet_id']
+                'targetAttribute' => ['character_sheet_id' => 'character_sheet_id'],
             ],
             [
                 ['description_pack_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => DescriptionPack::class,
-                'targetAttribute' => ['description_pack_id' => 'description_pack_id']
+                'targetAttribute' => ['description_pack_id' => 'description_pack_id'],
             ],
             [
                 ['external_data_pack_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => ExternalDataPack::class,
-                'targetAttribute' => ['external_data_pack_id' => 'external_data_pack_id']
+                'targetAttribute' => ['external_data_pack_id' => 'external_data_pack_id'],
             ],
             [
                 ['scribble_pack_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => ScribblePack::class,
-                'targetAttribute' => ['scribble_pack_id' => 'scribble_pack_id']
+                'targetAttribute' => ['scribble_pack_id' => 'scribble_pack_id'],
             ],
-            [
-                ['visibility'],
-                'in',
-                'range' => function () {
-                    return $this->allowedVisibilitiesForValidator();
-                }
-            ],
+            [['visibility'], 'in', 'range' => fn() => $this->allowedVisibilitiesForValidator()],
         ];
     }
 
@@ -221,16 +216,6 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             $this->external_data_pack_id = $pack->external_data_pack_id;
         }
 
-        if (empty($this->seen_pack_id)) {
-            $pack = SeenPack::create('Character');
-            $this->seen_pack_id = $pack->seen_pack_id;
-        }
-
-        if (empty($this->utility_bag_id)) {
-            $pack = UtilityBag::create('Character');
-            $this->utility_bag_id = $pack->utility_bag_id;
-        }
-
         if (empty($this->importance_pack_id)) {
             $pack = ImportancePack::create('Character');
             $this->importance_pack_id = $pack->importance_pack_id;
@@ -239,6 +224,16 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         if (empty($this->scribble_pack_id)) {
             $pack = ScribblePack::create('Character');
             $this->scribble_pack_id = $pack->scribble_pack_id;
+        }
+
+        if (empty($this->seen_pack_id)) {
+            $pack = SeenPack::create('Character');
+            $this->seen_pack_id = $pack->seen_pack_id;
+        }
+
+        if (empty($this->utility_bag_id)) {
+            $pack = UtilityBag::create('Character');
+            $this->utility_bag_id = $pack->utility_bag_id;
         }
 
         if (!$this->is_off_the_record_change) {
@@ -251,6 +246,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     /**
      * @throws Exception
      */
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         if (!$this->is_off_the_record_change) {
@@ -260,6 +256,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         parent::afterSave($insert, $changedAttributes);
     }
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -379,6 +376,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ])->orderBy('status');
     }
 
+    #[Override]
     public function getSimpleDataForApi(): array
     {
         return [
@@ -389,6 +387,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         ];
     }
 
+    #[Override]
     public function getCompleteDataForApi(): array
     {
         $decodedData = json_decode($this->data, true);
@@ -408,13 +407,14 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return $decodedData;
     }
 
+    #[Override]
     public function isVisibleInApi(): bool
     {
         return ($this->getVisibility() === Visibility::VISIBILITY_FULL);
     }
 
     /**
-     * Creates character record for character sheet
+     * Creates character record for the character sheet
      *
      * @throws Exception
      */
@@ -437,7 +437,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     }
 
     /**
-     * Provides list of types allowed by this class
+     * Provides the list of types allowed by this class
      *
      * @return string[]
      */
@@ -485,22 +485,22 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return self::canUserViewInEpic($this->epic);
     }
 
-    static function throwExceptionAboutCreate(): void
+    public static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_CHARACTER'));
     }
 
-    static function throwExceptionAboutControl(): void
+    public static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_CHARACTER'));
     }
 
-    static function throwExceptionAboutIndex(): void
+    public static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_CHARACTER'));
     }
 
-    static function throwExceptionAboutView(): void
+    public static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
     }
@@ -550,11 +550,16 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         return $this->seenPack->getCSSForCurrentUser();
     }
 
+    /**
+     * @throws DateMalformedStringException
+     */
+    #[Override]
     public function getLastModified(): DateTimeImmutable
     {
         return new DateTimeImmutable(date("Y-m-d H:i:s", $this->modified_at));
     }
 
+    #[Override]
     public function getSeenStatusForUser(int $userId): string
     {
         /** @var Seen $sighting */

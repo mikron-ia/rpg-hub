@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Override;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -11,6 +12,7 @@ use yii\data\ActiveDataProvider;
  */
 final class CharacterSheetQuery extends CharacterSheet
 {
+    #[Override]
     public function rules(): array
     {
         return [
@@ -19,6 +21,7 @@ final class CharacterSheetQuery extends CharacterSheet
         ];
     }
 
+    #[Override]
     public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class

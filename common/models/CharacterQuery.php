@@ -6,6 +6,7 @@ use common\dto\CharacterListDataObject;
 use common\models\core\Visibility;
 use common\models\entities\CharacterWithImportance;
 use common\models\tools\ToolsForImportanceInQueries;
+use Override;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -19,7 +20,7 @@ final class CharacterQuery extends Character
 {
     use ToolsForImportanceInQueries;
 
-    private const DEFAULT_PAGE_SIZE = 24;
+    private const int DEFAULT_PAGE_SIZE = 24;
 
     private int $pageCount;
 
@@ -29,6 +30,7 @@ final class CharacterQuery extends Character
         parent::__construct($config);
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -37,13 +39,14 @@ final class CharacterQuery extends Character
         ];
     }
 
+    #[Override]
     public function scenarios(): array
     {
         return Model::scenarios();
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates a data provider instance with a search query applied
      *
      * @param string[] $params
      */
@@ -73,8 +76,8 @@ final class CharacterQuery extends Character
     }
 
     /**
-     * Creates data provider instance with search query applied and applies default order according to importance
-     * This list is more suitable for front section
+     * Creates data a provider instance with a search query applied and applies the default order according to importance
+     * This list is more suitable for the front section
      *
      * @param string[] $params
      */
@@ -84,8 +87,8 @@ final class CharacterQuery extends Character
     }
 
     /**
-     * Creates data provider instance with search query applied and applies default order according to time of the last modification
-     * This list is more suitable for operator section
+     * Creates a data provider instance with a search query applied and applies default order according to time of the last modification
+     * This list is more suitable for the operator section
      *
      * @param string[] $params
      */
@@ -132,7 +135,12 @@ final class CharacterQuery extends Character
 
         return new ArrayDataProvider([
             'allModels' => $models,
-            'sort' => ['attributes' => array_merge(['name', 'visibility', 'importance_category'], array_unique($fields ?? []))],
+            'sort' => [
+                'attributes' => array_merge(
+                    ['name', 'visibility', 'importance_category'],
+                    array_unique($fields ?? []),
+                ),
+            ],
             'pagination' => ['pageSize' => $this->pageCount],
         ]);
     }
