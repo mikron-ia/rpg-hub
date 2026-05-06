@@ -9,12 +9,12 @@ use common\models\CharacterSheet;
 use common\models\core\HasSightings;
 use common\models\Epic;
 use common\models\Group;
+use common\models\Location;
 use common\models\Recap;
 use common\models\Story;
 use yii\console\Controller;
 
 /**
- * Class ImportanceController
  * @package console\controllers
  */
 class SightingController extends Controller
@@ -28,6 +28,7 @@ class SightingController extends Controller
         $characterSheets = CharacterSheet::find()->all();
         $epics = Epic::find()->all();
         $groups = Group::find()->all();
+        $locations = Location::find()->all();
         $recaps = Recap::find()->all();
         $stories = Story::find()->all();
 
@@ -36,6 +37,7 @@ class SightingController extends Controller
         $this->createAbsentSightingObjects($characterSheets);
         $this->createAbsentSightingObjects($epics);
         $this->createAbsentSightingObjects($groups);
+        $this->createAbsentSightingObjects($locations);
         $this->createAbsentSightingObjects($recaps);
         $this->createAbsentSightingObjects($stories);
 

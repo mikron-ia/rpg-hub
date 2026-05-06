@@ -8,6 +8,7 @@ use common\models\CharacterSheet;
 use common\models\Epic;
 use common\models\Game;
 use common\models\Group;
+use common\models\Location;
 use common\models\Parameter;
 use common\models\Recap;
 use common\models\Story;
@@ -163,6 +164,19 @@ class CrutchController extends Controller
     }
 
     /**
+     * @throws DbException
+     */
+    public function actionSaveLocations(): void
+    {
+        $objects = Location::find()->all();
+
+        foreach ($objects as $object) {
+            /** @var Location $object */
+            $object->save(false);
+        }
+    }
+
+    /**
      * Saves everything - to be used to trigger beforeSave() or afterSave() on all
      *
      * @throws InvalidRouteException
@@ -179,5 +193,6 @@ class CrutchController extends Controller
         $this->runAction('save-articles');
         $this->runAction('save-games');
         $this->runAction('save-parameters');
+        $this->runAction('save-locations');
     }
 }

@@ -9,8 +9,6 @@ use yii\console\Controller;
 use yii\db\Exception;
 
 /**
- * Class ImportanceController
- *
  * @package console\controllers
  */
 class ImportanceController extends Controller
@@ -24,11 +22,12 @@ class ImportanceController extends Controller
     public function actionRecalculate(): void
     {
         LoggingHelper::log('Conditional recalculation started', 'importance.calculator.state');
-        if ($this->recalculate(true)) {
-            LoggingHelper::log('Conditional recalculation completed', 'importance.calculator.state');
-        } else {
-            LoggingHelper::log('Conditional recalculation not completed', 'importance.calculator.state');
-        }
+        LoggingHelper::log(
+            message: $this->recalculate(true)
+                ? 'Conditional recalculation completed'
+                : 'Conditional recalculation not completed',
+            prefix: 'importance.calculator.state'
+        );
     }
 
     /**
@@ -40,11 +39,12 @@ class ImportanceController extends Controller
     public function actionRecalculateUnconditionally(): void
     {
         LoggingHelper::log('Unconditional recalculation started', 'importance.calculator.state');
-        if ($this->recalculate(false)) {
-            LoggingHelper::log('Unconditional recalculation completed', 'importance.calculator.state');
-        } else {
-            LoggingHelper::log('Unconditional recalculation not completed', 'importance.calculator.state');
-        }
+        LoggingHelper::log(
+            message: $this->recalculate(false)
+                ? 'Conditional recalculation completed'
+                : 'Conditional recalculation not completed',
+            prefix: 'importance.calculator.state'
+        );
     }
 
     /**
@@ -72,15 +72,15 @@ class ImportanceController extends Controller
                 $pack->unflagForRecalculation();
             } else {
                 LoggingHelper::log(
-                    'Pack ' . $pack->importance_pack_id . ' failed',
-                    'importance.calculator.process'
+                    message: sprintf('Pack %d failed', $pack->importance_pack_id),
+                    prefix: 'importance.calculator.process'
                 );
             }
         }
 
         LoggingHelper::log(
-            'Attempted ' . count($packs) . ' recalculations, succeeded with ' . $successful . '.',
-            'importance.calculator.summary'
+            message: sprintf('Attempted %d recalculations, succeeded with %d.', count($packs), $successful),
+            prefix: 'importance.calculator.summary'
         );
 
         return ($successful === count($packs));
