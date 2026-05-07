@@ -7,13 +7,12 @@ use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/** @var View $this */
-/** @var Image $model */
-/** @var ActiveForm $form */
+/* @var $this View */
+/* @var $model Image */
+/* @var $form ActiveForm */
 ?>
 
 <div class="image-form">
-
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-4">
@@ -35,11 +34,11 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'alt')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-3">
         <?= $form->field($model, 'display_height')->textInput(['maxlength' => true]) ?>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-3">
         <?= $form->field($model, 'display_width')->textInput(['maxlength' => true]) ?>
     </div>
 
@@ -57,5 +56,4 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>

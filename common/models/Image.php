@@ -58,7 +58,7 @@ class Image extends ActiveRecord implements HasEpicControl, HasKey
         return [
             [['name', 'note', 'title', 'alt'], 'default', 'value' => null],
             [['epic_id'], 'required'],
-            [['epic_id'], 'integer'],
+            [['epic_id', 'display_height', 'display_width'], 'integer'],
             [['note'], 'string'],
             [['name', 'title'], 'string', 'max' => 120],
             [['alt'], 'string', 'max' => 255],

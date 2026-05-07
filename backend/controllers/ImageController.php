@@ -97,8 +97,6 @@ class ImageController extends CmsController
             return $this->redirect(['view', 'key' => $model->key]);
         }
 
-        var_dump($model->errors);
-
         return $this->render('create', [
             'model' => $model,
         ]);

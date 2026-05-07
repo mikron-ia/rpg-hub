@@ -1,13 +1,16 @@
 <?php
 
+use common\models\Image;
 use yii\helpers\Html;
+use yii\web\View;
 
-/** @var \yii\web\View $this */
-/** @var \common\models\Image $model */
+/* @var $this View */
+/* @var $model Image */
 
 $this->title = Yii::t('app', 'IMAGE_TITLE_UPDATE');
+$this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'IMAGE_TITLE_INDEX'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'image_id' => $model->image_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'key' => $model->key]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'IMAGE_TITLE_UPDATE');
 ?>
 <div class="image-update">

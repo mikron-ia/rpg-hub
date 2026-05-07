@@ -6,10 +6,11 @@ use yii\web\View;
 use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
-/** @var View $this */
-/** @var Image $model */
+/* @var $this View */
+/* @var $model Image */
 
 $this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'IMAGE_TITLE_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 YiiAsset::register($this);

@@ -4,8 +4,8 @@ use common\models\Image;
 use yii\helpers\Html;
 use yii\web\View;
 
-/** @var View $this */
-/** @var Image $model */
+/* @var $this View */
+/* @var $model Image */
 
 $this->title = Yii::t('app', 'IMAGE_TITLE_CREATE');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'IMAGE_TITLE_INDEX'), 'url' => ['index']];

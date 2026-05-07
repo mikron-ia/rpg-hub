@@ -11,9 +11,9 @@ use yii\grid\GridView;
 use yii\web\View;
 
 /* @var $epic Epic */
-/** @var View $this */
-/** @var ImageQuery $searchModel */
-/** @var ActiveDataProvider $dataProvider */
+/* @var $this View */
+/* @var $searchModel ImageQuery */
+/* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'IMAGE_TITLE_INDEX');
 $this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];
