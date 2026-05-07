@@ -67,6 +67,7 @@ return [
         'game' => getenv('KEY_GENERATION_GAME'),
         'group' => getenv('KEY_GENERATION_GROUP'),
         'groupMembership' => getenv('KEY_GENERATION_GROUP_MEMBERSHIP'),
+        'image' => getenv('KEY_GENERATION_IMAGE'),
         'location' => getenv('KEY_GENERATION_LOCATION'),
         'parameter' => getenv('KEY_GENERATION_PARAMETER'),
         'participant' => getenv('KEY_GENERATION_PARTICIPANT'),

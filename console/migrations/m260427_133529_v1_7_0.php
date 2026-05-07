@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\ImageDisplayMode;
 use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
 use yii\db\Migration;
@@ -25,11 +26,74 @@ class m260427_133529_v1_7_0 extends Migration
             'seen_pack_id' => $this->integer(11)->unsigned(),
             'utility_bag_id' => $this->integer(11)->unsigned(),
         ]);
+
+        $this->createTable('{{%image}}', [
+            'image_id' => $this->primaryKey()->unsigned(),
+            'epic_id' => $this->integer(11)->unsigned()->notNull(),
+            'key' => $this->string(80)->notNull(),
+            'name' => $this->string(120)->null(),
+            'note' => $this->text()->null(),
+            'title' => $this->string(120)->null(),
+            'alt' => $this->string(255)->null(),
+            'display_height' => $this->smallInteger()->unsigned()->null(),
+            'display_width' => $this->smallInteger()->unsigned()->null(),
+            'created_at' => $this->integer(11)->unsigned()->notNull(),
+            'updated_at' => $this->integer(11)->unsigned()->notNull(),
+            'created_by' => $this->integer()->unsigned()->notNull(),
+            'updated_by' => $this->integer()->unsigned()->notNull(),
+        ]);
+
+        $this->addForeignKey('image_user_creator', 'image', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('image_user_modifier', 'image', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+
+        $this->createTable('{{%image_link}}', [
+            'image_link_id' => $this->primaryKey()->unsigned(),
+            'image_id' => $this->integer(11)->unsigned()->notNull(),
+            'link' => $this->string(255)->notNull(),
+            'display_mode' => $this->char(6)->notNull()->defaultValue(ImageDisplayMode::Always->value),
+            'display_weight' => $this->smallInteger()->unsigned()->notNull()->defaultValue(100),
+            'created_at' => $this->integer(11)->unsigned()->notNull(),
+            'updated_at' => $this->integer(11)->unsigned()->notNull(),
+            'created_by' => $this->integer()->unsigned()->notNull(),
+            'updated_by' => $this->integer()->unsigned()->notNull(),
+        ]);
+
+        $this->addForeignKey('image_link_image', 'image_link', 'image_id', 'image', 'image_id', 'RESTRICT', 'CASCADE');
+
+        $this->addForeignKey(
+            'image_link_user_creator',
+            'image_link',
+            'created_by',
+            'user',
+            'id',
+            'RESTRICT',
+            'CASCADE'
+        );
+        $this->addForeignKey(
+            'image_link_user_modifier',
+            'image_link',
+            'updated_by',
+            'user',
+            'id',
+            'RESTRICT',
+            'CASCADE');
     }
 
     #[Override]
     public function safeDown(): void
     {
+        $this->dropForeignKey('image_link_user_modifier', 'image_link');
+        $this->dropForeignKey('image_link_user_creator', 'image_link');
+
+        $this->dropForeignKey('image_link_image', 'image_link');
+
+        $this->dropTable('{{%image_link}}');
+
+        $this->dropForeignKey('image_user_modifier', 'image');
+        $this->dropForeignKey('image_user_creator', 'image');
+
+        $this->dropTable('{{%image}}');
+
         $this->dropTable('{{%location}}');
     }
 }
