@@ -46,6 +46,9 @@ class ImageController extends CmsController
         );
     }
 
+    /**
+     * @throws HttpException
+     */
     public function actionIndex(): string
     {
         if (!empty($epic)) {
@@ -73,12 +76,18 @@ class ImageController extends CmsController
     }
 
     /**
-     * @throws NotFoundHttpException
+     * @throws HttpException
      */
     public function actionView(string $key): string
     {
+        $model = $this->findModel($key);
+
+        if (!$model->canUserViewYou()) {
+            Image::throwExceptionAboutView();
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($key),
+            'model' =>$model,
         ]);
     }
 
@@ -88,7 +97,9 @@ class ImageController extends CmsController
      */
     public function actionCreate(?string $epic = null): Response|string
     {
-        // todo add security
+        if (!Image::canUserCreateThem()) {
+            Image::throwExceptionAboutCreate();
+        }
 
         $model = new Image();
         $this->setEpicOnObject($epic, $model);
@@ -104,11 +115,15 @@ class ImageController extends CmsController
 
     /**
      * @throws Exception
-     * @throws NotFoundHttpException
+     * @throws HttpException
      */
     public function actionUpdate(string $key): Response|string
     {
         $model = $this->findModel($key);
+
+        if (!$model->canUserControlYou()) {
+            Image::throwExceptionAboutControl();
+        }
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
@@ -120,13 +135,19 @@ class ImageController extends CmsController
     }
 
     /**
-     * @throws NotFoundHttpException
+     * @throws HttpException
      * @throws StaleObjectException
      * @throws Throwable
      */
     public function actionDelete(string $key): Response|string
     {
-        $this->findModel($key)->delete();
+        $model = $this->findModel($key);
+
+        if (!$model->canUserControlYou()) {
+            Image::throwExceptionAboutControl();
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }
@@ -134,7 +155,7 @@ class ImageController extends CmsController
     /**
      * @throws NotFoundHttpException
      */
-    protected function findModel(string $key)
+    protected function findModel(string $key): ?Image
     {
         if (($model = Image::findOne(['key' => $key])) !== null) {
             return $model;

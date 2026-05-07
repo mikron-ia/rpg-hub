@@ -22,15 +22,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="image-index">
 
     <div class="buttoned-header">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
+        <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(
             Yii::t('app', 'BUTTON_IMAGE_CREATE'),
             ['create', 'epic' => $epic->key],
             ['class' => 'btn btn-success'],
         ); ?>
-    </p>
     </div>
 
     <div class="col-md-9">
@@ -39,15 +36,45 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterPosition' => null,
             'columns' => [
                 'name',
-                'display_height',
-                'display_width',
-                'created_at:datetime',
-                'updated_at:datetime',
+                [
+                    'label' => Yii::t('app', 'IMAGE_LINK_COUNT'),
+                    'value' => function (Image $model) {
+                        return count($model->imageLinks);
+                    },
+                    'contentOptions' => ['class' => 'text-center'],
+                    'headerOptions' => ['class' => 'text-center'],
+                ],
+                [
+                    'attribute' => 'created_at',
+                    'format' => 'datetime',
+                    'contentOptions' => ['class' => 'text-center'],
+                    'headerOptions' => ['class' => 'text-center'],
+                ],
+                [
+                    'attribute' => 'updated_at',
+                    'format' => 'datetime',
+                    'contentOptions' => ['class' => 'text-center'],
+                    'headerOptions' => ['class' => 'text-center'],
+                ],
                 [
                     'class' => ActionColumn::class,
-                    'urlCreator' => function ($action, Image $model, $key, $index, $column) {
-                        return Url::toRoute([$action, 'key' => $model->key]);
-                    }
+                    'template' => '{view} {update}',
+                    'buttons' => [
+                        'view' => function ($url, Image $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-eye-open"></span>',
+                                Yii::$app->urlManager->createUrl(['image/view', 'key' => $model->key]),
+                                ['title' => Yii::t('app', 'BUTTON_VIEW')]
+                            );
+                        },
+                        'update' => function ($url, Image $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-pencil"></span>',
+                                Yii::$app->urlManager->createUrl(['image/update', 'key' => $model->key]),
+                                ['title' => Yii::t('app', 'BUTTON_UPDATE')]
+                            );
+                        },
+                    ],
                 ],
             ],
         ]); ?>

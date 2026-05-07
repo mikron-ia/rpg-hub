@@ -2,8 +2,12 @@
 
 namespace common\models;
 
+use common\behaviours\PerformedActionBehavior;
+use common\models\core\ImageDisplayMode;
 use Override;
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 use Yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -37,24 +41,31 @@ class ImageLink extends ActiveRecord
     {
         return [
             [['title', 'alt'], 'default', 'value' => null],
-            [['display_mode'], 'default', 'value' => 'always'],
+            [['display_mode'], 'default', 'value' => ImageDisplayMode::Always->value],
             [['display_weight'], 'default', 'value' => 100],
-            [['image_id', 'link', 'updated_at', 'modified_at', 'created_by', 'modified_by'], 'required'],
-            [['image_id', 'display_weight', 'updated_at', 'modified_at', 'created_by', 'modified_by'], 'integer'],
+            [['image_id', 'link'], 'required'],
+            [['image_id', 'display_weight'], 'integer'],
             [['note'], 'string'],
             [['link', 'alt'], 'string', 'max' => 255],
             [['title'], 'string', 'max' => 120],
             [['display_mode'], 'string', 'max' => 6],
-            [['image_id'], 'exist', 'skipOnError' => true, 'targetClass' => Image::class, 'targetAttribute' => ['image_id' => 'image_id']],
+            [['display_mode'], 'in', 'range' => fn() => ImageDisplayMode::allowedValues()],
+            [
+                ['image_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Image::class,
+                'targetAttribute' => ['image_id' => 'image_id'],
+            ],
         ];
     }
 
     #[Override]
-    public function attributeLabels():array
+    public function attributeLabels(): array
     {
         return [
             'image_link_id' => Yii::t('app', 'IMAGE_LINK_ID'),
-            'image_id' => Yii::t('app', 'IMAGE_ID'),
+            'image_id' => Yii::t('app', 'LABEL_IMAGE'),
             'link' => Yii::t('app', 'IMAGE_LINK_LINK'),
             'display_mode' => Yii::t('app', 'IMAGE_LINK_DISPLAY_MODE'),
             'display_weight' => Yii::t('app', 'IMAGE_LINK_DISPLAY_WEIGHT'),
@@ -71,6 +82,20 @@ class ImageLink extends ActiveRecord
         return [
             'display_mode' => Yii::t('app', 'IMAGE_LINK_HINT_DISPLAY_MODE'),
             'display_weight' => Yii::t('app', 'IMAGE_LINK_HINT_DISPLAY_WEIGHT'),
+        ];
+    }
+
+    #[Override]
+    public function behaviors(): array
+    {
+        return [
+            'performedActionBehavior' => [
+                'class' => PerformedActionBehavior::class,
+                'idName' => 'image_id',
+                'className' => 'Image',
+            ],
+            'blameableBehavior' => ['class' => BlameableBehavior::class],
+            'timestampBehavior' => ['class' => TimestampBehavior::class],
         ];
     }
 

@@ -418,6 +418,9 @@ class RbacController extends Controller
         $gameMasterRule = $auth->getRule('epicGameMaster');
         $watcherRule = $auth->getRule('epicWatcher');
 
+        $user = $auth->getRole('user');
+        $operator = $auth->getRole('operator');
+
         $controlLocation = $auth->createPermission('controlLocation');
         $controlLocation->description = 'Able to add, edit, or remove a location for Epic';
         $controlLocation->ruleName = $gameMasterRule->name;
@@ -430,10 +433,22 @@ class RbacController extends Controller
 
         $auth->add($viewLocation);
 
-        $user = $auth->getRole('user');
-        $operator = $auth->getRole('operator');
-
         $auth->addChild($operator, $controlLocation);
         $auth->addChild($user, $viewLocation);
+
+        $controlImage = $auth->createPermission('controlImage');
+        $controlImage->description = 'Able to add, edit, or remove a image for Epic';
+        $controlImage->ruleName = $gameMasterRule->name;
+
+        $auth->add($controlImage);
+
+        $viewImage = $auth->createPermission('viewImage');
+        $viewImage->description = 'Able to view an image';
+        $viewImage->ruleName = $watcherRule->name;
+
+        $auth->add($viewImage);
+
+        $auth->addChild($operator, $controlImage);
+        $auth->addChild($user, $viewImage);
     }
 }

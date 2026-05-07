@@ -22,8 +22,16 @@ use yii\widgets\ActiveForm;
         ); ?>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-4">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    </div>
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'display_height')->textInput(['maxlength' => true]) ?>
+    </div>
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'display_width')->textInput(['maxlength' => true]) ?>
     </div>
 
     <div class="col-md-12">
@@ -32,14 +40,6 @@ use yii\widgets\ActiveForm;
 
     <div class="col-md-12">
         <?= $form->field($model, 'alt')->textInput(['maxlength' => true]) ?>
-    </div>
-
-    <div class="col-md-3">
-        <?= $form->field($model, 'display_height')->textInput(['maxlength' => true]) ?>
-    </div>
-
-    <div class="col-md-3">
-        <?= $form->field($model, 'display_width')->textInput(['maxlength' => true]) ?>
     </div>
 
     <div class="col-md-12">
