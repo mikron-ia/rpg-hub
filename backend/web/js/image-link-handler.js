@@ -23,3 +23,16 @@ $('.update-image-link').click(function () {
         }
     );
 });
+
+$('.view-image-link').click(function () {
+    $.get(
+        '../image/view-link',
+        {
+            imageLinkKey: $(this).data('key')
+        },
+        function (data) {
+            $('.modal-body').html(data);
+            $('#view-image-link-modal').modal();
+        }
+    );
+});

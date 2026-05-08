@@ -5,6 +5,7 @@ use common\models\Image;
 use common\models\ImageLink;
 use yii\bootstrap\Modal;
 use yii\data\ActiveDataProvider;
+use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\web\View;
@@ -119,10 +120,18 @@ ImageAsset::register($this);
                     'enableSorting' => false,
                 ],
                 [
-                    'class' => 'yii\grid\ActionColumn',
-                    'template' => '{update} {delete}',
+                    'class' => ActionColumn::class,
+                    'template' => '{view} {update} {delete}',
                     'buttons' => [
-                        'update' => function ($url, ImageLink $model, $key) {
+                        'view' => function ($url, ImageLink $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-picture"></span>', '#', [
+                                'class' => 'view-image-link',
+                                'title' => Yii::t('app', 'LABEL_VIEW'),
+                                'data-toggle' => 'modal',
+                                'data-target' => '#view-image-link-modal',
+                                'data-key' => $model->key,
+                            ]);
+                        },'update' => function ($url, ImageLink $model, $key) {
                             return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
                                 'class' => 'update-image-link',
                                 'title' => Yii::t('app', 'LABEL_UPDATE'),
@@ -159,6 +168,14 @@ ImageAsset::register($this);
     <?php Modal::begin([
         'id' => 'update-image-link-modal',
         'header' => '<h2 class="modal-title">' . Yii::t('app', 'IMAGE_LINK_TITLE_UPDATE') . '</h2>',
+        'clientOptions' => ['backdrop' => 'static'],
+        'size' => Modal::SIZE_LARGE,
+    ]); ?>
+
+    <?php Modal::end(); ?>
+
+    <?php Modal::begin([
+        'id' => 'view-image-link-modal',
         'clientOptions' => ['backdrop' => 'static'],
         'size' => Modal::SIZE_LARGE,
     ]); ?>

@@ -695,3 +695,7 @@ p {
     font-weight: bold;
     padding: 1px;
 }
+
+.img-link-view-img-in-modal {
+    margin: 0 auto;
+}

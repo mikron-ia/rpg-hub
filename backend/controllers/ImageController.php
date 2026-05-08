@@ -40,6 +40,7 @@ class ImageController extends CmsController
                                 'add-link',
                                 'update-link',
                                 'delete-link',
+                                'view-link',
                             ],
                             'allow' => true,
                             'roles' => ['operator'],
@@ -213,6 +214,25 @@ class ImageController extends CmsController
         }
 
         return $this->render('link/update', ['model' => $model]);
+    }
+
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    public function actionViewLink(string $imageLinkKey): string
+    {
+        $model = $this->findModelLink($imageLinkKey);
+
+        if (!$model->image->canUserViewYou()) {
+            throw new HttpException(403, Yii::t('app', 'ERROR_IMAGE_ACCESS_DENIED'));
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('link/view', ['model' => $model]);
+        }
+
+        return $this->render('link/view', ['model' => $model]);
     }
 
     /**
