@@ -41,6 +41,7 @@
         "classmap": [
             "common/behaviours/",
             "common/components/",
+            "common/dto/",
             "common/models/"
         ]
     }

@@ -3,10 +3,14 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\components\service\ImageRotationService;
+use common\dto\ImageDisplayObject;
 use common\models\core\HasEpicControl;
 use common\models\core\HasKey;
+use common\models\core\ImageDisplayMode;
 use common\models\tools\ToolsForEntity;
 use Override;
+use Random\RandomException;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -59,7 +63,7 @@ class Image extends ActiveRecord implements HasEpicControl, HasKey
             [['name', 'note', 'title', 'alt'], 'default', 'value' => null],
             [['epic_id'], 'required'],
             [['epic_id'], 'integer'],
-            [['display_height', 'display_width'], 'integer', 'min'=> 1],
+            [['display_height', 'display_width'], 'integer', 'min' => 1],
             [['note'], 'string'],
             [['name', 'title'], 'string', 'max' => 120],
             [['alt'], 'string', 'max' => 255],
@@ -184,5 +188,24 @@ class Image extends ActiveRecord implements HasEpicControl, HasKey
     static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_IMAGE'));
+    }
+
+    /**
+     * @throws RandomException
+     */
+    public function provideDisplayableImage(bool $useBackup = false): ImageDisplayObject
+    {
+        return ImageRotationService::makeDisplayObjectWithDimensions(
+            image: $this,
+            imageLink: ImageRotationService::chooseLink(
+                $this->imageLinks,
+                random_int(0, ImageRotationService::calculateTotalWeight(
+                        ImageRotationService::filterImageLinks(
+                            links: $this->imageLinks,
+                            mode: $useBackup ? ImageDisplayMode::Backup : ImageDisplayMode::Always
+                        )
+                    ) - 1)
+            )
+        );
     }
 }
