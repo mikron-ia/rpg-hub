@@ -1,9 +1,13 @@
 <?php
 
+use backend\assets\ImageAsset;
 use common\models\Image;
+use common\models\ImageLink;
+use yii\bootstrap\Modal;
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\web\View;
-use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
 /* @var $this View */
@@ -13,7 +17,8 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'IMAGE_TITLE_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-YiiAsset::register($this);
+
+ImageAsset::register($this);
 ?>
 <div class="image-view">
 
@@ -24,7 +29,7 @@ YiiAsset::register($this);
             ['update', 'key' => $model->key],
             ['class' => 'btn btn-primary']
         ) ?>
-        <?= Html::a(
+        <?= count($model->imageLinks) === 0 ? Html::a(
             Yii::t('app', 'BUTTON_DELETE'),
             ['delete', 'key' => $model->key],
             [
@@ -34,7 +39,7 @@ YiiAsset::register($this);
                     'method' => 'post',
                 ],
             ]
-        ) ?>
+        ) : '' ?>
     </div>
     <div class="col-md-6">
         <?= DetailView::widget([
@@ -62,17 +67,101 @@ YiiAsset::register($this);
             ],
         ]) ?>
     </div>
-    <div class="col-md-6">
-        <pre>IMAGE PLACEHOLDER</pre>
-    </div>
+
     <div class="col-md-6">
         <h3 class="text-center"><?= Yii::t('app', 'IMAGE_TITLE') ?></h3>
         <div><?= $model->title ?></div>
+
         <h3 class="text-center"><?= Yii::t('app', 'IMAGE_ALT') ?></h3>
         <div><?= $model->alt ?></div>
     </div>
+
     <div class="col-md-6">
         <h3 class="text-center"><?= Yii::t('app', 'IMAGE_NOTE') ?></h3>
         <div><?= $model->note ?></div>
     </div>
+
+    <div class="col-md-12">
+        <div class="buttoned-header">
+            <h2><?= Yii::t('app', 'IMAGE_LINK_TITLE_INDEX') ?></h2>
+            <?= Html::a(
+                '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_IMAGE_LINK_CREATE') . '</span>',
+                '#',
+                [
+                    'class' => 'create-image-link',
+                    'title' => Yii::t('app', 'BUTTON_IMAGE_LINK_CREATE'),
+                    'data-controller' => 'epic',
+                    'data-key' => $model->key,
+                    'data-toggle' => 'modal',
+                    'data-target' => '#create-image-link-modal'
+                ]
+            ); ?>
+        </div>
+
+        <?= GridView::widget([
+            'dataProvider' => new ActiveDataProvider(['query' => ImageLink::find()->where(['image_id' => $model->image_id])]),
+            'summary' => '',
+            'options' => ['style' => 'table-layout: fixed'],
+            'columns' => [
+                [
+                    'attribute' => 'link',
+                    'enableSorting' => false,
+                ],
+                [
+                    'attribute' => 'display_mode',
+                    'enableSorting' => false,
+                    'value' => function (ImageLink $model) {
+                        return $model->getDisplayModeObject()->getName();
+                    },
+                ],
+                [
+                    'attribute' => 'display_weight',
+                    'enableSorting' => false,
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{update} {delete}',
+                    'buttons' => [
+                        'update' => function ($url, ImageLink $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
+                                'class' => 'update-image-link',
+                                'title' => Yii::t('app', 'LABEL_UPDATE'),
+                                'data-toggle' => 'modal',
+                                'data-target' => '#update-image-link-modal',
+                                'data-key' => $model->key,
+                            ]);
+                        },
+                        'delete' => function ($url, ImageLink $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-erase"></span>',
+                                ['image/delete-link', 'imageLinkKey' => $model->key],
+                                [
+                                    'title' => Yii::t('app', 'LABEL_DELETE'),
+                                    'data-confirm' => Yii::t('app', 'CONFIRMATION_DELETE'),
+                                    'data-method' => 'post',
+                                ]);
+                        }
+                    ]
+                ],
+            ],
+        ]); ?>
+    </div>
+
+    <?php Modal::begin([
+        'id' => 'create-image-link-modal',
+        'header' => '<h2 class="modal-title">' . Yii::t('app', 'IMAGE_LINK_TITLE_CREATE') . '</h2>',
+        'clientOptions' => ['backdrop' => 'static'],
+        'size' => Modal::SIZE_LARGE,
+    ]); ?>
+
+    <?php Modal::end(); ?>
+
+    <?php Modal::begin([
+        'id' => 'update-image-link-modal',
+        'header' => '<h2 class="modal-title">' . Yii::t('app', 'IMAGE_LINK_TITLE_UPDATE') . '</h2>',
+        'clientOptions' => ['backdrop' => 'static'],
+        'size' => Modal::SIZE_LARGE,
+    ]); ?>
+
+    <?php Modal::end(); ?>
 </div>

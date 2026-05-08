@@ -49,6 +49,7 @@ class m260427_133529_v1_7_0 extends Migration
         $this->createTable('{{%image_link}}', [
             'image_link_id' => $this->primaryKey()->unsigned(),
             'image_id' => $this->integer(11)->unsigned()->notNull(),
+            'key' => $this->string(80)->notNull(),
             'link' => $this->string(255)->notNull(),
             'display_mode' => $this->char(6)->notNull()->defaultValue(ImageDisplayMode::Always->value),
             'display_weight' => $this->smallInteger()->unsigned()->notNull()->defaultValue(100),

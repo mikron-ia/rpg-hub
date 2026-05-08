@@ -3,20 +3,22 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\HasKey;
 use common\models\core\ImageDisplayMode;
+use common\models\tools\ToolsForEntity;
 use Override;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use Yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\HttpException;
 
 /**
  * @property int $image_link_id
  * @property int $image_id
+ * @property string $key
  * @property string $link
- * @property string|null $title
- * @property string|null $alt
  * @property string $display_mode
  * @property int $display_weight
  * @property int $created_at
@@ -28,26 +30,33 @@ use yii\db\ActiveRecord;
  * @property Image $image
  * @property User $updatedBy
  */
-class ImageLink extends ActiveRecord
+class ImageLink extends ActiveRecord implements HasKey
 {
+    use ToolsForEntity;
+
+    public const string DEFAULT_WEIGHT = '100';
+
     #[Override]
     public static function tableName(): string
     {
         return 'image_link';
     }
 
+    public static function keyParameterName(): string
+    {
+        return 'imageLink';
+    }
+
     #[Override]
     public function rules(): array
     {
         return [
-            [['title', 'alt'], 'default', 'value' => null],
             [['display_mode'], 'default', 'value' => ImageDisplayMode::Always->value],
-            [['display_weight'], 'default', 'value' => 100],
-            [['image_id', 'link'], 'required'],
-            [['image_id', 'display_weight'], 'integer'],
-            [['note'], 'string'],
-            [['link', 'alt'], 'string', 'max' => 255],
-            [['title'], 'string', 'max' => 120],
+            [['display_weight'], 'default', 'value' => self::DEFAULT_WEIGHT],
+            [['link'], 'required'],
+            [['link'], 'url'],
+            [['display_weight'], 'integer'],
+            [['link'], 'string', 'max' => 255],
             [['display_mode'], 'string', 'max' => 6],
             [['display_mode'], 'in', 'range' => fn() => ImageDisplayMode::allowedValues()],
             [
@@ -85,6 +94,19 @@ class ImageLink extends ActiveRecord
         ];
     }
 
+    /**
+     * @throws HttpException
+     */
+    #[Override]
+    public function beforeSave($insert): bool
+    {
+        if ($insert) {
+            $this->key = $this->generateKey();
+        }
+
+        return parent::beforeSave($insert);
+    }
+
     #[Override]
     public function behaviors(): array
     {
@@ -112,5 +134,10 @@ class ImageLink extends ActiveRecord
     public function getUpdatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'modified_by']);
+    }
+
+    public function getDisplayModeObject(): ImageDisplayMode
+    {
+        return ImageDisplayMode::from($this->display_mode);
     }
 }

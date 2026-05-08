@@ -5,7 +5,6 @@ use common\models\Image;
 use common\models\ImageQuery;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\web\View;
@@ -28,6 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ['create', 'epic' => $epic->key],
             ['class' => 'btn btn-success'],
         ); ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_GOTO_FILTER'),
+            ['#filter'],
+            ['class' => 'btn btn-default hidden-lg hidden-md']
+        ) ?>
     </div>
 
     <div class="col-md-9">
@@ -80,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3" id="filter">
         <?= $this->render('_search', ['model' => $searchModel]); ?>
     </div>
 

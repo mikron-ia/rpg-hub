@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\components\EpicAssistance;
 use common\models\Epic;
 use common\models\Image;
+use common\models\ImageLink;
 use common\models\ImageQuery;
 use Override;
 use Throwable;
@@ -30,7 +31,16 @@ class ImageController extends CmsController
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['create', 'index', 'update', 'view', 'delete'],
+                            'actions' => [
+                                'create',
+                                'index',
+                                'update',
+                                'view',
+                                'delete',
+                                'add-link',
+                                'update-link',
+                                'delete-link',
+                            ],
                             'allow' => true,
                             'roles' => ['operator'],
                         ],
@@ -40,6 +50,7 @@ class ImageController extends CmsController
                     'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
+                        'delete-link' => ['POST'],
                     ],
                 ],
             ]
@@ -87,7 +98,7 @@ class ImageController extends CmsController
         }
 
         return $this->render('view', [
-            'model' =>$model,
+            'model' => $model,
         ]);
     }
 
@@ -153,6 +164,81 @@ class ImageController extends CmsController
     }
 
     /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    public function actionAddLink(string $imageKey): Response|string
+    {
+        $image = $this->findModel($imageKey);
+
+        if (!$image->canUserControlYou()) {
+            Image::throwExceptionAboutControl();
+        }
+
+        $model = new ImageLink();
+
+        $dataLoad = $model->load(Yii::$app->request->post());
+        $model->image_id = $image->image_id;
+
+        if ($dataLoad && $model->save()) {
+            return $this->redirect(['view', 'key' => $image->key]);
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('link/create', ['model' => $model]);
+        }
+
+        return $this->render('link/create', ['model' => $model]);
+    }
+
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    public function actionUpdateLink(string $imageLinkKey): Response|string
+    {
+        $model = $this->findModelLink($imageLinkKey);
+
+        if (!$model->image->canUserControlYou()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_IMAGE_ACCESS_DENIED'));
+            return $this->returnToReferrer(['image/index']);
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->returnToReferrer(['index']);
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('link/update', ['model' => $model]);
+        }
+
+        return $this->render('link/update', ['model' => $model]);
+    }
+
+    /**
+     * @throws Exception
+     * @throws HttpException
+     * @throws Throwable
+     */
+    public function actionDeleteLink(string $imageLinkKey): Response|string
+    {
+        $model = $this->findModelLink($imageLinkKey);
+
+        if (!$model->image->canUserControlYou()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_IMAGE_ACCESS_DENIED'));
+            return $this->returnToReferrer(['image/index']);
+        }
+
+        if ($model->delete()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'IMAGE_LINK_DELETED'));
+            return $this->returnToReferrer(['image/index']);
+        }
+
+        Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_IMAGE_LINK_DELETE'));
+        return $this->returnToReferrer(['image/index']);
+    }
+
+    /**
      * @throws NotFoundHttpException
      */
     protected function findModel(string $key): ?Image
@@ -162,5 +248,17 @@ class ImageController extends CmsController
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'IMAGE_NOT_AVAILABLE'));
+    }
+
+    /**
+     * @throws NotFoundHttpException
+     */
+    protected function findModelLink(string $key): ?ImageLink
+    {
+        if (($model = ImageLink::findOne(['key' => $key])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'IMAGE_LINK_NOT_AVAILABLE'));
     }
 }
