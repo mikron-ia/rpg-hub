@@ -1,11 +1,12 @@
 <?php
 
-/* @var $this yii\web\View */
-
 use common\models\Epic;
 use common\models\EpicQuery;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
+use yii\web\View;
+
+/* @var $this View */
 
 $this->title = 'RPG hub - control';
 
@@ -20,7 +21,6 @@ foreach ($epics as $epic) {
         ['class' => 'btn btn-primary btn-block btn-epic-choice']
     );
 }
-
 ?>
 
 <div class="site-index">

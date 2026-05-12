@@ -220,9 +220,8 @@ final class EpicController extends CmsController
     }
 
     /**
-     * @throws NotFoundHttpException
-     * @throws HttpException
      * @throws Exception
+     * @throws HttpException
      */
     public function actionUpdate(string $key): Response|string
     {
@@ -283,8 +282,8 @@ final class EpicController extends CmsController
     }
 
     /**
-     * @throws NotFoundHttpException
      * @throws Exception
+     * @throws NotFoundHttpException
      */
     public function actionParticipantEdit(string $key): Response|string
     {

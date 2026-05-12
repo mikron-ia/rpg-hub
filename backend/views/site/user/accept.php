@@ -1,9 +1,11 @@
 <?php
 
+use common\models\user\UserAcceptForm;
 use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\user\UserAcceptForm */
+/* @var $this View */
+/* @var $model UserAcceptForm */
 
 $this->title = Yii::t('app', 'USER_ACCOUNT_CREATE');
 $this->params['breadcrumbs'][] = $this->title;

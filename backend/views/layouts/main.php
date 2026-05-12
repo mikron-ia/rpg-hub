@@ -1,7 +1,6 @@
 <?php
 
 /* @var $this View */
-
 /* @var $content string */
 
 use backend\assets\AppAsset;
@@ -135,7 +134,7 @@ AppAsset::register($this);
                 'label' => Yii::t('app', 'BREADCRUMBS_HOME'),
                 'url' => Yii::$app->homeUrl,
             ],
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            'links' => $this->params['breadcrumbs'] ?? [],
         ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>

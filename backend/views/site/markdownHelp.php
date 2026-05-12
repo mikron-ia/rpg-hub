@@ -1,12 +1,10 @@
 <?php
-
 $this->title = Yii::t('app', 'LABEL_MARKDOWN_HELP');
-
 ?>
 
 <h1>Markdown help</h1>
 
-The page's text areas use the basic `GitHub` Markdown style, without forced newlines. Please note that this does
+The page's text areas use the basic `GitHub` Markdown style without forced newlines. Please note that this does
 <strong>not</strong> apply to most one-line fields - using formatting there will be unsuccessful.
 
 <h2>Commonly used elements of style</h2>
@@ -15,7 +13,7 @@ The page's text areas use the basic `GitHub` Markdown style, without forced newl
     <li>
         Use empty lines between text to make paragraphs
         <ul>
-            <li>This is due to lack of forced newlines</li>
+            <li>This is due to the lack of forced newlines</li>
         </ul>
     </li>
     <li>Use <code>*</code> or <code>_</code> for italics</li>
@@ -47,7 +45,7 @@ The page's text areas use the basic `GitHub` Markdown style, without forced newl
 
 <h2>The tag system</h2>
 
-The hub also contains its own extension to Markdown in a form of a tag system. The following tags are valid:
+The hub also contains its own extension to Markdown in the form of a tag system. The following tags are valid:
 
 <ul>
     <li><code>CHARACTER</code> / <code>CH</code> for characters</li>
@@ -63,7 +61,7 @@ instead. The requested object must be created first, otherwise the tag will not 
 
 <strong>Note:</strong> this system works in descriptions, articles, recaps, and stories, but it does
 <strong>not</strong> yet work in most auxiliary objects, like memberships and points in time. Use manual linking there
-if needed.
+if needed. Most fields will have information whether Markdown or tags work - look for hint text below them in forms.
 
 <h2>Further reading</h2>
 

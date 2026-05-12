@@ -1,12 +1,14 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\user\PasswordChange */
-
+use common\models\user\PasswordChange;
 use kartik\password\PasswordInput;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\web\View;
+
+/* @var $this View */
+/* @var $form ActiveForm */
+/* @var $model PasswordChange */
 
 $this->title = Yii::t('app', 'PASSWORD_CHANGE_TITLE');
 $this->params['breadcrumbs'][] = $this->title;
