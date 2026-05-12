@@ -7,6 +7,7 @@ use common\rules\EpicGameMaster;
 use common\rules\EpicParticipant;
 use common\rules\EpicPlayer;
 use common\rules\EpicWatcher;
+use Exception;
 use Yii;
 use yii\console\Controller;
 
@@ -410,6 +411,8 @@ class RbacController extends Controller
 
     /**
      * Adds rights from v1.7.0
+     *
+     * @throws Exception
      */
     public function actionV1070(): void
     {
@@ -420,6 +423,9 @@ class RbacController extends Controller
 
         $user = $auth->getRole('user');
         $operator = $auth->getRole('operator');
+        $manager = $auth->getRole('manager');
+
+        /* Add Location rights */
 
         $controlLocation = $auth->createPermission('controlLocation');
         $controlLocation->description = 'Able to add, edit, or remove a location for Epic';
@@ -436,6 +442,8 @@ class RbacController extends Controller
         $auth->addChild($operator, $controlLocation);
         $auth->addChild($user, $viewLocation);
 
+        /* Add Image rights */
+
         $controlImage = $auth->createPermission('controlImage');
         $controlImage->description = 'Able to add, edit, or remove a image for Epic';
         $controlImage->ruleName = $gameMasterRule->name;
@@ -450,5 +458,17 @@ class RbacController extends Controller
 
         $auth->addChild($operator, $controlImage);
         $auth->addChild($user, $viewImage);
+
+        /* Add Epic Management right */
+
+        $manageEpic = $auth->createPermission('manageEpic');
+        $manageEpic->description = 'Able to manage an epic';
+
+        $auth->add($manageEpic);
+
+        $openEpic = $auth->getPermission('openEpic');
+        $auth->addChild($manageEpic, $openEpic);
+
+        $auth->addChild($manager, $manageEpic);
     }
 }

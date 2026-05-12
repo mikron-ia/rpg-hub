@@ -40,7 +40,7 @@ final class EpicController extends CmsController
                 'rules' => [
                     [
                         'actions' => [
-                            'create',
+                            'create-as-gm',
                             'front',
                             'index',
                             'update',
@@ -56,6 +56,7 @@ final class EpicController extends CmsController
                     ],
                     [
                         'actions' => [
+                            'create-as-manager',
                             'manage',
                             'manager-attach',
                             'manager-detach',
@@ -94,6 +95,7 @@ final class EpicController extends CmsController
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'showManagerButton' => Yii::$app->user->can('manageEpic'),
         ]);
     }
 
@@ -104,7 +106,7 @@ final class EpicController extends CmsController
      */
     public function actionManage(): string
     {
-        Epic::canUserIndexEpic();
+        Epic::canUserManageEpic();
 
         $searchModel = new EpicQuery();
         $dataProvider = $searchModel->manageableEpicsAsActiveDataProvider();
@@ -112,6 +114,7 @@ final class EpicController extends CmsController
         return $this->render('manage', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'showManagerButton' => true, // if you got to this point without a 403, you must have the right to do that
         ]);
     }
 
@@ -173,10 +176,10 @@ final class EpicController extends CmsController
     }
 
     /**
-     * @throws HttpException
      * @throws Exception
+     * @throws HttpException
      */
-    public function actionCreate(): Response|string
+    public function actionCreateAsGm(): Response|string
     {
         Epic::canUserCreateEpic();
 
@@ -188,7 +191,29 @@ final class EpicController extends CmsController
             }
             return $this->redirect(['view', 'key' => $model->key]);
         } else {
-            return $this->render('create', [
+            return $this->render('create-as-gm', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    public function actionCreateAsManager(): Response|string
+    {
+        Epic::canUserCreateEpic();
+
+        $model = new Epic();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save() && $model->refresh()) {
+            if (!Participant::createForEpic($model->epic_id, Yii::$app->user->id, ParticipantRole::ROLE_MANAGER)) {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_MANAGER_ADDED'));
+            }
+            return $this->redirect(['view', 'key' => $model->key]);
+        } else {
+            return $this->render('create-as-manager', [
                 'model' => $model,
             ]);
         }

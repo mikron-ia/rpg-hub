@@ -11,6 +11,7 @@ use yii\web\View;
 /* @var $this View */
 /* @var $searchModel EpicQuery */
 /* @var $dataProvider ActiveDataProvider */
+/* @var $showManagerButton bool */
 
 $this->title = Yii::t('app', 'TITLE_EPICS');
 $this->params['breadcrumbs'][] = $this->title;
@@ -28,7 +29,18 @@ $epicRolesCalculatorClosure = function (Epic $model) {
 <div class="epic-index">
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
-        <?= Html::a(Yii::t('app', 'BUTTON_EPIC_ADD'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(
+            Yii::t('app', 'BUTTON_EPIC_ADD_AS_GM'),
+            ['create-as-gm'],
+            ['class' => 'btn btn-success']
+        ) ?>
+        <?php if ($showManagerButton): ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_EPIC_ADD_AS_MANAGER'),
+                ['create-as-manager'],
+                ['class' => 'btn btn-success']
+            ) ?>
+        <?php endif; ?>
     </div>
 
     <div class="col-md-9">

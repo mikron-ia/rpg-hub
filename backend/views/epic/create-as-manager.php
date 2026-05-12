@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p class="info-box"><?= Yii::t('app', 'EPIC_CREATION_WARNING'); ?></p>
+    <p class="info-box"><?= Yii::t('app', 'EPIC_CREATION_WARNING_MANAGER'); ?></p>
 
     <?= $this->render('_form', [
         'model' => $model,

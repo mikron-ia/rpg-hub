@@ -563,6 +563,20 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     }
 
     /**
+     * Determines whether the user can manage epics
+     *
+     * @throws HttpException
+     */
+    public static function canUserManageEpic(): bool
+    {
+        if (Yii::$app->user->can('manageEpic')) {
+            return true;
+        }
+
+        throw new HttpException(403, Yii::t('app', 'NO_RIGHT_TO_MANAGE_EPIC'));
+    }
+
+    /**
      * Determines whether the user can view this epic
      *
      * @throws HttpException

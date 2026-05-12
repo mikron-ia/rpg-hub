@@ -57,7 +57,7 @@ AppAsset::register($this);
         $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_USER_LIST'), 'url' => ['/user/index']];
     }
 
-    if (Yii::$app->user->can('manager')) {
+    if (Yii::$app->user->can('manageEpic')) {
         $auxiliaryItems[] = ['label' => Yii::t('app', 'BUTTON_EPIC_MANAGEMENT'), 'url' => ['/epic/manage']];
     }
 

@@ -96,7 +96,7 @@ final class EpicQuery extends Epic
         /* @var $user User */
         $user = Yii::$app->user->identity;
 
-        if (Yii::$app->user->can('manager')) {
+        if (Yii::$app->user->can('manageEpic')) {
             /* GM needs those mastered and assisted in */
             $query = $user->getEpicsGameMasteredAndManaged();
         } elseif ($limitToControlled) {
