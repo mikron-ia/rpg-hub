@@ -32,7 +32,7 @@ final class GroupQuery extends Group
     {
         return [
             [['group_id', 'epic_id'], 'integer'],
-            [['key', 'name', 'data'], 'safe'],
+            [['data', 'name', 'visibility'], 'safe'],
         ];
     }
 
@@ -70,8 +70,9 @@ final class GroupQuery extends Group
             'epic_id' => $this->epic_id,
         ]);
 
-        $query->andFilterWhere(['like', 'key', $this->key])
+        $query
             ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['in', 'visibility', $this->visibility])
             ->andFilterWhere(['like', 'data', $this->data]);
 
         return $dataProvider;

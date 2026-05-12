@@ -1,7 +1,10 @@
 <?php
 
+use common\models\core\Visibility;
 use common\models\Epic;
+use common\models\Group;
 use common\models\GroupQuery;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -23,6 +26,14 @@ $actionUrl = $actionUrl ?? 'index';
     ]); ?>
 
     <?= $form->field($model, 'name') ?>
+
+    <?php echo $form->field($model, 'visibility')->widget(
+        class: Select2::class,
+        config: [
+            'data' => Visibility::visibilityNames(Group::allowedVisibilities()),
+            'options' => ['multiple' => true],
+        ]
+    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'BUTTON_SEARCH'), ['class' => 'btn btn-primary']) ?>
