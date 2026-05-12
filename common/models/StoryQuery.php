@@ -30,7 +30,7 @@ final class StoryQuery extends Story implements EntityQuery
         return [
             [['story_id'], 'integer'],
             [['descriptions', 'parameters'], 'string'],
-            [['key', 'name', 'short', 'long', 'data'], 'safe'],
+            [['key', 'name', 'short', 'long', 'code', 'data'], 'safe'],
         ];
     }
 
@@ -129,6 +129,7 @@ final class StoryQuery extends Story implements EntityQuery
 
         $query
             ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['in', 'code', $this->code])
             ->andFilterWhere([
                 'or',
                 ['like', 'short', $this->descriptions],

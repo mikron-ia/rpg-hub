@@ -2,6 +2,8 @@
 
 use common\models\Epic;
 use common\models\StoryQuery;
+use common\models\type\StoryType;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -24,6 +26,14 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'descriptions') ?>
 
     <?= $form->field($model, 'parameters') ?>
+
+    <?= $form->field($model, 'code')->widget(
+        Select2::class,
+        [
+            'data' => StoryType::namesForDropdown(),
+            'options' => ['multiple' => true],
+        ]
+    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'BUTTON_SEARCH'), ['class' => 'btn btn-primary']) ?>
