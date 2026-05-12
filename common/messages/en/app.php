@@ -17,6 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'ALPHA_WARNING_TEXT' => 'Early stage feature',
+    'ALPHA_WARNING_TITLE' => 'This feature is in an early stage, some components are not implemented, and others may work incorrectly. Use with caution.',
     'ANNOUNCEMENTS_NOT_FOUND' => 'No announcements found',
     'ANNOUNCEMENT_BASICS' => 'Basic data',
     'ANNOUNCEMENT_BUTTON_CREATE' => 'Create announcement',

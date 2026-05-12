@@ -42,6 +42,9 @@ ImageAsset::register($this);
             ]
         ) : '' ?>
     </div>
+    <p class="beta-feature-warning" title="<?= Yii::t('app', 'BETA_WARNING_TITLE') ?>">
+        <?= Yii::t('app', 'BETA_WARNING_TEXT') ?>
+    </p>
     <div class="col-md-6">
         <?= DetailView::widget([
             'model' => $model,
@@ -98,6 +101,9 @@ ImageAsset::register($this);
                 ]
             ); ?>
         </div>
+        <p class="beta-feature-warning" title="<?= Yii::t('app', 'ALPHA_WARNING_TITLE') ?>">
+            <?= Yii::t('app', 'ALPHA_WARNING_TEXT') ?>
+        </p>
 
         <?= GridView::widget([
             'dataProvider' => new ActiveDataProvider(['query' => ImageLink::find()->where(['image_id' => $model->image_id])]),
@@ -176,7 +182,6 @@ ImageAsset::register($this);
 
     <?php Modal::begin([
         'id' => 'view-image-link-modal',
-        'clientOptions' => ['backdrop' => 'static'],
         'size' => Modal::SIZE_LARGE,
     ]); ?>
 

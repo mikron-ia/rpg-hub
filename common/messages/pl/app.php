@@ -17,6 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'ALPHA_WARNING_TEXT' => 'Funkcjonalność w fazie tworzenia',
+    'ALPHA_WARNING_TITLE' => 'Ta funkcjonalność jest w fazie tworzenia. Niektóre komponenty nie działają a inne mogą działać w sposób nieoczekiwany. Zachowaj daleko posuniętą ostrożność.',
     'ANNOUNCEMENTS_NOT_FOUND' => 'Brak ogłoszeń',
     'ANNOUNCEMENT_BASICS' => 'Podstawowe dane',
     'ANNOUNCEMENT_BUTTON_CREATE' => 'Dodaj ogłoszenie',
