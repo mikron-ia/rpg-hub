@@ -16,7 +16,6 @@ final class CharacterSheetQuery extends CharacterSheet
     public function rules(): array
     {
         return [
-            [['character_sheet_id', 'epic_id'], 'integer'],
             [['key', 'name', 'data'], 'safe'],
         ];
     }

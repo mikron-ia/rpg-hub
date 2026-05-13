@@ -20,7 +20,7 @@ final class EpicQuery extends Epic
     public function rules(): array
     {
         return [
-            [['epic_id', 'name', 'system', 'status'], 'safe'],
+            [['name', 'system', 'status'], 'safe'],
         ];
     }
 

@@ -31,7 +31,6 @@ final class LocationQuery extends Location
     public function rules(): array
     {
         return [
-            [['location_id', 'epic_id'], 'integer'],
             [['name', 'tagline', 'visibility', 'importance_category'], 'safe'],
         ];
     }

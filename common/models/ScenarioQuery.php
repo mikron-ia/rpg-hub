@@ -20,7 +20,6 @@ class ScenarioQuery extends Scenario implements EntityQuery
     public function rules(): array
     {
         return [
-            [['scenario_id', 'epic_id', 'description_pack_id'], 'integer'],
             [['name', 'tag_line', 'status'], 'safe'],
         ];
     }

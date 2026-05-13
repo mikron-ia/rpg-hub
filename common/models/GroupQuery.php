@@ -5,15 +5,13 @@ namespace common\models;
 use common\models\core\Visibility;
 use common\models\entities\GroupWithImportance;
 use common\models\tools\ToolsForImportanceInQueries;
+use Override;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\data\DataProviderInterface;
 
-/**
- * GroupQuery represents the model behind the search form about `common\models\Group`.
- */
 final class GroupQuery extends Group
 {
     use ToolsForImportanceInQueries;
@@ -25,17 +23,19 @@ final class GroupQuery extends Group
     public function __construct(int $pagination = self::DEFAULT_PAGE_SIZE, array $config = [])
     {
         $this->pageCount = $pagination;
+
         parent::__construct($config);
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
-            [['group_id', 'epic_id'], 'integer'],
             [['data', 'name', 'visibility'], 'safe'],
         ];
     }
 
+    #[Override]
     public function scenarios(): array
     {
         return Model::scenarios();
@@ -64,12 +64,6 @@ final class GroupQuery extends Group
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'group_id' => $this->group_id,
-            'epic_id' => $this->epic_id,
-        ]);
-
         $query
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['in', 'visibility', $this->visibility])
@@ -79,7 +73,7 @@ final class GroupQuery extends Group
     }
 
     /**
-     * Creates data provider instance with a search query applied and applies default order according to importance
+     * Creates a data provider instance with a search query applied and applies the default order according to importance
      * This list is more suitable for the presentation section
      */
     public function searchForUser(array $params): ActiveDataProvider
@@ -88,8 +82,8 @@ final class GroupQuery extends Group
     }
 
     /**
-     * Creates data provider instance with search query applied and applies default order according to time of the last modification
-     * This list is more suitable for operator section
+     * Creates a data provider instance with the search query applied and applies the default order according to time of the last modification
+     * This list is more suitable for the operator section
      */
     public function searchForOperator(array $params): ActiveDataProvider
     {
@@ -134,7 +128,12 @@ final class GroupQuery extends Group
 
         return new ArrayDataProvider([
             'allModels' => $models,
-            'sort' => ['attributes' => array_merge(['name', 'visibility', 'importance_category'], array_unique($fields ?? []))],
+            'sort' => [
+                'attributes' => array_merge(
+                    ['name', 'visibility', 'importance_category'],
+                    array_unique($fields ?? [])
+                ),
+            ],
             'pagination' => ['pageSize' => $this->pageCount],
         ]);
     }

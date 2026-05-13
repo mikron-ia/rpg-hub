@@ -13,7 +13,6 @@ class GameQuery extends Game
     public function rules(): array
     {
         return [
-            [['game_id', 'epic_id', 'position'], 'integer'],
             [['time', 'status', 'details', 'note'], 'safe'],
         ];
     }

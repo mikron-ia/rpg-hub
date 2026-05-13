@@ -23,8 +23,7 @@ final class RecapQuery extends Recap
     public function rules()
     {
         return [
-            [['recap_id'], 'integer'],
-            [['key', 'name', 'content', 'time'], 'safe'],
+            [['name', 'content', 'time'], 'safe'],
         ];
     }
 

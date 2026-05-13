@@ -28,9 +28,8 @@ final class StoryQuery extends Story implements EntityQuery
     public function rules(): array
     {
         return [
-            [['story_id'], 'integer'],
             [['descriptions', 'parameters'], 'string'],
-            [['key', 'name', 'short', 'long', 'code', 'data'], 'safe'],
+            [['name', 'short', 'long', 'code', 'data'], 'safe'],
         ];
     }
 

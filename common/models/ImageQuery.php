@@ -13,7 +13,6 @@ class ImageQuery extends Image
     public function rules(): array
     {
         return [
-            [['image_id', 'epic_id'], 'integer'],
             [['name', 'title', 'alt', 'note'], 'safe'],
         ];
     }

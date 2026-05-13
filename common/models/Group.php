@@ -60,6 +60,7 @@ use yii\web\HttpException;
  * @property ScribblePack $scribblePack
  * @property StoryGroupAssignment[] $storyGroupAssignments
  * @property UtilityBag $utilityBag
+ *
  * @property GroupMembership[] $groupCharacterMemberships
  * @property GroupMembership[] $groupCharacterMembershipsOrderedByPosition
  * @property GroupMembership[] $groupCharacterMembershipsActive
@@ -78,6 +79,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public array|string $groupStoryAssignmentChoicesPublic = [];
     public array|string $groupStoryAssignmentChoicesPrivate = [];
 
+    #[Override]
     public static function tableName(): string
     {
         return 'group';
@@ -89,6 +91,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return 'group';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -162,6 +165,10 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         ];
     }
 
+    /**
+     * @throws Exception
+     */
+    #[Override]
     public function afterFind(): void
     {
         if ($this->seen_pack_id) {
@@ -174,6 +181,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         parent::afterFind();
     }
 
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -202,6 +210,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     /**
      * @throws Exception
      */
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         if (!$this->is_off_the_record_change) {
@@ -215,6 +224,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
      * @throws Exception
      * @throws HttpException
      */
+    #[Override]
     public function beforeSave($insert): bool
     {
         if ($insert) {
@@ -259,7 +269,8 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return parent::beforeSave($insert);
     }
 
-    static public function allowedDescriptionTypes(): array
+    #[Override]
+    public static function allowedDescriptionTypes(): array
     {
         return [
             Description::TYPE_WHO,
@@ -281,6 +292,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         ];
     }
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -306,6 +318,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $this->hasOne(ExternalDataPack::class, ['external_data_pack_id' => 'external_data_pack_id']);
     }
 
+    #[Override]
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
@@ -415,6 +428,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         ])->orderBy('position ASC');
     }
 
+    #[Override]
     public function getSimpleDataForApi(): array
     {
         return [
@@ -423,6 +437,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         ];
     }
 
+    #[Override]
     public function getCompleteDataForApi(): array
     {
         $decodedData = json_decode($this->data, true);
@@ -433,47 +448,56 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $decodedData;
     }
 
+    #[Override]
     public function isVisibleInApi(): bool
     {
         return true;
     }
 
-    static public function canUserIndexThem(): bool
+    #[Override]
+    public static function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem(): bool
+    #[Override]
+    public static function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
+    #[Override]
     public function canUserControlYou(): bool
     {
         return self::canUserControlInEpic($this->epic);
     }
 
+    #[Override]
     public function canUserViewYou(): bool
     {
         return self::canUserViewInEpic($this->epic);
     }
 
-    static function throwExceptionAboutCreate()
+    #[Override]
+    public static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_GROUP'));
     }
 
-    static function throwExceptionAboutControl()
+    #[Override]
+    public static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_GROUP'));
     }
 
-    static function throwExceptionAboutIndex()
+    #[Override]
+    public static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_GROUP'));
     }
 
-    static function throwExceptionAboutView()
+    #[Override]
+    public static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_GROUP'));
     }
@@ -517,17 +541,20 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $this->importance_category;
     }
 
+    #[Override]
     public function getImportanceCategoryLowercase(): string
     {
         $importance = ImportanceCategory::from($this->importance_category);
         return $importance->getNameLowercase();
     }
 
+    #[Override]
     public function getLastModified(): DateTimeImmutable
     {
         return new DateTimeImmutable(date("Y-m-d H:i:s", $this->modified_at));
     }
 
+    #[Override]
     public function getSeenStatusForUser(int $userId): string
     {
         /** @var Seen $sighting */
@@ -540,7 +567,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $sighting->status;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return Html::a($this->name, ['group/view', 'key' => $this->key]);
     }

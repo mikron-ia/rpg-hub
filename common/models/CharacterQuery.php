@@ -13,9 +13,6 @@ use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\data\DataProviderInterface;
 
-/**
- * CharacterQuery represents the model behind the search form about `common\models\Character`.
- */
 final class CharacterQuery extends Character
 {
     use ToolsForImportanceInQueries;
@@ -34,8 +31,7 @@ final class CharacterQuery extends Character
     public function rules(): array
     {
         return [
-            [['character_id', 'character_sheet_id'], 'integer'],
-            [['epic_id', 'name', 'tagline', 'visibility'], 'safe'],
+            [['name', 'tagline', 'visibility'], 'safe'],
         ];
     }
 
@@ -151,7 +147,7 @@ final class CharacterQuery extends Character
      * Note: this method does not account for Group or GroupMembership visibility, only for Character
      * Note: pagination is disabled to avoid conflicts with main tab pagination
      */
-    static private function getCharactersToShowInGroupTab(string $groupKey): ActiveDataProvider
+    private static function getCharactersToShowInGroupTab(string $groupKey): ActiveDataProvider
     {
         $query = Character::find()
             ->joinWith('groupMembership', true, 'JOIN')
@@ -168,7 +164,7 @@ final class CharacterQuery extends Character
      *
      * @return CharacterListDataObject[]
      */
-    static public function getCharactersToShowInGroupTabAsDataObjects(): array
+    public static function getCharactersToShowInGroupTabAsDataObjects(): array
     {
         return array_map(function (Group $group) {
             return new CharacterListDataObject($group->name, self::getCharactersToShowInGroupTab($group->key));
@@ -180,7 +176,7 @@ final class CharacterQuery extends Character
      *
      * Note: pagination is disabled to avoid conflicts with main tab pagination
      */
-    static function getCharactersToShowInFavoritesTab(): ActiveDataProvider
+    public static function getCharactersToShowInFavoritesTab(): ActiveDataProvider
     {
         $query = Character::find()
             ->joinWith('scribblePack', true, 'JOIN')
