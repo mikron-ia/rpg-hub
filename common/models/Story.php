@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\components\service\AssignmentService;
 use common\models\core\Displayable;
 use common\models\core\HasEpicControl;
 use common\models\core\HasKey;
@@ -171,11 +172,13 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             $this->seenPack->recordNotification();
         }
 
-        $this->storyCharacterAssignmentChoicesPublic = $this->getStoryCharacterAssignmentIds(Visibility::VISIBILITY_FULL);
-        $this->storyCharacterAssignmentChoicesPrivate = $this->getStoryCharacterAssignmentIds(Visibility::VISIBILITY_GM);
+        $characterAssignments = AssignmentService::extractAssignmentsActingIds($this->getStoryCharacterAssignments());
+        $this->storyCharacterAssignmentChoicesPublic = $characterAssignments->public;
+        $this->storyCharacterAssignmentChoicesPrivate = $characterAssignments->private;
 
-        $this->storyGroupAssignmentChoicesPublic = $this->getStoryGroupAssignmentIds(Visibility::VISIBILITY_FULL);
-        $this->storyGroupAssignmentChoicesPrivate = $this->getStoryGroupAssignmentIds(Visibility::VISIBILITY_GM);
+        $groupAssignments = AssignmentService::extractAssignmentsActingIds($this->getStoryGroupAssignments());
+        $this->storyGroupAssignmentChoicesPublic = $groupAssignments->public;
+        $this->storyGroupAssignmentChoicesPrivate = $groupAssignments->private;
 
         parent::afterFind();
     }
@@ -262,24 +265,9 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return $this->hasMany(StoryCharacterAssignment::class, ['story_id' => 'story_id']);
     }
 
-    public function getStoryCharacterAssignmentIds(Visibility $visibility): array
-    {
-        return $this->getStoryCharacterAssignments()
-            ->andWhere(['story_character_assignment.visibility' => $visibility->value])
-            ->select('character_id')->column();
-    }
-
     public function getStoryGroupAssignments(): ActiveQuery
     {
         return $this->hasMany(StoryGroupAssignment::class, ['story_id' => 'story_id']);
-    }
-
-    public function getStoryGroupAssignmentIds(Visibility $visibility): array
-    {
-        return $this->getStoryGroupAssignments()
-            ->andWhere(['story_group_assignment.visibility' => $visibility->value])
-            ->select('group_id')
-            ->column();
     }
 
     public function getStoryParameters(): ActiveQuery

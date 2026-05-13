@@ -29,21 +29,14 @@ final class AssignmentServiceTest extends TestCase
             ->method('all')
             ->willReturn($assignments);
 
-        self::assertSame(
-            [
-                Visibility::VISIBILITY_GM->value => [1, 3, 4, 5],
-                Visibility::VISIBILITY_FULL->value => [2],
-            ],
-            AssignmentService::distributeAssignmentsActingIds($assignmentQuery)
-        );
+        $actingIds = AssignmentService::extractAssignmentsActingIds($assignmentQuery);
+        $narrativeIds = AssignmentService::extractAssignmentsNarrativeIds($assignmentQuery);
 
-        self::assertSame(
-            [
-                Visibility::VISIBILITY_GM->value => [6, 7],
-                Visibility::VISIBILITY_FULL->value => [6],
-            ],
-            AssignmentService::distributeAssignmentsNarrativeIds($assignmentQuery)
-        );
+        self::assertSame([1, 3, 4, 5], $actingIds->private);
+        self::assertSame([2], $actingIds->public);
+
+        self::assertSame([6, 7], $narrativeIds->private);
+        self::assertSame([6], $narrativeIds->public);
     }
 
     /**
@@ -57,20 +50,14 @@ final class AssignmentServiceTest extends TestCase
             ->method('all')
             ->willReturn([]);
 
-        self::assertSame(
-            [
-                Visibility::VISIBILITY_GM->value => [],
-                Visibility::VISIBILITY_FULL->value => [],
-            ],
-            AssignmentService::distributeAssignmentsActingIds($assignmentQuery)
-        );
+        $actingIds = AssignmentService::extractAssignmentsActingIds($assignmentQuery);
 
-        self::assertSame(
-            [
-                Visibility::VISIBILITY_GM->value => [],
-                Visibility::VISIBILITY_FULL->value => [],
-            ],
-            AssignmentService::distributeAssignmentsNarrativeIds($assignmentQuery)
-        );
+        $narrativeIds = AssignmentService::extractAssignmentsNarrativeIds($assignmentQuery);
+
+        self::assertSame([], $actingIds->private);
+        self::assertSame([], $actingIds->public);
+
+        self::assertSame([], $narrativeIds->private);
+        self::assertSame([], $narrativeIds->public);
     }
 }

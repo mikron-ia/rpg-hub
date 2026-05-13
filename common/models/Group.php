@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\components\service\AssignmentService;
 use common\models\core\Displayable;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
@@ -174,10 +175,11 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         if ($this->seen_pack_id) {
             $this->seenPack->recordNotification();
         }
-        
-        $this->groupStoryAssignmentChoicesPublic = $this->getGroupStoryAssignmentIds(Visibility::VISIBILITY_FULL);
-        $this->groupStoryAssignmentChoicesPrivate = $this->getGroupStoryAssignmentIds(Visibility::VISIBILITY_GM);
-        
+
+        $storyAssignments = AssignmentService::extractAssignmentsNarrativeIds($this->getStoryGroupAssignments());
+        $this->groupStoryAssignmentChoicesPublic = $storyAssignments->public;
+        $this->groupStoryAssignmentChoicesPrivate = $storyAssignments->private;
+
         parent::afterFind();
     }
 
@@ -380,13 +382,6 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             ),
             $assignments
         );
-    }
-
-    public function getGroupStoryAssignmentIds(Visibility $visibility): array
-    {
-        return $this->getStoryGroupAssignments()
-            ->andWhere(['story_group_assignment.visibility' => $visibility->value])
-            ->select('story_id')->column();
     }
 
     public function getUtilityBag(): ActiveQuery

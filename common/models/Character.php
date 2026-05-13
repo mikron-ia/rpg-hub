@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\components\service\AssignmentService;
 use common\models\core\Displayable;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
@@ -188,8 +189,9 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             $this->seenPack->recordNotification();
         }
 
-        $this->characterStoryAssignmentChoicesPublic = $this->getCharacterStoryAssignmentIds(Visibility::VISIBILITY_FULL);
-        $this->characterStoryAssignmentChoicesPrivate = $this->getCharacterStoryAssignmentIds(Visibility::VISIBILITY_GM);
+        $storyAssignments = AssignmentService::extractAssignmentsNarrativeIds($this->getStoryCharacterAssignments());
+        $this->characterStoryAssignmentChoicesPublic = $storyAssignments->public;
+        $this->characterStoryAssignmentChoicesPrivate = $storyAssignments->private;
 
         parent::afterFind();
     }
@@ -340,13 +342,6 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             ),
             $assignments
         );
-    }
-
-    public function getCharacterStoryAssignmentIds(Visibility $visibility): array
-    {
-        return $this->getStoryCharacterAssignments()
-            ->andWhere(['story_character_assignment.visibility' => $visibility->value])
-            ->select('story_id')->column();
     }
 
     public function getUtilityBag(): ActiveQuery

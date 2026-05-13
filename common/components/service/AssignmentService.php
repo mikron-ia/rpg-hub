@@ -3,6 +3,7 @@
 namespace common\components\service;
 
 use Closure;
+use common\dto\AssignmentIdentifierLists;
 use common\models\core\HasVisibility;
 use common\models\core\IsAssignment;
 use common\models\core\Visibility;
@@ -10,24 +11,26 @@ use yii\db\ActiveQuery;
 
 class AssignmentService
 {
-    public static function distributeAssignmentsActingIds(ActiveQuery $assignments): array
+    public static function extractAssignmentsActingIds(ActiveQuery $assignments): AssignmentIdentifierLists
     {
-        return self::distributeAssignments(
+        return self::extractAssignmentIds(
             $assignments,
             fn(IsAssignment $assignment) => $assignment->getActingSideId()
         );
     }
 
-    public static function distributeAssignmentsNarrativeIds(ActiveQuery $assignments): array
+    public static function extractAssignmentsNarrativeIds(ActiveQuery $assignments): AssignmentIdentifierLists
     {
-        return self::distributeAssignments(
+        return self::extractAssignmentIds(
             $assignments,
             fn(IsAssignment $assignment) => $assignment->getNarrativeSideId()
         );
     }
 
-    private static function distributeAssignments(ActiveQuery $assignmentQuery, Closure $getId): array
-    {
+    private static function extractAssignmentIds(
+        ActiveQuery $assignmentQuery,
+        Closure $getId
+    ): AssignmentIdentifierLists {
         $ids = [
             Visibility::VISIBILITY_GM->value => [],
             Visibility::VISIBILITY_FULL->value => [],
@@ -39,8 +42,9 @@ class AssignmentService
             // todo expand to include assignment type
         }
 
-        array_walk($ids, fn(&$value) => $value = array_unique($value));
-
-        return $ids;
+        return new AssignmentIdentifierLists(
+            array_unique($ids[Visibility::VISIBILITY_FULL->value]),
+            array_unique($ids[Visibility::VISIBILITY_GM->value]),
+        );
     }
 }
