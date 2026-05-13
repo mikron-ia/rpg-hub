@@ -9,6 +9,7 @@ use common\models\core\ToolsForIsAssignment;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
+use common\models\type\AssignmentRank;
 use Override;
 use Yii;
 use yii\db\ActiveQuery;
@@ -22,6 +23,7 @@ use yii\web\HttpException;
  * @property int $story_id
  * @property string $key
  * @property string $visibility
+ * @property string $rank
  *
  * @property Group $group
  * @property Story $story
@@ -106,13 +108,18 @@ class StoryGroupAssignment extends ActiveRecord implements HasKey, HasVisibility
      * @throws Exception
      */
     #[Override]
-    public static function create(int $actingSideId, int $narrativeSideId, Visibility $visibility): self
-    {
+    public static function create(
+        int $actingSideId,
+        int $narrativeSideId,
+        Visibility $visibility,
+        AssignmentRank $rank
+    ): self {
         $assignment = new self();
 
         $assignment->group_id = $actingSideId;
         $assignment->story_id = $narrativeSideId;
         $assignment->visibility = $visibility->value;
+        $assignment->rank = $rank->value;
 
         // the value is discarded because this it returns false only on validation error and all data is internal
         $assignment->save();
@@ -130,5 +137,11 @@ class StoryGroupAssignment extends ActiveRecord implements HasKey, HasVisibility
     public function getNarrativeSideId(): int
     {
         return $this->story_id;
+    }
+
+    #[Override]
+    public function getRank(): AssignmentRank
+    {
+        return AssignmentRank::from($this->rank);
     }
 }

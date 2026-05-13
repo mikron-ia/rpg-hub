@@ -3,24 +3,21 @@
 namespace common\components\service;
 
 use common\models\core\Visibility;
-use common\models\exceptions\InternalErrorException;
 use common\_stubs\AssignmentEntityStub;
+use common\models\type\AssignmentRank;
 use PHPUnit\Framework\TestCase;
 use yii\db\ActiveQuery;
 
 final class AssignmentServiceTest extends TestCase
 {
-    /**
-     * @throws InternalErrorException
-     */
-    public function testDistributeAssignmentsGroupsEntityIdsByVisibility(): void
+    public function testSuccess(): void
     {
         $assignments = [
-            new AssignmentEntityStub(Visibility::VISIBILITY_GM, 1, 6),
-            new AssignmentEntityStub(Visibility::VISIBILITY_FULL, 2, 6),
-            new AssignmentEntityStub(Visibility::VISIBILITY_GM, 3, 7),
-            new AssignmentEntityStub(Visibility::VISIBILITY_GM, 4, 7),
-            new AssignmentEntityStub(Visibility::VISIBILITY_GM, 5, 7),
+            new AssignmentEntityStub(Visibility::VISIBILITY_GM, 1, 6, AssignmentRank::Major),
+            new AssignmentEntityStub(Visibility::VISIBILITY_FULL, 2, 6, AssignmentRank::Minor),
+            new AssignmentEntityStub(Visibility::VISIBILITY_GM, 3, 7, AssignmentRank::Major),
+            new AssignmentEntityStub(Visibility::VISIBILITY_GM, 4, 7, AssignmentRank::Minor),
+            new AssignmentEntityStub(Visibility::VISIBILITY_GM, 5, 7, AssignmentRank::Major),
         ];
 
         $assignmentQuery = $this->createMock(ActiveQuery::class);
@@ -39,9 +36,6 @@ final class AssignmentServiceTest extends TestCase
         self::assertSame([6], $narrativeIds->public);
     }
 
-    /**
-     * @throws InternalErrorException
-     */
     public function testEmpty(): void
     {
         $assignmentQuery = $this->createMock(ActiveQuery::class);

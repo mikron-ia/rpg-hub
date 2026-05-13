@@ -3,6 +3,7 @@
 use common\models\core\ImageDisplayMode;
 use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
+use common\models\type\AssignmentRank;
 use yii\db\Migration;
 
 class m260427_133529_v1_7_0 extends Migration
@@ -43,8 +44,24 @@ class m260427_133529_v1_7_0 extends Migration
             'updated_by' => $this->integer()->unsigned()->notNull(),
         ]);
 
-        $this->addForeignKey('image_user_creator', 'image', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('image_user_modifier', 'image', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey(
+            'image_user_creator',
+            'image',
+            'created_by',
+            'user',
+            'id',
+            'RESTRICT',
+            'CASCADE'
+        );
+        $this->addForeignKey(
+            'image_user_modifier',
+            'image',
+            'updated_by',
+            'user',
+            'id',
+            'RESTRICT',
+            'CASCADE'
+        );
 
         $this->createTable('{{%image_link}}', [
             'image_link_id' => $this->primaryKey()->unsigned(),
@@ -59,7 +76,15 @@ class m260427_133529_v1_7_0 extends Migration
             'updated_by' => $this->integer()->unsigned()->notNull(),
         ]);
 
-        $this->addForeignKey('image_link_image', 'image_link', 'image_id', 'image', 'image_id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey(
+            'image_link_image',
+            'image_link',
+            'image_id',
+            'image',
+            'image_id',
+            'RESTRICT',
+            'CASCADE'
+        );
 
         $this->addForeignKey(
             'image_link_user_creator',
@@ -77,12 +102,20 @@ class m260427_133529_v1_7_0 extends Migration
             'user',
             'id',
             'RESTRICT',
-            'CASCADE');
+            'CASCADE'
+        );
+
+        $assignmentRankColumn = $this->char(5)->notNull()->defaultValue(AssignmentRank::Other->value)->after('key');
+        $this->addColumn('{{%story_character_assignment}}', 'rank', $assignmentRankColumn);
+        $this->addColumn('{{%story_group_assignment}}', 'rank', $assignmentRankColumn);
     }
 
     #[Override]
     public function safeDown(): void
     {
+        $this->dropColumn('{{%story_group_assignment}}', 'rank');
+        $this->dropColumn('{{%story_character_assignment}}', 'rank');
+
         $this->dropForeignKey('image_link_user_modifier', 'image_link');
         $this->dropForeignKey('image_link_user_creator', 'image_link');
 

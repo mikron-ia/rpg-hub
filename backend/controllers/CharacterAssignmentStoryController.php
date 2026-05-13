@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\core\Visibility;
 use common\models\StoryCharacterAssignment;
+use common\models\type\AssignmentRank;
 use Override;
 use Throwable;
 use Yii;
@@ -70,12 +71,19 @@ class CharacterAssignmentStoryController extends AssignmentAbstractController
     {
         $storyIds = Yii::$app->request->post('keys', []);
         $characterKey = Yii::$app->request->post('characterKey');
+        $rank = Yii::$app->request->post('rank') ?? AssignmentRank::Other->value;
         $visibility = Yii::$app->request->post('visibility');
 
-        $validatedVisibility = Visibility::tryFrom($visibility);
+        $validVisibility = Visibility::tryFrom($visibility);
 
-        if ($validatedVisibility === null) {
+        if ($validVisibility === null) {
             throw new BadRequestHttpException(Yii::t('app', 'ERROR_VISIBILITY_NOT_VALID'));
+        }
+
+        $validRank = AssignmentRank::tryFrom($rank);
+
+        if ($validRank === null) {
+            throw new BadRequestHttpException(Yii::t('app', 'ERROR_ASSIGNMENT_RANK_NOT_VALID'));
         }
 
         $character = $this->findCharacter($characterKey);
@@ -83,7 +91,8 @@ class CharacterAssignmentStoryController extends AssignmentAbstractController
 
         $existingAssignments = StoryCharacterAssignment::findAll([
             'character_id' => $character->character_id,
-            'visibility' => $validatedVisibility->value,
+            'rank' => $validRank->value,
+            'visibility' => $validVisibility->value,
         ]);
 
         $storyIdsToUnassign = array_diff(array_column($existingAssignments, 'story_id'), $storyIds);
@@ -93,12 +102,13 @@ class CharacterAssignmentStoryController extends AssignmentAbstractController
             StoryCharacterAssignment::deleteAll([
                 'character_id' => $character->character_id,
                 'story_id' => $storyIdsToUnassign,
-                'visibility' => $validatedVisibility->value,
+                'rank' => $validRank->value,
+                'visibility' => $validVisibility->value,
             ]);
 
             foreach ($stories as $storyId => $story) {
                 if (!in_array($storyId, $storyIdsToSkip)) {
-                    StoryCharacterAssignment::create($character->character_id, $storyId, $validatedVisibility);
+                    StoryCharacterAssignment::create($character->character_id, $storyId, $validVisibility, $validRank);
                 }
             }
 

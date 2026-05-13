@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\Character;
 use common\models\core\Visibility;
 use common\models\StoryCharacterAssignment;
+use common\models\type\AssignmentRank;
 use Override;
 use Throwable;
 use Yii;
@@ -71,12 +72,17 @@ class StoryAssignmentCharacterController extends AssignmentAbstractController
     {
         $characterIds = Yii::$app->request->post('keys', []);
         $storyKey = Yii::$app->request->post('storyKey');
+        $rank = Yii::$app->request->post('rank') ?? AssignmentRank::Other->value;
         $visibility = Yii::$app->request->post('visibility');
 
-        $validatedVisibility = Visibility::tryFrom($visibility);
-
-        if ($validatedVisibility === null) {
+        $validVisibility = Visibility::tryFrom($visibility);
+        if ($validVisibility === null) {
             throw new BadRequestHttpException(Yii::t('app', 'ERROR_VISIBILITY_NOT_VALID'));
+        }
+
+        $validRank = AssignmentRank::tryFrom($rank);
+        if ($validRank === null) {
+            throw new BadRequestHttpException(Yii::t('app', 'ERROR_ASSIGNMENT_RANK_NOT_VALID'));
         }
 
         $story = $this->findStory($storyKey);
@@ -84,7 +90,8 @@ class StoryAssignmentCharacterController extends AssignmentAbstractController
 
         $existingAssignments = StoryCharacterAssignment::findAll([
             'story_id' => $story->story_id,
-            'visibility' => $validatedVisibility->value,
+            'rank' => $validRank->value,
+            'visibility' => $validVisibility->value,
         ]);
 
         $characterIdsToUnassign = array_diff(array_column($existingAssignments, 'character_id'), $characterIds);
@@ -94,7 +101,8 @@ class StoryAssignmentCharacterController extends AssignmentAbstractController
             StoryCharacterAssignment::deleteAll([
                 'character_id' => $characterIdsToUnassign,
                 'story_id' => $story->story_id,
-                'visibility' => $validatedVisibility->value,
+                'rank' => $validRank->value,
+                'visibility' => $validVisibility->value,
             ]);
 
             $unassignedCharacters = $this->findCharacters($characterIdsToUnassign, $story->epic);
@@ -104,7 +112,7 @@ class StoryAssignmentCharacterController extends AssignmentAbstractController
 
             foreach ($characters as $characterId => $character) {
                 if (!in_array($characterId, $characterIdsToSkip)) {
-                    StoryCharacterAssignment::create($characterId, $story->story_id, $validatedVisibility);
+                    StoryCharacterAssignment::create($characterId, $story->story_id, $validVisibility, $validRank);
                     $character->importancePack->flagForRecalculation();
                 }
             }

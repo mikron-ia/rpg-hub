@@ -2,15 +2,15 @@
 
 namespace common\models\core;
 
-use common\models\exceptions\InternalErrorException;
+use common\models\type\AssignmentRank;
 
 interface IsAssignment
 {
-    public static function create(int $actingSideId, int $narrativeSideId, Visibility $visibility): self;
+    public static function create(int $actingSideId, int $narrativeSideId, Visibility $visibility, AssignmentRank $rank): self;
 
     public function getActingSideId(): int;
 
     public function getNarrativeSideId(): int;
 
-//    public function getType(): AssignmentType;
+    public function getRank(): AssignmentRank;
 }

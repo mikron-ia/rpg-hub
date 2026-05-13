@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\core\Visibility;
 use common\models\StoryGroupAssignment;
+use common\models\type\AssignmentRank;
 use Override;
 use Throwable;
 use Yii;
@@ -70,12 +71,17 @@ class GroupAssignmentStoryController extends AssignmentAbstractController
     {
         $storyIds = Yii::$app->request->post('keys', []);
         $groupKey = Yii::$app->request->post('groupKey');
+        $rank = Yii::$app->request->post('rank') ?? AssignmentRank::Other->value;
         $visibility = Yii::$app->request->post('visibility');
 
-        $validatedVisibility = Visibility::tryFrom($visibility);
-
-        if ($validatedVisibility === null) {
+        $validVisibility = Visibility::tryFrom($visibility);
+        if ($validVisibility === null) {
             throw new BadRequestHttpException(Yii::t('app', 'ERROR_VISIBILITY_NOT_VALID'));
+        }
+
+        $validRank = AssignmentRank::tryFrom($rank);
+        if ($validRank === null) {
+            throw new BadRequestHttpException(Yii::t('app', 'ERROR_ASSIGNMENT_RANK_NOT_VALID'));
         }
 
         $group = $this->findGroup($groupKey);
@@ -83,7 +89,8 @@ class GroupAssignmentStoryController extends AssignmentAbstractController
 
         $existingAssignments = StoryGroupAssignment::findAll([
             'group_id' => $group->group_id,
-            'visibility' => $validatedVisibility->value,
+            'rank' => $validRank->value,
+            'visibility' => $validVisibility->value,
         ]);
 
         $storyIdsToUnassign = array_diff(array_column($existingAssignments, 'story_id'), $storyIds);
@@ -93,12 +100,13 @@ class GroupAssignmentStoryController extends AssignmentAbstractController
             StoryGroupAssignment::deleteAll([
                 'group_id' => $group->group_id,
                 'story_id' => $storyIdsToUnassign,
-                'visibility' => $validatedVisibility->value,
+                'rank' => $validRank->value,
+                'visibility' => $validVisibility->value,
             ]);
 
             foreach ($stories as $storyId => $story) {
                 if (!in_array($storyId, $storyIdsToSkip)) {
-                    StoryGroupAssignment::create($group->group_id, $storyId, $validatedVisibility);
+                    StoryGroupAssignment::create($group->group_id, $storyId, $validVisibility, $validRank);
                 }
             }
 

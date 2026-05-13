@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\core\Visibility;
 use common\models\Group;
 use common\models\StoryGroupAssignment;
+use common\models\type\AssignmentRank;
 use Override;
 use Throwable;
 use Yii;
@@ -71,12 +72,17 @@ class StoryAssignmentGroupController extends AssignmentAbstractController
     {
         $groupIds = Yii::$app->request->post('keys');
         $storyKey = Yii::$app->request->post('storyKey');
+        $rank = Yii::$app->request->post('rank') ?? AssignmentRank::Other->value;
         $visibility = Yii::$app->request->post('visibility');
 
-        $validatedVisibility = Visibility::tryFrom($visibility);
-
-        if ($validatedVisibility === null) {
+        $validVisibility = Visibility::tryFrom($visibility);
+        if ($validVisibility === null) {
             throw new BadRequestHttpException(Yii::t('app', 'ERROR_VISIBILITY_NOT_VALID'));
+        }
+
+        $validRank = AssignmentRank::tryFrom($rank);
+        if ($validRank === null) {
+            throw new BadRequestHttpException(Yii::t('app', 'ERROR_ASSIGNMENT_RANK_NOT_VALID'));
         }
 
         $story = $this->findStory($storyKey);
@@ -84,7 +90,8 @@ class StoryAssignmentGroupController extends AssignmentAbstractController
 
         $existingAssignments = StoryGroupAssignment::findAll([
             'story_id' => $story->story_id,
-            'visibility' => $validatedVisibility->value,
+            'rank' => $validRank->value,
+            'visibility' => $validVisibility->value,
         ]);
 
         $groupIdsToUnassign = array_diff(array_column($existingAssignments, 'group_id'), $groupIds);
@@ -94,7 +101,8 @@ class StoryAssignmentGroupController extends AssignmentAbstractController
             StoryGroupAssignment::deleteAll([
                 'group_id' => $groupIdsToUnassign,
                 'story_id' => $story->story_id,
-                'visibility' => $validatedVisibility->value,
+                'rank' => $validRank->value,
+                'visibility' => $validVisibility->value,
             ]);
 
             $unassignedGroups = $this->findGroups($groupIdsToUnassign, $story->epic);
@@ -104,7 +112,7 @@ class StoryAssignmentGroupController extends AssignmentAbstractController
 
             foreach ($groups as $groupId => $group) {
                 if (!in_array($groupId, $groupIdsToSkip)) {
-                    StoryGroupAssignment::create($groupId, $story->story_id, $validatedVisibility);
+                    StoryGroupAssignment::create($groupId, $story->story_id, $validVisibility, $validRank);
                     $group->importancePack->flagForRecalculation();
                 }
             }

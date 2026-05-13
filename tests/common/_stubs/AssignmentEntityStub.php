@@ -5,6 +5,7 @@ namespace common\_stubs;
 use common\models\core\HasVisibility;
 use common\models\core\IsAssignment;
 use common\models\core\Visibility;
+use common\models\type\AssignmentRank;
 use Override;
 
 final readonly class AssignmentEntityStub implements HasVisibility, IsAssignment
@@ -13,13 +14,18 @@ final readonly class AssignmentEntityStub implements HasVisibility, IsAssignment
         private Visibility $visibility,
         private int $actingSideId,
         private int $narrativeSideId,
+        private AssignmentRank $rank,
     ) {
     }
 
     #[Override]
-    public static function create(int $actingSideId, int $narrativeSideId, Visibility $visibility): self
-    {
-        return new self($visibility, $actingSideId, $narrativeSideId);
+    public static function create(
+        int $actingSideId,
+        int $narrativeSideId,
+        Visibility $visibility,
+        AssignmentRank $rank
+    ): self {
+        return new self($visibility, $actingSideId, $narrativeSideId, $rank);
     }
 
     #[Override]
@@ -56,5 +62,11 @@ final readonly class AssignmentEntityStub implements HasVisibility, IsAssignment
     public function getNarrativeSideId(): int
     {
         return $this->narrativeSideId;
+    }
+
+    #[Override]
+    public function getRank(): AssignmentRank
+    {
+        return $this->rank;
     }
 }
