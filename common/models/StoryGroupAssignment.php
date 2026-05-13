@@ -5,6 +5,7 @@ namespace common\models;
 use common\models\core\HasKey;
 use common\models\core\HasVisibility;
 use common\models\core\IsAssignment;
+use common\models\core\ToolsForIsAssignment;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
@@ -21,10 +22,6 @@ use yii\web\HttpException;
  * @property int $story_id
  * @property string $key
  * @property string $visibility
- * @property int|null $position
- * @property string|null $short_text
- * @property string|null $public_text
- * @property string|null $private_text
  *
  * @property Group $group
  * @property Story $story
@@ -33,6 +30,7 @@ class StoryGroupAssignment extends ActiveRecord implements HasKey, HasVisibility
 {
     use ToolsForEntity;
     use ToolsForHasVisibility;
+    use ToolsForIsAssignment;
 
     #[Override]
     public static function tableName(): string
@@ -120,5 +118,17 @@ class StoryGroupAssignment extends ActiveRecord implements HasKey, HasVisibility
         $assignment->save();
 
         return $assignment;
+    }
+
+    #[Override]
+    public function getActingSideId(): int
+    {
+        return $this->group_id;
+    }
+
+    #[Override]
+    public function getNarrativeSideId(): int
+    {
+        return $this->story_id;
     }
 }

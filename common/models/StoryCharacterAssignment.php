@@ -3,9 +3,12 @@
 namespace common\models;
 
 use common\models\core\HasKey;
+use common\models\core\HasVisibility;
 use common\models\core\IsAssignment;
+use common\models\core\ToolsForIsAssignment;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
+use common\models\tools\ToolsForHasVisibility;
 use Override;
 use Yii;
 use yii\db\ActiveQuery;
@@ -19,17 +22,15 @@ use yii\web\HttpException;
  * @property int $story_id
  * @property string $key
  * @property string $visibility
- * @property int|null $position
- * @property string|null $short_text
- * @property string|null $public_text
- * @property string|null $private_text
  *
  * @property Character $character
  * @property Story $story
  */
-class StoryCharacterAssignment extends ActiveRecord implements HasKey, IsAssignment
+class StoryCharacterAssignment extends ActiveRecord implements HasKey, HasVisibility, IsAssignment
 {
     use ToolsForEntity;
+    use ToolsForHasVisibility;
+    use ToolsForIsAssignment;
 
     #[Override]
     public static function tableName(): string
@@ -118,5 +119,17 @@ class StoryCharacterAssignment extends ActiveRecord implements HasKey, IsAssignm
         $assignment->save();
 
         return $assignment;
+    }
+
+    #[Override]
+    public function getActingSideId(): int
+    {
+        return $this->character_id;
+    }
+
+    #[Override]
+    public function getNarrativeSideId(): int
+    {
+        return $this->story_id;
     }
 }

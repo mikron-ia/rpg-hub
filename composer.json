@@ -42,7 +42,8 @@
             "common/behaviours/",
             "common/components/",
             "common/dto/",
-            "common/models/"
+            "common/models/",
+            "tests/common/_stubs/"
         ]
     }
 }
