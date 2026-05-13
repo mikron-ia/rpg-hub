@@ -14,14 +14,50 @@ $viewFile = '../story-assignment-group/_view_group_form';
 
     <?= $this->render($viewFile, [
         'model' => $model,
-        'formId' => 'form-story-group-assignment-public',
-        'attribute' => 'storyGroupAssignmentChoicesPublic',
+        'formId' => 'form-story-group-assignment-public-vital',
+        'attribute' => 'storyGroupAssignmentChoicesPublicVital',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
-        'formId' => 'form-story-group-assignment-private',
-        'attribute' => 'storyGroupAssignmentChoicesPrivate',
+        'formId' => 'form-story-group-assignment-public-major',
+        'attribute' => 'storyGroupAssignmentChoicesPublicMajor',
+    ]) ?>
+
+    <?= $this->render($viewFile, [
+        'model' => $model,
+        'formId' => 'form-story-group-assignment-public-minor',
+        'attribute' => 'storyGroupAssignmentChoicesPublicMinor',
+    ]) ?>
+
+    <?= $this->render($viewFile, [
+        'model' => $model,
+        'formId' => 'form-story-group-assignment-public-other',
+        'attribute' => 'storyGroupAssignmentChoicesPublicOther',
+    ]) ?>
+
+    <?= $this->render($viewFile, [
+        'model' => $model,
+        'formId' => 'form-story-group-assignment-private-vital',
+        'attribute' => 'storyGroupAssignmentChoicesPrivateVital',
+    ]) ?>
+
+    <?= $this->render($viewFile, [
+        'model' => $model,
+        'formId' => 'form-story-group-assignment-private-major',
+        'attribute' => 'storyGroupAssignmentChoicesPrivateMajor',
+    ]) ?>
+
+    <?= $this->render($viewFile, [
+        'model' => $model,
+        'formId' => 'form-story-group-assignment-private-minor',
+        'attribute' => 'storyGroupAssignmentChoicesPrivateMinor',
+    ]) ?>
+
+    <?= $this->render($viewFile, [
+        'model' => $model,
+        'formId' => 'form-story-group-assignment-private-other',
+        'attribute' => 'storyGroupAssignmentChoicesPrivateOther',
     ]) ?>
 </div>
 

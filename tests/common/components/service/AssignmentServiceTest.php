@@ -29,11 +29,15 @@ final class AssignmentServiceTest extends TestCase
         $actingIds = AssignmentService::extractAssignmentsActingIds($assignmentQuery);
         $narrativeIds = AssignmentService::extractAssignmentsNarrativeIds($assignmentQuery);
 
-        self::assertSame([1, 3, 4, 5], $actingIds->private);
-        self::assertSame([2], $actingIds->public);
+        self::assertSame([1, 3, 5], $actingIds->privateMajor);
+        self::assertSame([], $actingIds->publicMajor);
+        self::assertSame([4], $actingIds->privateMinor);
+        self::assertSame([2], $actingIds->publicMinor);
 
-        self::assertSame([6, 7], $narrativeIds->private);
-        self::assertSame([6], $narrativeIds->public);
+        self::assertSame([6, 7], $narrativeIds->privateMajor);
+        self::assertSame([], $narrativeIds->publicMajor);
+        self::assertSame([7], $narrativeIds->privateMinor);
+        self::assertSame([6], $narrativeIds->publicMinor);
     }
 
     public function testEmpty(): void
@@ -48,10 +52,24 @@ final class AssignmentServiceTest extends TestCase
 
         $narrativeIds = AssignmentService::extractAssignmentsNarrativeIds($assignmentQuery);
 
-        self::assertSame([], $actingIds->private);
-        self::assertSame([], $actingIds->public);
+        self::assertSame([], $actingIds->privateVital);
+        self::assertSame([], $actingIds->privateMajor);
+        self::assertSame([], $actingIds->privateMinor);
+        self::assertSame([], $actingIds->privateOther);
 
-        self::assertSame([], $narrativeIds->private);
-        self::assertSame([], $narrativeIds->public);
+        self::assertSame([], $actingIds->publicVital);
+        self::assertSame([], $actingIds->publicMajor);
+        self::assertSame([], $actingIds->publicMinor);
+        self::assertSame([], $actingIds->publicOther);
+
+        self::assertSame([], $narrativeIds->privateVital);
+        self::assertSame([], $narrativeIds->privateMajor);
+        self::assertSame([], $narrativeIds->privateMinor);
+        self::assertSame([], $narrativeIds->privateOther);
+
+        self::assertSame([], $narrativeIds->publicVital);
+        self::assertSame([], $narrativeIds->publicMajor);
+        self::assertSame([], $narrativeIds->publicMinor);
+        self::assertSame([], $narrativeIds->publicOther);
     }
 }

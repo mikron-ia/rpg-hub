@@ -19,7 +19,7 @@ const fillList = function (type) {
     });
 }
 
-const setActors = function (type, storyKeyFieldId, objects, visibility) {
+const setActors = function (type, storyKeyFieldId, objects, rank, visibility) {
     $.ajax(
         '../story-assignment-' + type + '/set-story-' + type + 's',
         {
@@ -27,6 +27,7 @@ const setActors = function (type, storyKeyFieldId, objects, visibility) {
             data: {
                 storyKey: $(storyKeyFieldId).data('story-key'),
                 keys: objects,
+                rank: rank,
                 visibility: visibility,
             }
         }
@@ -39,44 +40,180 @@ const setActors = function (type, storyKeyFieldId, objects, visibility) {
     });
 }
 
-$('#form-story-character-assignment-public').on('submit', function (ev) {
+$('#form-story-character-assignment-public-vital').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'character',
-        '#story-storycharacterassignmentchoicespublic',
-        $(this).find('[name="Story[storyCharacterAssignmentChoicesPublic][]"]').val(),
+        '#story-storycharacterassignmentchoicespublicvital',
+        $(this).find('[name="Story[storyCharacterAssignmentChoicesPublicVital][]"]').val(),
+        'vital',
         'full'
     );
 })
 
-$('#form-story-character-assignment-private').on('submit', function (ev) {
+$('#form-story-character-assignment-public-major').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'character',
-        '#story-storycharacterassignmentchoicesprivate',
-        $(this).find('[name="Story[storyCharacterAssignmentChoicesPrivate][]"]').val(),
-        'gm'
-    );
-})
-
-$('#form-story-group-assignment-public').on('submit', function (ev) {
-    ev.preventDefault();
-    setActors(
-        'group',
-        '#story-storygroupassignmentchoicespublic',
-        $(this).find('[name="Story[storyGroupAssignmentChoicesPublic][]"]').val(),
+        '#story-storycharacterassignmentchoicespublicmajor',
+        $(this).find('[name="Story[storyCharacterAssignmentChoicesPublicMajor][]"]').val(),
+        'major',
         'full'
     );
 })
 
-$('#form-story-group-assignment-private').on('submit', function (ev) {
+$('#form-story-character-assignment-public-minor').on('submit', function (ev) {
+    ev.preventDefault();
+    setActors(
+        'character',
+        '#story-storycharacterassignmentchoicespublicminor',
+        $(this).find('[name="Story[storyCharacterAssignmentChoicesPublicMinor][]"]').val(),
+        'minor',
+        'full'
+    )
+})
+
+$('#form-story-character-assignment-public-other').on('submit', function (ev) {
+    ev.preventDefault();
+    setActors(
+        'character',
+        '#story-storycharacterassignmentchoicespublicother',
+        $(this).find('[name="Story[storyCharacterAssignmentChoicesPublicOther][]"]').val(),
+        'other',
+        'full'
+    )
+})
+
+$('#form-story-character-assignment-private-vital').on('submit', function (ev) {
+    ev.preventDefault();
+    setActors(
+        'character',
+        '#story-storycharacterassignmentchoicesprivatevital',
+        $(this).find('[name="Story[storyCharacterAssignmentChoicesPrivateVital][]"]').val(),
+        'vital',
+        'gm'
+    );
+})
+
+$('#form-story-character-assignment-private-major').on('submit', function (ev) {
+    ev.preventDefault();
+    setActors(
+        'character',
+        '#story-storycharacterassignmentchoicesprivatemajor',
+        $(this).find('[name="Story[storyCharacterAssignmentChoicesPrivateMajor][]"]').val(),
+        'major',
+        'gm'
+    );
+})
+
+$('#form-story-character-assignment-private-minor').on('submit', function (ev) {
+    ev.preventDefault();
+    setActors(
+        'character',
+        '#story-storycharacterassignmentchoicesprivateminor',
+        $(this).find('[name="Story[storyCharacterAssignmentChoicesPrivateMinor][]"]').val(),
+        'minor',
+        'gm'
+    )
+})
+
+$('#form-story-character-assignment-private-other').on('submit', function (ev) {
+    ev.preventDefault();
+    setActors(
+        'character',
+        '#story-storycharacterassignmentchoicesprivateother',
+        $(this).find('[name="Story[storyCharacterAssignmentChoicesPrivateOther][]"]').val(),
+        'other',
+        'gm'
+    )
+})
+
+$('#form-story-group-assignment-public-vital').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'group',
-        '#story-storygroupassignmentchoicesprivate',
-        $(this).find('[name="Story[storyGroupAssignmentChoicesPrivate][]"]').val(),
+        '#story-storygroupassignmentchoicespublicvital',
+        $(this).find('[name="Story[storyGroupAssignmentChoicesPublicVital][]"]').val(),
+        'vital',
+        'full'
+    );
+})
+
+$('#form-story-group-assignment-public-major').on('submit', function (ev) {
+    ev.preventDefault();
+    setActors(
+        'group',
+        '#story-storygroupassignmentchoicespublicmajor',
+        $(this).find('[name="Story[storyGroupAssignmentChoicesPublicMajor][]"]').val(),
+        'major',
+        'full'
+    );
+})
+
+$('#form-story-group-assignment-public-minor').on('submit', function (ev) {
+    ev.preventDefault();
+    setActors(
+        'group',
+        '#story-storygroupassignmentchoicespublicminor',
+        $(this).find('[name="Story[storyGroupAssignmentChoicesPublicMinor][]"]').val(),
+        'minor',
+        'full'
+    )
+})
+
+$('#form-story-group-assignment-public-other').on('submit', function (ev) {
+    ev.preventDefault();
+    setActors(
+        'group',
+        '#story-storygroupassignmentchoicespublicother',
+        $(this).find('[name="Story[storyGroupAssignmentChoicesPublicOther][]"]').val(),
+        'other',
+        'full'
+    )
+})
+
+$('#form-story-group-assignment-private-vital').on('submit', function (ev) {
+    ev.preventDefault();
+    setActors(
+        'group',
+        '#story-storygroupassignmentchoicesprivatevital',
+        $(this).find('[name="Story[storyGroupAssignmentChoicesPrivateVital][]"]').val(),
+        'vital',
         'gm'
     );
+})
+
+$('#form-story-group-assignment-private-major').on('submit', function (ev) {
+    ev.preventDefault();
+    setActors(
+        'group',
+        '#story-storygroupassignmentchoicesprivatemajor',
+        $(this).find('[name="Story[storyGroupAssignmentChoicesPrivateMajor][]"]').val(),
+        'major',
+        'gm'
+    );
+})
+
+$('#form-story-group-assignment-private-minor').on('submit', function (ev) {
+    ev.preventDefault();
+    setActors(
+        'group',
+        '#story-storygroupassignmentchoicesprivateminor',
+        $(this).find('[name="Story[storyGroupAssignmentChoicesPrivateMinor][]"]').val(),
+        'minor',
+        'gm'
+    )
+})
+
+$('#form-story-group-assignment-private-other').on('submit', function (ev) {
+    ev.preventDefault();
+    setActors(
+        'group',
+        '#story-storygroupassignmentchoicesprivateother',
+        $(this).find('[name="Story[storyGroupAssignmentChoicesPrivateOther][]"]').val(),
+        'other',
+        'gm'
+    )
 })
 
 $(document).ready(function () {

@@ -74,8 +74,14 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
 
     public bool $is_off_the_record_change = false;
 
-    public array|string $characterStoryAssignmentChoicesPublic = [];
-    public array|string $characterStoryAssignmentChoicesPrivate = [];
+    public array|string $characterStoryAssignmentChoicesPublicVital = [];
+    public array|string $characterStoryAssignmentChoicesPublicMajor = [];
+    public array|string $characterStoryAssignmentChoicesPublicMinor = [];
+    public array|string $characterStoryAssignmentChoicesPublicOther = [];
+    public array|string $characterStoryAssignmentChoicesPrivateVital = [];
+    public array|string $characterStoryAssignmentChoicesPrivateMajor = [];
+    public array|string $characterStoryAssignmentChoicesPrivateMinor = [];
+    public array|string $characterStoryAssignmentChoicesPrivateOther = [];
 
     #[Override]
     public static function tableName(): string
@@ -174,8 +180,14 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'scribble_pack_id' => Yii::t('app', 'SCRIBBLE_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
             'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
-            'characterStoryAssignmentChoicesPublic' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC'),
-            'characterStoryAssignmentChoicesPrivate' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE'),
+            'characterStoryAssignmentChoicesPublicVital' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC_VITAL'),
+            'characterStoryAssignmentChoicesPublicMajor' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC_MAJOR'),
+            'characterStoryAssignmentChoicesPublicMinor' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC_MINOR'),
+            'characterStoryAssignmentChoicesPublicOther' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC_OTHER'),
+            'characterStoryAssignmentChoicesPrivateVital' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE_VITAL'),
+            'characterStoryAssignmentChoicesPrivateMajor' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE_MAJOR'),
+            'characterStoryAssignmentChoicesPrivateMinor' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE_MINOR'),
+            'characterStoryAssignmentChoicesPrivateOther' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE_OTHER'),
         ];
     }
 
@@ -190,8 +202,14 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         }
 
         $storyAssignments = AssignmentService::extractAssignmentsNarrativeIds($this->getStoryCharacterAssignments());
-        $this->characterStoryAssignmentChoicesPublic = $storyAssignments->public;
-        $this->characterStoryAssignmentChoicesPrivate = $storyAssignments->private;
+        $this->characterStoryAssignmentChoicesPublicVital = $storyAssignments->publicVital;
+        $this->characterStoryAssignmentChoicesPublicMajor = $storyAssignments->publicMajor;
+        $this->characterStoryAssignmentChoicesPublicMinor = $storyAssignments->publicMinor;
+        $this->characterStoryAssignmentChoicesPublicOther = $storyAssignments->publicOther;
+        $this->characterStoryAssignmentChoicesPrivateVital = $storyAssignments->privateVital;
+        $this->characterStoryAssignmentChoicesPrivateMajor = $storyAssignments->privateMajor;
+        $this->characterStoryAssignmentChoicesPrivateMinor = $storyAssignments->privateMinor;
+        $this->characterStoryAssignmentChoicesPrivateOther = $storyAssignments->privateOther;
 
         parent::afterFind();
     }

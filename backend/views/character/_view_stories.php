@@ -12,14 +12,50 @@ use yii\web\View;
 
     <?= $this->render('../character-assignment-story/_view_story_form', [
         'model' => $model,
-        'formId' => 'form-character-story-assignment-public',
-        'attribute' => 'characterStoryAssignmentChoicesPublic',
+        'formId' => 'form-character-story-assignment-public-vital',
+        'attribute' => 'characterStoryAssignmentChoicesPublicVital',
     ]) ?>
 
     <?= $this->render('../character-assignment-story/_view_story_form', [
         'model' => $model,
-        'formId' => 'form-character-story-assignment-private',
-        'attribute' => 'characterStoryAssignmentChoicesPrivate',
+        'formId' => 'form-character-story-assignment-public-major',
+        'attribute' => 'characterStoryAssignmentChoicesPublicMajor',
+    ]) ?>
+
+    <?= $this->render('../character-assignment-story/_view_story_form', [
+        'model' => $model,
+        'formId' => 'form-character-story-assignment-public-minor',
+        'attribute' => 'characterStoryAssignmentChoicesPublicMinor',
+    ]) ?>
+
+    <?= $this->render('../character-assignment-story/_view_story_form', [
+        'model' => $model,
+        'formId' => 'form-character-story-assignment-public-other',
+        'attribute' => 'characterStoryAssignmentChoicesPublicOther',
+    ]) ?>
+
+    <?= $this->render('../character-assignment-story/_view_story_form', [
+        'model' => $model,
+        'formId' => 'form-character-story-assignment-private-vital',
+        'attribute' => 'characterStoryAssignmentChoicesPrivateVital',
+    ]) ?>
+
+    <?= $this->render('../character-assignment-story/_view_story_form', [
+        'model' => $model,
+        'formId' => 'form-character-story-assignment-private-major',
+        'attribute' => 'characterStoryAssignmentChoicesPrivateMajor',
+    ]) ?>
+
+    <?= $this->render('../character-assignment-story/_view_story_form', [
+        'model' => $model,
+        'formId' => 'form-character-story-assignment-private-minor',
+        'attribute' => 'characterStoryAssignmentChoicesPrivateMinor',
+    ]) ?>
+
+    <?= $this->render('../character-assignment-story/_view_story_form', [
+        'model' => $model,
+        'formId' => 'form-character-story-assignment-private-other',
+        'attribute' => 'characterStoryAssignmentChoicesPrivateOther',
     ]) ?>
 </div>
 

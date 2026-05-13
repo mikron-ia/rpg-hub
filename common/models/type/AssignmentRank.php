@@ -11,7 +11,7 @@ enum AssignmentRank: string
     case Minor = 'minor';
     case Other = 'other';
 
-    public function name(): string
+    public function getName(): string
     {
         return match ($this) {
             self::Vital => Yii::t('app', 'ASSIGNMENT_RANK_VITAL'),

@@ -23,6 +23,13 @@ use yii\web\View;
                 'value' => fn(StoryGroupAssignment $model) => (string)$model->story,
             ],
             [
+                'attribute' => 'rank',
+                'headerOptions' => ['class' => 'text-center'],
+                'contentOptions' => ['class' => 'text-center'],
+                'enableSorting' => false,
+                'value' => fn(StoryGroupAssignment $model) => $model->getRank()->getName(),
+            ],
+            [
                 'attribute' => 'story.visibility',
                 'label' => Yii::t('app', 'LABEL_VISIBILITY_OBJECT'),
                 'headerOptions' => ['class' => 'text-center'],

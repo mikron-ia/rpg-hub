@@ -77,6 +77,7 @@ class StoryGroupAssignment extends ActiveRecord implements HasKey, HasVisibility
             'group_id' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_GROUP_ID'),
             'story_id' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_STORY_ID'),
             'key' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_KEY'),
+            'rank' => Yii::t('app', 'STORY_GROUP_ASSIGNMENT_RANK'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
         ];
     }

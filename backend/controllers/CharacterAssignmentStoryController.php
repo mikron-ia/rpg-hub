@@ -71,7 +71,7 @@ class CharacterAssignmentStoryController extends AssignmentAbstractController
     {
         $storyIds = Yii::$app->request->post('keys', []);
         $characterKey = Yii::$app->request->post('characterKey');
-        $rank = Yii::$app->request->post('rank') ?? AssignmentRank::Other->value;
+        $rank = Yii::$app->request->post('rank');
         $visibility = Yii::$app->request->post('visibility');
 
         $validVisibility = Visibility::tryFrom($visibility);

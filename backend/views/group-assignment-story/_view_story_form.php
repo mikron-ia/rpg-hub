@@ -9,6 +9,7 @@ use yii\widgets\ActiveForm;
 /* @var $model Group */
 /* @var $formId string */
 /* @var $attribute string */
+/* @var $storiesForDropdown array<int,string> */
 
 $formTemplate = '{label}
 <div class="input-group assignment-input-group">

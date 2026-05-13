@@ -66,10 +66,22 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     use ToolsForMultipleChoiceFields;
     use ToolsForLinkTags;
 
-    public array|string $storyCharacterAssignmentChoicesPublic = [];
-    public array|string $storyCharacterAssignmentChoicesPrivate = [];
-    public array|string $storyGroupAssignmentChoicesPublic = [];
-    public array|string $storyGroupAssignmentChoicesPrivate = [];
+    public array|string $storyCharacterAssignmentChoicesPublicVital = [];
+    public array|string $storyCharacterAssignmentChoicesPublicMajor = [];
+    public array|string $storyCharacterAssignmentChoicesPublicMinor = [];
+    public array|string $storyCharacterAssignmentChoicesPublicOther = [];
+    public array|string $storyCharacterAssignmentChoicesPrivateVital = [];
+    public array|string $storyCharacterAssignmentChoicesPrivateMajor = [];
+    public array|string $storyCharacterAssignmentChoicesPrivateMinor = [];
+    public array|string $storyCharacterAssignmentChoicesPrivateOther = [];
+    public array|string $storyGroupAssignmentChoicesPublicVital = [];
+    public array|string $storyGroupAssignmentChoicesPublicMajor = [];
+    public array|string $storyGroupAssignmentChoicesPublicMinor = [];
+    public array|string $storyGroupAssignmentChoicesPublicOther = [];
+    public array|string $storyGroupAssignmentChoicesPrivateVital = [];
+    public array|string $storyGroupAssignmentChoicesPrivateMajor = [];
+    public array|string $storyGroupAssignmentChoicesPrivateMinor = [];
+    public array|string $storyGroupAssignmentChoicesPrivateOther = [];
 
     /**
      * @var array<string,string>
@@ -155,10 +167,22 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
             'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
-            'storyCharacterAssignmentChoicesPublic' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PUBLIC'),
-            'storyCharacterAssignmentChoicesPrivate' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PRIVATE'),
-            'storyGroupAssignmentChoicesPublic' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PUBLIC'),
-            'storyGroupAssignmentChoicesPrivate' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PRIVATE'),
+            'storyCharacterAssignmentChoicesPublicVital' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PUBLIC_VITAL'),
+            'storyCharacterAssignmentChoicesPublicMajor' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PUBLIC_MAJOR'),
+            'storyCharacterAssignmentChoicesPublicMinor' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PUBLIC_MINOR'),
+            'storyCharacterAssignmentChoicesPublicOther' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PUBLIC_OTHER'),
+            'storyCharacterAssignmentChoicesPrivateVital' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PRIVATE_VITAL'),
+            'storyCharacterAssignmentChoicesPrivateMajor' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PRIVATE_MAJOR'),
+            'storyCharacterAssignmentChoicesPrivateMinor' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PRIVATE_MINOR'),
+            'storyCharacterAssignmentChoicesPrivateOther' => Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PRIVATE_OTHER'),
+            'storyGroupAssignmentChoicesPublicVital' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PUBLIC_VITAL'),
+            'storyGroupAssignmentChoicesPublicMajor' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PUBLIC_MAJOR'),
+            'storyGroupAssignmentChoicesPublicMinor' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PUBLIC_MINOR'),
+            'storyGroupAssignmentChoicesPublicOther' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PUBLIC_OTHER'),
+            'storyGroupAssignmentChoicesPrivateVital' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PRIVATE_VITAL'),
+            'storyGroupAssignmentChoicesPrivateMajor' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PRIVATE_MAJOR'),
+            'storyGroupAssignmentChoicesPrivateMinor' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PRIVATE_MINOR'),
+            'storyGroupAssignmentChoicesPrivateOther' => Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PRIVATE_OTHER'),
         ];
     }
 
@@ -173,12 +197,24 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         }
 
         $characterAssignments = AssignmentService::extractAssignmentsActingIds($this->getStoryCharacterAssignments());
-        $this->storyCharacterAssignmentChoicesPublic = $characterAssignments->public;
-        $this->storyCharacterAssignmentChoicesPrivate = $characterAssignments->private;
+        $this->storyCharacterAssignmentChoicesPublicVital = $characterAssignments->publicVital;
+        $this->storyCharacterAssignmentChoicesPublicMajor = $characterAssignments->publicMajor;
+        $this->storyCharacterAssignmentChoicesPublicMinor = $characterAssignments->publicMinor;
+        $this->storyCharacterAssignmentChoicesPublicOther = $characterAssignments->publicOther;
+        $this->storyCharacterAssignmentChoicesPrivateVital = $characterAssignments->privateVital;
+        $this->storyCharacterAssignmentChoicesPrivateMajor = $characterAssignments->privateMajor;
+        $this->storyCharacterAssignmentChoicesPrivateMinor = $characterAssignments->privateMinor;
+        $this->storyCharacterAssignmentChoicesPrivateOther = $characterAssignments->privateOther;
 
         $groupAssignments = AssignmentService::extractAssignmentsActingIds($this->getStoryGroupAssignments());
-        $this->storyGroupAssignmentChoicesPublic = $groupAssignments->public;
-        $this->storyGroupAssignmentChoicesPrivate = $groupAssignments->private;
+        $this->storyGroupAssignmentChoicesPublicVital = $groupAssignments->publicVital;
+        $this->storyGroupAssignmentChoicesPublicMajor = $groupAssignments->publicMajor;
+        $this->storyGroupAssignmentChoicesPublicMinor = $groupAssignments->publicMinor;
+        $this->storyGroupAssignmentChoicesPublicOther = $groupAssignments->publicOther;
+        $this->storyGroupAssignmentChoicesPrivateVital = $groupAssignments->privateVital;
+        $this->storyGroupAssignmentChoicesPrivateMajor = $groupAssignments->privateMajor;
+        $this->storyGroupAssignmentChoicesPrivateMinor = $groupAssignments->privateMinor;
+        $this->storyGroupAssignmentChoicesPrivateOther = $groupAssignments->privateOther;
 
         parent::afterFind();
     }

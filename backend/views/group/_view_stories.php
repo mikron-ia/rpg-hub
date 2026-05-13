@@ -12,14 +12,50 @@ use yii\web\View;
 
     <?= $this->render('../group-assignment-story/_view_story_form', [
         'model' => $model,
-        'formId' => 'form-group-story-assignment-public',
-        'attribute' => 'groupStoryAssignmentChoicesPublic',
+        'formId' => 'form-group-story-assignment-public-vital',
+        'attribute' => 'groupStoryAssignmentChoicesPublicVital',
     ]) ?>
 
     <?= $this->render('../group-assignment-story/_view_story_form', [
         'model' => $model,
-        'formId' => 'form-group-story-assignment-private',
-        'attribute' => 'groupStoryAssignmentChoicesPrivate',
+        'formId' => 'form-group-story-assignment-public-major',
+        'attribute' => 'groupStoryAssignmentChoicesPublicMajor',
+    ]) ?>
+
+    <?= $this->render('../group-assignment-story/_view_story_form', [
+        'model' => $model,
+        'formId' => 'form-group-story-assignment-public-minor',
+        'attribute' => 'groupStoryAssignmentChoicesPublicMinor',
+    ]) ?>
+
+    <?= $this->render('../group-assignment-story/_view_story_form', [
+        'model' => $model,
+        'formId' => 'form-group-story-assignment-public-other',
+        'attribute' => 'groupStoryAssignmentChoicesPublicOther',
+    ]) ?>
+
+    <?= $this->render('../group-assignment-story/_view_story_form', [
+        'model' => $model,
+        'formId' => 'form-group-story-assignment-private-vital',
+        'attribute' => 'groupStoryAssignmentChoicesPrivateVital',
+    ]) ?>
+
+    <?= $this->render('../group-assignment-story/_view_story_form', [
+        'model' => $model,
+        'formId' => 'form-group-story-assignment-private-major',
+        'attribute' => 'groupStoryAssignmentChoicesPrivateMajor',
+    ]) ?>
+
+    <?= $this->render('../group-assignment-story/_view_story_form', [
+        'model' => $model,
+        'formId' => 'form-group-story-assignment-private-minor',
+        'attribute' => 'groupStoryAssignmentChoicesPrivateMinor',
+    ]) ?>
+
+    <?= $this->render('../group-assignment-story/_view_story_form', [
+        'model' => $model,
+        'formId' => 'form-group-story-assignment-private-other',
+        'attribute' => 'groupStoryAssignmentChoicesPrivateOther',
     ]) ?>
 </div>
 
