@@ -183,19 +183,14 @@ final class GroupQuery extends Group
     /**
      * @return string[]
      */
-    public static function listEpicGroupsAsArray(): array
+    public static function listEpicGroupsAsArray(Epic $epic): array
     {
         $query = Group::find();
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-            $query->where('0=1');
-        } else {
-            $query->andWhere([
-                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-                'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
-            ]);
-        }
+        $query->andWhere([
+            'epic_id' => $epic->epic_id,
+            'visibility' => Visibility::determineVisibilityVector($epic),
+        ]);
 
         $groups = $query->all();
 

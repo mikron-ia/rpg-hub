@@ -195,19 +195,14 @@ final class CharacterQuery extends Character
     /**
      * @return string[]
      */
-    public static function listEpicCharactersAsArray(): array
+    public static function listEpicCharactersAsArray(Epic $epic): array
     {
         $query = Character::find();
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-            $query->where('0=1');
-        } else {
-            $query->andWhere([
-                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-                'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
-            ]);
-        }
+        $query->andWhere([
+            'epic_id' => $epic->epic_id,
+            'visibility' => Visibility::determineVisibilityVector($epic),
+        ]);
 
         $characters = $query->all();
 

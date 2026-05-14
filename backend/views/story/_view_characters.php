@@ -1,11 +1,13 @@
 <?php
 
+use common\models\CharacterQuery;
 use common\models\Story;
 use yii\web\View;
 
 /* @var $this View */
 /* @var $model Story */
 
+$charactersForDropdown = CharacterQuery::listEpicCharactersAsArray($model->epic);
 $viewFile = '../story-assignment-character/_view_character_form';
 ?>
 
@@ -14,48 +16,56 @@ $viewFile = '../story-assignment-character/_view_character_form';
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'charactersForDropdown' => $charactersForDropdown,
         'formId' => 'form-story-character-assignment-public-vital',
         'attribute' => 'storyCharacterAssignmentChoicesPublicVital',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'charactersForDropdown' => $charactersForDropdown,
         'formId' => 'form-story-character-assignment-public-major',
         'attribute' => 'storyCharacterAssignmentChoicesPublicMajor',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'charactersForDropdown' => $charactersForDropdown,
         'formId' => 'form-story-character-assignment-public-minor',
         'attribute' => 'storyCharacterAssignmentChoicesPublicMinor',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'charactersForDropdown' => $charactersForDropdown,
         'formId' => 'form-story-character-assignment-public-other',
         'attribute' => 'storyCharacterAssignmentChoicesPublicOther',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'charactersForDropdown' => $charactersForDropdown,
         'formId' => 'form-story-character-assignment-private-vital',
         'attribute' => 'storyCharacterAssignmentChoicesPrivateVital',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'charactersForDropdown' => $charactersForDropdown,
         'formId' => 'form-story-character-assignment-private-major',
         'attribute' => 'storyCharacterAssignmentChoicesPrivateMajor',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'charactersForDropdown' => $charactersForDropdown,
         'formId' => 'form-story-character-assignment-private-minor',
         'attribute' => 'storyCharacterAssignmentChoicesPrivateMinor',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'charactersForDropdown' => $charactersForDropdown,
         'formId' => 'form-story-character-assignment-private-other',
         'attribute' => 'storyCharacterAssignmentChoicesPrivateOther',
     ]) ?>

@@ -1,7 +1,6 @@
 <?php
 
 use common\models\Group;
-use common\models\StoryQuery;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -27,7 +26,7 @@ $formTemplate = '{label}
 <?= $form->field($model, $attribute, ['template' => $formTemplate])->widget(
     Select2::class,
     [
-        'data' => StoryQuery::listEpicStoriesAsArrayForDropdown(),
+        'data' => $storiesForDropdown,
         'options' => ['multiple' => true, 'data-group-key' => $model->key],
         'pluginOptions' => ['allowClear' => true],
     ],

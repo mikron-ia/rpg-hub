@@ -1,6 +1,5 @@
 <?php
 
-use common\models\CharacterQuery;
 use common\models\Story;
 use kartik\select2\Select2;
 use yii\helpers\Html;
@@ -9,6 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $model Story */
 /* @var $formId string */
 /* @var $attribute string */
+/* @var $charactersForDropdown array<int,string> */
 
 $formTemplate = '{label}
 <div class="input-group assignment-input-group">
@@ -26,7 +26,7 @@ $formTemplate = '{label}
 <?= $form->field($model, $attribute, ['template' => $formTemplate])->widget(
     Select2::class,
     [
-        'data' => CharacterQuery::listEpicCharactersAsArray(),
+        'data' => $charactersForDropdown,
         'options' => ['multiple' => true, 'data-story-key' => $model->key],
         'pluginOptions' => ['allowClear' => true],
     ],

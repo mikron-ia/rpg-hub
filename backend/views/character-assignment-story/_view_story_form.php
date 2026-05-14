@@ -9,6 +9,7 @@ use yii\widgets\ActiveForm;
 /* @var $model Character */
 /* @var $formId string */
 /* @var $attribute string */
+/* @var $storiesForDropdown array<int,string> */
 
 $formTemplate = '{label}
 <div class="input-group assignment-input-group">
@@ -26,7 +27,7 @@ $formTemplate = '{label}
 <?= $form->field($model, $attribute, ['template' => $formTemplate])->widget(
     Select2::class,
     [
-        'data' => StoryQuery::listEpicStoriesAsArrayForDropdown(),
+        'data' => $storiesForDropdown,
         'options' => ['multiple' => true, 'data-character-key' => $model->key],
         'pluginOptions' => ['allowClear' => true],
     ],

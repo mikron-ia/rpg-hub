@@ -1,11 +1,13 @@
 <?php
 
+use common\models\GroupQuery;
 use common\models\Story;
 use yii\web\View;
 
 /* @var $this View */
 /* @var $model Story */
 
+$groupsForDropdown = GroupQuery::listEpicGroupsAsArray($model->epic);
 $viewFile = '../story-assignment-group/_view_group_form';
 ?>
 
@@ -14,48 +16,56 @@ $viewFile = '../story-assignment-group/_view_group_form';
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'groupsForDropdown' => $groupsForDropdown,
         'formId' => 'form-story-group-assignment-public-vital',
         'attribute' => 'storyGroupAssignmentChoicesPublicVital',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'groupsForDropdown' => $groupsForDropdown,
         'formId' => 'form-story-group-assignment-public-major',
         'attribute' => 'storyGroupAssignmentChoicesPublicMajor',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'groupsForDropdown' => $groupsForDropdown,
         'formId' => 'form-story-group-assignment-public-minor',
         'attribute' => 'storyGroupAssignmentChoicesPublicMinor',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'groupsForDropdown' => $groupsForDropdown,
         'formId' => 'form-story-group-assignment-public-other',
         'attribute' => 'storyGroupAssignmentChoicesPublicOther',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'groupsForDropdown' => $groupsForDropdown,
         'formId' => 'form-story-group-assignment-private-vital',
         'attribute' => 'storyGroupAssignmentChoicesPrivateVital',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'groupsForDropdown' => $groupsForDropdown,
         'formId' => 'form-story-group-assignment-private-major',
         'attribute' => 'storyGroupAssignmentChoicesPrivateMajor',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'groupsForDropdown' => $groupsForDropdown,
         'formId' => 'form-story-group-assignment-private-minor',
         'attribute' => 'storyGroupAssignmentChoicesPrivateMinor',
     ]) ?>
 
     <?= $this->render($viewFile, [
         'model' => $model,
+        'groupsForDropdown' => $groupsForDropdown,
         'formId' => 'form-story-group-assignment-private-other',
         'attribute' => 'storyGroupAssignmentChoicesPrivateOther',
     ]) ?>

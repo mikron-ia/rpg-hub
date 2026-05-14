@@ -141,19 +141,14 @@ final class StoryQuery extends Story implements EntityQuery
     /**
      * @return string[]
      */
-    public static function listEpicStoriesAsArrayForDropdown(): array
+    public static function listEpicStoriesAsArrayForDropdown(Epic $epic): array
     {
         $query = Story::find();
 
-        if (empty(Yii::$app->params['activeEpic'])) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
-            $query->where('0=1');
-        } else {
-            $query->andWhere([
-                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
-                'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
-            ])->orderBy('position DESC');
-        }
+        $query->andWhere([
+            'epic_id' => $epic->epic_id,
+            'visibility' => Visibility::determineVisibilityVector($epic),
+        ])->orderBy('position DESC');
 
         $stories = $query->all();
 
