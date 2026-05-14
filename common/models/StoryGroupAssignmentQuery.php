@@ -5,7 +5,6 @@ namespace common\models;
 use common\dto\LinkWithVisibility;
 use common\models\core\Visibility;
 use yii\db\ActiveQuery;
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 final class StoryGroupAssignmentQuery extends StoryGroupAssignment
@@ -92,7 +91,7 @@ final class StoryGroupAssignmentQuery extends StoryGroupAssignment
     {
         return array_map(
             fn(StoryGroupAssignment $assignment) => new LinkWithVisibility(
-                text: $assignment->{$address}->name . ' (' . $assignment->getRank()->getNameForBrackets() . ')',
+                text: $assignment->{$address}->name . ' (' . strtolower($assignment->getRank()->getNameForBrackets()) . ')',
                 url: Url::to([$address . '/view', 'key' => $assignment->{$address}->key]),
                 isSecret: $assignment->{$address}->visibility === Visibility::VISIBILITY_GM->value,
             ),

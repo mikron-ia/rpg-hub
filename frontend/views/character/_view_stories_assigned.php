@@ -1,12 +1,13 @@
 <?php
 
+use common\dto\LinkWithVisibility;
 use common\models\Character;
 
 /* @var $this yii\web\View */
 /* @var $header string */
 /* @var $model Character */
-/* @var $storyCharacterPublic array<string> */
-/* @var $storyCharacterPrivate array<string> */
+/* @var $storyCharacterPublic array<LinkWithVisibility> */
+/* @var $storyCharacterPrivate array<LinkWithVisibility> */
 /* @var $showPrivateWarning bool */
 
 ?>
@@ -15,13 +16,12 @@ use common\models\Character;
     <div class="col-md-6">
         <?php if ($showPrivateWarning): ?>
             <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PUBLIC'); ?></h2>
-            <p class="warning-box"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PRIVATE_WARNING'); ?></p>
         <?php else: ?>
             <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY'); ?></h2>
         <?php endif; ?>
         <ul>
             <?php foreach ($storyCharacterPublic as $role): ?>
-                <li><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'secret list-item-hidden' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -34,7 +34,7 @@ use common\models\Character;
         <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PRIVATE'); ?></h2>
         <ul>
             <?php foreach ($storyCharacterPrivate as $role): ?>
-                <li><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'secret list-item-hidden' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>

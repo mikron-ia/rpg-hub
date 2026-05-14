@@ -1,13 +1,16 @@
 <?php
 
+use common\dto\LinkWithVisibility;
 use common\models\Group;
 use yii\web\View;
 
 /* @var $this View */
 /* @var $header string */
 /* @var $model Group */
-/* @var $storyGroupPublic array<string> */
-/* @var $storyGroupPrivate array<string> */
+/* @var $storyCharacterPublic array<LinkWithVisibility> */
+/* @var $storyCharacterPrivate array<LinkWithVisibility> */
+/* @var $storyGroupPublic array<LinkWithVisibility> */
+/* @var $storyGroupPrivate array<LinkWithVisibility> */
 /* @var $showPrivateWarning bool */
 
 ?>
@@ -32,7 +35,7 @@ use yii\web\View;
         <?php endif; ?>
         <ul>
             <?php foreach ($storyCharacterPublic as $role): ?>
-                <li><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'secret list-item-hidden' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -47,7 +50,7 @@ use yii\web\View;
         <?php endif; ?>
         <ul>
             <?php foreach ($storyGroupPublic as $role): ?>
-                <li><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'secret list-item-hidden' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -59,7 +62,7 @@ use yii\web\View;
         <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PRIVATE'); ?></h2>
         <ul>
             <?php foreach ($storyCharacterPrivate as $role): ?>
-                <li><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'secret list-item-hidden' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -71,9 +74,8 @@ use yii\web\View;
         <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PRIVATE'); ?></h2>
         <ul>
             <?php foreach ($storyGroupPrivate as $role): ?>
-                <li><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'secret list-item-hidden' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
 <?php endif; ?>
-

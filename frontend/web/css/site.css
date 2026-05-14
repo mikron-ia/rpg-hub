@@ -558,6 +558,10 @@ tr.table-row-hidden > td {
     background-color: lightgoldenrodyellow;
 }
 
+li.list-item-hidden {
+    font-style: italic;
+}
+
 .session-box-closed {
     cursor: pointer;
 }
