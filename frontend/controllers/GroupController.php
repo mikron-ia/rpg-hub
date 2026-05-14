@@ -88,8 +88,8 @@ class GroupController extends Controller
     }
 
     /**
+     * @throws Exception
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionView(string $key): string
     {
@@ -121,7 +121,6 @@ class GroupController extends Controller
 
     /**
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionExternalReputation(string $key): string
     {
@@ -146,7 +145,6 @@ class GroupController extends Controller
 
     /**
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionExternalReputationEvent(string $key): string
     {

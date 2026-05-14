@@ -41,10 +41,7 @@ final class StoryController extends Controller
     }
 
     /**
-     * Lists all Story models
-     *
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionIndex(?string $key = null): string
     {
@@ -75,8 +72,6 @@ final class StoryController extends Controller
     }
 
     /**
-     * Displays a single Story model
-     *
      * @throws Exception
      * @throws HttpException
      */

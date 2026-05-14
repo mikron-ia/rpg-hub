@@ -7,21 +7,21 @@ use common\models\ArticleQuery;
 use common\models\core\Visibility;
 use common\models\Epic;
 use common\components\EpicAssistance;
+use Override;
 use Yii;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
-/**
- * ArticleController implements the CRUD actions for Article model.
- */
 class ArticleController extends Controller
 {
     use EpicAssistance;
 
-    public function behaviors()
+    #[Override]
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -44,14 +44,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Lists all Article models
-     *
-     * @param null|string $key
-     *
-     * @return string
-     *
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionIndex(?string $key = null): string
     {
@@ -83,14 +76,8 @@ class ArticleController extends Controller
     }
 
     /**
-     * Displays a single Article model
-     *
-     * @param string $key
-     *
-     * @return string
-     *
+     * @throws Exception
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionView(string $key): string
     {
@@ -110,37 +97,11 @@ class ArticleController extends Controller
     }
 
     /**
-     * Finds the Story model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $key
-     * @return Article the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
-    protected function findModelByKey($key)
+    protected function findModelByKey(string $key): Article
     {
         $model = Article::findOne(['key' => $key]);
-
-        if ($model === null) {
-            throw new NotFoundHttpException(Yii::t('app', 'ARTICLE_NOT_AVAILABLE'));
-        }
-
-        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
-            throw new NotFoundHttpException(Yii::t('app', 'ARTICLE_NOT_AVAILABLE'));
-        }
-
-        return $model;
-    }
-
-    /**
-     * Finds the Character model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Article the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModelById($id)
-    {
-        $model = Article::findOne(['article_id' => $id]);
 
         if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'ARTICLE_NOT_AVAILABLE'));

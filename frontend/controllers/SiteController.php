@@ -17,9 +17,11 @@ use common\models\user\UserAcceptForm;
 use common\models\user\UserSettingsForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
+use Override;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidArgumentException;
+use yii\db\Exception as DbException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
@@ -33,6 +35,7 @@ use yii\web\Response;
  */
 final class SiteController extends Controller
 {
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -78,6 +81,7 @@ final class SiteController extends Controller
     /**
      * @return array<string, array<string, string|null>>
      */
+    #[Override]
     public function actions(): array
     {
         return [
@@ -150,6 +154,8 @@ final class SiteController extends Controller
 
     /**
      * Logs out the current user
+     *
+     * @throws DbException
      */
     public function actionLogout(): Response
     {
@@ -160,11 +166,6 @@ final class SiteController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Password change action
-     *
-     * @throws BadRequestHttpException
-     */
     public function actionPasswordChange(): Response|string
     {
         $model = new PasswordChange();
@@ -180,9 +181,6 @@ final class SiteController extends Controller
         return $this->render('user/password-change', ['model' => $model]);
     }
 
-    /**
-     * Requests password reset
-     */
     public function actionRequestPasswordReset(): Response|string
     {
         $model = new PasswordResetRequestForm();
@@ -202,8 +200,6 @@ final class SiteController extends Controller
     }
 
     /**
-     * Resets password
-     *
      * @throws BadRequestHttpException
      */
     public function actionResetPassword(string $token): Response|string
@@ -225,9 +221,6 @@ final class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Selects an Epic
-     */
     public function actionSetEpic(): Response
     {
         $chosenEpicKey = Yii::$app->request->post('epic');

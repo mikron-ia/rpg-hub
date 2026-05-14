@@ -9,7 +9,9 @@ use common\models\Epic;
 use common\models\StoryCharacterAssignmentQuery;
 use frontend\controllers\external\ReputationToolsForControllerTrait;
 use common\components\EpicAssistance;
+use Override;
 use Yii;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -17,9 +19,6 @@ use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * CharacterController implements the CRUD actions for the Character model.
- */
 final class CharacterController extends Controller
 {
     use EpicAssistance;
@@ -27,6 +26,7 @@ final class CharacterController extends Controller
 
     private const int POSITIONS_PER_PAGE = 24;
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -55,7 +55,6 @@ final class CharacterController extends Controller
 
     /**
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionIndex(?string $key = null): string
     {
@@ -94,8 +93,8 @@ final class CharacterController extends Controller
     }
 
     /**
+     * @throws Exception
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionView(string $key): string
     {
@@ -126,7 +125,7 @@ final class CharacterController extends Controller
     }
 
     /**
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
     protected function findModelByKey(string $key): Character
     {
@@ -169,7 +168,6 @@ final class CharacterController extends Controller
 
     /**
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionExternalReputationEvent(string $key): string
     {
@@ -192,8 +190,8 @@ final class CharacterController extends Controller
     }
 
     /**
+     * @throws Exception
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionOpenScribbleModal(string $key): string
     {
@@ -210,23 +208,5 @@ final class CharacterController extends Controller
         }
 
         return $this->render('../scribble/_modal_box', ['model' => $scribbleModel]);
-    }
-
-    /**
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModelById(string $id): Character
-    {
-        $model = Character::findOne(['character_id' => $id]);
-
-        if ($model === null) {
-            throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));
-        }
-
-        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
-            throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));
-        }
-
-        return $model;
     }
 }
