@@ -20,4 +20,18 @@ enum AssignmentRank: string
             self::Other => Yii::t('app', 'ASSIGNMENT_RANK_OTHER'),
         };
     }
+
+    public function getNameLowercase(): string
+    {
+        return strtolower($this->getName());
+    }
+
+    public function getNameForBrackets(): string
+    {
+        return Yii::t(
+            'app',
+            'ASSIGNMENT_RANK_NAME_FOR_BRACKETS {rank}',
+            ['rank' => $this->getNameLowercase()]
+        );
+    }
 }

@@ -69,6 +69,7 @@ return [
     'ARTICLE_VISIBILITY' => 'Visibility',
     'ASSIGNMENT_RANK_MAJOR' => 'Major',
     'ASSIGNMENT_RANK_MINOR' => 'Minor',
+    'ASSIGNMENT_RANK_NAME_FOR_BRACKETS {rank}' => '{rank} role',
     'ASSIGNMENT_RANK_OTHER' => 'Other',
     'ASSIGNMENT_RANK_VITAL' => 'Vital',
     'ASSIGNMENT_SUMMARY {totalCount}' => 'Found assignments: <b>{totalCount, number}</b>.',

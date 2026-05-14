@@ -69,6 +69,7 @@ return [
     'ARTICLE_VISIBILITY' => 'Widoczność',
     'ASSIGNMENT_RANK_MAJOR' => 'Duża',
     'ASSIGNMENT_RANK_MINOR' => 'Mała',
+    'ASSIGNMENT_RANK_NAME_FOR_BRACKETS {rank}' => 'rola {rank}',
     'ASSIGNMENT_RANK_OTHER' => 'Tła',
     'ASSIGNMENT_RANK_VITAL' => 'Główna',
     'ASSIGNMENT_SUMMARY {totalCount}' => 'Znalezionych powiązań: <b>{totalCount, number}</b>.',
