@@ -1,15 +1,23 @@
 <?php
 
+use common\models\GroupMembership;
 use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\GroupMembership */
+/* @var $this View */
+/* @var $model GroupMembership */
 
 $this->title = Yii::t('app', 'GROUP_MEMBERSHIP_TITLE_VIEW {name}', ['name' => $model->character->name]);
 ?>
 <div class="group-membership-view">
+    <p class="pull-right">
+        <?= Html::tag(
+            'span',
+            $model->getStatus(),
+            ['class' => ['membership-status', 'pull-left', $model->getStatusClass()]]
+        ) ?>
+    </p>
 
-    <p class="pull-right"><?= Html::tag('span', $model->getStatus(), ['class' => ['membership-status', 'pull-left', $model->getStatusClass()]]) ?></p>
     <p class="subtitle"><?= $model->short_text ?></p>
 
     <div><?= $model->getPublicFormatted(); ?></div>
@@ -17,5 +25,4 @@ $this->title = Yii::t('app', 'GROUP_MEMBERSHIP_TITLE_VIEW {name}', ['name' => $m
     <div class="private-notes"><?= $model->getPrivateFormatted(); ?></div>
 
     <?php $this->registerJs("$('#membership-view-modal-title').html('" . $this->title . "');"); ?>
-
 </div>

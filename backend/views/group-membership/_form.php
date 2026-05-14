@@ -4,16 +4,16 @@ use common\models\Character;
 use common\models\core\Visibility;
 use common\models\GroupMembership;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\GroupMembership */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model GroupMembership */
+/* @var $form ActiveForm */
 /* @var $charactersForMembership Character[] */
 ?>
 
 <div class="group-membership-form">
-
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-6">
@@ -21,7 +21,10 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'visibility')->dropDownList(Visibility::visibilityNames(GroupMembership::allowedVisibilities())); ?>
+        <?= $form
+            ->field($model, 'visibility')
+            ->dropDownList(Visibility::visibilityNames(GroupMembership::allowedVisibilities()));
+        ?>
     </div>
 
     <div class="col-md-3">
@@ -48,5 +51,4 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>

@@ -45,7 +45,6 @@ final class GroupMembershipController extends CmsController
     /**
      * @throws HttpException
      * @throws InvalidRouteException
-     * @throws NotFoundHttpException
      */
     public function actionView(string $key): Response|string
     {
@@ -93,28 +92,33 @@ final class GroupMembershipController extends CmsController
 
         if ($success) {
             return $this->returnToReferrer(['site/index']);
-        } else {
-            $charactersForMembership = CharacterQuery::listEpicCharactersAsArray();
+        }
 
-            if (Yii::$app->request->isAjax) {
-                return $this->renderAjax(
-                    'create',
-                    ['model' => $model, 'charactersForMembership' => $charactersForMembership]
-                );
-            }
+        $charactersForMembership = CharacterQuery::listEpicCharactersAsArray($model->group->epic);
 
-            return $this->render(
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax(
                 'create',
-                ['model' => $model, 'charactersForMembership' => $charactersForMembership]
+                [
+                    'model' => $model,
+                    'charactersForMembership' => $charactersForMembership,
+                ]
             );
         }
+
+        return $this->render(
+            'create',
+            [
+                'model' => $model,
+                'charactersForMembership' => $charactersForMembership,
+            ]
+        );
     }
 
     /**
      * @throws Exception
      * @throws HttpException
      * @throws InvalidRouteException
-     * @throws NotFoundHttpException
      */
     public function actionUpdate(string $key): Response|string
     {
@@ -128,7 +132,7 @@ final class GroupMembershipController extends CmsController
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->returnToReferrer(['site/index']);
         } else {
-            $charactersForMembership = CharacterQuery::listEpicCharactersAsArray();
+            $charactersForMembership = CharacterQuery::listEpicCharactersAsArray($model->group->epic);
 
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax(
@@ -147,7 +151,6 @@ final class GroupMembershipController extends CmsController
     /**
      * @throws HttpException
      * @throws InvalidRouteException
-     * @throws NotFoundHttpException
      */
     public function actionHistory(string $key): Response|string
     {
@@ -164,17 +167,22 @@ final class GroupMembershipController extends CmsController
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('history', ['model' => $model, 'historyRecords' => $historyRecords]);
-        } else {
-            return $this->render('history', ['model' => $model, 'historyRecords' => $historyRecords]);
         }
+
+        return $this->render('history', ['model' => $model, 'historyRecords' => $historyRecords]);
     }
 
     /**
-     * @throws NotFoundHttpException
+     * @throws HttpException
      */
     public function actionMoveUp(string $key): Response
     {
         $model = $this->findModel($key);
+
+        if (!$model->group->canUserViewYou() || !$model->character->canUserViewYou()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_MEMBERSHIP_ACCESS_DENIED'));
+            return $this->returnToReferrer(['site/index']);
+        }
 
         $model->movePrev();
 
@@ -182,30 +190,20 @@ final class GroupMembershipController extends CmsController
     }
 
     /**
-     * @throws NotFoundHttpException
+     * @throws HttpException
      */
     public function actionMoveDown(string $key): Response
     {
         $model = $this->findModel($key);
 
+        if (!$model->group->canUserViewYou() || !$model->character->canUserViewYou()) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_MEMBERSHIP_ACCESS_DENIED'));
+            return $this->returnToReferrer(['site/index']);
+        }
+
         $model->moveNext();
 
         return $this->returnToReferrer(['index']);
-    }
-
-    /**
-     * Finds the GroupMembership model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     *
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModelById(string $id): GroupMembership
-    {
-        if (($model = GroupMembership::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
