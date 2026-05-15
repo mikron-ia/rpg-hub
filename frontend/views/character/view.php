@@ -117,8 +117,4 @@ if ($this->params['showPrivates']) {
         'items' => $items
     ]) ?>
 
-    <?php if ($this->params['showPrivates']): ?>
-        <?= $this->registerJs('$(".secret").hide();'); ?>
-    <?php endif; ?>
-
 </div>

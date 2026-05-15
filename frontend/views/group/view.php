@@ -111,8 +111,4 @@ if ($this->params['showPrivates']) {
     </div>
 
     <?= Tabs::widget(['items' => $items]) ?>
-
-    <?php if ($this->params['showPrivates']): ?>
-        <?php $this->registerJs('$(".secret").hide();'); ?>
-    <?php endif; ?>
 </div>
