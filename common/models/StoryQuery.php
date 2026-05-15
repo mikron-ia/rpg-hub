@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\core\EntityQuery;
 use common\models\core\Visibility;
+use Override;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -29,7 +30,7 @@ final class StoryQuery extends Story implements EntityQuery
     {
         return [
             [['descriptions', 'parameters'], 'string'],
-            [['name', 'short', 'long', 'code', 'data'], 'safe'],
+            [['name', 'short', 'long', 'code', 'data', 'visibility'], 'safe'],
         ];
     }
 
@@ -48,6 +49,7 @@ final class StoryQuery extends Story implements EntityQuery
         return Model::scenarios();
     }
 
+    #[Override]
     public function search(array $params): ActiveDataProvider
     {
         $query = Story::find()->joinWith('parameterPack', true, 'JOIN');
@@ -66,7 +68,7 @@ final class StoryQuery extends Story implements EntityQuery
     }
 
     /**
-     * Creates data provider instance with search query applied and data limited to given Epic
+     * Creates a data provider instance with the search query applied and data limited to given Epic
      */
     public function searchForEpic(array $params, ?Epic $epic = null): ActiveDataProvider
     {
@@ -129,6 +131,7 @@ final class StoryQuery extends Story implements EntityQuery
         $query
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['in', 'code', $this->code])
+            ->andFilterWhere(['in', 'visibility', $this->visibility])
             ->andFilterWhere([
                 'or',
                 ['like', 'short', $this->descriptions],

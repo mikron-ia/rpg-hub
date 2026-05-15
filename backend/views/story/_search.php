@@ -1,6 +1,8 @@
 <?php
 
+use common\models\core\Visibility;
 use common\models\Epic;
+use common\models\Story;
 use common\models\StoryQuery;
 use common\models\type\StoryType;
 use kartik\select2\Select2;
@@ -31,6 +33,14 @@ use yii\widgets\ActiveForm;
         Select2::class,
         [
             'data' => StoryType::namesForDropdown(),
+            'options' => ['multiple' => true],
+        ]
+    ) ?>
+
+    <?php echo $form->field($model, 'visibility')->widget(
+        kartik\select2\Select2::class,
+        [
+            'data' => Visibility::visibilityNames(Story::allowedVisibilities()),
             'options' => ['multiple' => true],
         ]
     ) ?>
