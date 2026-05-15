@@ -64,17 +64,32 @@ if ($showPrivates) {
 }
 ?>
 <div class="story-view">
-    <h1>
-        <?php if ($model->story_id === $model->epic->current_story_id): ?>
-            <span class="current-tag tag-view-page"><?= Yii::t('app', 'TAG_CURRENT_F') ?></span>
+    <div class="buttoned-header">
+        <h1>
+            <?php if ($model->story_id === $model->epic->current_story_id): ?>
+                <span class="current-tag tag-view-page"><?= Yii::t('app', 'TAG_CURRENT_F') ?></span>
+            <?php endif; ?>
+            <?php if ($model->displayCodeName()): ?>
+                <span class="type-tag tag-view-page"><?= $model->getCodeName() ?></span>
+            <?php endif; ?>
+            <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
+                <span class="unpublished-tag tag-view-page"><?= Yii::t('app', 'TAG_UNPUBLISHED_F') ?></span>
+            <?php endif; ?>
+            <?= Html::encode($this->title) ?>
+        </h1>
+        <?php if ($showPrivates): ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_SECRETS_SHOW'), '#', [
+                'class' => 'btn btn-default',
+                'onclick' => 'showSecrets()',
+                'id' => 'secrets-show',
+            ]) ?>
+            <?= Html::a(Yii::t('app', 'BUTTON_SECRETS_HIDE'), '#', [
+                'class' => 'btn btn-default',
+                'onclick' => 'hideSecrets()',
+                'id' => 'secrets-hide',
+                'style' => 'display: none;'
+            ]) ?>
         <?php endif; ?>
-        <?php if ($model->displayCodeName()): ?>
-            <span class="type-tag tag-view-page"><?= $model->getCodeName() ?></span>
-        <?php endif; ?>
-        <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
-            <span class="unpublished-tag tag-view-page"><?= Yii::t('app', 'TAG_UNPUBLISHED_F') ?></span>
-        <?php endif; ?>
-        <?= Html::encode($this->title) ?>
-    </h1>
+    </div>
     <?= Tabs::widget(['items' => $items]) ?>
 </div>

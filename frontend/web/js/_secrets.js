@@ -11,3 +11,7 @@ function hideSecrets() {
     $("#secrets-show").show();
     $("#secrets-hide").hide();
 }
+
+$(document).ready(function () {
+    hideSecrets();
+})

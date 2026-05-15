@@ -29,7 +29,7 @@ use yii\web\View;
         <?php endif; ?>
         <ul>
             <?php foreach ($storyCharacterPublic as $role): ?>
-                <li class="<?= $role->isSecret ? 'confidential redacted' : '' ?>"><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'confidential' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -44,7 +44,7 @@ use yii\web\View;
         <?php endif; ?>
         <ul>
             <?php foreach ($storyGroupPublic as $role): ?>
-                <li class="<?= $role->isSecret ? 'confidential redacted' : '' ?>"><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'confidential' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -56,7 +56,7 @@ use yii\web\View;
         <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PRIVATE'); ?></h2>
         <ul>
             <?php foreach ($storyCharacterPrivate as $role): ?>
-                <li class="<?= $role->isSecret ? 'confidential redacted' : '' ?>"><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'confidential' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -68,7 +68,7 @@ use yii\web\View;
         <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PRIVATE'); ?></h2>
         <ul>
             <?php foreach ($storyGroupPrivate as $role): ?>
-                <li class="<?= $role->isSecret ? 'confidential redacted' : '' ?>"><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'confidential' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
