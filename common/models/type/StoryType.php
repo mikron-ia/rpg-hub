@@ -6,8 +6,7 @@ use Yii;
 
 enum StoryType: string
 {
-    case None = '';                   // No type set
-
+    case None = 'none';               // No type set
     case Story = 'story';             // Default story; interactive
     case Chapter = 'chapter';         // Part of a larger story; interactive
     case Episode = 'episode';         // Self-standing episode; interactive
@@ -36,6 +35,11 @@ enum StoryType: string
             self::Report => Yii::t('app', 'STORY_TYPE_REPORT'),
             self::Summary => Yii::t('app', 'STORY_TYPE_SUMMARY'),
         };
+    }
+
+    public function displayTag(): bool
+    {
+        return !($this === self::None);
     }
 
     /**

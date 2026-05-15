@@ -68,7 +68,7 @@ if ($showPrivates) {
         <?php if ($model->story_id === $model->epic->current_story_id): ?>
             <span class="current-tag tag-view-page"><?= Yii::t('app', 'TAG_CURRENT_F') ?></span>
         <?php endif; ?>
-        <?php if ($model->hasCodeName()): ?>
+        <?php if ($model->displayCodeName()): ?>
             <span class="type-tag tag-view-page"><?= $model->getCodeName() ?></span>
         <?php endif; ?>
         <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>

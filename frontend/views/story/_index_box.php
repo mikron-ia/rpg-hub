@@ -16,7 +16,7 @@ $storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
             Html::encode((empty($storyNumberRaw) ? '' : $storyNumberRaw . ' ') . $model->name),
             ['story/view', 'key' => $model->key]
         ); ?>
-        <?php if ($model->hasCodeName()): ?>
+        <?php if ($model->displayCodeName()): ?>
             <span class="text-center type-tag tag-smaller"><?= $model->getCodeName() ?></span>
         <?php endif; ?>
     </h4>

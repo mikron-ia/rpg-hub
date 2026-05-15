@@ -16,7 +16,7 @@ $storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
             Html::encode((empty($storyNumberRaw) ? '' : ($storyNumberRaw . ' ')) . $model->name),
             ['view', 'key' => $model->key]
         ); ?>
-        <?php if ($model->hasCodeName()): ?>
+        <?php if ($model->displayCodeName()): ?>
             <span class="text-center type-tag"><?= $model->getCodeName() ?></span>
         <?php endif; ?>
         <?php if ($model->story_id === $model->epic->current_story_id): ?>

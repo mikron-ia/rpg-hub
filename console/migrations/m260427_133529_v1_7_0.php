@@ -4,6 +4,7 @@ use common\models\core\ImageDisplayMode;
 use common\models\core\ImportanceCategory;
 use common\models\core\Visibility;
 use common\models\type\AssignmentRank;
+use common\models\type\StoryType;
 use yii\db\Migration;
 
 class m260427_133529_v1_7_0 extends Migration
@@ -108,11 +109,17 @@ class m260427_133529_v1_7_0 extends Migration
         $assignmentRankColumn = $this->char(5)->notNull()->defaultValue(AssignmentRank::Other->value)->after('key');
         $this->addColumn('{{%story_character_assignment}}', 'rank', $assignmentRankColumn);
         $this->addColumn('{{%story_group_assignment}}', 'rank', $assignmentRankColumn);
+
+        $this->alterColumn('{{%story}}', 'code', $this->char(10)->notNull()->defaultValue(StoryType::None->value));
+        $this->execute(sprintf("UPDATE `story` SET `code` = '%s' WHERE `code` = ''", StoryType::None->value));
     }
 
     #[Override]
     public function safeDown(): void
     {
+        $this->execute(sprintf("UPDATE `story` SET `code` = '' WHERE `code` = '%s'", StoryType::None->value));
+        $this->alterColumn('{{%story}}', 'code', $this->string(40)->notNull());
+
         $this->dropColumn('{{%story_group_assignment}}', 'rank');
         $this->dropColumn('{{%story_character_assignment}}', 'rank');
 
