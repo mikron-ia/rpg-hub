@@ -9,9 +9,11 @@ use yii\data\ActiveDataProvider;
 
 class ScenarioQuery extends Scenario implements EntityQuery
 {
+    private const int DEFAULT_PAGE_SIZE = 20;
+
     private int $pageCount;
 
-    public function __construct($pagination = 20, array $config = [])
+    public function __construct($pagination = self::DEFAULT_PAGE_SIZE, array $config = [])
     {
         $this->pageCount = $pagination;
         parent::__construct($config);

@@ -83,12 +83,12 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public array|string $storyGroupAssignmentChoicesPrivateMinor = [];
     public array|string $storyGroupAssignmentChoicesPrivateOther = [];
 
+    public bool $is_off_the_record_change = false;
+
     /**
      * @var array<string,string>
      */
     private array $parametersFormatted = [];
-
-    public bool $is_off_the_record_change = false;
 
     #[Override]
     public static function tableName(): string

@@ -14,26 +14,30 @@ use yii\web\HttpException;
 
 final class StoryQuery extends Story implements EntityQuery
 {
-    private int $pageCount;
+    private const int DEFAULT_PAGE_SIZE = 4;
 
-    public function __construct($pagination = 4, array $config = [])
-    {
-        $this->pageCount = $pagination;
-        parent::__construct($config);
-    }
+    private int $pageCount;
 
     public ?string $descriptions = null;
 
     public ?string $parameters = null;
 
+    public function __construct($pagination = self::DEFAULT_PAGE_SIZE, array $config = [])
+    {
+        $this->pageCount = $pagination;
+        parent::__construct($config);
+    }
+
+    #[Override]
     public function rules(): array
     {
         return [
-            [['descriptions', 'parameters'], 'string'],
-            [['name', 'short', 'long', 'code', 'data', 'visibility'], 'safe'],
+            [['descriptions', 'name', 'parameters'], 'string'],
+            [['code', 'visibility'], 'safe'],
         ];
     }
 
+    #[Override]
     public function attributeLabels(): array
     {
         $attributeLabels = parent::attributeLabels();
@@ -44,6 +48,7 @@ final class StoryQuery extends Story implements EntityQuery
         return $attributeLabels;
     }
 
+    #[Override]
     public function scenarios(): array
     {
         return Model::scenarios();

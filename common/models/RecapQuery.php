@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\models\core\EntityQuery;
+use Override;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -10,32 +12,34 @@ use yii\data\ArrayDataProvider;
 /**
  * RecapQuery represents the model behind the search form about `common\models\Recap`.
  */
-final class RecapQuery extends Recap
+final class RecapQuery extends Recap implements EntityQuery
 {
+    private const int DEFAULT_PAGE_SIZE = 4;
+
     private int $pageCount;
 
-    public function __construct(int $pagination = 4, array $config = [])
+    public function __construct(int $pagination = self::DEFAULT_PAGE_SIZE, array $config = [])
     {
         $this->pageCount = $pagination;
         parent::__construct($config);
     }
 
-    public function rules()
+    #[Override]
+    public function rules(): array
     {
         return [
             [['name', 'content', 'time'], 'safe'],
         ];
     }
 
-    public function scenarios()
+    #[Override]
+    public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     */
+    #[Override]
     public function search(array $params): ActiveDataProvider
     {
         $query = Recap::find();
@@ -123,7 +127,7 @@ final class RecapQuery extends Recap
     }
 
     /**
-     * Provides list of all recaps from current epic for use in a selector
+     * Provides a list of all recaps from current epic for use in a selector
      *
      * @return string[]
      */
