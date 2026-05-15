@@ -18,12 +18,6 @@ use yii\web\View;
     <div class="col-md-12">
         <p class="info-box"><?= Yii::t('app', 'STORY_ASSIGNMENT_CHARACTER_AND_GROUP_EMPTY'); ?></p>
     </div>
-<?php else: ?>
-    <?php if ($showPrivateWarning): ?>
-        <div class="col-md-12">
-            <p class="warning-box"><?= Yii::t('app', 'STORY_ASSIGNMENT_CHARACTER_AND_GROUP_PRIVATE_WARNING'); ?></p>
-        </div>
-    <?php endif; ?>
 <?php endif; ?>
 
 <?php if (!empty($storyCharacterPublic)): ?>
@@ -35,7 +29,7 @@ use yii\web\View;
         <?php endif; ?>
         <ul>
             <?php foreach ($storyCharacterPublic as $role): ?>
-                <li class="<?= $role->isSecret ? 'secret list-item-hidden' : '' ?>"><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'confidential redacted' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -50,7 +44,7 @@ use yii\web\View;
         <?php endif; ?>
         <ul>
             <?php foreach ($storyGroupPublic as $role): ?>
-                <li class="<?= $role->isSecret ? 'secret list-item-hidden' : '' ?>"><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'confidential redacted' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -62,7 +56,7 @@ use yii\web\View;
         <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_CHARACTERS_PRIVATE'); ?></h2>
         <ul>
             <?php foreach ($storyCharacterPrivate as $role): ?>
-                <li class="<?= $role->isSecret ? 'secret list-item-hidden' : '' ?>"><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'confidential redacted' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -74,7 +68,7 @@ use yii\web\View;
         <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_GROUPS_PRIVATE'); ?></h2>
         <ul>
             <?php foreach ($storyGroupPrivate as $role): ?>
-                <li class="<?= $role->isSecret ? 'secret list-item-hidden' : '' ?>"><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'confidential redacted' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>

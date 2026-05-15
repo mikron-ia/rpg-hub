@@ -99,6 +99,10 @@ a:focus {
     border: 4px solid #dd0022;
 }
 
+li.redacted {
+    background-color: black;
+}
+
 .seen-tag-new {
     background-color: red;
     border-color: red;

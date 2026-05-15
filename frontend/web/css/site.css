@@ -191,7 +191,7 @@ p {
 }
 
 .no-data-box {
-    background: whitesmokee;
+    background: whitesmoke;
     border-radius: 10px;
     font-style: italic;
     padding: 10px 20px;
@@ -558,8 +558,16 @@ tr.table-row-hidden > td {
     background-color: lightgoldenrodyellow;
 }
 
-li.list-item-hidden {
+li.confidential {
     font-style: italic;
+}
+
+li.redacted {
+    font-style: revert;
+}
+
+li.redacted:hover {
+    background-color: revert;
 }
 
 .session-box-closed {

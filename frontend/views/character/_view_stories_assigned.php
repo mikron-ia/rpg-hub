@@ -21,7 +21,7 @@ use common\models\Character;
         <?php endif; ?>
         <ul>
             <?php foreach ($storyCharacterPublic as $role): ?>
-                <li class="<?= $role->isSecret ? 'secret list-item-hidden' : '' ?>"><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'confidential redacted' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -34,7 +34,7 @@ use common\models\Character;
         <h2 class="text-center"><?= Yii::t('app', 'STORY_ASSIGNMENT_STORY_PRIVATE'); ?></h2>
         <ul>
             <?php foreach ($storyCharacterPrivate as $role): ?>
-                <li class="<?= $role->isSecret ? 'secret list-item-hidden' : '' ?>"><?= $role; ?></li>
+                <li class="<?= $role->isSecret ? 'confidential redacted' : '' ?>"><?= $role; ?></li>
             <?php endforeach; ?>
         </ul>
     </div>

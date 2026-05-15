@@ -98,6 +98,10 @@ a:focus {
     border: 4px solid #88dd00;
 }
 
+li.redacted {
+    background-color: green;
+}
+
 .seen-tag-new {
     background-color: yellowgreen;
     border-color: yellowgreen;
