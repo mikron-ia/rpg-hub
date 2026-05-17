@@ -666,6 +666,7 @@ return [
     'LOCATION_BASIC' => 'Podstawy',
     'LOCATION_BUTTON_SEE_IMPORTANCES' => 'Lista z ważnością',
     'LOCATION_BUTTON_SEE_MAIN_INDEX' => 'Lista podstawowa',
+    'LOCATION_DESCRIPTIONS_COMPACT_TAB' => 'Opisy',
     'LOCATION_DESCRIPTIONS_TAB' => 'Szczegóły',
     'LOCATION_GM_TAB' => 'Dane MG',
     'LOCATION_ID' => 'ID',

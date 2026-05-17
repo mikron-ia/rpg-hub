@@ -24,14 +24,33 @@ $this->params['breadcrumbs'][] = [
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['showPrivates'] = $showPrivates;
 
-$items = [];
+$items = [
+    [
+        'label' => Yii::t('app', 'LOCATION_DESCRIPTIONS_COMPACT_TAB'),
+        'content' => $this->render('../_descriptions-compact/_view_descriptions', [
+            'model' => $model,
+            'showPrivates' => $showPrivates,
+        ]),
+        'encode' => false,
+        'active' => true,
+    ],
+    [
+        'label' => Yii::t('app', 'LOCATION_DESCRIPTIONS_TAB'),
+        'content' => $this->render('../_descriptions/_view_descriptions', [
+            'model' => $model,
+            'showPrivates' => $showPrivates,
+        ]),
+        'encode' => false,
+        'active' => false,
+    ],
+];
 
 if ($this->params['showPrivates']) {
     $items[] = [
         'label' => Yii::t('app', 'LOCATION_GM_TAB'),
         'content' => $this->render('_view_gm', ['model' => $model]),
         'encode' => false,
-        'active' => true,
+        'active' => false,
     ];
 }
 

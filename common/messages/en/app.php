@@ -666,6 +666,7 @@ return [
     'LOCATION_BASIC' => 'Location basic data',
     'LOCATION_BUTTON_SEE_IMPORTANCES' => 'List with importances',
     'LOCATION_BUTTON_SEE_MAIN_INDEX' => 'Basic list',
+    'LOCATION_DESCRIPTIONS_COMPACT_TAB' => 'Descriptions',
     'LOCATION_DESCRIPTIONS_TAB' => 'Details',
     'LOCATION_GM_TAB' => 'GM data',
     'LOCATION_ID' => 'ID',
