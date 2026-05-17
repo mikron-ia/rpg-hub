@@ -211,6 +211,67 @@ final class LocationController extends CmsController
     }
 
     /**
+     * @throws HttpException
+     */
+    public function actionDisplayDescriptions(string $key): string
+    {
+        if (!Yii::$app->request->isAjax) {
+            throw new MethodNotAllowedHttpException(Yii::t('app', 'ERROR_AJAX_REQUESTS_ONLY'));
+        }
+
+        $model = $this->findModelByKey($key);
+
+        if (!$model->canUserControlYou()) {
+            throw new ForbiddenHttpException(Yii::t('app', 'DESCRIPTION_PACK_NOT_ACCESSIBLE'));
+        }
+
+        return $this->renderAjax(
+            '../description/_view_descriptions',
+            [
+                'model' => $model->descriptionPack,
+                'creatorController' => 'location',
+                'creatorKey' => $model->key,
+            ]
+        );
+    }
+
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    public function actionCreateDescription(string $key): Response|string
+    {
+        $model = $this->findModelByKey($key);
+        if (!$model->canUserControlYou()) {
+            Location::throwExceptionAboutControl();
+        }
+
+        $description = new Description();
+        $loadSuccess = $description->load(Yii::$app->request->post());
+
+        $description = DescriptionService::fillDescription(
+            model: $description,
+            descriptionPack: $model->descriptionPack
+        );
+
+        if ($loadSuccess && $description->save()) {
+            return $this->returnToReferrer(['site/index']);
+        }
+
+        $dataForCreate = [
+            'model' => $description,
+            'creatorController' => 'location',
+            'creatorKey' => $model->key,
+        ];
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('../description/create', $dataForCreate);
+        }
+
+        return $this->render('../description/create', $dataForCreate);
+    }
+
+    /**
      * Finds the Location model based on its primary key value
      *
      * @throws NotFoundHttpException if the model cannot be found

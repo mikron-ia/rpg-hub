@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
+use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\core\HasImportance;
 use common\models\core\HasImportanceCategory;
@@ -48,7 +49,7 @@ use yii\web\HttpException;
  * @property SeenPack $seenPack
  * @property UtilityBag $utilityBag
  */
-class Location extends ActiveRecord implements HasEpicControl, HasImportance, HasImportanceCategory, HasScribbles, HasSightings, HasVisibility, HasKey
+class Location extends ActiveRecord implements HasEpicControl, HasDescriptions, HasImportance, HasImportanceCategory, HasScribbles, HasSightings, HasVisibility, HasKey
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
@@ -196,6 +197,28 @@ class Location extends ActiveRecord implements HasEpicControl, HasImportance, Ha
             ],
         ];
     }
+
+    static public function allowedDescriptionTypes(): array
+    {
+        return [
+            Description::TYPE_WHO,
+            Description::TYPE_APPEARANCE,
+            Description::TYPE_LOCATION,
+            Description::TYPE_HISTORY,
+            Description::TYPE_ASPECTS,
+            Description::TYPE_FACTIONS,
+            Description::TYPE_HISTORY,
+            Description::TYPE_INTERACTIONS,
+            Description::TYPE_RESOURCES,
+            Description::TYPE_REPUTATION,
+            Description::TYPE_RETINUE,
+            Description::TYPE_RUMOURS,
+            Description::TYPE_STORIES,
+            Description::TYPE_THREADS,
+            Description::TYPE_COMMENTARY,
+        ];
+    }
+
 
     public function getDescriptionPack(): ActiveQuery
     {

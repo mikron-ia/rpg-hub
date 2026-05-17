@@ -11,6 +11,8 @@ class LocationAsset extends AssetBundle
     public $css = [];
     public $js = [
         'js/copy-key-button.js',
+        'js/description-loader.js',
+        'js/loader-for-location.js',
     ];
     public $depends = [
         'backend\assets\AppAsset',

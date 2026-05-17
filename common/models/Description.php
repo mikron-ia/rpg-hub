@@ -63,26 +63,28 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
     use ToolsForLinkTags;
     use ToolsForHasVisibility;
 
-    const string TYPE_APPEARANCE = 'appearance';       // For Character; The looks
-    const string TYPE_ASPECTS = 'aspects';             // For Character, Group, Scenario, Story; Aspects (for FATE-like games) and Moves (for Powered by Apocalypse games)
+    const string TYPE_APPEARANCE = 'appearance';       // For Character, Location; The looks
+    const string TYPE_ASPECTS = 'aspects';             // For Character, Group, Location, Scenario, Story; Aspects (for FATE-like games) and Moves (for Powered by Apocalypse games)
     const string TYPE_ATTITUDE = 'attitude';           // For Character, Group; Attitude towards different people / groups and connections with them
     const string TYPE_BACKGROUND = 'background';       // For Character, Group, Story; Origin, education, the like
-    const string TYPE_COMMENTARY = 'commentary';       // For Character, Group, Story; GM commentary
+    const string TYPE_COMMENTARY = 'commentary';       // For Character, Group, Location, Story; GM commentary
     const string TYPE_DOMAIN = 'domain';               // For Character, Group; Places where the person reigns, dominates, or frequents
     const string TYPE_FAME = 'fame';                   // For Character; Famous deeds or events; REMOVED
-    const string TYPE_FACTIONS = 'factions';           // For Character, Group; Factions associated with; this includes nations
-    const string TYPE_HISTORY = 'history';             // For Character, Group; History of the person or group
-    const string TYPE_INTERACTIONS = 'interactions';   // For Character, Group; Interactions / encounters with the group or person NAMES
+    const string TYPE_FACTIONS = 'factions';           // For Character, Group, Location; Factions associated with; this includes nations
+    const string TYPE_HISTORY = 'history';             // For Character, Group, Location; History of the character/group/location
+    const string TYPE_INTERACTIONS = 'interactions';   // For Character, Group, Location; Interactions / encounters with the group or person NAMES
     const string TYPE_PERSONALITY = 'personality';     // For Character; Personality, character behaviour, mental issues
-    const string TYPE_RESOURCES = 'resources';         // For Character, Group; Resources the person wields, flaunts, can offer
-    const string TYPE_REPUTATION = 'reputation';       // For Character; Character's reputation
-    const string TYPE_RETINUE = 'retinue';             // For Character, Group; Friends, allies, etc.
-    const string TYPE_RUMOURS = 'rumours';             // For Character, Group; Unproven rumours collected about character
-    const string TYPE_STORIES = 'stories';             // For Character, Group; Stories person participated in
-    const string TYPE_THREADS = 'threads';             // For Character, Group, Scenario, Story; Threads attached
-    const string TYPE_WHO = 'who';                     // For Character, Group; Who is this?
+    const string TYPE_RESOURCES = 'resources';         // For Character, Group, Location; Resources the person/group/location wields, flaunts, or can offer
+    const string TYPE_REPUTATION = 'reputation';       // For Character, Group, Location; Reputation of the character/group/location
+    const string TYPE_RETINUE = 'retinue';             // For Character, Group, Location; Friends, allies, etc.; for Location, it's mostly about personnel
+    const string TYPE_RUMOURS = 'rumours';             // For Character, Group, Location; Unproven rumours collected about character/group/location
+    const string TYPE_STORIES = 'stories';             // For Character, Group, Location; Stories participated in
+    const string TYPE_THREADS = 'threads';             // For Character, Group, Location, Scenario, Story; Threads attached
+    const string TYPE_WHO = 'who';                     // For Character, Group, Location; Who/what is this?
 
     const string TYPE_STRUCTURE = 'structure';         // For Group: what is the structure and basic workings?
+
+    const string TYPE_LOCATION = 'location';           // For Location: where is it?
 
     const string TYPE_PREMISE = 'premise';             // For Scenario, Story; what is the main concept?
     const string TYPE_ACTORS = 'actors';               // For Scenario, Story; who is going to participate?
@@ -309,6 +311,7 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
             self::TYPE_STORIES => Yii::t('app', 'DESCRIPTION_TYPE_STORIES'),
             self::TYPE_THREADS => Yii::t('app', 'DESCRIPTION_TYPE_THREADS'),
             self::TYPE_WHO => Yii::t('app', 'DESCRIPTION_TYPE_WHO'),
+            self::TYPE_LOCATION => Yii::t('app', 'DESCRIPTION_TYPE_LOCATION'),
             self::TYPE_PREMISE => Yii::t('app', 'DESCRIPTION_TYPE_PREMISE'),
             self::TYPE_ACTORS => Yii::t('app', 'DESCRIPTION_TYPE_ACTORS'),
             self::TYPE_PLAN => Yii::t('app', 'DESCRIPTION_TYPE_PLAN'),

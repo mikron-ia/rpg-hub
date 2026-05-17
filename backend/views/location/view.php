@@ -29,6 +29,12 @@ $items = [
         'active' => true,
     ],
     [
+        'label' => Yii::t('app', 'LOCATION_DESCRIPTIONS_TAB'),
+        'content' => $this->render('../description/_view_descriptions_empty', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ],
+    [
         'label' => Yii::t('app', 'LOCATION_STATISTICS'),
         'content' => $this->render('_view_statistics', ['model' => $model]),
         'encode' => false,
