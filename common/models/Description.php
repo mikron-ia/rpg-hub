@@ -311,6 +311,7 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
             self::TYPE_STORIES => Yii::t('app', 'DESCRIPTION_TYPE_STORIES'),
             self::TYPE_THREADS => Yii::t('app', 'DESCRIPTION_TYPE_THREADS'),
             self::TYPE_WHO => Yii::t('app', 'DESCRIPTION_TYPE_WHO'),
+            self::TYPE_STRUCTURE => Yii::t('app', 'DESCRIPTION_TYPE_STRUCTURE'),
             self::TYPE_LOCATION => Yii::t('app', 'DESCRIPTION_TYPE_LOCATION'),
             self::TYPE_PREMISE => Yii::t('app', 'DESCRIPTION_TYPE_PREMISE'),
             self::TYPE_ACTORS => Yii::t('app', 'DESCRIPTION_TYPE_ACTORS'),

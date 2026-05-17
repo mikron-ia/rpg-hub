@@ -320,6 +320,7 @@ return [
     'DESCRIPTION_TYPE_RUMOURS' => 'Rumours',
     'DESCRIPTION_TYPE_SCENE' => 'Scene',
     'DESCRIPTION_TYPE_STORIES' => 'Stories participated in',
+    'DESCRIPTION_TYPE_STRUCTURE' => 'Structure and organization',
     'DESCRIPTION_TYPE_THREADS' => 'Threads',
     'DESCRIPTION_TYPE_WHO' => 'Who/what is this?',
     'DESCRIPTION_UPDATED {when} {who}' => 'Changed {when}, by {who}',

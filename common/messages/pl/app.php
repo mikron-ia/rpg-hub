@@ -320,6 +320,7 @@ return [
     'DESCRIPTION_TYPE_RUMOURS' => 'Plotki',
     'DESCRIPTION_TYPE_SCENE' => 'Scena',
     'DESCRIPTION_TYPE_STORIES' => 'Historie z udziałem',
+    'DESCRIPTION_TYPE_STRUCTURE' => 'Struktura i organizacja',
     'DESCRIPTION_TYPE_THREADS' => 'Wątki',
     'DESCRIPTION_TYPE_WHO' => 'Kim/czym jest?',
     'DESCRIPTION_UPDATED {when} {who}' => 'Zmienione przez {who}, {when}',
