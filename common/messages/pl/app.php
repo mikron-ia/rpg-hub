@@ -907,6 +907,7 @@ return [
     'SEEN_STATUS_NEW' => 'Nowość',
     'SEEN_STATUS_SEEN' => 'Bez zmian',
     'SEEN_STATUS_UPDATED' => 'Po zmianach',
+    'SEEN_TIMES' => 'Ile razy?',
     'STORIES_ASSIGNMENT_ACTORS_TAB' => 'Występują',
     'STORIES_NOT_FOUND' => 'Historii nie znaleziono',
     'STORY_ASSIGNED_CHARACTERS_TAB' => 'Postacie w historii',

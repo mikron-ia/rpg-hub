@@ -24,6 +24,15 @@ use yii\web\View;
             [
                 'attribute' => 'seen_at',
                 'format' => 'datetime',
+                'contentOptions' => ['class' => 'text-center'],
+                'headerOptions' => ['class' => 'text-center'],
+                'enableSorting' => false,
+            ],
+            [
+                'attribute' => 'times',
+                'format' => 'integer',
+                'contentOptions' => ['class' => 'text-center'],
+                'headerOptions' => ['class' => 'text-center'],
                 'enableSorting' => false,
             ],
         ],
@@ -41,6 +50,15 @@ use yii\web\View;
             [
                 'attribute' => 'seen_at',
                 'format' => 'datetime',
+                'contentOptions' => ['class' => 'text-center'],
+                'headerOptions' => ['class' => 'text-center'],
+                'enableSorting' => false,
+            ],
+            [
+                'attribute' => 'times',
+                'format' => 'integer',
+                'contentOptions' => ['class' => 'text-center'],
+                'headerOptions' => ['class' => 'text-center'],
                 'enableSorting' => false,
             ],
         ],

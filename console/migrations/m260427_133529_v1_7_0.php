@@ -112,11 +112,15 @@ class m260427_133529_v1_7_0 extends Migration
 
         $this->alterColumn('{{%story}}', 'code', $this->char(10)->notNull()->defaultValue(StoryType::None->value));
         $this->execute(sprintf("UPDATE `story` SET `code` = '%s' WHERE `code` = ''", StoryType::None->value));
+
+        $this->addColumn('{{%seen}}', 'times', $this->bigInteger()->unsigned()->defaultValue(0));
     }
 
     #[Override]
     public function safeDown(): void
     {
+        $this->dropColumn('{{%seen}}', 'times');
+
         $this->execute(sprintf("UPDATE `story` SET `code` = '' WHERE `code` = '%s'", StoryType::None->value));
         $this->alterColumn('{{%story}}', 'code', $this->string(40)->notNull());
 

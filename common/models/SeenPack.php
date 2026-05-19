@@ -190,6 +190,7 @@ class SeenPack extends ActiveRecord
                     $importancePack->flagForRecalculation(); // flag only if possible and on status change
                 }
                 $record->seen_at = time();
+                $record->addToSightingCounter();
                 $record->setSeenStatus(SeenStatus::STATUS_SEEN);
             }
 

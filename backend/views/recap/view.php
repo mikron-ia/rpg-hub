@@ -109,6 +109,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'seen_at',
                         'format' => 'datetime',
+                        'contentOptions' => ['class' => 'text-center'],
+                        'headerOptions' => ['class' => 'text-center'],
+                        'enableSorting' => false,
+                    ],
+                    [
+                        'attribute' => 'times',
+                        'format' => 'integer',
+                        'contentOptions' => ['class' => 'text-center'],
+                        'headerOptions' => ['class' => 'text-center'],
                         'enableSorting' => false,
                     ],
                 ],
@@ -130,6 +139,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'seen_at',
                         'format' => 'datetime',
+                        'contentOptions' => ['class' => 'text-center'],
+                        'headerOptions' => ['class' => 'text-center'],
+                        'enableSorting' => false,
+                    ],
+                    [
+                        'attribute' => 'times',
+                        'format' => 'integer',
+                        'contentOptions' => ['class' => 'text-center'],
+                        'headerOptions' => ['class' => 'text-center'],
                         'enableSorting' => false,
                     ],
                 ],

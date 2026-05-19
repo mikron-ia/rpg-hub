@@ -68,6 +68,15 @@ use yii\widgets\DetailView;
                 [
                     'attribute' => 'seen_at',
                     'format' => 'datetime',
+                    'contentOptions' => ['class' => 'text-center'],
+                    'headerOptions' => ['class' => 'text-center'],
+                    'enableSorting' => false,
+                ],
+                [
+                    'attribute' => 'times',
+                    'format' => 'integer',
+                    'contentOptions' => ['class' => 'text-center'],
+                    'headerOptions' => ['class' => 'text-center'],
                     'enableSorting' => false,
                 ],
             ],
@@ -85,6 +94,15 @@ use yii\widgets\DetailView;
                 [
                     'attribute' => 'seen_at',
                     'format' => 'datetime',
+                    'contentOptions' => ['class' => 'text-center'],
+                    'headerOptions' => ['class' => 'text-center'],
+                    'enableSorting' => false,
+                ],
+                [
+                    'attribute' => 'times',
+                    'format' => 'integer',
+                    'contentOptions' => ['class' => 'text-center'],
+                    'headerOptions' => ['class' => 'text-center'],
                     'enableSorting' => false,
                 ],
             ],

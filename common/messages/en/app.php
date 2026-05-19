@@ -907,6 +907,7 @@ return [
     'SEEN_STATUS_NEW' => 'New',
     'SEEN_STATUS_SEEN' => 'Seen',
     'SEEN_STATUS_UPDATED' => 'Updated',
+    'SEEN_TIMES' => 'Times seen',
     'STORIES_ASSIGNMENT_ACTORS_TAB' => 'Actors in story',
     'STORIES_NOT_FOUND' => 'Stories not found',
     'STORY_ASSIGNED_CHARACTERS_TAB' => 'Characters in story',
