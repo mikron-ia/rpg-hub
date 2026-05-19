@@ -17,7 +17,8 @@ use yii\db\ActiveRecord;
  * @property string $seen_at
  * @property string $status
  * @property integer $alert_threshold
- * @property integer $times
+ * @property integer $times_seen
+ * @property integer $times_seen_since_update
  *
  * @property SeenPack $seenPack
  * @property User $user
@@ -55,7 +56,8 @@ class Seen extends ActiveRecord
             'seen_at' => Yii::t('app', 'SEEN_SEEN_AT'),
             'status' => Yii::t('app', 'SEEN_STATUS'),
             'alert_threshold' => Yii::t('app', 'SEEN_ALERT'),
-            'times' => Yii::t('app', 'SEEN_TIMES'),
+            'times_seen' => Yii::t('app', 'SEEN_TIMES_SEEN'),
+            'times_seen_since_update' => Yii::t('app', 'SEEN_TIMES_SEEN_SINCE_UPDATE'),
         ];
     }
 
@@ -112,8 +114,14 @@ class Seen extends ActiveRecord
         }
     }
 
-    public function addToSightingCounter(): void
+    public function addToSightingCounters(): void
     {
-        $this->times++;
+        $this->times_seen++;
+        $this->times_seen_since_update++;
+    }
+
+    public function resetSinceUpdateSightingCounter(): void
+    {
+        $this->times_seen_since_update = 0;
     }
 }

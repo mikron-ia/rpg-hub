@@ -28,7 +28,14 @@ use yii\grid\GridView;
                 'enableSorting' => false,
             ],
             [
-                'attribute' => 'times',
+                'attribute' => 'times_seen',
+                'format' => 'integer',
+                'contentOptions' => ['class' => 'text-center'],
+                'headerOptions' => ['class' => 'text-center'],
+                'enableSorting' => false,
+            ],
+            [
+                'attribute' => 'times_seen_since_update',
                 'format' => 'integer',
                 'contentOptions' => ['class' => 'text-center'],
                 'headerOptions' => ['class' => 'text-center'],
@@ -56,7 +63,14 @@ use yii\grid\GridView;
                 'enableSorting' => false,
             ],
             [
-                'attribute' => 'times',
+                'attribute' => 'times_seen',
+                'format' => 'integer',
+                'contentOptions' => ['class' => 'text-center'],
+                'headerOptions' => ['class' => 'text-center'],
+                'enableSorting' => false,
+            ],
+            [
+                'attribute' => 'times_seen_since_update',
                 'format' => 'integer',
                 'contentOptions' => ['class' => 'text-center'],
                 'headerOptions' => ['class' => 'text-center'],

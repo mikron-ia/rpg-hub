@@ -190,7 +190,7 @@ class SeenPack extends ActiveRecord
                     $importancePack->flagForRecalculation(); // flag only if possible and on status change
                 }
                 $record->seen_at = time();
-                $record->addToSightingCounter();
+                $record->addToSightingCounters();
                 $record->setSeenStatus(SeenStatus::STATUS_SEEN);
             }
 
@@ -214,6 +214,7 @@ class SeenPack extends ActiveRecord
         foreach ($foundRecords as $record) {
             if ($record->getSeenStatus() != SeenStatus::STATUS_NEW) {
                 $record->setSeenStatus(SeenStatus::STATUS_UPDATED);
+                $record->resetSinceUpdateSightingCounter();
                 $updateResult = $updateResult && $record->save();
             }
         }

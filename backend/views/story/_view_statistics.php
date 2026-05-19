@@ -29,7 +29,14 @@ use yii\web\View;
                 'enableSorting' => false,
             ],
             [
-                'attribute' => 'times',
+                'attribute' => 'times_seen',
+                'format' => 'integer',
+                'contentOptions' => ['class' => 'text-center'],
+                'headerOptions' => ['class' => 'text-center'],
+                'enableSorting' => false,
+            ],
+            [
+                'attribute' => 'times_seen_since_update',
                 'format' => 'integer',
                 'contentOptions' => ['class' => 'text-center'],
                 'headerOptions' => ['class' => 'text-center'],
@@ -55,7 +62,14 @@ use yii\web\View;
                 'enableSorting' => false,
             ],
             [
-                'attribute' => 'times',
+                'attribute' => 'times_seen',
+                'format' => 'integer',
+                'contentOptions' => ['class' => 'text-center'],
+                'headerOptions' => ['class' => 'text-center'],
+                'enableSorting' => false,
+            ],
+            [
+                'attribute' => 'times_seen_since_update',
                 'format' => 'integer',
                 'contentOptions' => ['class' => 'text-center'],
                 'headerOptions' => ['class' => 'text-center'],
