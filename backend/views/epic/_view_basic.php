@@ -22,7 +22,6 @@ use yii\widgets\DetailView;
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                'key',
                 'system',
                 ['attribute' => 'status', 'value' => $model->getStatus()],
                 ['attribute' => 'current_story_id', 'format' => 'raw', 'value' => $model->currentStory],
@@ -106,6 +105,11 @@ use yii\widgets\DetailView;
                 ],
             ],
         ]); ?>
+    </div>
+
+    <div class="col-md-6" id="key-div">
+        <h2 class="text-center"><?= Yii::t('app', 'EPIC_KEY'); ?></h2>
+        <p class="key"><?= $model->key ?></p>
     </div>
 
     <?php Modal::begin([

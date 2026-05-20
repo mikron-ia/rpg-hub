@@ -65,7 +65,7 @@ YiiAsset::register($this);
             ],
         ]) ?>
 
-        <div class="text-center">
+        <div class="text-center buttons-on-view">
             <?= Html::a(
                 Yii::t('app', 'BUTTON_UPDATE'),
                 ['update', 'key' => $model->key],

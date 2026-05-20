@@ -51,7 +51,7 @@ use yii\widgets\DetailView;
             ],
         ]) ?>
 
-        <div class="text-center">
+        <div class="text-center buttons-on-view">
             <?= Html::a(Yii::t('app', 'BUTTON_LOAD'), ['load-data', 'key' => $model->key], [
                 'class' => 'btn btn-primary',
                 'data' => [
@@ -64,8 +64,20 @@ use yii\widgets\DetailView;
                 ['update', 'key' => $model->key],
                 ['class' => 'btn btn-primary']
             ) ?>
+        </div>
+    </div>
+
+    <div class="col-md-6" id="key-div" style="display: none">
+        <h2 class="text-center"><?= Yii::t('app', 'LOCATION_KEY'); ?></h2>
+        <p class="info-box"><?= Yii::t('app', 'LABEL_KEY_TITLE_EXPLANATION') ?></p>
+        <p class="key"><?= $model->key ?></p>
+    </div>
+
+    <div class="col-md-6">
+        <h2 class="text-center"><?= Yii::t('app', 'LABEL_AUXILIARY_ACTIONS'); ?></h2>
+        <div class="buttons-on-view">
             <?= Html::a(
-                Yii::t('app', 'BUTTON_MARK_AS_CHANGED_M'),
+                Yii::t('app', 'BUTTON_MARK_AS_CHANGED_N'),
                 ['mark-changed', 'key' => $model->key],
                 [
                     'class' => 'btn btn-primary',
@@ -82,7 +94,7 @@ use yii\widgets\DetailView;
             <?= Html::a(
                 Yii::t('app', 'BUTTON_COPY_KEY'),
                 '#',
-                ['class' => 'btn btn-default', 'id' => 'button-copy-key']
+                ['class' => 'btn btn-default', 'id' => 'button-copy-key', 'style' => 'display: none;']
             ) ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_SEE_FRONTEND'),
@@ -90,7 +102,7 @@ use yii\widgets\DetailView;
                     'location/view',
                     'key' => $model->key
                 ]),
-                ['class' => 'btn btn-default']
+                ['class' => 'btn btn-default', 'id' => 'button-copy-key']
             ) ?>
         </div>
     </div>

@@ -75,7 +75,7 @@ use yii\widgets\DetailView;
             ],
         ]) ?>
 
-        <div class="text-center">
+        <div class="text-center buttons-on-view">
             <?= Html::a(Yii::t('app', 'BUTTON_LOAD'), ['load-data', 'key' => $model->key], [
                 'class' => 'btn btn-primary',
                 'data' => [
@@ -89,7 +89,28 @@ use yii\widgets\DetailView;
                 ['class' => 'btn btn-primary']
             ) ?>
             <?= Html::a(
-                Yii::t('app', 'BUTTON_MARK_AS_CHANGED_M'),
+                Yii::t('app', 'BUTTON_SEE_FRONTEND'),
+                Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
+                    'group/view',
+                    'key' => $model->key
+                ]),
+                ['class' => 'btn btn-default']
+            ) ?>
+        </div>
+    </div>
+
+    <div class="col-md-6" id="key-div" style="display: none">
+        <h2 class="text-center"><?= Yii::t('app', 'GROUP_KEY'); ?></h2>
+        <p class="key">
+            <?= $model->key ?>
+        </p>
+    </div>
+
+    <div class="col-md-6">
+        <h2 class="text-center"><?= Yii::t('app', 'LABEL_AUXILIARY_ACTIONS'); ?></h2>
+        <div class="buttons-on-view">
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_MARK_AS_CHANGED_F'),
                 ['mark-changed', 'key' => $model->key],
                 [
                     'class' => 'btn btn-primary',
@@ -106,15 +127,7 @@ use yii\widgets\DetailView;
             <?= Html::a(
                 Yii::t('app', 'BUTTON_COPY_KEY'),
                 '#',
-                ['class' => 'btn btn-default', 'id' => 'button-copy-key']
-            ) ?>
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_SEE_FRONTEND'),
-                Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
-                    'group/view',
-                    'key' => $model->key
-                ]),
-                ['class' => 'btn btn-default']
+                ['class' => 'btn btn-default', 'id' => 'button-copy-key', 'style' => 'display: none;']
             ) ?>
         </div>
     </div>

@@ -88,17 +88,6 @@ $isStoryCurrent = $model->story_id === $model->epic->current_story_id;
                 ['class' => 'btn btn-primary']
             );
             ?>
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_MARK_AS_CHANGED_F'),
-                ['mark-changed', 'key' => $model->key],
-                [
-                    'class' => 'btn btn-primary',
-                    'data' => [
-                        'confirm' => Yii::t('app', 'CONFIRMATION_MARK_AS_CHANGED'),
-                        'method' => 'post',
-                    ],
-                ]
-            ) ?>
             <?php if (!$isStoryCurrent): ?>
                 <?= Html::a(
                     Yii::t('app', 'BUTTON_MARK_AS_CURRENT_F'),
@@ -132,15 +121,6 @@ $isStoryCurrent = $model->story_id === $model->epic->current_story_id;
                     ],
                 ]
             ); ?>
-            <span class="hidden" id="key-value" data-key="ST:<?= $model->key ?>"></span>
-            <span class="hidden" id="button-message-copy-base"><?= Yii::t('app', 'BUTTON_COPY_KEY') ?></span>
-            <span class="hidden" id="button-message-copy-confirm"><?= Yii::t('app', 'BUTTON_COPY_IN_PROGRESS') ?></span>
-            <span class="hidden" id="button-message-copy-failure"><?= Yii::t('app', 'BUTTON_COPY_FAILED') ?></span>
-            <?= Html::a(
-                Yii::t('app', 'BUTTON_COPY_KEY'),
-                '#',
-                ['class' => 'btn btn-default', 'id' => 'button-copy-key']
-            ) ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_SEE_FRONTEND'),
                 Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
@@ -250,6 +230,40 @@ $isStoryCurrent = $model->story_id === $model->epic->current_story_id;
             ],
         ]); ?>
 
+    </div>
+
+    <div class="col-md-6" id="key-div" style="display: none">
+        <h2 class="text-center"><?= Yii::t('app', 'STORY_KEY'); ?></h2>
+        <p class="info-box"><?= Yii::t('app', 'LABEL_KEY_TITLE_EXPLANATION') ?></p>
+        <p class="key"><?= $model->key ?></p>
+    </div>
+
+    <div class="col-md-6">
+        <div class="buttons-on-view">
+            <h2 class="text-center"><?= Yii::t('app', 'LABEL_AUXILIARY_ACTIONS'); ?></h2>
+
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_MARK_AS_CHANGED_F'),
+                ['mark-changed', 'key' => $model->key],
+                [
+                    'class' => 'btn btn-primary',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'CONFIRMATION_MARK_AS_CHANGED'),
+                        'method' => 'post',
+                    ],
+                ]
+            ) ?>
+
+            <span class="hidden" id="key-value" data-key="ST:<?= $model->key ?>"></span>
+            <span class="hidden" id="button-message-copy-base"><?= Yii::t('app', 'BUTTON_COPY_KEY') ?></span>
+            <span class="hidden" id="button-message-copy-confirm"><?= Yii::t('app', 'BUTTON_COPY_IN_PROGRESS') ?></span>
+            <span class="hidden" id="button-message-copy-failure"><?= Yii::t('app', 'BUTTON_COPY_FAILED') ?></span>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_COPY_KEY'),
+                '#',
+                ['class' => 'btn btn-default', 'id' => 'button-copy-key', 'style' => 'display: none;']
+            ) ?>
+        </div>
     </div>
 
     <?php Modal::begin([

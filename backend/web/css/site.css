@@ -125,8 +125,31 @@ p {
 }
 
 .key {
+    background-color: lightgray;
+    border-radius: 15px;
     font-family: "Courier New", Courier, monospace;
-    background-color: lightgoldenrodyellow;
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 5px 5px;
+    text-align: center;
+}
+
+@media (960px <= width < 1200px) {
+    .key {
+        font-size: 1.1em;
+    }
+}
+
+@media (1200px <= width < 1600px) {
+    .key {
+        font-size: 1.3em;
+    }
+}
+
+@media (min-width: 1600px) {
+    .key {
+        font-size: 2em;
+    }
 }
 
 /* Clearing trick */
