@@ -22,7 +22,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
         <?= $this->render('../_epic-selection_box', ['epics' => $epics]) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-8">
         <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_IC_TITLE_TEXT') ?>">
             <?= Yii::t('app', 'FRONTPAGE_IC') ?>
         </h2>
@@ -71,7 +71,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_OOC_TITLE_TEXT') ?>">
             <?= Yii::t('app', 'FRONTPAGE_OOC') ?>
         </h2>

@@ -101,7 +101,7 @@ if ($epic) {
 
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-8">
 
         <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_IC_TITLE_TEXT') ?>">
             <?= Yii::t('app', 'FRONTPAGE_IC') ?>
@@ -146,7 +146,7 @@ if ($epic) {
 
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
 
         <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_OOC_TITLE_TEXT') ?>">
             <?= Yii::t('app', 'FRONTPAGE_OOC') ?>

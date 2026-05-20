@@ -160,7 +160,7 @@ p {
 }
 
 .btn-group {
-    margin-top: 5px;
+    margin: 5px 4px;
 }
 
 .beta-feature-warning {
@@ -253,7 +253,7 @@ a:focus {
     margin: 1% 0.75%;
     height: 200px;
     padding: 0 10px;
-    overflow: auto;
+    overflow: hidden;
     position: relative;
 }
 
@@ -362,7 +362,7 @@ a:focus {
     font-family: "Courier New", Courier, monospace;
     font-size: 2rem;
     font-weight: bold;
-    margin: 0 5px 2.5px 5px;
+    margin: 5px 5px 9px 5px;
     padding: 5px 20px;
     vertical-align: middle;
 }
@@ -389,7 +389,7 @@ a:focus {
     border-radius: 15px;
     padding: 2%;
     position: absolute;
-    bottom: -1%;
+    bottom: -1px;
     right: 2.5%;
     width: 64%;
 }
@@ -407,7 +407,7 @@ a:focus {
     font-family: "Courier New", Courier, monospace;
     font-size: 2rem;
     font-weight: bold;
-    margin: 0 5px 2.5px 5px;
+    margin: 5px 5px 9px 5px;
     padding: 5px 20px;
     vertical-align: middle;
 }
@@ -420,7 +420,7 @@ a:focus {
     font-family: "Courier New", Courier, monospace;
     font-size: 2rem;
     font-weight: bold;
-    margin: 0 5px 2.5px 5px;
+    margin: 5px 5px 9px 5px;
     padding: 5px 20px;
     vertical-align: middle;
 }
@@ -433,7 +433,7 @@ a:focus {
     font-family: "Courier New", Courier, monospace;
     font-size: 2rem;
     font-weight: bold;
-    margin: 0 5px 2.5px 5px;
+    margin: 5px 5px 9px 5px;
     padding: 5px 20px;
     vertical-align: middle;
 }
@@ -487,6 +487,7 @@ a:focus {
 
 .session-box {
     font-size: 1.8rem;
+    line-height: 1.8;
 }
 
 .game-status {
@@ -496,7 +497,7 @@ a:focus {
     font-size: 14px;
     font-weight: bold;
     border-radius: 15px;
-    padding: 5px 7px;
+    padding: 3px 7px;
     min-width: 150px;
     margin-right: 10px;
     text-align: center;
