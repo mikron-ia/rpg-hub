@@ -2,16 +2,26 @@
 
 namespace common\models\tools;
 
+use common\models\Character;
+use common\models\Group;
+use common\models\Story;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
 
-/**
- * Trait ToolsForLinkTags
- * @package common\models\tools
- */
 trait ToolsForLinkTags
 {
+    private const string CHARACTER = 'Character';
+    private const string GROUP = 'Group';
+    private const string STORY = 'Story';
+
+    /** @var array<string> */
+    private static array $availableClasses = [
+        self::CHARACTER,
+        self::GROUP,
+        self::STORY,
+    ];
+
     /** @var array<string,string> */
     private static array $headerReplacements = [
         '|^##### |m' => '###### ',
@@ -23,9 +33,15 @@ trait ToolsForLinkTags
 
     /** @var array<string,string> */
     private static array $linkBases = [
-        'Character' => '/index.php/character/view?key=',
-        'Group' => '/index.php/group/view?key=',
-        'Story' => '/index.php/story/view?key=',
+        self::CHARACTER=> '/index.php/character/view?key=',
+        self::GROUP=> '/index.php/group/view?key=',
+        self::STORY=> '/index.php/story/view?key=',
+    ];
+
+    private static array $classQualifiedNames = [
+        self::CHARACTER=> Character::class,
+        self::GROUP=> Group::class,
+        self::STORY=> Story::class,
     ];
 
     /**
@@ -37,7 +53,7 @@ trait ToolsForLinkTags
     }
 
     /**
-     * Turns keys in format of NN:key to []() Markdown links
+     * Turns keys in the format of NN:key to []() Markdown links
      */
     private function processKeys(string $text): string
     {
@@ -51,7 +67,7 @@ trait ToolsForLinkTags
     }
 
     /**
-     * Turns keys in format of [name](NN:key) and [name](code:key) to []() Markdown links
+     * Turns keys in the format of [name](NN:key) and [name](code:key) to []() Markdown links
      *
      * @param string $text
      * @param string[] $linkBases
@@ -61,22 +77,21 @@ trait ToolsForLinkTags
     private function processKeysInLinks(string $text, array $linkBases): string
     {
         $complexPatterns = [
-            'Character' => '|\[(.+?)\]\(CH(ARACTER)?:([a-z\d]{40})\)|',
-            'Group' => '|\[(.+?)\]\(GR(OUP)?:([a-z\d]{40})\)|',
-            'Story' => '|\[(.+?)\]\(ST(ORY)?:([a-z\d]{40})\)|',
+            self::CHARACTER=> '|\[(.+?)]\(CH(ARACTER)?:([a-z\d]{40})\)|',
+            self::GROUP=> '|\[(.+?)]\(GR(OUP)?:([a-z\d]{40})\)|',
+            self::STORY=> '|\[(.+?)]\(ST(ORY)?:([a-z\d]{40})\)|',
         ];
 
-        $complexReplacements = [
-            'Character' => '[$1](' . $linkBases['Character'] . '$3)',
-            'Group' => '[$1](' . $linkBases['Group'] . '$3)',
-            'Story' => '[$1](' . $linkBases['Story'] . '$3)',
-        ];
+        $complexReplacements = array_map(
+            fn(string $class) => sprintf('[$1](%s$3)', $linkBases[$class]),
+            self::$availableClasses
+        );
 
         return preg_replace($complexPatterns, $complexReplacements, $text);
     }
 
     /**
-     * Turns keys in format of NN:key and code:key to []() Markdown links
+     * Turns keys in the format of NN:key and code:key to []() Markdown links
      *
      * @param string $text
      * @param string[] $linkBases
@@ -86,15 +101,15 @@ trait ToolsForLinkTags
     private function processKeysInTheOpen(string $text, array $linkBases): string
     {
         $simplePatterns = [
-            'Character' => '|CH(ARACTER)?:([a-z\d]{40})|',
-            'Group' => '|GR(OUP)?:([a-z\d]{40})|',
-            'Story' => '|ST(ORY)?:([a-z\d]{40})|',
+            self::CHARACTER=> '|CH(ARACTER)?:([a-z\d]{40})|',
+            self::GROUP=> '|GR(OUP)?:([a-z\d]{40})|',
+            self::STORY=> '|ST(ORY)?:([a-z\d]{40})|',
         ];
 
         $errorMessages = [
-            'Character' => Yii::t('app', 'CHARACTER_NOT_AVAILABLE'),
-            'Group' => Yii::t('app', 'GROUP_NOT_AVAILABLE'),
-            'Story' => Yii::t('app', 'STORY_NOT_AVAILABLE'),
+            self::CHARACTER=> Yii::t('app', 'CHARACTER_NOT_AVAILABLE'),
+            self::GROUP=> Yii::t('app', 'GROUP_NOT_AVAILABLE'),
+            self::STORY=> Yii::t('app', 'STORY_NOT_AVAILABLE'),
         ];
 
         foreach ($simplePatterns as $class => $simplePattern) {
@@ -102,11 +117,10 @@ trait ToolsForLinkTags
             preg_match_all($simplePattern, $text, $foundInstances, PREG_SET_ORDER);
 
             foreach ($foundInstances as $instance) {
-                $className = 'common\models\\' . $class;
                 $match = $instance[0];
                 $key = array_pop($instance);
 
-                $object = ($className)::findOne(['key' => $key]);
+                $object = (self::$classQualifiedNames[$class])::findOne(['key' => $key]);
 
                 if ($object) {
                     $replacement = '[' . $object->name . '](' . $linkBases[$class] . $object->key . ')';
