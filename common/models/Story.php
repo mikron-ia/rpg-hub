@@ -187,6 +187,18 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     }
 
     /**
+     * @return array<string,string>
+     */
+    #[Override]
+    public function attributeHints(): array
+    {
+        return [
+            'short' => Yii::t('app', 'STORY_SHORT_HINT'),
+            'long' => Yii::t('app', 'STORY_LONG_HINT'),
+        ];
+    }
+
+    /**
      * @throws Exception
      */
     #[Override]

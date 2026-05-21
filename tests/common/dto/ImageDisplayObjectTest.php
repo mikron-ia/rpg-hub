@@ -9,7 +9,7 @@ use yii\base\InvalidConfigException;
 class ImageDisplayObjectTest extends TestCase
 {
     private const string IMAGE_URL = 'http://localhost/test.jpg';
-    
+
     #[DataProvider('toStringDataProvider')]
     public function testToStringValid(ImageDisplayObject $imageDisplayObject, string $expected): void
     {
@@ -42,7 +42,7 @@ class ImageDisplayObjectTest extends TestCase
                     height: 100,
                     width: 200,
                 ),
-                '<img src="http://localhost/test.jpg" width="200" height="100" alt="Image alt text" title="Image title">',
+                '<img class="img-responsive" src="' . self::IMAGE_URL . '" alt="Image alt text" title="Image title" style="height: 100px; width: 200px">',
             ],
             'url' => [
                 new ImageDisplayObject(
@@ -52,7 +52,7 @@ class ImageDisplayObjectTest extends TestCase
                     height: null,
                     width: null,
                 ),
-                '<img src="http://localhost/test.jpg" alt="">',
+                '<img class="img-responsive" src="' . self::IMAGE_URL . '" alt="">',
             ],
             'height' => [
                 new ImageDisplayObject(
@@ -62,7 +62,7 @@ class ImageDisplayObjectTest extends TestCase
                     height: 100,
                     width: null,
                 ),
-                '<img src="http://localhost/test.jpg" height="100" alt="">',
+                '<img class="img-responsive" src="' . self::IMAGE_URL . '" alt="" style="height: 100px">',
             ],
             'width' => [
                 new ImageDisplayObject(
@@ -72,7 +72,7 @@ class ImageDisplayObjectTest extends TestCase
                     height: null,
                     width: 200,
                 ),
-                '<img src="http://localhost/test.jpg" width="200" alt="">',
+                '<img class="img-responsive" src="' . self::IMAGE_URL . '" alt="" style="width: 200px">',
             ],
             'empty' => [
                 new ImageDisplayObject(
@@ -82,7 +82,7 @@ class ImageDisplayObjectTest extends TestCase
                     height: 0,
                     width: 0,
                 ),
-                '<img src="http://localhost/test.jpg" alt="">',
+                '<img class="img-responsive" src="' . self::IMAGE_URL . '" alt="">',
             ],
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace common\models\tools;
 
+use common\components\processor\MediaTagsProcessor;
 use common\models\Character;
 use common\models\Group;
 use common\models\Location;
@@ -36,17 +37,17 @@ trait ToolsForLinkTags
 
     /** @var array<string,string> */
     private static array $linkBases = [
-        self::CHARACTER=> '/index.php/character/view?key=',
-        self::GROUP=> '/index.php/group/view?key=',
-        self::STORY=> '/index.php/story/view?key=',
-        self::LOCATION=> '/index.php/location/view?key=',
+        self::CHARACTER => '/index.php/character/view?key=',
+        self::GROUP => '/index.php/group/view?key=',
+        self::STORY => '/index.php/story/view?key=',
+        self::LOCATION => '/index.php/location/view?key=',
     ];
 
     private static array $classQualifiedNames = [
-        self::CHARACTER=> Character::class,
-        self::GROUP=> Group::class,
-        self::STORY=> Story::class,
-        self::LOCATION=> Location::class,
+        self::CHARACTER => Character::class,
+        self::GROUP => Group::class,
+        self::STORY => Story::class,
+        self::LOCATION => Location::class,
     ];
 
     /**
@@ -82,10 +83,10 @@ trait ToolsForLinkTags
     private function processKeysInLinks(string $text, array $linkBases): string
     {
         $complexPatterns = [
-            self::CHARACTER=> '|\[(.+?)]\(CH(ARACTER)?:([a-z\d]{40})\)|',
-            self::GROUP=> '|\[(.+?)]\(GR(OUP)?:([a-z\d]{40})\)|',
-            self::STORY=> '|\[(.+?)]\(ST(ORY)?:([a-z\d]{40})\)|',
-            self::LOCATION=> '|\[(.+?)]\(LOC(ATION)?:([a-z\d]{40})\)|',
+            self::CHARACTER => '|\[(.+?)]\(CH(ARACTER)?:([a-z\d]{40})\)|',
+            self::GROUP => '|\[(.+?)]\(GR(OUP)?:([a-z\d]{40})\)|',
+            self::STORY => '|\[(.+?)]\(ST(ORY)?:([a-z\d]{40})\)|',
+            self::LOCATION => '|\[(.+?)]\(LOC(ATION)?:([a-z\d]{40})\)|',
         ];
 
         $complexReplacements = array_map(
@@ -107,17 +108,17 @@ trait ToolsForLinkTags
     private function processKeysInTheOpen(string $text, array $linkBases): string
     {
         $simplePatterns = [
-            self::CHARACTER=> '|CH(ARACTER)?:([a-z\d]{40})|',
-            self::GROUP=> '|GR(OUP)?:([a-z\d]{40})|',
-            self::STORY=> '|ST(ORY)?:([a-z\d]{40})|',
-            self::LOCATION=> '|LOC(ATION)?:([a-z\d]{40})|',
+            self::CHARACTER => '|CH(ARACTER)?:([a-z\d]{40})|',
+            self::GROUP => '|GR(OUP)?:([a-z\d]{40})|',
+            self::STORY => '|ST(ORY)?:([a-z\d]{40})|',
+            self::LOCATION => '|LOC(ATION)?:([a-z\d]{40})|',
         ];
 
         $errorMessages = [
-            self::CHARACTER=> Yii::t('app', 'CHARACTER_NOT_AVAILABLE'),
-            self::GROUP=> Yii::t('app', 'GROUP_NOT_AVAILABLE'),
-            self::STORY=> Yii::t('app', 'STORY_NOT_AVAILABLE'),
-            self::LOCATION=> Yii::t('app', 'LOCATION_NOT_AVAILABLE'),
+            self::CHARACTER => Yii::t('app', 'CHARACTER_NOT_AVAILABLE'),
+            self::GROUP => Yii::t('app', 'GROUP_NOT_AVAILABLE'),
+            self::STORY => Yii::t('app', 'STORY_NOT_AVAILABLE'),
+            self::LOCATION => Yii::t('app', 'LOCATION_NOT_AVAILABLE'),
         ];
 
         foreach ($simplePatterns as $class => $simplePattern) {
@@ -158,6 +159,15 @@ trait ToolsForLinkTags
 
     private function formatText(?string $textToFormat): string
     {
-        return Markdown::process(str_ireplace('&gt;', '>', Html::encode($textToFormat ?? '')), 'gfm');
+        return MediaTagsProcessor::processMediaTags(
+            Markdown::process(
+                markdown: str_ireplace(
+                    search: '&gt;',
+                    replace: '>',
+                    subject: Html::encode($textToFormat ?? '')
+                ),
+                flavor: 'gfm'
+            )
+        );
     }
 }
