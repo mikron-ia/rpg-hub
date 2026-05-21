@@ -19,17 +19,28 @@ final readonly class ImageDisplayObject
 
     public function __toString(): string
     {
-        $options = [];
+        $options = [
+            'class' => 'img-responsive',
+        ];
 
         if ($this->alt) {
             $options['alt'] = $this->alt;
         }
-        if ($this->height) {
-            $options['height'] = $this->height;
+
+        if ($this->height || $this->width) {
+            $styles = [];
+
+            if ($this->height) {
+                $styles[] = "height: {$this->height}px";
+            }
+
+            if ($this->width) {
+                $styles[] = "width: {$this->width}px";
+            }
+
+            $options['style'] = implode('; ', $styles);
         }
-        if ($this->width) {
-            $options['width'] = $this->width;
-        }
+
         if ($this->title) {
             $options['title'] = $this->title;
         }

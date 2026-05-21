@@ -190,22 +190,23 @@ class Image extends ActiveRecord implements HasEpicControl, HasKey
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_IMAGE'));
     }
 
-    /**
-     * @throws RandomException
-     */
     public function provideDisplayableImage(bool $useBackup = false): ImageDisplayObject
     {
+        try {
+            $randomChoice = random_int(0, ImageRotationService::calculateTotalWeight(
+                    ImageRotationService::filterImageLinks(
+                        links: $this->imageLinks,
+                        mode: $useBackup ? ImageDisplayMode::Backup : ImageDisplayMode::Always
+                    )
+                ) - 1);
+        } catch (RandomException) {
+            // todo add logging
+            $randomChoice = 0;
+        }
+
         return ImageRotationService::makeDisplayObjectWithDimensions(
             image: $this,
-            imageLink: ImageRotationService::chooseLink(
-                $this->imageLinks,
-                random_int(0, ImageRotationService::calculateTotalWeight(
-                        ImageRotationService::filterImageLinks(
-                            links: $this->imageLinks,
-                            mode: $useBackup ? ImageDisplayMode::Backup : ImageDisplayMode::Always
-                        )
-                    ) - 1)
-            )
+            imageLink: ImageRotationService::chooseLink($this->imageLinks, $randomChoice)
         );
     }
 }
