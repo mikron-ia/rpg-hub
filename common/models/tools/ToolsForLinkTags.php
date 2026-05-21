@@ -4,6 +4,7 @@ namespace common\models\tools;
 
 use common\models\Character;
 use common\models\Group;
+use common\models\Location;
 use common\models\Story;
 use Yii;
 use yii\helpers\Html;
@@ -14,12 +15,14 @@ trait ToolsForLinkTags
     private const string CHARACTER = 'Character';
     private const string GROUP = 'Group';
     private const string STORY = 'Story';
+    private const string LOCATION = 'Location';
 
     /** @var array<string> */
     private static array $availableClasses = [
         self::CHARACTER,
         self::GROUP,
         self::STORY,
+        self::LOCATION,
     ];
 
     /** @var array<string,string> */
@@ -36,12 +39,14 @@ trait ToolsForLinkTags
         self::CHARACTER=> '/index.php/character/view?key=',
         self::GROUP=> '/index.php/group/view?key=',
         self::STORY=> '/index.php/story/view?key=',
+        self::LOCATION=> '/index.php/location/view?key=',
     ];
 
     private static array $classQualifiedNames = [
         self::CHARACTER=> Character::class,
         self::GROUP=> Group::class,
         self::STORY=> Story::class,
+        self::LOCATION=> Location::class,
     ];
 
     /**
@@ -80,6 +85,7 @@ trait ToolsForLinkTags
             self::CHARACTER=> '|\[(.+?)]\(CH(ARACTER)?:([a-z\d]{40})\)|',
             self::GROUP=> '|\[(.+?)]\(GR(OUP)?:([a-z\d]{40})\)|',
             self::STORY=> '|\[(.+?)]\(ST(ORY)?:([a-z\d]{40})\)|',
+            self::LOCATION=> '|\[(.+?)]\(LOC(ATION)?:([a-z\d]{40})\)|',
         ];
 
         $complexReplacements = array_map(
@@ -104,12 +110,14 @@ trait ToolsForLinkTags
             self::CHARACTER=> '|CH(ARACTER)?:([a-z\d]{40})|',
             self::GROUP=> '|GR(OUP)?:([a-z\d]{40})|',
             self::STORY=> '|ST(ORY)?:([a-z\d]{40})|',
+            self::LOCATION=> '|LOC(ATION)?:([a-z\d]{40})|',
         ];
 
         $errorMessages = [
             self::CHARACTER=> Yii::t('app', 'CHARACTER_NOT_AVAILABLE'),
             self::GROUP=> Yii::t('app', 'GROUP_NOT_AVAILABLE'),
             self::STORY=> Yii::t('app', 'STORY_NOT_AVAILABLE'),
+            self::LOCATION=> Yii::t('app', 'LOCATION_NOT_AVAILABLE'),
         ];
 
         foreach ($simplePatterns as $class => $simplePattern) {
