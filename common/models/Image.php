@@ -16,6 +16,8 @@ use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
+use yii\helpers\Markdown;
 use yii\web\HttpException;
 
 /**
@@ -150,6 +152,11 @@ class Image extends ActiveRecord implements HasEpicControl, HasKey
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
+    public function getNoteFormatted(): string
+    {
+        return Markdown::process(Html::encode($this->note), 'gfm');
+    }
+
     static public function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
@@ -190,23 +197,32 @@ class Image extends ActiveRecord implements HasEpicControl, HasKey
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_IMAGE'));
     }
 
-    public function provideDisplayableImage(bool $useBackup = false): ImageDisplayObject
+    public function provideDisplayableImage(bool $skipAlways = false): ?ImageDisplayObject
     {
-        try {
-            $randomChoice = random_int(0, ImageRotationService::calculateTotalWeight(
-                    ImageRotationService::filterImageLinks(
-                        links: $this->imageLinks,
-                        mode: $useBackup ? ImageDisplayMode::Backup : ImageDisplayMode::Always
-                    )
-                ) - 1);
-        } catch (RandomException) {
-            // todo add logging
-            $randomChoice = 0;
+        $links = ImageRotationService::filterImageLinks(
+            links: $this->imageLinks,
+            mode: $skipAlways ? ImageDisplayMode::Backup : ImageDisplayMode::Always
+        );
+
+        if (count($links) === 0 && !$skipAlways) {
+            // if there are no active links at all, use backup links
+            $links = ImageRotationService::filterImageLinks(links: $this->imageLinks, mode: ImageDisplayMode::Backup);
         }
 
-        return ImageRotationService::makeDisplayObjectWithDimensions(
-            image: $this,
-            imageLink: ImageRotationService::chooseLink($this->imageLinks, $randomChoice)
-        );
+        if (count($links) > 0) {
+            try {
+                $randomChoice = random_int(0, ImageRotationService::calculateTotalWeight($links) - 1);
+            } catch (RandomException) {
+                // todo add logging
+                $randomChoice = 0;
+            }
+
+            return ImageRotationService::makeDisplayObjectWithDimensions(
+                image: $this,
+                imageLink: ImageRotationService::chooseLink($this->imageLinks, $randomChoice)
+            );
+        }
+
+        return null;
     }
 }

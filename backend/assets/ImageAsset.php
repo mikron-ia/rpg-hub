@@ -10,6 +10,7 @@ class ImageAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [];
     public $js = [
+        'js/copy-key-button.js',
         'js/image-link-handler.js',
     ];
     public $depends = [

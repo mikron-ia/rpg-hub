@@ -42,9 +42,13 @@ ImageAsset::register($this);
             ]
         ) : '' ?>
     </div>
+
     <p class="beta-feature-warning" title="<?= Yii::t('app', 'BETA_WARNING_TITLE') ?>">
         <?= Yii::t('app', 'BETA_WARNING_TEXT') ?>
     </p>
+
+    <div class="clearfix"></div>
+
     <div class="col-md-6">
         <?= DetailView::widget([
             'model' => $model,
@@ -72,17 +76,34 @@ ImageAsset::register($this);
         ]) ?>
     </div>
 
+    <div class="col-md-6" id="key-div">
+        <h3 class="text-center"><?= Yii::t('app', 'IMAGE_KEY'); ?></h3>
+        <p class="key"><?= $model->key ?></p>
+    </div>
+
     <div class="col-md-6">
         <h3 class="text-center"><?= Yii::t('app', 'IMAGE_TITLE') ?></h3>
-        <div><?= $model->title ?></div>
+        <?php if ($model->title) : ?>
+            <div><?= $model->title ?></div>
+        <?php else : ?>
+            <div class="no-data-box"><?= Yii::t('app', 'IMAGE_TITLE_EMPTY') ?></div>
+        <?php endif; ?>
 
         <h3 class="text-center"><?= Yii::t('app', 'IMAGE_ALT') ?></h3>
-        <div><?= $model->alt ?></div>
+        <?php if ($model->alt) : ?>
+            <div><?= $model->alt ?></div>
+        <?php else : ?>
+            <div class="no-data-box"><?= Yii::t('app', 'IMAGE_ALT_EMPTY') ?></div>
+        <?php endif; ?>
     </div>
 
     <div class="col-md-6">
         <h3 class="text-center"><?= Yii::t('app', 'IMAGE_NOTE') ?></h3>
-        <div><?= $model->note ?></div>
+        <?php if ($model->note) : ?>
+            <div><?= $model->getNoteFormatted() ?></div>
+        <?php else : ?>
+            <div class="no-data-box"><?= Yii::t('app', 'IMAGE_NOTE_EMPTY') ?></div>
+        <?php endif; ?>
     </div>
 
     <div class="col-md-12">
@@ -106,7 +127,11 @@ ImageAsset::register($this);
         </p>
 
         <?= GridView::widget([
-            'dataProvider' => new ActiveDataProvider(['query' => ImageLink::find()->where(['image_id' => $model->image_id])]),
+            'dataProvider' => new ActiveDataProvider([
+                'query' => ImageLink::find()->where(['image_id' => $model->image_id]),
+                'pagination' => false,
+            ]),
+            'emptyText' => Yii::t('app', 'IMAGE_LINK_EMPTY_LIST'),
             'summary' => '',
             'options' => ['style' => 'table-layout: fixed'],
             'columns' => [
@@ -137,7 +162,8 @@ ImageAsset::register($this);
                                 'data-target' => '#view-image-link-modal',
                                 'data-key' => $model->key,
                             ]);
-                        },'update' => function ($url, ImageLink $model, $key) {
+                        },
+                        'update' => function ($url, ImageLink $model, $key) {
                             return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
                                 'class' => 'update-image-link',
                                 'title' => Yii::t('app', 'LABEL_UPDATE'),

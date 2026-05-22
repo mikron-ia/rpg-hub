@@ -7,6 +7,7 @@ use Yii;
 
 class MediaTagsProcessor
 {
+    private const string ERROR_TEMPLATE = '<pre>%s</pre>';
     private const string IMAGE = 'Image';
 
     private static array $classQualifiedNames = [
@@ -31,17 +32,18 @@ class MediaTagsProcessor
                 $match = $instance[0];
                 $key = array_pop($instance);
 
+                $replacement = null;
+
                 /** @var Image $object */
                 $object = (self::$classQualifiedNames[$class])::findOne(['key' => $key]);
 
-                if ($object) {
-                    // todo At some point it may be useful to apply an interface; for now, just Images can be displayed
-                    $replacement = $object->provideDisplayableImage(false);
-                } else {
-                    $replacement = '`' . $errorMessages[$class] . '`';
-                }
+                $replacement = $object?->provideDisplayableImage(false);
 
-                $text = str_replace($match, $replacement, $text);
+                $text = str_replace(
+                    $match,
+                    ($replacement ?? sprintf(self::ERROR_TEMPLATE, $errorMessages[$class])),
+                    $text
+                );
             }
         }
 
