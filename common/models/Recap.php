@@ -13,7 +13,6 @@ use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\helpers\Markdown;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
@@ -162,7 +161,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
      */
     public function getContentFormatted(): string
     {
-        return Markdown::process($this->content_expanded ?? $this->content, 'gfm');
+        return $this->formatText($this->content_expanded ?? $this->content, false);
     }
 
     public function getEpic(): ActiveQuery

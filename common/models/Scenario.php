@@ -12,7 +12,6 @@ use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\helpers\Markdown;
 
 /**
  * This is the model class for table "scenario".
@@ -242,6 +241,6 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl, 
 
     public function getContentFormatted(): string
     {
-        return Markdown::process($this->content_expanded ?? $this->content, 'gfm');
+        return $this->formatText($this->content_expanded ?? $this->content, true);
     }
 }

@@ -157,17 +157,17 @@ trait ToolsForLinkTags
         return $this->processAllInOrder($textToFormat ?? '');
     }
 
-    private function formatText(?string $textToFormat): string
+    private function formatText(?string $textToFormat, bool $processImages): string
     {
-        return MediaTagsProcessor::processMediaTags(
-            Markdown::process(
-                markdown: str_ireplace(
-                    search: '&gt;',
-                    replace: '>',
-                    subject: Html::encode($textToFormat ?? '')
-                ),
-                flavor: 'gfm'
-            )
+        $processedText = Markdown::process(
+            markdown: str_ireplace(
+                search: '&gt;',
+                replace: '>',
+                subject: Html::encode($textToFormat ?? '')
+            ),
+            flavor: 'gfm'
         );
+
+        return $processImages ? MediaTagsProcessor::processMediaTags($processedText) : $processedText;
     }
 }

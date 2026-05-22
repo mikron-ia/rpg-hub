@@ -17,10 +17,10 @@ final readonly class ImageDisplayObject
     ) {
     }
 
-    public function __toString(): string
+    private function formatImageToTag(): string
     {
         $options = [
-            'class' => 'img-responsive',
+            'class' => 'expanded-image',
         ];
 
         if ($this->alt) {
@@ -46,5 +46,10 @@ final readonly class ImageDisplayObject
         }
 
         return Html::img($this->url, $options);
+    }
+
+    public function __toString(): string
+    {
+        return $this->formatImageToTag();
     }
 }

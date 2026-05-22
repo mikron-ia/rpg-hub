@@ -22,7 +22,6 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
 use yii\helpers\Html;
-use yii\helpers\Markdown;
 use yii\helpers\StringHelper;
 use yii\web\HttpException;
 use yii2tech\ar\position\PositionBehavior;
@@ -333,7 +332,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      */
     public function getShortFormatted(): string
     {
-        return Markdown::process($this->short_expanded ?? $this->short, 'gfm');
+        return $this->formatText($this->short_expanded ?? $this->short, false);
     }
 
     /**
@@ -341,7 +340,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      */
     public function getLongFormatted(): string
     {
-        return Markdown::process($this->long_expanded ?? $this->long, 'gfm');
+        return $this->formatText($this->long_expanded ?? $this->long, true);
     }
 
     /**

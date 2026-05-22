@@ -172,16 +172,16 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
 
     public function getPublicFormatted(): string
     {
-        return $this->formatText($this->public_text_expanded);
+        return $this->formatText($this->public_text_expanded, true);
     }
 
     public function getProtectedFormatted(): string
     {
-        return $this->formatText($this->protected_text_expanded);
+        return $this->formatText($this->protected_text_expanded, true);
     }
 
     public function getPrivateFormatted(): string
     {
-        return $this->formatText($this->private_text_expanded);
+        return $this->formatText($this->private_text_expanded, true);
     }
 }

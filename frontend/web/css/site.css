@@ -805,3 +805,10 @@ li.redacted:hover {
     background-color: black;
     color: white;
 }
+
+.expanded-image {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    margin: 0 auto;
+}

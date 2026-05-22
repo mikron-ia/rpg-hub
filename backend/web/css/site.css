@@ -723,3 +723,10 @@ p {
 .img-link-view-img-in-modal {
     margin: 0 auto;
 }
+
+.expanded-image {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    margin: 0 auto;
+}

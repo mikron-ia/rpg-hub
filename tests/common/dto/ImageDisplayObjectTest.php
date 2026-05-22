@@ -42,7 +42,7 @@ class ImageDisplayObjectTest extends TestCase
                     height: 100,
                     width: 200,
                 ),
-                '<img class="img-responsive" src="' . self::IMAGE_URL . '" alt="Image alt text" title="Image title" style="height: 100px; width: 200px">',
+                '<img class="expanded-image" src="' . self::IMAGE_URL . '" alt="Image alt text" title="Image title" style="height: 100px; width: 200px">',
             ],
             'url' => [
                 new ImageDisplayObject(
@@ -52,7 +52,7 @@ class ImageDisplayObjectTest extends TestCase
                     height: null,
                     width: null,
                 ),
-                '<img class="img-responsive" src="' . self::IMAGE_URL . '" alt="">',
+                '<img class="expanded-image" src="' . self::IMAGE_URL . '" alt="">',
             ],
             'height' => [
                 new ImageDisplayObject(
@@ -62,7 +62,7 @@ class ImageDisplayObjectTest extends TestCase
                     height: 100,
                     width: null,
                 ),
-                '<img class="img-responsive" src="' . self::IMAGE_URL . '" alt="" style="height: 100px">',
+                '<img class="expanded-image" src="' . self::IMAGE_URL . '" alt="" style="height: 100px">',
             ],
             'width' => [
                 new ImageDisplayObject(
@@ -72,7 +72,7 @@ class ImageDisplayObjectTest extends TestCase
                     height: null,
                     width: 200,
                 ),
-                '<img class="img-responsive" src="' . self::IMAGE_URL . '" alt="" style="width: 200px">',
+                '<img class="expanded-image" src="' . self::IMAGE_URL . '" alt="" style="width: 200px">',
             ],
             'empty' => [
                 new ImageDisplayObject(
@@ -82,7 +82,7 @@ class ImageDisplayObjectTest extends TestCase
                     height: 0,
                     width: 0,
                 ),
-                '<img class="img-responsive" src="' . self::IMAGE_URL . '" alt="">',
+                '<img class="expanded-image" src="' . self::IMAGE_URL . '" alt="">',
             ],
         ];
     }
