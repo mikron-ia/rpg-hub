@@ -3,18 +3,17 @@
 namespace common\models;
 
 use common\models\core\HasVisibility;
-use common\models\core\Visibility;
 use common\models\tools\ToolsForHasVisibility;
+use Override;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
 
 /**
- * This is the model class for table "group_membership_history".
- *
  * @property string $group_membership_history_id
  * @property string $group_membership_id
  * @property string $visibility
@@ -30,12 +29,13 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
 {
     use ToolsForHasVisibility;
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'group_membership_history';
     }
 
-    public function rules()
+    #[Override]
+    public function rules(): array
     {
         return [
             [['group_membership_id'], 'required'],
@@ -52,7 +52,8 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
         ];
     }
 
-    public function attributeLabels()
+    #[Override]
+    public function attributeLabels(): array
     {
         return [
             'group_membership_history_id' => Yii::t('app', 'GROUP_MEMBERSHIP_HISTORY_ID'),
@@ -67,7 +68,8 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
         ];
     }
 
-    public function behaviors()
+    #[Override]
+    public function behaviors(): array
     {
         return [
             'timestampBehavior' => [
@@ -77,35 +79,25 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public function getGroupMembership()
+    public function getGroupMembership(): ActiveQuery
     {
         return $this->hasOne(GroupMembership::class, ['group_membership_id' => 'group_membership_id']);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPublicFormatted()
+    public function getPublicFormatted(): ?string
     {
         return Markdown::process(Html::encode($this->public_text), 'gfm');
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPrivateFormatted()
+    public function getPrivateFormatted(): ?string
     {
         return Markdown::process(Html::encode($this->private_text), 'gfm');
     }
 
     /**
-     * @param GroupMembership $membership
-     * @return GroupMembershipHistory
+     * @throws Exception
      */
-    static public function createFromMembership(GroupMembership $membership)
+    public static function createFromMembership(GroupMembership $membership): ?GroupMembershipHistory
     {
         $history = new GroupMembershipHistory();
 
@@ -119,15 +111,15 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
         if ($history->save()) {
             $history->refresh();
             return $history;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
      * @return string[]
      */
-    static public function statusNames(): array
+    public static function statusNames(): array
     {
         return GroupMembership::statusNames();
     }
@@ -135,23 +127,17 @@ class GroupMembershipHistory extends ActiveRecord implements HasVisibility
     /**
      * @return string[]
      */
-    static public function statusClasses(): array
+    public static function statusClasses(): array
     {
         return GroupMembership::statusClasses();
     }
 
-    /**
-     * @return string
-     */
     public function getStatus(): string
     {
         $names = self::statusNames();
         return isset($names[$this->status]) ? $names[$this->status] : '?';
     }
 
-    /**
-     * @return string
-     */
     public function getStatusClass(): string
     {
         $names = self::statusClasses();

@@ -5,6 +5,7 @@ namespace common\models;
 use common\models\core\HasVisibility;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
+use Override;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -12,8 +13,6 @@ use yii\db\ActiveRecord;
 use yii\db\Exception;
 
 /**
- * This is the model class for table "description_history".
- *
  * @property string $description_history_id
  * @property string $description_id
  * @property string $created_at
@@ -31,17 +30,20 @@ use yii\db\Exception;
  * @property Description $description
  * @property PointInTime $pointInTimeStart
  * @property PointInTime $pointInTimeEnd
+ * @property PointInTime $pointInTimeStillValid
  */
 class DescriptionHistory extends ActiveRecord implements HasVisibility
 {
     use ToolsForLinkTags;
     use ToolsForHasVisibility;
 
+    #[Override]
     public static function tableName(): string
     {
         return 'description_history';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -93,6 +95,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -113,6 +116,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
         ];
     }
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -126,7 +130,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
     /**
      * @throws Exception
      */
-    static public function createFromDescription(Description $description): ?DescriptionHistory
+    public static function createFromDescription(Description $description): ?DescriptionHistory
     {
         $history = new DescriptionHistory();
 

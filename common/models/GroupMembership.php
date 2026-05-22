@@ -5,13 +5,13 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasKey;
 use common\models\core\HasVisibility;
-use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
 use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
 use yii\web\HttpException;
@@ -166,6 +166,9 @@ class GroupMembership extends ActiveRecord implements HasVisibility, HasKey
         return Markdown::process(Html::encode($this->private_text), 'gfm');
     }
 
+    /**
+     * @throws Exception
+     */
     public function createHistoryRecord(): ?GroupMembershipHistory
     {
         $membership = GroupMembership::findOne(['group_membership_id' => $this->group_membership_id]);
@@ -186,7 +189,7 @@ class GroupMembership extends ActiveRecord implements HasVisibility, HasKey
     /**
      * @return string[]
      */
-    static public function statusNames(): array
+    public static function statusNames(): array
     {
         return [
             self::STATUS_ACTIVE => Yii::t('app', 'MEMBERSHIP_STATUS_ACTIVE'),
@@ -199,7 +202,7 @@ class GroupMembership extends ActiveRecord implements HasVisibility, HasKey
     /**
      * @return string[]
      */
-    static public function statusClasses(): array
+    public static function statusClasses(): array
     {
         return [
             self::STATUS_ACTIVE => 'membership-status-active',
