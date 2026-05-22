@@ -21,8 +21,6 @@ use yii\helpers\Markdown;
 use yii\web\HttpException;
 
 /**
- * This is the model class for table "image".
- *
  * @property int $image_id
  * @property int $epic_id
  * @property string $key
@@ -132,6 +130,7 @@ class Image extends ActiveRecord implements HasEpicControl, HasKey
         ];
     }
 
+    #[Override]
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
@@ -157,42 +156,50 @@ class Image extends ActiveRecord implements HasEpicControl, HasKey
         return Markdown::process(Html::encode($this->note), 'gfm');
     }
 
-    static public function canUserIndexThem(): bool
+    #[Override]
+    public static function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem(): bool
+    #[Override]
+    public static function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
+    #[Override]
     public function canUserControlYou(): bool
     {
         return self::canUserControlInEpic($this->epic);
     }
 
+    #[Override]
     public function canUserViewYou(): bool
     {
         return self::canUserViewInEpic($this->epic);
     }
 
-    static function throwExceptionAboutCreate(): void
+    #[Override]
+    public static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_IMAGE'));
     }
 
-    static function throwExceptionAboutControl(): void
+    #[Override]
+    public static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_IMAGE'));
     }
 
-    static function throwExceptionAboutIndex(): void
+    #[Override]
+    public static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_IMAGE'));
     }
 
-    static function throwExceptionAboutView(): void
+    #[Override]
+    public static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_IMAGE'));
     }
@@ -205,7 +212,6 @@ class Image extends ActiveRecord implements HasEpicControl, HasKey
         );
 
         if (count($links) === 0 && !$skipAlways) {
-            // if there are no active links at all, use backup links
             $links = ImageRotationService::filterImageLinks(links: $this->imageLinks, mode: ImageDisplayMode::Backup);
         }
 

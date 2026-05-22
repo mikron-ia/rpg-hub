@@ -25,10 +25,6 @@ class ImageQuery extends Image
 
     /**
      * Creates a data provider instance with the search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
      */
     public function search(array $params): ActiveDataProvider
     {

@@ -8,7 +8,7 @@ use common\models\ImageLink;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class ImageRotationServiceTest extends TestCase
+final class ImageRotationServiceTest extends TestCase
 {
     private const string IMAGE_URL = 'http://localhost/test.jpg';
     

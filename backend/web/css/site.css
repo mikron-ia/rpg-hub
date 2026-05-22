@@ -720,13 +720,17 @@ p {
     padding: 1px;
 }
 
-.img-link-view-img-in-modal {
-    margin: 0 auto;
-}
-
 .expanded-image {
     display: block;
     height: auto;
     max-width: 100%;
     margin: 0 auto;
+}
+
+.text-separating-box {
+    border-color: lightgrey;
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 15px;
+    padding: 10px;
 }

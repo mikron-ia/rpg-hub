@@ -15,11 +15,11 @@ use yii\web\View;
 /* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'IMAGE_TITLE_INDEX');
+
 $this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="image-index">
-
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(
@@ -90,5 +90,4 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-3" id="filter">
         <?= $this->render('_search', ['model' => $searchModel]); ?>
     </div>
-
 </div>

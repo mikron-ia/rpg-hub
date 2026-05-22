@@ -15,6 +15,7 @@ use yii\widgets\DetailView;
 /* @var $model Image */
 
 $this->title = $model->name;
+
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'IMAGE_TITLE_INDEX'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -58,7 +59,6 @@ ImageAsset::register($this);
                     'format' => 'raw',
                     'value' => Html::a($model->epic->name, ['epic/front', 'key' => $model->epic->key]),
                 ],
-                'key',
                 'name',
                 'display_height',
                 'display_width',
@@ -74,24 +74,37 @@ ImageAsset::register($this);
                 ],
             ],
         ]) ?>
-    </div>
 
-    <div class="col-md-6" id="key-div">
-        <h3 class="text-center"><?= Yii::t('app', 'IMAGE_KEY'); ?></h3>
-        <p class="key"><?= $model->key ?></p>
+        <div class="buttons-on-view">
+            <span class="hidden" id="key-value" data-key="IMG:<?= $model->key ?>"></span>
+            <span class="hidden" id="button-message-copy-base"><?= Yii::t('app', 'BUTTON_COPY_KEY') ?></span>
+            <span class="hidden" id="button-message-copy-confirm"><?= Yii::t('app', 'BUTTON_COPY_IN_PROGRESS') ?></span>
+            <span class="hidden" id="button-message-copy-failure"><?= Yii::t('app', 'BUTTON_COPY_FAILED') ?></span>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_COPY_KEY'),
+                '#',
+                ['class' => 'btn btn-default', 'id' => 'button-copy-key', 'style' => 'display: none;']
+            ) ?>
+        </div>
+
+        <div id="key-div" style="display: none">
+            <h2 class="text-center"><?= Yii::t('app', 'CHARACTER_KEY'); ?></h2>
+            <p class="info-box"><?= Yii::t('app', 'LABEL_KEY_TITLE_EXPLANATION') ?></p>
+            <p class="key"><?= $model->key ?></p>
+        </div>
     </div>
 
     <div class="col-md-6">
         <h3 class="text-center"><?= Yii::t('app', 'IMAGE_TITLE') ?></h3>
         <?php if ($model->title) : ?>
-            <div><?= $model->title ?></div>
+            <div class="text-separating-box"><?= $model->title ?></div>
         <?php else : ?>
             <div class="no-data-box"><?= Yii::t('app', 'IMAGE_TITLE_EMPTY') ?></div>
         <?php endif; ?>
 
         <h3 class="text-center"><?= Yii::t('app', 'IMAGE_ALT') ?></h3>
         <?php if ($model->alt) : ?>
-            <div><?= $model->alt ?></div>
+            <div class="text-separating-box"><?= $model->alt ?></div>
         <?php else : ?>
             <div class="no-data-box"><?= Yii::t('app', 'IMAGE_ALT_EMPTY') ?></div>
         <?php endif; ?>
