@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => ['class' => 'action-cell'],
                 'template' => '{view} {update} {up} {down}',
                 'buttons' => [
                     'view' => function ($url, PointInTime $model, $key) {

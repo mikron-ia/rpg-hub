@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => ['class' => 'action-cell'],
                 'template' => '{view} {update} {up} {down}',
                 'buttons' => [
                     'up' => function ($url, Article $model, $key) {

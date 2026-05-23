@@ -50,6 +50,7 @@ $mostRecent = $searchModel->mostRecent();
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
+                    'contentOptions' => ['class' => 'action-cell'],
                     'template' => '{view} {update}',
                     'buttons' => [
                         'view' => function ($url, Recap $model, $key) {

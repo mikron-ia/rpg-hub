@@ -88,7 +88,7 @@ ImageAsset::register($this);
         </div>
 
         <div id="key-div" style="display: none">
-            <h2 class="text-center"><?= Yii::t('app', 'CHARACTER_KEY'); ?></h2>
+            <h2 class="text-center"><?= Yii::t('app', 'IMAGE_KEY'); ?></h2>
             <p class="info-box"><?= Yii::t('app', 'LABEL_KEY_TITLE_EXPLANATION') ?></p>
             <p class="key"><?= $model->key ?></p>
         </div>

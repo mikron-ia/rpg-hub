@@ -65,6 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => ActionColumn::class,
+                    'contentOptions' => ['class' => 'action-cell'],
                     'template' => '{view} {update}',
                     'buttons' => [
                         'view' => function ($url, Story $model, $key) {

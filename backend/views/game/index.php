@@ -39,21 +39,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 [
                     'attribute' => 'position',
-                    'contentOptions' => ['class' => 'cell-needing-alignment text-center'],
+                    'contentOptions' => ['class' => ' text-center'],
                     'headerOptions' => ['class' => 'text-center'],
                     'label' => Yii::t('app', 'GAME_POSITION'),
                 ],
                 'basics',
                 [
                     'attribute' => 'status',
-                    'contentOptions' => ['class' => 'cell-needing-alignment text-center'],
+                    'contentOptions' => ['class' => ' text-center'],
                     'headerOptions' => ['class' => 'text-center'],
                     'format' => 'raw',
                     'value' => fn(Game $model) => $model->getStatus()->getName(),
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'contentOptions' => ['class' => 'action-cell cell-needing-alignment'],
+                    'contentOptions' => ['class' => 'action-cell'],
                     'template' => '{view} {update} {up} {down}',
                     'buttons' => [
                         'view' => function ($url, Game $model, $key) {

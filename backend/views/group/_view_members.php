@@ -65,6 +65,7 @@ use yii\helpers\StringHelper;
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => ['class' => 'action-cell'],
                 'template' => '{view} {history} {update} {up} {down}',
                 'buttons' => [
                     'view' => function ($url, GroupMembership $model, $key) {

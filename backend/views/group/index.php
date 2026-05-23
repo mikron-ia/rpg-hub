@@ -101,6 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
+                    'contentOptions' => ['class' => 'action-cell'],
                     'template' => '{view} {update}',
                     'buttons' => [
                         'view' => function ($url, Group $model, $key) {

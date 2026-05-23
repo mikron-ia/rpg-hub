@@ -52,11 +52,10 @@ $epicRolesCalculatorClosure = function (Epic $model) {
             'columns' => [
                 [
                     'attribute' => 'name',
-                    'contentOptions' => ['class' => 'epic-list-cell'],
                 ],
                 [
                     'attribute' => 'system',
-                    'contentOptions' => ['class' => 'epic-list-cell text-center'],
+                    'contentOptions' => ['class' => 'text-center'],
                     'headerOptions' => ['class' => 'text-center'],
                 ],
                 [
@@ -73,18 +72,18 @@ $epicRolesCalculatorClosure = function (Epic $model) {
                     'value' => function (Epic $model) {
                         return sprintf('%d', $model->getParticipants()->count());
                     },
-                    'contentOptions' => ['class' => 'epic-list-cell text-center'],
+                    'contentOptions' => ['class' => 'text-center'],
                     'headerOptions' => ['class' => 'text-center'],
                 ],
                 [
                     'label' => Yii::t('app', 'EPIC_PARTICIPANT_ROLES'),
                     'value' => $epicRolesCalculatorClosure,
-                    'contentOptions' => ['class' => 'epic-list-cell text-center'],
+                    'contentOptions' => ['class' => 'text-center'],
                     'headerOptions' => ['class' => 'text-center'],
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'contentOptions' => ['class' => 'epic-list-cell text-center'],
+                    'contentOptions' => ['class' => 'action-cell'],
                     'template' => '{view}',
                     'buttons' => [
                         'view' => function ($url, Epic $model, $key) {
