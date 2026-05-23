@@ -9,11 +9,13 @@ use yii\data\ActiveDataProvider;
 
 class GameQuery extends Game
 {
+    private const int DEFAULT_FRONT_LIMIT = 4;
+
     #[Override]
     public function rules(): array
     {
         return [
-            [['time', 'status', 'details', 'note'], 'safe'],
+            [['basics', 'planned_location', 'status', 'notes'], 'safe'],
         ];
     }
 
@@ -25,10 +27,6 @@ class GameQuery extends Game
 
     /**
      * Creates a data provider instance with the search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
      */
     public function search(array $params): ActiveDataProvider
     {
@@ -58,7 +56,8 @@ class GameQuery extends Game
         }
 
         $query->andFilterWhere(['like', 'basics', $this->basics])
-            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'planned_location', $this->planned_location])
+            ->andFilterWhere(['in', 'status', $this->status])
             ->andFilterWhere(['like', 'notes', $this->notes]);
 
         return $dataProvider;
@@ -84,10 +83,10 @@ class GameQuery extends Game
 
         $query
             ->andWhere([
-                'epic_id' => $activeEpic->epic_id
+                'epic_id' => $activeEpic->epic_id,
             ])
             ->orderBy(['position' => SORT_DESC])
-            ->limit(4);
+            ->limit(self::DEFAULT_FRONT_LIMIT);
 
         return $dataProvider;
     }

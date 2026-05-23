@@ -2,6 +2,7 @@
 
 use common\models\Epic;
 use common\models\Game;
+use common\models\GameQuery;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -9,6 +10,7 @@ use yii\web\View;
 
 /* @var $this View */
 /* @var $epic Epic */
+/* @var $searchModel GameQuery */
 /* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_GAME_INDEX');
@@ -31,58 +33,68 @@ $this->params['breadcrumbs'][] = $this->title;
         ) ?>
     </div>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            [
-                'attribute' => 'position',
-                'contentOptions' => ['class' => 'text-center'],
-                'label' => Yii::t('app', 'GAME_POSITION'),
-            ],
-            'basics',
-            [
-                'attribute' => 'status',
-                'format' => 'raw',
-                'value' => fn(Game $model) => $model->getStatus()->getName(),
-            ],
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {up} {down}',
-                'buttons' => [
-                    'view' => function ($url, Game $model, $key) {
-                        return Html::a(
-                            '<span class="glyphicon glyphicon-eye-open"></span>',
-                            Yii::$app->urlManager->createUrl(['game/view', 'key' => $model->key]),
-                            ['title' => Yii::t('app', 'BUTTON_VIEW')]
-                        );
-                    },
-                    'update' => function ($url, Game $model, $key) {
-                        return Html::a(
-                            '<span class="glyphicon glyphicon-pencil"></span>',
-                            Yii::$app->urlManager->createUrl(['game/update', 'key' => $model->key]),
-                            ['title' => Yii::t('app', 'BUTTON_UPDATE')]
-                        );
-                    },
-                    'up' => function ($url, Game $model, $key) {
-                        return Html::a(
-                            '<span class="glyphicon glyphicon-arrow-up"></span>',
-                            ['game/move-down', 'key' => $model->key],
-                            [
-                                'title' => Yii::t('app', 'LABEL_MOVE_UP'),
-                            ]
-                        );
-                    },
-                    'down' => function ($url, Game $model, $key) {
-                        return Html::a(
-                            '<span class="glyphicon glyphicon-arrow-down"></span>',
-                            ['game/move-up', 'key' => $model->key],
-                            [
-                                'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
-                            ]
-                        );
-                    },
+    <div class="col-md-9">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                [
+                    'attribute' => 'position',
+                    'contentOptions' => ['class' => 'cell-needing-alignment text-center'],
+                    'headerOptions' => ['class' => 'text-center'],
+                    'label' => Yii::t('app', 'GAME_POSITION'),
+                ],
+                'basics',
+                [
+                    'attribute' => 'status',
+                    'contentOptions' => ['class' => 'cell-needing-alignment text-center'],
+                    'headerOptions' => ['class' => 'text-center'],
+                    'format' => 'raw',
+                    'value' => fn(Game $model) => $model->getStatus()->getName(),
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'contentOptions' => ['class' => 'action-cell cell-needing-alignment'],
+                    'template' => '{view} {update} {up} {down}',
+                    'buttons' => [
+                        'view' => function ($url, Game $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-eye-open"></span>',
+                                Yii::$app->urlManager->createUrl(['game/view', 'key' => $model->key]),
+                                ['title' => Yii::t('app', 'BUTTON_VIEW')]
+                            );
+                        },
+                        'update' => function ($url, Game $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-pencil"></span>',
+                                Yii::$app->urlManager->createUrl(['game/update', 'key' => $model->key]),
+                                ['title' => Yii::t('app', 'BUTTON_UPDATE')]
+                            );
+                        },
+                        'up' => function ($url, Game $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-arrow-up"></span>',
+                                ['game/move-down', 'key' => $model->key],
+                                [
+                                    'title' => Yii::t('app', 'LABEL_MOVE_UP'),
+                                ]
+                            );
+                        },
+                        'down' => function ($url, Game $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-arrow-down"></span>',
+                                ['game/move-up', 'key' => $model->key],
+                                [
+                                    'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
+                                ]
+                            );
+                        },
+                    ],
                 ],
             ],
-        ],
-    ]); ?>
+        ]); ?>
+    </div>
+
+    <div class="col-md-3" id="filter">
+        <?php echo $this->render('_search', ['model' => $searchModel, 'epic' => $epic]); ?>
+    </div>
 </div>
