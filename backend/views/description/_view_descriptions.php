@@ -22,7 +22,7 @@ use yii\widgets\ListView;
     ><?= Yii::t('app', 'DESCRIPTION_BUTTON_CREATE') ?></p>
 </div>
 
-<?php if ($model): ?>
+<?php if (count($model->descriptions) > 0): ?>
     <div id="descriptions">
         <?= ListView::widget([
             'dataProvider' => new ActiveDataProvider([
@@ -45,7 +45,7 @@ use yii\widgets\ListView;
         ]) ?>
     </div>
 <?php else: ?>
-    <p><?= Yii::t('app', 'DESCRIPTIONS_NOT_FOUND'); ?></p>
+    <p class="info-box"><?= Yii::t('app', 'DESCRIPTIONS_NOT_FOUND'); ?></p>
 <?php endif; ?>
 
 <?php Modal::begin([

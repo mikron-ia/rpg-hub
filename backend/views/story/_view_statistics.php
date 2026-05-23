@@ -2,7 +2,8 @@
 
 use common\models\Character;
 use common\models\core\SeenStatus;
-use yii\helpers\Html;
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\web\View;
 
 /* @var $this View */
@@ -13,8 +14,8 @@ use yii\web\View;
 <div class="col-md-6">
 
     <h2 class="text-center"><?= Yii::t('app', 'SEEN_READ') ?></h2>
-    <?= \yii\grid\GridView::widget([
-        'dataProvider' => new \yii\data\ActiveDataProvider([
+    <?= GridView::widget([
+        'dataProvider' => new ActiveDataProvider([
             'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_SEEN),
             'pagination' => false,
         ]),
@@ -46,8 +47,8 @@ use yii\web\View;
     ]) ?>
 
     <h2 class="text-center"><?= Yii::t('app', 'SEEN_BEFORE_UPDATE') ?></h2>
-    <?= \yii\grid\GridView::widget([
-        'dataProvider' => new \yii\data\ActiveDataProvider([
+    <?= GridView::widget([
+        'dataProvider' => new ActiveDataProvider([
             'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_UPDATED),
             'pagination' => false,
         ]),
@@ -79,8 +80,8 @@ use yii\web\View;
     ]) ?>
 
     <h2 class="text-center"><?= Yii::t('app', 'SEEN_NEW') ?></h2>
-    <?= \yii\grid\GridView::widget([
-        'dataProvider' => new \yii\data\ActiveDataProvider([
+    <?= GridView::widget([
+        'dataProvider' => new ActiveDataProvider([
             'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_NEW),
             'pagination' => false,
         ]),
@@ -99,7 +100,5 @@ use yii\web\View;
 
 <div class="col-md-6">
     <h2>JSON</h2>
-    <p class="text-left">
-        <?= Html::encode($model->data) ?>
-    </p>
+    <pre><?= json_encode(json_decode($model->data), JSON_PRETTY_PRINT) ?></pre>
 </div>

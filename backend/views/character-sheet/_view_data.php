@@ -1,11 +1,12 @@
 <?php
-/* @var $this yii\web\View */
-/* @var $model common\models\CharacterSheet */
+
+use common\models\CharacterSheet;
+use yii\web\View;
+
+/* @var $this View */
+/* @var $model CharacterSheet */
 ?>
 
-<div class="col-md-12">
-    <textarea id="raw-data" title="<?= Yii::t('app', 'CHARACTER_SHEET_RAW_DATA') ?>"
-              class="col-md-12" rows="28"
-              readonly="readonly"
-    ><?= \yii\helpers\Html::encode($model->data); ?></textarea>
+<div class="col-md-12" id="raw-data" title="<?= Yii::t('app', 'CHARACTER_SHEET_RAW_DATA') ?>">
+    <pre><?= json_encode(json_decode($model->data), JSON_PRETTY_PRINT) ?></pre>
 </div>

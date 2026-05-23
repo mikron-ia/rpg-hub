@@ -25,7 +25,6 @@ ArticleAsset::register($this);
                         ? (Html::a($model->epic->name, ['epic/front', 'key' => $model->epic->key], []))
                         : Yii::t('app', 'ARTICLE_NO_EPIC'),
                 ],
-                'key',
                 [
                     'attribute' => 'visibility',
                     'value' => $model->getVisibilityName()

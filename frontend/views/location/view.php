@@ -77,9 +77,8 @@ if ($this->params['showPrivates']) {
             ]) ?>
         <?php endif; ?>
     </div>
-    <p class="beta-feature-warning" title="<?= Yii::t('app', 'BETA_WARNING_TITLE') ?>">
-        <?= Yii::t('app', 'BETA_WARNING_TEXT') ?>
-    </p>
+
+    <p class="subtitle"><?= $model->tagline ?></p>
 
     <?= Tabs::widget(['items' => $items]) ?>
 </div>

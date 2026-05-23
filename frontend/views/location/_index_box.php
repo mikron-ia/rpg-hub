@@ -69,6 +69,15 @@ $titleText = '';
           title="<?= $scribbleTitle ?>"
     ></span>
 
+    <p class="subtitle index-box-subtitle-narrow">
+        <?= StringHelper::truncateWords(
+            $model->tagline,
+            Yii::$app->params['indexBoxWordTrimming']['withTags']['subtitle'],
+            ' (...)',
+            false
+        ) ?>
+    </p>
+
     <p class="text-center seen-tag-common <?= $model->showSightingCSS() ?> seen-tag-box">
         <?= $model->showSightingStatus() ?>
     </p>

@@ -28,9 +28,6 @@ $isStoryCurrent = $model->story_id === $model->epic->current_story_id;
             'model' => $model,
             'attributes' => [
                 [
-                    'attribute' => 'key',
-                ],
-                [
                     'attribute' => 'epic_id',
                     'format' => 'raw',
                     'value' => Html::a($model->epic->name, ['epic/front', 'key' => $model->epic->key], []),
