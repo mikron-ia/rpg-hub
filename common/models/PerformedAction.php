@@ -13,8 +13,6 @@ use yii\db\ActiveRecord;
 use yii\db\Exception;
 
 /**
- * This is the model class for table "performed_action".
- *
  * @property string $id
  * @property string $user_id
  * @property string $operation
@@ -30,13 +28,13 @@ use yii\db\Exception;
  */
 class PerformedAction extends ActiveRecord
 {
-    const string PERFORMED_ACTION_CREATE = 'create';
-    const string PERFORMED_ACTION_UPDATE = 'update';
-    const string PERFORMED_ACTION_LOGIN = 'login';
-    const string PERFORMED_ACTION_LOGOUT = 'logout';
-    const string PERFORMED_ACTION_MANAGER_ATTACH = 'manager-attach';
-    const string PERFORMED_ACTION_MANAGER_DETACH = 'manager-detach';
-    const string PERFORMED_ACTION_OTHER = 'other';
+    public const string PERFORMED_ACTION_CREATE = 'create';
+    public const string PERFORMED_ACTION_UPDATE = 'update';
+    public const string PERFORMED_ACTION_LOGIN = 'login';
+    public const string PERFORMED_ACTION_LOGOUT = 'logout';
+    public const string PERFORMED_ACTION_MANAGER_ATTACH = 'manager-attach';
+    public const string PERFORMED_ACTION_MANAGER_DETACH = 'manager-detach';
+    public const string PERFORMED_ACTION_OTHER = 'other';
 
     #[Override]
     public static function tableName(): string
@@ -76,7 +74,7 @@ class PerformedAction extends ActiveRecord
                     self::PERFORMED_ACTION_LOGOUT,
                     self::PERFORMED_ACTION_MANAGER_ATTACH,
                     self::PERFORMED_ACTION_MANAGER_DETACH,
-                    self::PERFORMED_ACTION_OTHER
+                    self::PERFORMED_ACTION_OTHER,
                 ]
             ],
             [
@@ -84,7 +82,7 @@ class PerformedAction extends ActiveRecord
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => User::class,
-                'targetAttribute' => ['user_id' => 'id']
+                'targetAttribute' => ['user_id' => 'id'],
             ],
         ];
     }

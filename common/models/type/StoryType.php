@@ -10,6 +10,7 @@ enum StoryType: string
     case Story = 'story';             // Default story; interactive
     case Chapter = 'chapter';         // Part of a larger story; interactive
     case Episode = 'episode';         // Self-standing episode; interactive
+    case Installment = 'installment';// Self-standing installment; interactive
     case Mission = 'mission';         // Self-standing episode; interactive
     case Prologue = 'prologue';       // Prologue to an arc; interactive or not
     case Interlude = 'interlude';     // Interlude in an arc; rarely interactive
@@ -30,6 +31,7 @@ enum StoryType: string
             self::Interlude => Yii::t('app', 'STORY_TYPE_INTERLUDE'),
             self::Epilogue => Yii::t('app', 'STORY_TYPE_EPILOGUE'),
             self::Episode => Yii::t('app', 'STORY_TYPE_EPISODE'),
+            self::Installment => Yii::t('app', 'STORY_TYPE_INSTALLMENT'),
             self::Mission => Yii::t('app', 'STORY_TYPE_MISSION'),
             self::Reading => Yii::t('app', 'STORY_TYPE_READING'),
             self::Report => Yii::t('app', 'STORY_TYPE_REPORT'),

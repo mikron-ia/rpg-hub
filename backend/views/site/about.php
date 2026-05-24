@@ -1,8 +1,13 @@
-<?php $this->title = Yii::t('app', 'LABEL_ABOUT'); ?>
+<?php
+$this->title = Yii::t('app', 'LABEL_ABOUT');
+$this->params['breadcrumbs'][] = $this->title;
+?>
 
 <h1>About</h1>
 
-This webpage is a hub for role-playing game story/campaign/epic management. This is the operator / GM site.
+<p>
+    This webpage is a hub for role-playing game story/campaign/epic management. This is the operator / GM site.
+</p>
 
 <h2>Attributions</h2>
 

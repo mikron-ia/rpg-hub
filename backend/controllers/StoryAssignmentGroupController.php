@@ -70,7 +70,7 @@ class StoryAssignmentGroupController extends AssignmentAbstractController
      */
     public function actionSetStoryGroups(): Response
     {
-        $groupIds = Yii::$app->request->post('keys');
+        $groupIds = Yii::$app->request->post('keys', []);
         $storyKey = Yii::$app->request->post('storyKey');
         $rank = Yii::$app->request->post('rank');
         $visibility = Yii::$app->request->post('visibility');

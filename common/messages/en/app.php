@@ -987,6 +987,7 @@ return [
     'STORY_TYPE_CHAPTER' => 'Chapter',
     'STORY_TYPE_EPILOGUE' => 'Epilogue',
     'STORY_TYPE_EPISODE' => 'Episode',
+    'STORY_TYPE_INSTALLMENT' => 'Installment',
     'STORY_TYPE_INTERLUDE' => 'Interlude',
     'STORY_TYPE_MISSION' => 'Mission',
     'STORY_TYPE_NONE' => 'None (hide type)',

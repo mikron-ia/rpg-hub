@@ -1,8 +1,5 @@
 <?php
 
-/* @var $this View */
-/* @var $content string */
-
 use backend\assets\AppAsset;
 use common\components\FooterHelper;
 use common\models\Epic;
@@ -13,6 +10,9 @@ use yii\bootstrap\NavBar;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\Breadcrumbs;
+
+/* @var $this View */
+/* @var $content string */
 
 AppAsset::register($this);
 ?>
