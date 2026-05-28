@@ -2,6 +2,7 @@
 
 namespace common\models\core;
 
+use common\models\type\DescriptionType;
 use yii\db\ActiveQuery;
 
 /**
@@ -13,7 +14,7 @@ interface HasDescriptions
      * Provides the list of types allowed by this class
      * Types will be displayed in form selector in the same order they are provided in this method
      *
-     * @return string[]
+     * @return DescriptionType[]
      */
     public static function allowedDescriptionTypes(): array;
 

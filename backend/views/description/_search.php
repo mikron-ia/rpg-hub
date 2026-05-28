@@ -4,6 +4,7 @@ use common\models\core\Language;
 use common\models\core\Visibility;
 use common\models\Description;
 use common\models\DescriptionQuery;
+use common\models\type\DescriptionType;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -25,7 +26,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'code')->widget(
         kartik\select2\Select2::class,
         [
-            'data' => Description::typeNames(),
+            'data' => DescriptionType::namesForDropdown(),
             'options' => ['multiple' => true],
         ]
     ) ?>

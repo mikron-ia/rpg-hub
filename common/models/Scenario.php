@@ -8,6 +8,7 @@ use common\models\core\HasKey;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
 use common\models\tools\ToolsForLinkTags;
+use common\models\type\DescriptionType;
 use Override;
 use Yii;
 use yii\db\ActiveQuery;
@@ -151,20 +152,20 @@ class Scenario extends ActiveRecord implements HasDescriptions, HasEpicControl, 
     public static function allowedDescriptionTypes(): array
     {
         return [
-            Description::TYPE_PREMISE,
-            Description::TYPE_PLAN,
-            Description::TYPE_ASPECTS,
-            Description::TYPE_ACTORS,
-            Description::TYPE_SCENE,
-            Description::TYPE_ACT,
-            Description::TYPE_BRIEFING,
-            Description::TYPE_PRELUDE,
-            Description::TYPE_INTERLUDE,
-            Description::TYPE_POSTLUDE,
-            Description::TYPE_DEBRIEFING,
-            Description::TYPE_THREADS,
-            Description::TYPE_BACKGROUND,
-            Description::TYPE_COMMENTARY,
+            DescriptionType::Premise,
+            DescriptionType::Plan,
+            DescriptionType::Aspects,
+            DescriptionType::Actors,
+            DescriptionType::Scene,
+            DescriptionType::Act,
+            DescriptionType::Briefing,
+            DescriptionType::Premise,
+            DescriptionType::Interlude,
+            DescriptionType::Postlude,
+            DescriptionType::Debriefing,
+            DescriptionType::Threads,
+            DescriptionType::Background,
+            DescriptionType::Commentary,
         ];
     }
 

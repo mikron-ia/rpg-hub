@@ -11,6 +11,7 @@ use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
+use common\models\type\DescriptionType;
 use Override;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -62,40 +63,6 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
     use ToolsForEntity;
     use ToolsForLinkTags;
     use ToolsForHasVisibility;
-
-    const string TYPE_APPEARANCE = 'appearance';       // For Character, Location; The looks
-    const string TYPE_ASPECTS = 'aspects';             // For Character, Group, Location, Scenario, Story; Aspects (for FATE-like games) and Moves (for Powered by Apocalypse games)
-    const string TYPE_ATTITUDE = 'attitude';           // For Character, Group; Attitude towards different people / groups and connections with them
-    const string TYPE_BACKGROUND = 'background';       // For Character, Group, Story; Origin, education, the like
-    const string TYPE_COMMENTARY = 'commentary';       // For Character, Group, Location, Story; GM commentary
-    const string TYPE_DOMAIN = 'domain';               // For Character, Group; Places where the person reigns, dominates, or frequents
-    const string TYPE_FAME = 'fame';                   // For Character; Famous deeds or events; REMOVED
-    const string TYPE_FACTIONS = 'factions';           // For Character, Group, Location; Factions associated with; this includes nations
-    const string TYPE_HISTORY = 'history';             // For Character, Group, Location; History of the character/group/location
-    const string TYPE_INTERACTIONS = 'interactions';   // For Character, Group, Location; Interactions / encounters with the group or person NAMES
-    const string TYPE_PERSONALITY = 'personality';     // For Character; Personality, character behaviour, mental issues
-    const string TYPE_RESOURCES = 'resources';         // For Character, Group, Location; Resources the person/group/location wields, flaunts, or can offer
-    const string TYPE_REPUTATION = 'reputation';       // For Character, Group, Location; Reputation of the character/group/location
-    const string TYPE_RETINUE = 'retinue';             // For Character, Group, Location; Friends, allies, etc.; for Location, it's mostly about personnel
-    const string TYPE_RUMOURS = 'rumours';             // For Character, Group, Location; Unproven rumours collected about character/group/location
-    const string TYPE_STORIES = 'stories';             // For Character, Group, Location; Stories participated in
-    const string TYPE_THREADS = 'threads';             // For Character, Group, Location, Scenario, Story; Threads attached
-    const string TYPE_WHO = 'who';                     // For Character, Group, Location; Who/what is this?
-
-    const string TYPE_STRUCTURE = 'structure';         // For Group: what is the structure and basic workings?
-
-    const string TYPE_LOCATION = 'location';           // For Location: where is it?
-
-    const string TYPE_PREMISE = 'premise';             // For Scenario, Story; what is the main concept?
-    const string TYPE_ACTORS = 'actors';               // For Scenario, Story; who is going to participate?
-    const string TYPE_PLAN = 'plan';                   // For Scenario; what is going to happen?
-    const string TYPE_SCENE = 'scene';                 // For Scenario, Story; a particular scene
-    const string TYPE_ACT = 'act';                     // For Scenario, Story; a particular act
-    const string TYPE_BRIEFING = 'briefing';           // For Scenario, Story; briefing / introduction scene
-    const string TYPE_DEBRIEFING = 'debriefing';       // For Scenario, Story; debriefing / aftermath scene
-    const string TYPE_PRELUDE = 'prelude';             // For Scenario, Story; events leading to or introducing
-    const string TYPE_INTERLUDE = 'interlude';         // For Scenario, Story; events in-between
-    const string TYPE_POSTLUDE = 'postlude';           // For Scenario, Story; events following
 
     #[Override]
     public static function tableName(): string
@@ -150,7 +117,7 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
                 'targetClass' => DescriptionPack::class,
                 'targetAttribute' => ['description_pack_id' => 'description_pack_id'],
             ],
-            [['code'], 'in', 'range' => fn() => $this->allowedTypes()],
+            [['code'], 'in', 'range' => fn() => DescriptionType::allowedTypesForValidator()],
             [['visibility'], 'in', 'range' => fn() => $this->allowedVisibilitiesForValidator()],
             [
                 ['point_in_time_start_id'],
@@ -288,45 +255,6 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
     }
 
     /**
-     * @return array<string,string>
-     */
-    public static function typeNames(): array
-    {
-        return [
-            self::TYPE_APPEARANCE => Yii::t('app', 'DESCRIPTION_TYPE_APPEARANCE'),
-            self::TYPE_ASPECTS => Yii::t('app', 'DESCRIPTION_TYPE_ASPECTS'),
-            self::TYPE_ATTITUDE => Yii::t('app', 'DESCRIPTION_TYPE_ATTITUDE'),
-            self::TYPE_BACKGROUND => Yii::t('app', 'DESCRIPTION_TYPE_BACKGROUND'),
-            self::TYPE_COMMENTARY => Yii::t('app', 'DESCRIPTION_TYPE_COMMENTARY'),
-            self::TYPE_DOMAIN => Yii::t('app', 'DESCRIPTION_TYPE_DOMAIN'),
-            self::TYPE_FAME => Yii::t('app', 'DESCRIPTION_TYPE_FAME'),
-            self::TYPE_FACTIONS => Yii::t('app', 'DESCRIPTION_TYPE_FACTIONS'),
-            self::TYPE_INTERACTIONS => Yii::t('app', 'DESCRIPTION_TYPE_INTERACTIONS'),
-            self::TYPE_HISTORY => Yii::t('app', 'DESCRIPTION_TYPE_HISTORY'),
-            self::TYPE_PERSONALITY => Yii::t('app', 'DESCRIPTION_TYPE_PERSONALITY'),
-            self::TYPE_RESOURCES => Yii::t('app', 'DESCRIPTION_TYPE_RESOURCES'),
-            self::TYPE_REPUTATION => Yii::t('app', 'DESCRIPTION_TYPE_REPUTATION'),
-            self::TYPE_RETINUE => Yii::t('app', 'DESCRIPTION_TYPE_RETINUE'),
-            self::TYPE_RUMOURS => Yii::t('app', 'DESCRIPTION_TYPE_RUMOURS'),
-            self::TYPE_STORIES => Yii::t('app', 'DESCRIPTION_TYPE_STORIES'),
-            self::TYPE_THREADS => Yii::t('app', 'DESCRIPTION_TYPE_THREADS'),
-            self::TYPE_WHO => Yii::t('app', 'DESCRIPTION_TYPE_WHO'),
-            self::TYPE_STRUCTURE => Yii::t('app', 'DESCRIPTION_TYPE_STRUCTURE'),
-            self::TYPE_LOCATION => Yii::t('app', 'DESCRIPTION_TYPE_LOCATION'),
-            self::TYPE_PREMISE => Yii::t('app', 'DESCRIPTION_TYPE_PREMISE'),
-            self::TYPE_ACTORS => Yii::t('app', 'DESCRIPTION_TYPE_ACTORS'),
-            self::TYPE_PLAN => Yii::t('app', 'DESCRIPTION_TYPE_PLAN'),
-            self::TYPE_SCENE => Yii::t('app', 'DESCRIPTION_TYPE_SCENE'),
-            self::TYPE_ACT => Yii::t('app', 'DESCRIPTION_TYPE_ACT'),
-            self::TYPE_BRIEFING => Yii::t('app', 'DESCRIPTION_TYPE_BRIEFING'),
-            self::TYPE_DEBRIEFING => Yii::t('app', 'DESCRIPTION_TYPE_DEBRIEFING'),
-            self::TYPE_PRELUDE => Yii::t('app', 'DESCRIPTION_TYPE_PRELUDE'),
-            self::TYPE_INTERLUDE => Yii::t('app', 'DESCRIPTION_TYPE_INTERLUDE'),
-            self::TYPE_POSTLUDE => Yii::t('app', 'DESCRIPTION_TYPE_POSTLUDE'),
-        ];
-    }
-
-    /**
      * Provides a list of allowed description types for the class the object belongs to
      * List is provided as full names in the current language keyed by codes
      *
@@ -337,32 +265,15 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
      */
     public function typeNamesForThisClass(): array
     {
-        $typeNamesAll = self::typeNames();
-        $typeNamesAccepted = [];
-
         $class = 'common\models\\' . $this->descriptionPack->class;
+
+        $typesAllowed = [];
 
         if (method_exists($class, 'allowedDescriptionTypes')) {
             $typesAllowed = call_user_func([$class, 'allowedDescriptionTypes']);
-        } else {
-            $typesAllowed = array_keys($typeNamesAll);
         }
 
-        foreach ($typesAllowed as $typeKey) {
-            if (isset($typeNamesAll[$typeKey])) {
-                $typeNamesAccepted[$typeKey] = $typeNamesAll[$typeKey];
-            }
-        }
-
-        return $typeNamesAccepted;
-    }
-
-    /**
-     * @return array<int,string>
-     */
-    public function allowedTypes(): array
-    {
-        return array_keys(self::typeNames());
+        return DescriptionType::typeNames($typesAllowed);
     }
 
     public function getCreatedBy(): ActiveQuery
@@ -397,8 +308,12 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
 
     public function getTypeName(): string
     {
-        $names = self::typeNames();
-        return isset($names[$this->code]) ? $names[$this->code] : "?";
+        return $this->getTypeEnum()?->name() ?? '?';
+    }
+
+    public function getTypeEnum(): ?DescriptionType
+    {
+        return DescriptionType::tryFrom($this->code);
     }
 
     public function getLanguage(): ?string

@@ -20,6 +20,7 @@ use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
 use common\models\tools\ToolsForHasScribbles;
 use common\models\tools\ToolsForHasVisibility;
+use common\models\type\DescriptionType;
 use DateMalformedStringException;
 use DateTimeImmutable;
 use Override;
@@ -452,29 +453,29 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     /**
      * Provides the list of types allowed by this class
      *
-     * @return string[]
+     * @return DescriptionType[]
      */
     public static function allowedDescriptionTypes(): array
     {
         return [
-            Description::TYPE_WHO,
-            Description::TYPE_APPEARANCE,
-            Description::TYPE_PERSONALITY,
-            Description::TYPE_HISTORY,
-            Description::TYPE_ASPECTS,
-            Description::TYPE_ATTITUDE,
-            Description::TYPE_BACKGROUND,
-            Description::TYPE_DOMAIN,
-            Description::TYPE_FACTIONS,
-            Description::TYPE_HISTORY,
-            Description::TYPE_INTERACTIONS,
-            Description::TYPE_RESOURCES,
-            Description::TYPE_REPUTATION,
-            Description::TYPE_RETINUE,
-            Description::TYPE_RUMOURS,
-            Description::TYPE_STORIES,
-            Description::TYPE_THREADS,
-            Description::TYPE_COMMENTARY,
+            DescriptionType::Who,
+            DescriptionType::Appearance,
+            DescriptionType::Personality,
+            DescriptionType::History,
+            DescriptionType::Aspects,
+            DescriptionType::Attitude,
+            DescriptionType::Background,
+            DescriptionType::Domain,
+            DescriptionType::Factions,
+            DescriptionType::History,
+            DescriptionType::Interactions,
+            DescriptionType::Resources,
+            DescriptionType::Reputation,
+            DescriptionType::Retinue,
+            DescriptionType::Rumours,
+            DescriptionType::Stories,
+            DescriptionType::Threads,
+            DescriptionType::Commentary,
         ];
     }
 

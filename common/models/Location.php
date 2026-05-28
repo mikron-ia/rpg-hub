@@ -16,6 +16,7 @@ use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
 use common\models\tools\ToolsForHasScribbles;
 use common\models\tools\ToolsForHasVisibility;
+use common\models\type\DescriptionType;
 use DateTimeImmutable;
 use Override;
 use Yii;
@@ -202,21 +203,21 @@ class Location extends ActiveRecord implements HasEpicControl, HasDescriptions, 
     public static function allowedDescriptionTypes(): array
     {
         return [
-            Description::TYPE_WHO,
-            Description::TYPE_APPEARANCE,
-            Description::TYPE_LOCATION,
-            Description::TYPE_HISTORY,
-            Description::TYPE_ASPECTS,
-            Description::TYPE_FACTIONS,
-            Description::TYPE_HISTORY,
-            Description::TYPE_INTERACTIONS,
-            Description::TYPE_RESOURCES,
-            Description::TYPE_REPUTATION,
-            Description::TYPE_RETINUE,
-            Description::TYPE_RUMOURS,
-            Description::TYPE_STORIES,
-            Description::TYPE_THREADS,
-            Description::TYPE_COMMENTARY,
+            DescriptionType::Who,
+            DescriptionType::Appearance,
+            DescriptionType::Location,
+            DescriptionType::History,
+            DescriptionType::Aspects,
+            DescriptionType::Factions,
+            DescriptionType::History,
+            DescriptionType::Interactions,
+            DescriptionType::Resources,
+            DescriptionType::Reputation,
+            DescriptionType::Retinue,
+            DescriptionType::Rumours,
+            DescriptionType::Stories,
+            DescriptionType::Threads,
+            DescriptionType::Commentary,
         ];
     }
 
