@@ -74,6 +74,41 @@ enum DescriptionType: string
         };
     }
 
+    public function description(): string
+    {
+        return match ($this) {
+            self::Act => Yii::t('app', 'DESCRIPTION_TYPE_ACT_DESCRIPTION'),
+            self::Actors => Yii::t('app', 'DESCRIPTION_TYPE_ACTORS_DESCRIPTION'),
+            self::Appearance => Yii::t('app', 'DESCRIPTION_TYPE_APPEARANCE_DESCRIPTION'),
+            self::Aspects => Yii::t('app', 'DESCRIPTION_TYPE_ASPECTS_DESCRIPTION'),
+            self::Attitude => Yii::t('app', 'DESCRIPTION_TYPE_ATTITUDE_DESCRIPTION'),
+            self::Background => Yii::t('app', 'DESCRIPTION_TYPE_BACKGROUND_DESCRIPTION'),
+            self::Briefing => Yii::t('app', 'DESCRIPTION_TYPE_BRIEFING_DESCRIPTION'),
+            self::Commentary => Yii::t('app', 'DESCRIPTION_TYPE_COMMENTARY_DESCRIPTION'),
+            self::Debriefing => Yii::t('app', 'DESCRIPTION_TYPE_DEBRIEFING_DESCRIPTION'),
+            self::Domain => Yii::t('app', 'DESCRIPTION_TYPE_DOMAIN_DESCRIPTION'),
+            self::Factions => Yii::t('app', 'DESCRIPTION_TYPE_FACTIONS_DESCRIPTION'),
+            self::History => Yii::t('app', 'DESCRIPTION_TYPE_HISTORY_DESCRIPTION'),
+            self::Interactions => Yii::t('app', 'DESCRIPTION_TYPE_INTERACTIONS_DESCRIPTION'),
+            self::Interlude => Yii::t('app', 'DESCRIPTION_TYPE_INTERLUDE_DESCRIPTION'),
+            self::Location => Yii::t('app', 'DESCRIPTION_TYPE_LOCATION_DESCRIPTION'),
+            self::Plan => Yii::t('app', 'DESCRIPTION_TYPE_PLAN_DESCRIPTION'),
+            self::Prelude => Yii::t('app', 'DESCRIPTION_TYPE_PRELUDE_DESCRIPTION'),
+            self::Premise => Yii::t('app', 'DESCRIPTION_TYPE_PREMISE_DESCRIPTION'),
+            self::Postlude => Yii::t('app', 'DESCRIPTION_TYPE_POSTLUDE_DESCRIPTION'),
+            self::Personality => Yii::t('app', 'DESCRIPTION_TYPE_PERSONALITY_DESCRIPTION'),
+            self::Resources => Yii::t('app', 'DESCRIPTION_TYPE_RESOURCES_DESCRIPTION'),
+            self::Reputation => Yii::t('app', 'DESCRIPTION_TYPE_REPUTATION_DESCRIPTION'),
+            self::Retinue => Yii::t('app', 'DESCRIPTION_TYPE_RETINUE_DESCRIPTION'),
+            self::Rumours => Yii::t('app', 'DESCRIPTION_TYPE_RUMOURS_DESCRIPTION'),
+            self::Scene => Yii::t('app', 'DESCRIPTION_TYPE_SCENE_DESCRIPTION'),
+            self::Stories => Yii::t('app', 'DESCRIPTION_TYPE_STORIES_DESCRIPTION'),
+            self::Structure => Yii::t('app', 'DESCRIPTION_TYPE_STRUCTURE_DESCRIPTION'),
+            self::Threads => Yii::t('app', 'DESCRIPTION_TYPE_THREADS_DESCRIPTION'),
+            self::Who => Yii::t('app', 'DESCRIPTION_TYPE_WHO_DESCRIPTION'),
+        };
+    }
+
     /**
      * @return array<string>
      *

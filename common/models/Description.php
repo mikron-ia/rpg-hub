@@ -314,6 +314,11 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
         return $this->getTypeEnum()?->name() ?? '?';
     }
 
+    public function getTypeDescription(): string
+    {
+        return $this->getTypeEnum()?->description() ?? '?';
+    }
+
     public function getTypeEnum(): ?DescriptionType
     {
         return DescriptionType::tryFrom($this->code);

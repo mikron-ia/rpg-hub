@@ -35,7 +35,9 @@ if ($pointInTimeStartExists || $pointInTimeEndExists || $pointInTimeStillValidEx
 ?>
 
 <div class="col-md-6">
-    <h2><?= $model->getTypeName(); ?></h2>
+    <h2 title="<?= $model->getTypeDescription() ?>">
+        <?= $model->getTypeName(); ?>
+    </h2>
 
     <?php if ($displayPointsInTime): ?>
         <div class="tag-box description-timestamp" data-type="<?= $model->code ?>" data-order="<?= $position ?? 0 ?>">
