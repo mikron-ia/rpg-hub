@@ -99,7 +99,7 @@ class PointInTimeController extends Controller
      * @throws DbException
      * @throws HttpException
      */
-    public function actionCreate(string $epic = null): Response|string
+    public function actionCreate(?string $epic = null): Response|string
     {
         if (!PointInTime::canUserCreateThem()) {
             PointInTime::throwExceptionAboutCreate();

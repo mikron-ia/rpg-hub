@@ -103,7 +103,7 @@ final class RecapController extends Controller
      * Creates a new Recap model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate(string $epic = null): Response|string
+    public function actionCreate(?string $epic = null): Response|string
     {
         if (!Recap::canUserCreateThem()) {
             Recap::throwExceptionAboutCreate();

@@ -89,7 +89,7 @@ final class CharacterSheetController extends Controller
     /**
      * Creates a new CharacterSheet model
      */
-    public function actionCreate(string $epic = null): Response|string
+    public function actionCreate(?string $epic = null): Response|string
     {
         CharacterSheet::canUserCreateThem();
 

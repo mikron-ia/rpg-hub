@@ -105,7 +105,7 @@ class ScenarioController extends CmsController
         return $this->render('view', ['model' => $this->findModel($key)]);
     }
 
-    public function actionCreate(string $epic = null): Response|string
+    public function actionCreate(?string $epic = null): Response|string
     {
         if (!Scenario::canUserCreateThem()) {
             Scenario::throwExceptionAboutCreate();

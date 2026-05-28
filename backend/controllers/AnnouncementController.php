@@ -109,7 +109,7 @@ class AnnouncementController extends Controller
      * @throws HttpException
      * @throws NotFoundHttpException
      */
-    public function actionCreate(string $epic = null): Response|string
+    public function actionCreate(?string $epic = null): Response|string
     {
         if (!Announcement::canUserCreateThem()) {
             Announcement::throwExceptionAboutCreate();

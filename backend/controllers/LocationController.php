@@ -154,7 +154,7 @@ final class LocationController extends CmsController
      * @throws Exception
      * @throws HttpException
      */
-    public function actionCreate(string $epic = null): Response|string
+    public function actionCreate(?string $epic = null): Response|string
     {
         if (!Location::canUserCreateThem()) {
             Location::throwExceptionAboutCreate();

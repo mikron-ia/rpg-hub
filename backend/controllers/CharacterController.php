@@ -162,7 +162,7 @@ final class CharacterController extends CmsController
      * @throws DbException
      * @throws HttpException
      */
-    public function actionCreate(string $epic = null): Response|string
+    public function actionCreate(?string $epic = null): Response|string
     {
         if (!Character::canUserCreateThem()) {
             Character::throwExceptionAboutCreate();

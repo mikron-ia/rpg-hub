@@ -98,7 +98,7 @@ class GameController extends CmsController
      * @throws Exception
      * @throws HttpException
      */
-    public function actionCreate(string $epic = null): Response|string
+    public function actionCreate(?string $epic = null): Response|string
     {
         if (!Game::canUserCreateThem()) {
             Game::throwExceptionAboutCreate();
