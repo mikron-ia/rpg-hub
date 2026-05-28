@@ -57,10 +57,17 @@ can no longer fulfill those goals. It is now maintained mostly for its practical
 1. [on an empty database] Run `./yii migrate/up`; `data.sql` will be automatically loaded if present
 1. [on an empty database] Run `./yii rbac/init`; this will set up the access rights for the roles
 1. [on an empty database] Run `./yii install/add-administrator` to add the administrator user
-1. [optional] Set-up cron tasks in your system with the content of `scripts/`
+1. Set up the periodic tasks; this is technically optional, but the system expects at least the importance recalculation
+   to be run relatively often, or it will not display some objects on the presentation page
+    - Fill the `config.shlib` file with values appropriate for your hosting environment
+        - `runner` is the PHP executable; while many hosting environments will work with `php` alone, there might be
+          some version issues
+        - `yii` is the path to the `yii` script; using an absolute path may solve some issues
+        - `log` is the path to the log directory; make sure the directory exists and is writable
+    - set up cron tasks in your system with the content of `scripts/`
 1. Access the entry points as needed:
-    - `backend/web` for the content management page
-    - `frontend/web` for the presentation page
+    - `backend/web` for the content management page (administrators and operators only)
+    - `frontend/web` for the presentation page (any user)
 
 ## Upgrading between versions
 
@@ -106,12 +113,14 @@ The hub allows handling of the following:
     - It is linked to a single `Character` from a list of `Character`s that have it set as their sheet
 - `Group` - a group of `Character`s - a party, an organization, or anything that justifies putting a few `Character`s
   together; can have other `Groups` as members as well
+- `Location` - a place present in the story
 - `Scenario` - a plan for events for a `Story`
     - This is the only "large" component that exists solely on the Game Master side and cannot be displayed on the
       presentation/front side
 - `Article` - miscellaneous texts
 - `Announcement` - news, information, and other OOC updates directed at users
 - `PointInTime` - auxiliary information, used to put in-story date/time on descriptions
+- `Image` - a set of links to an image file that can in turn be embedded in most text fields
 - `User` - as the name suggests, this is the user, i.e. person accessing the hub; no further explanation should be
   needed
 

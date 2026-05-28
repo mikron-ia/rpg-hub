@@ -90,6 +90,9 @@ class RbacController extends Controller
 
         /* Load v1.7.0 */
         $this->actionV1070();
+
+        /* Load v1.7.0 */
+        $this->actionV1080();
     }
 
     /**
@@ -470,5 +473,21 @@ class RbacController extends Controller
         $auth->addChild($manageEpic, $openEpic);
 
         $auth->addChild($manager, $manageEpic);
+    }
+
+    /**
+     * Adds rights from v1.8.0
+     *
+     * @throws Exception
+     */
+    public function actionV1080(): void
+    {
+        $auth = Yii::$app->authManager;
+
+        $gameMasterRule = $auth->getRule('epicGameMaster');
+        $watcherRule = $auth->getRule('epicWatcher');
+
+        $user = $auth->getRole('user');
+        $operator = $auth->getRole('operator');
     }
 }
