@@ -84,7 +84,7 @@ class Location extends ActiveRecord implements HasEpicControl, HasDescriptions, 
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Epic::class,
-                'targetAttribute' => ['epic_id' => 'epic_id']
+                'targetAttribute' => ['epic_id' => 'epic_id'],
             ],
             [['visibility'], 'in', 'range' => fn() => $this->allowedVisibilitiesForValidator()],
         ];
@@ -198,7 +198,8 @@ class Location extends ActiveRecord implements HasEpicControl, HasDescriptions, 
         ];
     }
 
-    static public function allowedDescriptionTypes(): array
+    #[Override]
+    public static function allowedDescriptionTypes(): array
     {
         return [
             Description::TYPE_WHO,
@@ -261,12 +262,12 @@ class Location extends ActiveRecord implements HasEpicControl, HasDescriptions, 
         return $this->hasOne(UtilityBag::class, ['utility_bag_id' => 'utility_bag_id']);
     }
 
-    static public function canUserIndexThem(): bool
+    public static function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem(): bool
+    public static function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
@@ -281,22 +282,22 @@ class Location extends ActiveRecord implements HasEpicControl, HasDescriptions, 
         return self::canUserViewInEpic($this->epic);
     }
 
-    static function throwExceptionAboutCreate(): void
+    public static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_LOCATION'));
     }
 
-    static function throwExceptionAboutControl(): void
+    public static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_LOCATION'));
     }
 
-    static function throwExceptionAboutIndex(): void
+    public static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_LOCATION'));
     }
 
-    static function throwExceptionAboutView(): void
+    public static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_LOCATION'));
     }

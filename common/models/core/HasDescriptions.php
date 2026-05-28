@@ -6,8 +6,6 @@ use yii\db\ActiveQuery;
 
 /**
  * Interface HasDescriptions describes classes with attached DescriptionPack that want to use full functionality of the pack
- *
- * @package common\models\core
  */
 interface HasDescriptions
 {
@@ -17,7 +15,7 @@ interface HasDescriptions
      *
      * @return string[]
      */
-    static public function allowedDescriptionTypes(): array;
+    public static function allowedDescriptionTypes(): array;
 
     /**
      * Provides the list of visible descriptions from Description Pack

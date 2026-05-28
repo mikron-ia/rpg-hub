@@ -290,7 +290,7 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
     /**
      * @return array<string,string>
      */
-    static public function typeNames(): array
+    public static function typeNames(): array
     {
         return [
             self::TYPE_APPEARANCE => Yii::t('app', 'DESCRIPTION_TYPE_APPEARANCE'),
