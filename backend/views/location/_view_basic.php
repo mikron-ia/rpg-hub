@@ -80,7 +80,7 @@ use yii\widgets\DetailView;
                     ],
                 ]
             ) ?>
-            <span class="hidden" id="key-value" data-key="GR:<?= $model->key ?>"></span>
+            <span class="hidden" id="key-value" data-key="LOC:<?= $model->key ?>"></span>
             <span class="hidden" id="button-message-copy-base"><?= Yii::t('app', 'BUTTON_COPY_KEY') ?></span>
             <span class="hidden" id="button-message-copy-confirm"><?= Yii::t('app', 'BUTTON_COPY_IN_PROGRESS') ?></span>
             <span class="hidden" id="button-message-copy-failure"><?= Yii::t('app', 'BUTTON_COPY_FAILED') ?></span>

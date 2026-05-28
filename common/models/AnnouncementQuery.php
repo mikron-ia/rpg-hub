@@ -27,7 +27,7 @@ class AnnouncementQuery extends Announcement
         return Model::scenarios();
     }
 
-    public function mostRecentDataProvider(Epic $activeEpic = null, bool $limitByTime = true): ActiveDataProvider
+    public function mostRecentDataProvider(?Epic $activeEpic = null, bool $limitByTime = true): ActiveDataProvider
     {
         if (empty($activeEpic)) {
             $activeEpic = Yii::$app->params['activeEpic'];
