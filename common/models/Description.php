@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\Displayable;
+use common\models\core\HasDescriptions;
 use common\models\core\HasKey;
 use common\models\core\HasVisibility;
 use common\models\core\Language;
@@ -12,6 +13,7 @@ use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use common\models\type\DescriptionType;
+use Error;
 use Override;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -63,6 +65,8 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
     use ToolsForEntity;
     use ToolsForLinkTags;
     use ToolsForHasVisibility;
+
+    const string CONTROLLING_CLASS_PREFIX = 'common\models\\';
 
     #[Override]
     public static function tableName(): string
@@ -256,24 +260,23 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
 
     /**
      * Provides a list of allowed description types for the class the object belongs to
-     * List is provided as full names in the current language keyed by codes
-     *
-     * Fallback mechanism: if the method is not implemented, a full list is provided, which will allow the object to be
-     * used, but will reduce the user experience.
+     * The list is provided as full names in the current language and keyed by codes
      *
      * @return string[]
      */
     public function typeNamesForThisClass(): array
     {
-        $class = 'common\models\\' . $this->descriptionPack->class;
-
-        $typesAllowed = [];
-
-        if (method_exists($class, 'allowedDescriptionTypes')) {
-            $typesAllowed = call_user_func([$class, 'allowedDescriptionTypes']);
+        try {
+            $object = new (self::CONTROLLING_CLASS_PREFIX . $this->descriptionPack->class);
+            if ($object instanceof HasDescriptions) {
+                $typesAllowed = $object::allowedDescriptionTypes();
+            }
+        } catch (Error) {
+            // todo Add logging for invalid class on DescriptionPack
+            // for now we are satisfied with $typesAllowed being an empty array
         }
 
-        return DescriptionType::typeNames($typesAllowed);
+        return DescriptionType::typeNames($typesAllowed ?? []);
     }
 
     public function getCreatedBy(): ActiveQuery
