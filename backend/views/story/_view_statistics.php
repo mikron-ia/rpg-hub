@@ -4,6 +4,7 @@ use common\models\Character;
 use common\models\core\SeenStatus;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
+use yii\helpers\Html;
 use yii\web\View;
 
 /* @var $this View */
@@ -100,5 +101,7 @@ use yii\web\View;
 
 <div class="col-md-6">
     <h2>JSON</h2>
-    <pre><?= json_encode(json_decode($model->data), JSON_PRETTY_PRINT) ?></pre>
+    <pre class="wrapped-json">
+        <?= Html::encode(json_encode(json_decode($model->data), JSON_PRETTY_PRINT)) ?>
+    </pre>
 </div>

@@ -740,3 +740,7 @@ p {
     border-radius: 15px;
     padding: 10px;
 }
+
+pre.wrapped-json {
+    white-space: pre-wrap;
+}
