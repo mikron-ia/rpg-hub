@@ -20,6 +20,9 @@ use yii\widgets\ListView;
        data-controller="<?= $creatorController ?>"
        data-key="<?= $creatorKey ?>"
     ><?= Yii::t('app', 'DESCRIPTION_BUTTON_CREATE') ?></p>
+    <p class="btn btn-default open-description-help">
+        <?= Yii::t('app', 'DESCRIPTION_BUTTON_HELP') ?>
+    </p>
 </div>
 
 <?php if (count($model->descriptions) > 0): ?>
@@ -50,6 +53,7 @@ use yii\widgets\ListView;
 
 <?php Modal::begin([
     'id' => 'create-description-modal',
+    'bodyOptions' => ['class' => 'modal-body modal-body-to-fill'],
     'header' => '<h2 class="modal-title">' . Yii::t('app', 'DESCRIPTION_TITLE_CREATE') . '</h2>',
     'clientOptions' => ['backdrop' => 'static'],
     'size' => Modal::SIZE_LARGE,
@@ -58,6 +62,7 @@ use yii\widgets\ListView;
 
 <?php Modal::begin([
     'id' => 'update-description-modal',
+    'bodyOptions' => ['class' => 'modal-body modal-body-to-fill'],
     'header' => '<h2 class="modal-title">' . Yii::t('app', 'DESCRIPTION_TITLE_UPDATE') . '</h2>',
     'clientOptions' => ['backdrop' => 'static'],
     'size' => Modal::SIZE_LARGE,
@@ -66,7 +71,16 @@ use yii\widgets\ListView;
 
 <?php Modal::begin([
     'id' => 'description-history-modal',
+    'bodyOptions' => ['class' => 'modal-body modal-body-to-fill'],
     'header' => '<h2 class="modal-title">' . Yii::t('app', 'DESCRIPTION_TITLE_HISTORY') . '</h2>',
     'size' => Modal::SIZE_LARGE,
 ]); ?>
+<?php Modal::end(); ?>
+
+<?php Modal::begin([
+    'id' => 'description-help-modal',
+    'header' => '<h2 class="modal-title">' . Yii::t('app', 'DESCRIPTION_TITLE_HELP') . '</h2>',
+    'size' => Modal::SIZE_LARGE,
+]); ?>
+<?= $this->render('_help', ['model' => $model]) ?>
 <?php Modal::end(); ?>

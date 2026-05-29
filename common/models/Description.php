@@ -4,7 +4,6 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\Displayable;
-use common\models\core\HasDescriptions;
 use common\models\core\HasKey;
 use common\models\core\HasVisibility;
 use common\models\core\Language;
@@ -13,7 +12,6 @@ use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use common\models\type\DescriptionType;
-use Error;
 use Override;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -65,8 +63,6 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
     use ToolsForEntity;
     use ToolsForLinkTags;
     use ToolsForHasVisibility;
-
-    const string CONTROLLING_CLASS_PREFIX = 'common\models\\';
 
     #[Override]
     public static function tableName(): string
@@ -266,17 +262,7 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
      */
     public function typeNamesForThisClass(): array
     {
-        try {
-            $object = new (self::CONTROLLING_CLASS_PREFIX . $this->descriptionPack->class);
-            if ($object instanceof HasDescriptions) {
-                $typesAllowed = $object::allowedDescriptionTypes();
-            }
-        } catch (Error) {
-            // todo Add logging for invalid class on DescriptionPack
-            // for now we are satisfied with $typesAllowed being an empty array
-        }
-
-        return DescriptionType::typeNames($typesAllowed ?? []);
+        return $this->descriptionPack->getTypeNamesForThisClass();
     }
 
     public function getCreatedBy(): ActiveQuery

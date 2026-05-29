@@ -3,10 +3,13 @@
 namespace common\models;
 
 use common\models\core\Displayable;
+use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
 use common\models\core\IsEditablePack;
 use common\models\core\Language;
 use common\models\tools\ToolsForEntity;
+use common\models\type\DescriptionType;
+use Error;
 use Override;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -28,6 +31,8 @@ use yii\web\HttpException;
 final class DescriptionPack extends ActiveRecord implements Displayable, IsEditablePack
 {
     use ToolsForEntity;
+
+    private const string CONTROLLING_CLASS_PREFIX = 'common\models\\';
 
     #[Override]
     public static function tableName(): string
@@ -195,6 +200,49 @@ final class DescriptionPack extends ActiveRecord implements Displayable, IsEdita
     public function getEpic(): Epic
     {
         return $this->getControllingObject()->getEpic()->one();
+    }
+
+    /**
+     * @return array<DescriptionType>
+     */
+    public function getAllowedTypesForControllingClass(): array
+    {
+        try {
+            $object = new (self::CONTROLLING_CLASS_PREFIX . $this->class);
+            if ($object instanceof HasDescriptions) {
+                $typesAllowed = $object::allowedDescriptionTypes();
+            }
+        } catch (Error) {
+            // todo Add logging for invalid class on DescriptionPack
+            // for now we are satisfied with $typesAllowed being an empty array
+        }
+
+        return $typesAllowed ?? [];
+    }
+
+    /**
+     * Provides a list of description for allowed description types for the class the object belongs to
+     * The list is keyed by full names and sorted by them
+     *
+     * @return string[]
+     */
+    public function getTypeDescriptionsForThisClass(): array
+    {
+        $descriptions = DescriptionType::typeDescriptions($this->getAllowedTypesForControllingClass());
+        ksort($descriptions);
+
+        return $descriptions;
+    }
+
+    /**
+     * Provides a list of allowed description types for the class the object belongs to
+     * The list is provided as full names in the current language and keyed by codes
+     *
+     * @return string[]
+     */
+    public function getTypeNamesForThisClass(): array
+    {
+        return DescriptionType::typeNames($this->getAllowedTypesForControllingClass());
     }
 
     /**

@@ -59,7 +59,7 @@ $(document).ready(function () {
                 key: $(this).data('key'),
             },
             function (data) {
-                $('.modal-body').html(data);
+                $('.modal-body-to-fill').html(data);
                 $('#description-history-modal').modal();
             }
         );
@@ -72,7 +72,7 @@ $(document).ready(function () {
                 key: $(this).data('key'),
             },
             function (data) {
-                $('.modal-body').html(data);
+                $('.modal-body-to-fill').html(data);
                 $('#update-description-modal').modal();
             }
         );
@@ -85,11 +85,15 @@ $(document).ready(function () {
                 key: $(this).data('key'),
             },
             function (data) {
-                $('.modal-body').html(data);
+                $('.modal-body-to-fill').html(data);
                 $('#create-description-modal').modal();
             }
         );
     });
+
+    $descriptions.on('click', '.open-description-help', function () {
+        $('#description-help-modal').modal();
+    })
 
     $(document).on('submit', '#description-form', function (event) {
         event.preventDefault();
@@ -100,7 +104,7 @@ $(document).ready(function () {
             method: (descriptionForm.attr('method') || 'POST'),
             data: descriptionForm.serialize()
         }).done(function (data) {
-            $('.modal-body').html(data);
+            $('.modal-body-to-fill').html(data);
         });
     });
 });

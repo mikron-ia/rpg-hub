@@ -127,6 +127,21 @@ enum DescriptionType: string
      *
      * @return array<string,string>
      */
+    public static function typeDescriptions(array $typesAllowed): array
+    {
+        $typeNamesAccepted = [];
+        foreach ($typesAllowed as $type) {
+            $typeNamesAccepted[$type->name()] = $type->description();
+        }
+
+        return $typeNamesAccepted;
+    }
+
+    /**
+     * @param array<DescriptionType> $typesAllowed
+     *
+     * @return array<string,string>
+     */
     public static function typeNames(array $typesAllowed): array
     {
         $typeNamesAccepted = [];
