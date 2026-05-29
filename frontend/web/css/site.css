@@ -812,3 +812,8 @@ li.redacted:hover {
     max-width: 100%;
     margin: 0 auto;
 }
+
+.header-tooltip-available {
+    cursor: help;
+    display: inline-block;
+}

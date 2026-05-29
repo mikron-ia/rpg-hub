@@ -10,7 +10,9 @@ use yii\web\View;
 ?>
 
 <div class="col-md-6">
-    <h2><?= $model->getTypeName(); ?></h2>
+    <div>
+        <h2><?= $model->getTypeName(); ?></h2>
+    </div>
 
     <div class="public-notes">
         <?= $model->getPublicFormatted(); ?>
