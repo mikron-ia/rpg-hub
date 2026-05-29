@@ -817,3 +817,9 @@ li.redacted:hover {
     cursor: help;
     display: inline-block;
 }
+
+.unpublished-description {
+    background-color: lightgoldenrodyellow;
+    border: palegoldenrod solid 4px;
+    border-radius: 15px;
+}

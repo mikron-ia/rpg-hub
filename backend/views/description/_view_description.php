@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use common\models\Description;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
@@ -25,7 +26,7 @@ $messageForStillValid = isset($model->point_in_time_still_valid_id) && isset($mo
             <?= Yii::t('app', 'BUTTON_MOVE_DOWN') ?>
         </span>
 
-        <span class="btn btn-default move-up"  data-description-key="<?= $model->key ?>">
+        <span class="btn btn-default move-up" data-description-key="<?= $model->key ?>">
             <?= Yii::t('app', 'BUTTON_MOVE_UP') ?>
         </span>
 
@@ -88,7 +89,7 @@ $messageForStillValid = isset($model->point_in_time_still_valid_id) && isset($mo
         </span>
 
         <span class="tag-box">
-            <?= Yii::t('app', 'LABEL_VISIBLE') . ' ' . $model->getVisibilityLowercase(); ?>
+            <?= Yii::t('app', 'LABEL_VISIBILITY') . ': ' . $model->getVisibilityLowercase(); ?>
         </span>
 
         <span class="tag-box">
@@ -110,6 +111,10 @@ $messageForStillValid = isset($model->point_in_time_still_valid_id) && isset($mo
         <?php if ($model->outdated): ?>
             <div class="tag-box">
                 <?= Yii::t('app', 'DESCRIPTION_OUTDATED_TAG_CMS'); ?>
+            </div>
+        <?php elseif ($model->point_in_time_end_id === null && $model->visibility === Visibility::VISIBILITY_FULL->value): ?>
+            <div class="tag-box">
+                <?= Yii::t('app', 'DESCRIPTION_ON_SUMMARY_TAG_CMS'); ?>
             </div>
         <?php endif; ?>
 

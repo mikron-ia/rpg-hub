@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use common\models\Description;
 use yii\web\View;
 
@@ -35,9 +36,14 @@ if ($pointInTimeStartExists || $pointInTimeEndExists || $pointInTimeStillValidEx
         $displayStillValid = true;
     }
 }
+
+$boxClasses = ['col-md-6'];
+if ($model->getVisibility() !== Visibility::VISIBILITY_FULL) {
+    $boxClasses[] = 'secret unpublished-description';
+}
 ?>
 
-<div class="col-md-6">
+<div class="<?= implode(' ', $boxClasses) ?>">
     <div>
         <h2 title="<?= $model->getTypeDescription() ?>" class="header-tooltip-available">
             <?= $model->getTypeName(); ?>

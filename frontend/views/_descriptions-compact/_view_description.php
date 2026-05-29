@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use common\models\Description;
 use yii\web\View;
 
@@ -7,9 +8,13 @@ use yii\web\View;
 /* @var $model Description */
 /* @var $showPrivates bool */
 
+$boxClasses = ['col-md-6'];
+if ($model->getVisibility() !== Visibility::VISIBILITY_FULL) {
+    $boxClasses[] = 'secret unpublished-description';
+}
 ?>
 
-<div class="col-md-6">
+<div class="<?= implode(' ', $boxClasses) ?>">
     <div>
         <h2><?= $model->getTypeName(); ?></h2>
     </div>
