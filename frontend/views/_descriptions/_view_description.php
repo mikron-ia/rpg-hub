@@ -1,7 +1,10 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Description */
+use common\models\Description;
+use yii\web\View;
+
+/* @var $this View */
+/* @var $model Description */
 /* @var $showPrivates bool */
 
 $pointInTimeStartExists = isset($model->point_in_time_start_id);

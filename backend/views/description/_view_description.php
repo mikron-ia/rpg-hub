@@ -21,11 +21,11 @@ $messageForStillValid = isset($model->point_in_time_still_valid_id) && isset($mo
     </div>
 
     <div class="buttons-under-header">
-        <span class="btn btn-default move-down" data-description-key="<?= $model->key ?>"">
+        <span class="btn btn-default move-down" data-description-key="<?= $model->key ?>">
             <?= Yii::t('app', 'BUTTON_MOVE_DOWN') ?>
         </span>
 
-        <span class="btn btn-default move-up"  data-description-key="<?= $model->key ?>"">
+        <span class="btn btn-default move-up"  data-description-key="<?= $model->key ?>">
             <?= Yii::t('app', 'BUTTON_MOVE_UP') ?>
         </span>
 
