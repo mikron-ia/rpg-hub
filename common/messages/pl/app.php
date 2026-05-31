@@ -984,6 +984,7 @@ return [
     'STORY_CHARACTER_ASSIGNMENT_RANK' => 'Rola',
     'STORY_CHARACTER_ASSIGNMENT_STORY_ID' => 'Historia',
     'STORY_DATA' => 'Dane',
+    'STORY_DATA_JSON_INVALID {message}' => 'JSON niepoprawny. Komunikat walidatora: {message} ',
     'STORY_DESCRIPTIONS' => 'Opisy',
     'STORY_DESCRIPTIONS_TAB' => 'Opis',
     'STORY_FORM_SELECT_SCENARIO' => 'Wybierz scenariusz będący podstawą tej historii',

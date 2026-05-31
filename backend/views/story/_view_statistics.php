@@ -101,7 +101,5 @@ use yii\web\View;
 
 <div class="col-md-6">
     <h2>JSON</h2>
-    <pre class="wrapped-json">
-        <?= Html::encode(json_encode(json_decode($model->data), JSON_PRETTY_PRINT)) ?>
-    </pre>
+    <pre class="wrapped-json"><?= Html::encode(json_encode(json_decode($model->data), JSON_PRETTY_PRINT)) ?></pre>
 </div>

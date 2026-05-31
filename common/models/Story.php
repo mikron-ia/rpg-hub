@@ -143,6 +143,17 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
                 'in',
                 'range' => fn() => StoryType::allowedCodes(),
             ],
+            [
+                ['data'],
+                function ($attribute, $params, $validator) {
+                    if (!json_validate($this->$attribute)) {
+                        $this->addError(
+                            $attribute,
+                            Yii::t('app', 'STORY_DATA_JSON_INVALID {message}', ['message' => json_last_error_msg()])
+                        );
+                    }
+                }
+            ],
         ];
     }
 

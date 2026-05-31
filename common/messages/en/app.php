@@ -984,6 +984,7 @@ return [
     'STORY_CHARACTER_ASSIGNMENT_RANK' => 'Role',
     'STORY_CHARACTER_ASSIGNMENT_STORY_ID' => 'Story',
     'STORY_DATA' => 'Data',
+    'STORY_DATA_JSON_INVALID {message}' => 'JSON is invalid. Validator message: {message}',
     'STORY_DESCRIPTIONS' => 'Descriptions',
     'STORY_DESCRIPTIONS_TAB' => 'Description',
     'STORY_FORM_SELECT_SCENARIO' => 'Select scenario this story was based on',

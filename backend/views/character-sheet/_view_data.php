@@ -9,7 +9,5 @@ use yii\web\View;
 ?>
 
 <div class="col-md-12" id="raw-data" title="<?= Yii::t('app', 'CHARACTER_SHEET_RAW_DATA') ?>">
-    <pre class="wrapped-json">
-        <?= Html::encode(json_encode(json_decode($model->data), JSON_PRETTY_PRINT)) ?>
-    </pre>
+    <pre class="wrapped-json"><?= Html::encode(json_encode(json_decode($model->data), JSON_PRETTY_PRINT)) ?></pre>
 </div>
