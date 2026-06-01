@@ -157,9 +157,18 @@ trait ToolsForLinkTags
         return $this->processAllInOrder($textToFormat ?? '');
     }
 
+    private function addClasses(string $text): string
+    {
+        return str_replace(
+            '<table>',
+            '<table class="table table-bordered table-striped table-from-markdown">',
+            $text
+        );
+    }
+
     private function formatText(?string $textToFormat, bool $processImages): string
     {
-        $processedText = Markdown::process(
+        $processedTextMarkdown = Markdown::process(
             markdown: str_ireplace(
                 search: '&gt;',
                 replace: '>',
@@ -167,6 +176,8 @@ trait ToolsForLinkTags
             ),
             flavor: 'gfm'
         );
+
+        $processedText = $this->addClasses($processedTextMarkdown);
 
         return $processImages ? MediaTagsProcessor::processMediaTags($processedText) : $processedText;
     }

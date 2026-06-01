@@ -733,6 +733,18 @@ p {
     text-align: center;
 }
 
+.table-from-markdown {
+    width: revert;
+}
+
+.table-from-markdown>thead>tr>th {
+    text-align: revert;
+}
+
+.table-from-markdown>tbody>tr>td {
+    padding: 10px;
+}
+
 .text-separating-box {
     border-color: lightgrey;
     border-style: solid;

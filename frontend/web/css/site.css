@@ -818,6 +818,18 @@ li.redacted:hover {
     display: inline-block;
 }
 
+.table-from-markdown {
+    width: revert;
+}
+
+.table-from-markdown>thead>tr>th {
+    text-align: revert;
+}
+
+.table-from-markdown>tbody>tr>td {
+    padding: 10px;
+}
+
 .unpublished-description {
     background-color: lightgoldenrodyellow;
     border: palegoldenrod solid 4px;
