@@ -12,12 +12,12 @@ interface HasParameters
      *
      * @return string[]
      */
-    static public function allowedParameterTypes(): array;
+    public static function allowedParameterTypes(): array;
 
     /**
      * Provides the list of types available for election in this class
      *
      * @return string[]
      */
-    static public function availableParameterTypes(): array;
+    public static function availableParameterTypes(): array;
 }

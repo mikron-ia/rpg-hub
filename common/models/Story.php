@@ -149,7 +149,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
                     if (!json_validate($this->$attribute)) {
                         $this->addError(
                             $attribute,
-                            Yii::t('app', 'STORY_DATA_JSON_INVALID {message}', ['message' => json_last_error_msg()])
+                            Yii::t('app', 'ERROR_DATA_JSON_INVALID {message}', ['message' => json_last_error_msg()])
                         );
                     }
                 }
@@ -258,6 +258,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      * @throws Exception
      * @throws HttpException
      */
+    #[Override]
     public function beforeSave($insert): bool
     {
         if ($insert) {
@@ -303,6 +304,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
+    #[Override]
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
@@ -418,6 +420,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         ];
     }
 
+    #[Override]
     public function isVisibleInApi(): bool
     {
         return ($this->getVisibility() === Visibility::VISIBILITY_FULL);
@@ -427,7 +430,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      * @return string[]
      */
     #[Override]
-    static public function allowedParameterTypes(): array
+    public static function allowedParameterTypes(): array
     {
         return [
             Parameter::STORY_NUMBER,
@@ -445,7 +448,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
      * @return string[]
      */
     #[Override]
-    static public function availableParameterTypes(): array
+    public static function availableParameterTypes(): array
     {
         return [
             Parameter::STORY_NUMBER,

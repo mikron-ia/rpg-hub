@@ -124,7 +124,7 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
                     if (!json_validate($this->$attribute)) {
                         $this->addError(
                             $attribute,
-                            Yii::t('app', 'PROJECT_DATA_JSON_INVALID {message}', ['message' => json_last_error_msg()])
+                            Yii::t('app', 'ERROR_DATA_JSON_INVALID {message}', ['message' => json_last_error_msg()])
                         );
                     }
                 }
@@ -149,6 +149,7 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
             'position' => Yii::t('app', 'PROJECT_POSITION'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
             'code' => Yii::t('app', 'PROJECT_TYPE'),
+            'status' => Yii::t('app', 'PROJECT_STATUS'),
             'based_on_id' => Yii::t('app', 'PROJECT_SCENARIO'),
             'data' => Yii::t('app', 'PROJECT_DATA'),
             'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
@@ -198,6 +199,7 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
      * @throws Exception
      * @throws HttpException
      */
+    #[Override]
     public function beforeSave($insert): bool
     {
         if ($insert) {
@@ -238,6 +240,7 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
         ];
     }
 
+    #[Override]
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
@@ -276,6 +279,11 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
     public function getStatus(): ProjectStatus
     {
         return ProjectStatus::tryFrom($this->status) ?? ProjectStatus::Unknown;
+    }
+
+    public function getType(): ProjectType
+    {
+        return ProjectType::tryFrom($this->code) ?? ProjectType::None;
     }
 
     public function formatParameters(): array
