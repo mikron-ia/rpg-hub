@@ -1,0 +1,256 @@
+<?php
+
+use common\models\Parameter;
+use common\models\Project;
+use yii\bootstrap\Modal;
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\web\View;
+use yii\widgets\DetailView;
+
+/* @var $this View */
+/* @var $model Project */
+?>
+
+<div>
+    <div class="col-md-6">
+        <h2 class="text-center"><?= Yii::t('app', 'LABEL_BASIC_DATA_AND_OPERATIONS'); ?></h2>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                [
+                    'attribute' => 'epic_id',
+                    'format' => 'raw',
+                    'value' => Html::a($model->epic->name, ['epic/front', 'key' => $model->epic->key], []),
+                ],
+                [
+                    'label' => Yii::t('app', 'LABEL_DATA_SIZE'),
+                    'format' => 'shortSize',
+                    'value' => strlen($model->data),
+                ],
+                [
+                    'attribute' => 'position',
+                ],
+                [
+                    'attribute' => 'visibility',
+                    'value' => $model->getVisibilityName(),
+                ],
+                [
+                    'attribute' => 'code',
+                    'value' => $model->getCodeName(),
+                ],
+                [
+                    'attribute' => 'based_on_id',
+                    'format' => 'raw',
+                    'value' => $model->based_on_id === null
+                        ? null
+                        : Html::a($model->basedOn->name, ['scenario/view', 'key' => $model->basedOn->key])
+                ],
+                [
+                    'label' => Yii::t('app', 'PROJECT_SHORT_SIZE'),
+                    'format' => 'shortSize',
+                    'value' => strlen($model->short),
+                ],
+                [
+                    'label' => Yii::t('app', 'PROJECT_LONG_SIZE'),
+                    'format' => 'shortSize',
+                    'value' => strlen($model->long),
+                ],
+                [
+                    'label' => Yii::t('app', 'PROJECT_WORD_COUNT'),
+                    'value' => $model->getLongDescriptionWordCount(),
+                ],
+            ],
+        ]) ?>
+
+        <div class="buttons-under-table">
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_UPDATE'),
+                ['update', 'key' => $model->key],
+                ['class' => 'btn btn-primary']
+            );
+            ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_MOVE_DOWN'),
+                ['project/move-up', 'key' => $model->key],
+                [
+                    'class' => 'btn btn-default',
+                    'data' => [
+                        'method' => 'post',
+                    ],
+                ]
+            ); ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_MOVE_UP'),
+                ['project/move-down', 'key' => $model->key],
+                [
+                    'class' => 'btn btn-default',
+                    'data' => [
+                        'method' => 'post',
+                    ],
+                ]
+            ); ?>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_SEE_FRONTEND'),
+                Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
+                    'project/view',
+                    'key' => $model->key
+                ]),
+                ['class' => 'btn btn-default']
+            ) ?>
+        </div>
+    </div>
+
+    <div class="project-view col-md-6">
+        <h2 class="text-center"><?php echo $model->getAttributeLabel('short'); ?></h2>
+        <div>
+            <?php echo $model->getShortFormatted(); ?>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="buttoned-header">
+            <h2 class="text-center"><?= Yii::t('app', 'PARAMETER_TITLE_INDEX') ?></h2>
+            <?= Html::a(
+                '<span class="btn btn-success">' . Yii::t('app', 'BUTTON_PARAMETER_CREATE') . '</span>',
+                '#',
+                [
+                    'class' => 'create-parameter-link',
+                    'title' => Yii::t('app', 'BUTTON_PARAMETER_CREATE'),
+                    'data-toggle' => 'modal',
+                    'data-target' => '#create-parameter-modal',
+                    'data-controller' => 'project',
+                    'data-key' => $model->key,
+                ]
+            ); ?>
+        </div>
+
+        <?= GridView::widget([
+            'dataProvider' => new ActiveDataProvider(['query' => $model->parameterPack->getParametersOrdered()]),
+            'summary' => '',
+            'columns' => [
+                [
+                    'attribute' => 'code',
+                    'enableSorting' => false,
+                    'value' => function (Parameter $model) {
+                        return $model->getCodeName();
+                    },
+                ],
+                [
+                    'attribute' => 'visibility',
+                    'enableSorting' => false,
+                    'value' => function (Parameter $model) {
+                        return $model->getVisibilityName();
+                    },
+                ],
+                [
+                    'attribute' => 'content',
+                    'enableSorting' => false,
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{update} {delete} {up} {down}',
+                    'contentOptions' => ['class' => 'text-center'],
+                    'buttons' => [
+                        'update' => function ($url, Parameter $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
+                                'class' => 'update-parameter-link',
+                                'title' => Yii::t('app', 'LABEL_UPDATE'),
+                                'data-toggle' => 'modal',
+                                'data-target' => '#update-parameter-modal',
+                                'data-key' => $model->key,
+                            ]);
+                        },
+                        'delete' => function ($url, Parameter $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-erase"></span>',
+                                ['parameter/delete', 'key' => $model->key],
+                                [
+                                    'title' => Yii::t('app', 'LABEL_DELETE'),
+                                    'data-confirm' => Yii::t(
+                                        'app',
+                                        'CONFIRMATION_DELETE {name}',
+                                        ['name' => $model->getCodeName()]
+                                    ),
+                                    'data-method' => 'post',
+                                ]);
+                        },
+                        'up' => function ($url, Parameter $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-arrow-up"></span>',
+                                ['parameter/move-up', 'key' => $model->key],
+                                [
+                                    'title' => Yii::t('app', 'LABEL_MOVE_UP'),
+                                ]
+                            );
+                        },
+                        'down' => function ($url, Parameter $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-arrow-down"></span>',
+                                ['parameter/move-down', 'key' => $model->key],
+                                [
+                                    'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
+                                ]
+                            );
+                        },
+                    ]
+                ],
+            ],
+        ]); ?>
+
+    </div>
+
+    <div class="col-md-6" id="key-div" style="display: none">
+        <h2 class="text-center"><?= Yii::t('app', 'PROJECT_KEY'); ?></h2>
+        <p class="info-box"><?= Yii::t('app', 'LABEL_KEY_TITLE_EXPLANATION') ?></p>
+        <p class="key"><?= $model->key ?></p>
+    </div>
+
+    <div class="col-md-6">
+        <div class="buttons-on-view">
+            <h2 class="text-center"><?= Yii::t('app', 'LABEL_AUXILIARY_ACTIONS'); ?></h2>
+
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_MARK_AS_CHANGED_F'),
+                ['mark-changed', 'key' => $model->key],
+                [
+                    'class' => 'btn btn-primary',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'CONFIRMATION_MARK_AS_CHANGED'),
+                        'method' => 'post',
+                    ],
+                ]
+            ) ?>
+
+            <span class="hidden" id="key-value" data-key="PR:<?= $model->key ?>"></span>
+            <span class="hidden" id="button-message-copy-base"><?= Yii::t('app', 'BUTTON_COPY_KEY') ?></span>
+            <span class="hidden" id="button-message-copy-confirm"><?= Yii::t('app', 'BUTTON_COPY_IN_PROGRESS') ?></span>
+            <span class="hidden" id="button-message-copy-failure"><?= Yii::t('app', 'BUTTON_COPY_FAILED') ?></span>
+            <?= Html::a(
+                Yii::t('app', 'BUTTON_COPY_KEY'),
+                '#',
+                ['class' => 'btn btn-default', 'id' => 'button-copy-key', 'style' => 'display: none;']
+            ) ?>
+        </div>
+    </div>
+
+    <?php Modal::begin([
+        'id' => 'create-parameter-modal',
+        'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_CREATE') . '</h2>',
+        'clientOptions' => ['backdrop' => 'static'],
+        'size' => Modal::SIZE_LARGE,
+    ]); ?>
+
+    <?php Modal::end(); ?>
+
+    <?php Modal::begin([
+        'id' => 'update-parameter-modal',
+        'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_UPDATE') . '</h2>',
+        'clientOptions' => ['backdrop' => 'static'],
+        'size' => Modal::SIZE_LARGE,
+    ]); ?>
+
+    <?php Modal::end(); ?>
+</div>

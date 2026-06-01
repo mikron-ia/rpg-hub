@@ -74,6 +74,7 @@ return [
         'participant' => getenv('KEY_GENERATION_PARTICIPANT'),
         'person' => getenv('KEY_GENERATION_CHARACTER'),
         'pointInTime' => getenv('KEY_GENERATION_POINT_IN_TIME'),
+        'project' => getenv('KEY_GENERATION_PROJECT'),
         'recap' => getenv('KEY_GENERATION_RECAP'),
         'scenario' => getenv('KEY_GENERATION_SCENARIO'),
         'scribble' => getenv('KEY_GENERATION_SCRIBBLE'),

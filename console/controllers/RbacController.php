@@ -489,5 +489,22 @@ class RbacController extends Controller
 
         $user = $auth->getRole('user');
         $operator = $auth->getRole('operator');
+
+        /* Add Project rights */
+
+        $controlProject = $auth->createPermission('controlProject');
+        $controlProject->description = 'Able to add, edit, or remove a Project for Epic';
+        $controlProject->ruleName = $gameMasterRule->name;
+
+        $auth->add($controlProject);
+
+        $viewProject = $auth->createPermission('viewProject');
+        $viewProject->description = 'Able to view a Project';
+        $viewProject->ruleName = $watcherRule->name;
+
+        $auth->add($viewProject);
+
+        $auth->addChild($operator, $controlProject);
+        $auth->addChild($user, $viewProject);
     }
 }
