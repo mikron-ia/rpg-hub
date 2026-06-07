@@ -213,7 +213,7 @@ use yii\widgets\DetailView;
             <h2 class="text-center"><?= Yii::t('app', 'LABEL_AUXILIARY_ACTIONS'); ?></h2>
 
             <?= Html::a(
-                Yii::t('app', 'BUTTON_MARK_AS_CHANGED_F'),
+                Yii::t('app', 'BUTTON_MARK_AS_CHANGED_M'),
                 ['mark-changed', 'key' => $model->key],
                 [
                     'class' => 'btn btn-primary',

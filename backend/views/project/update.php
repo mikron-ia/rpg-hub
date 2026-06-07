@@ -20,11 +20,9 @@ $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'ke
 $this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_UPDATE');
 ?>
 <div class="project-update">
-
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
 </div>

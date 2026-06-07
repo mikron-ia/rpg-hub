@@ -10,6 +10,7 @@ use common\models\GameQuery;
 use common\models\Parameter;
 use common\models\Participant;
 use common\models\ParticipantRole;
+use common\models\ProjectQuery;
 use common\models\RecapQuery;
 use common\models\Story;
 use common\models\StoryQuery;
@@ -143,6 +144,10 @@ final class EpicController extends CmsController
         $searchModel = new StoryQuery(4);
         $stories = $searchModel->searchForEpic(Yii::$app->request->queryParams, $model);
 
+        /* Get Projects */
+        $searchModel = new ProjectQuery(4);
+        $projects = $searchModel->searchForEpic(Yii::$app->request->queryParams, $model);
+
         /* Get Sessions */
         $sessionQuery = new GameQuery();
         $sessions = $sessionQuery->mostRecentDataProvider($model);
@@ -156,6 +161,7 @@ final class EpicController extends CmsController
             'announcements' => $announcements,
             'sessions' => $sessions,
             'stories' => $stories,
+            'projects' => $projects,
             'recap' => $recap,
         ]);
     }

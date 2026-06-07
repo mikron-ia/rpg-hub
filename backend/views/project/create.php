@@ -19,11 +19,13 @@ $this->params['breadcrumbs'][] = [
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="project-create">
-
     <h1><?= Html::encode($this->title) ?></h1>
+
+    <p class="beta-feature-warning" title="<?= Yii::t('app', 'BETA_WARNING_TITLE') ?>">
+        <?= Yii::t('app', 'BETA_WARNING_TEXT') ?>
+    </p>
 
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
 </div>

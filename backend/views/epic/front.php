@@ -13,6 +13,7 @@ use yii\widgets\ListView;
 /* @var $announcements ActiveDataProvider */
 /* @var $sessions ActiveDataProvider */
 /* @var $stories ActiveDataProvider */
+/* @var $projects ActiveDataProvider */
 
 /* @var $recap Recap */
 
@@ -149,11 +150,34 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                 <div>
                     <?= ListView::widget([
                         'dataProvider' => $stories,
+                        'emptyText' => '<p class="error-box">'
+                            . Yii::t('app', 'FRONTPAGE_STORIES_NOT_AVAILABLE')
+                            . '</p>',
                         'layout' => '{items}',
                         'itemOptions' => ['class' => 'item'],
                         'itemView' => function ($model, $key, $index, $widget) {
                             return $this->render(
                                 'story/_index_box',
+                                ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                            );
+                        },
+                    ]) ?>
+                </div>
+
+                <h2 title="<?= Yii::t('app', 'FRONTPAGE_PROJECTS_TITLE_TEXT') ?>">
+                    <?= Yii::t('app', 'FRONTPAGE_PROJECTS') ?>
+                </h2>
+
+                <div>
+                    <?= ListView::widget([
+                        'dataProvider' => $projects,'emptyText' => '<p class="error-box">'
+                            . Yii::t('app', 'FRONTPAGE_PROJECTS_NOT_AVAILABLE')
+                            . '</p>',
+                        'layout' => '{items}',
+                        'itemOptions' => ['class' => 'item'],
+                        'itemView' => function ($model, $key, $index, $widget) {
+                            return $this->render(
+                                'project/_index_box',
                                 ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
                             );
                         },

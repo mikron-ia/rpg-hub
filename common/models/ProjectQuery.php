@@ -74,6 +74,8 @@ final class ProjectQuery extends Project implements EntityQuery
 
     /**
      * Creates a data provider instance with the search query applied and data limited to given Epic
+     *
+     * @todo Add limitation by status
      */
     public function searchForEpic(array $params, ?Epic $epic = null): ActiveDataProvider
     {

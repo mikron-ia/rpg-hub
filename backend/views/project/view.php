@@ -46,5 +46,5 @@ $items = [
 <h1><?= Html::encode($this->title) ?></h1>
 
 <?= Tabs::widget([
-    'items' => $items
+    'items' => $items,
 ]) ?>
