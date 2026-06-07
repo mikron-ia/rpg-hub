@@ -7,9 +7,9 @@ use common\components\EpicAssistance;
 use common\models\Article;
 use common\models\ArticleQuery;
 use common\models\Epic;
+use Override;
 use Throwable;
 use Yii;
-use yii\base\InvalidRouteException;
 use yii\db\Exception;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
@@ -23,6 +23,7 @@ class ArticleController extends CmsController
     use EpicAssistance;
     use MarkChangeTrait;
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -55,8 +56,6 @@ class ArticleController extends CmsController
     }
 
     /**
-     * Lists all Article models
-     *
      * @throws HttpException
      */
     public function actionIndex(?string $epic = null): string
@@ -90,12 +89,6 @@ class ArticleController extends CmsController
     }
 
     /**
-     * Displays a single Article model.
-     *
-     * @param string $key
-     *
-     * @return string
-     *
      * @throws NotFoundHttpException
      * @throws HttpException
      */
@@ -111,9 +104,6 @@ class ArticleController extends CmsController
     }
 
     /**
-     * Creates a new Article model
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     *
      * @throws Exception
      * @throws HttpException
      */
@@ -138,9 +128,6 @@ class ArticleController extends CmsController
     }
 
     /**
-     * Updates an existing Article model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     *
      * @throws NotFoundHttpException
      * @throws Exception
      * @throws HttpException
@@ -161,9 +148,6 @@ class ArticleController extends CmsController
     }
 
     /**
-     * Deletes an existing Article model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     *
      * @param string $key
      *
      * @return Response
@@ -187,11 +171,10 @@ class ArticleController extends CmsController
     }
 
     /**
-     * Moves Article up in order; this means lower position on the list
+     * Moves Article up in order; this means a lower position on the list
      *
-     * @throws NotFoundHttpException
      * @throws HttpException
-     * @throws InvalidRouteException
+     * @throws NotFoundHttpException
      */
     public function actionMoveUp(string $key): Response
     {
@@ -207,11 +190,9 @@ class ArticleController extends CmsController
     }
 
     /**
-     * Moves Article down in order; this means higher position on the list
+     * Moves Article down in order; this means a higher position on the list
      *
-     * @throws NotFoundHttpException
      * @throws HttpException
-     * @throws InvalidRouteException
      */
     public function actionMoveDown(string $key): Response
     {
@@ -229,12 +210,7 @@ class ArticleController extends CmsController
     /**
      * Saves the model to mark it as changed
      *
-     * @param string $key
-     *
-     * @return Response
-     *
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionMarkChanged(string $key): Response
     {
@@ -250,8 +226,6 @@ class ArticleController extends CmsController
     }
 
     /**
-     * Finds the Article model based on its key value
-     *
      * @throws NotFoundHttpException
      */
     protected function findModelByKey(string $key): Article

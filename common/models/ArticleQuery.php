@@ -3,15 +3,14 @@
 namespace common\models;
 
 use common\models\core\Visibility;
+use Override;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-/**
- * ArticleQuery represents the model behind the search form about `common\models\Article`.
- */
 class ArticleQuery extends Article
 {
+    #[Override]
     public function rules(): array
     {
         return [
@@ -20,15 +19,16 @@ class ArticleQuery extends Article
         ];
     }
 
+    #[Override]
     public function scenarios(): array
     {
         return Model::scenarios();
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates a data provider instance with the search query applied
      *
-     * @param array $params
+     * @param array<string,string> $params
      *
      * @return ActiveDataProvider
      */

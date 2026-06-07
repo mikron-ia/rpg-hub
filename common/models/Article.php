@@ -14,14 +14,14 @@ use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
 use yii\helpers\StringHelper;
+use yii\web\HttpException;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
- * This is the model class for table "article".
- *
  * @property string $article_id
  * @property string $epic_id
  * @property string $key
@@ -53,6 +53,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
 
     public bool $is_off_the_record_change = false;
 
+    #[Override]
     public static function tableName(): string
     {
         return 'article';
@@ -64,6 +65,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return 'article';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -100,6 +102,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function attributeHints(): array
     {
         return [
@@ -111,6 +114,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
     /**
      * @return array<string,string>
      */
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -130,6 +134,10 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         ];
     }
 
+    /**
+     * @throws Exception
+     */
+    #[Override]
     public function afterFind(): void
     {
         if ($this->seen_pack_id) {
@@ -138,6 +146,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         parent::afterFind();
     }
 
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -149,6 +158,11 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         ];
     }
 
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    #[Override]
     public function beforeSave($insert): bool
     {
         if ($insert) {
@@ -182,6 +196,10 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return parent::beforeSave($insert);
     }
 
+    /**
+     * @throws Exception
+     */
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         if (!$this->is_off_the_record_change) {
@@ -190,17 +208,12 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         parent::afterSave($insert, $changedAttributes);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getDescriptionPack(): ActiveQuery
     {
         return $this->hasOne(DescriptionPack::class, ['description_pack_id' => 'description_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
+    #[Override]
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
@@ -281,12 +294,12 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_ARTICLE'));
     }
 
-    static public function throwExceptionAboutIndex(): void
+    public static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_ARTICLE'));
     }
 
-    static public function throwExceptionAboutView(): void
+    public static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_ARTICLE'));
     }
