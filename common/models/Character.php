@@ -14,6 +14,7 @@ use common\models\core\HasScribbles;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\ImportanceCategory;
+use common\models\core\IsLinkable;
 use common\models\core\Visibility;
 use common\models\external\HasReputations;
 use common\models\tools\ToolsForEntity;
@@ -66,7 +67,7 @@ use yii\web\HttpException;
  * @property GroupMembership[] $groupMemberships
  * @property GroupMembership[] $groupMembershipsVisibleToUser
  */
-class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasVisibility, HasScribbles, HasSightings, HasKey
+class Character extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasVisibility, HasScribbles, HasSightings, HasKey, IsLinkable
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
@@ -181,14 +182,22 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
             'scribble_pack_id' => Yii::t('app', 'SCRIBBLE_PACK'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
             'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
-            'characterStoryAssignmentChoicesPublicVital' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC_VITAL'),
-            'characterStoryAssignmentChoicesPublicMajor' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC_MAJOR'),
-            'characterStoryAssignmentChoicesPublicMinor' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC_MINOR'),
-            'characterStoryAssignmentChoicesPublicOther' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC_OTHER'),
-            'characterStoryAssignmentChoicesPrivateVital' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE_VITAL'),
-            'characterStoryAssignmentChoicesPrivateMajor' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE_MAJOR'),
-            'characterStoryAssignmentChoicesPrivateMinor' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE_MINOR'),
-            'characterStoryAssignmentChoicesPrivateOther' => Yii::t('app', 'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE_OTHER'),
+            'characterStoryAssignmentChoicesPublicVital' => Yii::t('app',
+                'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC_VITAL'),
+            'characterStoryAssignmentChoicesPublicMajor' => Yii::t('app',
+                'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC_MAJOR'),
+            'characterStoryAssignmentChoicesPublicMinor' => Yii::t('app',
+                'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC_MINOR'),
+            'characterStoryAssignmentChoicesPublicOther' => Yii::t('app',
+                'CHARACTER_STORY_ASSIGNMENT_CHOICES_PUBLIC_OTHER'),
+            'characterStoryAssignmentChoicesPrivateVital' => Yii::t('app',
+                'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE_VITAL'),
+            'characterStoryAssignmentChoicesPrivateMajor' => Yii::t('app',
+                'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE_MAJOR'),
+            'characterStoryAssignmentChoicesPrivateMinor' => Yii::t('app',
+                'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE_MINOR'),
+            'characterStoryAssignmentChoicesPrivateOther' => Yii::t('app',
+                'CHARACTER_STORY_ASSIGNMENT_CHOICES_PRIVATE_OTHER'),
         ];
     }
 
@@ -538,6 +547,12 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     {
         $importance = ImportanceCategory::from($this->importance_category);
         return $importance->getNameLowercase();
+    }
+
+    #[Override]
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     #[Override]

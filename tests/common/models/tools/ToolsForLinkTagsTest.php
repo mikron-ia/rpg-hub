@@ -17,6 +17,7 @@ class ToolsForLinkTagsTest extends TestCase
             'Group' => '/index.php/group/view/key=',
             'Story' => '/index.php/story/view/key=',
             'Location' => '/index.php/location/view/key=',
+            'Article' => '/index.php/article/view/key=',
         ];
 
         $this->assertEquals($result, $this->processKeysInLinks($text, $linkBases));
@@ -41,6 +42,10 @@ class ToolsForLinkTagsTest extends TestCase
                 '[Location\'s name](LOC:184e5117955e384ca1e68dd731637bb8988782a1)',
                 '[Location\'s name](/index.php/location/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
             ],
+            'Correct article - short' => [
+                '[Article\'s name](ART:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Article\'s name](/index.php/article/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
             'Correct character - long' => [
                 '[Character\'s name](CHARACTER:184e5117955e384ca1e68dd731637bb8988782a1)',
                 '[Character\'s name](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
@@ -56,6 +61,10 @@ class ToolsForLinkTagsTest extends TestCase
             'Correct location - long' => [
                 '[Location\'s name](LOCATION:184e5117955e384ca1e68dd731637bb8988782a1)',
                 '[Location\'s name](/index.php/location/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Correct article - long' => [
+                '[Article\'s name](ARTICLE:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Article\'s name](/index.php/article/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
             ],
             'Unprocessed - key is too long' => [
                 '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a15)',

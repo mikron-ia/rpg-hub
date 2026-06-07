@@ -14,6 +14,7 @@ use common\models\core\HasScribbles;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\ImportanceCategory;
+use common\models\core\IsLinkable;
 use common\models\core\Visibility;
 use common\models\external\HasReputations;
 use common\models\tools\ToolsForEntity;
@@ -69,7 +70,7 @@ use yii\web\HttpException;
  * @property GroupMembership[] $groupCharacterMembershipsPassive
  * @property GroupMembership[] $groupCharacterMembershipsPast
  */
-class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasScribbles, HasSightings, HasVisibility, HasKey
+class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpicControl, HasImportance, HasImportanceCategory, HasReputations, HasScribbles, HasSightings, HasVisibility, HasKey, IsLinkable
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
@@ -354,6 +355,12 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
     public function getScribblePack(): ActiveQuery|ScribblePackQuery
     {
         return $this->hasOne(ScribblePack::class, ['scribble_pack_id' => 'scribble_pack_id']);
+    }
+
+    #[Override]
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     public function getMasterGroup(): ActiveQuery

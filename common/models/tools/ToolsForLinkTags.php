@@ -3,7 +3,9 @@
 namespace common\models\tools;
 
 use common\components\processor\MediaTagsProcessor;
+use common\models\Article;
 use common\models\Character;
+use common\models\core\IsLinkable;
 use common\models\Group;
 use common\models\Location;
 use common\models\Story;
@@ -17,6 +19,7 @@ trait ToolsForLinkTags
     private const string GROUP = 'Group';
     private const string STORY = 'Story';
     private const string LOCATION = 'Location';
+    private const string ARTICLE = 'Article';
 
     /** @var array<string> */
     private static array $availableClasses = [
@@ -24,6 +27,7 @@ trait ToolsForLinkTags
         self::GROUP,
         self::STORY,
         self::LOCATION,
+        self::ARTICLE,
     ];
 
     /** @var array<string,string> */
@@ -41,6 +45,7 @@ trait ToolsForLinkTags
         self::GROUP => '/index.php/group/view?key=',
         self::STORY => '/index.php/story/view?key=',
         self::LOCATION => '/index.php/location/view?key=',
+        self::ARTICLE => '/index.php/article/view?key=',
     ];
 
     private static array $classQualifiedNames = [
@@ -48,6 +53,7 @@ trait ToolsForLinkTags
         self::GROUP => Group::class,
         self::STORY => Story::class,
         self::LOCATION => Location::class,
+        self::ARTICLE => Article::class,
     ];
 
     /**
@@ -87,6 +93,7 @@ trait ToolsForLinkTags
             self::GROUP => '|\[(.+?)]\(GR(OUP)?:([a-z\d]{40})\)|',
             self::STORY => '|\[(.+?)]\(ST(ORY)?:([a-z\d]{40})\)|',
             self::LOCATION => '|\[(.+?)]\(LOC(ATION)?:([a-z\d]{40})\)|',
+            self::ARTICLE => '|\[(.+?)]\(ART(ICLE)?:([a-z\d]{40})\)|',
         ];
 
         $complexReplacements = array_map(
@@ -112,6 +119,7 @@ trait ToolsForLinkTags
             self::GROUP => '|GR(OUP)?:([a-z\d]{40})|',
             self::STORY => '|ST(ORY)?:([a-z\d]{40})|',
             self::LOCATION => '|LOC(ATION)?:([a-z\d]{40})|',
+            self::ARTICLE => '|ART(ICLE)?:([a-z\d]{40})|',
         ];
 
         $errorMessages = [
@@ -119,6 +127,7 @@ trait ToolsForLinkTags
             self::GROUP => Yii::t('app', 'GROUP_NOT_AVAILABLE'),
             self::STORY => Yii::t('app', 'STORY_NOT_AVAILABLE'),
             self::LOCATION => Yii::t('app', 'LOCATION_NOT_AVAILABLE'),
+            self::ARTICLE => Yii::t('app', 'ARTICLE_NOT_AVAILABLE'),
         ];
 
         foreach ($simplePatterns as $class => $simplePattern) {
@@ -129,10 +138,11 @@ trait ToolsForLinkTags
                 $match = $instance[0];
                 $key = array_pop($instance);
 
+                /** @var IsLinkable|null $object */
                 $object = (self::$classQualifiedNames[$class])::findOne(['key' => $key]);
 
                 if ($object) {
-                    $replacement = '[' . $object->name . '](' . $linkBases[$class] . $object->key . ')';
+                    $replacement = '[' . $object->getName() . '](' . $linkBases[$class] . $object->key . ')';
                 } else {
                     $replacement = '`' . $errorMessages[$class] . '`';
                 }

@@ -12,6 +12,7 @@ use common\models\core\HasScribbles;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\ImportanceCategory;
+use common\models\core\IsLinkable;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasDescriptions;
 use common\models\tools\ToolsForHasScribbles;
@@ -50,7 +51,7 @@ use yii\web\HttpException;
  * @property SeenPack $seenPack
  * @property UtilityBag $utilityBag
  */
-class Location extends ActiveRecord implements HasEpicControl, HasDescriptions, HasImportance, HasImportanceCategory, HasScribbles, HasSightings, HasVisibility, HasKey
+class Location extends ActiveRecord implements HasEpicControl, HasDescriptions, HasImportance, HasImportanceCategory, HasScribbles, HasSightings, HasVisibility, HasKey, IsLinkable
 {
     use ToolsForEntity;
     use ToolsForHasDescriptions;
@@ -241,6 +242,12 @@ class Location extends ActiveRecord implements HasEpicControl, HasDescriptions, 
     public function getScribblePack(): ActiveQuery|ScribblePackQuery
     {
         return $this->hasOne(ScribblePack::class, ['scribble_pack_id' => 'scribble_pack_id']);
+    }
+
+    #[Override]
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     public function getMasterLocation(): ActiveQuery

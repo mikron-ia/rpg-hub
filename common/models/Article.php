@@ -6,6 +6,7 @@ use common\models\core\HasEpicControl;
 use common\models\core\HasKey;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
+use common\models\core\IsLinkable;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use common\models\tools\ToolsForEntity;
@@ -44,7 +45,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @method movePrev()
  * @method moveNext()
  */
-class Article extends ActiveRecord implements HasEpicControl, HasVisibility, HasSightings, HasKey
+class Article extends ActiveRecord implements HasEpicControl, HasVisibility, HasSightings, HasKey, IsLinkable
 {
     use ToolsForEntity;
     use ToolsForLinkTags;
@@ -203,6 +204,12 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
+    }
+
+    #[Override]
+    public function getName(): string
+    {
+        return $this->title;
     }
 
     public function getOutlineWordCount(): int
