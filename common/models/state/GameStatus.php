@@ -19,15 +19,45 @@ enum GameStatus: string
     public function getName(): string
     {
         return match ($this) {
-            self::Proposed => Yii::t('app', 'GAME_STATUS_PROPOSED'),
-            self::Announced => Yii::t('app', 'GAME_STATUS_ANNOUNCED'),
-            self::Unplanned => Yii::t('app', 'GAME_STATUS_UNPLANNED'),
-            self::Planned => Yii::t('app', 'GAME_STATUS_PLANNED'),
-            self::Cancelled => Yii::t('app', 'GAME_STATUS_CANCELLED'),
-            self::Progressing => Yii::t('app', 'GAME_STATUS_PROGRESSING'),
-            self::Aborted => Yii::t('app', 'GAME_STATUS_ABORTED'),
-            self::Completed => Yii::t('app', 'GAME_STATUS_COMPLETED'),
-            self::Closed => Yii::t('app', 'GAME_STATUS_CLOSED'),
+            self::Proposed => Yii::t('app', 'GAME_STATUS_LABEL_PROPOSED'),
+            self::Announced => Yii::t('app', 'GAME_STATUS_LABEL_ANNOUNCED'),
+            self::Unplanned => Yii::t('app', 'GAME_STATUS_LABEL_UNPLANNED'),
+            self::Planned => Yii::t('app', 'GAME_STATUS_LABEL_PLANNED'),
+            self::Cancelled => Yii::t('app', 'GAME_STATUS_LABEL_CANCELLED'),
+            self::Progressing => Yii::t('app', 'GAME_STATUS_LABEL_PROGRESSING'),
+            self::Aborted => Yii::t('app', 'GAME_STATUS_LABEL_ABORTED'),
+            self::Completed => Yii::t('app', 'GAME_STATUS_LABEL_COMPLETED'),
+            self::Closed => Yii::t('app', 'GAME_STATUS_LABEL_CLOSED'),
+        };
+    }
+
+    public function getDescription(): string
+    {
+        return match ($this) {
+            self::Proposed => Yii::t('app', 'GAME_STATUS_DESCRIPTION_PROPOSED'),
+            self::Announced => Yii::t('app', 'GAME_STATUS_DESCRIPTION_ANNOUNCED'),
+            self::Unplanned => Yii::t('app', 'GAME_STATUS_DESCRIPTION_UNPLANNED'),
+            self::Planned => Yii::t('app', 'GAME_STATUS_DESCRIPTION_PLANNED'),
+            self::Cancelled => Yii::t('app', 'GAME_STATUS_DESCRIPTION_CANCELLED'),
+            self::Progressing => Yii::t('app', 'GAME_STATUS_DESCRIPTION_PROGRESSING'),
+            self::Aborted => Yii::t('app', 'GAME_STATUS_DESCRIPTION_ABORTED'),
+            self::Completed => Yii::t('app', 'GAME_STATUS_DESCRIPTION_COMPLETED'),
+            self::Closed => Yii::t('app', 'GAME_STATUS_DESCRIPTION_CLOSED'),
+        };
+    }
+
+    public function getSwitchToButtonText(): string
+    {
+        return match ($this) {
+            self::Proposed => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_PROPOSED'),
+            self::Announced => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_ANNOUNCED'),
+            self::Unplanned => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_UNPLANNED'),
+            self::Planned => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_PLANNED'),
+            self::Cancelled => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_CANCELLED'),
+            self::Progressing => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_PROGRESSING'),
+            self::Aborted => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_ABORTED'),
+            self::Completed => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_COMPLETED'),
+            self::Closed => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_CLOSED'),
         };
     }
 

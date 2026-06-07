@@ -10,7 +10,10 @@ use yii\helpers\Html;
         <?= Html::tag(
             'span',
             $model->getStatus()->getName(),
-            ['class' => ['game-status', $model->getStatus()->getClass()]]
+            [
+                'class' => ['game-status', $model->getStatus()->getClass()],
+                'title' => $model->getStatus()->getDescription(),
+            ]
         ) ?>
         <?php echo Html::a(Html::encode($model->basics), ['game/view', 'key' => $model->key]); ?>
     </p>

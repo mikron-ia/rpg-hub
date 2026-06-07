@@ -49,7 +49,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'contentOptions' => ['class' => ' text-center'],
                     'headerOptions' => ['class' => 'text-center'],
                     'format' => 'raw',
-                    'value' => fn(Game $model) => $model->getStatus()->getName(),
+                    'value' => fn(Game $model) => sprintf(
+                        '<span class="table-tag game-status %s" title="%s">%s</span>',
+                        $model->getStatus()->getClass(),
+                        $model->getStatus()->getDescription(),
+                        $model->getStatus()->getName()
+                    ),
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',

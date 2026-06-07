@@ -16,7 +16,10 @@ use yii\helpers\Html;
             <?= Html::tag(
                 'span',
                 $model->getStatus()->getName(),
-                ['class' => ['game-status', $model->getStatus()->getClass(), 'game-status-widening']]
+                [
+                    'class' => ['game-status', $model->getStatus()->getClass(), 'game-status-widening'],
+                    'title' => $model->getStatus()->getDescription(),
+                ]
             ) ?>
             <?php echo Html::tag('span', Html::encode($model->basics), []); ?>
         </p>
@@ -38,7 +41,10 @@ use yii\helpers\Html;
             <?= Html::tag(
                 'span',
                 $model->getStatus()->getName(),
-                ['class' => ['game-status', $model->getStatus()->getClass(), 'game-status-widening']]
+                [
+                    'class' => ['game-status', $model->getStatus()->getClass(), 'game-status-widening'],
+                    'title' => $model->getStatus()->getDescription(),
+                ]
             ) ?>
             <?php echo Html::tag('span', Html::encode($model->basics), []); ?>
         </p>

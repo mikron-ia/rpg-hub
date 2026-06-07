@@ -16,7 +16,10 @@ use yii\helpers\Html;
         <?= Html::tag(
             'span',
             $model->getStatus()->getName(),
-            ['class' => ['game-status', $model->getStatus()->getClass(), 'game-status-in-row']]
+            [
+                'class' => ['game-status', $model->getStatus()->getClass(), 'game-status-in-row'],
+                'title' => $model->getStatus()->getDescription(),
+            ]
         ) ?>
         <?php echo Html::tag('span', Html::encode($model->basics), []); ?>
     </p>
@@ -25,7 +28,10 @@ use yii\helpers\Html;
         <?= Html::tag(
             'p',
             $model->getStatus()->getName(),
-            ['class' => ['game-status', $model->getStatus()->getClass(), 'game-status-in-description']]
+            [
+                'class' => ['game-status', $model->getStatus()->getClass(), 'game-status-in-description'],
+                'title' => $model->getStatus()->getDescription(),
+            ]
         ) ?>
         <p>
             <strong><?php echo Yii::t('app', 'LABEL_EPIC'); ?>:</strong> <?php echo Html::encode($model->epic->name); ?>

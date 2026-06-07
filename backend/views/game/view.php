@@ -60,7 +60,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'status',
                         'format' => 'raw',
-                        'value' => '<span class="table-tag game-status ' . $model->getStatus()->getClass() . '">' . $model->getStatus()->getName() . '</span>',
+                        'value' => sprintf(
+                            '<span class="table-tag game-status %s" title="%s">%s</span>',
+                            $model->getStatus()->getClass(),
+                            $model->getStatus()->getDescription(),
+                            $model->getStatus()->getName()
+                        ),
                     ]
                 ],
             ]) ?>
