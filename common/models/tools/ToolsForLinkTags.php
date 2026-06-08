@@ -176,13 +176,18 @@ trait ToolsForLinkTags
         );
     }
 
-    private function formatText(?string $textToFormat, bool $processImages): string
+    private function formatText(?string $textToFormat, bool $processImages, bool $encode = true): string
     {
+        $textForEncoding = $textToFormat ?? '';
+
+        // disabling encoding is needed to accommodate the occasional pre-processing; do not use this unless necessary
+        $textForMarkdown = $encode ? Html::encode($textForEncoding) : $textForEncoding;
+
         $processedTextMarkdown = Markdown::process(
             markdown: str_ireplace(
                 search: '&gt;',
                 replace: '>',
-                subject: Html::encode($textToFormat ?? '')
+                subject: $textForMarkdown
             ),
             flavor: 'gfm'
         );

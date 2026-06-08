@@ -6,5 +6,5 @@
 ?>
 
 <div class="col-md-12">
-    <?= $model->text_ready ?>
+    <?= $model->getTextFormatted() ?>
 </div>

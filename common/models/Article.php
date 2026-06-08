@@ -235,6 +235,16 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return StringHelper::countWords($this->text_raw ?? '');
     }
 
+    public function getOutlinedFormatted(): string
+    {
+        return $this->formatText($this->outline_ready ?? $this->outline_raw, false, false);
+    }
+
+    public function getTextFormatted(): string
+    {
+        return $this->formatText($this->text_ready ?? $this->text_raw, true, false);
+    }
+
     #[Override]
     public function recordSighting(): bool
     {

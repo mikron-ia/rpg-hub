@@ -37,12 +37,12 @@ $this->params['showPrivates'] = $model->canUserControlYou();
 
     <?php if (!empty($model->outline_ready)): ?>
         <div class="outline-box">
-            <?= $model->outline_ready ?>
+            <?= $model->getOutlinedFormatted() ?>
         </div>
     <?php endif; ?>
 
     <div>
-        <?= $model->text_ready ?>
+        <?= $model->getTextFormatted() ?>
     </div>
 
 </div>
