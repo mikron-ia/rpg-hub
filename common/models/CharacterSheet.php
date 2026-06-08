@@ -19,8 +19,6 @@ use yii\db\Exception;
 use yii\web\HttpException;
 
 /**
- * This is the model class for table "character_sheet".
- *
  * @property string $character_sheet_id
  * @property string $epic_id
  * @property string $key
@@ -33,7 +31,7 @@ use yii\web\HttpException;
  * @property string $utility_bag_id
  *
  * @property Epic $epic
- * @property Character $currentlyDeliveredPerson
+ * @property Character $currentlyDeliveredCharacter
  * @property Character[] $characters
  * @property User $player
  * @property SeenPack $seenPack
@@ -52,7 +50,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     #[Override]
     public static function keyParameterName(): string
     {
-        return 'character_sheet';
+        return 'characterSheet';
     }
 
     #[Override]
@@ -191,8 +189,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
     }
 
-
-    public function getCurrentlyDeliveredPerson(): ActiveQuery
+    public function getCurrentlyDeliveredCharacter(): ActiveQuery
     {
         return $this->hasOne(Character::class, ['character_id' => 'currently_delivered_character_id']);
     }
@@ -243,7 +240,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         $decodedData['key'] = $this->key;
 
         if (isset($this->currently_delivered_character_id)) {
-            $decodedData['person'] = $this->currentlyDeliveredPerson->getCompleteDataForApi();
+            $decodedData['person'] = $this->currentlyDeliveredCharacter->getCompleteDataForApi();
         }
 
         return $decodedData;
@@ -280,7 +277,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
      *
      * @throws Exception
      */
-    static public function createForCharacter(Character $character): ?CharacterSheet
+    public static function createForCharacter(Character $character): ?CharacterSheet
     {
         $characterSheet = new CharacterSheet();
         $characterSheet->epic_id = $character->epic_id;
@@ -305,12 +302,12 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
         return array_keys($this->getPeopleAvailableToThisCharacterAsDropDownList());
     }
 
-    static public function canUserIndexThem(): bool
+    public static function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem(): bool
+    public static function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
@@ -332,22 +329,22 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             );
     }
 
-    static function throwExceptionAboutCreate(): void
+    public static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_CHARACTER'));
     }
 
-    static function throwExceptionAboutControl(): void
+    public static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_CHARACTER'));
     }
 
-    static function throwExceptionAboutIndex(): void
+    public static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_CHARACTER'));
     }
 
-    static function throwExceptionAboutView(): void
+    public static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_CHARACTER'));
     }
@@ -378,6 +375,8 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
 
     /**
      * Loads and saves external data
+     *
+     * @throws Exception
      */
     public function loadExternal(string $data): bool
     {

@@ -35,8 +35,8 @@ use yii\widgets\DetailView;
                     'format' => 'raw',
                     'value' => isset($model->currently_delivered_character_id) ?
                         Html::a(
-                            $model->currentlyDeliveredPerson->name,
-                            ['character/view', 'key' => $model->currentlyDeliveredPerson->key]
+                            $model->currentlyDeliveredCharacter->name,
+                            ['character/view', 'key' => $model->currentlyDeliveredCharacter->key]
                         ) :
                         null,
                 ],

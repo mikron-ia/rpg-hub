@@ -1,12 +1,15 @@
 <?php
-/* @var $this yii\web\View */
 
-/* @var $model common\models\CharacterSheet */
-
+use common\models\CharacterSheet;
 use common\models\core\SeenStatus;
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
+/* @var $this View */
+/* @var $model CharacterSheet */
 ?>
 
 <div class="col-md-12">
@@ -40,8 +43,8 @@ use yii\widgets\DetailView;
                     'format' => 'raw',
                     'value' => isset($model->currently_delivered_character_id) ?
                         Html::a(
-                            $model->currentlyDeliveredPerson->name,
-                            ['character/view', 'key' => $model->currentlyDeliveredPerson->key]
+                            $model->currentlyDeliveredCharacter->name,
+                            ['character/view', 'key' => $model->currentlyDeliveredCharacter->key]
                         ) :
                         null,
                 ],
@@ -57,8 +60,8 @@ use yii\widgets\DetailView;
     <div class="col-md-6">
 
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_READ') ?></h2>
-        <?= \yii\grid\GridView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider([
+        <?= GridView::widget([
+            'dataProvider' => new ActiveDataProvider([
                 'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_SEEN),
                 'pagination' => false,
             ]),
@@ -90,8 +93,8 @@ use yii\widgets\DetailView;
         ]) ?>
 
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_BEFORE_UPDATE') ?></h2>
-        <?= \yii\grid\GridView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider([
+        <?= GridView::widget([
+            'dataProvider' => new ActiveDataProvider([
                 'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_UPDATED),
                 'pagination' => false,
             ]),
@@ -123,8 +126,8 @@ use yii\widgets\DetailView;
         ]) ?>
 
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_NEW') ?></h2>
-        <?= \yii\grid\GridView::widget([
-            'dataProvider' => new \yii\data\ActiveDataProvider([
+        <?= GridView::widget([
+            'dataProvider' => new ActiveDataProvider([
                 'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_NEW),
                 'pagination' => false,
             ]),

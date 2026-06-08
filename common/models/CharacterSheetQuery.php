@@ -7,9 +7,6 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-/**
- * CharacterSheetQuery represents the model behind the search form about `common\models\CharacterSheet`.
- */
 final class CharacterSheetQuery extends CharacterSheet
 {
     #[Override]
@@ -28,7 +25,7 @@ final class CharacterSheetQuery extends CharacterSheet
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates a data provider instance with the search query applied
      */
     public function search(array $params): ActiveDataProvider
     {
@@ -90,7 +87,7 @@ final class CharacterSheetQuery extends CharacterSheet
      *
      * @return CharacterSheet[]
      */
-    static public function activeCharactersAsModels(): array
+    public static function activeCharactersAsModels(): array
     {
         $query = CharacterSheet::find();
 
@@ -114,7 +111,7 @@ final class CharacterSheetQuery extends CharacterSheet
     /**
      * @return string[]
      */
-    static public function getListOfCharactersForSelector(): array
+    public static function getListOfCharactersForSelector(): array
     {
         $characterList = self::activeCharactersAsModels();
 
@@ -131,7 +128,7 @@ final class CharacterSheetQuery extends CharacterSheet
     /**
      * @return int[]
      */
-    static public function allowedCharacters(): array
+    public static function allowedCharacters(): array
     {
         return array_keys(self::activeCharactersAsModels());
     }
