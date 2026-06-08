@@ -1,9 +1,11 @@
 <?php
 
+use common\models\ExternalData;
 use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\ExternalData */
+/* @var $this View */
+/* @var $model ExternalData */
 
 $this->title = Yii::t('app', 'EXTERNAL_DATA_UPDATE_TITLE');
 $this->params['breadcrumbs'][] = [

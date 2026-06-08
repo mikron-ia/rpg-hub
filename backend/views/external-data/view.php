@@ -1,10 +1,12 @@
 <?php
 
+use common\models\ExternalData;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\ExternalData */
+/* @var $this View */
+/* @var $model ExternalData */
 
 $this->title = $model->external_data_id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'EXTERNAL_DATA_INDEX_TITLE'), 'url' => ['index']];

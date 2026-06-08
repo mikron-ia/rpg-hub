@@ -28,7 +28,15 @@ class GameController extends CmsController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'update', 'view', 'delete', 'move-up', 'move-down'],
+                        'actions' => [
+                            'create',
+                            'delete',
+                            'index',
+                            'move-up',
+                            'move-down',
+                            'update',
+                            'view',
+                        ],
                         'allow' => true,
                         'roles' => ['operator'],
                     ],
@@ -45,7 +53,6 @@ class GameController extends CmsController
 
     /**
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionIndex(?string $epic = null): string
     {
@@ -79,7 +86,6 @@ class GameController extends CmsController
 
     /**
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionView(string $key): string
     {
@@ -118,7 +124,6 @@ class GameController extends CmsController
     /**
      * @throws Exception
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionUpdate(string $key): Response|string
     {
@@ -138,7 +143,6 @@ class GameController extends CmsController
 
     /**
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionDelete(string $key): Response
     {
@@ -168,7 +172,6 @@ class GameController extends CmsController
      * Moves game up in order; this means a lower position on the list
      *
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionMoveUp(string $key): Response
     {
@@ -185,7 +188,6 @@ class GameController extends CmsController
      * Moves game down in order; this means higher position on the list
      *
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionMoveDown(string $key): Response
     {

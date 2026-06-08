@@ -1,12 +1,14 @@
 <?php
 
 use common\models\core\Visibility;
+use common\models\ExternalData;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\ExternalData */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model ExternalData */
+/* @var $form ActiveForm */
 ?>
 
 <div class="external-data-form">
