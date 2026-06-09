@@ -2,6 +2,7 @@
 
 namespace common\models\state;
 
+use backend\models\dto\SimpleActionButton;
 use Yii;
 
 enum GameStatus: string
@@ -112,6 +113,33 @@ enum GameStatus: string
         }
 
         return $allowed;
+    }
+
+    /**
+     * @return array<SimpleActionButton>
+     */
+    public function allowedSuccessorsAsActionButtons(string $objectKey): array
+    {
+        $button = [];
+        foreach ($this->getAllowedSuccessors() as $successor) {
+            if ($successor !== $this) {
+                $button[] = new SimpleActionButton(
+                    text: $successor->getSwitchToButtonText(),
+                    explanation: $successor->getDescription(),
+                    confirmation: Yii::t(
+                        'app',
+                        'GAME_STATUS_CHANGE_CONFIRMATION {target}',
+                        ['target' => strtolower($successor->getName())]
+                    ),
+                    controller: 'game',
+                    action: 'switch-state',
+                    command: $successor->value,
+                    key: $objectKey
+                );
+            }
+        }
+
+        return $button;
     }
 
     /**

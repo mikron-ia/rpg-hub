@@ -6,6 +6,7 @@ use common\components\EpicAssistance;
 use common\models\Epic;
 use common\models\Game;
 use common\models\GameQuery;
+use common\models\state\GameStatus;
 use Override;
 use Throwable;
 use Yii;
@@ -34,6 +35,7 @@ class GameController extends CmsController
                             'index',
                             'move-up',
                             'move-down',
+                            'switch-state',
                             'update',
                             'view',
                         ],
@@ -198,6 +200,38 @@ class GameController extends CmsController
         $model->moveNext();
 
         return $this->returnToReferrer(['index']);
+    }
+
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    public function actionSwitchState(string $key, string $command): Response
+    {
+        $model = $this->findModel($key);
+        if (!$model->canUserControlYou()) {
+            Game::throwExceptionAboutControl();
+        }
+
+        $newStatus = GameStatus::tryFrom($command);
+        if ($newStatus === null || !in_array($newStatus, $model->getStatus()->getAllowedSuccessors())) {
+            Yii::$app->session->setFlash(
+                'error',
+                Yii::t('app', 'GAME_SESSION_STATUS_CHANGE_ERROR_INVALID_STATUS')
+            );
+        } else {
+            $model->status = $newStatus->value;
+            $model->save();
+            Yii::$app->session->setFlash(
+                'success',
+                Yii::t(
+                    'app', 'GAME_SESSION_STATUS_CHANGE_SUCCESS {target}',
+                    ['target' => strtolower($newStatus->getName())]
+                )
+            );
+        }
+
+        return $this->returnToReferrer(['view', 'key' => $key]);
     }
 
     /**
