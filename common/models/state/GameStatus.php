@@ -7,6 +7,8 @@ use Yii;
 
 enum GameStatus: string
 {
+    use StatusCommons;
+
     case Proposed = 'proposed';       // game was entered on page; next: ANNOUNCED, PLANNED, UNPLANNED
     case Announced = 'announced';     // information was propagated; next: PLANNED, UNPLANNED
     case Unplanned = 'unplanned';     // game failed to achieve planning stage; next: none
@@ -93,29 +95,6 @@ enum GameStatus: string
     }
 
     /**
-     * @return array<string,string>
-     */
-    public function allowedSuccessorsAsKeys(): array
-    {
-        return array_map(function (self $status) {
-            return $status->value;
-        }, $this->getAllowedSuccessors());
-    }
-
-    /**
-     * @return array<string,string>
-     */
-    public function allowedSuccessorsAsStrings(): array
-    {
-        $allowed = [];
-        foreach ($this->getAllowedSuccessors() as $successor) {
-            $allowed[$successor->value] = $successor->getName();
-        }
-
-        return $allowed;
-    }
-
-    /**
      * @return array<SimpleActionButton>
      */
     public function allowedSuccessorsAsActionButtons(string $objectKey): array
@@ -140,20 +119,5 @@ enum GameStatus: string
         }
 
         return $button;
-    }
-
-    /**
-     * @return array<string,string>
-     */
-    public static function namesForDropdown(): array
-    {
-        return array_reduce(
-            self::cases(),
-            static function (array $names, self $type): array {
-                $names[$type->value] = $type->getName();
-                return $names;
-            },
-            []
-        );
     }
 }

@@ -42,7 +42,7 @@ use yii\widgets\ActiveForm;
     <div class="col-md-6 col-lg-3">
         <?= $form
             ->field($model, 'status')
-            ->dropDownList($model->isNewRecord ? ProjectStatus::namesForDropdown() : $model->getStatus()->allowedSuccessorsAsStrings())
+            ->dropDownList($model->isNewRecord ? ProjectStatus::listAllNamesForDropdown() : $model->getStatus()->getAllowedSuccessorsAsStrings())
         ?>
     </div>
 

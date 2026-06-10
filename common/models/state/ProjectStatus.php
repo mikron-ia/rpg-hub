@@ -6,6 +6,8 @@ use Yii;
 
 enum ProjectStatus: string
 {
+    use StatusCommons;
+
     case Unknown = 'unknown';
 
     public function getName(): string
@@ -22,46 +24,10 @@ enum ProjectStatus: string
         };
     }
 
-    /**
-     * @return array<string>
-     */
-    public static function getAllowedCodes(): array
-    {
-        return array_map(fn(self $type) => $type->value, self::cases());
-    }
-
     public function getAllowedSuccessors(): array
     {
         return match ($this) {
             self::Unknown => [self::Unknown]
         };
-    }
-
-    /**
-     * @return array<string,string>
-     */
-    public function allowedSuccessorsAsStrings(): array
-    {
-        $allowed = [];
-        foreach ($this->getAllowedSuccessors() as $successor) {
-            $allowed[$successor->value] = $successor->getName();
-        }
-
-        return $allowed;
-    }
-
-    /**
-     * @return array<string,string>
-     */
-    public static function namesForDropdown(): array
-    {
-        return array_reduce(
-            self::cases(),
-            static function (array $names, self $type): array {
-                $names[$type->value] = $type->getName();
-                return $names;
-            },
-            []
-        );
     }
 }

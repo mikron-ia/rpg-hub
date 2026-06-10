@@ -32,7 +32,7 @@ GameAsset::register($this);
     <div class="col-md-6 col-lg-2">
         <?= $form
             ->field($model, 'status')
-            ->dropDownList($model->isNewRecord ? GameStatus::namesForDropdown() : $model->getStatus()->allowedSuccessorsAsStrings())
+            ->dropDownList($model->isNewRecord ? GameStatus::listAllNamesForDropdown() : $model->getStatus()->getAllowedSuccessorsAsStrings())
         ?>
     </div>
 
@@ -70,7 +70,7 @@ GameAsset::register($this);
             <label class="control-label" for="game-basics-constructed">
                 <?= Yii::t('app', 'GAME_BASICS_CONSTRUCTED') ?>
             </label>
-            <input class="form-control" id="game-basics-constructed" disabled />
+            <input class="form-control" id="game-basics-constructed" disabled/>
         </div>
     </div>
 

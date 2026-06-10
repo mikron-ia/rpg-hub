@@ -116,7 +116,7 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
             [
                 ['status'],
                 'in',
-                'range' => fn() => ProjectStatus::getAllowedCodes(),
+                'range' => fn() => ProjectStatus::listLegalValuesAsKeys(),
             ],
             [
                 ['data'],
@@ -127,7 +127,7 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
                             Yii::t('app', 'ERROR_DATA_JSON_INVALID {message}', ['message' => json_last_error_msg()])
                         );
                     }
-                }
+                },
             ],
         ];
     }

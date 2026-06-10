@@ -68,11 +68,11 @@ class Game extends ActiveRecord implements HasEpicControl, HasKey
             [
                 ['status'],
                 'in',
-                'range' => $this->getStatus()->allowedSuccessorsAsKeys(),
+                'range' => $this->getStatus()->getAllowedSuccessorsAsKeys(),
                 'message' => Yii::t(
                     'app',
                     'GAME_STATE_NOT_ALLOWED {allowed}',
-                    ['allowed' => implode(', ', $this->getStatus()->allowedSuccessorsAsStrings())],
+                    ['allowed' => implode(', ', $this->getStatus()->getAllowedSuccessorsAsStrings())],
                 ),
                 'on' => 'update',
             ],

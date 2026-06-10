@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status')->widget(
         Select2::class,
-        ['data' => GameStatus::namesForDropdown(), 'options' => ['multiple' => true]]
+        ['data' => GameStatus::listAllNamesForDropdown(), 'options' => ['multiple' => true]]
     ) ?>
 
     <?php echo $form->field($model, 'notes')->hint('') ?>
