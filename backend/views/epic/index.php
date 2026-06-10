@@ -63,9 +63,12 @@ $epicRolesCalculatorClosure = function (Epic $model) {
                     'contentOptions' => ['class' => 'text-center'],
                     'headerOptions' => ['class' => 'text-center'],
                     'format' => 'raw',
-                    'value' => function (Epic $model) {
-                        return '<span class="epic-status epic-status-in-cell ' . $model->getStatusClass() . '">' . $model->getStatus() . '</span>';
-                    }
+                    'value' => fn(Epic $model) => sprintf(
+                        '<span class="epic-status epic-status-in-cell %s" title="%s">%s</span>',
+                        $model->getStatus()->getClass(),
+                        $model->getStatus()->getDescription(),
+                        $model->getStatus()->getName()
+                    ),
                 ],
                 [
                     'label' => Yii::t('app', 'EPIC_COUNT_PARTICIPANTS'),

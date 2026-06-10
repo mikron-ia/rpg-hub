@@ -209,7 +209,9 @@ if ($epic) {
         </div>
 
         <h3><?= Yii::t('app', 'EPIC_CARD_EPIC_ATTRIBUTES'); ?></h3>
-        <span class="epic-status <?= $epic->getStatusClass(); ?>"><?= $epic->getStatus(); ?></span>
+        <span class="epic-status <?= $epic->getStatus()->getClass(); ?>"
+              title="<?= $epic->getStatus()->getDescription(); ?>"
+        ><?= $epic->getStatus()->getName(); ?></span>
 
     </div>
 

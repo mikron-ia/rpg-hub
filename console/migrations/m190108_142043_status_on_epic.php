@@ -1,5 +1,6 @@
 <?php
 
+use common\models\state\EpicStatus;
 use yii\db\Migration;
 
 /**
@@ -9,7 +10,11 @@ class m190108_142043_status_on_epic extends Migration
 {
     public function safeUp()
     {
-        $this->addColumn('{{%epic}}', 'status', $this->string(20)->notNull()->after('system')->defaultValue(\common\models\Epic::STATUS_PROPOSED));
+        $this->addColumn(
+            '{{%epic}}',
+            'status',
+            $this->string(20)->notNull()->after('system')->defaultValue(EpicStatus::Proposed->value)
+        );
     }
 
     public function safeDown()

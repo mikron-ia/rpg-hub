@@ -1,7 +1,7 @@
 <?php
 
-use common\models\Epic;
 use common\models\EpicQuery;
+use common\models\state\EpicStatus;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'status')->widget(
         kartik\select2\Select2::class,
         [
-            'data' => Epic::statusNames(),
+            'data' => EpicStatus::listAllNamesForDropdown(),
             'options' => ['multiple' => true],
         ]
     ) ?>

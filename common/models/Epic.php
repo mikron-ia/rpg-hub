@@ -8,8 +8,8 @@ use common\models\core\FrontStyles;
 use common\models\core\HasKey;
 use common\models\core\HasParameters;
 use common\models\core\HasSightings;
-use common\models\core\HasStatus;
 use common\models\core\Visibility;
+use common\models\state\EpicStatus;
 use common\models\tools\ToolsForEntity;
 use Override;
 use Throwable;
@@ -57,22 +57,9 @@ use yii\web\HttpException;
  *
  * @todo: Someday, system field will have to come from a closed list of supported systems
  */
-class Epic extends ActiveRecord implements Displayable, HasParameters, HasSightings, HasStatus, HasKey
+class Epic extends ActiveRecord implements Displayable, HasParameters, HasSightings, HasKey
 {
     use ToolsForEntity;
-
-    const string STATUS_PROPOSED = 'proposed';       // idea is created; next: PREPARED, SCRAPPED
-    const string STATUS_PLANNED = 'planning';        // epic is being planned; next: PREPARED, SCRAPPED
-    const string STATUS_PREPARED = 'preparation';    // epic is being prepared; next: READY, SCRAPPED
-    const string STATUS_READY = 'ready';             // epic is ready to run; next: PLAYED, SCRAPPED
-    const string STATUS_SCRAPPED = 'scrapped';       // epic failed to achieve readiness; next: PLANNED, CLOSED
-    const string STATUS_CANCELLED = 'cancelled';     // epic ran but failed to complete; next: RESUMING, CLOSED
-    const string STATUS_PLAYED = 'played';           // in progress; next: LAPSED, ON HOLD, CANCELLED, FINISHED
-    const string STATUS_LAPSED = 'lapsed';           // sessions stopped, but nothing was said yet; next: ON HOLD, CANCELLED, RESUMING
-    const string STATUS_ON_HOLD = 'on hold';         // epic was officially suspended; next: RESUMING, CANCELLED
-    const string STATUS_RESUMING = 'resuming';       // resuming after some trouble; next: PLAYED, ON HOLD
-    const string STATUS_FINISHED = 'finished';       // epic was completed; next: CLOSED
-    const string STATUS_CLOSED = 'closed';           // epic is documented and done; next: none
 
     #[Override]
     public static function tableName(): string
@@ -105,11 +92,11 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             [
                 ['status'],
                 'in',
-                'range' => $this->getAllowedChange(),
+                'range' => $this->getStatus()->getAllowedSuccessorsAsKeys(),
                 'message' => Yii::t(
                     'app',
                     'EPIC_STATUS_NOT_ALLOWED {allowed}',
-                    ['allowed' => implode(', ', $this->getAllowedChangeNames())],
+                    ['allowed' => implode(', ', $this->getStatus()->getAllowedSuccessorsAsStrings())],
                 )
             ],
             [
@@ -142,137 +129,9 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         ];
     }
 
-    /**
-     * @return array<string, string>
-     */
-    #[Override]
-    public static function statusNames(): array
+    public function getStatus(): EpicStatus
     {
-        return [
-            self::STATUS_CANCELLED => Yii::t('app', 'EPIC_STATUS_CANCELLED'),
-            self::STATUS_CLOSED => Yii::t('app', 'EPIC_STATUS_CLOSED'),
-            self::STATUS_FINISHED => Yii::t('app', 'EPIC_STATUS_FINISHED'),
-            self::STATUS_LAPSED => Yii::t('app', 'EPIC_STATUS_LAPSED'),
-            self::STATUS_ON_HOLD => Yii::t('app', 'EPIC_STATUS_ON_HOLD'),
-            self::STATUS_PLANNED => Yii::t('app', 'EPIC_STATUS_PLANNED'),
-            self::STATUS_PREPARED => Yii::t('app', 'EPIC_STATUS_PREPARED'),
-            self::STATUS_PLAYED => Yii::t('app', 'EPIC_STATUS_PLAYED'),
-            self::STATUS_PROPOSED => Yii::t('app', 'EPIC_STATUS_PROPOSED'),
-            self::STATUS_READY => Yii::t('app', 'EPIC_STATUS_READY'),
-            self::STATUS_RESUMING => Yii::t('app', 'EPIC_STATUS_RESUMING'),
-            self::STATUS_SCRAPPED => Yii::t('app', 'EPIC_STATUS_SCRAPPED'),
-        ];
-    }
-
-
-    /**
-     * @return array<string, string>
-     */
-    #[Override]
-    public static function statusClasses(): array
-    {
-        return [
-            self::STATUS_CANCELLED => 'epic-status-cancelled',
-            self::STATUS_CLOSED => 'epic-status-closed',
-            self::STATUS_FINISHED => 'epic-status-finished',
-            self::STATUS_LAPSED => 'epic-status-lapsed',
-            self::STATUS_ON_HOLD => 'epic-status-on-hold',
-            self::STATUS_PLANNED => 'epic-status-planned',
-            self::STATUS_PREPARED => 'epic-status-prepared',
-            self::STATUS_PLAYED => 'epic-status-played',
-            self::STATUS_PROPOSED => 'epic-status-proposed',
-            self::STATUS_READY => 'epic-status-ready',
-            self::STATUS_RESUMING => 'epic-status-resuming',
-            self::STATUS_SCRAPPED => 'epic-status-scrapped',
-        ];
-    }
-
-
-    /**
-     * @return array<string,string[]>
-     */
-    #[Override]
-    public function statusAllowedChanges(): array
-    {
-        return [
-            self::STATUS_CANCELLED => [self::STATUS_RESUMING, self::STATUS_CLOSED],
-            self::STATUS_CLOSED => [],
-            self::STATUS_FINISHED => [self::STATUS_CLOSED],
-            self::STATUS_LAPSED => [self::STATUS_ON_HOLD, self::STATUS_CANCELLED, self::STATUS_RESUMING],
-            self::STATUS_ON_HOLD => [self::STATUS_RESUMING, self::STATUS_CANCELLED],
-            self::STATUS_PLANNED => [self::STATUS_PREPARED, self::STATUS_SCRAPPED],
-            self::STATUS_PREPARED => [self::STATUS_READY, self::STATUS_SCRAPPED],
-            self::STATUS_PLAYED => [
-                self::STATUS_LAPSED,
-                self::STATUS_ON_HOLD,
-                self::STATUS_CANCELLED,
-                self::STATUS_FINISHED,
-            ],
-            self::STATUS_PROPOSED => [self::STATUS_PLANNED, self::STATUS_SCRAPPED],
-            self::STATUS_READY => [self::STATUS_PLAYED, self::STATUS_SCRAPPED],
-            self::STATUS_RESUMING => [self::STATUS_PLAYED, self::STATUS_ON_HOLD],
-            self::STATUS_SCRAPPED => [self::STATUS_PLANNED, self::STATUS_CLOSED],
-        ];
-    }
-
-    /**
-     * Provides sorting priorities based on status
-     * Note: most important statuses have the lowest numbers
-     *
-     * @return int[]
-     */
-    public function sortPriorities(): array
-    {
-        return [
-            self::STATUS_CANCELLED => 3,
-            self::STATUS_CLOSED => 4,
-            self::STATUS_FINISHED => 3,
-            self::STATUS_LAPSED => 1,
-            self::STATUS_ON_HOLD => 2,
-            self::STATUS_PLANNED => 1,
-            self::STATUS_PREPARED => 1,
-            self::STATUS_PLAYED => 0,
-            self::STATUS_PROPOSED => 2,
-            self::STATUS_READY => 0,
-            self::STATUS_RESUMING => 0,
-            self::STATUS_SCRAPPED => 3,
-        ];
-    }
-
-    /**
-     * Provides Epic's own priority
-     */
-    public function getOwnSortPriority(): int
-    {
-        return $this->sortPriorities()[$this->status];
-    }
-
-    #[Override]
-    public function getStatus(): string
-    {
-        $names = self::statusNames();
-        return isset($names[$this->status]) ? $names[$this->status] : '?';
-    }
-
-    #[Override]
-    public function getStatusClass(): string
-    {
-        $names = self::statusClasses();
-        return isset($names[$this->status]) ? $names[$this->status] : '';
-    }
-
-    #[Override]
-    public function getAllowedChange(): array
-    {
-        return array_merge(($this->statusAllowedChanges()[$this->status] ?? []), [$this->status]);
-    }
-
-    #[Override]
-    public function getAllowedChangeNames(): array
-    {
-        return array_filter(self::statusNames(), function ($key) {
-            return in_array($key, $this->getAllowedChange());
-        }, ARRAY_FILTER_USE_KEY);
+        return $this->status === null ? EpicStatus::Proposed : EpicStatus::from($this->status);
     }
 
     public function getAllowedStoriesForDropDown(): array
@@ -793,10 +652,14 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     static public function sortByStatus(array $epics): array
     {
         uasort($epics, function (Epic $a, Epic $b) {
-            if ($a->getOwnSortPriority() === $b->getOwnSortPriority()) {
+            $aSortPriority = $a->getStatus()->getSortPriority();
+            $bSortPriority = $b->getStatus()->getSortPriority();
+
+            if ($aSortPriority === $bSortPriority) {
                 return $a->epic_id > $b->epic_id ? -1 : 1; // it impossible to have the same ID and with this, the sorting is deterministic
             }
-            return $a->getOwnSortPriority() < $b->getOwnSortPriority() ? -1 : 1;
+
+            return $aSortPriority < $bSortPriority ? -1 : 1;
         });
 
         return $epics;

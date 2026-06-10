@@ -23,7 +23,7 @@ use yii\widgets\DetailView;
             'model' => $model,
             'attributes' => [
                 'system',
-                ['attribute' => 'status', 'value' => $model->getStatus()],
+                ['attribute' => 'status', 'value' => $model->getStatus()->getName()],
                 ['attribute' => 'current_story_id', 'format' => 'raw', 'value' => $model->currentStory],
                 ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_STORIES'), 'value' => count($model->stories)],
                 ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_CHARACTERS'), 'value' => count($model->people)],

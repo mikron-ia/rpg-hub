@@ -40,7 +40,7 @@ use yii\widgets\ActiveForm;
         </div>
 
         <div class="col-md-6">
-            <?= $form->field($model, 'status')->dropDownList($model->getAllowedChangeNames()) ?>
+            <?= $form->field($model, 'status')->dropDownList($model->getStatus()->getAllowedSuccessorsAsStrings()) ?>
         </div>
     <?php endif; ?>
 

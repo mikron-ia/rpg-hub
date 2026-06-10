@@ -101,7 +101,9 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
             <div class="col-md-4">
                 <h2><?= Yii::t('app', 'EPIC_CARD_EPIC_ATTRIBUTES'); ?></h2>
 
-                <span class="epic-status <?= $epic->getStatusClass(); ?>"><?= $epic->getStatus(); ?></span>
+                <span class="epic-status <?= $epic->getStatus()->getClass(); ?>"
+                      title="<?= $epic->getStatus()->getDescription(); ?>"
+                ><?= $epic->getStatus()->getName(); ?></span>
 
                 <h2><?= Yii::t('app', 'EPIC_CARD_SESSIONS'); ?></h2>
 
