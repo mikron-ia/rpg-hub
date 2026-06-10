@@ -23,21 +23,56 @@ use yii\widgets\DetailView;
             'model' => $model,
             'attributes' => [
                 'system',
-                ['attribute' => 'status', 'value' => $model->getStatus()->getName()],
-                ['attribute' => 'current_story_id', 'format' => 'raw', 'value' => $model->currentStory],
-                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_STORIES'), 'value' => count($model->stories)],
-                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_CHARACTERS'), 'value' => count($model->people)],
-                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_GROUPS'), 'value' => count($model->groups)],
-                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_LOCATIONS'), 'value' => count($model->locations)],
-                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_CHARACTER_SHEETS'), 'value' => count($model->characters)],
-                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_RECAPS'), 'value' => count($model->recaps)],
-                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_POINTS_IN_TIME'), 'value' => count($model->pointsInTime)],
+                [
+                    'attribute' => 'status',
+                    'contentOptions' => ['title' => $model->getStatus()->getDescription()],
+                    'value' => $model->getStatus()->getName(),
+                ],
+                [
+                    'attribute' => 'current_story_id',
+                    'format' => 'raw',
+                    'value' => $model->currentStory,
+                ],
+                [
+                    'label' => Yii::t('app', 'EPIC_BASIC_COUNT_STORIES'),
+                    'value' => count($model->stories),
+                ],
+                [
+                    'label' => Yii::t('app', 'EPIC_BASIC_COUNT_CHARACTERS'),
+                    'value' => count($model->characters),
+                ],
+                [
+                    'label' => Yii::t('app', 'EPIC_BASIC_COUNT_GROUPS'),
+                    'value' => count($model->groups),
+                ],
+                [
+                    'label' => Yii::t('app', 'EPIC_BASIC_COUNT_LOCATIONS'),
+                    'value' => count($model->locations),
+                ],
+                [
+                    'label' => Yii::t('app', 'EPIC_BASIC_COUNT_CHARACTER_SHEETS'),
+                    'value' => count($model->characterSheets),
+                ],
+                [
+                    'label' => Yii::t('app', 'EPIC_BASIC_COUNT_RECAPS'),
+                    'value' => count($model->recaps)
+                ],
+                [
+                    'label' => Yii::t('app', 'EPIC_BASIC_COUNT_POINTS_IN_TIME'),
+                    'value' => count($model->pointsInTime),
+                ],
                 [
                     'label' => Yii::t('app', 'EPIC_BASIC_COUNT_SESSIONS'),
                     'value' => $model->getGameCountByStatus('closed') . ' / ' . count($model->games),
                 ],
-                ['label' => Yii::t('app', 'EPIC_BASIC_COUNT_ARTICLES'), 'value' => count($model->articles)],
-                ['attribute' => 'style', 'value' => $model->getStyle()->getStyleName()],
+                [
+                    'label' => Yii::t('app', 'EPIC_BASIC_COUNT_ARTICLES'),
+                    'value' => count($model->articles),
+                ],
+                [
+                    'attribute' => 'style',
+                    'value' => $model->getStyle()->getStyleName(),
+                ],
             ],
         ]) ?>
     </div>
@@ -72,7 +107,7 @@ use yii\widgets\DetailView;
                     'value' => function (Participant $model) {
                         $roles = $model->getRolesList();
                         return !empty($roles) ? implode(', ', $roles) : null;
-                    }
+                    },
                 ],
                 [
                     'class' => ActionColumn::class,
@@ -198,7 +233,7 @@ use yii\widgets\DetailView;
                                     'data-method' => 'post',
                                 ]);
                         }
-                    ]
+                    ],
                 ],
             ],
         ]); ?>

@@ -4,7 +4,7 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\Displayable;
-use common\models\core\FrontStyles;
+use common\models\core\FrontStyle;
 use common\models\core\HasKey;
 use common\models\core\HasParameters;
 use common\models\core\HasSightings;
@@ -23,8 +23,6 @@ use yii\helpers\Html;
 use yii\web\HttpException;
 
 /**
- * This is the model class for table "epic".
- *
  * @property string $epic_id
  * @property string $key
  * @property string $name Public name for the epic
@@ -36,7 +34,8 @@ use yii\web\HttpException;
  * @property string $seen_pack_id
  * @property string $utility_bag_id
  *
- * @property CharacterSheet[] $characters
+ * @property Character[] $characters
+ * @property CharacterSheet[] $characterSheets
  * @property ParameterPack $parameterPack
  * @property SeenPack $seenPack
  * @property UtilityBag $utilityBag
@@ -47,9 +46,8 @@ use yii\web\HttpException;
  * @property Group[] $groups
  * @property Location[] $locations
  * @property Participant[] $participants
- * @property User[] $users
  * @property PointInTime[] $pointsInTime
- * @property Character[] $people
+ * @property Project[] $projects
  * @property Recap[] $recaps
  * @property Scenario[] $scenarios
  * @property Story[] $stories
@@ -146,9 +144,9 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return $list;
     }
 
-    public function getStyle(): FrontStyles
+    public function getStyle(): FrontStyle
     {
-        return FrontStyles::tryFrom($this->style ?? FrontStyles::Default->value) ?? FrontStyles::Default;
+        return FrontStyle::tryFrom($this->style ?? FrontStyle::Default->value) ?? FrontStyle::Default;
     }
 
     /**
@@ -221,6 +219,11 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
 
     public function getCharacters(): ActiveQuery
     {
+        return $this->hasMany(Character::class, ['epic_id' => 'epic_id']);
+    }
+
+    public function getCharacterSheets(): ActiveQuery
+    {
         return $this->hasMany(CharacterSheet::class, ['epic_id' => 'epic_id']);
     }
 
@@ -274,9 +277,9 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return $this->hasMany(Participant::class, ['epic_id' => 'epic_id']);
     }
 
-    public function getPeople(): ActiveQuery
+    public function getProjects(): ActiveQuery
     {
-        return $this->hasMany(Character::class, ['epic_id' => 'epic_id']);
+        return $this->hasMany(Project::class, ['epic_id' => 'epic_id']);
     }
 
     public function getRecaps(): ActiveQuery

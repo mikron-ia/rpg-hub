@@ -4,7 +4,7 @@
 
 /* @var $content string */
 
-use common\models\core\FrontStyles;
+use common\models\core\FrontStyle;
 use common\models\Epic;
 use common\models\EpicQuery;
 use frontend\assets\AppAsset;
@@ -17,7 +17,7 @@ use yii\web\View;
 use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
-(Yii::$app->params['activeEpic']?->getStyle() ?? FrontStyles::Default)->provideClass()::register($this);
+(Yii::$app->params['activeEpic']?->getStyle() ?? FrontStyle::Default)->provideClass()::register($this);
 
 ?>
 <?php $this->beginPage() ?>

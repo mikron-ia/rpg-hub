@@ -7,7 +7,7 @@ use frontend\assets\StyleDefaultAsset;
 use frontend\assets\StyleWoodenAsset;
 use Yii;
 
-enum FrontStyles: string
+enum FrontStyle: string
 {
     case Default = 'default';
     case Wooden = 'wooden';

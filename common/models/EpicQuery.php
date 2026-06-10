@@ -9,9 +9,6 @@ use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
-/**
- * EpicQuery represents the model behind the search form about `common\models\Epic`.
- */
 final class EpicQuery extends Epic
 {
     private const int DEFAULT_PAGE_SIZE = 16;

@@ -1,6 +1,6 @@
 <?php
 
-use common\models\core\FrontStyles;
+use common\models\core\FrontStyle;
 use common\models\Epic;
 use kartik\select2\Select2;
 use yii\helpers\Html;
@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-4">
-        <?= $form->field($model, 'style')->widget(Select2::class, ['data' => FrontStyles::provideStyleNames()]); ?>
+        <?= $form->field($model, 'style')->widget(Select2::class, ['data' => FrontStyle::provideStyleNames()]); ?>
     </div>
 
     <?php if (!$model->isNewRecord): ?>
