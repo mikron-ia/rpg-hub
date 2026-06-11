@@ -2,6 +2,7 @@
 
 namespace common\models\state;
 
+use backend\models\dto\SimpleActionButton;
 use Yii;
 
 enum EpicStatus: string
@@ -75,6 +76,24 @@ enum EpicStatus: string
         };
     }
 
+    public function getSwitchToButtonText(): string
+    {
+        return match ($this) {
+            self::Cancelled => Yii::t('app', 'EPIC_STATUS_SWITCH_TO_CANCELLED'),
+            self::Closed => Yii::t('app', 'EPIC_STATUS_SWITCH_TO_CLOSED'),
+            self::Finished => Yii::t('app', 'EPIC_STATUS_SWITCH_TO_FINISHED'),
+            self::Lapsed => Yii::t('app', 'EPIC_STATUS_SWITCH_TO_LAPSED'),
+            self::OnHold => Yii::t('app', 'EPIC_STATUS_SWITCH_TO_ON_HOLD'),
+            self::Planned => Yii::t('app', 'EPIC_STATUS_SWITCH_TO_PLANNED'),
+            self::Prepared => Yii::t('app', 'EPIC_STATUS_SWITCH_TO_PREPARED'),
+            self::Played => Yii::t('app', 'EPIC_STATUS_SWITCH_TO_PLAYED'),
+            self::Proposed => Yii::t('app', 'EPIC_STATUS_SWITCH_TO_PROPOSED'),
+            self::Ready => Yii::t('app', 'EPIC_STATUS_SWITCH_TO_READY'),
+            self::Resuming => Yii::t('app', 'EPIC_STATUS_SWITCH_TO_RESUMING'),
+            self::Scrapped => Yii::t('app', 'EPIC_STATUS_SWITCH_TO_SCRAPPED'),
+        };
+    }
+
     public function getAllowedSuccessors(): array
     {
         return match ($this) {
@@ -119,5 +138,32 @@ enum EpicStatus: string
             self::Cancelled, self::Finished, self::Scrapped => 3,
             self::Closed => 4,
         };
+    }
+
+    /**
+     * @return array<SimpleActionButton>
+     */
+    public function allowedSuccessorsAsActionButtons(string $objectKey): array
+    {
+        $button = [];
+        foreach ($this->getAllowedSuccessors() as $successor) {
+            if ($successor !== $this) {
+                $button[] = new SimpleActionButton(
+                    text: $successor->getSwitchToButtonText(),
+                    explanation: $successor->getDescription(),
+                    confirmation: Yii::t(
+                        'app',
+                        'EPIC_STATUS_CHANGE_CONFIRMATION {target}',
+                        ['target' => strtolower($successor->getName())]
+                    ),
+                    controller: 'epic',
+                    action: 'switch-state',
+                    command: $successor->value,
+                    key: $objectKey
+                );
+            }
+        }
+
+        return $button;
     }
 }

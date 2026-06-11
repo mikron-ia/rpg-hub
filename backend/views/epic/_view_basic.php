@@ -75,6 +75,11 @@ use yii\widgets\DetailView;
                 ],
             ],
         ]) ?>
+        <div class="buttons-under-table">
+            <?php foreach ($model->getStatus()->allowedSuccessorsAsActionButtons($model->key) as $button): ?>
+                <?= $button; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
 
     <div class="col-lg-6">

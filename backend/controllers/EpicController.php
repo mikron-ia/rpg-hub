@@ -12,6 +12,7 @@ use common\models\Participant;
 use common\models\ParticipantRole;
 use common\models\ProjectQuery;
 use common\models\RecapQuery;
+use common\models\state\EpicStatus;
 use common\models\Story;
 use common\models\StoryQuery;
 use Override;
@@ -50,6 +51,7 @@ final class EpicController extends CmsController
                             'participant-edit',
                             'participant-delete',
                             'set-current-story',
+                            'switch-state',
                             'create-parameter',
                         ],
                         'allow' => true,
@@ -410,6 +412,38 @@ final class EpicController extends CmsController
         );
 
         return $this->redirect(['story/view', 'key' => $story->key]);
+    }
+
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    public function actionSwitchState(string $key, string $command): Response
+    {
+        $model = $this->findModel($key);
+        if (!$model->canUserControlYou()) {
+            Epic::throwExceptionAboutControl();
+        }
+
+        $newStatus = EpicStatus::tryFrom($command);
+        if ($newStatus === null || !in_array($newStatus, $model->getStatus()->getAllowedSuccessors())) {
+            Yii::$app->session->setFlash(
+                'error',
+                Yii::t('app', 'EPIC_STATUS_CHANGE_ERROR_INVALID_STATUS')
+            );
+        } else {
+            $model->status = $newStatus->value;
+            $model->save();
+            Yii::$app->session->setFlash(
+                'success',
+                Yii::t(
+                    'app', 'EPIC_STATUS_CHANGE_SUCCESS {target}',
+                    ['target' => strtolower($newStatus->getName())]
+                )
+            );
+        }
+
+        return $this->returnToReferrer(['view', 'key' => $key]);
     }
 
     /**
