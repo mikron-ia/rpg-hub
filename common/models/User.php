@@ -18,8 +18,6 @@ use yii\web\HttpException;
 use yii\web\IdentityInterface;
 
 /**
- * User model
- *
  * @property integer $id
  * @property string $key
  * @property string $username
@@ -190,17 +188,11 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
 
-    /**
-     * Finds user by ID
-     */
     public static function findById(int $id): null|static
     {
         return static::findOne(['id' => $id, 'status' => UserStatus::Active->value]);
     }
 
-    /**
-     * Finds user by username
-     */
     public static function findByUsername(string $username): ?User
     {
         return User::findOne(['username' => $username, 'status' => UserStatus::Active->value]);
@@ -221,10 +213,7 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
         ]);
     }
 
-    /**
-     * Finds out if password reset token is valid
-     */
-    public static function isPasswordResetTokenValid(string $token): bool
+    public static function isPasswordResetTokenValid(?string $token): bool
     {
         if (empty($token)) {
             return false;
@@ -235,11 +224,13 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
         return $timestamp + $expire >= time();
     }
 
+    #[Override]
     public function getId()
     {
         return $this->getPrimaryKey();
     }
 
+    #[Override]
     public function getAuthKey(): string
     {
         return $this->auth_key;
@@ -248,14 +239,14 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
     public function getEpicsAssisted(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
-            ParticipantRole::ROLE_ASSISTANT
+            ParticipantRole::ROLE_ASSISTANT,
         ]);
     }
 
     public function getEpicsManaged(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
-            ParticipantRole::ROLE_MANAGER
+            ParticipantRole::ROLE_MANAGER,
         ]);
     }
 
@@ -263,14 +254,14 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
     {
         return $this->getEpicsLimitedByRoles([
             ParticipantRole::ROLE_GM,
-            ParticipantRole::ROLE_MANAGER
+            ParticipantRole::ROLE_MANAGER,
         ]);
     }
 
     public function getEpicsGameMastered(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
-            ParticipantRole::ROLE_GM
+            ParticipantRole::ROLE_GM,
         ]);
     }
 
@@ -278,14 +269,14 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
     {
         return $this->getEpicsLimitedByRoles([
             ParticipantRole::ROLE_GM,
-            ParticipantRole::ROLE_ASSISTANT
+            ParticipantRole::ROLE_ASSISTANT,
         ]);
     }
 
     public function getEpicsPlayed(): ActiveQuery
     {
         return $this->getEpicsLimitedByRoles([
-            ParticipantRole::ROLE_PLAYER
+            ParticipantRole::ROLE_PLAYER,
         ]);
     }
 
@@ -295,7 +286,7 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
             ParticipantRole::ROLE_GM,
             ParticipantRole::ROLE_ASSISTANT,
             ParticipantRole::ROLE_PLAYER,
-            ParticipantRole::ROLE_WATCHER
+            ParticipantRole::ROLE_WATCHER,
         ]);
     }
 
@@ -345,7 +336,7 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
     }
 
     /**
-     * Generates "remember me" authentication key
+     * Generates a "remember me" authentication key
      *
      * @throws Exception
      */
@@ -355,7 +346,7 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
     }
 
     /**
-     * Generates new password reset token
+     * Generates a new password reset token
      *
      * @throws Exception
      */
@@ -364,9 +355,6 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 
-    /**
-     * Removes password reset token
-     */
     public function removePasswordResetToken(): void
     {
         $this->password_reset_token = null;
@@ -375,7 +363,7 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
     /**
      * @return array<int,string>
      */
-    static public function getAllForDropDown(): array
+    public static function getAllForDropDown(): array
     {
         /** @var User[] $users */
         $users = User::find()->all();
@@ -413,7 +401,7 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
     /**
      * @return array<int,string>
      */
-    static public function getFullUserList(): array
+    public static function getFullUserList(): array
     {
         /**
          * @var $usersUnordered User[]
@@ -431,7 +419,7 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
     /**
      * @return array<string,string>
      */
-    static public function userRoleNames(): array
+    public static function userRoleNames(): array
     {
         return [
             self::USER_ROLE_NONE => Yii::t('app', 'USER_ROLE_NONE'),
@@ -445,7 +433,7 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
     /**
      * @return array<string,string>
      */
-    static public function allowedUserRoleNames(): array
+    public static function allowedUserRoleNames(): array
     {
         $roles = User::userRoleNames();
         $allowedRoles = User::allowedUserRoles();
@@ -462,7 +450,7 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
     /**
      * @return array<int,string>
      */
-    static public function allowedUserRoles(): array
+    public static function allowedUserRoles(): array
     {
         return [self::USER_ROLE_USER, self::USER_ROLE_OPERATOR, self::USER_ROLE_MANAGER];
     }
@@ -470,7 +458,7 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
     /**
      * @return array<int,string>
      */
-    static public function operatorUserRoles(): array
+    public static function operatorUserRoles(): array
     {
         return [self::USER_ROLE_OPERATOR, self::USER_ROLE_MANAGER, self::USER_ROLE_ADMINISTRATOR];
     }
