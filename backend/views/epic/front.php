@@ -97,6 +97,14 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
 
         <div class="btn-group btn-group-lg">
             <?= Html::a(
+                Yii::t('app', 'BUTTON_SECRETS'),
+                ['secret/index', 'epic' => $epic->key],
+                ['class' => 'btn btn-lg btn-primary'],
+            ); ?>
+        </div>
+
+        <div class="btn-group btn-group-lg">
+            <?= Html::a(
                 Yii::t('app', 'BUTTON_SCENARIOS'),
                 ['scenario/index', 'epic' => $epic->key],
                 ['class' => 'btn btn-lg btn-primary'],

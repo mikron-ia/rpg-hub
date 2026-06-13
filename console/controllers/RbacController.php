@@ -506,5 +506,22 @@ class RbacController extends Controller
 
         $auth->addChild($operator, $controlProject);
         $auth->addChild($user, $viewProject);
+        
+        /* Add Secret rights */
+
+        $controlSecret = $auth->createPermission('controlSecret');
+        $controlSecret->description = 'Able to add, edit, or remove a Secret for Epic';
+        $controlSecret->ruleName = $gameMasterRule->name;
+
+        $auth->add($controlSecret);
+
+        $viewSecret = $auth->createPermission('viewSecret');
+        $viewSecret->description = 'Able to view a Secret';
+        $viewSecret->ruleName = $watcherRule->name;
+
+        $auth->add($viewSecret);
+
+        $auth->addChild($operator, $controlSecret);
+        $auth->addChild($user, $viewSecret);
     }
 }

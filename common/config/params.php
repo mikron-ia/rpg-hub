@@ -59,6 +59,7 @@ return [
     'keyGeneration' => [
         'announcement' => getenv('KEY_GENERATION_ANNOUNCEMENT'),
         'article' => getenv('KEY_GENERATION_ARTICLE'),
+        'bestowedList' => getenv('KEY_GENERATION_BESTOWED_LIST'),
         'character' => getenv('KEY_GENERATION_CHARACTER'),
         'characterSheet' => getenv('KEY_GENERATION_CHARACTER_SHEET'),
         'description' => getenv('KEY_GENERATION_DESCRIPTION'),
@@ -78,6 +79,7 @@ return [
         'recap' => getenv('KEY_GENERATION_RECAP'),
         'scenario' => getenv('KEY_GENERATION_SCENARIO'),
         'scribble' => getenv('KEY_GENERATION_SCRIBBLE'),
+        'secret' => getenv('KEY_GENERATION_SECRET'),
         'story' => getenv('KEY_GENERATION_STORY'),
         'storyCharacterAssignment' => getenv('KEY_GENERATION_STORY_CHARACTER_ASSIGNMENT'),
         'storyGroupAssignment' => getenv('KEY_GENERATION_STORY_GROUP_ASSIGNMENT'),

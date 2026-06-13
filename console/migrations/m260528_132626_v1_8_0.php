@@ -34,6 +34,37 @@ class m260528_132626_v1_8_0 extends Migration
             'FOREIGN KEY (seen_pack_id) REFERENCES `seen_pack` (seen_pack_id) ON DELETE RESTRICT ON UPDATE CASCADE',
             'FOREIGN KEY (epic_id) REFERENCES `epic` (epic_id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ], $tableOptions);
+
+        $this->createTable('{{%bestowed_list}}', [
+            'bestowed_list_id' => $this->primaryKey()->unsigned(),
+            'key' => $this->string(80)->notNull(),
+            'created_at' => $this->integer(11)->unsigned()->notNull(),
+            'updated_at' => $this->integer(11)->unsigned()->notNull(),
+        ]);
+
+        $this->createTable('{{%bestowed}}', [
+            'bestowed_id' => $this->primaryKey()->unsigned(),
+            'bestowed_list_id' => $this->integer(11)->unsigned()->notNull(),
+            'user_id' => $this->integer(11)->unsigned()->notNull(),
+            'created_at' => $this->integer(11)->unsigned()->notNull(),
+            'updated_at' => $this->integer(11)->unsigned()->notNull(),
+            'FOREIGN KEY (bestowed_list_id) REFERENCES `bestowed_list` (bestowed_list_id) ON DELETE RESTRICT ON UPDATE CASCADE',
+        ]);
+
+        $this->createTable('{{%secret}}', [
+            'secret_id' => $this->primaryKey()->unsigned(),
+            'epic_id' => $this->integer(11)->unsigned()->notNull(),
+            'key' => $this->string(80)->notNull(),
+            'title' => $this->string(120)->notNull(),
+            'content' => $this->text()->notNull(),
+            'notes' => $this->text(),
+            'content_expanded' => $this->text(),
+            'notes_expanded' => $this->text(),
+            'bestowed_list_id' => $this->integer(11)->unsigned(),
+            'created_at' => $this->integer(11)->unsigned()->notNull(),
+            'updated_at' => $this->integer(11)->unsigned()->notNull(),
+            'FOREIGN KEY (bestowed_list_id) REFERENCES `bestowed_list` (bestowed_list_id) ON DELETE RESTRICT ON UPDATE CASCADE',
+        ]);
     }
 
     #[Override]
