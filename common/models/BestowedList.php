@@ -64,6 +64,11 @@ class BestowedList extends ActiveRecord implements HasKey
         return array_column($this->bestowed, 'user_id');
     }
 
+    public function getBestowedUserNames(): array
+    {
+        return array_map(fn (Bestowed $bestowed) => $bestowed->user->username, $this->bestowed);
+    }
+
     /**
      * @throws Exception
      */

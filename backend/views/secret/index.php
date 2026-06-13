@@ -44,6 +44,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 'title',
                 [
+                    'label' => Yii::t('app', 'LABEL_VISIBLE_TO'),
+                    'contentOptions' => ['class' => 'text-center'],
+                    'headerOptions' => ['class' => 'text-center'],
+                    'value' => function (Secret $model) {
+                        return implode(', ', $model->bestowedList->getBestowedUserNames());
+                    },
+                ],
+                [
                     'attribute' => 'created_at',
                     'format' => 'datetime',
                     'contentOptions' => ['class' => 'text-center'],

@@ -25,7 +25,7 @@ class SecretQuery extends Secret
 
     public function search(array $params): ActiveDataProvider
     {
-        $query = Secret::find();
+        $query = Secret::find()->with('bestowedList', 'bestowedList.bestowed', 'bestowedList.bestowed.user');
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
