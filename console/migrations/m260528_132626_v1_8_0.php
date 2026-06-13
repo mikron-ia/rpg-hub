@@ -71,5 +71,11 @@ class m260528_132626_v1_8_0 extends Migration
     public function safeDown(): void
     {
         $this->dropTable('{{%project}}');
+
+        $this->dropTable('{{%secret}}');
+
+        $this->dropTable('{{%bestowed}}');
+
+        $this->dropTable('{{%bestowed_list}}');
     }
 }

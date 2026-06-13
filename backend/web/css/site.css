@@ -753,6 +753,10 @@ p {
     padding: 10px;
 }
 
+.text-separating-box-private {
+    border-style: dashed;
+}
+
 pre.wrapped-json {
     white-space: pre-wrap;
 }

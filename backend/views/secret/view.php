@@ -2,6 +2,7 @@
 
 use backend\assets\SecretAsset;
 use common\models\Secret;
+use common\models\User;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\DetailView;
@@ -54,7 +55,6 @@ SecretAsset::register($this);
                     'format' => 'raw',
                     'value' => Html::a($model->epic->name, ['epic/front', 'key' => $model->epic->key]),
                 ],
-                'title',
                 'created_at:datetime',
                 'updated_at:datetime',
             ],
@@ -80,9 +80,24 @@ SecretAsset::register($this);
     </div>
 
     <div class="col-md-6">
+        <?= $this->render('../bestowed/_view_bestowed_form', [
+            'model' => $model,
+            'attribute' => 'bestowedAccessIds',
+            'formId' => 'form-bestow-access',
+            'listKey' => $model->bestowedList->key,
+            'usersForDropdown' => $model->epic->getPlayerListForDropDown(),
+        ]) ?>
+    </div>
+
+    <div class="col-md-6">
+        <h3 class="text-center"><?= Yii::t('app', 'SECRET_FIELD_CONTENT') ?></h3>
+        <div class="text-separating-box"><?= $model->getContentFormatted() ?></div>
+    </div>
+
+    <div class="col-md-6">
         <h3 class="text-center"><?= Yii::t('app', 'SECRET_FIELD_NOTES') ?></h3>
         <?php if ($model->notes) : ?>
-            <div><?= $model->getNotesFormatted() ?></div>
+            <div class="text-separating-box text-separating-box-private"><?= $model->getNotesFormatted() ?></div>
         <?php else : ?>
             <div class="no-data-box"><?= Yii::t('app', 'SECRET_NOTES_EMPTY') ?></div>
         <?php endif; ?>

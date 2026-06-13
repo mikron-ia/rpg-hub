@@ -10,6 +10,7 @@ class SecretAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [];
     public $js = [
+        'js/bestower.js',
         'js/copy-key-button.js',
     ];
     public $depends = [

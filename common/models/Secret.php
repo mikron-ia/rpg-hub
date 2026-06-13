@@ -38,6 +38,8 @@ class Secret extends ActiveRecord implements HasEpicControl, HasKey
     use ToolsForEntity;
     use ToolsForLinkTags;
 
+    public array|string $bestowedAccessIds = [];
+
     #[Override]
     public static function tableName(): string
     {
@@ -76,6 +78,7 @@ class Secret extends ActiveRecord implements HasEpicControl, HasKey
             'notes_expanded' => Yii::t('app', 'SECRET_FIELD_NOTES'),
             'created_at' => Yii::t('app', 'SECRET_FIELD_CREATED_AT'),
             'updated_at' => Yii::t('app', 'SECRET_FIELD_UPDATED_AT'),
+            'bestowedAccessIds' => Yii::t('app', 'SECRET_FIELD_BESTOWED_ACCESS_IDS')
         ];
     }
 
@@ -86,6 +89,14 @@ class Secret extends ActiveRecord implements HasEpicControl, HasKey
             'content' => Yii::t('app', 'SECRET_HINT_CONTENT'),
             'notes' => Yii::t('app', 'SECRET_HINT_NOTES'),
         ];
+    }
+
+    #[Override]
+    public function afterFind(): void
+    {
+        $this->bestowedAccessIds = $this->bestowedList->getBestowedUserIds();
+
+        parent::afterFind();
     }
 
     /**
@@ -127,6 +138,11 @@ class Secret extends ActiveRecord implements HasEpicControl, HasKey
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
+    }
+
+    public function getBestowedList(): ActiveQuery
+    {
+        return $this->hasOne(BestowedList::class, ['bestowed_list_id' => 'bestowed_list_id']);
     }
 
     public function getContentFormatted(): string
