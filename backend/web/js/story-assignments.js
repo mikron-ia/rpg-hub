@@ -2,15 +2,11 @@ const fillList = function (type) {
     const list = $('#story-' + type + '-assignment-list');
     const path = '../story-assignment-' + type + '/get-story-' + type + 's';
 
-    $.ajax(
-        path,
-        {
-            method: "GET",
-            data: {
-                storyKey: list.data('story-key'),
-            }
+    $.ajax(path, {
+        method: "GET", data: {
+            storyKey: list.data('story-key'),
         }
-    ).done(function (xhr) {
+    }).done(function (xhr) {
         list.html(xhr);
     }).fail(function (xhr) {
         list.html('<div class="loader-broken">' + xhr.status + '<p>' + xhr.responseText + '</p></div>');
@@ -20,21 +16,17 @@ const fillList = function (type) {
 }
 
 const setActors = function (type, storyKeyFieldId, objects, rank, visibility) {
-    $.ajax(
-        '../story-assignment-' + type + '/set-story-' + type + 's',
-        {
-            method: "PUT",
-            data: {
-                storyKey: $(storyKeyFieldId).data('story-key'),
-                keys: objects,
-                rank: rank,
-                visibility: visibility,
-            }
+    $.ajax('../story-assignment-' + type + '/set-story-' + type + 's', {
+        method: "PUT", data: {
+            storyKey: $(storyKeyFieldId).data('story-key'),
+            keys: objects,
+            rank: rank,
+            visibility: visibility,
         }
-    ).done(function (xhr) {
+    }).done(function (xhr) {
         fillList(type);
     }).fail(function (xhr) {
-        console.log('Failed:'.xhr.status + ': ' + xhr.responseText);
+        console.log('Failed: ' + xhr.status + ': ' + xhr.responseText);
     }).always(function (xhr) {
         //@todo Logging
     });
