@@ -52,9 +52,9 @@ final class BestowedController extends CmsController
     /**
      * @throws HttpException
      */
-    public function actionGet(string $listKey, string $class): string
+    public function actionGet(string $listKey, string $objectClass): string
     {
-        $model = $this->findBestowedList($listKey, $class);
+        $model = $this->findBestowedList($listKey, $objectClass);
 
         return $this->renderAjax('_view_bestowed_list', [
             'dataProvider' => new ActiveDataProvider([

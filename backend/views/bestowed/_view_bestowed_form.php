@@ -37,3 +37,11 @@ $formTemplate = '{label}
     ],
 ); ?>
 <?php ActiveForm::end(); ?>
+
+<div style="display: none;" id="form-bestow-access-success" class="alert alert-success">
+    <?= Yii::t('app', 'BESTOWED_FORM_SUCCES') ?>
+</div>
+
+<div style="display: none;" id="form-bestow-access-fail" class="alert alert-danger">
+    <?= Yii::t('app', 'BESTOWED_FORM_ERROR') ?>: <span id="form-bestow-access-fail-text"></span>
+</div>

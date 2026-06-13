@@ -81,6 +81,8 @@ return [
     'BACKEND_FRONT_PAGE_MAIN_EPIC_SUGGESTED' => 'Epic suggested according to accessed object',
     'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC' => 'Welcome to the epic data hub. Please choose an epic.',
     'BACKEND_FRONT_PAGE_TITLE' => 'RPG Hub Control',
+    'BESTOWED_FORM_ERROR' => 'Bestowing/removing access rights failed',
+    'BESTOWED_FORM_SUCCES' => 'Bestowing/removing access rights was successful',
     'BESTOWED_LIST_NOT_AVAILABLE' => 'List of users with access is not available',
     'BETA_WARNING_TEXT' => 'Test feature',
     'BETA_WARNING_TITLE' => 'This is a test feature. Bugs and odd behaviors are likely to occur with much greater frequency than with the regular features.',

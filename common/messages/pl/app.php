@@ -81,6 +81,8 @@ return [
     'BACKEND_FRONT_PAGE_MAIN_EPIC_SUGGESTED' => 'Kampania sugerowana na podstawie aktywnego obiektu',
     'BACKEND_FRONT_PAGE_MAIN_SELECT_EPIC' => 'Witamy w centrum kontroli kampanii. Wybierz kampanię.',
     'BACKEND_FRONT_PAGE_TITLE' => 'Centrum kontroli',
+    'BESTOWED_FORM_ERROR' => 'Nadawanie/odbieranie praw dostępu nieudane',
+    'BESTOWED_FORM_SUCCES' => 'Nadawanie/odbieranie praw dostępu udane',
     'BESTOWED_LIST_NOT_AVAILABLE' => 'Lista użytkowników uprawnionych nie jest dostępna',
     'BETA_WARNING_TEXT' => 'Funkcjonalność w fazie testów',
     'BETA_WARNING_TITLE' => 'Ta funkcjonalność jest w fazie testów na użytkowniku. Bugi i nieoczekiwane zachowania mogą być zauważalnie częstsze niż w innych częściach aplikacji.',
