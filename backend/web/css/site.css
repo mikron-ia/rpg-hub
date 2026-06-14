@@ -735,18 +735,22 @@ p {
 .secret-text-box {
     background-color: aliceblue;
     border-color: lightskyblue;
-    border-radius: 15px 15px 0 0;
+    border-radius: 15px;
     border-style: solid;
     border-width: 5px;
     margin: 10px 10px 0;
     padding: 10px;
 }
 
-.secret-text-box-notes {
+.secret-text-box-actual-notes {
     margin: 0 10px 10px;
     border-radius: 0 0 15px 15px;
     border-style: dashed;
     border-top-style: none;
+}
+
+.secret-text-box-with-notes {
+    border-radius: 15px 15px 0 0;
 }
 
 .table-bordered > tbody > tr > td {

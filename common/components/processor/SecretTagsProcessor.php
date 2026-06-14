@@ -12,11 +12,11 @@ final class SecretTagsProcessor
     private const string PATTERN = '|SECRET:([a-z\d]{40})|';
 
     private const string OPERATOR_TEMPLATE =
-        '<div class="secret-text-box">' .
+        '<div class="secret-text-box secret-text-box-with-notes secret">' .
         '<h4>%s</h4>' .
         '<div>%s</div>' .
         '</div>' .
-        '<div class="secret-text-box secret-text-box-notes">'.
+        '<div class="secret-text-box secret-text-box-actual-notes secret">'.
         '<div>%s</div>'.
         '<p class="secret-text-box-bestowed"><strong>%s:</strong> %s</p>' .
         '</div>';

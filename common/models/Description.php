@@ -321,9 +321,29 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
         return $this->formatText($this->public_text_expanded, true);
     }
 
+    public function getPublicFormattedForOperator(): string
+    {
+        return $this->processSecretTagsForOperator($this->getPublicFormatted());
+    }
+
+    public function getPublicFormattedForUser(): string
+    {
+        return $this->processSecretTagsForUser($this->getPublicFormatted());
+    }
+
     public function getProtectedFormatted(): string
     {
         return $this->formatText($this->protected_text_expanded, true);
+    }
+
+    public function getProtectedFormattedForOperator(): string
+    {
+        return $this->processSecretTagsForOperator($this->getProtectedFormatted());
+    }
+
+    public function getProtectedFormattedForUser(): string
+    {
+        return $this->processSecretTagsForUser($this->getProtectedFormatted());
     }
 
     public function getPrivateFormatted(): string

@@ -132,11 +132,11 @@ $messageForStillValid = isset($model->point_in_time_still_valid_id) && isset($mo
     </div>
 
     <div class="col-md-12 public-notes">
-        <?= $model->getPublicFormatted(); ?>
+        <?= $model->getPublicFormattedForOperator(); ?>
     </div>
 
     <div class="col-md-12 protected-notes">
-        <?= $model->getProtectedFormatted(); ?>
+        <?= $model->getProtectedFormattedForOperator(); ?>
     </div>
 
     <div class="col-md-12 private-notes">

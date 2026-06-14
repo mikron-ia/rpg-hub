@@ -71,12 +71,12 @@ if ($model->getVisibility() !== Visibility::VISIBILITY_FULL) {
     <?php endif; ?>
 
     <div class="public-notes">
-        <?= $model->getPublicFormatted(); ?>
+        <?= $showPrivates ? $model->getPublicFormattedForOperator() : $model->getPublicFormattedForUser(); ?>
     </div>
 
     <?php if ($model->protected_text): ?>
         <div class="protected-notes comment">
-            <?= $model->getProtectedFormatted(); ?>
+            <?= $showPrivates ? $model->getProtectedFormattedForOperator() : $model->getProtectedFormattedForUser(); ?>
         </div>
     <?php endif; ?>
 
