@@ -41,12 +41,12 @@ fieldset[disabled] .btn-primary.active {
 }
 
 a {
-    color: black;
+    color: darkred;
 }
 
 a:hover,
 a:focus {
-    color: darkred;
+    color: red;
 }
 
 .dropdown-menu > .active > a {

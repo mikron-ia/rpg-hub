@@ -136,6 +136,7 @@ class DescriptionHistory extends ActiveRecord implements HasVisibility
 
         $history->description_id = $description->description_id;
         $history->public_text = $description->public_text;
+        $history->protected_text = $description->protected_text;
         $history->private_text = $description->private_text;
         $history->visibility = $description->visibility;
         $history->point_in_time_start_id = $description->point_in_time_start_id;

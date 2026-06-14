@@ -4,6 +4,7 @@ namespace common\components\processor;
 
 use common\models\Secret;
 use Yii;
+use yii\helpers\Html;
 
 final class SecretTagsProcessor
 {
@@ -12,13 +13,13 @@ final class SecretTagsProcessor
     private const string PATTERN = '|SECRET:([a-z\d]{40})|';
 
     private const string OPERATOR_TEMPLATE =
-        '<div class="secret-text-box secret-text-box-with-notes secret">' .
+        '<div class="secret-text-box secret-text-box-with-notes">' .
         '<h4>%s</h4>' .
-        '<div>%s</div>' .
+        '<div class="secret">%s</div>' .
         '</div>' .
-        '<div class="secret-text-box secret-text-box-actual-notes secret">'.
-        '<div>%s</div>'.
-        '<p class="secret-text-box-bestowed"><strong>%s:</strong> %s</p>' .
+        '<div class="secret-text-box secret-text-box-actual-notes">' .
+        '<div class="secret">%s</div>' .
+        '<p class="secret-text-box-bestowed secret"><strong>%s:</strong> %s</p>' .
         '</div>';
 
     private const string USER_TEMPLATE =
@@ -41,7 +42,13 @@ final class SecretTagsProcessor
             $replacement = !empty($secret)
                 ? sprintf(
                     self::OPERATOR_TEMPLATE,
-                    $secret->title,
+                    Html::a(
+                        $secret->title,
+                        Yii::$app->params['uri.back'] . Yii::$app->urlManager->createUrl([
+                            'secret/view',
+                            'key' => $secret->key,
+                        ])
+                    ),
                     $secret->getContentFormatted(),
                     $secret->getNotesFormatted(),
                     Yii::t('app', 'SECRET_BESTOWED_TO_LABEL'),

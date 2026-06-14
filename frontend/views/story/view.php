@@ -29,13 +29,19 @@ $this->params['showPrivates'] = $showPrivates;
 $items = [
     [
         'label' => Yii::t('app', 'STORY_SHORT_TAB'),
-        'content' => $this->render('_view_short', ['model' => $model]),
+        'content' => $this->render('_view_short', [
+            'model' => $model,
+            'showPrivates' => $showPrivates,
+        ]),
         'encode' => false,
         'active' => true,
     ],
     [
         'label' => Yii::t('app', 'STORY_LONG_TAB'),
-        'content' => $this->render('_view_long', ['model' => $model]),
+        'content' => $this->render('_view_long', [
+            'model' => $model,
+            'showPrivates' => $showPrivates,
+        ]),
         'encode' => false,
         'active' => false,
     ],
