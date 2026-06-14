@@ -356,6 +356,16 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return $this->formatText($this->long_expanded ?? $this->long, true);
     }
 
+    public function getLongFormattedForOperator(): string
+    {
+        return $this->processSecretTagsForOperator($this->getLongFormatted());
+    }
+
+    public function getLongFormattedForUser(): string
+    {
+        return $this->processSecretTagsForUser($this->getLongFormatted());
+    }
+
     /**
      * @return array
      * @todo Consider parameter visibility based on access rights - vide issue #104

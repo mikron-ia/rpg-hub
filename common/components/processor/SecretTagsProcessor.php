@@ -39,7 +39,7 @@ final class SecretTagsProcessor
 
             $secret = Secret::findOne(['key' => $key]);
 
-            $replacement = !empty($secret)
+            $replacement = (!empty($secret) && $secret->canUserControlYou())
                 ? sprintf(
                     self::OPERATOR_TEMPLATE,
                     Html::a(

@@ -271,6 +271,16 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
         return $this->formatText($this->long_expanded ?? $this->long, true);
     }
 
+    public function getLongFormattedForOperator(): string
+    {
+        return $this->processSecretTagsForOperator($this->getLongFormatted());
+    }
+
+    public function getLongFormattedForUser(): string
+    {
+        return $this->processSecretTagsForUser($this->getLongFormatted());
+    }
+
     public function getNotesFormatted(): string
     {
         return $this->formatText($this->notes_expanded ?? $this->notes, true);

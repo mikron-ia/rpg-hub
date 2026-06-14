@@ -11,7 +11,7 @@ use yii\web\View;
 <div>
     <div class="col-md-12">
         <div>
-            <?php echo $model->getLongFormatted(); ?>
+            <?php echo $model->getLongFormattedForOperator(); ?>
         </div>
     </div>
 </div>

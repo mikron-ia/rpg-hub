@@ -9,5 +9,5 @@ use yii\web\View;
 ?>
 
 <div class="col-lg-12">
-    <?= $model->getLongFormatted(); ?>
+    <?= $showPrivates ? $model->getLongFormattedForOperator() : $model->getLongFormattedForUser(); ?>
 </div>
