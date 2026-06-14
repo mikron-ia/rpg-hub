@@ -1028,6 +1028,7 @@ return [
     'SCRIBBLE_PACK_CLASS' => 'Class',
     'SCRIBBLE_PACK_ID' => 'ID',
     'SCRIBBLE_TITLE' => 'Player\'s scribbles',
+    'SECRET_BESTOWED_TO_LABEL' => 'Visible to',
     'SECRET_FIELD_BESTOWED_ACCESS_IDS' => 'Users allowed to see the content',
     'SECRET_FIELD_CONTENT' => 'Content',
     'SECRET_FIELD_CREATED_AT' => 'Created at',

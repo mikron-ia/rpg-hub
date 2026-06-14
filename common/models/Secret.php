@@ -145,6 +145,16 @@ class Secret extends ActiveRecord implements HasEpicControl, HasKey
         return $this->hasOne(BestowedList::class, ['bestowed_list_id' => 'bestowed_list_id']);
     }
 
+    public function getBestowedListAsUsernames(bool $useFormatting): array
+    {
+        $template = $useFormatting ? '<span class="bestowed-username">%s</span>' : '%s';
+
+        return array_map(
+            fn(Bestowed $bestowed) => sprintf($template, $bestowed->user->username),
+            $this->bestowedList->bestowed
+        );
+    }
+
     public function getContentFormatted(): string
     {
         return Markdown::process(Html::encode($this->content_expanded ?? $this->content), 'gfm');

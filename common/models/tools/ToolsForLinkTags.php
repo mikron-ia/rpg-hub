@@ -3,6 +3,7 @@
 namespace common\models\tools;
 
 use common\components\processor\MediaTagsProcessor;
+use common\components\processor\SecretTagsProcessor;
 use common\models\Article;
 use common\models\Character;
 use common\models\core\IsLinkable;
@@ -174,6 +175,16 @@ trait ToolsForLinkTags
             '<table class="table table-bordered table-striped table-from-markdown">',
             $text
         );
+    }
+
+    private function processSecretTagsForOperator(string $text): string
+    {
+        return SecretTagsProcessor::processSecretTagsForOperator($text);
+    }
+
+    private function processSecretTagsForUser(string $text): string
+    {
+        return SecretTagsProcessor::processSecretTagsForUser($text);
     }
 
     private function formatText(?string $textToFormat, bool $processImages, bool $encode = true): string

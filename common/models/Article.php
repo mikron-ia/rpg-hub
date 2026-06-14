@@ -245,6 +245,16 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return $this->formatText($this->text_ready ?? $this->text_raw, true, false);
     }
 
+    public function getTextFormattedForOperator(): string
+    {
+        return $this->processSecretTagsForOperator($this->getTextFormatted());
+    }
+
+    public function getTextFormattedForUser(): string
+    {
+        return $this->processSecretTagsForUser($this->getTextFormatted());
+    }
+
     #[Override]
     public function recordSighting(): bool
     {

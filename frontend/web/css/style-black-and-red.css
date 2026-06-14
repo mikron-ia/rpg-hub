@@ -140,6 +140,11 @@ li.redacted {
     color: darkred;
 }
 
+.secret-text-box {
+    background-color: pink;
+    border-color: #dd0022;
+}
+
 .type-tag {
     background-color: white;
     border-color: darkred;

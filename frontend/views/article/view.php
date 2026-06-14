@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ARTICLE_TITLE_INDEX'), 'url' => ['index', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = $this->title;
 
-$this->params['showPrivates'] = $model->canUserControlYou();
+$this->params['showPrivates'] = $showPrivates = $model->canUserControlYou();
 ?>
 <div class="article-view col-lg-10 col-lg-offset-1 col-md-12">
 
@@ -24,7 +24,7 @@ $this->params['showPrivates'] = $model->canUserControlYou();
             <?php endif; ?>
             <?= Html::encode($this->title) ?>
         </h1>
-        <?php if ($this->params['showPrivates']): ?>
+        <?php if ($showPrivates): ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_SEE_BACKEND'),
                 Yii::$app->params['uri.back'] . Yii::$app->urlManager->createUrl(['article/view', 'key' => $model->key]),
@@ -42,7 +42,7 @@ $this->params['showPrivates'] = $model->canUserControlYou();
     <?php endif; ?>
 
     <div>
-        <?= $model->getTextFormatted() ?>
+        <?= $showPrivates ? $model->getTextFormattedForOperator() : $model->getTextFormattedForUser() ?>
     </div>
 
 </div>

@@ -56,8 +56,6 @@ interface HasEpicControl
 
     /**
      * Determines whether the user can alter or delete the object
-     *
-     * @throws HttpException
      */
     public function canUserControlYou(): bool;
 

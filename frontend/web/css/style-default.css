@@ -139,6 +139,11 @@ li.redacted {
     color: green;
 }
 
+.secret-text-box {
+    background-color: lightyellow;
+    border-color: #88dd00;
+}
+
 .type-tag {
     background-color: white;
     border-color: green;

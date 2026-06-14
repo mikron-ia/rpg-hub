@@ -9,5 +9,5 @@ use yii\web\View;
 ?>
 
 <div class="col-md-12">
-    <?= $model->getTextFormatted() ?>
+    <?= $model->getTextFormattedForOperator() ?>
 </div>
