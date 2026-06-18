@@ -18,13 +18,14 @@ enum Visibility: string
     public const array allowedVisibilities =  [
         //Visibility::VISIBILITY_NONE,
         Visibility::VISIBILITY_GM,
-        //Visibility::VISIBILITY_DESIGNATED,
+        Visibility::VISIBILITY_DESIGNATED,
         //Visibility::VISIBILITY_LOGGED,
         Visibility::VISIBILITY_FULL,
     ];
 
     /**
      * Determines range of accessible objects for the user
+     * This method is guaranteed to return only safe objects
      *
      * @return array<int,string>
      */
@@ -34,11 +35,40 @@ enum Visibility: string
             /* No epic and no user makes bad business */
             $visibilityVector = [];
         } else {
-            $visibilityVector = [Visibility::VISIBILITY_FULL->value, Visibility::VISIBILITY_LOGGED->value];
+            $visibilityVector = [
+                Visibility::VISIBILITY_FULL->value,
+                Visibility::VISIBILITY_LOGGED->value,
+            ];
 
             if (Participant::participantHasRole(Yii::$app->user->identity, $epic, ParticipantRole::ROLE_GM)) {
                 $visibilityVector[] = Visibility::VISIBILITY_GM->value;
                 $visibilityVector[] = Visibility::VISIBILITY_DESIGNATED->value;
+            }
+        }
+
+        return $visibilityVector;
+    }
+
+    /**
+     * Determines range of accessible objects for the user, allowing for unsafe (potentially secret) objects
+     * The results should be filtered further to remove those
+     *
+     * @return array<int,string>
+     */
+    public static function determineUnsafeVisibilityVector(Epic $epic): array
+    {
+        if (Yii::$app->user->isGuest) {
+            /* No epic and no user makes bad business */
+            $visibilityVector = [];
+        } else {
+            $visibilityVector = [
+                Visibility::VISIBILITY_FULL->value,
+                Visibility::VISIBILITY_LOGGED->value,
+                Visibility::VISIBILITY_DESIGNATED->value, // the source of unsafety
+            ];
+
+            if (Participant::participantHasRole(Yii::$app->user->identity, $epic, ParticipantRole::ROLE_GM)) {
+                $visibilityVector[] = Visibility::VISIBILITY_GM->value;
             }
         }
 

@@ -5,6 +5,7 @@ namespace common\models;
 use common\models\core\HasKey;
 use common\models\tools\ToolsForEntity;
 use Override;
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -66,7 +67,7 @@ class BestowedList extends ActiveRecord implements HasKey
 
     public function getBestowedUserNames(): array
     {
-        return array_map(fn (Bestowed $bestowed) => $bestowed->user->username, $this->bestowed);
+        return array_map(fn(Bestowed $bestowed) => $bestowed->user->username, $this->bestowed);
     }
 
     /**
@@ -106,8 +107,13 @@ class BestowedList extends ActiveRecord implements HasKey
         return $this;
     }
 
-    public function hasBestowedFor(int $userId): bool
+    public function hasBestowedFor(?int $userId): bool
     {
+        if ($userId === null) {
+            // It is impossible to bestow access for a guest, but it is possible for the guest to check
+            return false;
+        }
+
         return Bestowed::findOne([
                 'bestowed_list_id' => $this->bestowed_list_id,
                 'user_id' => $userId,

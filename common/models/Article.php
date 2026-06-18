@@ -7,6 +7,7 @@ use common\models\core\HasKey;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\IsLinkable;
+use common\models\core\Visibility;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use common\models\tools\ToolsForEntity;
@@ -136,6 +137,15 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
             'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
             'bestowedAccessIds' => Yii::t('app', 'BESTOWED_ACCESS_IDS_WITH_VISIBILITY')
+        ];
+    }
+
+    public static function allowedVisibilities(): array
+    {
+        return [
+            Visibility::VISIBILITY_GM,
+            Visibility::VISIBILITY_DESIGNATED,
+            Visibility::VISIBILITY_FULL,
         ];
     }
 
@@ -271,6 +281,11 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return $this->processSecretTagsForUser($this->getTextFormatted());
     }
 
+    public function getVisibility(): Visibility
+    {
+        return Visibility::from($this->visibility);
+    }
+
     #[Override]
     public function recordSighting(): bool
     {
@@ -317,7 +332,16 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
 
     public function canUserViewYou(): bool
     {
-        return self::canUserViewInEpic($this->epic);
+        $visibility = $this->getVisibility();
+        $userControl = $this->canUserControlYou();
+
+        return self::canUserViewInEpic($this->epic) &&
+            ($visibility !== Visibility::VISIBILITY_GM || $userControl) &&
+            (
+                $visibility !== Visibility::VISIBILITY_DESIGNATED ||
+                $userControl ||  // free pass on designated for operators
+                $this->bestowedList->hasBestowedFor(Yii::$app->user->getId()) // is user on the list?
+            );
     }
 
     static public function throwExceptionAboutCreate(): void

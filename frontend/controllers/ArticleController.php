@@ -107,7 +107,7 @@ class ArticleController extends Controller
             throw new NotFoundHttpException(Yii::t('app', 'ARTICLE_NOT_AVAILABLE'));
         }
 
-        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
+        if (!in_array($model->visibility, Visibility::determineUnsafeVisibilityVector($model->epic))) {
             throw new NotFoundHttpException(Yii::t('app', 'ARTICLE_NOT_AVAILABLE'));
         }
 
