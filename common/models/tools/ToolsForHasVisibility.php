@@ -8,9 +8,10 @@ trait ToolsForHasVisibility
 {
     /**
      * @note Override as needed, this is the default state
+     *
      * @return array<Visibility>
      */
-    static public function allowedVisibilities(): array
+    public static function allowedVisibilities(): array
     {
         return [
             Visibility::VISIBILITY_GM,
@@ -21,7 +22,7 @@ trait ToolsForHasVisibility
     /**
      * @return array<string>
      */
-    static public function allowedVisibilitiesForValidator(): array
+    public static function allowedVisibilitiesForValidator(): array
     {
         return array_map(function (Visibility $visibility) {
             return $visibility->value;

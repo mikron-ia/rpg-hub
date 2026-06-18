@@ -5,6 +5,7 @@
 /* @var $model common\models\Article */
 
 use backend\assets\ArticleAsset;
+use common\models\core\Visibility;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -84,6 +85,31 @@ ArticleAsset::register($this);
         <?php endif; ?>
     </div>
 
+    <div class="col-md-6">
+        <h2 class="text-center"><?= Yii::t('app', 'BESTOWED_VISIBILITY_HEADER'); ?></h2>
+        <?php if (!empty($model->bestowed_list_id) && $model->visibility === Visibility::VISIBILITY_DESIGNATED->value): ?>
+            <?= $this->render('../bestowed/_view_bestowed_form', [
+                'model' => $model,
+                'attribute' => 'bestowedAccessIds',
+                'class' => 'Article',
+                'formId' => 'form-bestow-access',
+                'listKey' => $model->bestowedList->key,
+                'usersForDropdown' => $model->epic->getPlayerListForDropDown(),
+            ]) ?>
+        <?php else: ?>
+            <p class="info-box">
+                <?= Yii::t(
+                    'app',
+                    'BESTOWED_VISIBILITY_NOT_ACTIVE {currentVisibility} {targetVisibility}',
+                    [
+                        'currentVisibility' => $model->getVisibility()->getNameLowercase(),
+                        'targetVisibility' => Visibility::VISIBILITY_DESIGNATED->getNameLowercase(),
+                    ]
+                ) ?>
+            </p>
+        <?php endif; ?>
+    </div>
+
     <div class="col-md-6" id="key-div" style="display: none">
         <h2 class="text-center"><?= Yii::t('app', 'ARTICLE_KEY'); ?></h2>
         <p class="info-box"><?= Yii::t('app', 'LABEL_KEY_TITLE_EXPLANATION') ?></p>
@@ -114,17 +140,6 @@ ArticleAsset::register($this);
                 ['class' => 'btn btn-default', 'id' => 'button-copy-key', 'style' => 'display: none;']
             ) ?>
         </div>
-    </div>
-
-    <div class="col-md-6">
-        <?= $this->render('../bestowed/_view_bestowed_form', [
-            'model' => $model,
-            'attribute' => 'bestowedAccessIds',
-            'class' => 'Article',
-            'formId' => 'form-bestow-access',
-            'listKey' => $model->bestowedList->key,
-            'usersForDropdown' => $model->epic->getPlayerListForDropDown(),
-        ]) ?>
     </div>
 
 </div>

@@ -28,7 +28,7 @@ enum Visibility: string
      *
      * @return array<int,string>
      */
-    static public function determineVisibilityVector(Epic $epic): array
+    public static function determineVisibilityVector(Epic $epic): array
     {
         if (Yii::$app->user->isGuest) {
             /* No epic and no user makes bad business */
@@ -51,7 +51,7 @@ enum Visibility: string
     }
 
     /**
-     * Provides visibility names
+     * Provides names for visibilities
      *
      * @param array<int,Visibility> $allowed
      *
@@ -80,11 +80,11 @@ enum Visibility: string
     }
 
     /**
-     * Provides visibilities names in lowercase
+     * Provides names for visibilities in lowercase
      *
      * @return array<string,string>
      */
-    static public function visibilityNamesLowercase($allowed): array
+    public static function visibilityNamesLowercase($allowed): array
     {
         return self::filterNames($allowed, [
             Visibility::VISIBILITY_NONE->value => Yii::t('app', 'VISIBILITY_NONE_LOWERCASE'),
@@ -95,7 +95,7 @@ enum Visibility: string
         ]);
     }
 
-    static private function filterNames(array $allowed, array $names): array
+    private static function filterNames(array $allowed, array $names): array
     {
         $allowedArray = array_map(function (Visibility $visibility) {
             return $visibility->value;
