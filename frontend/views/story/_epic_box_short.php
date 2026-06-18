@@ -23,8 +23,10 @@ $storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
             <span class="current-tag tag-view-page tag-smaller"><?= Yii::t('app', 'TAG_CURRENT_F') ?></span>
         <?php endif; ?>
         <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
-            <span class="text-center unpublished-tag tag-smaller">
-                <?= Yii::t('app', 'TAG_UNPUBLISHED_F') ?>
+            <span class="text-center unpublished-tag tag-smaller"
+                  title="<?= Yii::t('app', 'TAG_TITLE_UNPUBLISHED_F') ?>"
+            >
+                <?= Yii::t('app', 'TAG_LABEL_UNPUBLISHED_F') ?>
             </span>
         <?php endif; ?>
     </h4>

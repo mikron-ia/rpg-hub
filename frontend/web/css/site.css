@@ -412,6 +412,20 @@ a:focus {
     vertical-align: middle;
 }
 
+.designated-tag {
+    border: 4px solid currentColor;
+    border-radius: 15px;
+    color: white;
+    cursor: help;
+    display: inline-block;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 5px 5px 9px 5px;
+    padding: 5px 20px;
+    vertical-align: middle;
+}
+
 .type-tag {
     border: 4px solid currentColor;
     border-radius: 15px;
@@ -429,6 +443,7 @@ a:focus {
     border: 4px solid currentColor;
     border-radius: 15px;
     color: white;
+    cursor: help;
     display: inline-block;
     font-family: "Courier New", Courier, monospace;
     font-size: 2rem;
@@ -615,6 +630,7 @@ li.redacted:hover {
 .epic-status {
     background-color: red;
     color: black;
+    cursor: help;
     display: inline-block;
     font-family: "Courier New", Courier, monospace;
     font-size: 1em;

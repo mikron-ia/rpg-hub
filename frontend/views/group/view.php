@@ -91,7 +91,7 @@ if ($this->params['showPrivates']) {
     <div class="buttoned-header">
         <h1>
             <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
-                <span class="unpublished-tag tag-view-page"><?= Yii::t('app', 'TAG_UNPUBLISHED_F') ?></span>
+                <span class="unpublished-tag tag-view-page"><?= Yii::t('app', 'TAG_LABEL_UNPUBLISHED_F') ?></span>
             <?php endif; ?>
             <?= Html::encode($this->title) ?>
         </h1>

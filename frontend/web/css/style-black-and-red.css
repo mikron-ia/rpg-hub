@@ -140,6 +140,12 @@ li.redacted {
     color: darkred;
 }
 
+.designated-tag {
+    background-color: sandybrown;
+    border-color: sandybrown;
+    color: white;
+}
+
 .secret-text-box {
     background-color: pink;
     border-color: #dd0022;
@@ -152,7 +158,7 @@ li.redacted {
 }
 
 .unpublished-tag {
-    background-color: darkviolet;
-    border-color: darkviolet;
+    background-color: brown;
+    border-color: brown;
     color: white;
 }
