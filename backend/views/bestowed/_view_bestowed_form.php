@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $model Model */
+/* @var $class string */
 /* @var $formId string */
 /* @var $listKey string */
 /* @var $attribute string */
@@ -31,7 +32,7 @@ $formTemplate = '{label}
         'options' => [
             'multiple' => true,
             'data-list-key' => $listKey,
-            'data-object-class' => 'Secret',
+            'data-object-class' => $class,
         ],
         'pluginOptions' => ['allowClear' => true],
     ],

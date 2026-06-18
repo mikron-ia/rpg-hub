@@ -1,8 +1,5 @@
 <?php
 
-use common\models\core\Visibility;
-use common\models\Story;
-use common\models\StoryCharacterAssignment;
 use yii\data\ArrayDataProvider;
 use yii\grid\GridView;
 use yii\web\View;

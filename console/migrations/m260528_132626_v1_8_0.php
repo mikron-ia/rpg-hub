@@ -65,11 +65,27 @@ class m260528_132626_v1_8_0 extends Migration
             'updated_at' => $this->integer(11)->unsigned()->notNull(),
             'FOREIGN KEY (bestowed_list_id) REFERENCES `bestowed_list` (bestowed_list_id) ON DELETE RESTRICT ON UPDATE CASCADE',
         ]);
+
+        $this->addColumn('{{%article}}', 'bestowed_list_id', $this->integer(11)->unsigned());
+
+        $this->addForeignKey(
+            'article_bestowed_list',
+            '{{%article}}',
+            'bestowed_list_id',
+            '{{%bestowed_list}}',
+            'bestowed_list_id',
+            'RESTRICT',
+            'CASCADE'
+        );
     }
 
     #[Override]
     public function safeDown(): void
     {
+        $this->dropForeignKey('article_bestowed_list', '{{%article}}');
+
+        $this->dropColumn('{{%article}}', 'bestowed_list_id');
+
         $this->dropTable('{{%project}}');
 
         $this->dropTable('{{%secret}}');

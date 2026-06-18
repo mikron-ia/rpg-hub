@@ -83,6 +83,7 @@ SecretAsset::register($this);
         <?= $this->render('../bestowed/_view_bestowed_form', [
             'model' => $model,
             'attribute' => 'bestowedAccessIds',
+            'class' => 'Secret',
             'formId' => 'form-bestow-access',
             'listKey' => $model->bestowedList->key,
             'usersForDropdown' => $model->epic->getPlayerListForDropDown(),

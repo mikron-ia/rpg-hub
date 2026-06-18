@@ -78,7 +78,7 @@ class Secret extends ActiveRecord implements HasEpicControl, HasKey
             'notes_expanded' => Yii::t('app', 'SECRET_FIELD_NOTES'),
             'created_at' => Yii::t('app', 'SECRET_FIELD_CREATED_AT'),
             'updated_at' => Yii::t('app', 'SECRET_FIELD_UPDATED_AT'),
-            'bestowedAccessIds' => Yii::t('app', 'SECRET_FIELD_BESTOWED_ACCESS_IDS')
+            'bestowedAccessIds' => Yii::t('app', 'BESTOWED_ACCESS_IDS_NO_VISIBILITY')
         ];
     }
 

@@ -12,6 +12,7 @@ class SecretAsset extends AssetBundle
     public $js = [
         'js/bestower.js',
         'js/copy-key-button.js',
+        'js/secret-bestower.js',
     ];
     public $depends = [
         'backend\assets\AppAsset',

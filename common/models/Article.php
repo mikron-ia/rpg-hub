@@ -36,7 +36,9 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $text_raw
  * @property string $text_ready
  * @property string $utility_bag_id
+ * @property int $bestowed_list_id
  *
+ * @property BestowedList $bestowedList
  * @property DescriptionPack $descriptionPack
  * @property Epic $epic
  * @property SeenPack $seenPack
@@ -52,6 +54,8 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
     use ToolsForHasVisibility;
 
     public bool $is_off_the_record_change = false;
+
+    public array|string $bestowedAccessIds = [];
 
     #[Override]
     public static function tableName(): string
@@ -131,6 +135,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             'text_ready' => Yii::t('app', 'ARTICLE_TEXT'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
             'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
+            'bestowedAccessIds' => Yii::t('app', 'BESTOWED_ACCESS_IDS_WITH_VISIBILITY')
         ];
     }
 
@@ -140,6 +145,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
     #[Override]
     public function afterFind(): void
     {
+        $this->bestowedAccessIds = $this->bestowedList?->getBestowedUserIds() ?? [];
         if ($this->seen_pack_id) {
             $this->seenPack->recordNotification();
         }
@@ -184,6 +190,11 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             $this->description_pack_id = $pack->description_pack_id;
         }
 
+        if (empty($this->bestowed_list_id)) {
+            $list = BestowedList::createList();
+            $this->bestowed_list_id = $list->bestowed_list_id;
+        }
+
         $this->text_ready = Markdown::process(
             Html::encode($this->processAllInOrder($this->text_raw)),
             'gfm'
@@ -206,6 +217,11 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             $this->seenPack->updateRecord();
         }
         parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function getBestowedList(): ActiveQuery
+    {
+        return $this->hasOne(BestowedList::class, ['bestowed_list_id' => 'bestowed_list_id']);
     }
 
     public function getDescriptionPack(): ActiveQuery

@@ -116,4 +116,15 @@ ArticleAsset::register($this);
         </div>
     </div>
 
+    <div class="col-md-6">
+        <?= $this->render('../bestowed/_view_bestowed_form', [
+            'model' => $model,
+            'attribute' => 'bestowedAccessIds',
+            'class' => 'Article',
+            'formId' => 'form-bestow-access',
+            'listKey' => $model->bestowedList->key,
+            'usersForDropdown' => $model->epic->getPlayerListForDropDown(),
+        ]) ?>
+    </div>
+
 </div>
