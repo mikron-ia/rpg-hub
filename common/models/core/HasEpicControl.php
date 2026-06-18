@@ -61,8 +61,6 @@ interface HasEpicControl
 
     /**
      * Determines whether the user can view the object
-     *
-     * @throws HttpException
      */
     public function canUserViewYou(): bool;
 

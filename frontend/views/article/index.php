@@ -1,14 +1,14 @@
 <?php
 
 use common\models\ArticleQuery;
-use yii\data\ActiveDataProvider;
+use yii\data\DataProviderInterface;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ListView;
 
 /* @var $this View */
 /* @var $searchModel ArticleQuery */
-/* @var $dataProvider ActiveDataProvider */
+/* @var $dataProvider DataProviderInterface */
 
 $this->title = Yii::t('app', 'ARTICLE_TITLE_INDEX');
 $this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
