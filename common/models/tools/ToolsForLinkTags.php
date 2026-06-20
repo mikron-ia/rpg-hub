@@ -2,6 +2,7 @@
 
 namespace common\models\tools;
 
+use common\components\processor\MarkdownProcessor;
 use common\components\processor\MediaTagsProcessor;
 use common\components\processor\SecretTagsProcessor;
 use common\models\Article;
@@ -12,7 +13,6 @@ use common\models\Location;
 use common\models\Story;
 use Yii;
 use yii\helpers\Html;
-use yii\helpers\Markdown;
 
 trait ToolsForLinkTags
 {
@@ -168,15 +168,6 @@ trait ToolsForLinkTags
         return $this->processAllInOrder($textToFormat ?? '');
     }
 
-    private function addClasses(string $text): string
-    {
-        return str_replace(
-            '<table>',
-            '<table class="table table-bordered table-striped table-from-markdown">',
-            $text
-        );
-    }
-
     private function processSecretTagsForOperator(string $text): string
     {
         return SecretTagsProcessor::processSecretTagsForOperator($text);
@@ -191,19 +182,15 @@ trait ToolsForLinkTags
     {
         $textForEncoding = $textToFormat ?? '';
 
-        // disabling encoding is needed to accommodate the occasional pre-processing; do not use this unless necessary
-        $textForMarkdown = $encode ? Html::encode($textForEncoding) : $textForEncoding;
-
-        $processedTextMarkdown = Markdown::process(
-            markdown: str_ireplace(
-                search: '&gt;',
-                replace: '>',
-                subject: $textForMarkdown
-            ),
-            flavor: 'gfm'
+        /**
+         * Disabling encoding is needed to accommodate text pre-processing in some objects
+         * Do not use this unless necessary for legacy reasons
+         */
+        $processedText = MarkdownProcessor::process(
+            textForMarkdown: $encode
+                ? Html::encode($textForEncoding)
+                : $textForEncoding
         );
-
-        $processedText = $this->addClasses($processedTextMarkdown);
 
         return $processImages ? MediaTagsProcessor::processMediaTags($processedText) : $processedText;
     }
