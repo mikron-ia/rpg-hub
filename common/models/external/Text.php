@@ -6,27 +6,13 @@ use yii\base\Model;
 
 class Text extends Model implements ExternalComponent
 {
-    /**
-     * @var string
-     */
-    public $class;
+    public string $class;
 
-    /**
-     * @var string
-     */
-    public $title = '';
+    public string $title = '';
 
-    /**
-     * @var string
-     */
-    public $text;
+    public string $text;
 
-    /**
-     * Creates object from array
-     * @param array $data
-     * @return ExternalComponent
-     */
-    static public function createFromData($data): ExternalComponent
+    public static function createFromData(array|string $data): ExternalComponent
     {
         $object = new Text();
 

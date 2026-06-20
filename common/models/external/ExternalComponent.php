@@ -5,11 +5,9 @@ namespace common\models\external;
 interface ExternalComponent
 {
     /**
-     * Creates object from array
-     * @param array|string $data
-     * @return ExternalComponent
+     * Creates the object from an array
      */
-    static public function createFromData($data): ExternalComponent;
+    public static function createFromData(array|string $data): ExternalComponent;
 
     /**
      * Provides displayable content of the object

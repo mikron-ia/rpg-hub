@@ -6,22 +6,14 @@ use yii\base\Model;
 
 class Table extends Model implements ExternalComponent
 {
-    /**
-     * @var string
-     */
-    public $caption = '';
+    public string $caption = '';
 
     /**
      * @var TableRow[]
      */
-    public $rows;
+    public array $rows;
 
-    /**
-     * Creates object from array
-     * @param array $data
-     * @return ExternalComponent
-     */
-    static public function createFromData($data): ExternalComponent
+    public static function createFromData(array|string $data): ExternalComponent
     {
         $object = new Table();
 

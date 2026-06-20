@@ -6,43 +6,21 @@ use yii\base\Model;
 
 class Box extends Model implements ExternalComponent
 {
-    /**
-     * @var string
-     */
-    public $title;
+    public string $title;
 
-    /**
-     * @var ExternalComponent
-     */
-    public $content;
+    public ExternalComponent $content;
 
-    /**
-     * @var string Class for the encompassing div
-     */
-    private $sizeClass;
+    private string $sizeClass;
 
-    /**
-     * Creates object from array
-     * @param array $data
-     * @return ExternalComponent
-     */
-    static public function createFromData($data): ExternalComponent
+    public static function createFromData(array|string $data): ExternalComponent
     {
         $type = $data['type'] ?? 'text';
         $size = $data['size'] ?? 'medium';
 
-        switch ($type) {
-            case 'table' :
-                $content = Table::createFromData($data);
-                break;
-            case 'text' :
-                $content = Text::createFromData($data);
-                break;
-            default :
-                $content = Text::createFromData($data);
-                break;
-
-        }
+        $content = match ($type) {
+            'table' => Table::createFromData($data),
+            default => Text::createFromData($data),
+        };
 
         $object = new Box();
 

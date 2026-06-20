@@ -1,15 +1,19 @@
 <?php
 
+use common\models\CharacterSheet;
+use yii\bootstrap\Tabs;
 use yii\helpers\Html;
+use yii\helpers\HtmlPurifier;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\CharacterSheet */
+/* @var $this View */
+/* @var $model CharacterSheet */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = [
     'label' => Yii::t('app', 'CHARACTER_SHEET_TITLE_INDEX'),
-    'url' => ['character-sheet/index', 'epic' => $model->epic->key]
+    'url' => ['character-sheet/index', 'epic' => $model->epic->key],
 ];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -22,7 +26,7 @@ $items = [];
 foreach ($tabs as $tabName => $tabData) {
     $item = [
         'label' => $tabData->title,
-        'content' => '<div class="external-data-tab-container">' . \yii\helpers\HtmlPurifier::process($tabData->getContent()) . '</div>',
+        'content' => '<div class="external-data-tab-container">' . HtmlPurifier::process($tabData->getContent()) . '</div>',
         'encode' => false,
         'active' => $active,
     ];
@@ -87,18 +91,18 @@ $items[] = [
             ['class' => 'btn btn-primary']
         ) ?>
 
-        <?= \yii\helpers\Html::a(
+        <?= Html::a(
             Yii::t('app', 'BUTTON_SEE_FRONTEND'),
             Yii::$app->params['uri.front'] . Yii::$app->urlManager->createUrl([
                 'character-sheet/view',
-                'key' => $model->key
+                'key' => $model->key,
             ]),
             ['class' => 'btn btn-default']
         ) ?>
     </div>
 
-    <?= \yii\bootstrap\Tabs::widget([
-        'items' => $items
+    <?= Tabs::widget([
+        'items' => $items,
     ]) ?>
 
 </div>

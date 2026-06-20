@@ -9,9 +9,9 @@ class TableRow extends Model implements ExternalComponent
     /**
      * @var TableCell[]
      */
-    public $cells;
+    public array $cells;
 
-    static public function createFromData($data): ExternalComponent
+    public static function createFromData(array|string $data): ExternalComponent
     {
         $object = new TableRow();
 
@@ -28,7 +28,7 @@ class TableRow extends Model implements ExternalComponent
      * @param TableRow $object
      * @param array $data
      */
-    private function makeFromComplexArray(TableRow $object, array $data)
+    private function makeFromComplexArray(TableRow $object, array $data): void
     {
         foreach ($data['cells'] ?? [] as $cell) {
             $object->cells[] = TableCell::createFromData($cell);
@@ -39,7 +39,7 @@ class TableRow extends Model implements ExternalComponent
      * @param TableRow $object
      * @param array $data
      */
-    private function makeFromSimpleArray(TableRow $object, array $data)
+    private function makeFromSimpleArray(TableRow $object, array $data): void
     {
         foreach ($data ?? [] as $cell) {
             $object->cells[] = TableCell::createFromData($cell);

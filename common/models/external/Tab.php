@@ -7,22 +7,16 @@ use yii\base\Model;
 
 class Tab extends Model implements ExternalComponent
 {
-    /**
-     * @var string
-     */
-    public $title;
+    public string $title;
 
-    /**
-     * @var string
-     */
-    public $description;
+    public string $description;
 
     /**
      * @var Box[]
      */
-    public $boxes;
+    public array $boxes;
 
-    static public function createFromData($data): ExternalComponent
+    public static function createFromData(array|string $data): ExternalComponent
     {
         $boxes = [];
 
