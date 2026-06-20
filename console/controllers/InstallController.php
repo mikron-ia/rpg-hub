@@ -11,9 +11,7 @@ use yii\console\ExitCode;
 use yii\helpers\BaseConsole;
 
 /**
- * Contain actions needed at the installation stage that do not fit into other controllers
- *
- * @package console\controllers
+ * Contain actions needed at the installation stage
  */
 class InstallController extends Controller
 {

@@ -12,11 +12,7 @@ use Yii;
 use yii\console\Controller;
 
 /**
- * Class RbacController
- *
  * Initiates and sets all access rights
- *
- * @package console\controllers
  */
 class RbacController extends Controller
 {

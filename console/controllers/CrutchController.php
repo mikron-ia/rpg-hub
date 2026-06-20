@@ -18,11 +18,12 @@ use yii\console\Exception;
 use yii\db\Exception as DbException;
 
 /**
- * Class CrutchController
+ * Class used for operations that sometimes have to be run at version change
  *
- * Class used for migration operations that can be done only from the console
- *
- * @package console\controllers
+ * Those actions are intended to emulate object behaviors that would normally happen if they were created with the
+ * new code in place. In the current state of things, this means running off-the-record saves to trigger the
+ * `beforeSave()` and `afterSave()` methods. Note that saving them still updates some of their timestamps and may change
+ * the order in which they appear on the CMS lists. It does not trigger their _updated_ flag, though.
  */
 class CrutchController extends Controller
 {
@@ -136,7 +137,7 @@ class CrutchController extends Controller
     }
 
     /**
-     * Saves all games
+     * Saves all games (sessions)
      *
      * @throws DbException
      */
@@ -152,6 +153,8 @@ class CrutchController extends Controller
 
     /**
      * Saves all parameters
+     *
+     * @throws DbException
      */
     public function actionSaveParameters(): void
     {
@@ -164,6 +167,8 @@ class CrutchController extends Controller
     }
 
     /**
+     * Saves all locations
+     *
      * @throws DbException
      */
     public function actionSaveLocations(): void
@@ -177,7 +182,7 @@ class CrutchController extends Controller
     }
 
     /**
-     * Saves everything - to be used to trigger beforeSave() or afterSave() on all
+     * Triggers all the other save actions from this category
      *
      * @throws InvalidRouteException
      * @throws Exception

@@ -9,12 +9,16 @@ use yii\console\Controller;
 use yii\db\Exception;
 
 /**
- * @package console\controllers
+ * Recalculates importance values for objects with `HasImportance` and `ImportancePack`
  */
 class ImportanceController extends Controller
 {
     /**
      * Orders recalculation of every importance pack flagged for recalculation
+     *
+     * This action recalculates the importance values only for objects that have been flagged, which usually means
+     * a small percentage of the entire database. It is thus intended to be called often; an interval of an hour or
+     * half an hour is recommended to keep the objects properly ordered based on importance.
      *
      * @throws Exception
      * @throws InvalidBackendConfigurationException
@@ -32,6 +36,11 @@ class ImportanceController extends Controller
 
     /**
      * Orders recalculation of every importance pack regardless of flagging
+     *
+     * This action recalculates the importance values for all objects that have it, which means its runtime grows
+     * linearly with the database. Its purpose is two-fold: to catch cases not flagged for any reason but still
+     * deserving recalculation and to apply new importance-related configuration values. Since both cases are rare,
+     * it is recommended to either set this action to run once a week at most, or to run it manually when needed.
      *
      * @throws Exception
      * @throws InvalidBackendConfigurationException

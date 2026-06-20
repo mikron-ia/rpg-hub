@@ -15,10 +15,13 @@ use common\models\Story;
 use yii\console\Controller;
 
 /**
- * @package console\controllers
+ * Handles `SeenPack` objects for `HasSightings` objects
  */
 class SightingController extends Controller
 {
+    /**
+     * Adds missing `SeenPack` objects for `HasSightings` objects
+     */
     public function actionSupplement(): void
     {
         LoggingHelper::log("Initiated", 'sighting.completion');
