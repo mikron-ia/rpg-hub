@@ -416,7 +416,7 @@ final class CharacterController extends CmsController
 
         $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
 
-        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
+        if (!in_array($model->getVisibility(), Visibility::determineVisibilityVectorWithObjects($model->epic))) {
             throw new NotFoundHttpException(Yii::t('app', 'CHARACTER_NOT_AVAILABLE'));
         }
 

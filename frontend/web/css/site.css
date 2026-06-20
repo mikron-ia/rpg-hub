@@ -873,9 +873,3 @@ li.redacted:hover {
 .table-from-markdown>tbody>tr>td {
     padding: 10px;
 }
-
-.unpublished-description {
-    background-color: lightgoldenrodyellow;
-    border: palegoldenrod solid 4px;
-    border-radius: 15px;
-}

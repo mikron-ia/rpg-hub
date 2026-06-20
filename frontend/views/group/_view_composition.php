@@ -32,8 +32,8 @@ use yii\web\View;
                 'value' => function (GroupMembership $model, $key, $index, $widget) {
                     return
                         in_array(
-                            $model->character->visibility,
-                            Visibility::determineVisibilityVector($model->group->epic)
+                            $model->character->getVisibility(),
+                            Visibility::determineVisibilityVectorWithObjects($model->group->epic)
                         )
                             ? Html::a($model->character->name, ['character/view', 'key' => $model->character->key])
                             : $model->character->name;

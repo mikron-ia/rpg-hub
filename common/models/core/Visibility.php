@@ -15,7 +15,7 @@ enum Visibility: string
     case VISIBILITY_LOGGED = 'logged';
     case VISIBILITY_FULL = 'full';
 
-    public const array allowedVisibilities =  [
+    public const array allowedVisibilities = [
         //Visibility::VISIBILITY_NONE,
         Visibility::VISIBILITY_GM,
         Visibility::VISIBILITY_DESIGNATED,
@@ -31,22 +31,10 @@ enum Visibility: string
      */
     public static function determineVisibilityVector(Epic $epic): array
     {
-        if (Yii::$app->user->isGuest) {
-            /* No epic and no user makes bad business */
-            $visibilityVector = [];
-        } else {
-            $visibilityVector = [
-                Visibility::VISIBILITY_FULL->value,
-                Visibility::VISIBILITY_LOGGED->value,
-            ];
-
-            if (Participant::participantHasRole(Yii::$app->user->identity, $epic, ParticipantRole::ROLE_GM)) {
-                $visibilityVector[] = Visibility::VISIBILITY_GM->value;
-                $visibilityVector[] = Visibility::VISIBILITY_DESIGNATED->value;
-            }
-        }
-
-        return $visibilityVector;
+        return array_map(
+            fn(Visibility $visibility): string => $visibility->value,
+            self::determineVisibilityVectorWithObjects($epic)
+        );
     }
 
     /**
@@ -57,18 +45,52 @@ enum Visibility: string
      */
     public static function determineUnsafeVisibilityVector(Epic $epic): array
     {
+        return array_map(
+            fn(Visibility $visibility): string => $visibility->value,
+            self::determineUnsafeVisibilityVectorWithObjects($epic)
+        );
+    }
+
+    /**
+     * @return array<int,Visibility>
+     */
+    public static function determineVisibilityVectorWithObjects(Epic $epic): array
+    {
         if (Yii::$app->user->isGuest) {
             /* No epic and no user makes bad business */
             $visibilityVector = [];
         } else {
             $visibilityVector = [
-                Visibility::VISIBILITY_FULL->value,
-                Visibility::VISIBILITY_LOGGED->value,
-                Visibility::VISIBILITY_DESIGNATED->value, // the source of unsafety
+                Visibility::VISIBILITY_FULL,
+                Visibility::VISIBILITY_LOGGED,
             ];
 
             if (Participant::participantHasRole(Yii::$app->user->identity, $epic, ParticipantRole::ROLE_GM)) {
-                $visibilityVector[] = Visibility::VISIBILITY_GM->value;
+                $visibilityVector[] = Visibility::VISIBILITY_GM;
+                $visibilityVector[] = Visibility::VISIBILITY_DESIGNATED;
+            }
+        }
+
+        return $visibilityVector;
+    }
+
+    /**
+     * @return array<int,string>
+     */
+    public static function determineUnsafeVisibilityVectorWithObjects(Epic $epic): array
+    {
+        if (Yii::$app->user->isGuest) {
+            /* No epic and no user makes bad business */
+            $visibilityVector = [];
+        } else {
+            $visibilityVector = [
+                Visibility::VISIBILITY_FULL,
+                Visibility::VISIBILITY_LOGGED,
+                Visibility::VISIBILITY_DESIGNATED, // the source of unsafety
+            ];
+
+            if (Participant::participantHasRole(Yii::$app->user->identity, $epic, ParticipantRole::ROLE_GM)) {
+                $visibilityVector[] = Visibility::VISIBILITY_GM;
             }
         }
 

@@ -10,7 +10,10 @@ use yii\web\View;
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/view', 'key' => $model->epic->key]];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ARTICLE_TITLE_INDEX'), 'url' => ['index', 'key' => $model->epic->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'ARTICLE_TITLE_INDEX'),
+    'url' => ['index', 'key' => $model->epic->key],
+];
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->params['showPrivates'] = $showPrivates = $model->canUserControlYou();
@@ -19,15 +22,25 @@ $this->params['showPrivates'] = $showPrivates = $model->canUserControlYou();
 
     <div class="buttoned-header">
         <h1>
-            <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
-                <span class="unpublished-tag tag-view-page"><?= Yii::t('app', 'TAG_LABEL_UNPUBLISHED_M') ?></span>
+            <?php if ($model->getVisibility() === Visibility::VISIBILITY_GM): ?>
+                <span class="unpublished-tag tag-view-page" title="<?= Yii::t('app', 'TAG_TITLE_UNPUBLISHED_M') ?>">
+                    <?= Yii::t('app', 'TAG_LABEL_UNPUBLISHED_M') ?>
+                </span>
+            <?php endif; ?>
+            <?php if ($model->getVisibility() === Visibility::VISIBILITY_DESIGNATED): ?>
+                <span class="designated-tag tag-view-page" title="<?= Yii::t('app', 'TAG_TITLE_DESIGNATED_M') ?>">
+                    <?= Yii::t('app', 'TAG_LABEL_DESIGNATED_M') ?>
+                </span>
             <?php endif; ?>
             <?= Html::encode($this->title) ?>
         </h1>
         <?php if ($showPrivates): ?>
             <?= Html::a(
                 Yii::t('app', 'BUTTON_SEE_BACKEND'),
-                Yii::$app->params['uri.back'] . Yii::$app->urlManager->createUrl(['article/view', 'key' => $model->key]),
+                Yii::$app->params['uri.back'] . Yii::$app->urlManager->createUrl([
+                    'article/view',
+                    'key' => $model->key,
+                ]),
                 ['class' => 'btn btn-default']
             ) ?>
         <?php endif; ?>

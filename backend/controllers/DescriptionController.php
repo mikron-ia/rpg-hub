@@ -237,7 +237,10 @@ final class DescriptionController extends CmsController
             throw new NotFoundHttpException(Yii::t('app', 'DESCRIPTION_NOT_AVAILABLE'));
         }
 
-        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->descriptionPack->epic))) {
+        if (!in_array(
+            $model->getVisibility(),
+            Visibility::determineVisibilityVectorWithObjects($model->descriptionPack->epic)
+        )) {
             throw new NotFoundHttpException(Yii::t('app', 'DESCRIPTION_NOT_AVAILABLE'));
         }
 

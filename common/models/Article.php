@@ -281,11 +281,6 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return $this->processSecretTagsForUser($this->getTextFormatted());
     }
 
-    public function getVisibility(): Visibility
-    {
-        return Visibility::from($this->visibility);
-    }
-
     #[Override]
     public function recordSighting(): bool
     {

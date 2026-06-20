@@ -129,8 +129,8 @@ final class StoryQuery extends Story implements EntityQuery
         }
 
         $visibilityColumn = in_array(
-            Visibility::VISIBILITY_GM->value,
-            Visibility::determineVisibilityVector(Yii::$app->params['activeEpic'])
+            Visibility::VISIBILITY_GM,
+            Visibility::determineVisibilityVectorWithObjects(Yii::$app->params['activeEpic'])
         ) ? 'parameters_gm' : 'parameters_full';
 
         $query

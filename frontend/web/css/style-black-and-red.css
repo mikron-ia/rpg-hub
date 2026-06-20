@@ -157,6 +157,12 @@ li.redacted {
     color: darkred;
 }
 
+.unpublished-description {
+    background-color: pink;
+    border: #dd0022 solid 4px;
+    border-radius: 15px;
+}
+
 .unpublished-tag {
     background-color: brown;
     border-color: brown;

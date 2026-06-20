@@ -154,6 +154,12 @@ li.redacted {
     color: white;
 }
 
+.unpublished-description {
+    background-color: lightsalmon;
+    border: saddlebrown solid 4px;
+    border-radius: 15px;
+}
+
 .unpublished-tag {
     background-color: orangered;
     border-color: orangered;

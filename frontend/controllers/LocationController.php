@@ -138,7 +138,7 @@ class LocationController extends Controller
             throw new NotFoundHttpException(Yii::t('app', 'LOCATION_NOT_AVAILABLE'));
         }
 
-        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
+        if (!in_array($model->getVisibility(), Visibility::determineVisibilityVectorWithObjects($model->epic))) {
             throw new NotFoundHttpException(Yii::t('app', 'LOCATION_NOT_AVAILABLE'));
         }
 

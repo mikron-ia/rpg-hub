@@ -31,8 +31,8 @@ use yii\grid\GridView;
                 'value' => function (GroupMembership $model, $key, $index, $widget) {
                     return
                         in_array(
-                            $model->group->visibility,
-                            Visibility::determineVisibilityVector($model->character->epic)
+                            $model->group->getVisibility(),
+                            Visibility::determineVisibilityVectorWithObjects($model->character->epic)
                         )
                             ? $model->group . ($model->group->master_group_id ? ' (' . $model->group->masterGroup . ')' : '')
                             : $model->group->name; // no master group in this path is intentional for secrecy reasons

@@ -129,7 +129,10 @@ final class ParameterController extends CmsController
             throw new NotFoundHttpException(Yii::t('app', 'PARAMETER_NOT_AVAILABLE'));
         }
 
-        if (!in_array($model->visibility, Visibility::determineVisibilityVector($model->parameterPack->epic))) {
+        if (!in_array(
+            $model->getVisibility(),
+            Visibility::determineVisibilityVectorWithObjects($model->parameterPack->epic)
+        )) {
             throw new NotFoundHttpException(Yii::t('app', 'PARAMETER_NOT_AVAILABLE'));
         }
 

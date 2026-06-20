@@ -86,7 +86,7 @@ return [
     'BESTOWED_FORM_ERROR' => 'Access rights change failed',
     'BESTOWED_FORM_SUCCES' => 'Access rights change successful',
     'BESTOWED_LIST_NOT_AVAILABLE' => 'List of users with access is not available',
-    'BESTOWED_VISIBILITY_HEADER' => 'Visibility status',
+    'BESTOWED_VISIBILITY_HEADER' => 'Visibility detailed settings',
     'BESTOWED_VISIBILITY_NOT_ACTIVE {currentVisibility} {targetVisibility}' => 'The object\'s visibility is currently set to "{currentVisibility}". To be able to bestow access to specific users, set the visibility to "{targetVisibility}".',
     'BETA_WARNING_TEXT' => 'Test feature',
     'BETA_WARNING_TITLE' => 'This is a test feature. Bugs and odd behaviors are likely to occur with much greater frequency than with the regular features.',

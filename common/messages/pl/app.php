@@ -86,7 +86,7 @@ return [
     'BESTOWED_FORM_ERROR' => 'Zmiana praw dostępu nieudana',
     'BESTOWED_FORM_SUCCES' => 'Zmiana praw dostępu udana',
     'BESTOWED_LIST_NOT_AVAILABLE' => 'Lista użytkowników uprawnionych nie jest dostępna',
-    'BESTOWED_VISIBILITY_HEADER' => 'Widoczność',
+    'BESTOWED_VISIBILITY_HEADER' => 'Szczegółowe ustawienia widoczności',
     'BESTOWED_VISIBILITY_NOT_ACTIVE {currentVisibility} {targetVisibility}' => 'Aktualna widoczność obiektu to "{currentVisibility}". By móc ustawić widoczność dla konkretnych użytkowników, zmień widoczność na "{targetVisibility}".',
     'BETA_WARNING_TEXT' => 'Funkcjonalność w fazie testów',
     'BETA_WARNING_TITLE' => 'Ta funkcjonalność jest w fazie testów na użytkowniku. Bugi i nieoczekiwane zachowania mogą być zauważalnie częstsze niż w innych częściach aplikacji.',
