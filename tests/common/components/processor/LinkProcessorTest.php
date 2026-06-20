@@ -1,0 +1,101 @@
+<?php
+
+namespace common\components\processor;
+
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
+
+class LinkProcessorTest extends TestCase
+{
+    #[DataProvider('complexConversionDataProvider')]
+    public function testComplexConversion(string $text, string $result)
+    {
+        $linkBases = [
+            'Character' => '/index.php/character/view/key=',
+            'Group' => '/index.php/group/view/key=',
+            'Story' => '/index.php/story/view/key=',
+            'Location' => '/index.php/location/view/key=',
+            'Article' => '/index.php/article/view/key=',
+        ];
+
+        $this->assertEquals($result, LinkTagsProcessor::processKeysInLinks($text, $linkBases));
+    }
+
+    public static function complexConversionDataProvider(): array
+    {
+        return [
+            'Correct character - short' => [
+                '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Character\'s name](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Correct group - short' => [
+                '[Group\'s name](GR:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Group\'s name](/index.php/group/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Correct story - short' => [
+                '[Story\'s name](ST:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Story\'s name](/index.php/story/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Correct location - short' => [
+                '[Location\'s name](LOC:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Location\'s name](/index.php/location/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Correct article - short' => [
+                '[Article\'s name](ART:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Article\'s name](/index.php/article/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Correct character - long' => [
+                '[Character\'s name](CHARACTER:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Character\'s name](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Correct group - long' => [
+                '[Group\'s name](GROUP:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Group\'s name](/index.php/group/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Correct story - long' => [
+                '[Story\'s name](STORY:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Story\'s name](/index.php/story/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Correct location - long' => [
+                '[Location\'s name](LOCATION:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Location\'s name](/index.php/location/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Correct article - long' => [
+                '[Article\'s name](ARTICLE:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Article\'s name](/index.php/article/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Unprocessed - key is too long' => [
+                '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a15)',
+                '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a15)',
+            ],
+            'Unprocessed - key has invalid characters' => [
+                '[Character\'s name](CH:184e5117A55e384ca1e68dd731637bb8988782a1)',
+                '[Character\'s name](CH:184e5117A55e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Unprocessed - wrong code' => [
+                '[Character\'s name](CHA:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Character\'s name](CHA:184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Unprocessed - unnecessary space - beginning' => [
+                '[Character\'s name]( CH:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Character\'s name]( CH:184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Unprocessed - unnecessary space - inside' => [
+                '[Character\'s name](CH: 184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Character\'s name](CH: 184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Unprocessed - unnecessary space - end' => [
+                '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a1 )',
+                '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a1 )',
+            ],
+            'Correct double - long - same type' => [
+                '[Alpha](CH:184e5117955e384ca1e68dd731637bb8988782a1) [Beta](CH:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Alpha](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1) [Beta](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Correct double - long - different type' => [
+                '[Alpha](CH:184e5117955e384ca1e68dd731637bb8988782a1) [Beta](GR:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Alpha](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1) [Beta](/index.php/group/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+        ];
+    }
+}
