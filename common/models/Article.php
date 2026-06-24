@@ -36,6 +36,8 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $outline_ready
  * @property string $text_raw
  * @property string $text_ready
+ * @property string|null $notes_raw
+ * @property string|null $notes_ready
  * @property string $utility_bag_id
  * @property int $bestowed_list_id
  *
@@ -76,7 +78,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return [
             [['epic_id'], 'integer'],
             [['title', 'text_raw'], 'required'],
-            [['text_raw', 'outline_raw'], 'string'],
+            [['text_raw', 'outline_raw', 'notes_raw'], 'string'],
             [['title', 'subtitle'], 'string', 'max' => 120],
             [['visibility'], 'string', 'max' => 20],
             [['is_off_the_record_change'], 'boolean'],
@@ -113,6 +115,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return [
             'text_raw' => Yii::t('app', 'ARTICLE_HINT_TEXT'),
             'outline_raw' => Yii::t('app', 'ARTICLE_HINT_OUTLINE'),
+            'notes_raw' => Yii::t('app', 'ARTICLE_HINT_NOTES'),
         ];
     }
 
@@ -134,6 +137,8 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             'outline_ready' => Yii::t('app', 'ARTICLE_OUTLINE'),
             'text_raw' => Yii::t('app', 'ARTICLE_TEXT'),
             'text_ready' => Yii::t('app', 'ARTICLE_TEXT'),
+            'notes_raw' => Yii::t('app', 'ARTICLE_NOTES'),
+            'notes_ready' => Yii::t('app', 'ARTICLE_NOTES'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
             'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
             'bestowedAccessIds' => Yii::t('app', 'BESTOWED_ACCESS_IDS_WITH_VISIBILITY')
@@ -213,6 +218,10 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             Html::encode($this->processAllInOrder($this->outline_raw ?? '')),
             'gfm'
         );
+        $this->notes_ready = Markdown::process(
+            Html::encode($this->processAllInOrder($this->notes_raw ?? '')),
+            'gfm'
+        );
 
         return parent::beforeSave($insert);
     }
@@ -279,6 +288,11 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
     public function getTextFormattedForUser(): string
     {
         return $this->processSecretTagsForUser($this->getTextFormatted());
+    }
+
+    public function getNotesFormatted(): string
+    {
+        return $this->formatText($this->notes_ready ?? $this->notes_raw, true, false);
     }
 
     #[Override]

@@ -46,6 +46,10 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'text_raw')->textarea(['rows' => 12]) ?>
     </div>
 
+    <div class="col-md-12">
+        <?= $form->field($model, 'notes_raw')->textarea(['rows' => 8]) ?>
+    </div>
+
     <?php if (!$model->isNewRecord): ?>
         <div class="col-md-12">
             <?= $form->field($model, 'is_off_the_record_change')->checkbox() ?>

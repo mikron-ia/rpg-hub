@@ -57,6 +57,13 @@ use yii\widgets\DetailView;
 
     </div>
 
+    <?php if (!empty($model->notes)): ?>
+        <div class="col-md-6">
+            <h2 class="text-center"><?= Yii::t('app', 'ARTICLE_NOTES') ?></h2>
+            <?= $model->getNotesFormatted() ?>
+        </div>
+    <?php endif; ?>
+
     <div class="col-md-6">
 
         <h2 class="text-center"><?= Yii::t('app', 'SEEN_READ') ?></h2>

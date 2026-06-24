@@ -62,6 +62,10 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-12">
+        <?= $form->field($model, 'notes')->textarea(['rows' => 12]); ?>
+    </div>
+
+    <div class="col-md-12">
         <?= $form->field($model, 'data')->textarea(['rows' => 20]); ?>
     </div>
 

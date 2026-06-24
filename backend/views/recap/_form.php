@@ -37,6 +37,10 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'content')->textarea(['rows' => 8]) ?>
     </div>
 
+    <div class="col-md-12">
+        <?= $form->field($model, 'notes')->textarea(['rows' => 4]) ?>
+    </div>
+
     <div class="form-group col-md-2">
         <?= Html::submitButton(
             $model->isNewRecord ? Yii::t('app', 'BUTTON_CREATE') : Yii::t('app', 'BUTTON_UPDATE'),

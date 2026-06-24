@@ -55,6 +55,12 @@ $items = [
         'active' => false,
     ],
     [
+        'label' => Yii::t('app', 'STORY_NOTES'),
+        'content' => $this->render('_view_notes', ['model' => $model]),
+        'encode' => false,
+        'active' => false,
+    ],
+    [
         'label' => Yii::t('app', 'STORY_STATISTICS'),
         'content' => $this->render('_view_statistics', ['model' => $model]),
         'encode' => false,

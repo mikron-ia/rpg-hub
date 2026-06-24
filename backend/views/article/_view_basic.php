@@ -85,6 +85,13 @@ ArticleAsset::register($this);
         <?php endif; ?>
     </div>
 
+    <?php if (!empty($model->notes_raw)): ?>
+        <div class="col-md-6">
+            <h2 class="text-center"><?= Yii::t('app', 'ARTICLE_NOTES') ?></h2>
+            <?= $model->getNotesFormatted() ?>
+        </div>
+    <?php endif; ?>
+
     <div class="col-md-6">
         <h2 class="text-center"><?= Yii::t('app', 'BESTOWED_VISIBILITY_HEADER'); ?></h2>
         <?php if (!empty($model->bestowed_list_id) && $model->visibility === Visibility::VISIBILITY_DESIGNATED->value): ?>

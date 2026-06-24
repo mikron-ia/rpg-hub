@@ -24,6 +24,8 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $name
  * @property string $content
  * @property string $content_expanded
+ * @property string|null $notes
+ * @property string|null $notes_expanded
  * @property string $seen_pack_id
  * @property string $point_in_time_id
  * @property int $position
@@ -56,7 +58,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         return [
             [['epic_id', 'name', 'content'], 'required'],
             [['epic_id', 'point_in_time_id', 'position'], 'integer'],
-            [['content', 'content_expanded'], 'string'],
+            [['content', 'notes'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
             [
@@ -83,6 +85,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     {
         return [
             'content' => Yii::t('app', 'RECAP_HINT_CONTEXT'),
+            'notes' => Yii::t('app', 'RECAP_HINT_NOTES'),
         ];
     }
 
@@ -98,6 +101,8 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
             'name' => Yii::t('app', 'RECAP_NAME'),
             'content' => Yii::t('app', 'RECAP_CONTENT'),
             'content_expanded' => Yii::t('app', 'RECAP_CONTENT_EXPANDED'),
+            'notes' => Yii::t('app', 'RECAP_NOTES'),
+            'notes_expanded' => Yii::t('app', 'RECAP_NOTES'),
             'point_in_time_id' => Yii::t('app', 'LABEL_POINT_IN_TIME'),
             'pointInTime' => Yii::t('app', 'LABEL_POINT_IN_TIME'),
             'position' => Yii::t('app', 'RECAP_POSITION'),
@@ -136,6 +141,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         }
 
         $this->content_expanded = $this->expandText($this->content);
+        $this->notes_expanded = $this->expandText($this->notes);
 
         return parent::beforeSave($insert);
     }
@@ -162,6 +168,11 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     public function getContentFormatted(): string
     {
         return $this->formatText($this->content_expanded ?? $this->content, false);
+    }
+
+    public function getNotesFormatted(): string
+    {
+        return $this->formatText($this->notes_expanded ?? $this->notes, false);
     }
 
     public function getEpic(): ActiveQuery

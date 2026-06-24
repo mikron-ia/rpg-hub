@@ -77,11 +77,35 @@ class m260528_132626_v1_8_0 extends Migration
             'RESTRICT',
             'CASCADE'
         );
+
+        $this->addColumn('{{%article}}', 'notes_raw', $this->text()->after('text_ready'));
+        $this->addColumn('{{%article}}', 'notes_ready', $this->text()->after('notes_raw'));
+
+        $this->addColumn('{{%character_sheet}}', 'notes', $this->text()->after('data_state'));
+        $this->addColumn('{{%character_sheet}}', 'notes_expanded', $this->text()->after('notes'));
+
+        $this->addColumn('{{%recap}}', 'notes', $this->text()->after('content_expanded'));
+        $this->addColumn('{{%recap}}', 'notes_expanded', $this->text()->after('notes'));
+
+        $this->addColumn('{{%story}}', 'notes', $this->text()->after('long'));
+        $this->addColumn('{{%story}}', 'notes_expanded', $this->text()->after('long_expanded'));
     }
 
     #[Override]
     public function safeDown(): void
     {
+        $this->dropColumn('{{%story}}', 'notes_expanded');
+        $this->dropColumn('{{%story}}', 'notes');
+
+        $this->dropColumn('{{%recap}}', 'notes_expanded');
+        $this->dropColumn('{{%recap}}', 'notes');
+
+        $this->dropColumn('{{%character_sheet}}', 'notes_expanded');
+        $this->dropColumn('{{%character_sheet}}', 'notes');
+
+        $this->dropColumn('{{%article}}', 'notes_ready');
+        $this->dropColumn('{{%article}}', 'notes_raw');
+
         $this->dropForeignKey('article_bestowed_list', '{{%article}}');
 
         $this->dropColumn('{{%article}}', 'bestowed_list_id');

@@ -10,6 +10,7 @@ use common\models\core\HasKey;
 use common\models\core\HasSightings;
 use common\models\external\Tab;
 use common\models\tools\ToolsForEntity;
+use common\models\tools\ToolsForLinkTags;
 use Override;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -25,6 +26,8 @@ use yii\web\HttpException;
  * @property string $name
  * @property string $data
  * @property string $data_state
+ * @property string|null $notes
+ * @property string|null $notes_expanded
  * @property string $currently_delivered_character_id
  * @property string $player_id
  * @property string $seen_pack_id
@@ -40,6 +43,7 @@ use yii\web\HttpException;
 class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl, HasSightings, HasKey
 {
     use ToolsForEntity;
+    use ToolsForLinkTags;
 
     #[Override]
     public static function tableName(): string
@@ -61,6 +65,7 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             [['epic_id', 'currently_delivered_character_id', 'player_id'], 'integer'],
             [['name'], 'string', 'max' => 120],
             [['data_state'], 'string', 'max' => 10],
+            [['notes'], 'string'],
             [
                 ['epic_id'],
                 'exist',
@@ -115,6 +120,8 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             'name' => Yii::t('app', 'CHARACTER_SHEET_NAME'),
             'data' => Yii::t('app', 'CHARACTER_SHEET_DATA'),
             'data_state' => Yii::t('app', 'CHARACTER_SHEET_DATA_STATE'),
+            'notes' => Yii::t('app', 'CHARACTER_SHEET_NOTES'),
+            'notes_expanded' => Yii::t('app', 'CHARACTER_SHEET_NOTES'),
             'currently_delivered_character_id' => Yii::t('app', 'CHARACTER_SHEET_DELIVERED_CHARACTER_ID'),
             'player_id' => Yii::t('app', 'CHARACTER_SHEET_PLAYER'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
@@ -164,6 +171,8 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
             $pack = UtilityBag::create('CharacterSheet');
             $this->utility_bag_id = $pack->utility_bag_id;
         }
+
+        $this->notes_expanded = $this->expandText($this->notes);
 
         return parent::beforeSave($insert);
     }
@@ -217,6 +226,11 @@ class CharacterSheet extends ActiveRecord implements Displayable, HasEpicControl
     public function getDataState(): CharacterSheetDataState
     {
         return CharacterSheetDataState::from($this->data_state);
+    }
+
+    public function getNotesFormatted(): string
+    {
+        return $this->formatText($this->notes_expanded ?? $this->notes, false);
     }
 
     /**

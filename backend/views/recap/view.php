@@ -93,6 +93,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $model->getContentFormatted(); ?>
     </div>
 
+    <h2><?= Yii::t('app', 'RECAP_NOTES'); ?></h2>
+
+    <div>
+        <?= $model->getNotesFormatted(); ?>
+    </div>
+
     <div class="col-md-12">
 
         <div class="col-md-6">

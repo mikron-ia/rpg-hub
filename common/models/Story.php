@@ -35,8 +35,10 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $name
  * @property string $short
  * @property string|null $long
+ * @property string|null $notes
  * @property string|null $short_expanded
  * @property string|null $long_expanded
+ * @property string|null $notes_expanded
  * @property int|null $position
  * @property string $visibility
  * @property int|null $based_on_id
@@ -107,7 +109,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return [
             [['epic_id', 'name', 'short'], 'required'],
             [['epic_id', 'position'], 'integer'],
-            [['short', 'long'], 'string'],
+            [['short', 'long', 'notes'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
             [['code', 'visibility'], 'string', 'max' => 20],
@@ -167,8 +169,10 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             'name' => Yii::t('app', 'STORY_NAME'),
             'short' => Yii::t('app', 'STORY_SHORT'),
             'long' => Yii::t('app', 'STORY_LONG'),
+            'notes' => Yii::t('app', 'STORY_NOTES'),
             'short_expanded' => Yii::t('app', 'STORY_SHORT'),
             'long_expanded' => Yii::t('app', 'STORY_LONG'),
+            'notes_expanded' => Yii::t('app', 'STORY_NOTES'),
             'position' => Yii::t('app', 'STORY_POSITION'),
             'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
             'code' => Yii::t('app', 'STORY_TYPE'),
@@ -205,6 +209,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return [
             'short' => Yii::t('app', 'STORY_SHORT_HINT'),
             'long' => Yii::t('app', 'STORY_LONG_HINT'),
+            'notes' => Yii::t('app', 'STORY_NOTES_HINT'),
         ];
     }
 
@@ -283,6 +288,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
 
         $this->short_expanded = $this->expandText($this->short);
         $this->long_expanded = $this->expandText($this->long);
+        $this->notes_expanded = $this->expandText($this->notes);
 
         return parent::beforeSave($insert);
     }
@@ -364,6 +370,11 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function getLongFormattedForUser(): string
     {
         return $this->processSecretTagsForUser($this->getLongFormatted());
+    }
+
+    public function getNotesFormatted(): string
+    {
+        return $this->formatText($this->notes_expanded ?? $this->notes, true);
     }
 
     /**
