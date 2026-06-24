@@ -62,6 +62,14 @@ TEXT;
         self::assertSame(Markdown::process($markdown), MarkdownProcessor::process($markdown));
     }
 
+    public function testProcessLinks(): void
+    {
+        self::assertSame(
+            'Plain text <a href="https://example.com">with a link</a> or <a href="https://example.com">two</a> inside',
+            MarkdownProcessor::findAndFixLinksWithMarkdown('Plain text [with a link](https://example.com) or [two](https://example.com) inside')
+        );
+    }
+
     /**
      * @return array<string, array<string>>
      */

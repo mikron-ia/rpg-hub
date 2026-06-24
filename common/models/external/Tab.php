@@ -2,6 +2,8 @@
 
 namespace common\models\external;
 
+use common\components\processor\LinkTagsProcessor;
+use common\components\processor\MarkdownProcessor;
 use Yii;
 use yii\base\Model;
 
@@ -42,5 +44,10 @@ class Tab extends Model implements ExternalComponent
         }
 
         return '<p>' . $this->description . '</p>' . PHP_EOL . implode(PHP_EOL, $boxes);
+    }
+
+    public function getContentWithLinks(): string
+    {
+        return MarkdownProcessor::findAndFixLinksWithMarkdown(LinkTagsProcessor::processKeys($this->getContent()));
     }
 }

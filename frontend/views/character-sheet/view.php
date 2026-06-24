@@ -30,7 +30,7 @@ $items = [];
 foreach ($tabs as $tabName => $tabData) {
     $item = [
         'label' => $tabData->title,
-        'content' => '<div class="external-data-tab-container">' . HtmlPurifier::process($tabData->getContent()) . '</div>',
+        'content' => '<div class="external-data-tab-container">' . HtmlPurifier::process($tabData->getContentWithLinks()) . '</div>',
         'encode' => false,
         'active' => $active,
     ];
