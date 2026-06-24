@@ -39,6 +39,7 @@ $mostRecent = $searchModel->mostRecent();
                 [
                     'attribute' => 'position',
                     'contentOptions' => ['class' => 'text-center'],
+                    'headerOptions' => ['class' => 'text-center'],
                     'label' => Yii::t('app', 'RECAP_ORDER'),
                 ],
                 [
@@ -47,6 +48,7 @@ $mostRecent = $searchModel->mostRecent();
                 [
                     'attribute' => 'pointInTime',
                     'contentOptions' => ['class' => 'text-center text-nowrap'],
+                    'headerOptions' => ['class' => 'text-center'],
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',

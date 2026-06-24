@@ -6,7 +6,10 @@ use common\models\Epic;
 use common\models\Recap;
 use common\models\RecapQuery;
 use common\components\EpicAssistance;
+use Override;
 use Yii;
+use yii\db\Exception;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\HttpException;
@@ -16,34 +19,37 @@ class RecapController extends Controller
 {
     use EpicAssistance;
 
-    private const POSITIONS_PER_PAGE = 4;
+    private const int POSITIONS_PER_PAGE = 4;
 
-    public function behaviors()
+    #[Override]
+    public function behaviors(): array
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => [
+                            'index',
+                            'view',
+                        ],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
-            ]
-        );
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [],
+            ],
+        ];
     }
 
     /**
-     * Lists all Recap models
-     *
-     * @param string|null $key
-     *
-     * @return string
-     *
      * @throws NotFoundHttpException
      * @throws HttpException
      */
-    public function actionIndex(?string $key = null)
+    public function actionIndex(?string $key = null): string
     {
         if ($key) {
             $epic = $this->findEpicByKey($key);
@@ -71,7 +77,11 @@ class RecapController extends Controller
         ]);
     }
 
-    public function actionView($key)
+    /**
+     * @throws Exception
+     * @throws HttpException
+     */
+    public function actionView(string $key): string
     {
         $model = $this->findModelByKey($key);
 
@@ -89,14 +99,7 @@ class RecapController extends Controller
     }
 
     /**
-     * Finds the Story model based on its key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     *
-     * @param string $key
-     *
-     * @return Recap the loaded model
-     *
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
     protected function findModelByKey(string $key): Recap
     {

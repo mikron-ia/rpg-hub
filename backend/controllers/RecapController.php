@@ -6,23 +6,24 @@ use common\components\EpicAssistance;
 use common\models\Epic;
 use common\models\Recap;
 use common\models\RecapQuery;
+use Throwable;
 use Yii;
+use yii\base\InvalidRouteException;
+use yii\db\Exception as DbException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * RecapController implements the CRUD actions for Recap model.
- */
 final class RecapController extends Controller
 {
     use EpicAssistance;
 
-    private const POSITIONS_PER_PAGE = 16;
+    private const int POSITIONS_PER_PAGE = 16;
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -53,7 +54,7 @@ final class RecapController extends Controller
     }
 
     /**
-     * Lists all Recap models.
+     * @throws HttpException
      */
     public function actionIndex(string $epic): string
     {
@@ -86,7 +87,7 @@ final class RecapController extends Controller
     }
 
     /**
-     * Displays a single Recap model.
+     * @throws HttpException
      */
     public function actionView(string $key): string
     {
@@ -100,8 +101,8 @@ final class RecapController extends Controller
     }
 
     /**
-     * Creates a new Recap model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @throws DbException
+     * @throws HttpException
      */
     public function actionCreate(?string $epic = null): Response|string
     {
@@ -121,8 +122,8 @@ final class RecapController extends Controller
     }
 
     /**
-     * Updates an existing Recap model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * @throws DbException
+     * @throws HttpException
      */
     public function actionUpdate(string $key): Response|string
     {
@@ -140,12 +141,9 @@ final class RecapController extends Controller
     }
 
     /**
-     * Deletes an existing Recap model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $key
-     * @return mixed
+     * @throws HttpException
      */
-    public function actionDelete($key)
+    public function actionDelete(string $key): Response
     {
         $model = $this->findModel($key);
 
@@ -153,55 +151,70 @@ final class RecapController extends Controller
             Recap::throwExceptionAboutControl();
         }
 
-        $model->delete();
+        try {
+            $success = $model->delete();
+        } catch (Throwable) {
+            $success = false;
+        }
 
-        return $this->redirect(['index']);
+        Yii::$app->session->setFlash(
+            $success ? 'success' : 'error',
+            $success ? Yii::t('app', 'RECAP_DELETE_SUCCESS') : Yii::t('app', 'RECAP_DELETE_FAILED')
+        );
+
+        return $success
+            ? $this->redirect(['recap/index', 'epic' => $model->epic->key])
+            : $this->redirect(['recap/view', 'key' => $model->key]);
     }
 
     /**
-     * Moves recap up in order; this means lower position on the list
-     * @param int $key Story ID
-     * @return \yii\web\Response
+     * Moves recap up in order; this means a lower position on the list
+     *
+     * @throws HttpException
+     * @throws InvalidRouteException
      */
-    public function actionMoveUp($key)
+    public function actionMoveUp(string $key): Response
     {
         $model = $this->findModel($key);
         if (!$model->canUserControlYou()) {
             Recap::throwExceptionAboutControl();
         }
+
         $model->movePrev();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
         }
+
+        return $this->redirect(['index']);
     }
 
     /**
-     * Moves recap down in order; this means higher position on the list
-     * @param int $key Story ID
-     * @return \yii\web\Response
+     * Moves recap down in order; this means a higher position on the list
+     *
+     * @throws HttpException
+     * @throws InvalidRouteException
      */
-    public function actionMoveDown($key)
+    public function actionMoveDown(string $key): Response
     {
         $model = $this->findModel($key);
         if (!$model->canUserControlYou()) {
             Recap::throwExceptionAboutControl();
         }
+
         $model->moveNext();
 
         $referrer = Yii::$app->getRequest()->getReferrer();
         if ($referrer) {
             return Yii::$app->getResponse()->redirect($referrer);
-        } else {
-            return $this->redirect(['index']);
         }
+
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Recap model based on its primary key value
+     * @throws NotFoundHttpException
      */
     protected function findModel(string $key): Recap
     {

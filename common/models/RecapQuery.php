@@ -127,11 +127,11 @@ final class RecapQuery extends Recap implements EntityQuery
     }
 
     /**
-     * Provides a list of all recaps from current epic for use in a selector
+     * Provides a list of all recaps from the current epic for use in a selector
      *
      * @return string[]
      */
-    static public function allFromCurrentEpicForSelector(): array
+    public static function allFromCurrentEpicForSelector(): array
     {
         $query = Recap::find();
 
