@@ -58,4 +58,10 @@ $this->params['showPrivates'] = $showPrivates = $model->canUserControlYou();
         <?= $showPrivates ? $model->getTextFormattedForOperator() : $model->getTextFormattedForUser() ?>
     </div>
 
+    <?php if ($showPrivates && !empty($model->notes_raw)): ?>
+        <div class="col-lg-12 secret-text-box">
+            <?= $model->getNotesFormatted(); ?>
+        </div>
+    <?php endif; ?>
+
 </div>

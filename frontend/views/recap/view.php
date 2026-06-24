@@ -15,12 +15,14 @@ $this->params['breadcrumbs'][] = [
     'url' => ['index', 'key' => $model->epic->key],
 ];
 $this->params['breadcrumbs'][] = $this->title;
-YiiAsset::register($this);
 
+$showPrivates = $model->canUserControlYou();
+
+YiiAsset::register($this);
 ?>
 <div class="recap-view">
     <h1><?= Html::encode($this->title) ?></h1>
-    <div>
+    <div class="col-lg-12">
         <p class="recap-box-time-view">
             <?= $model->point_in_time_id ? $model->pointInTime->name : '' ?>
         </p>
@@ -30,4 +32,10 @@ YiiAsset::register($this);
             <?= $model->getSessionNamesFormatted() ?>
         <?php endif; ?>
     </div>
+
+    <?php if ($showPrivates && !empty($model->notes)): ?>
+        <div class="col-lg-12 secret-text-box">
+            <?= $model->getNotesFormatted(); ?>
+        </div>
+    <?php endif; ?>
 </div>

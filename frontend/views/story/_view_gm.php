@@ -29,3 +29,8 @@ use yii\widgets\DetailView;
     </div>
 
 </div>
+
+<div class="col-md-6">
+    <h2 class="text-center"><?= Yii::t('app', 'STORY_NOTES') ?></h2>
+    <?= $model->getNotesFormatted(); ?>
+</div>

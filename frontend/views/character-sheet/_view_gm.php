@@ -14,6 +14,8 @@ use yii\widgets\DetailView;
 
     <div class="col-md-6">
 
+        <h2 class="text-center"><?= Yii::t('app', 'LABEL_BASIC_DATA_AND_OPERATIONS') ?></h2>
+
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
@@ -48,6 +50,13 @@ use yii\widgets\DetailView;
         ]) ?>
 
     </div>
+
+    <?php if(!empty($model->notes)): ?>
+        <h2 class="text-center"><?= Yii::t('app', 'CHARACTER_SHEET_NOTES') ?></h2>
+        <div class="col-md-6">
+            <?= $model->getNotesFormatted() ?>
+        </div>
+    <?php endif; ?>
 
     <div class="col-md-6">
 

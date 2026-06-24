@@ -206,6 +206,7 @@ return [
     'CHARACTER_SHEET_EXTERNAL_DATA_PLACEHOLDER' => 'Wklej treść danych',
     'CHARACTER_SHEET_FORM_SELECT_CURRENTLY_DELIVERED_CHARACTER' => 'Wybierz aktualnie używaną przez kartę postaci postać/tożsamość...',
     'CHARACTER_SHEET_FORM_SELECT_PLAYER' => 'Wybierz gracza grającego postacią; pomiń przy NPC-ach',
+    'CHARACTER_SHEET_GM_TAB' => 'Dane MG',
     'CHARACTER_SHEET_ID' => 'ID postaci',
     'CHARACTER_SHEET_KEY' => 'Klucz',
     'CHARACTER_SHEET_NAME' => 'Imię postaci',

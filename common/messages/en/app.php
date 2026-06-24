@@ -206,6 +206,7 @@ return [
     'CHARACTER_SHEET_EXTERNAL_DATA_PLACEHOLDER' => 'Paste external data',
     'CHARACTER_SHEET_FORM_SELECT_CURRENTLY_DELIVERED_CHARACTER' => 'Select currently delivered character/identity...',
     'CHARACTER_SHEET_FORM_SELECT_PLAYER' => 'Select the character\'s player; skip for NPCs',
+    'CHARACTER_SHEET_GM_TAB' => 'GM data',
     'CHARACTER_SHEET_ID' => 'Character sheet ID',
     'CHARACTER_SHEET_KEY' => 'Key',
     'CHARACTER_SHEET_NAME' => 'Character name',
