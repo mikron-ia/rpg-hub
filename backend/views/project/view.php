@@ -45,6 +45,10 @@ $items = [
 
 <h1><?= Html::encode($this->title) ?></h1>
 
+<p class="beta-feature-warning" title="<?= Yii::t('app', 'BETA_WARNING_TITLE') ?>">
+    <?= Yii::t('app', 'BETA_WARNING_TEXT') ?>
+</p>
+
 <?= Tabs::widget([
     'items' => $items,
 ]) ?>

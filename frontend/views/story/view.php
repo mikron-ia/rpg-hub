@@ -62,7 +62,7 @@ $items = [
 
 if ($showPrivates) {
     $items[] = [
-        'label' => Yii::t('app', 'CHARACTER_GM_TAB'),
+        'label' => Yii::t('app', 'STORY_GM_TAB'),
         'content' => $this->render('_view_gm', ['model' => $model]),
         'encode' => false,
         'active' => false,
@@ -78,8 +78,10 @@ if ($showPrivates) {
             <?php if ($model->displayCodeName()): ?>
                 <span class="type-tag tag-view-page"><?= $model->getCodeName() ?></span>
             <?php endif; ?>
-            <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
-                <span class="unpublished-tag tag-view-page"><?= Yii::t('app', 'TAG_LABEL_UNPUBLISHED_F') ?></span>
+            <?php if ($model->getVisibility() === Visibility::VISIBILITY_GM): ?>
+                <span class="unpublished-tag tag-view-page" title="<?= Yii::t('app', 'TAG_TITLE_UNPUBLISHED_F') ?>">
+                    <?= Yii::t('app', 'TAG_LABEL_UNPUBLISHED_F') ?>
+                </span>
             <?php endif; ?>
             <?= Html::encode($this->title) ?>
         </h1>

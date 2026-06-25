@@ -22,6 +22,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'BREADCRUMBS_UPDATE');
 <div class="project-update">
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <p class="beta-feature-warning" title="<?= Yii::t('app', 'BETA_WARNING_TITLE') ?>">
+        <?= Yii::t('app', 'BETA_WARNING_TEXT') ?>
+    </p>
+
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

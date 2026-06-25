@@ -1,7 +1,7 @@
 <?php
 
-use common\models\Character;
 use common\models\core\SeenStatus;
+use common\models\Story;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
