@@ -33,13 +33,13 @@ class AssignmentService
         Closure $getId
     ): AssignmentIdentifierLists {
         $ids = [
-            Visibility::VISIBILITY_GM->value => [
+            Visibility::GameMaster->value => [
                 AssignmentRank::Vital->value => [],
                 AssignmentRank::Major->value => [],
                 AssignmentRank::Minor->value => [],
                 AssignmentRank::Other->value => [],
             ],
-            Visibility::VISIBILITY_FULL->value => [
+            Visibility::Full->value => [
                 AssignmentRank::Vital->value => [],
                 AssignmentRank::Major->value => [],
                 AssignmentRank::Minor->value => [],
@@ -54,14 +54,14 @@ class AssignmentService
         }
 
         return new AssignmentIdentifierLists(
-            array_unique($ids[Visibility::VISIBILITY_FULL->value][AssignmentRank::Vital->value]),
-            array_unique($ids[Visibility::VISIBILITY_FULL->value][AssignmentRank::Major->value]),
-            array_unique($ids[Visibility::VISIBILITY_FULL->value][AssignmentRank::Minor->value]),
-            array_unique($ids[Visibility::VISIBILITY_FULL->value][AssignmentRank::Other->value]),
-            array_unique($ids[Visibility::VISIBILITY_GM->value][AssignmentRank::Vital->value]),
-            array_unique($ids[Visibility::VISIBILITY_GM->value][AssignmentRank::Major->value]),
-            array_unique($ids[Visibility::VISIBILITY_GM->value][AssignmentRank::Minor->value]),
-            array_unique($ids[Visibility::VISIBILITY_GM->value][AssignmentRank::Other->value]),
+            array_unique($ids[Visibility::Full->value][AssignmentRank::Vital->value]),
+            array_unique($ids[Visibility::Full->value][AssignmentRank::Major->value]),
+            array_unique($ids[Visibility::Full->value][AssignmentRank::Minor->value]),
+            array_unique($ids[Visibility::Full->value][AssignmentRank::Other->value]),
+            array_unique($ids[Visibility::GameMaster->value][AssignmentRank::Vital->value]),
+            array_unique($ids[Visibility::GameMaster->value][AssignmentRank::Major->value]),
+            array_unique($ids[Visibility::GameMaster->value][AssignmentRank::Minor->value]),
+            array_unique($ids[Visibility::GameMaster->value][AssignmentRank::Other->value]),
         );
     }
 }

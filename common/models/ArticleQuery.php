@@ -93,7 +93,7 @@ class ArticleQuery extends Article
 
         return new ArrayDataProvider([
             'allModels' => array_filter($query->all(), function (Article $model) {
-                return $model->getVisibility() !== Visibility::VISIBILITY_DESIGNATED || $model->canUserViewYou();
+                return $model->getVisibility() !== Visibility::Designated || $model->canUserViewYou();
             }),
             'sort' => new Sort([
                 'attributes' => [

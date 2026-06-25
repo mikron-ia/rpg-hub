@@ -136,7 +136,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     {
         $list = [];
         foreach ($this->getStories()->where([
-            'visibility' => Visibility::VISIBILITY_FULL
+            'visibility' => Visibility::Full
         ])->orderBy('position DESC')->all() as $story) {
             /** @var Story $story */
             $list[$story->story_id] = $story->name;

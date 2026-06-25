@@ -381,7 +381,7 @@ class Description extends ActiveRecord implements Displayable, HasKey, HasVisibi
     #[Override]
     public function isVisibleInApi(): bool
     {
-        return ($this->getVisibility() === Visibility::VISIBILITY_FULL);
+        return ($this->getVisibility() === Visibility::Full);
     }
 
     /**

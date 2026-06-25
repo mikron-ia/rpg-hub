@@ -94,7 +94,7 @@ ArticleAsset::register($this);
 
     <div class="col-md-6">
         <h2 class="text-center"><?= Yii::t('app', 'BESTOWED_VISIBILITY_HEADER'); ?></h2>
-        <?php if (!empty($model->bestowed_list_id) && $model->visibility === Visibility::VISIBILITY_DESIGNATED->value): ?>
+        <?php if (!empty($model->bestowed_list_id) && $model->visibility === Visibility::Designated->value): ?>
             <?= $this->render('../bestowed/_view_bestowed_form', [
                 'model' => $model,
                 'attribute' => 'bestowedAccessIds',
@@ -110,7 +110,7 @@ ArticleAsset::register($this);
                     'BESTOWED_VISIBILITY_NOT_ACTIVE {currentVisibility} {targetVisibility}',
                     [
                         'currentVisibility' => $model->getVisibility()->getNameLowercase(),
-                        'targetVisibility' => Visibility::VISIBILITY_DESIGNATED->getNameLowercase(),
+                        'targetVisibility' => Visibility::Designated->getNameLowercase(),
                     ]
                 ) ?>
             </p>

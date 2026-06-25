@@ -16,8 +16,8 @@ class VisibilityTest extends TestCase
 
     public function testGetName(): void
     {
-        $this->assertSame('VISIBILITY_GM', Visibility::VISIBILITY_GM->getName());
-        $this->assertSame('VISIBILITY_FULL', Visibility::VISIBILITY_FULL->getName());
+        $this->assertSame('VISIBILITY_GM', Visibility::GameMaster->getName());
+        $this->assertSame('VISIBILITY_FULL', Visibility::Full->getName());
     }
 
     public static function visibilityValuesDataProvider(): array
@@ -25,22 +25,22 @@ class VisibilityTest extends TestCase
         return [
             'empty' => [[], [], []],
             'simple' => [
-                [Visibility::VISIBILITY_NONE],
+                [Visibility::None],
                 ['none' => 'VISIBILITY_NONE'],
                 ['none' => 'VISIBILITY_NONE_LOWERCASE']
             ],
             'common' => [
-                [Visibility::VISIBILITY_GM, Visibility::VISIBILITY_FULL],
+                [Visibility::GameMaster, Visibility::Full],
                 ['gm' => 'VISIBILITY_GM', 'full' => 'VISIBILITY_FULL'],
                 ['gm' => 'VISIBILITY_GM_LOWERCASE', 'full' => 'VISIBILITY_FULL_LOWERCASE'],
             ],
             'all' => [
                 [
-                    Visibility::VISIBILITY_NONE,
-                    Visibility::VISIBILITY_GM,
-                    Visibility::VISIBILITY_DESIGNATED,
-                    Visibility::VISIBILITY_LOGGED,
-                    Visibility::VISIBILITY_FULL
+                    Visibility::None,
+                    Visibility::GameMaster,
+                    Visibility::Designated,
+                    Visibility::LoggedIn,
+                    Visibility::Full
                 ],
                 [
                     'none' => 'VISIBILITY_NONE',

@@ -22,7 +22,7 @@ $storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
         <?php if ($model->story_id === $model->epic->current_story_id): ?>
             <span class="current-tag tag-view-page tag-smaller"><?= Yii::t('app', 'TAG_CURRENT_F') ?></span>
         <?php endif; ?>
-        <?php if ($model->getVisibility() !== Visibility::VISIBILITY_FULL): ?>
+        <?php if ($model->getVisibility() !== Visibility::Full): ?>
             <span class="text-center unpublished-tag tag-smaller"
                   title="<?= Yii::t('app', 'TAG_TITLE_UNPUBLISHED_F') ?>"
             >

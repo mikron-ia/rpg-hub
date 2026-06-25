@@ -14,8 +14,8 @@ trait ToolsForHasVisibility
     public static function allowedVisibilities(): array
     {
         return [
-            Visibility::VISIBILITY_GM,
-            Visibility::VISIBILITY_FULL,
+            Visibility::GameMaster,
+            Visibility::Full,
         ];
     }
 

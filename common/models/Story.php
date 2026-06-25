@@ -387,7 +387,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             $parameters = [];
 
             foreach ($this->parameterPack->parameters as $parameter) {
-                if ($parameter->getVisibility() === Visibility::VISIBILITY_FULL) {
+                if ($parameter->getVisibility() === Visibility::Full) {
                     $parameters[$parameter->code] = [
                         'name' => $parameter->getCodeName(),
                         'value' => $parameter->content,
@@ -444,7 +444,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     #[Override]
     public function isVisibleInApi(): bool
     {
-        return ($this->getVisibility() === Visibility::VISIBILITY_FULL);
+        return ($this->getVisibility() === Visibility::Full);
     }
 
     /**
@@ -585,7 +585,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             $assignment = new StoryCharacterAssignment([
                 'story_id' => $this->story_id,
                 'character_id' => $id,
-                'visibility' => Visibility::VISIBILITY_FULL->value,
+                'visibility' => Visibility::Full->value,
             ]);
             $assignment->save();
         }
@@ -594,7 +594,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             $assignment = new StoryCharacterAssignment([
                 'story_id' => $this->story_id,
                 'character_id' => $id,
-                'visibility' => Visibility::VISIBILITY_GM->value,
+                'visibility' => Visibility::GameMaster->value,
             ]);
             $assignment->save();
         }
@@ -612,7 +612,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             $assignment = new StoryGroupAssignment([
                 'story_id' => $this->story_id,
                 'group_id' => $id,
-                'visibility' => Visibility::VISIBILITY_FULL->value,
+                'visibility' => Visibility::Full->value,
             ]);
             $assignment->save();
         }
@@ -621,7 +621,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             $assignment = new StoryGroupAssignment([
                 'story_id' => $this->story_id,
                 'group_id' => $id,
-                'visibility' => Visibility::VISIBILITY_GM->value,
+                'visibility' => Visibility::GameMaster->value,
             ]);
             $assignment->save();
         }

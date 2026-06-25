@@ -46,9 +46,9 @@ final class StoryCharacterAssignmentQuery extends StoryCharacterAssignment
 
     public static function getCharacterAssignmentLinksForUser(int $storyId): array
     {
-        $assignments = self::getCharacterAssignments($storyId, Visibility::VISIBILITY_FULL)
+        $assignments = self::getCharacterAssignments($storyId, Visibility::Full)
             ->joinWith('character')
-            ->andWhere(['character.visibility' => Visibility::VISIBILITY_FULL->value])
+            ->andWhere(['character.visibility' => Visibility::Full->value])
             ->orderBy('character.name ASC')
             ->all();
 
@@ -57,9 +57,9 @@ final class StoryCharacterAssignmentQuery extends StoryCharacterAssignment
 
     public static function getStoryAssignmentLinksForUser(int $characterId): array
     {
-        $assignments = self::getStoryAssignments($characterId, Visibility::VISIBILITY_FULL)
+        $assignments = self::getStoryAssignments($characterId, Visibility::Full)
             ->joinWith('story')
-            ->andWhere(['story.visibility' => Visibility::VISIBILITY_FULL->value])
+            ->andWhere(['story.visibility' => Visibility::Full->value])
             ->orderBy('story.position DESC')
             ->all();
 
@@ -68,22 +68,22 @@ final class StoryCharacterAssignmentQuery extends StoryCharacterAssignment
 
     public static function getCharacterAssignmentPublicLinksForOperator(int $storyId): array
     {
-        return self::getCharacterAssignmentLinksForOperator($storyId, Visibility::VISIBILITY_FULL);
+        return self::getCharacterAssignmentLinksForOperator($storyId, Visibility::Full);
     }
 
     public static function getStoryAssignmentPublicLinksForOperator(int $characterId): array
     {
-        return self::getStoryAssignmentLinksForOperator($characterId, Visibility::VISIBILITY_FULL);
+        return self::getStoryAssignmentLinksForOperator($characterId, Visibility::Full);
     }
 
     public static function getCharacterAssignmentPrivateLinksForOperator(int $storyId): array
     {
-        return self::getCharacterAssignmentLinksForOperator($storyId, Visibility::VISIBILITY_GM);
+        return self::getCharacterAssignmentLinksForOperator($storyId, Visibility::GameMaster);
     }
 
     public static function getStoryAssignmentPrivateLinksForOperator(int $characterId): array
     {
-        return self::getStoryAssignmentLinksForOperator($characterId, Visibility::VISIBILITY_GM);
+        return self::getStoryAssignmentLinksForOperator($characterId, Visibility::GameMaster);
     }
 
     private static function processIntoLinks(array $assignments, string $address): array
@@ -92,7 +92,7 @@ final class StoryCharacterAssignmentQuery extends StoryCharacterAssignment
             fn(StoryCharacterAssignment $assignment) => new LinkWithVisibility(
                 text: $assignment->{$address}->name . ' (' . strtolower($assignment->getRank()->getNameForBrackets()) . ')',
                 url: Url::to([$address . '/view', 'key' => $assignment->{$address}->key]),
-                isSecret: $assignment->{$address}->visibility === Visibility::VISIBILITY_GM->value,
+                isSecret: $assignment->{$address}->visibility === Visibility::GameMaster->value,
             ),
             $assignments
         );

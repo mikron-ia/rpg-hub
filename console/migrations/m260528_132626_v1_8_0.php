@@ -24,7 +24,7 @@ class m260528_132626_v1_8_0 extends Migration
             'long_expanded' => $this->text(),
             'notes_expanded' => $this->text(),
             'position' => $this->integer()->defaultValue(0),
-            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM->value),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::GameMaster->value),
             'data' => $this->text(),
             'based_on_id' => $this->integer(10)->unsigned(),
             'parameter_pack_id' => $this->integer(11)->unsigned(),

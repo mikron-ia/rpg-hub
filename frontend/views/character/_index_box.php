@@ -8,7 +8,7 @@ use yii\helpers\StringHelper;
 /** @var $model Character */
 
 switch ($model->getVisibility()) {
-    case Visibility::VISIBILITY_GM :
+    case Visibility::GameMaster :
         $additionalBoxClasses = 'index-box-gm';
         $additionalTitleText = '('
             . Yii::t('app', 'LABEL_VISIBLE_LOWERCASE_F')
@@ -16,7 +16,7 @@ switch ($model->getVisibility()) {
             . $model->getVisibilityLowercase()
             . ')';
         break;
-    case Visibility::VISIBILITY_DESIGNATED :
+    case Visibility::Designated :
         $additionalBoxClasses = 'index-box-designated';
         $additionalTitleText = '('
             . Yii::t('app', 'LABEL_VISIBLE_LOWERCASE_F')

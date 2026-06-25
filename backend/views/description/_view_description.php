@@ -112,7 +112,7 @@ $messageForStillValid = isset($model->point_in_time_still_valid_id) && isset($mo
             <div class="tag-box">
                 <?= Yii::t('app', 'DESCRIPTION_OUTDATED_TAG_CMS'); ?>
             </div>
-        <?php elseif ($model->point_in_time_end_id === null && $model->visibility === Visibility::VISIBILITY_FULL->value): ?>
+        <?php elseif ($model->point_in_time_end_id === null && $model->visibility === Visibility::Full->value): ?>
             <div class="tag-box">
                 <?= Yii::t('app', 'DESCRIPTION_ON_SUMMARY_TAG_CMS'); ?>
             </div>

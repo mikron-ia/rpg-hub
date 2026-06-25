@@ -38,7 +38,7 @@ if ($pointInTimeStartExists || $pointInTimeEndExists || $pointInTimeStillValidEx
 }
 
 $boxClasses = ['col-md-6'];
-if ($model->getVisibility() !== Visibility::VISIBILITY_FULL) {
+if ($model->getVisibility() !== Visibility::Full) {
     $boxClasses[] = 'secret unpublished-description';
 }
 ?>

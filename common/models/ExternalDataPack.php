@@ -133,7 +133,7 @@ class ExternalDataPack extends ActiveRecord implements IsEditablePack
                 'external_data_pack_id' => $this->external_data_pack_id,
                 'code' => $code,
                 'data' => $dataFormatted,
-                'visibility' => Visibility::VISIBILITY_GM,
+                'visibility' => Visibility::GameMaster,
             ]);
         } else {
             /* Update external data */

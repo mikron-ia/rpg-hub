@@ -101,7 +101,7 @@ final class StoryQuery extends Story implements EntityQuery
             if (
                 !isset($mostRecentStories[$story->epic_id]) &&
                 $story->canUserViewYou() &&
-                $story->getVisibility() === Visibility::VISIBILITY_FULL
+                $story->getVisibility() === Visibility::Full
             ) {
                 $mostRecentStories[$story->epic_id] = $story;
             }
@@ -129,7 +129,7 @@ final class StoryQuery extends Story implements EntityQuery
         }
 
         $visibilityColumn = in_array(
-            Visibility::VISIBILITY_GM,
+            Visibility::GameMaster,
             Visibility::determineVisibilityVectorWithObjects(Yii::$app->params['activeEpic'])
         ) ? 'parameters_gm' : 'parameters_full';
 

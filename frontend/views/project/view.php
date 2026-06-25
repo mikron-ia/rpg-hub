@@ -58,7 +58,7 @@ if ($showPrivates) {
             <?php if ($model->displayCodeName()): ?>
                 <span class="type-tag tag-view-page"><?= $model->getCodeName() ?></span>
             <?php endif; ?>
-            <?php if ($model->getVisibility() === Visibility::VISIBILITY_GM): ?>
+            <?php if ($model->getVisibility() === Visibility::GameMaster): ?>
                 <span class="unpublished-tag tag-view-page" title="<?= Yii::t('app', 'TAG_TITLE_UNPUBLISHED_M') ?>">
                     <?= Yii::t('app', 'TAG_LABEL_UNPUBLISHED_M') ?>
                 </span>

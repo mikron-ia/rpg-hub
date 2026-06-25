@@ -148,9 +148,9 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
     public static function allowedVisibilities(): array
     {
         return [
-            Visibility::VISIBILITY_GM,
-            Visibility::VISIBILITY_DESIGNATED,
-            Visibility::VISIBILITY_FULL,
+            Visibility::GameMaster,
+            Visibility::Designated,
+            Visibility::Full,
         ];
     }
 
@@ -345,9 +345,9 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         $userControl = $this->canUserControlYou();
 
         return self::canUserViewInEpic($this->epic) &&
-            ($visibility !== Visibility::VISIBILITY_GM || $userControl) &&
+            ($visibility !== Visibility::GameMaster || $userControl) &&
             (
-                $visibility !== Visibility::VISIBILITY_DESIGNATED ||
+                $visibility !== Visibility::Designated ||
                 $userControl ||  // free pass on designated for operators
                 $this->bestowedList->hasBestowedFor(Yii::$app->user->getId()) // is user on the list?
             );

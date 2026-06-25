@@ -28,7 +28,7 @@ class m160602_230625_v0_3_0 extends Migration
             'public_text' => $this->text()->notNull(),
             'private_text' => $this->text(),
             'lang' => $this->string(5)->notNull()->defaultValue('en'),
-            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_NONE),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::None),
             'position' => $this->integer()->defaultValue(0),
         ], $tableOptions);
 
@@ -44,7 +44,7 @@ class m160602_230625_v0_3_0 extends Migration
             'parameter_pack_id' => $this->integer(11)->unsigned(),
             'code' => $this->string(20)->notNull(),
             'lang' => $this->string(5),
-            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_NONE),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::None),
             'position' => $this->integer()->defaultValue(0),
             'content' => $this->string(120)->notNull(),
             'FOREIGN KEY (parameter_pack_id) REFERENCES `parameter_pack` (parameter_pack_id) ON DELETE RESTRICT ON UPDATE CASCADE',
@@ -96,7 +96,7 @@ class m160602_230625_v0_3_0 extends Migration
             'story_parameter_id' => $this->primaryKey()->unsigned(),
             'story_id' => $this->integer(11)->unsigned(),
             'code' => $this->string(20)->notNull(),
-            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_NONE),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::None),
             'content' => $this->string(80)->notNull(),
         ], $tableOptions);
 

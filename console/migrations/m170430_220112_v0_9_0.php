@@ -16,7 +16,7 @@ class m170430_220112_v0_9_0 extends Migration
             'key' => $this->string(80)->notNull(),
             'title' => $this->string(120)->notNull(),
             'subtitle' => $this->string(120),
-            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::GameMaster),
             'seen_pack_id' => $this->integer(11)->unsigned(),
             'description_pack_id' => $this->integer(11)->unsigned(),
             'position' => $this->integer()->defaultValue(0),

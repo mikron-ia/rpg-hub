@@ -22,12 +22,12 @@ $this->params['showPrivates'] = $showPrivates = $model->canUserControlYou();
 
     <div class="buttoned-header">
         <h1>
-            <?php if ($model->getVisibility() === Visibility::VISIBILITY_GM): ?>
+            <?php if ($model->getVisibility() === Visibility::GameMaster): ?>
                 <span class="unpublished-tag tag-view-page" title="<?= Yii::t('app', 'TAG_TITLE_UNPUBLISHED_M') ?>">
                     <?= Yii::t('app', 'TAG_LABEL_UNPUBLISHED_M') ?>
                 </span>
             <?php endif; ?>
-            <?php if ($model->getVisibility() === Visibility::VISIBILITY_DESIGNATED): ?>
+            <?php if ($model->getVisibility() === Visibility::Designated): ?>
                 <span class="designated-tag tag-view-page" title="<?= Yii::t('app', 'TAG_TITLE_DESIGNATED_M') ?>">
                     <?= Yii::t('app', 'TAG_LABEL_DESIGNATED_M') ?>
                 </span>

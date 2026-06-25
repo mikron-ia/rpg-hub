@@ -103,7 +103,7 @@ final class ProjectQuery extends Project implements EntityQuery
             if (
                 !isset($mostRecentProjects[$project->epic_id]) &&
                 $project->canUserViewYou() &&
-                $project->getVisibility() === Visibility::VISIBILITY_FULL
+                $project->getVisibility() === Visibility::Full
             ) {
                 $mostRecentProjects[$project->epic_id] = $project;
             }
@@ -131,7 +131,7 @@ final class ProjectQuery extends Project implements EntityQuery
         }
 
         $visibilityColumn = in_array(
-            Visibility::VISIBILITY_GM,
+            Visibility::GameMaster,
             Visibility::determineVisibilityVectorWithObjects(Yii::$app->params['activeEpic'])
         ) ? 'parameters_gm' : 'parameters_full';
 

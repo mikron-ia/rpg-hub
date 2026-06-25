@@ -18,7 +18,7 @@ class m260427_133529_v1_7_0 extends Migration
             'key' => $this->string(80)->notNull(),
             'name' => $this->string(120)->notNull(),
             'tagline' => $this->string(120)->notNull(),
-            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::VISIBILITY_GM->value),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::GameMaster->value),
             'importance_category' => $this->string(20)->notNull()->defaultValue(ImportanceCategory::IMPORTANCE_MEDIUM->value),
             'updated_at' => $this->integer(11)->unsigned(),
             'modified_at' => $this->integer(11)->unsigned(),

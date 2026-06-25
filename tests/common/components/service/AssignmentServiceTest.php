@@ -13,11 +13,11 @@ final class AssignmentServiceTest extends TestCase
     public function testSuccess(): void
     {
         $assignments = [
-            new AssignmentEntityStub(Visibility::VISIBILITY_GM, 1, 6, AssignmentRank::Major),
-            new AssignmentEntityStub(Visibility::VISIBILITY_FULL, 2, 6, AssignmentRank::Minor),
-            new AssignmentEntityStub(Visibility::VISIBILITY_GM, 3, 7, AssignmentRank::Major),
-            new AssignmentEntityStub(Visibility::VISIBILITY_GM, 4, 7, AssignmentRank::Minor),
-            new AssignmentEntityStub(Visibility::VISIBILITY_GM, 5, 7, AssignmentRank::Major),
+            new AssignmentEntityStub(Visibility::GameMaster, 1, 6, AssignmentRank::Major),
+            new AssignmentEntityStub(Visibility::Full, 2, 6, AssignmentRank::Minor),
+            new AssignmentEntityStub(Visibility::GameMaster, 3, 7, AssignmentRank::Major),
+            new AssignmentEntityStub(Visibility::GameMaster, 4, 7, AssignmentRank::Minor),
+            new AssignmentEntityStub(Visibility::GameMaster, 5, 7, AssignmentRank::Major),
         ];
 
         $assignmentQuery = $this->createMock(ActiveQuery::class);

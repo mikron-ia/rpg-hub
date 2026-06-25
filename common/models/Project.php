@@ -302,7 +302,7 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
             $parameters = [];
 
             foreach ($this->parameterPack->parameters as $parameter) {
-                if ($parameter->getVisibility() === Visibility::VISIBILITY_FULL) {
+                if ($parameter->getVisibility() === Visibility::Full) {
                     $parameters[$parameter->code] = [
                         'name' => $parameter->getCodeName(),
                         'value' => $parameter->content,

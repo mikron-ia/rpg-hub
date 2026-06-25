@@ -91,7 +91,7 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
         $parametersGM = [];
 
         foreach ($this->parameters as $parameter) {
-            if ($parameter->visibility === Visibility::VISIBILITY_FULL->value) {
+            if ($parameter->visibility === Visibility::Full->value) {
                 $parametersFull[$parameter->code] = $parameter->content;
             }
 

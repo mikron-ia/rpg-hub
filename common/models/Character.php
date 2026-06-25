@@ -433,7 +433,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
     #[Override]
     public function isVisibleInApi(): bool
     {
-        return ($this->getVisibility() === Visibility::VISIBILITY_FULL);
+        return ($this->getVisibility() === Visibility::Full);
     }
 
     /**
@@ -448,7 +448,7 @@ class Character extends ActiveRecord implements Displayable, HasDescriptions, Ha
         $character->name = $characterSheet->name;
         $character->character_sheet_id = $characterSheet->character_sheet_id;
         $character->tagline = '?';
-        $character->visibility = Visibility::VISIBILITY_GM;
+        $character->visibility = Visibility::GameMaster;
         $character->importance_category = ImportanceCategory::IMPORTANCE_MEDIUM;
 
         if ($character->save()) {

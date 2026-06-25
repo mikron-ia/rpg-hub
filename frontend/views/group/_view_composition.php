@@ -19,7 +19,7 @@ use yii\web\View;
         'summary' => '',
         'rowOptions' => function (GroupMembership $model, $key, $index, $grid) {
             $options = [];
-            if ($model->getVisibility() === Visibility::VISIBILITY_GM) {
+            if ($model->getVisibility() === Visibility::GameMaster) {
                 $options['class'] = 'table-row-hidden secret';
             }
             return $options;

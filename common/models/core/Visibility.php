@@ -9,18 +9,18 @@ use Yii;
 
 enum Visibility: string
 {
-    case VISIBILITY_NONE = 'none';
-    case VISIBILITY_GM = 'gm';
-    case VISIBILITY_DESIGNATED = 'designated';
-    case VISIBILITY_LOGGED = 'logged';
-    case VISIBILITY_FULL = 'full';
+    case None = 'none';
+    case GameMaster = 'gm';
+    case Designated = 'designated';
+    case LoggedIn = 'logged';
+    case Full = 'full';
 
     public const array allowedVisibilities = [
-        //Visibility::VISIBILITY_NONE,
-        Visibility::VISIBILITY_GM,
-        Visibility::VISIBILITY_DESIGNATED,
-        //Visibility::VISIBILITY_LOGGED,
-        Visibility::VISIBILITY_FULL,
+        Visibility::None,
+        Visibility::GameMaster,
+        Visibility::Designated,
+        Visibility::LoggedIn,
+        Visibility::Full,
     ];
 
     /**
@@ -61,13 +61,13 @@ enum Visibility: string
             $visibilityVector = [];
         } else {
             $visibilityVector = [
-                Visibility::VISIBILITY_FULL,
-                Visibility::VISIBILITY_LOGGED,
+                Visibility::Full,
+                Visibility::LoggedIn,
             ];
 
             if (Participant::participantHasRole(Yii::$app->user->identity, $epic, ParticipantRole::ROLE_GM)) {
-                $visibilityVector[] = Visibility::VISIBILITY_GM;
-                $visibilityVector[] = Visibility::VISIBILITY_DESIGNATED;
+                $visibilityVector[] = Visibility::GameMaster;
+                $visibilityVector[] = Visibility::Designated;
             }
         }
 
@@ -84,13 +84,13 @@ enum Visibility: string
             $visibilityVector = [];
         } else {
             $visibilityVector = [
-                Visibility::VISIBILITY_FULL,
-                Visibility::VISIBILITY_LOGGED,
-                Visibility::VISIBILITY_DESIGNATED, // the source of unsafety
+                Visibility::Full,
+                Visibility::LoggedIn,
+                Visibility::Designated, // the source of unsafety
             ];
 
             if (Participant::participantHasRole(Yii::$app->user->identity, $epic, ParticipantRole::ROLE_GM)) {
-                $visibilityVector[] = Visibility::VISIBILITY_GM;
+                $visibilityVector[] = Visibility::GameMaster;
             }
         }
 
@@ -112,11 +112,11 @@ enum Visibility: string
     static public function visibilityNames(array $allowed): array
     {
         return self::filterNames($allowed, [
-            Visibility::VISIBILITY_NONE->value => Yii::t('app', 'VISIBILITY_NONE'),
-            Visibility::VISIBILITY_GM->value => Yii::t('app', 'VISIBILITY_GM'),
-            Visibility::VISIBILITY_DESIGNATED->value => Yii::t('app', 'VISIBILITY_DESIGNATED'),
-            Visibility::VISIBILITY_LOGGED->value => Yii::t('app', 'VISIBILITY_LOGGED'),
-            Visibility::VISIBILITY_FULL->value => Yii::t('app', 'VISIBILITY_FULL'),
+            Visibility::None->value => Yii::t('app', 'VISIBILITY_NONE'),
+            Visibility::GameMaster->value => Yii::t('app', 'VISIBILITY_GM'),
+            Visibility::Designated->value => Yii::t('app', 'VISIBILITY_DESIGNATED'),
+            Visibility::LoggedIn->value => Yii::t('app', 'VISIBILITY_LOGGED'),
+            Visibility::Full->value => Yii::t('app', 'VISIBILITY_FULL'),
         ]);
     }
 
@@ -139,11 +139,11 @@ enum Visibility: string
     public static function visibilityNamesLowercase($allowed): array
     {
         return self::filterNames($allowed, [
-            Visibility::VISIBILITY_NONE->value => Yii::t('app', 'VISIBILITY_NONE_LOWERCASE'),
-            Visibility::VISIBILITY_GM->value => Yii::t('app', 'VISIBILITY_GM_LOWERCASE'),
-            Visibility::VISIBILITY_DESIGNATED->value => Yii::t('app', 'VISIBILITY_DESIGNATED_LOWERCASE'),
-            Visibility::VISIBILITY_LOGGED->value => Yii::t('app', 'VISIBILITY_LOGGED_LOWERCASE'),
-            Visibility::VISIBILITY_FULL->value => Yii::t('app', 'VISIBILITY_FULL_LOWERCASE'),
+            Visibility::None->value => Yii::t('app', 'VISIBILITY_NONE_LOWERCASE'),
+            Visibility::GameMaster->value => Yii::t('app', 'VISIBILITY_GM_LOWERCASE'),
+            Visibility::Designated->value => Yii::t('app', 'VISIBILITY_DESIGNATED_LOWERCASE'),
+            Visibility::LoggedIn->value => Yii::t('app', 'VISIBILITY_LOGGED_LOWERCASE'),
+            Visibility::Full->value => Yii::t('app', 'VISIBILITY_FULL_LOWERCASE'),
         ]);
     }
 

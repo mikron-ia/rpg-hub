@@ -47,9 +47,9 @@ final class StoryGroupAssignmentQuery extends StoryGroupAssignment
 
     public static function getGroupAssignmentLinksForUser(int $storyId): array
     {
-        $assignments = self::getGroupAssignments($storyId, Visibility::VISIBILITY_FULL)
+        $assignments = self::getGroupAssignments($storyId, Visibility::Full)
             ->joinWith('group')
-            ->andWhere(['group.visibility' => Visibility::VISIBILITY_FULL->value])
+            ->andWhere(['group.visibility' => Visibility::Full->value])
             ->orderBy('group.name ASC')
             ->all();
 
@@ -58,9 +58,9 @@ final class StoryGroupAssignmentQuery extends StoryGroupAssignment
 
     public static function getStoryAssignmentLinksForUser(int $groupId): array
     {
-        $assignments = self::getStoryAssignments($groupId, Visibility::VISIBILITY_FULL)
+        $assignments = self::getStoryAssignments($groupId, Visibility::Full)
             ->joinWith('story')
-            ->andWhere(['story.visibility' => Visibility::VISIBILITY_FULL->value])
+            ->andWhere(['story.visibility' => Visibility::Full->value])
             ->orderBy('story.position DESC')
             ->all();
 
@@ -69,22 +69,22 @@ final class StoryGroupAssignmentQuery extends StoryGroupAssignment
 
     public static function getGroupAssignmentPublicLinksForOperator(int $storyId): array
     {
-        return self::getGroupAssignmentLinksForOperator($storyId, Visibility::VISIBILITY_FULL);
+        return self::getGroupAssignmentLinksForOperator($storyId, Visibility::Full);
     }
 
     public static function getStoryAssignmentPublicLinksForOperator(int $groupId): array
     {
-        return self::getStoryAssignmentLinksForOperator($groupId, Visibility::VISIBILITY_FULL);
+        return self::getStoryAssignmentLinksForOperator($groupId, Visibility::Full);
     }
 
     public static function getGroupAssignmentPrivateLinksForOperator(int $storyId): array
     {
-        return self::getGroupAssignmentLinksForOperator($storyId, Visibility::VISIBILITY_GM);
+        return self::getGroupAssignmentLinksForOperator($storyId, Visibility::GameMaster);
     }
 
     public static function getStoryAssignmentPrivateLinksForOperator(int $groupId): array
     {
-        return self::getStoryAssignmentLinksForOperator($groupId, Visibility::VISIBILITY_GM);
+        return self::getStoryAssignmentLinksForOperator($groupId, Visibility::GameMaster);
     }
 
     private static function processIntoLinks(array $assignments, string $address): array
@@ -93,7 +93,7 @@ final class StoryGroupAssignmentQuery extends StoryGroupAssignment
             fn(StoryGroupAssignment $assignment) => new LinkWithVisibility(
                 text: $assignment->{$address}->name . ' (' . strtolower($assignment->getRank()->getNameForBrackets()) . ')',
                 url: Url::to([$address . '/view', 'key' => $assignment->{$address}->key]),
-                isSecret: $assignment->{$address}->visibility === Visibility::VISIBILITY_GM->value,
+                isSecret: $assignment->{$address}->visibility === Visibility::GameMaster->value,
             ),
             $assignments
         );
