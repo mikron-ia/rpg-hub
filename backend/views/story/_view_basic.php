@@ -18,6 +18,13 @@ use yii\widgets\DetailView;
 /* @var $storyGroupsPrivate array<string> */
 
 $isStoryCurrent = $model->story_id === $model->epic->current_story_id;
+$visibilityWarning = $isStoryCurrent && $model->getVisibility() !== Visibility::Full
+    ? sprintf(
+        ' <span class="%s" title="%s"></span>',
+        'glyphicon glyphicon-alert text-warning',
+        Yii::t('app', 'STORY_VISIBILITY_WARNING_CURRENT')
+    )
+    : '';
 
 ?>
 
@@ -71,8 +78,9 @@ $isStoryCurrent = $model->story_id === $model->epic->current_story_id;
                 ],
                 [
                     'label' => Yii::t('app', 'STORY_IS_CURRENT'),
+                    'format' => 'raw',
                     'value' => $isStoryCurrent
-                        ? Yii::t('app', 'VALUE_YES')
+                        ? Yii::t('app', 'VALUE_YES') . $visibilityWarning
                         : Yii::t('app', 'VALUE_NO'),
                 ],
             ],

@@ -119,7 +119,7 @@ final class SiteController extends Controller
         $epics = EpicQuery::activeEpicsAsModels(false);
         $sessions = (new GameQuery())->mostRecentByPlayerDataProvider($userEpicIDs);
         $recaps = (new RecapQuery())->mostRecentByPlayerDataProvider($userEpicIDs);
-        $stories = (new StoryQuery(4))->mostRecentByPlayerDataProvider($userEpicIDs);
+        $stories = (new StoryQuery(4))->allCurrentByPlayerDataProvider($userEpicIDs);
         $announcements = (new AnnouncementQuery())->mostRecentByPlayerDataProvider($userEpicIDs);
 
         // @todo Recap sighting

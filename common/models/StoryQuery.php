@@ -9,6 +9,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
+use yii\data\DataProviderInterface;
 use yii\db\ActiveQuery;
 use yii\web\HttpException;
 
@@ -109,6 +110,28 @@ final class StoryQuery extends Story implements EntityQuery
 
         return new ArrayDataProvider([
             'allModels' => $mostRecentStories,
+            'pagination' => false,
+        ]);
+    }
+
+    /**
+     * @param array<int> $userEpicIds
+     */
+    public function allCurrentByPlayerDataProvider(array $userEpicIds): DataProviderInterface
+    {
+        return new ArrayDataProvider([
+            'allModels' => array_filter(
+                Story::find()
+                    ->joinWith('epic', true, 'INNER JOIN')
+                    ->where(['in', 'epic.epic_id', $userEpicIds])
+                    ->andWhere('epic.current_story_id = story.story_id')
+                    ->orderBy(['position' => SORT_DESC, 'story_id' => SORT_DESC])
+                    ->all(),
+                fn(Story $story) => in_array(
+                    $story->getVisibility(),
+                    Visibility::determineVisibilityVectorWithObjects($story->epic)
+                )
+            ),
             'pagination' => false,
         ]);
     }

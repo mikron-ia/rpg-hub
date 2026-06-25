@@ -2,17 +2,16 @@
 
 use common\models\Epic;
 use common\models\Recap;
-use yii\data\ActiveDataProvider;
+use yii\data\DataProviderInterface;
 use yii\web\View;
 use yii\widgets\ListView;
 
 /* @var $this View */
 /* @var $epics Epic[] */
 /* @var $recaps Recap[] */
-/* @var $announcements ActiveDataProvider */
-/* @var $sessions ActiveDataProvider */
-
-/* @var $stories ActiveDataProvider */
+/* @var $announcements DataProviderInterface */
+/* @var $sessions DataProviderInterface */
+/* @var $stories DataProviderInterface */
 
 $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
 ?>
@@ -48,26 +47,22 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
             <?php endif; ?>
         </div>
         <div>
-            <h3 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
-                <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
+            <h3 title="<?= Yii::t('app', 'FRONTPAGE_CURRENT_STORIES_TITLE_TEXT') ?>">
+                <?= Yii::t('app', 'FRONTPAGE_CURRENT_STORIES') ?>
             </h3>
 
-            <?php if ($stories): ?>
-                <?= ListView::widget([
-                    'dataProvider' => $stories,
-                    'emptyText' => '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_STORIES_NOT_AVAILABLE') . '</p>',
-                    'layout' => '{items}',
-                    'itemOptions' => ['class' => 'item'],
-                    'itemView' => function ($model, $key, $index, $widget) {
-                        return $this->render(
-                            '../story/_index_box',
-                            ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
-                        );
-                    },
-                ]) ?>
-            <?php else: ?>
-                <p class="error-box"><?= Yii::t('app', 'FRONTPAGE_STORIES_NOT_AVAILABLE') ?></p>
-            <?php endif; ?>
+            <?= ListView::widget([
+                'dataProvider' => $stories,
+                'emptyText' => '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_CURRENT_STORIES_NOT_AVAILABLE') . '</p>',
+                'layout' => '{items}',
+                'itemOptions' => ['class' => 'item'],
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render(
+                        '../story/_index_box',
+                        ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                    );
+                },
+            ]) ?>
         </div>
     </div>
 
