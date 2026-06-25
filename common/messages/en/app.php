@@ -959,7 +959,7 @@ return [
     'PROJECT_DESCRIPTIONS_TAB' => 'Descriptions',
     'PROJECT_DETAILS_FOR_GM' => 'Technical details',
     'PROJECT_FORM_SELECT_SCENARIO' => 'Select scenario',
-    'PROJECT_GM_TAB' => '',
+    'PROJECT_GM_TAB' => 'GM data',
     'PROJECT_ID' => 'ID',
     'PROJECT_KEY' => 'Key',
     'PROJECT_LONG' => 'Long description',

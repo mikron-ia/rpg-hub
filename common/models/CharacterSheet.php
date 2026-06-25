@@ -36,6 +36,7 @@ use yii\web\HttpException;
  * @property Epic $epic
  * @property Character $currentlyDeliveredCharacter
  * @property Character[] $characters
+ * @property CharacterSheetDataState $dataState
  * @property User $player
  * @property SeenPack $seenPack
  * @property UtilityBag $utilityBag

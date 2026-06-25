@@ -45,6 +45,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     use ToolsForEntity;
     use ToolsForLinkTags;
 
+    #[Override]
     public static function tableName(): string
     {
         return 'recap';
@@ -56,6 +57,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         return 'recap';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -246,13 +248,13 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     }
 
     #[Override]
-    static public function canUserIndexThem(): bool
+    public static function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
     #[Override]
-    static public function canUserCreateThem(): bool
+    public static function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
@@ -270,25 +272,25 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
     }
 
     #[Override]
-    static function throwExceptionAboutCreate(): void
+    public static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_RECAP'));
     }
 
     #[Override]
-    static function throwExceptionAboutControl(): void
+    public static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_RECAP'));
     }
 
     #[Override]
-    static function throwExceptionAboutIndex(): void
+    public static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_RECAP'));
     }
 
     #[Override]
-    static function throwExceptionAboutView(): void
+    public static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_RECAP'));
     }
@@ -324,8 +326,6 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
 
     public function getSessionNamesFormatted($glue = '; '): string
     {
-        return implode($glue, array_map(function (Game $model) {
-            return $model->basics;
-        }, $this->games));
+        return implode($glue, array_map(fn(Game $model) => $model->basics, $this->games));
     }
 }

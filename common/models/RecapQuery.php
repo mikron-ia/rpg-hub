@@ -68,11 +68,6 @@ final class RecapQuery extends Recap implements EntityQuery
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'recap_id' => $this->recap_id,
-        ]);
-
         $query->andFilterWhere(['like', 'key', $this->key])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'content', $this->content]);

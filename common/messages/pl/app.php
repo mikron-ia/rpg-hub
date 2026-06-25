@@ -1118,7 +1118,7 @@ return [
     'STORY_DESCRIPTIONS' => 'Opisy',
     'STORY_DESCRIPTIONS_TAB' => 'Opis',
     'STORY_FORM_SELECT_SCENARIO' => 'Wybierz scenariusz będący podstawą tej historii',
-    'STORY_GM_TAB' => '',
+    'STORY_GM_TAB' => 'Dane MG',
     'STORY_GROUP_ASSIGNMENT_GROUP_ID' => 'Grupa',
     'STORY_GROUP_ASSIGNMENT_ID' => 'Przypisanie grupy do historii',
     'STORY_GROUP_ASSIGNMENT_KEY' => 'Klucz',

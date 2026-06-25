@@ -149,9 +149,7 @@ enum Visibility: string
 
     private static function filterNames(array $allowed, array $names): array
     {
-        $allowedArray = array_map(function (Visibility $visibility) {
-            return $visibility->value;
-        }, $allowed);
+        $allowedArray = array_map(fn(Visibility $visibility) => $visibility->value, $allowed);
 
         foreach ($names as $key => $name) {
             if (!in_array($key, $allowedArray)) {
