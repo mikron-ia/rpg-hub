@@ -659,7 +659,13 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
             $bSortPriority = $b->getStatus()->getSortPriority();
 
             if ($aSortPriority === $bSortPriority) {
-                return $a->epic_id > $b->epic_id ? -1 : 1; // it impossible to have the same ID and with this, the sorting is deterministic
+                $alphabeticPriority = strcasecmp($a->name, $b->name);
+
+                if ($alphabeticPriority === 0) {
+                    return $a->epic_id > $b->epic_id ? -1 : 1; // it impossible to have the same ID and with this, the sorting is deterministic
+                }
+
+                return $alphabeticPriority;
             }
 
             return $aSortPriority < $bSortPriority ? -1 : 1;
