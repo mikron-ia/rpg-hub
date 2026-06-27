@@ -90,12 +90,12 @@ SecretAsset::register($this);
         ]) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <h3 class="text-center"><?= Yii::t('app', 'SECRET_FIELD_CONTENT') ?></h3>
         <div class="text-separating-box"><?= $model->getContentFormatted() ?></div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <h3 class="text-center"><?= Yii::t('app', 'SECRET_FIELD_NOTES') ?></h3>
         <?php if ($model->notes) : ?>
             <div class="text-separating-box text-separating-box-private"><?= $model->getNotesFormatted() ?></div>

@@ -11,6 +11,7 @@ use common\models\Group;
 use common\models\Location;
 use common\models\Parameter;
 use common\models\Recap;
+use common\models\Secret;
 use common\models\Story;
 use yii\base\InvalidRouteException;
 use yii\console\Controller;
@@ -182,6 +183,21 @@ class CrutchController extends Controller
     }
 
     /**
+     * Saves all secrets
+     *
+     * @throws DbException
+     */
+    public function actionSaveSecrets(): void
+    {
+        $objects = Secret::find()->all();
+
+        foreach ($objects as $object) {
+            /** @var Secret $object */
+            $object->save(false);
+        }
+    }
+
+    /**
      * Triggers all the other save actions from this category
      *
      * @throws InvalidRouteException
@@ -199,5 +215,6 @@ class CrutchController extends Controller
         $this->runAction('save-games');
         $this->runAction('save-parameters');
         $this->runAction('save-locations');
+        $this->runAction('save-secrets');
     }
 }

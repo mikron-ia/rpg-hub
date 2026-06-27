@@ -1,16 +1,16 @@
 <?php
 
-/* @var $this yii\web\View */
-
-/* @var $model common\models\Article */
-
 use backend\assets\ArticleAsset;
+use common\models\Article;
 use common\models\core\Visibility;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
-ArticleAsset::register($this);
+/* @var $this View */
+/* @var $model Article */
 
+ArticleAsset::register($this);
 ?>
 <div>
 
@@ -77,22 +77,6 @@ ArticleAsset::register($this);
     </div>
 
     <div class="col-md-6">
-        <h2 class="text-center"><?= Yii::t('app', 'ARTICLE_OUTLINE_TITLE') ?></h2>
-        <?php if (!empty($model->outline_raw)): ?>
-            <?= $model->getOutlinedFormatted() ?>
-        <?php else: ?>
-            <p class="error-box"><?= Yii::t('app', 'ARTICLE_OUTLINE_EMPTY') ?></p>
-        <?php endif; ?>
-    </div>
-
-    <?php if (!empty($model->notes_raw)): ?>
-        <div class="col-md-6">
-            <h2 class="text-center"><?= Yii::t('app', 'ARTICLE_NOTES') ?></h2>
-            <?= $model->getNotesFormatted() ?>
-        </div>
-    <?php endif; ?>
-
-    <div class="col-md-6">
         <h2 class="text-center"><?= Yii::t('app', 'BESTOWED_VISIBILITY_HEADER'); ?></h2>
         <?php if (!empty($model->bestowed_list_id) && $model->visibility === Visibility::Designated->value): ?>
             <?= $this->render('../bestowed/_view_bestowed_form', [
@@ -148,5 +132,21 @@ ArticleAsset::register($this);
             ) ?>
         </div>
     </div>
+
+    <div class="col-md-12">
+        <h2 class="text-center"><?= Yii::t('app', 'ARTICLE_OUTLINE_TITLE') ?></h2>
+        <?php if (!empty($model->outline_raw)): ?>
+            <?= $model->getOutlinedFormatted() ?>
+        <?php else: ?>
+            <p class="error-box"><?= Yii::t('app', 'ARTICLE_OUTLINE_EMPTY') ?></p>
+        <?php endif; ?>
+    </div>
+
+    <?php if (!empty($model->notes_raw)): ?>
+        <div class="col-md-12">
+            <h2 class="text-center"><?= Yii::t('app', 'ARTICLE_NOTES') ?></h2>
+            <?= $model->getNotesFormatted() ?>
+        </div>
+    <?php endif; ?>
 
 </div>

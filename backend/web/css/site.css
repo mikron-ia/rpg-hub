@@ -537,6 +537,7 @@ p {
 
 .table-icon-in-cell {
     color: #337ab7;
+    cursor: help;
     float: right;
 }
 

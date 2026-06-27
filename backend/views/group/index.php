@@ -57,15 +57,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'name',
                     'format' => 'raw',
-                    'value' => function (Group $model) {
-                        return $model->name
-                            . ($model->display_as_tab
-                                ? '<span class="glyphicon glyphicon-list-alt table-icon-in-cell" title="' . Yii::t(
-                                    'app',
-                                    'GROUP_IS_DISPLAYED_AS_TAB'
-                                ) . '"></span>'
-                                : '');
-                    }
+                    'value' => fn(Group $model) => $model->name
+                        . ($model->display_as_tab
+                            ? sprintf(
+                                '<span class="%s" title="%s"></span>',
+                                'glyphicon glyphicon-list-alt table-icon-in-cell',
+                                Yii::t('app', 'GROUP_IS_DISPLAYED_AS_TAB')
+                            )
+                            : ''
+                        )
                 ],
                 [
                     'attribute' => 'master_group_id',

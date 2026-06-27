@@ -30,7 +30,7 @@ can no longer fulfill those goals. It is now maintained mostly for its practical
 ## Set up instructions
 
 1. Make sure you have the proper stack installed; the current requirements are:
-    - PHP 8.3+
+    - PHP 8.4+
         - Due to PHP maintaining most of its backwards compatibility, the project also works up to PHP 8.5
     - MySQL 5.6+ database or MariaDB equivalent
         - The current project was tested and found working up to MySQL 8.0 and MariaDB 11.0
@@ -114,12 +114,15 @@ The hub allows handling of the following:
 - `Group` - a group of `Character`s - a party, an organization, or anything that justifies putting a few `Character`s
   together; can have other `Groups` as members as well
 - `Location` - a place present in the story
+- `Project` - a less structured, more distributed, and usually player-driven set of events and actions, usually
+  resulting in a creation of something or accomplishment of a goal independently of a story
 - `Scenario` - a plan for events for a `Story`
     - This is the only "large" component that exists solely on the Game Master side and cannot be displayed on the
       presentation/front side
 - `Article` - miscellaneous texts
 - `Announcement` - news, information, and other OOC updates directed at users
 - `PointInTime` - auxiliary information, used to put in-story date/time on descriptions
+- `Secret` - auxiliary information, used to put in-story secrets in texts
 - `Image` - a set of links to an image file that can in turn be embedded in most text fields
 - `User` - as the name suggests, this is the user, i.e. person accessing the hub; no further explanation should be
   needed

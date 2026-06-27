@@ -2,17 +2,20 @@
 
 use backend\assets\CharacterAsset;
 use common\models\Character;
+use common\models\CharacterQuery;
 use common\models\Epic;
+use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
+use yii\web\View;
 
 CharacterAsset::register($this);
 
 /* @var $epic Epic */
-/* @var $this yii\web\View */
-/* @var $searchModel common\models\CharacterQuery */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $searchModel CharacterQuery */
+/* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_CHARACTER_INDEX');
 $this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];

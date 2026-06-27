@@ -18,6 +18,8 @@ class RbacController extends Controller
 {
     /**
      * Clears all rights and rules and sets them again
+     *
+     * @throws Exception
      */
     public function actionReset(): void
     {
@@ -38,6 +40,8 @@ class RbacController extends Controller
      * Initiates all rules. NOTE: this will erase all access rights
      * Minor technical note: if there is no separate index* right, all view* rights should allow listing,
      * of course not necessarily complete.
+     *
+     * @throws Exception
      */
     public function actionInit(): void
     {
@@ -87,12 +91,14 @@ class RbacController extends Controller
         /* Load v1.7.0 */
         $this->actionV1070();
 
-        /* Load v1.7.0 */
+        /* Load v1.8.0 */
         $this->actionV1080();
     }
 
     /**
      * Adds rights from v0.4.0 and earlier
+     *
+     * @throws Exception
      */
     public function actionV0040(): void
     {
@@ -279,6 +285,8 @@ class RbacController extends Controller
 
     /**
      * Adds rights from v0.8.0
+     *
+     * @throws Exception
      */
     public function actionV0080(): void
     {
@@ -323,6 +331,8 @@ class RbacController extends Controller
 
     /**
      * Adds rights from v0.11.0
+     *
+     * @throws Exception
      */
     public function actionV0110(): void
     {
@@ -352,6 +362,8 @@ class RbacController extends Controller
 
     /**
      * Adds rights from v1.2.0
+     *
+     * @throws Exception
     */
     public function actionV1020(): void
     {
@@ -381,6 +393,8 @@ class RbacController extends Controller
 
     /**
      * Adds rights from v1.4.0
+     *
+     * @throws Exception
     */
     public function actionV1040(): void
     {

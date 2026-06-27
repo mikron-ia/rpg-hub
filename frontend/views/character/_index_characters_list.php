@@ -10,8 +10,8 @@ use yii\widgets\ListView;
 ?>
 
 <div id="characters">
-    <p class="beta-feature-warning" title="<?= Yii::t('app', 'BETA_WARNING_TITLE') ?>">
-        <?= Yii::t('app', 'BETA_WARNING_TEXT') ?>
+    <p class="beta-feature-warning" title="<?= Yii::t('app', 'ALPHA_WARNING_TITLE') ?>">
+        <?= Yii::t('app', 'ALPHA_WARNING_TEXT') ?>
     </p>
     <?php echo ListView::widget([
         'dataProvider' => $dataProvider,
