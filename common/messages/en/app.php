@@ -734,6 +734,7 @@ return [
     'LABEL_CHARACTER_LIST_STATE' => 'Character list',
     'LABEL_COMPLETION' => 'Completion',
     'LABEL_CONTENT' => 'Content',
+    'LABEL_COPY_KEY_DISABLED' => 'Your browser does not allow direct access to the clipboard, thus copy key buttons have been removed as unusable.',
     'LABEL_CREATE' => 'Create',
     'LABEL_CREATED_AT' => 'Created at',
     'LABEL_DATA_SIZE' => 'Size of external data',

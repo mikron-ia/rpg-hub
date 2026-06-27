@@ -17,9 +17,30 @@ $('#button-copy-key').click(function (event) {
     });
 });
 
+$('.index-copy-key').click(function (event) {
+    event.preventDefault();
+
+    let copyKey = $(this);
+
+    copyKey.prop('disabled', true);
+
+    navigator.clipboard.writeText(copyKey.closest("tr").data('copy-key')).then(function () {
+        copyKey.removeClass('glyphicon-copy');
+        copyKey.addClass('glyphicon-check');
+    }).finally(function () {
+        setTimeout(function () {
+            copyKey.removeClass('glyphicon-check');
+            copyKey.addClass('glyphicon-copy');
+            copyKey.prop('disabled', false);
+        }, 2000);
+    });
+});
+
 $(document).ready(function () {
     if (navigator.clipboard === undefined) {
-        $('#key-div').show()
+        $('#key-div').show();
+        $('.index-copy-key').hide();
+        $('#copy-key-disabled').show();
     } else {
         $('#button-copy-key').show();
     }

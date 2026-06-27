@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 $isCurrentStory = $model->story_id === $epic->current_story_id;
                 return [
                     'class' => $isCurrentStory ? 'table-row-story-current' : '',
+                    'data-copy-key' => sprintf('ST:%s', $model->key),
                     'title' => $isCurrentStory ? Yii::t('app', 'CURRENT_STORY') : null,
                 ];
             },
@@ -66,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => ActionColumn::class,
                     'contentOptions' => ['class' => 'action-cell'],
-                    'template' => '{view} {update}',
+                    'template' => '{view} {update} {copy}',
                     'buttons' => [
                         'view' => function ($url, Story $model, $key) {
                             return Html::a(
@@ -82,6 +83,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['title' => Yii::t('app', 'BUTTON_UPDATE')]
                             );
                         },
+                        'copy' => function ($url, Story $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-copy index-copy-key"></span>',
+                                '#',
+                                ['title' => Yii::t('app', 'BUTTON_COPY_KEY')]
+                            );
+                        },
                     ]
                 ],
             ],
@@ -90,6 +98,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="col-md-3" id="filter">
         <?php echo $this->render('_search', ['model' => $searchModel, 'epic' => $epic]); ?>
+    </div>
+
+    <div class="col-md-3" id="copy-key-disabled" style="display: none;">
+        <p class="warning-box"><?= Yii::t('app', 'LABEL_COPY_KEY_DISABLED') ?></p>
     </div>
 
 </div>

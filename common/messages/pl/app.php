@@ -734,6 +734,7 @@ return [
     'LABEL_CHARACTER_LIST_STATE' => 'Lista postaci',
     'LABEL_COMPLETION' => 'Kompletność',
     'LABEL_CONTENT' => 'Treść',
+    'LABEL_COPY_KEY_DISABLED' => 'Twoja przeglądarka nie daje możliwości kopiowania do schowka, zatem przyciski kopiowania kluczy zostały ukryte.',
     'LABEL_CREATE' => 'Stwórz',
     'LABEL_CREATED_AT' => 'Stworzono',
     'LABEL_DATA_SIZE' => 'Rozmiar danych zewnętrznych',

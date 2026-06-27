@@ -1,5 +1,6 @@
 <?php
 
+use backend\assets\ArticleAsset;
 use common\models\Article;
 use common\models\Epic;
 use yii\helpers\Html;
@@ -9,6 +10,8 @@ use yii\grid\GridView;
 /* @var $epic Epic */
 /* @var $searchModel common\models\ArticleQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+
+ArticleAsset::register($this);
 
 $this->title = Yii::t('app', 'ARTICLE_TITLE_INDEX');
 $this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];
@@ -34,6 +37,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'filterPosition' => null,
+        'rowOptions' => function (Article $model, $key, $index, $grid) {
+            return [
+                'data-copy-key' => sprintf('ART:%s', $model->key),
+            ];
+        },
         'columns' => [
             'title',
             [
@@ -45,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => ['class' => 'action-cell'],
-                'template' => '{view} {update} {up} {down}',
+                'template' => '{view} {update} {copy} {up} {down}',
                 'buttons' => [
                     'up' => function ($url, Article $model, $key) {
                         return Html::a(
@@ -63,6 +71,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
                             ]
+                        );
+                    },
+                    'copy' => function ($url, Article $model, $key) {
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-copy index-copy-key"></span>',
+                            '#',
+                            ['title' => Yii::t('app', 'BUTTON_COPY_KEY')]
                         );
                     },
                     'view' => function ($url, Article $model, $key) {
@@ -83,4 +98,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
+
+    <div class="col-md-12" id="copy-key-disabled" style="display: none;">
+        <p class="warning-box"><?= Yii::t('app', 'LABEL_COPY_KEY_DISABLED') ?></p>
+    </div>
 </div>

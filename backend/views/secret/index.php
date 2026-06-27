@@ -1,5 +1,6 @@
 <?php
 
+use backend\assets\SecretAsset;
 use common\models\Epic;
 use common\models\Secret;
 use common\models\SecretQuery;
@@ -13,6 +14,8 @@ use yii\web\View;
 /* @var $this View */
 /* @var $searchModel SecretQuery */
 /* @var $dataProvider ActiveDataProvider */
+
+SecretAsset::register($this);
 
 $this->title = Yii::t('app', 'SECRET_TITLE_INDEX');
 
@@ -41,6 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterPosition' => null,
+            'rowOptions' => function (Secret $model, $key, $index, $grid) {
+                return [
+                    'data-copy-key' => sprintf('SECRET:%s', $model->key),
+                ];
+            },
             'columns' => [
                 'title',
                 [
@@ -66,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => ActionColumn::class,
                     'contentOptions' => ['class' => 'action-cell'],
-                    'template' => '{view} {update}',
+                    'template' => '{view} {update} {copy}',
                     'buttons' => [
                         'view' => function ($url, Secret $model, $key) {
                             return Html::a(
@@ -82,6 +90,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['title' => Yii::t('app', 'BUTTON_UPDATE')]
                             );
                         },
+                        'copy' => function ($url, Secret $model, $key) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-copy index-copy-key"></span>',
+                                '#',
+                                ['title' => Yii::t('app', 'BUTTON_COPY_KEY')]
+                            );
+                        },
                     ],
                 ],
             ],
@@ -90,5 +105,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="col-md-3" id="filter">
         <?= $this->render('_search', ['model' => $searchModel]); ?>
+    </div>
+
+    <div class="col-md-3" id="copy-key-disabled" style="display: none;">
+        <p class="warning-box"><?= Yii::t('app', 'LABEL_COPY_KEY_DISABLED') ?></p>
     </div>
 </div>
