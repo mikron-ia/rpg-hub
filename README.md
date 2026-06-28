@@ -30,8 +30,7 @@ can no longer fulfill those goals. It is now maintained mostly for its practical
 ## Set up instructions
 
 1. Make sure you have the proper stack installed; the current requirements are:
-    - PHP 8.4+
-        - Due to PHP maintaining most of its backwards compatibility, the project also works up to PHP 8.5
+    - PHP 8.5+
     - MySQL 5.6+ database or MariaDB equivalent
         - The current project was tested and found working up to MySQL 8.0 and MariaDB 11.0
 1. If you have no composer, install it via [instructions from here](https://getcomposer.org/download/)

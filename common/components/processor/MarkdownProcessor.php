@@ -11,16 +11,10 @@ final class MarkdownProcessor
      */
     public static function process(string $textForMarkdown): string
     {
-        return self::addClasses(
-            Markdown::process(
-                markdown: str_ireplace(
-                    search: '&gt;',
-                    replace: '>',
-                    subject: $textForMarkdown
-                ),
-                flavor: 'gfm'
-            )
-        );
+        return $textForMarkdown
+                |> (fn(string $text) => str_ireplace(search: '&gt;', replace: '>', subject: $text))
+                |> (fn(string $text) => Markdown::process(markdown: $text, flavor: 'gfm'))
+                |> self::addClasses(...);
     }
 
     /**

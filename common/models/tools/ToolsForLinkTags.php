@@ -24,7 +24,9 @@ trait ToolsForLinkTags
      */
     private function processAllInOrder(string $text): string
     {
-        return $this->expandHeaders(LinkTagsProcessor::processKeys($text));
+        return $text
+                |> LinkTagsProcessor::processKeys(...)
+                |> $this->expandHeaders(...);
     }
 
     /**
@@ -57,13 +59,11 @@ trait ToolsForLinkTags
         /**
          * Disabling encoding is needed to accommodate text pre-processing in some objects
          * Do not use this unless necessary for legacy reasons
+         * @todo Hopefully fix in #576
          */
-        $processedText = MarkdownProcessor::process(
-            textForMarkdown: $encode
-                ? Html::encode($textForEncoding)
-                : $textForEncoding
-        );
-
-        return $processImages ? MediaTagsProcessor::processMediaTags($processedText) : $processedText;
+        return $textForEncoding
+                |> (fn(string $text) => $encode ? Html::encode($textForEncoding) : $textForEncoding)
+                |> MarkdownProcessor::process(...)
+                |> (fn(string $text) => $processImages ? MediaTagsProcessor::processMediaTags($text) : $text);
     }
 }

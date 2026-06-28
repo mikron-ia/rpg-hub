@@ -46,15 +46,12 @@ final class LinkTagsProcessor
 
     /**
      * Turns keys in the format of NN:key to []() Markdown links
-     *
-     * @todo Convert to pipe operator once PHP 8.5 is allowed on the project
      */
     public static function processKeys(string $text): string
     {
-        return self::processKeysInTheOpen( /* Solve cases of CODE:key format */
-            self::processKeysInLinks($text, self::$linkBases), /* Solve cases of [name](CODE:key) */
-            self::$linkBases
-        );
+        return $text
+                |> (fn(string $text) => self::processKeysInLinks($text, self::$linkBases)) // [name](CODE:key)
+                |> (fn(string $text) => self::processKeysInTheOpen($text, self::$linkBases)); // CODE:key
     }
 
     /**
