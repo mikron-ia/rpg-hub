@@ -10,6 +10,7 @@ use common\models\core\HasKey;
 use common\models\core\HasParameters;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
+use common\models\core\IsLinkable;
 use common\models\core\Visibility;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
@@ -27,8 +28,6 @@ use yii\web\HttpException;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
- * This is the model class for table "story".
- *
  * @property int $story_id
  * @property int $epic_id
  * @property string $key
@@ -60,7 +59,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @method moveNext()
  * @method movePrev()
  */
-class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl, HasSightings, HasVisibility, HasKey
+class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicControl, HasSightings, HasVisibility, HasKey, IsLinkable
 {
     use ToolsForEntity;
     use ToolsForHasVisibility;
@@ -630,6 +629,12 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     public function getBasedOn(): ActiveQuery
     {
         return $this->hasOne(Scenario::class, ['scenario_id' => 'based_on_id']);
+    }
+
+    #[Override]
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     public function __toString()

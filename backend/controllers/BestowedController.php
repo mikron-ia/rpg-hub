@@ -132,6 +132,8 @@ final class BestowedController extends CmsController
      */
     private function checkAccess(HasEpicControl $object): void
     {
-        $object->canUserControlYou();
+        if (!$object->canUserControlYou()) {
+            $object->throwExceptionAboutControl();
+        }
     }
 }

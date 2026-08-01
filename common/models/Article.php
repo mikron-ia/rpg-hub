@@ -324,12 +324,12 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
-    static public function canUserIndexThem(): bool
+    public static function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
-    static public function canUserCreateThem(): bool
+    public static function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
@@ -353,12 +353,12 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             );
     }
 
-    static public function throwExceptionAboutCreate(): void
+    public static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_ARTICLE'));
     }
 
-    static public function throwExceptionAboutControl(): void
+    public static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_ARTICLE'));
     }
