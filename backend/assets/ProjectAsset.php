@@ -10,8 +10,10 @@ class ProjectAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [];
     public $js = [
+        'js/bestower.js',
         'js/copy-key-button.js',
         'js/parameter-handler.js',
+        'js/project-bestower.js',
         'js/story.js',
     ];
     public $depends = [

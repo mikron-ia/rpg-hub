@@ -41,11 +41,13 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $code
  * @property string $status
  * @property string|null $data
+ * @property int $bestowed_list_id
  * @property int|null $parameter_pack_id
  * @property int|null $seen_pack_id
  *
  * @property Epic $epic
  * @property Scenario|null $basedOn
+ * @property BestowedList $bestowedList
  * @property ParameterPack $parameterPack
  * @property Parameter[] $projectParameters
  * @property SeenPack $seenPack
@@ -60,6 +62,8 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
     use ToolsForLinkTags;
 
     public bool $is_off_the_record_change = false;
+
+    public array|string $bestowedAccessIds = [];
 
     /**
      * @var array<string,string>
@@ -151,6 +155,7 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
             'code' => Yii::t('app', 'PROJECT_TYPE'),
             'status' => Yii::t('app', 'PROJECT_STATUS'),
             'based_on_id' => Yii::t('app', 'PROJECT_SCENARIO'),
+            'bestowedAccessIds' => Yii::t('app', 'BESTOWED_ACCESS_IDS_WITH_VISIBILITY'),
             'data' => Yii::t('app', 'PROJECT_DATA'),
             'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
         ];
@@ -169,12 +174,24 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
         ];
     }
 
+    #[Override]
+    public static function allowedVisibilities(): array
+    {
+        return [
+            Visibility::GameMaster,
+            Visibility::Designated,
+            Visibility::Full,
+        ];
+    }
+
     /**
      * @throws Exception
      */
     #[Override]
     public function afterFind(): void
     {
+        $this->bestowedAccessIds = $this->bestowedList?->getBestowedUserIds() ?? [];
+
         if ($this->seen_pack_id) {
             $this->seenPack->recordNotification();
         }
@@ -205,6 +222,11 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
         if ($insert) {
             $this->key = $this->generateKey();
             $this->data = json_encode([]);
+        }
+
+        if (empty($this->bestowed_list_id)) {
+            $list = BestowedList::createList();
+            $this->bestowed_list_id = $list->bestowed_list_id;
         }
 
         if (empty($this->parameter_pack_id)) {
@@ -244,6 +266,11 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
+    }
+
+    public function getBestowedList(): ActiveQuery
+    {
+        return $this->hasOne(BestowedList::class, ['bestowed_list_id' => 'bestowed_list_id']);
     }
 
     public function getParameterPack(): ActiveQuery

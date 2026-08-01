@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use common\models\Parameter;
 use common\models\Project;
 use yii\bootstrap\Modal;
@@ -100,6 +101,31 @@ use yii\widgets\DetailView;
                 ['class' => 'btn btn-default']
             ) ?>
         </div>
+    </div>
+
+    <div class="col-md-6">
+        <h2 class="text-center"><?= Yii::t('app', 'BESTOWED_VISIBILITY_HEADER'); ?></h2>
+        <?php if (!empty($model->bestowed_list_id) && $model->visibility === Visibility::Designated->value): ?>
+            <?= $this->render('../bestowed/_view_bestowed_form', [
+                'model' => $model,
+                'attribute' => 'bestowedAccessIds',
+                'class' => 'Project',
+                'formId' => 'form-bestow-access',
+                'listKey' => $model->bestowedList->key,
+                'usersForDropdown' => $model->epic->getPlayerListForDropDown(),
+            ]) ?>
+        <?php else: ?>
+            <p class="info-box">
+                <?= Yii::t(
+                    'app',
+                    'BESTOWED_VISIBILITY_NOT_ACTIVE {currentVisibility} {targetVisibility}',
+                    [
+                        'currentVisibility' => $model->getVisibility()->getNameLowercase(),
+                        'targetVisibility' => Visibility::Designated->getNameLowercase(),
+                    ]
+                ) ?>
+            </p>
+        <?php endif; ?>
     </div>
 
     <div class="project-view col-md-6">
