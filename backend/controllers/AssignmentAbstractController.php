@@ -5,6 +5,9 @@ namespace backend\controllers;
 use common\components\EpicAssistance;
 use common\models\Character;
 use common\models\core\HasEpicControl;
+use common\models\core\HasVisibility;
+use common\models\core\IsAssignment;
+use common\models\core\Visibility;
 use common\models\Epic;
 use common\models\Group;
 use common\models\Story;
@@ -41,6 +44,31 @@ class AssignmentAbstractController extends CmsController
         if ($epicFromModel->epic_id <> $epic->epic_id) {
             throw new HttpException(400, Yii::t('app', 'ERROR_WRONG_EPIC'));
         }
+    }
+
+    /**
+     * @param array<IsAssignment&HasVisibility> $assignments
+     */
+    protected function hasDuplicateAssignments(array $assignments): bool
+    {
+        $identityStrings = [];
+
+        foreach ($assignments as $assignment) {
+            $identityString = sprintf(
+                '%s-%s-%s',
+                $assignment->getVisibility()->value,
+                $assignment->getNarrativeSideId(),
+                $assignment->getActingSideId()
+            );
+
+            if (isset($identityStrings[$identityString])) {
+                return true;
+            }
+
+            $identityStrings[$identityString] = true;
+        }
+
+        return false;
     }
 
     /**

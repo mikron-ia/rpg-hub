@@ -61,6 +61,7 @@ class GroupAssignmentStoryController extends AssignmentAbstractController
                 'query' => $query,
                 'pagination' => false,
             ]),
+            'showDuplicateWarning' => $this->hasDuplicateAssignments($query->all()),
         ]);
     }
 

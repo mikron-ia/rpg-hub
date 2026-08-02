@@ -10,9 +10,16 @@ use yii\web\View;
 /* @var $this View */
 /* @var $model Story */
 /* @var $dataProvider ArrayDataProvider */
+/* @var $showDuplicateWarning bool */
 ?>
 
 <div>
+    <?php if($showDuplicateWarning):?>
+        <div class="alert alert-warning">
+            <?= Yii::t('app', 'GROUP_ASSIGNMENT_DUPLICATE_WARNING') ?>
+        </div>
+    <?php endif; ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'summary' => '<span class="assignment-summary">' . Yii::t('app', 'ASSIGNMENT_SUMMARY {totalCount}') . '</span>',
