@@ -7,8 +7,7 @@ use yii\db\ActiveQuery;
 use yii\web\HttpException;
 
 /**
- * Interface HasEpicControl indicates the rights of the object are handled mainly by its Epic
- * @package common\models\core
+ * Indicates the rights of the object are handled mainly by its Epic
  */
 interface HasEpicControl
 {
@@ -17,42 +16,42 @@ interface HasEpicControl
      *
      * @throws HttpException
      */
-    static public function canUserCreateThem(): bool;
+    public static function canUserCreateThem(): bool;
 
     /**
      * Determines whether the user can list the objects
      *
      * @throws HttpException
      */
-    static public function canUserIndexThem(): bool;
+    public static function canUserIndexThem(): bool;
 
     /**
      * Throws a 403 exception if the user cannot create
      *
      * @throws HttpException
      */
-    static function throwExceptionAboutCreate();
+    public static function throwExceptionAboutCreate();
 
     /**
      * Throws an exception if the user cannot create
      *
      * @throws HttpException
      */
-    static function throwExceptionAboutControl();
+    public static function throwExceptionAboutControl();
 
     /**
      * Throws a 403 exception if the user cannot index
      *
      * @throws HttpException
      */
-    static function throwExceptionAboutIndex();
+    public static function throwExceptionAboutIndex();
 
     /**
      * Throws a 403 exception if the user cannot view
      *
      * @throws HttpException
      */
-    static function throwExceptionAboutView();
+    public static function throwExceptionAboutView();
 
     /**
      * Determines whether the user can alter or delete the object
@@ -64,9 +63,6 @@ interface HasEpicControl
      */
     public function canUserViewYou(): bool;
 
-    /**
-     * Provides Epic
-     */
     public function getEpic(): ActiveQuery;
 
     public function setCurrentEpicOnEmpty(): void;

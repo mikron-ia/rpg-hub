@@ -145,6 +145,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         ];
     }
 
+    #[Override]
     public static function allowedVisibilities(): array
     {
         return [
@@ -324,21 +325,25 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
         return $this->hasOne(SeenPack::class, ['seen_pack_id' => 'seen_pack_id']);
     }
 
+    #[Override]
     public static function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
+    #[Override]
     public static function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
 
+    #[Override]
     public function canUserControlYou(): bool
     {
         return self::canUserControlInEpic($this->epic);
     }
 
+    #[Override]
     public function canUserViewYou(): bool
     {
         $visibility = $this->getVisibility();
@@ -353,21 +358,25 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
             );
     }
 
+    #[Override]
     public static function throwExceptionAboutCreate(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_CREATE_ARTICLE'));
     }
 
+    #[Override]
     public static function throwExceptionAboutControl(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_CONTROL_ARTICLE'));
     }
 
+    #[Override]
     public static function throwExceptionAboutIndex(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHTS_TO_LIST_ARTICLE'));
     }
 
+    #[Override]
     public static function throwExceptionAboutView(): void
     {
         self::thrownExceptionAbout(Yii::t('app', 'NO_RIGHT_TO_VIEW_ARTICLE'));

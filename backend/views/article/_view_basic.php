@@ -22,9 +22,7 @@ ArticleAsset::register($this);
                 [
                     'attribute' => 'epic_id',
                     'format' => 'raw',
-                    'value' => $model->epic_id
-                        ? (Html::a($model->epic->name, ['epic/front', 'key' => $model->epic->key], []))
-                        : Yii::t('app', 'ARTICLE_NO_EPIC'),
+                    'value' => $model->epic,
                 ],
                 [
                     'attribute' => 'visibility',
