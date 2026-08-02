@@ -9,6 +9,8 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
+use yii\data\DataProviderInterface;
+use yii\data\Sort;
 use yii\db\ActiveQuery;
 use yii\web\HttpException;
 
@@ -70,6 +72,36 @@ final class ProjectQuery extends Project implements EntityQuery
         }
 
         return $this->getDataProviderForSearch($params, $query);
+    }
+
+    public function searchForUser(): DataProviderInterface
+    {
+        $query = Project::find();
+
+        if (empty(Yii::$app->params['activeEpic'])) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
+            $query->where('0=1');
+        } else {
+            $query->andWhere([
+                'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+                'visibility' => Visibility::determineUnsafeVisibilityVector(Yii::$app->params['activeEpic']),
+            ]);
+        }
+
+        return new ArrayDataProvider([
+            'allModels' => array_filter($query->all(), function (Project $model) {
+                return $model->getVisibility() !== Visibility::Designated || $model->canUserViewYou();
+            }),
+            'sort' => new Sort([
+                'attributes' => [
+                    'position',
+                ],
+                'defaultOrder' => [
+                    'position' => SORT_DESC,
+                ],
+            ]),
+            'pagination' => ['pageSize' => 8],
+        ]);
     }
 
     /**

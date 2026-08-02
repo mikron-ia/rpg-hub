@@ -62,7 +62,7 @@ final class ProjectController extends Controller
         }
 
         $searchModel = new ProjectQuery(self::POSITIONS_PER_PAGE);
-        $dataProvider = $searchModel->search([]);
+        $dataProvider = $searchModel->searchForUser();
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -104,7 +104,7 @@ final class ProjectController extends Controller
             throw new NotFoundHttpException(Yii::t('app', 'PROJECT_NOT_AVAILABLE'));
         }
 
-        if (!in_array($model->getVisibility(), Visibility::determineVisibilityVectorWithObjects($model->epic))) {
+        if (!in_array($model->getVisibility(), Visibility::determineUnsafeVisibilityVectorWithObjects($model->epic))) {
             throw new NotFoundHttpException(Yii::t('app', 'PROJECT_NOT_AVAILABLE'));
         }
 

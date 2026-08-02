@@ -404,7 +404,16 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
     #[Override]
     public function canUserViewYou(): bool
     {
-        return self::canUserViewInEpic($this->epic);
+        $visibility = $this->getVisibility();
+        $userControl = $this->canUserControlYou();
+
+        return self::canUserViewInEpic($this->epic) &&
+            ($visibility !== Visibility::GameMaster || $userControl) &&
+            (
+                $visibility !== Visibility::Designated ||
+                $userControl ||  // free pass on designated for operators
+                $this->bestowedList->hasBestowedFor(Yii::$app->user->getId()) // is user on the list?
+            );
     }
 
     #[Override]
