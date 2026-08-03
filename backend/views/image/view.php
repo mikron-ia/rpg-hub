@@ -44,9 +44,7 @@ ImageAsset::register($this);
         ) : '' ?>
     </div>
 
-    <p class="beta-feature-warning" title="<?= Yii::t('app', 'BETA_WARNING_TITLE') ?>">
-        <?= Yii::t('app', 'BETA_WARNING_TEXT') ?>
-    </p>
+    <?= $this->render('../_common/beta') ?>
 
     <div class="clearfix"></div>
 
@@ -135,9 +133,8 @@ ImageAsset::register($this);
                 ]
             ); ?>
         </div>
-        <p class="beta-feature-warning" title="<?= Yii::t('app', 'ALPHA_WARNING_TITLE') ?>">
-            <?= Yii::t('app', 'ALPHA_WARNING_TEXT') ?>
-        </p>
+
+        <?= $this->render('../_common/alpha') ?>
 
         <?= GridView::widget([
             'dataProvider' => new ActiveDataProvider([

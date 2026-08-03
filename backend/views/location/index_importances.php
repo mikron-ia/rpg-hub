@@ -90,9 +90,7 @@ $columnsAction = [
         ) ?>
     </div>
 
-    <p class="beta-feature-warning" title="<?= Yii::t('app', 'BETA_WARNING_TITLE') ?>">
-        <?= Yii::t('app', 'BETA_WARNING_TEXT') ?>
-    </p>
+    <?= $this->render('../_common/beta') ?>
 
     <div class="col-md-9">
         <?= GridView::widget([

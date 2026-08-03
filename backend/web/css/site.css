@@ -711,6 +711,7 @@ p {
     margin-bottom: 5px;
 }
 
+.alpha-feature-warning,
 .beta-feature-warning {
     font-family: "Courier New", Courier, monospace;
     font-weight: bold;

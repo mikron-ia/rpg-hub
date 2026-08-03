@@ -16,9 +16,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'SECRET_TITLE_UPDATE');
 <div class="secret-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <p class="beta-feature-warning" title="<?= Yii::t('app', 'BETA_WARNING_TITLE') ?>">
-        <?= Yii::t('app', 'BETA_WARNING_TEXT') ?>
-    </p>
+
+    <?= $this->render('../_common/beta') ?>
 
     <?= $this->render('_form', [
         'model' => $model,
