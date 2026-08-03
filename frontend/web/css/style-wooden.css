@@ -160,6 +160,7 @@ li.redacted {
     border-radius: 15px;
 }
 
+.expired-tag,
 .unpublished-tag {
     background-color: orangered;
     border-color: orangered;

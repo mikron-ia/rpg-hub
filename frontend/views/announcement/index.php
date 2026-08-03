@@ -17,9 +17,9 @@ $this->params['breadcrumbs'][] = [
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="announcement-index col-lg-10 col-lg-offset-1 col-md-12">
+<div class="announcement-index col-lg-8 col-lg-offset-2 col-md-12">
 
-    <div class="buttoned-header"><h1><?= Html::encode($this->title) ?></h1></div>
+    <div class="text-center"><h1><?= Html::encode($this->title) ?></h1></div>
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,

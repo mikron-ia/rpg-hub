@@ -162,6 +162,7 @@ li.redacted {
     border-radius: 15px;
 }
 
+.expired-tag,
 .unpublished-tag {
     background-color: darkviolet;
     border-color: darkviolet;

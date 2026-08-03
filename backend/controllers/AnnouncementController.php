@@ -71,7 +71,7 @@ class AnnouncementController extends Controller
         }
 
         $searchModel = new AnnouncementQuery();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams, false);
 
         return $this->render('index', [
             'epic' => $epicObject ?? Yii::$app->params['activeEpic'],

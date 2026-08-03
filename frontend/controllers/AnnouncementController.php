@@ -13,9 +13,6 @@ use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
-/**
- * AnnouncementController implements the CRUD actions for Announcement model.
- */
 class AnnouncementController extends Controller
 {
     use EpicAssistance;
@@ -73,7 +70,7 @@ class AnnouncementController extends Controller
         }
 
         $searchModel = new AnnouncementQuery();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, !Announcement::canUserCreateThem());
 
         return $this->render('index', [
             'searchModel' => $searchModel,

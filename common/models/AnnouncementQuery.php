@@ -17,6 +17,9 @@ use yii\db\conditions\SimpleCondition;
  */
 class AnnouncementQuery extends Announcement
 {
+    private const int DEFAULT_FRONT_LIMIT = 4;
+    private const int DEFAULT_LIST_LIMIT = 8;
+
     public function rules(): array
     {
         return [
@@ -50,7 +53,7 @@ class AnnouncementQuery extends Announcement
             'pagination' => false,
         ]);
 
-        $query->limit(4);
+        $query->limit(self::DEFAULT_FRONT_LIMIT);
 
         return $dataProvider;
     }
@@ -79,11 +82,10 @@ class AnnouncementQuery extends Announcement
      * Creates a data provider instance with the search query applied
      *
      * @param array $params
-     * @param string|null $formName Form name to be used into `->load()` method.
      *
      * @return ActiveDataProvider
      */
-    public function search(array $params, ?string $formName = null): ActiveDataProvider
+    public function search(array $params, bool $limitByTime = true): ActiveDataProvider
     {
         $query = Announcement::find();
 
@@ -94,12 +96,17 @@ class AnnouncementQuery extends Announcement
             $query->andWhere(['epic_id' => Yii::$app->params['activeEpic']->epic_id]);
         }
 
+        if ($limitByTime) {
+            $query = $this->limitByTime($query);
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => ['pageSize' => self::DEFAULT_LIST_LIMIT],
             'sort' => ['defaultOrder' => ['visible_from' => SORT_DESC, 'announcement_id' => SORT_DESC]],
         ]);
 
-        $this->load($params, $formName);
+        $this->load($params);
 
         if (!$this->validate()) {
             $query->where('0=1');
