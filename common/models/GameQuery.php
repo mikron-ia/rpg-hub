@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 
 class GameQuery extends Game
 {
+    private const int DEFAULT_DASHBOARD_LIMIT = 8;
     private const int DEFAULT_FRONT_LIMIT = 4;
 
     #[Override]
@@ -25,9 +26,6 @@ class GameQuery extends Game
         return Model::scenarios();
     }
 
-    /**
-     * Creates a data provider instance with the search query applied
-     */
     public function search(array $params): ActiveDataProvider
     {
         $query = Game::find();
@@ -40,8 +38,6 @@ class GameQuery extends Game
                 'epic_id' => Yii::$app->params['activeEpic']->epic_id,
             ]);
         }
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -92,7 +88,7 @@ class GameQuery extends Game
     }
 
     /**
-     * @param array $userIds
+     * @param array<int,int> $userIds
      * @return ActiveDataProvider|null
      */
     public function mostRecentByPlayerDataProvider(array $userIds): ?ActiveDataProvider
@@ -108,7 +104,7 @@ class GameQuery extends Game
         $query
             ->andWhere(['in', 'epic_id', $userIds])
             ->orderBy(['planned_date' => SORT_DESC])
-            ->limit(8);
+            ->limit(self::DEFAULT_DASHBOARD_LIMIT);
 
         return $dataProvider;
     }

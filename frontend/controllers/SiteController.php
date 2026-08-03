@@ -30,9 +30,6 @@ use yii\web\Cookie;
 use yii\web\HttpException;
 use yii\web\Response;
 
-/**
- * Site controller
- */
 final class SiteController extends Controller
 {
     #[Override]
@@ -95,17 +92,12 @@ final class SiteController extends Controller
         ];
     }
 
-    /**
-     * Displays the about page
-     */
     public function actionAbout(): string
     {
         return $this->render('about');
     }
 
     /**
-     * Displays front page
-     *
      * @throws HttpException
      */
     public function actionIndex(): string
@@ -117,10 +109,10 @@ final class SiteController extends Controller
         }, $user->getParticipants()->all());
 
         $epics = EpicQuery::activeEpicsAsModels(false);
-        $sessions = (new GameQuery())->mostRecentByPlayerDataProvider($userEpicIDs);
-        $recaps = (new RecapQuery())->mostRecentByPlayerDataProvider($userEpicIDs);
-        $stories = (new StoryQuery(4))->allCurrentByPlayerDataProvider($userEpicIDs);
-        $announcements = (new AnnouncementQuery())->mostRecentByPlayerDataProvider($userEpicIDs);
+        $sessions = new GameQuery()->mostRecentByPlayerDataProvider($userEpicIDs);
+        $recaps = new RecapQuery()->mostRecentByPlayerDataProvider($userEpicIDs);
+        $stories = new StoryQuery(4)->allCurrentByPlayerDataProvider($userEpicIDs);
+        $announcements = new AnnouncementQuery()->mostRecentByPlayerDataProvider($userEpicIDs);
 
         // @todo Recap sighting
 
@@ -133,9 +125,6 @@ final class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Logs in a user
-     */
     public function actionLogin(): Response|string
     {
         if (!Yii::$app->user->isGuest) {
@@ -153,8 +142,6 @@ final class SiteController extends Controller
     }
 
     /**
-     * Logs out the current user
-     *
      * @throws DbException
      */
     public function actionLogout(): Response

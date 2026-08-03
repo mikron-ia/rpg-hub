@@ -48,6 +48,7 @@ class Game extends ActiveRecord implements HasEpicControl, HasKey
         return 'game';
     }
 
+    #[Override]
     public static function keyParameterName(): string
     {
         return 'game';

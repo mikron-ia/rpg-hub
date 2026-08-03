@@ -155,7 +155,7 @@ final class GroupQuery extends Group
     /**
      * @return string[]
      */
-    static public function getAllFromCurrentEpicForSelector(): array
+    public static function getAllFromCurrentEpicForSelector(): array
     {
         $query = Group::find();
 
