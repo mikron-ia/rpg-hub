@@ -19,12 +19,14 @@ use yii\helpers\Html;
                 'ANNOUNCEMENT_TIME_FORMAT_FROM_TO {from} {to}',
                 ['from' => $model->visible_from, 'to' => $model->visible_to]
             ) ?>
-        <?php else: ?>
+        <?php elseif (isset($model->visible_from)): ?>
             <?= Yii::t(
                 'app',
                 'ANNOUNCEMENT_TIME_FORMAT_FROM {from}}',
                 ['from' => $model->visible_from]
             ) ?>
+        <?php else: ?>
+            <?= Yii::t('app', 'ANNOUNCEMENT_TIME_FORMAT_INVISIBLE') ?>
         <?php endif; ?>
     </p>
     <div>

@@ -6,7 +6,10 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
+use yii\db\ActiveQuery;
+use yii\db\conditions\AndCondition;
 use yii\db\conditions\BetweenColumnsCondition;
+use yii\db\conditions\OrCondition;
 use yii\db\conditions\SimpleCondition;
 
 /**
@@ -38,7 +41,7 @@ class AnnouncementQuery extends Announcement
             ->orWhere(new SimpleCondition('epic_id', 'IS', null));
 
         if ($limitByTime) {
-            $query->andWhere(new BetweenColumnsCondition(time(), 'BETWEEN', 'visible_from', 'visible_to'));
+            $query = $this->limitByTime($query);
         }
 
         $dataProvider = new ActiveDataProvider([
@@ -54,9 +57,11 @@ class AnnouncementQuery extends Announcement
 
     public function mostRecentByPlayerDataProvider(array $userIds): ArrayDataProvider
     {
-        $query = Announcement::find()->where(['in', 'epic_id', $userIds])
-            ->andWhere(new BetweenColumnsCondition(time(), 'BETWEEN', 'visible_from', 'visible_to'))
+        $query = Announcement::find()
+            ->where(['in', 'epic_id', $userIds])
             ->orderBy(['announcement_id' => SORT_DESC, 'visible_from' => SORT_DESC]);
+
+        $query = $this->limitByTime($query);
 
         $mostRecentAnnouncements = [];
 
@@ -106,5 +111,16 @@ class AnnouncementQuery extends Announcement
             ->andFilterWhere(['like', 'text_ready', $this->text_ready]);
 
         return $dataProvider;
+    }
+
+    private function limitByTime(ActiveQuery $query): ActiveQuery
+    {
+        return $query->andWhere(new OrCondition([
+            new BetweenColumnsCondition(time(), 'BETWEEN', 'visible_from', 'visible_to'),
+            new AndCondition([
+                new SimpleCondition('visible_from', '<', time()),
+                new SimpleCondition('visible_to', 'IS', null),
+            ])
+        ]));
     }
 }

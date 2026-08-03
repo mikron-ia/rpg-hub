@@ -27,7 +27,6 @@ $this->params['breadcrumbs'][] = [
 $this->params['breadcrumbs'][] = $this->title;
 
 YiiAsset::register($this);
-
 ?>
 
 <div class="announcement-view">
@@ -38,11 +37,11 @@ YiiAsset::register($this);
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                'announcement_id',
                 'key',
                 [
                     'label' => Yii::t('app', 'LABEL_EPIC'),
-                    'value' => $model->epic?->name,
+                    'format' => 'raw',
+                    'value' => $model->epic,
                 ],
                 [
                     'label' => Yii::t('app', 'ANNOUNCEMENT_VISIBLE_TO'),

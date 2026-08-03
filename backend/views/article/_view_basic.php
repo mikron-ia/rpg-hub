@@ -22,7 +22,9 @@ ArticleAsset::register($this);
                 [
                     'attribute' => 'epic_id',
                     'format' => 'raw',
-                    'value' => $model->epic,
+                    'value' => $model->epic_id
+                        ? $model->epic
+                        : Yii::t('app', 'ARTICLE_NO_EPIC'),
                 ],
                 [
                     'attribute' => 'visibility',
