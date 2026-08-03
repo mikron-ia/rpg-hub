@@ -27,6 +27,25 @@ The project itself was originally thought of as a learning experience and a codi
 changes in the technological landscape (primarily change in popularity of frameworks and shifting design philosophies)
 can no longer fulfill those goals. It is now maintained mostly for its practical uses and minor coding experiments.
 
+## Purpose
+
+This project's main purpose is to make it possible for the Game Master to present the players the complete information
+about their shared epic, such as characters, organizations, locations, and stories. Its secondary purpose is to make it
+easier for the Game Master to track those things for their own use; hence the possibility to keep many things a secret.
+Everything else is either a bonus or has only an auxiliary purpose.
+
+As a result of that, the project has very few mechanisms designed for handling specific mechanics of various RPG
+systems. Everything that is specific to a system should be managed in one or more external tools and added to the page
+via the `data` or text fields in most appropriate objects. While some minor integrations exist to facilitate API use,
+the whole process data upload system is intended to be manual, simple, low-level, and driven by copy-paste instead of
+integrations. This is a conscious choice made because implementing specific systems would require a huge effort, even if
+it was limited to the most popular systems and be invariably subjected to favoritism from the developer. Not to mention
+possible copyright issues when copyrighted game terms would be used.
+
+This project also assumes that everyone involved in the epic is able to communicate in other ways, either in person, via
+social media, direct messages, or any other means (homing pigeons included); hence it does not include any direct
+messaging or commenting system.
+
 ## Set up instructions
 
 1. Make sure you have the proper stack installed; the current requirements are:
