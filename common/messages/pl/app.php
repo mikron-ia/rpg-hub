@@ -148,6 +148,7 @@ return [
     'BUTTON_POINT_IN_TIME_CREATE' => 'Dodaj punkt w czasie',
     'BUTTON_PROJECTS' => 'Projekty',
     'BUTTON_PROJECT_CREATE' => 'Dodaj projekt',
+    'BUTTON_PROJECT_VIEW_ALL' => 'Pełna lista projektów',
     'BUTTON_RECAPS' => 'Podsumowania',
     'BUTTON_RECAP_CREATE' => 'Dodaj podsumowanie',
     'BUTTON_RECAP_VIEW_ALL' => 'Pełna lista podsumowań',

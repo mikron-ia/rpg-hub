@@ -148,6 +148,7 @@ return [
     'BUTTON_POINT_IN_TIME_CREATE' => 'Add point in time',
     'BUTTON_PROJECTS' => 'Projects',
     'BUTTON_PROJECT_CREATE' => 'Add project',
+    'BUTTON_PROJECT_VIEW_ALL' => 'Full project list',
     'BUTTON_RECAPS' => 'Recaps',
     'BUTTON_RECAP_CREATE' => 'Add recap',
     'BUTTON_RECAP_VIEW_ALL' => 'Full recap list',

@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $epic Epic */
+/* @var $projects ActiveDataProvider */
 /* @var $sessions ActiveDataProvider */
 /* @var $stories ActiveDataProvider */
 /* @var $announcements ActiveDataProvider */
@@ -13,6 +14,7 @@
 use common\models\Announcement;
 use common\models\Epic;
 use common\models\Game;
+use common\models\Project;
 use common\models\Recap;
 use common\models\Story;
 use yii\bootstrap\Html;
@@ -148,6 +150,32 @@ if ($epic) {
                     },
                 ]) ?>
             </div>
+
+            <?php if ($projects->getTotalCount() > 0): ?>
+                <div>
+                    <div class="buttoned-header">
+                        <h3 title="<?= Yii::t('app', 'FRONTPAGE_PROJECTS_TITLE_TEXT') ?>">
+                            <?= Yii::t('app', 'FRONTPAGE_PROJECTS') ?>
+                        </h3>
+                        <?= Html::a(
+                            Yii::t('app', 'BUTTON_PROJECT_VIEW_ALL'),
+                            ['project/index', 'key' => $epic->key],
+                            ['class' => 'btn btn-primary']
+                        ); ?>
+                    </div>
+                    <?= ListView::widget([
+                        'dataProvider' => $projects,
+                        'layout' => '{items}',
+                        'itemOptions' => ['class' => 'item'],
+                        'itemView' => function (Project $model, $key, $index, $widget) {
+                            return $this->render(
+                                '../project/_epic_box_short',
+                                ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                            );
+                        },
+                    ]) ?>
+                </div>
+            <?php endif; ?>
         <?php else: ?>
             <p class="error-box"><?= Yii::t('app', 'ERROR_NO_EPIC_ACTIVE_FRONTPAGE_IC') ?></p>
         <?php endif; ?>

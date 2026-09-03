@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\AnnouncementQuery;
 use common\models\Epic;
 use common\models\GameQuery;
+use common\models\ProjectQuery;
 use common\models\RecapQuery;
 use common\models\Story;
 use common\models\StoryQuery;
@@ -97,6 +98,9 @@ final class EpicController extends Controller
                 false
             );
 
+        /* Get Projects */
+        $projects = new ProjectQuery(4)->search(Yii::$app->request->queryParams);
+
         /* Get Sessions */
         $sessionQuery = new GameQuery();
         $sessions = $sessionQuery->mostRecentDataProvider($model, true);
@@ -116,6 +120,7 @@ final class EpicController extends Controller
             'epic' => $model,
             'sessions' => $sessions,
             'stories' => $stories,
+            'projects' => $projects,
             'announcements' => $announcements,
             'recap' => $recap,
             'showScenarios' => $showScenarios,
