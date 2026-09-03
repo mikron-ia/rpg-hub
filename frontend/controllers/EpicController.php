@@ -23,6 +23,8 @@ final class EpicController extends Controller
 {
     use EpicAssistance;
 
+    private const int MAX_MOST_RECENT = 4;
+
     #[Override]
     public function behaviors(): array
     {
@@ -68,7 +70,6 @@ final class EpicController extends Controller
     /**
      * @throws Exception
      * @throws HttpException
-     * @throws NotFoundHttpException
      */
     public function actionView(string $key): string
     {
@@ -83,13 +84,11 @@ final class EpicController extends Controller
         $model->recordSighting();
 
         /* Get Recap */
-        $recapQuery = new RecapQuery();
-        $recap = $recapQuery->mostRecent();
+        $recap = new RecapQuery()->mostRecent();
         $recap?->recordSighting();
 
         /* Get Stories */
-        $searchModel = new StoryQuery(4);
-        $stories = $searchModel->search(Yii::$app->request->queryParams);
+        $stories = new StoryQuery(self::MAX_MOST_RECENT)->search(Yii::$app->request->queryParams);
         $showCurrentStorySeparately =
             isset($model->current_story_id) &&
             !array_reduce(
@@ -99,12 +98,10 @@ final class EpicController extends Controller
             );
 
         /* Get Projects */
-        $projects = new ProjectQuery(4)->search(Yii::$app->request->queryParams);
+        $projects = new ProjectQuery(self::MAX_MOST_RECENT)->search(Yii::$app->request->queryParams);
 
         /* Get Sessions */
-        $sessionQuery = new GameQuery();
-        $sessions = $sessionQuery->mostRecentDataProvider($model, true);
-        $recap?->recordSighting();
+        $sessions = new GameQuery()->mostRecentDataProvider($model);
 
         try {
             $showScenarios = $model->canUserControlYou();
@@ -113,8 +110,7 @@ final class EpicController extends Controller
         }
 
         /* Get News */
-        $announcementsQuery = new AnnouncementQuery();
-        $announcements = $announcementsQuery->mostRecentDataProvider($model);
+        $announcements = new AnnouncementQuery()->mostRecentDataProvider($model);
 
         return $this->render('view', [
             'epic' => $model,
@@ -129,16 +125,10 @@ final class EpicController extends Controller
     }
 
     /**
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
     protected function findModelByKey(string $key): Epic
     {
-        $model = Epic::findOne(['key' => $key]);
-
-        if ($model === null) {
-            throw new NotFoundHttpException(Yii::t('app', 'EPIC_NOT_AVAILABLE'));
-        }
-
-        return $model;
+        return Epic::findOne(['key' => $key]) ?? throw new NotFoundHttpException(Yii::t('app', 'EPIC_NOT_AVAILABLE'));
     }
 }

@@ -100,7 +100,7 @@ final class ProjectQuery extends Project implements EntityQuery
                     'position' => SORT_DESC,
                 ],
             ]),
-            'pagination' => ['pageSize' => 8],
+            'pagination' => ['pageSize' => self::DEFAULT_PAGE_SIZE],
         ]);
     }
 

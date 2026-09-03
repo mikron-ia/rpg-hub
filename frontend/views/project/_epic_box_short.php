@@ -13,11 +13,14 @@ use yii\helpers\Html;
         <?php if (!empty($model->displayCodeName())): ?>
             <span class="text-center type-tag tag-smaller"><?= $model->getCodeName() ?></span>
         <?php endif; ?>
-        <?php if ($model->getVisibility() !== Visibility::Full): ?>
-            <span class="text-center unpublished-tag tag-smaller"
-                  title="<?= Yii::t('app', 'TAG_TITLE_UNPUBLISHED_M') ?>"
-            >
+        <?php if ($model->getVisibility() === Visibility::GameMaster): ?>
+            <span class="unpublished-tag tag-view-page" title="<?= Yii::t('app', 'TAG_TITLE_UNPUBLISHED_M') ?>">
                 <?= Yii::t('app', 'TAG_LABEL_UNPUBLISHED_M') ?>
+            </span>
+        <?php endif; ?>
+        <?php if ($model->getVisibility() === Visibility::Designated): ?>
+            <span class="designated-tag tag-view-page" title="<?= Yii::t('app', 'TAG_TITLE_DESIGNATED_M') ?>">
+                <?= Yii::t('app', 'TAG_LABEL_DESIGNATED_M') ?>
             </span>
         <?php endif; ?>
     </h4>
