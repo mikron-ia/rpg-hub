@@ -123,36 +123,37 @@ if ($epic) {
                 <?= $this->render('../recap/_epic_box', ['model' => $recap]) ?>
             </div>
 
-            <div>
-                <?php if ($showCurrentStorySeparately): ?>
-                    <h3><?= Yii::t('app', 'EPIC_CURRENT_STORY'); ?></h3>
-                    <p><?= $epic->getCurrentStory()->one(); ?></p>
-                <?php endif; ?>
-                <div class="buttoned-header">
-                    <h3 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
-                        <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
-                    </h3>
-                    <?= Html::a(
-                        Yii::t('app', 'BUTTON_STORY_VIEW_ALL'),
-                        ['story/index', 'key' => $epic->key],
-                        ['class' => 'btn btn-primary']
-                    ); ?>
+            <?php if ($stories->count > 0): ?>
+                <div>
+                    <?php if ($showCurrentStorySeparately): ?>
+                        <h3><?= Yii::t('app', 'EPIC_CURRENT_STORY'); ?></h3>
+                        <p><?= $epic->getCurrentStory()->one(); ?></p>
+                    <?php endif; ?>
+                    <div class="buttoned-header">
+                        <h3 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
+                            <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
+                        </h3>
+                        <?= Html::a(
+                            Yii::t('app', 'BUTTON_STORY_VIEW_ALL'),
+                            ['story/index', 'key' => $epic->key],
+                            ['class' => 'btn btn-primary']
+                        ); ?>
+                    </div>
+                    <?= ListView::widget([
+                        'dataProvider' => $stories,
+                        'layout' => '{items}',
+                        'itemOptions' => ['class' => 'item'],
+                        'itemView' => function (Story $model, $key, $index, $widget) {
+                            return $this->render(
+                                '../story/_epic_box_short',
+                                ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                            );
+                        },
+                    ]) ?>
                 </div>
-                <?= ListView::widget([
-                    'dataProvider' => $stories,
-                    'emptyText' => '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_STORIES_NOT_AVAILABLE') . '</p>',
-                    'layout' => '{items}',
-                    'itemOptions' => ['class' => 'item'],
-                    'itemView' => function (Story $model, $key, $index, $widget) {
-                        return $this->render(
-                            '../story/_epic_box_short',
-                            ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
-                        );
-                    },
-                ]) ?>
-            </div>
+            <?php endif; ?>
 
-            <?php if ($projects->getTotalCount() > 0): ?>
+            <?php if ($projects->count > 0): ?>
                 <div>
                     <div class="buttoned-header">
                         <h3 title="<?= Yii::t('app', 'FRONTPAGE_PROJECTS_TITLE_TEXT') ?>">
@@ -189,11 +190,12 @@ if ($epic) {
             <?= Yii::t('app', 'FRONTPAGE_OOC') ?>
         </h2>
 
-        <div>
-            <h3 title="<?= Yii::t('app', 'FRONTPAGE_SESSIONS_TITLE_TEXT') ?>">
-                <?= Yii::t('app', 'FRONTPAGE_SESSIONS') ?>
-            </h3>
-            <?php if ($sessions): ?>
+        <?php if ($sessions->count > 0): ?>
+            <div>
+                <h3 title="<?= Yii::t('app', 'FRONTPAGE_SESSIONS_TITLE_TEXT') ?>">
+                    <?= Yii::t('app', 'FRONTPAGE_SESSIONS') ?>
+                </h3>
+
                 <?= ListView::widget([
                     'dataProvider' => $sessions,
                     'emptyText' => '<p class="error-box">' . Yii::t('app', 'EPIC_SESSION_NOT_AVAILABLE') . '</p>',
@@ -206,26 +208,22 @@ if ($epic) {
                         );
                     },
                 ]) ?>
-            <?php else: ?>
-                <p class="error-box"><?= Yii::t('app', 'EPIC_SESSION_NOT_AVAILABLE') ?></p>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php endif; ?>
 
-        <div>
-            <div class="buttoned-header">
-                <h3 title="<?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_TITLE_TEXT') ?>">
-                    <?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT') ?>
-                </h3>
-                <?php if ($announcements->count > 0): ?>
+        <?php if ($announcements->count > 0): ?>
+            <div>
+                <div class="buttoned-header">
+                    <h3 title="<?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_TITLE_TEXT') ?>">
+                        <?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT') ?>
+                    </h3>
                     <?= Html::a(
                         Yii::t('app', 'BUTTON_ANNOUNCEMENT_VIEW_ALL'),
                         ['announcement/index', 'key' => $epic->key],
                         ['class' => 'btn btn-primary']
                     ); ?>
-                <?php endif; ?>
-            </div>
+                </div>
 
-            <?php if ($announcements->count > 0): ?>
                 <?= ListView::widget([
                     'dataProvider' => $announcements,
                     'emptyText' => '<p class="error-box">' . Yii::t('app',
@@ -240,10 +238,8 @@ if ($epic) {
                         );
                     },
                 ]) ?>
-            <?php else: ?>
-                <p class="no-data-box"><?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_NOT_AVAILABLE') ?></p>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php endif; ?>
 
         <h3><?= Yii::t('app', 'EPIC_CARD_EPIC_ATTRIBUTES'); ?></h3>
         <span class="epic-status <?= $epic->getStatus()->getClass(); ?>"

@@ -42,6 +42,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                             ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
                         );
                     },
+                    'separator' => '<hr />',
                 ]) ?>
             <?php else: ?>
                 <p class="error-box"><?= Yii::t('app', 'FRONTPAGE_RECAPS_NOT_AVAILABLE') ?></p>
@@ -63,6 +64,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                         ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
                     );
                 },
+                'separator' => '<hr />',
             ]) ?>
         </div>
         <?php if($projects->count > 0): ?>
@@ -80,6 +82,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                         ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
                     );
                 },
+                'separator' => '<hr />',
             ]) ?>
         <?php endif; ?>
     </div>

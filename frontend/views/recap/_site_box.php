@@ -1,8 +1,9 @@
 <?php
-/* @var $model Recap */
 
 use common\models\Recap;
 use yii\helpers\Html;
+
+/* @var $model Recap */
 
 ?>
 
