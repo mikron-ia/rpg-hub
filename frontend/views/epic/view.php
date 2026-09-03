@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $epic Epic */
-/* @var $projects ActiveDataProvider */
+/* @var $projects DataProviderInterface */
 /* @var $sessions ActiveDataProvider */
 /* @var $stories ActiveDataProvider */
 /* @var $announcements ActiveDataProvider */
@@ -19,6 +19,7 @@ use common\models\Recap;
 use common\models\Story;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
+use yii\data\DataProviderInterface;
 use yii\widgets\ListView;
 
 if ($epic) {

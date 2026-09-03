@@ -9,6 +9,7 @@ use common\models\GameQuery;
 use common\models\LoginForm;
 use common\models\Participant;
 use common\models\PerformedAction;
+use common\models\ProjectQuery;
 use common\models\RecapQuery;
 use common\models\StoryQuery;
 use common\models\User;
@@ -112,6 +113,7 @@ final class SiteController extends Controller
         $sessions = new GameQuery()->mostRecentByPlayerDataProvider($userEpicIDs);
         $recaps = new RecapQuery()->mostRecentByPlayerDataProvider($userEpicIDs);
         $stories = new StoryQuery(4)->allCurrentByPlayerDataProvider($userEpicIDs);
+        $projects = new ProjectQuery()->mostRecentByPlayerDataProvider($userEpicIDs);
         $announcements = new AnnouncementQuery()->mostRecentByPlayerDataProvider($userEpicIDs);
 
         // @todo Recap sighting
@@ -120,6 +122,7 @@ final class SiteController extends Controller
             'epics' => $epics,
             'sessions' => $sessions,
             'stories' => $stories,
+            'projects' => $projects,
             'announcements' => $announcements,
             'recaps' => $recaps,
         ]);

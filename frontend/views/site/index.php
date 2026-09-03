@@ -10,6 +10,7 @@ use yii\widgets\ListView;
 /* @var $epics Epic[] */
 /* @var $recaps Recap[] */
 /* @var $announcements DataProviderInterface */
+/* @var $projects DataProviderInterface */
 /* @var $sessions DataProviderInterface */
 /* @var $stories DataProviderInterface */
 
@@ -64,6 +65,23 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                 },
             ]) ?>
         </div>
+        <?php if($projects->count > 0): ?>
+            <h3 title="<?= Yii::t('app', 'FRONTPAGE_PROJECTS_TITLE_TEXT') ?>">
+                <?= Yii::t('app', 'FRONTPAGE_PROJECTS') ?>
+            </h3>
+
+            <?= ListView::widget([
+                'dataProvider' => $projects,
+                'layout' => '{items}',
+                'itemOptions' => ['class' => 'item'],
+                'itemView' => function ($model, $key, $index, $widget) {
+                    return $this->render(
+                        '../project/_index_box',
+                        ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                    );
+                },
+            ]) ?>
+        <?php endif; ?>
     </div>
 
     <div class="col-md-4">

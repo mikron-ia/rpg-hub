@@ -134,8 +134,7 @@ final class ProjectQuery extends Project implements EntityQuery
             /** @var Project $project */
             if (
                 !isset($mostRecentProjects[$project->epic_id]) &&
-                $project->canUserViewYou() &&
-                $project->getVisibility() === Visibility::Full
+                $project->canUserViewYou()
             ) {
                 $mostRecentProjects[$project->epic_id] = $project;
             }

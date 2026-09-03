@@ -98,7 +98,7 @@ final class EpicController extends Controller
             );
 
         /* Get Projects */
-        $projects = new ProjectQuery(self::MAX_MOST_RECENT)->search(Yii::$app->request->queryParams);
+        $projects = new ProjectQuery(self::MAX_MOST_RECENT)->searchForUser();
 
         /* Get Sessions */
         $sessions = new GameQuery()->mostRecentDataProvider($model);
