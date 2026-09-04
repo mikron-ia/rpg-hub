@@ -1,16 +1,5 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $epic Epic */
-/* @var $projects DataProviderInterface */
-/* @var $sessions ActiveDataProvider */
-/* @var $stories ActiveDataProvider */
-/* @var $announcements ActiveDataProvider */
-/* @var $showScenarios bool */
-/* @var $showCurrentStorySeparately bool */
-
-/* @var $recap Recap */
-
 use common\models\Announcement;
 use common\models\Epic;
 use common\models\Game;
@@ -18,16 +7,23 @@ use common\models\Project;
 use common\models\Recap;
 use common\models\Story;
 use yii\bootstrap\Html;
-use yii\data\ActiveDataProvider;
 use yii\data\DataProviderInterface;
 use yii\widgets\ListView;
 
-if ($epic) {
-    $this->title = $epic->name . ' - ' . Yii::t('app', 'FRONTPAGE_TITLE');
-} else {
-    $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
-}
+/* @var $this yii\web\View */
+/* @var $epic Epic */
 
+/* @var $announcements DataProviderInterface */
+/* @var $projects DataProviderInterface */
+/* @var $sessions DataProviderInterface */
+/* @var $stories DataProviderInterface */
+
+/* @var $recap Recap */
+
+/* @var $showScenarios bool */
+/* @var $showCurrentStorySeparately bool */
+
+$this->title = $epic ? $epic->name . ' - ' . Yii::t('app', 'FRONTPAGE_TITLE') : Yii::t('app', 'FRONTPAGE_TITLE');
 ?>
 <div class="epic-view">
 

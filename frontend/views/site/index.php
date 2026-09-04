@@ -1,16 +1,16 @@
 <?php
 
 use common\models\Epic;
-use common\models\Recap;
 use yii\data\DataProviderInterface;
 use yii\web\View;
 use yii\widgets\ListView;
 
 /* @var $this View */
 /* @var $epics Epic[] */
-/* @var $recaps Recap[] */
+
 /* @var $announcements DataProviderInterface */
 /* @var $projects DataProviderInterface */
+/* @var $recaps DataProviderInterface */
 /* @var $sessions DataProviderInterface */
 /* @var $stories DataProviderInterface */
 
@@ -26,14 +26,14 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
         <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_IC_TITLE_TEXT') ?>">
             <?= Yii::t('app', 'FRONTPAGE_IC') ?>
         </h2>
-        <div>
-            <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
-                <?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?>
-            </h3>
-            <?php if ($recaps): ?>
+        <?php if ($recaps->count > 0): ?>
+            <div>
+                <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
+                    <?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED') ?>
+                </h3>
+
                 <?= ListView::widget([
                     'dataProvider' => $recaps,
-                    'emptyText' => '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_RECAPS_NOT_AVAILABLE') . '</p>',
                     'layout' => '{items}',
                     'itemOptions' => ['class' => 'item'],
                     'itemView' => function ($model, $key, $index, $widget) {
@@ -44,30 +44,29 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                     },
                     'separator' => '<hr />',
                 ]) ?>
-            <?php else: ?>
-                <p class="error-box"><?= Yii::t('app', 'FRONTPAGE_RECAPS_NOT_AVAILABLE') ?></p>
-            <?php endif; ?>
-        </div>
-        <div>
-            <h3 title="<?= Yii::t('app', 'FRONTPAGE_CURRENT_STORIES_TITLE_TEXT') ?>">
-                <?= Yii::t('app', 'FRONTPAGE_CURRENT_STORIES') ?>
-            </h3>
+            </div>
+        <?php endif; ?>
+        <?php if ($stories->count > 0): ?>
+            <div>
+                <h3 title="<?= Yii::t('app', 'FRONTPAGE_CURRENT_STORIES_TITLE_TEXT') ?>">
+                    <?= Yii::t('app', 'FRONTPAGE_CURRENT_STORIES') ?>
+                </h3>
 
-            <?= ListView::widget([
-                'dataProvider' => $stories,
-                'emptyText' => '<p class="error-box">' . Yii::t('app', 'FRONTPAGE_CURRENT_STORIES_NOT_AVAILABLE') . '</p>',
-                'layout' => '{items}',
-                'itemOptions' => ['class' => 'item'],
-                'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render(
-                        '../story/_index_box',
-                        ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
-                    );
-                },
-                'separator' => '<hr />',
-            ]) ?>
-        </div>
-        <?php if($projects->count > 0): ?>
+                <?= ListView::widget([
+                    'dataProvider' => $stories,
+                    'layout' => '{items}',
+                    'itemOptions' => ['class' => 'item'],
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        return $this->render(
+                            '../story/_index_box',
+                            ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
+                        );
+                    },
+                    'separator' => '<hr />',
+                ]) ?>
+            </div>
+        <?php endif; ?>
+        <?php if ($projects->count > 0): ?>
             <h3 title="<?= Yii::t('app', 'FRONTPAGE_PROJECTS_TITLE_TEXT') ?>">
                 <?= Yii::t('app', 'FRONTPAGE_PROJECTS') ?>
             </h3>
@@ -91,11 +90,11 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
         <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_OOC_TITLE_TEXT') ?>">
             <?= Yii::t('app', 'FRONTPAGE_OOC') ?>
         </h2>
-        <div>
-            <h3 title="<?= Yii::t('app', 'FRONTPAGE_SESSIONS_TITLE_TEXT') ?>">
-                <?= Yii::t('app', 'FRONTPAGE_SESSIONS') ?>
-            </h3>
-            <?php if ($sessions): ?>
+        <?php if ($sessions->count > 0): ?>
+            <div>
+                <h3 title="<?= Yii::t('app', 'FRONTPAGE_SESSIONS_TITLE_TEXT') ?>">
+                    <?= Yii::t('app', 'FRONTPAGE_SESSIONS') ?>
+                </h3>
                 <?= ListView::widget([
                     'dataProvider' => $sessions,
                     'emptyText' => '<p class="error-box">' . Yii::t('app', 'EPIC_SESSION_NOT_AVAILABLE') . '</p>',
@@ -108,18 +107,16 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                         );
                     },
                 ]) ?>
-            <?php else: ?>
-                <p class="error-box"><?= Yii::t('app', 'EPIC_SESSION_NOT_AVAILABLE') ?></p>
-            <?php endif; ?>
-        </div>
-        <div>
-            <div class="buttoned-header">
-                <h3 title="<?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_TITLE_TEXT') ?>">
-                    <?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT') ?>
-                </h3>
             </div>
+        <?php endif; ?>
+        <?php if ($announcements->count > 0): ?>
+            <div>
+                <div class="buttoned-header">
+                    <h3 title="<?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_TITLE_TEXT') ?>">
+                        <?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT') ?>
+                    </h3>
+                </div>
 
-            <?php if ($announcements->count > 0): ?>
                 <?= ListView::widget([
                     'dataProvider' => $announcements,
                     'emptyText' =>
@@ -136,9 +133,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                         );
                     },
                 ]) ?>
-            <?php else: ?>
-                <p class="no-data-box"><?= Yii::t('app', 'FRONTPAGE_ANNOUNCEMENT_NOT_AVAILABLE') ?></p>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
