@@ -488,8 +488,47 @@ a:focus {
 }
 
 .session-box {
+    align-items: center;
+    display: grid;
     font-size: 1.8rem;
-    line-height: 1.8;
+    gap: 10px 15px;
+    grid-template-columns: max-content minmax(0, 1fr) max-content;
+    line-height: 1.5;
+    margin: 0 0 10px;
+    padding: 8px 12px;
+    text-align: left;
+    width: 100%;
+}
+
+.session-box-closed,
+.session-box-opened {
+    cursor: pointer;
+}
+
+.session-box-closed > .session-box-toggle > span.session-box-mark-opened {
+    display: none;
+}
+
+.session-box-opened > .session-box-toggle > span.session-box-mark-closed {
+    display: none;
+}
+
+.session-box-mark {
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.session-box-notes {
+    margin: 0 0 10px 5px;
+    padding: 0 12px;
+}
+
+.session-box-toggle {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    min-width: 32px;
 }
 
 .game-status {
@@ -500,9 +539,8 @@ a:focus {
     font-size: 14px;
     font-weight: bold;
     border-radius: 15px;
-    padding: 3px 7px;
+    padding: 5px 7px;
     min-width: 150px;
-    margin-right: 10px;
     text-align: center;
     text-transform: uppercase;
     vertical-align: middle;
@@ -510,7 +548,12 @@ a:focus {
 
 @media (max-width: 1199px) {
     .session-box-widening {
+        grid-template-columns: 1fr max-content;
         text-align: center;
+    }
+
+    .session-box-widening .session-box-status {
+        grid-column: 1 / -1;
     }
 
     .game-status-widening {
@@ -572,25 +615,6 @@ li.redacted {
 
 li.redacted:hover {
     background-color: revert;
-}
-
-.session-box-closed {
-    cursor: pointer;
-}
-
-.session-box-closed:after {
-    content: '+';
-    float: right;
-}
-
-.session-box-open {
-    cursor: pointer;
-}
-
-.session-box-open:after {
-    content: '-';
-    float: right;
-    cursor: pointer;
 }
 
 .game-status-in-row {

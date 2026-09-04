@@ -121,11 +121,7 @@ li.redacted {
     color: white;
 }
 
-.session-box-closed:after {
-    color: black;
-}
-
-.session-box-open:after {
+.session-box-mark {
     color: black;
 }
 

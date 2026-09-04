@@ -120,11 +120,7 @@ li.redacted {
     color: white;
 }
 
-.session-box-closed:after {
-    color: saddlebrown;
-}
-
-.session-box-open:after {
+.session-box-mark {
     color: saddlebrown
 }
 
