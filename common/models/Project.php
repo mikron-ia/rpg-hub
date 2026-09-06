@@ -171,6 +171,7 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
             'short' => Yii::t('app', 'PROJECT_SHORT_HINT'),
             'long' => Yii::t('app', 'PROJECT_LONG_HINT'),
             'notes' => Yii::t('app', 'PROJECT_NOTES_HINT'),
+            'data' => Yii::t('app', 'PROJECT_DATA_HINT'),
         ];
     }
 

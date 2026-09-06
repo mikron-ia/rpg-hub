@@ -53,20 +53,20 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]); ?>
     </div>
 
-    <div class="col-md-12">
-        <?= $form->field($model, 'short')->textarea(['rows' => 10]); ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'short')->textarea(['rows' => 6]); ?>
+    </div>
+
+    <div class="col-md-6">
+        <?= $form->field($model, 'notes')->textarea(['rows' => 6]); ?>
     </div>
 
     <div class="col-md-12">
-        <?= $form->field($model, 'long')->textarea(['rows' => 20]); ?>
+        <?= $form->field($model, 'long')->textarea(['rows' => 12]); ?>
     </div>
 
     <div class="col-md-12">
-        <?= $form->field($model, 'notes')->textarea(['rows' => 12]); ?>
-    </div>
-
-    <div class="col-md-12">
-        <?= $form->field($model, 'data')->textarea(['rows' => 20]); ?>
+        <?= $form->field($model, 'data')->textarea(['rows' => 4]); ?>
     </div>
 
     <?php if (!$model->isNewRecord): ?>

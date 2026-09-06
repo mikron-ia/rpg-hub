@@ -209,6 +209,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
             'short' => Yii::t('app', 'STORY_SHORT_HINT'),
             'long' => Yii::t('app', 'STORY_LONG_HINT'),
             'notes' => Yii::t('app', 'STORY_NOTES_HINT'),
+            'data' => Yii::t('app', 'STORY_DATA_HINT'),
         ];
     }
 
