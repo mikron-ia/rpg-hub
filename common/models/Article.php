@@ -8,6 +8,7 @@ use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
 use common\models\core\IsLinkable;
 use common\models\core\Visibility;
+use common\models\tools\ToolsForHasBestowed;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use common\models\tools\ToolsForEntity;
@@ -54,6 +55,7 @@ class Article extends ActiveRecord implements HasEpicControl, HasVisibility, Has
 {
     use ToolsForEntity;
     use ToolsForLinkTags;
+    use ToolsForHasBestowed;
     use ToolsForHasVisibility;
 
     public bool $is_off_the_record_change = false;

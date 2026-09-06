@@ -11,6 +11,7 @@ use common\models\core\HasVisibility;
 use common\models\core\Visibility;
 use common\models\state\ProjectStatus;
 use common\models\tools\ToolsForEntity;
+use common\models\tools\ToolsForHasBestowed;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use common\models\type\ProjectType;
@@ -58,6 +59,7 @@ use yii2tech\ar\position\PositionBehavior;
 class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicControl, HasSightings, HasVisibility
 {
     use ToolsForEntity;
+    use ToolsForHasBestowed;
     use ToolsForHasVisibility;
     use ToolsForLinkTags;
 

@@ -14,6 +14,7 @@ ProjectAsset::register($this);
 
 /* @var $this View */
 /* @var $epic Epic */
+
 /* @var $searchModel RecapQuery */
 /* @var $dataProvider ActiveDataProvider */
 
@@ -50,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'visibility',
                     'headerOptions' => ['class' => 'text-center'],
                     'contentOptions' => ['class' => 'text-center'],
-                    'value' => fn(Project $model) => $model->getVisibilityName(),
+                    'value' => fn(Project $model) => $model->getVisibilityNameWithBestowed(),
                 ],
                 [
                     'attribute' => 'code',

@@ -2,14 +2,19 @@
 
 use backend\assets\ArticleAsset;
 use common\models\Article;
+use common\models\ArticleQuery;
 use common\models\Epic;
+use yii\data\ActiveDataProvider;
+use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\web\View;
 
-/* @var $this yii\web\View */
+/* @var $this View */
 /* @var $epic Epic */
-/* @var $searchModel common\models\ArticleQuery */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+
+/* @var $searchModel ArticleQuery */
+/* @var $dataProvider ActiveDataProvider */
 
 ArticleAsset::register($this);
 
@@ -46,12 +51,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             [
                 'attribute' => 'visibility',
-                'value' => function (Article $model) {
-                    return $model->getVisibilityName();
-                }
+                'value' => fn(Article $model): string => $model->getVisibilityNameWithBestowed(),
             ],
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => ActionColumn::class,
                 'contentOptions' => ['class' => 'action-cell'],
                 'template' => '{view} {update} {copy} {up} {down}',
                 'buttons' => [
@@ -94,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['title' => Yii::t('app', 'BUTTON_UPDATE')]
                         );
                     },
-                ]
+                ],
             ],
         ],
     ]); ?>
