@@ -225,7 +225,7 @@ class Image extends ActiveRecord implements HasEpicControl, HasKey
 
             return ImageRotationService::makeDisplayObjectWithDimensions(
                 image: $this,
-                imageLink: ImageRotationService::chooseLink($this->imageLinks, $randomChoice)
+                imageLink: ImageRotationService::chooseLink($links, $randomChoice)
             );
         }
 
