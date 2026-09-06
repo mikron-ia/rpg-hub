@@ -183,6 +183,26 @@ p {
     margin: 0 0 15px 0;
 }
 
+.welcome-box {
+    border: 4px solid green;
+    color: black;
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin: 10px auto;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .welcome-box {
+        width: 80%;
+    }
+}
+
+.welcome-box>p {
+    margin: 20px 0;
+    text-align: center;
+}
+
 .info-box {
     color: #4545a9;
     background: #f7f7fd;

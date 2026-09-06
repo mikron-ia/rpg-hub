@@ -22,10 +22,18 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
         <?= $this->render('../_epic-selection_box', ['epics' => $epics]) ?>
     </div>
 
+    <?php if (empty($epics)): ?>
+        <div class="lead welcome-box">
+            <?= Yii::t('app', 'FRONTEND_FRONT_PAGE_MAIN_EMPTY_EPIC_LIST') ?>
+        </div>
+    <?php endif; ?>
+
     <div class="col-md-8">
-        <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_IC_TITLE_TEXT') ?>">
-            <?= Yii::t('app', 'FRONTPAGE_IC') ?>
-        </h2>
+        <?php if (!empty($epics)): ?>
+            <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_IC_TITLE_TEXT') ?>">
+                <?= Yii::t('app', 'FRONTPAGE_IC') ?>
+            </h2>
+        <?php endif; ?>
         <?php if ($recaps->count > 0): ?>
             <div>
                 <h3 title="<?= Yii::t('app', 'FRONTPAGE_WHAT_HAPPENED_TITLE_TEXT') ?>">
@@ -87,9 +95,11 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
     </div>
 
     <div class="col-md-4">
-        <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_OOC_TITLE_TEXT') ?>">
-            <?= Yii::t('app', 'FRONTPAGE_OOC') ?>
-        </h2>
+        <?php if (!empty($epics)): ?>
+            <h2 class="text-center" title="<?= Yii::t('app', 'FRONTPAGE_OOC_TITLE_TEXT') ?>">
+                <?= Yii::t('app', 'FRONTPAGE_OOC') ?>
+            </h2>
+        <?php endif; ?>
         <?php if ($sessions->count > 0): ?>
             <div>
                 <h3 title="<?= Yii::t('app', 'FRONTPAGE_SESSIONS_TITLE_TEXT') ?>">
