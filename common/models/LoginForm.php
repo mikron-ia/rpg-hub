@@ -2,12 +2,11 @@
 
 namespace common\models;
 
+use Override;
 use Yii;
 use yii\base\Model;
+use yii\db\Exception as DbException;
 
-/**
- * Login form
- */
 class LoginForm extends Model
 {
     public $username;
@@ -16,8 +15,9 @@ class LoginForm extends Model
 
     private $_user;
 
-    const REMEMBER_TIME_IN_SECONDS = 2592000;
+    private const int REMEMBER_TIME_IN_SECONDS = 2592000;
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -27,6 +27,7 @@ class LoginForm extends Model
         ];
     }
 
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -36,13 +37,23 @@ class LoginForm extends Model
         ];
     }
 
+    #[Override]
+    public function attributeHints(): array
+    {
+        return [
+            'username' => Yii::t('app', 'LOGIN_HINT_USERNAME'),
+        ];
+    }
+
     /**
      * Validates the password
+     *
      * This method serves as the inline validation for password
+     *
      * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
+     * @param array|null $params the additional name-value pairs given in the rule
      */
-    public function validatePassword($attribute, $params)
+    public function validatePassword(string $attribute, ?array $params): void
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
@@ -54,7 +65,10 @@ class LoginForm extends Model
 
     /**
      * Logs in a user using the provided username and password
+     *
      * @return boolean whether the user is logged in successfully
+     *
+     * @throws DbException
      */
     public function login(): bool
     {
@@ -66,15 +80,11 @@ class LoginForm extends Model
             }
 
             return $result;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
-    /**
-     * Finds user by [[username]]
-     * @return User|null
-     */
     protected function getUser(): ?User
     {
         if ($this->_user === null) {

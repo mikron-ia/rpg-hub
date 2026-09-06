@@ -794,6 +794,7 @@ return [
     'LOCATION_TAGLINE' => 'Short note',
     'LOCATION_UPDATED_AT' => 'Last changed',
     'LOCATION_VISIBILITY' => 'Visibility',
+    'LOGIN_HINT_USERNAME' => 'Use the username you chose when registering',
     'LOGIN_PASSWORD' => 'Password',
     'LOGIN_REMEMBER' => 'Remember me',
     'LOGIN_RESET_PASSWORD' => 'Reset password',
