@@ -3,9 +3,10 @@
 use common\models\core\ImportanceCategory;
 
 if (getenv('LANGUAGES_ALLOWED')) {
-    $languages = explode(',', str_replace(' ', '', getenv('LANGUAGES_ALLOWED')));
-} else {
-    $languages = ['en', 'pl'];
+    $languagesAvailable = 'LANGUAGES_ALLOWED'
+            |> getenv(...)
+            |> (fn($languages) => str_replace(' ', '', $languages))
+            |> (fn($languages) => explode(',', $languages));
 }
 
 $invitationValidityMultiplier = getenv('INVITATION_VALIDITY_IN_DAYS') ?? 1;
@@ -86,7 +87,7 @@ return [
         'user' => getenv('KEY_GENERATION_USER'),
         'userInvitation' => getenv('KEY_GENERATION_USER_INVITATION'),
     ],
-    'languagesAvailable' => $languages, // Languages will appear in the order entered here
+    'languagesAvailable' => $languagesAvailable ?? ['en', 'pl'], // Languages will appear in the order entered here
     'reputationAccessUri' => getenv('REPUTATION_URI'),
     'reputationAccessKey' => getenv('AUTHENTICATION_REPUTATION_SIMPLE_KEY'),
     'senderEmail' => getenv('EMAIL'),

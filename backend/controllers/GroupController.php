@@ -225,14 +225,14 @@ final class GroupController extends CmsController
         $description = new Description();
         $loadSuccess = $description->load(Yii::$app->request->post());
 
+        if ($loadSuccess && $description->save()) {
+            return $this->returnToReferrer(['site/index']);
+        }
+
         $description = DescriptionService::fillDescription(
             model: $description,
             descriptionPack: $model->descriptionPack
         );
-
-        if ($loadSuccess && $description->save()) {
-            return $this->returnToReferrer(['site/index']);
-        }
 
         $dataForCreate = [
             'model' => $description,
