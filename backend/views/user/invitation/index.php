@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => fn(UserInvitation $model) => $model->getIntendedRoleName(),
             ],
             'created_at:datetime',
+            'sent_at:datetime',
             'opened_at:datetime',
             'used_at:datetime',
             'revoked_at:datetime',
@@ -72,13 +73,25 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]
                         );
                     },
-                    'resend' => function ($url, $model, $key) {
+                    'resend' => function ($url, UserInvitation $model, $key) {
+                        if ($model->isInvitationSent()) {
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-share"></span>',
+                                ['user/resend', 'key' => $model->key],
+                                [
+                                    'title' => Yii::t('app', 'USER_INVITATION_RESEND'),
+                                    'data-confirm' => Yii::t('app', 'USER_INVITATION_RESENDING_CONFIRM'),
+                                    'data-method' => 'post',
+                                ]
+                            );
+                        }
+
                         return Html::a(
-                            '<span class="glyphicon glyphicon-share"></span>',
+                            '<span class="glyphicon glyphicon-envelope"></span>',
                             ['user/resend', 'key' => $model->key],
                             [
-                                'title' => Yii::t('app', 'USER_INVITATION_RESEND'),
-                                'data-confirm' => Yii::t('app', 'USER_INVITATION_RESENDING_CONFIRM'),
+                                'title' => Yii::t('app', 'USER_INVITATION_SEND'),
+                                'data-confirm' => Yii::t('app', 'USER_INVITATION_SENDING_CONFIRM'),
                                 'data-method' => 'post',
                             ]
                         );

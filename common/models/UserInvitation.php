@@ -15,14 +15,13 @@ use yii\db\ActiveRecord;
 use yii\db\Exception;
 
 /**
- * This is the model class for table "user_invitation".
- *
  * @property string $id
  * @property string $key
  * @property string $email
  * @property string $status
  * @property string $created_by
  * @property integer $created_at
+ * @property integer $sent_at
  * @property integer $opened_at
  * @property integer $used_at
  * @property integer $revoked_at
@@ -84,6 +83,7 @@ class UserInvitation extends ActiveRecord implements HasKey
             'status' => Yii::t('app', 'USER_INVITATION_STATUS'),
             'created_by' => Yii::t('app', 'USER_INVITATION_CREATOR'),
             'created_at' => Yii::t('app', 'USER_INVITATION_CREATED_AT'),
+            'sent_at' => Yii::t('app', 'USER_INVITATION_SENT_AT'),
             'opened_at' => Yii::t('app', 'USER_INVITATION_OPENED_AT'),
             'used_at' => Yii::t('app', 'USER_INVITATION_USED_AT'),
             'revoked_at' => Yii::t('app', 'USER_INVITATION_REVOKED_AT'),
@@ -137,6 +137,7 @@ class UserInvitation extends ActiveRecord implements HasKey
     /**
      * Sends an invitation to create an account
      *
+     * @throws Exception
      * @throws InvalidBackendConfigurationException
      */
     public function sendEmail(): bool
@@ -158,6 +159,12 @@ class UserInvitation extends ActiveRecord implements HasKey
 
         $result = $mail->send();
         Yii::$app->language = $oldLanguage;
+
+        if ($result && empty($this->sent_at)) {
+            $this->sent_at = time();
+            $this->save();
+        }
+
         return $result;
     }
 
@@ -196,6 +203,14 @@ class UserInvitation extends ActiveRecord implements HasKey
     public function isInvitationUnRevoked(): bool
     {
         return !$this->revoked_at;
+    }
+
+    /**
+     * Finds out if the invitation has been sent via e-mail
+     */
+    public function isInvitationSent(): bool
+    {
+        return (bool)$this->sent_at;
     }
 
     /**

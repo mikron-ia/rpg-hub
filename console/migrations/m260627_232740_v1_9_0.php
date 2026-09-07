@@ -17,10 +17,14 @@ class m260627_232740_v1_9_0 extends Migration
             'RESTRICT',
             'CASCADE'
         );
+
+        $this->addColumn('{{%user_invitation}}', 'sent_at', $this->integer(11)->unsigned()->after('created_at'));
     }
 
     public function safeDown(): void
     {
+        $this->dropColumn('{{%user_invitation}}', 'sent_at');
+
         $this->dropForeignKey('project_bestowed_list', '{{%project}}');
 
         $this->dropColumn('{{%project}}', 'bestowed_list_id');
