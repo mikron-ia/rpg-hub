@@ -99,13 +99,15 @@ final class UserController extends Controller
 
     /**
      * Prepares an invitation to a new user
+     *
+     * @throws Exception
      */
     public function actionCreate(): Response|string
     {
         $model = new UserCreateForm();
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->signUp()) {
+            if ($model->createUserInvitation()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_INVITE_PREPARED'));
                 return $this->redirect(['invitations']);
             } else {
@@ -261,6 +263,7 @@ final class UserController extends Controller
     /**
      * Re-sends an invitation
      *
+     * @throws Exception
      * @throws InvalidBackendConfigurationException
      */
     public function actionResend(string $key): Response

@@ -1,15 +1,17 @@
 <?php
+
 namespace backend\models;
 
 use common\models\core\Language;
 use common\models\core\UserStatus;
 use common\models\User;
 use common\models\UserInvitation;
+use Override;
 use Yii;
 use yii\base\Model;
+use yii\db\Exception;
 
 /**
- * Class CreateUserForm
  * @package backend\models
  */
 final class UserCreateForm extends Model
@@ -39,12 +41,8 @@ final class UserCreateForm extends Model
      */
     public $user_role;
 
-    /**
-     * @var UserInvitation
-     */
-    private $invitation;
-
-    public function attributeLabels()
+    #[Override]
+    public function attributeLabels(): array
     {
         return [
             'email' => Yii::t('app', 'USER_INVITATION_EMAIL'),
@@ -55,14 +53,17 @@ final class UserCreateForm extends Model
         ];
     }
 
+    #[Override]
     public function attributeHints(): array
     {
         return [
             'message' => Yii::t('app', 'USER_INVITATION_HINT_MESSAGE'),
+            'note' => Yii::t('app', 'USER_INVITATION_HINT_NOTE'),
         ];
     }
 
-    public function rules()
+    #[Override]
+    public function rules(): array
     {
         return [
             [['email', 'message', 'user_role'], 'required'],
@@ -78,37 +79,27 @@ final class UserCreateForm extends Model
             ],
             ['language', 'in', 'range' => Language::supportedLanguages()],
             [['note'], 'string', 'max' => 255],
-            ['user_role', 'in', 'range' => User::allowedUserRoles()]
+            ['user_role', 'in', 'range' => User::allowedUserRoles()],
         ];
     }
 
     /**
-     * Signs user up
-     * @return bool
+     * @throws Exception
      */
-    public function signUp():bool
+    public function createUserInvitation(): bool
     {
         if (!$this->validate()) {
             return false;
         }
 
-        $this->invitation = new UserInvitation();
+        $invitation = new UserInvitation();
 
-        $this->invitation->email = $this->email;
-        $this->invitation->intended_role = $this->user_role;
-        $this->invitation->language = $this->language;
-        $this->invitation->message = $this->message;
-        $this->invitation->note = $this->note;
+        $invitation->email = $this->email;
+        $invitation->intended_role = $this->user_role;
+        $invitation->language = $this->language;
+        $invitation->message = $this->message;
+        $invitation->note = $this->note;
 
-        return $this->invitation->save();
-    }
-
-    /**
-     * Sends e-mail with the invitation
-     * @return bool
-     */
-    public function sendEmail():bool
-    {
-        return $this->invitation->sendEmail();
+        return $invitation->save();
     }
 }
