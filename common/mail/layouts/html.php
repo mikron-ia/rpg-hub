@@ -21,10 +21,11 @@ use yii\web\View;
 <?= $content ?>
 <?php $this->endBody() ?>
 --
-<?= Yii::t('mail', 'SIGNATURE_HTML') ?>
-<?php echo isset(Yii::$app->params['baseUriForMail'])
-    ? Html::a(Yii::$app->params['baseUriForMail'], Yii::$app->params['baseUriForMail'])
-    : '' ?>
+<?php if (isset(Yii::$app->params['baseUriForMail'])): ?>
+    <?= Yii::t('mail', 'SIGNATURE_HTML_WITH_LINK', ['link' => Yii::$app->params['baseUriForMail']]) ?>
+<?php else: ?>
+    <?= Yii::t('mail', 'SIGNATURE_HTML_SIMPLE') ?>
+<?php endif ?>
 </body>
 </html>
 <?php $this->endPage() ?>

@@ -1258,6 +1258,7 @@ return [
     'USER_INVITATION_CREATOR' => 'Inviter',
     'USER_INVITATION_EMAIL' => 'E-mail',
     'USER_INVITATION_HAS_BEEN_REVOKED' => 'invitation has been revoked',
+    'USER_INVITATION_HINT_MESSAGE' => 'Content of the message; a registration link will be attached separately. The field accepts Markdown, but does not accept links to resources.',
     'USER_INVITATION_ID' => 'ID',
     'USER_INVITATION_INDEX_TITLE' => 'Invites',
     'USER_INVITATION_KEY' => 'Key',

@@ -1258,6 +1258,7 @@ return [
     'USER_INVITATION_CREATOR' => 'Zaprosił[a]',
     'USER_INVITATION_EMAIL' => 'E-mail',
     'USER_INVITATION_HAS_BEEN_REVOKED' => 'zaproszenie zostało odwołane',
+    'USER_INVITATION_HINT_MESSAGE' => 'Treść wiadomości; link rejestracyjny zostanie dołączony osobno. Pole przyjmuje Markdown, ale nie przyjmuje linków do zasobów.',
     'USER_INVITATION_ID' => 'ID',
     'USER_INVITATION_INDEX_TITLE' => 'Zaproszenia',
     'USER_INVITATION_KEY' => 'Klucz',

@@ -55,6 +55,13 @@ final class UserCreateForm extends Model
         ];
     }
 
+    public function attributeHints(): array
+    {
+        return [
+            'message' => Yii::t('app', 'USER_INVITATION_HINT_MESSAGE'),
+        ];
+    }
+
     public function rules()
     {
         return [

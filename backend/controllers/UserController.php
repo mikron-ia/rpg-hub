@@ -104,11 +104,13 @@ final class UserController extends Controller
     {
         $model = new UserCreateForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->signUp()) {
-            Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_INVITE_PREPARED'));
-            return $this->redirect(['invitations']);
-        } else {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_INVITE_PREPARATION_FAILED'));
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->signUp()) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'USER_CREATION_INVITE_PREPARED'));
+                return $this->redirect(['invitations']);
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'USER_CREATION_INVITE_PREPARATION_FAILED'));
+            }
         }
 
         return $this->render('create', [

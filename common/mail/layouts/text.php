@@ -13,6 +13,9 @@ use yii\web\View;
 <?= $content ?>
 <?php $this->endBody() ?>
 --
-<?= Yii::t('mail', 'SIGNATURE_TEXT') ?>
-<?php echo Yii::$app->params['baseUriForMail'] ?? '' ?>
+<?php if (isset(Yii::$app->params['baseUriForMail'])): ?>
+    <?= Yii::t('mail', 'SIGNATURE_TEXT_WITH_LINK', ['link' => Yii::$app->params['baseUriForMail']]) ?>
+<?php else: ?>
+    <?= Yii::t('mail', 'SIGNATURE_TEXT_SIMPLE') ?>
+<?php endif ?>
 <?php $this->endPage() ?>

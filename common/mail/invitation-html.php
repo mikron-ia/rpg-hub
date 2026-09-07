@@ -1,5 +1,6 @@
 <?php
 
+use common\components\processor\MarkdownProcessor;
 use common\models\UserInvitation;
 use yii\helpers\Html;
 use yii\web\View;
@@ -9,14 +10,21 @@ use yii\web\View;
 /* @var $link string */
 
 ?>
-<div class="password-reset">
+<div class="invitation">
     <p><?= Yii::t('mail', 'GREETING') ?>,</p>
 
-    <p><?= $invitation->message ?></p>
+    <div>
+        <?= MarkdownProcessor::process($invitation->message) ?>
+    </div>
 
-    <p><?= Yii::t('mail', 'USER_INVITATION_BODY_TEXT') ?></p>
-
-    <p><?= Html::a(Html::encode($link), $link) ?></p>
+    <p>
+        <?= sprintf(
+            '%s: %s',
+            Yii::t('mail', 'USER_INVITATION_BODY_TEXT'),
+            Html::a(Html::encode($link), $link)
+        );
+        ?>
+    </p>
 
     <p>
         <?= Yii::t(
