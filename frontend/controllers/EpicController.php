@@ -91,6 +91,7 @@ final class EpicController extends Controller
         $stories = new StoryQuery(self::MAX_MOST_RECENT)->search(Yii::$app->request->queryParams);
         $showCurrentStorySeparately =
             isset($model->current_story_id) &&
+            $model->currentStory->canUserViewYou() &&
             !array_reduce(
                 $stories->models,
                 fn(bool $carry, Story $story) => $carry || $story->story_id === $model->current_story_id,

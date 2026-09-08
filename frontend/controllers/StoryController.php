@@ -2,7 +2,6 @@
 
 namespace frontend\controllers;
 
-use common\models\core\Visibility;
 use common\models\Epic;
 use common\models\Story;
 use common\models\StoryCharacterAssignmentQuery;
@@ -79,10 +78,6 @@ final class StoryController extends Controller
     {
         $model = $this->findModelByKey($key);
 
-        if (!$model->canUserViewYou()) {
-            Story::throwExceptionAboutView();
-        }
-
         $this->selectEpic($model->epic->key, $model->epic_id, $model->epic->name);
 
         $model->recordSighting();
@@ -112,7 +107,7 @@ final class StoryController extends Controller
     }
 
     /**
-     * @throws NotFoundHttpException
+     * @throws HttpException
      */
     protected function findModelByKey(string $key): Story
     {
@@ -122,8 +117,8 @@ final class StoryController extends Controller
             throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));
         }
 
-        if (!in_array($model->getVisibility(), Visibility::determineVisibilityVectorWithObjects($model->epic))) {
-            throw new NotFoundHttpException(Yii::t('app', 'STORY_NOT_AVAILABLE'));
+        if (!$model->canUserViewYou()) {
+            Story::throwExceptionAboutView();
         }
 
         return $model;

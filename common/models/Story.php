@@ -504,7 +504,12 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
     #[Override]
     public function canUserViewYou(): bool
     {
-        return self::canUserViewInEpic($this->epic);
+        $visibility = $this->getVisibility();
+        $userControl = $this->canUserControlYou();
+
+        return self::canUserViewInEpic($this->epic) &&
+            ($visibility !== Visibility::GameMaster || $userControl)
+            ; // expand with Designated once possible
     }
 
     #[Override]
