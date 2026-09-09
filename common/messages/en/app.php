@@ -1001,7 +1001,7 @@ return [
     'RECAP_CREATE_TITLE' => 'Add recap',
     'RECAP_DELETE_FAILED' => 'Recap deletion failed',
     'RECAP_DELETE_SUCCESS' => 'Recap successfully deleted',
-    'RECAP_HINT_CONTEXT' => 'Recap content. Accepts Markdown and object references.',
+    'RECAP_HINT_CONTEXT' => 'Recap content. Accepts Markdown and object references. Does not accept image tags. Accepts secret tags, but great caution and significant prudence are advised in their use due to impossibility of hiding secrets in a recap display.',
     'RECAP_HINT_NOTES' => 'Recap notes, invisible to anyone but the Game Master. Accepts Markdown and object references.',
     'RECAP_ID' => 'Recap ID',
     'RECAP_KEY' => 'Key',

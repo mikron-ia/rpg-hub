@@ -27,7 +27,7 @@ use yii\helpers\Html;
             <p class="recap-box-time"><?= $model->pointInTime ?></p>
         <?php endif; ?>
         <div>
-            <?= $model->getContentFormatted() ?>
+            <?= $model->getContentFormattedForUser(); ?>
         </div>
 
         <?php if (!empty($model->games)): ?>

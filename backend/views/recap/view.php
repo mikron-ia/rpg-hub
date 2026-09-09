@@ -90,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h2><?= Yii::t('app', 'LABEL_CONTENT'); ?></h2>
 
     <div>
-        <?= $model->getContentFormatted(); ?>
+        <?= $model->getContentFormattedForOperator(); ?>
     </div>
 
     <h2><?= Yii::t('app', 'RECAP_NOTES'); ?></h2>

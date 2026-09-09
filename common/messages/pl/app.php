@@ -1001,7 +1001,7 @@ return [
     'RECAP_CREATE_TITLE' => 'Nowe podsumowanie',
     'RECAP_DELETE_FAILED' => 'Usunięcie podsumowania nieskuteczne',
     'RECAP_DELETE_SUCCESS' => 'Podsumowanie skutecznie usunięte',
-    'RECAP_HINT_CONTEXT' => 'Treść podsumowania. Przyjmuje Markdown i odnośniki do obiektów. Nie przyjmuje tagów obrazów ani tagów sekretów.',
+    'RECAP_HINT_CONTEXT' => 'Treść podsumowania. Przyjmuje Markdown i odnośniki do obiektów. Nie przyjmuje tagów obrazów. Przyjmuje tagi sekretów, acz wskazana jest wysoka ostrożność i daleko posunięta wstrzemięźliwość przy ich użyciu ze względu na niemożność ukrycia sekretów przy wyświetlaniu podsumowania.',
     'RECAP_HINT_NOTES' => 'Notatki do podsumowania, niewidoczne dla nikogo poza Mistrzem Gry. Przyjmuje Markdown i odnośniki do obiektów.  Nie przyjmuje tagów obrazów ani tagów sekretów.',
     'RECAP_ID' => 'ID podsumowania',
     'RECAP_KEY' => 'Klucz',

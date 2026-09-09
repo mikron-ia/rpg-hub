@@ -8,6 +8,8 @@ use yii\web\YiiAsset;
 /** @var View $this */
 /** @var Recap $model */
 
+/* @var bool $showSecretDetails */
+
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/view', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = [
@@ -26,7 +28,7 @@ YiiAsset::register($this);
         <p class="recap-box-time-view">
             <?= $model->point_in_time_id ? $model->pointInTime->name : '' ?>
         </p>
-        <?= $model->getContentFormatted(); ?>
+        <?= $showSecretDetails ? $model->getContentFormattedForOperator() : $model->getContentFormattedForUser(); ?>
         <?php if (!empty($model->games)): ?>
             <strong class="text-center"><?= Yii::t('app', 'LABEL_GAMES') ?>:</strong>
             <?= $model->getSessionNamesFormatted() ?>

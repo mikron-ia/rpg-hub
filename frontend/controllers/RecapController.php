@@ -95,6 +95,7 @@ class RecapController extends Controller
 
         return $this->render('view', [
             'model' => $model,
+            'showSecretDetails' => $model->canUserControlYou(),
         ]);
     }
 

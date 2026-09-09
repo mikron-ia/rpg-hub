@@ -190,6 +190,16 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
         return $this->formatText($this->content_expanded ?? $this->content, false);
     }
 
+    public function getContentFormattedForOperator(): string
+    {
+        return $this->processSecretTagsForOperator($this->getContentFormatted());
+    }
+
+    public function getContentFormattedForUser(): string
+    {
+        return $this->processSecretTagsForUser($this->getContentFormatted());
+    }
+
     public function getNotesFormatted(): string
     {
         return $this->formatText($this->notes_expanded ?? $this->notes, false);
