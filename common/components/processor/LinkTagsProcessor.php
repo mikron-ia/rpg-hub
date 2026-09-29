@@ -7,6 +7,7 @@ use common\models\Character;
 use common\models\core\IsLinkable;
 use common\models\Group;
 use common\models\Location;
+use common\models\Project;
 use common\models\Story;
 use Yii;
 
@@ -16,6 +17,7 @@ final class LinkTagsProcessor
     private const string CHARACTER = 'Character';
     private const string GROUP = 'Group';
     private const string LOCATION = 'Location';
+    private const string PROJECT = 'Project';
     private const string STORY = 'Story';
 
     /** @var array<string> */
@@ -24,6 +26,7 @@ final class LinkTagsProcessor
         self::CHARACTER,
         self::GROUP,
         self::LOCATION,
+        self::PROJECT,
         self::STORY,
     ];
 
@@ -33,6 +36,7 @@ final class LinkTagsProcessor
         self::CHARACTER => '/index.php/character/view?key=',
         self::GROUP => '/index.php/group/view?key=',
         self::LOCATION => '/index.php/location/view?key=',
+        self::PROJECT => '/index.php/project/view?key=',
         self::STORY => '/index.php/story/view?key=',
     ];
 
@@ -41,6 +45,7 @@ final class LinkTagsProcessor
         self::CHARACTER => Character::class,
         self::GROUP => Group::class,
         self::LOCATION => Location::class,
+        self::PROJECT => Project::class,
         self::STORY => Story::class,
     ];
 
@@ -69,6 +74,7 @@ final class LinkTagsProcessor
             self::CHARACTER => '|\[(.+?)]\(CH(ARACTER)?:([a-z\d]{40})\)|',
             self::GROUP => '|\[(.+?)]\(GR(OUP)?:([a-z\d]{40})\)|',
             self::LOCATION => '|\[(.+?)]\(LOC(ATION)?:([a-z\d]{40})\)|',
+            self::PROJECT => '|\[(.+?)]\(PR(OJECT)?:([a-z\d]{40})\)|',
             self::STORY => '|\[(.+?)]\(ST(ORY)?:([a-z\d]{40})\)|',
         ];
 
@@ -96,6 +102,7 @@ final class LinkTagsProcessor
             self::STORY => '|ST(ORY)?:([a-z\d]{40})|',
             self::LOCATION => '|LOC(ATION)?:([a-z\d]{40})|',
             self::ARTICLE => '|ART(ICLE)?:([a-z\d]{40})|',
+            self::PROJECT => '|PR(OJECT)?:([a-z\d]{40})|',
         ];
 
         $errorMessages = [
@@ -104,6 +111,7 @@ final class LinkTagsProcessor
             self::STORY => Yii::t('app', 'STORY_NOT_AVAILABLE'),
             self::LOCATION => Yii::t('app', 'LOCATION_NOT_AVAILABLE'),
             self::ARTICLE => Yii::t('app', 'ARTICLE_NOT_AVAILABLE'),
+            self::PROJECT => Yii::t('app', 'PROJECT_NOT_AVAILABLE'),
         ];
 
         foreach ($simplePatterns as $class => $simplePattern) {

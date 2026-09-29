@@ -8,6 +8,7 @@ use common\models\core\HasKey;
 use common\models\core\HasParameters;
 use common\models\core\HasSightings;
 use common\models\core\HasVisibility;
+use common\models\core\IsLinkable;
 use common\models\core\Visibility;
 use common\models\state\ProjectStatus;
 use common\models\tools\ToolsForEntity;
@@ -56,7 +57,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @method moveNext()
  * @method movePrev()
  */
-class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicControl, HasSightings, HasVisibility
+class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicControl, HasSightings, HasVisibility, IsLinkable
 {
     use ToolsForEntity;
     use ToolsForHasBestowed;
@@ -417,6 +418,11 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
                 $userControl ||  // free pass on designated for operators
                 $this->bestowedList->hasBestowedFor(Yii::$app->user->getId()) // is user on the list?
             );
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     #[Override]
