@@ -1,11 +1,14 @@
 <?php
 
+use common\models\RecapQuery;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ListView;
 
-/** @var yii\web\View $this */
-/** @var common\models\RecapQuery $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var View $this */
+/** @var RecapQuery $searchModel */
+/** @var ActiveDataProvider $dataProvider */
 
 $this->title = Yii::t('app', 'RECAP_TITLE_INDEX');
 $this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];

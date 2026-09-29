@@ -3,10 +3,10 @@
 use common\models\LoginForm;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-
+/* @var $this View */
+/* @var $form ActiveForm */
 /* @var $model LoginForm */
 
 $this->title = Yii::t('app', 'LOGIN_TITLE');

@@ -1,9 +1,5 @@
 <?php
 
-/* @var $this View */
-
-/* @var $content string */
-
 use common\models\core\FrontStyle;
 use common\models\Epic;
 use common\models\EpicQuery;
@@ -15,6 +11,9 @@ use yii\bootstrap\NavBar;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\Breadcrumbs;
+
+/* @var $this View */
+/* @var $content string */
 
 AppAsset::register($this);
 (Yii::$app->params['activeEpic']?->getStyle() ?? FrontStyle::Default)->provideClass()::register($this);

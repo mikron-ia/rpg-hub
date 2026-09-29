@@ -2,10 +2,8 @@
 
 use backend\assets\ScenarioAsset;
 use common\models\Epic;
-use common\models\Scenario;
 use common\models\ScenarioQuery;
 use yii\data\ActiveDataProvider;
-use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ListView;
