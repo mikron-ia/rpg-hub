@@ -14,7 +14,6 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="parameter-form">
-
     <?php $form = ActiveForm::begin([
         'id' => 'story-parameter-form',
         'action' => $model->isNewRecord ?
@@ -46,5 +45,4 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>

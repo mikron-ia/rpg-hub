@@ -2,13 +2,16 @@
 
 use common\models\Epic;
 use common\models\Recap;
+use common\models\RecapQuery;
+use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\web\View;
 
 /* @var $epic Epic */
-/* @var $this yii\web\View */
-/* @var $searchModel common\models\RecapQuery */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $this View */
+/* @var $searchModel RecapQuery */
+/* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'RECAP_TITLE_INDEX');
 $this->params['breadcrumbs'][] = ['label' => $epic->name, 'url' => ['epic/front', 'key' => $epic->key]];
@@ -16,7 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
 $mostRecent = $searchModel->mostRecent();
 ?>
 <div class="recap-index">
-
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
         <?= Html::a(
@@ -78,5 +80,4 @@ $mostRecent = $searchModel->mostRecent();
     <div class="col-md-3" id="filter">
         <?php echo $this->render('_search', ['model' => $searchModel, 'epic' => $epic]); ?>
     </div>
-
 </div>

@@ -2,17 +2,21 @@
 
 use common\models\core\SeenStatus;
 use common\models\Game;
+use common\models\Recap;
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Recap */
+/* @var $this View */
+/* @var $model Recap */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => $model->epic->name, 'url' => ['epic/front', 'key' => $model->epic->key]];
 $this->params['breadcrumbs'][] = [
     'label' => Yii::t('app', 'RECAP_TITLE_INDEX'),
-    'url' => ['recap/index', 'epic' => $model->epic->key]
+    'url' => ['recap/index', 'epic' => $model->epic->key],
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -100,12 +104,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="col-md-12">
-
         <div class="col-md-6">
-
             <h2 class="text-center"><?= Yii::t('app', 'SEEN_READ') ?></h2>
-            <?= \yii\grid\GridView::widget([
-                'dataProvider' => new \yii\data\ActiveDataProvider([
+            <?= GridView::widget([
+                'dataProvider' => new ActiveDataProvider([
                     'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_SEEN),
                     'pagination' => false,
                 ]),
@@ -135,14 +137,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
             ]) ?>
-
         </div>
 
         <div class="col-md-6">
-
             <h2 class="text-center"><?= Yii::t('app', 'SEEN_BEFORE_UPDATE') ?></h2>
-            <?= \yii\grid\GridView::widget([
-                'dataProvider' => new \yii\data\ActiveDataProvider([
+            <?= GridView::widget([
+                'dataProvider' => new ActiveDataProvider([
                     'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_UPDATED),
                     'pagination' => false,
                 ]),
@@ -172,14 +172,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
             ]) ?>
-
         </div>
 
         <div class="col-md-6">
-
             <h2 class="text-center"><?= Yii::t('app', 'SEEN_NEW') ?></h2>
-            <?= \yii\grid\GridView::widget([
-                'dataProvider' => new \yii\data\ActiveDataProvider([
+            <?= GridView::widget([
+                'dataProvider' => new ActiveDataProvider([
                     'query' => $model->seenPack->getSightingsWithStatus(SeenStatus::STATUS_NEW),
                     'pagination' => false,
                 ]),
@@ -193,9 +191,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
             ]) ?>
-
         </div>
-
     </div>
-
 </div>

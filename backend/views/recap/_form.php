@@ -2,17 +2,18 @@
 
 use common\models\EpicQuery;
 use common\models\PointInTimeQuery;
+use common\models\Recap;
 use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Recap */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $this View */
+/* @var $model Recap */
+/* @var $form ActiveForm */
 ?>
 
 <div class="recap-form">
-
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="col-md-6">
@@ -49,5 +50,4 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>

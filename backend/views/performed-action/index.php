@@ -15,7 +15,6 @@ $this->title = Yii::t('app', 'PERFORMED_ACTIONS_TITLE_INDEX');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="performed-action-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="col-md-9">
@@ -44,5 +43,4 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-3" id="filter">
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
-
 </div>

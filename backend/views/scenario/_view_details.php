@@ -7,7 +7,6 @@ use yii\widgets\DetailView;
 
 /* @var $this View */
 /* @var $model Scenario */
-
 ?>
 
 <div>
