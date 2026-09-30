@@ -16,6 +16,7 @@ class LinkProcessorTest extends TestCase
             'Story' => '/index.php/story/view/key=',
             'Location' => '/index.php/location/view/key=',
             'Article' => '/index.php/article/view/key=',
+            'Project' => '/index.php/project/view/key=',
         ];
 
         $this->assertEquals($result, LinkTagsProcessor::processKeysInLinks($text, $linkBases));
@@ -44,6 +45,10 @@ class LinkProcessorTest extends TestCase
                 '[Article\'s name](ART:184e5117955e384ca1e68dd731637bb8988782a1)',
                 '[Article\'s name](/index.php/article/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
             ],
+            'Correct project - short' => [
+                '[Project\'s name](PR:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Project\'s name](/index.php/project/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
             'Correct character - long' => [
                 '[Character\'s name](CHARACTER:184e5117955e384ca1e68dd731637bb8988782a1)',
                 '[Character\'s name](/index.php/character/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
@@ -63,6 +68,10 @@ class LinkProcessorTest extends TestCase
             'Correct article - long' => [
                 '[Article\'s name](ARTICLE:184e5117955e384ca1e68dd731637bb8988782a1)',
                 '[Article\'s name](/index.php/article/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
+            ],
+            'Correct project - long' => [
+                '[Project\'s name](PROJECT:184e5117955e384ca1e68dd731637bb8988782a1)',
+                '[Project\'s name](/index.php/project/view/key=184e5117955e384ca1e68dd731637bb8988782a1)',
             ],
             'Unprocessed - key is too long' => [
                 '[Character\'s name](CH:184e5117955e384ca1e68dd731637bb8988782a15)',
