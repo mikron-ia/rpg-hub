@@ -10,6 +10,7 @@ use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 use yii\web\HttpException;
 use yii2tech\ar\position\PositionBehavior;
 
@@ -139,6 +140,11 @@ class PointInTime extends ActiveRecord implements HasEpicControl, HasKey
     public function getEpic(): ActiveQuery
     {
         return $this->hasOne(Epic::class, ['epic_id' => 'epic_id']);
+    }
+
+    public function getLink(): string
+    {
+        return Html::a($this->name, ['point-in-time/view', 'key' => $this->key]);
     }
 
     #[Override]

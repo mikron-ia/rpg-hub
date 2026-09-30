@@ -1,7 +1,6 @@
 <?php
 
 use common\models\core\SeenStatus;
-use common\models\Game;
 use common\models\Recap;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
@@ -24,11 +23,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="buttoned-header">
         <h1><?= Html::encode($this->title) ?></h1>
+
         <?= Html::a(
             Yii::t('app', 'BUTTON_UPDATE'),
             ['update', 'key' => $model->key],
             ['class' => 'btn btn-primary']
         ) ?>
+
         <?= Html::a(
             Yii::t('app', 'BUTTON_MOVE_DOWN'),
             ['recap/move-up', 'key' => $model->key],
@@ -39,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]
         ); ?>
+
         <?= Html::a(
             Yii::t('app', 'BUTTON_MOVE_UP'),
             ['recap/move-down', 'key' => $model->key],
@@ -49,6 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]
         ); ?>
+
         <?= Html::a(
             Yii::t('app', 'BUTTON_DELETE'),
             ['delete', 'key' => $model->key],
@@ -62,46 +65,55 @@ $this->params['breadcrumbs'][] = $this->title;
         ) ?>
     </div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            [
-                'attribute' => 'key',
+    <div class="col-md-6">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                [
+                    'attribute' => 'key',
+                ],
+                [
+                    'attribute' => 'epic_id',
+                    'format' => 'raw',
+                    'value' => Html::a($model->epic->name, ['epic/front', 'key' => $model->epic->key], []),
+                ],
+                [
+                    'attribute' => 'pointInTime',
+                    'format' => 'raw',
+                    'value' => $model->pointInTime?->getLink(),
+                ],
+                [
+                    'attribute' => 'position',
+                ],
             ],
-            [
-                'attribute' => 'epic_id',
-                'format' => 'raw',
-                'value' => Html::a($model->epic->name, ['epic/front', 'key' => $model->epic->key], []),
-            ],
-            [
-                'attribute' => 'pointInTime',
-                'format' => 'raw',
-                'value' => $model->pointInTime,
-            ],
-            [
-                'label' => Yii::t('app', 'LABEL_GAMES'),
-                'format' => 'raw',
-                'value' => implode('; ', array_map(function (Game $model) {
-                    return Html::a($model->basics, ['game/view', 'id' => $model->game_id], []);
-                }, $model->games))
-            ],
-            [
-                'attribute' => 'position',
-            ],
-        ],
-    ]) ?>
+        ]) ?>
+    </div>
 
-    <h2><?= Yii::t('app', 'LABEL_CONTENT'); ?></h2>
+    <?php if (!empty($model->games)) : ?>
+        <div class="col-md-6">
+            <h2 class="text-center"><?= Yii::t('app', 'LABEL_GAMES'); ?></h2>
+            <ul>
+                <?php foreach ($model->games as $game): ?>
+                    <li><?= Html::a($game->basics, ['game/view', 'key' => $game->key], []) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
 
-    <div>
+    <div class="col-md-12">
+        <h2><?= Yii::t('app', 'LABEL_CONTENT'); ?></h2>
         <?= $model->getContentFormattedForOperator(); ?>
     </div>
 
-    <h2><?= Yii::t('app', 'RECAP_NOTES'); ?></h2>
+    <?php if (!empty($model->notes)) : ?>
+        <div class="col-md-12">
+            <h2><?= Yii::t('app', 'RECAP_NOTES'); ?></h2>
 
-    <div>
-        <?= $model->getNotesFormatted(); ?>
-    </div>
+            <div>
+                <?= $model->getNotesFormatted(); ?>
+            </div>
+        </div>
+    <?php endif; ?>
 
     <div class="col-md-12">
         <div class="col-md-6">

@@ -29,15 +29,22 @@ YiiAsset::register($this);
             <?= $model->point_in_time_id ? $model->pointInTime->name : '' ?>
         </p>
         <?= $showSecretDetails ? $model->getContentFormattedForOperator() : $model->getContentFormattedForUser(); ?>
-        <?php if (!empty($model->games)): ?>
-            <strong class="text-center"><?= Yii::t('app', 'LABEL_GAMES') ?>:</strong>
-            <?= $model->getSessionNamesFormatted() ?>
-        <?php endif; ?>
     </div>
 
     <?php if ($showPrivates && !empty($model->notes)): ?>
-        <div class="col-lg-12 secret-text-box">
+        <div class="col-lg-8 secret-text-box">
             <?= $model->getNotesFormatted(); ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($model->games)): ?>
+        <div class="col-lg-3">
+            <h2 class="text-center"><?= Yii::t('app', 'LABEL_GAMES'); ?></h2>
+            <ul>
+                <?php foreach ($model->games as $game): ?>
+                    <li><?= $game->basics ?></li>
+                <?php endforeach; ?>
+            </ul>
         </div>
     <?php endif; ?>
 </div>
