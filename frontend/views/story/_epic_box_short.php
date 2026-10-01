@@ -20,7 +20,7 @@ $storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
             <span class="text-center type-tag tag-smaller"><?= $model->getCodeName() ?></span>
         <?php endif; ?>
         <?php if ($model->story_id === $model->epic->current_story_id): ?>
-            <span class="current-tag tag-view-page tag-smaller"><?= Yii::t('app', 'TAG_CURRENT_F') ?></span>
+            <span class="current-tag tag-smaller"><?= Yii::t('app', 'TAG_CURRENT_F') ?></span>
         <?php endif; ?>
         <?php if ($model->getVisibility() !== Visibility::Full): ?>
             <span class="text-center unpublished-tag tag-smaller"

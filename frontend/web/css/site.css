@@ -515,7 +515,7 @@ a:focus {
     grid-template-columns: max-content minmax(0, 1fr) max-content;
     line-height: 1.5;
     margin: 0 0 10px;
-    padding: 8px 12px;
+    padding: 8px 0;
     text-align: left;
     width: 100%;
 }
@@ -541,7 +541,7 @@ a:focus {
 
 .session-box-notes {
     margin: 0 0 10px 5px;
-    padding: 0 12px;
+    padding: 0;
 }
 
 .session-box-toggle {
@@ -566,7 +566,7 @@ a:focus {
     vertical-align: middle;
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1599px) {
     .session-box-widening {
         grid-template-columns: 1fr max-content;
         text-align: center;
