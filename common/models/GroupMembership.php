@@ -109,6 +109,7 @@ class GroupMembership extends ActiveRecord implements HasVisibility, HasKey
     }
 
     /**
+     * @throws Exception
      * @throws HttpException
      */
     public function beforeSave($insert): bool

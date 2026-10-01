@@ -58,6 +58,7 @@ class Parameter extends ActiveRecord implements HasVisibility, HasKey
         return 'parameter';
     }
 
+    #[Override]
     public static function keyParameterName(): string
     {
         return 'parameter';

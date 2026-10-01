@@ -5,6 +5,7 @@ namespace common\models;
 use common\models\core\Visibility;
 use common\models\entities\LocationWithImportance;
 use common\models\tools\ToolsForImportanceInQueries;
+use Override;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -28,6 +29,7 @@ final class LocationQuery extends Location
         parent::__construct($config);
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -35,6 +37,7 @@ final class LocationQuery extends Location
         ];
     }
 
+    #[Override]
     public function scenarios(): array
     {
         return Model::scenarios();
@@ -88,7 +91,7 @@ final class LocationQuery extends Location
     }
 
     /**
-     * Creates a data provider instance with the search query applied and applies default order according to time of the last modification
+     * Creates a data provider instance with the search query applied and applies the default order according to time of the last modification
      * This list is more suitable for the operator section
      */
     public function searchForOperator(array $params): ActiveDataProvider
@@ -154,7 +157,7 @@ final class LocationQuery extends Location
 
         self::secureQuery($query);
 
-        return (new ActiveDataProvider(['query' => $query]))->getModels();
+        return new ActiveDataProvider(['query' => $query])->getModels();
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Override;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -10,6 +11,7 @@ use yii\data\ActiveDataProvider;
  */
 final class ParameterQuery extends Parameter
 {
+    #[Override]
     public function rules(): array
     {
         return [
@@ -18,6 +20,7 @@ final class ParameterQuery extends Parameter
         ];
     }
 
+    #[Override]
     public function scenarios(): array
     {
         return Model::scenarios();

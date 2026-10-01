@@ -555,7 +555,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     }
 
     /**
-     * Provides list of players for a drop down
+     * Provides the list of players for a drop-down
      *
      * @return string[]
      */

@@ -90,7 +90,7 @@ class ExternalDataPack extends ActiveRecord implements IsEditablePack
     }
 
     /**
-     * Provides content of the desired ExternalData object in a form of an array
+     * Provides content of the desired ExternalData object in the form of an array
      */
     public function getExternalDataByCode(string $code): array
     {
@@ -100,11 +100,7 @@ class ExternalDataPack extends ActiveRecord implements IsEditablePack
             'visibility' => Visibility::determineVisibilityVector($this->epic),
         ]);
 
-        if ($object) {
-            return json_decode($object->data, true);
-        } else {
-            return [];
-        }
+        return $object ? json_decode($object->data, true) : [];
     }
 
     /**
@@ -122,7 +118,7 @@ class ExternalDataPack extends ActiveRecord implements IsEditablePack
         /* @var $externalData ExternalData|null */
         $externalData = ExternalData::findOne([
             'code' => $code,
-            'external_data_pack_id' => $this->external_data_pack_id
+            'external_data_pack_id' => $this->external_data_pack_id,
         ]);
 
         $dataFormatted = json_encode($data);

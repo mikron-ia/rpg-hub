@@ -44,6 +44,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl, HasKey
         return 'point_in_time';
     }
 
+    #[Override]
     public static function keyParameterName(): string
     {
         return 'pointInTime';
@@ -62,7 +63,11 @@ class PointInTime extends ActiveRecord implements HasEpicControl, HasKey
             [
                 ['status'],
                 'in',
-                'range' => [PointInTime::STATUS_ACTIVE, PointInTime::STATUS_RETIRED, PointInTime::STATUS_FUTURE],
+                'range' => [
+                    PointInTime::STATUS_ACTIVE,
+                    PointInTime::STATUS_RETIRED,
+                    PointInTime::STATUS_FUTURE,
+                ],
             ],
             [
                 ['epic_id'],
@@ -119,7 +124,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl, HasKey
                 'class' => PerformedActionBehavior::class,
                 'idName' => 'point_in_time_id',
                 'className' => 'PointInTime',
-            ]
+            ],
         ];
     }
 
@@ -148,13 +153,13 @@ class PointInTime extends ActiveRecord implements HasEpicControl, HasKey
     }
 
     #[Override]
-    static public function canUserIndexThem(): bool
+    public static function canUserIndexThem(): bool
     {
         return self::canUserIndexInEpic(Yii::$app->params['activeEpic']);
     }
 
     #[Override]
-    static public function canUserCreateThem(): bool
+    public static function canUserCreateThem(): bool
     {
         return self::canUserCreateInEpic(Yii::$app->params['activeEpic']);
     }
@@ -203,7 +208,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl, HasKey
     /**
      * @return array<string,string>
      */
-    static public function statusNames(): array
+    public static function statusNames(): array
     {
         return [
             self::STATUS_ACTIVE => Yii::t('app', 'POINT_IN_TIME_STATUS_ACTIVE'),
@@ -215,7 +220,7 @@ class PointInTime extends ActiveRecord implements HasEpicControl, HasKey
     /**
      * @return array<string,string>
      */
-    static public function statusCSS(): array
+    public static function statusCSS(): array
     {
         return [
             self::STATUS_ACTIVE => 'point-in-time-status-active',

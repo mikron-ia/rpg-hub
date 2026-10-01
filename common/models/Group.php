@@ -22,6 +22,7 @@ use common\models\tools\ToolsForHasDescriptions;
 use common\models\tools\ToolsForHasScribbles;
 use common\models\tools\ToolsForHasVisibility;
 use common\models\type\DescriptionType;
+use DateMalformedStringException;
 use DateTimeImmutable;
 use Override;
 use Yii;
@@ -570,6 +571,9 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
         return $importance->getNameLowercase();
     }
 
+    /**
+     * @throws DateMalformedStringException
+     */
     #[Override]
     public function getLastModified(): DateTimeImmutable
     {

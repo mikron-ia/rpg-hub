@@ -5,12 +5,9 @@ namespace common\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-/**
- * ExternalDataQuery represents the model behind the search form about `common\models\ExternalData`.
- */
 class ExternalDataQuery extends ExternalData
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             [['external_data_id', 'external_data_pack_id'], 'integer'],
@@ -18,19 +15,19 @@ class ExternalDataQuery extends ExternalData
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates a data provider instance with the search query applied
      *
      * @param array $params
      *
      * @return ActiveDataProvider
      */
-    public function search($params): ActiveDataProvider
+    public function search(array $params): ActiveDataProvider
     {
         $query = ExternalData::find();
 

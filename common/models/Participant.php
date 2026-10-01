@@ -41,7 +41,6 @@ class Participant extends ActiveRecord implements HasKey
         return 'participant';
     }
 
-
     #[Override]
     public function rules(): array
     {

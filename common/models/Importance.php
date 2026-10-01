@@ -89,7 +89,7 @@ class Importance extends ActiveRecord
      */
     private function calculate(HasImportance $controllingObject): int
     {
-        return (new ImportanceCalculator(ImportanceParametersDto::create(Yii::$app->params['importance'])))
+        return new ImportanceCalculator(ImportanceParametersDto::create(Yii::$app->params['importance']))
             ->calculate($controllingObject, $this->user, new DateTimeImmutable());
     }
 

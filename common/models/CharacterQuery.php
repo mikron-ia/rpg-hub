@@ -172,7 +172,7 @@ final class CharacterQuery extends Character
     }
 
     /**
-     * Provides list of favorite/starred Characters for active user
+     * Provides the list of favorite/starred Characters for active user
      *
      * Note: pagination is disabled to avoid conflicts with main tab pagination
      */

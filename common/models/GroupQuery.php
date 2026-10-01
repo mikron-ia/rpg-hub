@@ -149,7 +149,7 @@ final class GroupQuery extends Group
 
         self::secureQuery($query);
 
-        return (new ActiveDataProvider(['query' => $query]))->getModels();
+        return new ActiveDataProvider(['query' => $query])->getModels();
     }
 
     /**

@@ -5,7 +5,6 @@ namespace common\models;
 use common\models\core\HasKey;
 use common\models\tools\ToolsForEntity;
 use Override;
-use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
