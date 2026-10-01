@@ -16,8 +16,9 @@ enum GameStatus: string
     case Cancelled = 'cancelled';     // plans cancelled; next: none
     case Progressing = 'progressing'; // game is in progress; next: COMPLETED, ABORTED
     case Aborted = 'aborted';         // game was started but aborted; next: none
-    case Completed = 'completed';     // game was completed; next: CLOSED
-    case Closed = 'closed';           // game was described; next: none
+    case Completed = 'completed';     // game was completed and is waiting for processing and a description; next: PROCESSED
+    case Processed = 'processed';     // game was completed and is being processed, summarized, and described; next: CLOSED
+    case Closed = 'closed';           // game was processed, summarized, and described; next: none
 
     public function getName(): string
     {
@@ -30,6 +31,7 @@ enum GameStatus: string
             self::Progressing => Yii::t('app', 'GAME_STATUS_LABEL_PROGRESSING'),
             self::Aborted => Yii::t('app', 'GAME_STATUS_LABEL_ABORTED'),
             self::Completed => Yii::t('app', 'GAME_STATUS_LABEL_COMPLETED'),
+            self::Processed => Yii::t('app', 'GAME_STATUS_LABEL_PROCESSED'),
             self::Closed => Yii::t('app', 'GAME_STATUS_LABEL_CLOSED'),
         };
     }
@@ -45,6 +47,7 @@ enum GameStatus: string
             self::Progressing => Yii::t('app', 'GAME_STATUS_DESCRIPTION_PROGRESSING'),
             self::Aborted => Yii::t('app', 'GAME_STATUS_DESCRIPTION_ABORTED'),
             self::Completed => Yii::t('app', 'GAME_STATUS_DESCRIPTION_COMPLETED'),
+            self::Processed => Yii::t('app', 'GAME_STATUS_DESCRIPTION_PROCESSED'),
             self::Closed => Yii::t('app', 'GAME_STATUS_DESCRIPTION_CLOSED'),
         };
     }
@@ -60,6 +63,7 @@ enum GameStatus: string
             self::Progressing => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_PROGRESSING'),
             self::Aborted => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_ABORTED'),
             self::Completed => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_COMPLETED'),
+            self::Processed => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_PROCESSED'),
             self::Closed => Yii::t('app', 'GAME_STATUS_SWITCH_TO_TEXT_CLOSED'),
         };
     }
@@ -75,6 +79,7 @@ enum GameStatus: string
             self::Progressing => 'game-status-progressing',
             self::Aborted => 'game-status-aborted',
             self::Completed => 'game-status-completed',
+            self::Processed => 'game-status-processed',
             self::Closed => 'game-status-closed',
         };
     }
@@ -89,7 +94,8 @@ enum GameStatus: string
             self::Cancelled => [self::Cancelled],
             self::Progressing => [self::Progressing, self::Completed, self::Aborted],
             self::Aborted => [self::Aborted],
-            self::Completed => [self::Completed, self::Closed],
+            self::Completed => [self::Completed, self::Processed],
+            self::Processed => [self::Processed, self::Closed],
             self::Closed => [self::Closed],
         };
     }

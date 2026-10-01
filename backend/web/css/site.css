@@ -393,6 +393,10 @@ p {
     background-color: darkolivegreen;
 }
 
+.game-status-processed {
+    background-color: darkolivegreen;
+}
+
 .game-status-closed {
     background-color: black;
 }
