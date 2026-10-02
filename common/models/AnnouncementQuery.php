@@ -61,7 +61,7 @@ class AnnouncementQuery extends Announcement
     public function mostRecentByPlayerDataProvider(array $userIds): ArrayDataProvider
     {
         $query = Announcement::find()
-            ->where(['in', 'epic_id', $userIds])
+            ->where(new OrCondition([['in', 'epic_id', $userIds], ['is', 'epic_id', null]]))
             ->orderBy(['announcement_id' => SORT_DESC, 'visible_from' => SORT_DESC]);
 
         $query = $this->limitByTime($query);
@@ -69,9 +69,11 @@ class AnnouncementQuery extends Announcement
         $mostRecentAnnouncements = [];
 
         foreach ($query->all() as $announcement) {
+            $epicId = $announcement->epic_id ?? 0; // 0 is added to account site-wide announcements, since null is not a valid array key
+
             /** @var Announcement $announcement */
-            if (!isset($mostRecentAnnouncements[$announcement->epic_id])) {
-                $mostRecentAnnouncements[$announcement->epic_id] = $announcement;
+            if (!isset($mostRecentAnnouncements[$epicId])) {
+                $mostRecentAnnouncements[$epicId] = $announcement;
             }
         }
 
@@ -89,7 +91,10 @@ class AnnouncementQuery extends Announcement
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
             $query->where('0=1');
         } else {
-            $query->andWhere(['epic_id' => Yii::$app->params['activeEpic']->epic_id]);
+            $query->andWhere(new OrCondition([
+                ['epic_id' => Yii::$app->params['activeEpic']->epic_id],
+                ['is', 'epic_id', null],
+            ]));
         }
 
         if ($limitByTime) {

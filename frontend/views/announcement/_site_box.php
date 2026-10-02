@@ -10,9 +10,12 @@ use yii\helpers\Html;
         <?php if ($model->epic_id): ?>
             <a href="<?= Yii::$app->urlManager->createUrl([
                 'epic/view',
-                'key' => $model->epic->key
-            ]) ?>"><?= Html::encode($model->epic->name) ?></a> /
+                'key' => $model->epic->key,
+            ]) ?>"><?= Html::encode($model->epic->name) ?></a>
+        <?php else: ?>
+            <?= Yii::t('app', 'ANNOUNCEMENT_LABEL_ALL_EPICS') ?>
         <?php endif; ?>
+        /
         <?= Html::encode($model->title) ?>
     </h4>
     <p class="announcement-box-time"><?= $model->visible_from ?></p>
