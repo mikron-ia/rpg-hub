@@ -36,8 +36,8 @@ $('#form-story-character-assignment-public-vital').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'character',
-        '#story-storycharacterassignmentchoicespublicvital',
-        $(this).find('[name="Story[storyCharacterAssignmentChoicesPublicVital][]"]').val(),
+        '#storycharacterassignmentmodel-storycharacterassignmentchoicespublicvital',
+        $(this).find('[name="StoryCharacterAssignmentModel[storyCharacterAssignmentChoicesPublicVital][]"]').val(),
         'vital',
         'full'
     );
@@ -47,8 +47,8 @@ $('#form-story-character-assignment-public-major').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'character',
-        '#story-storycharacterassignmentchoicespublicmajor',
-        $(this).find('[name="Story[storyCharacterAssignmentChoicesPublicMajor][]"]').val(),
+        '#storycharacterassignmentmodel-storycharacterassignmentchoicespublicmajor',
+        $(this).find('[name="StoryCharacterAssignmentModel[storyCharacterAssignmentChoicesPublicMajor][]"]').val(),
         'major',
         'full'
     );
@@ -58,8 +58,8 @@ $('#form-story-character-assignment-public-minor').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'character',
-        '#story-storycharacterassignmentchoicespublicminor',
-        $(this).find('[name="Story[storyCharacterAssignmentChoicesPublicMinor][]"]').val(),
+        '#storycharacterassignmentmodel-storycharacterassignmentchoicespublicminor',
+        $(this).find('[name="StoryCharacterAssignmentModel[storyCharacterAssignmentChoicesPublicMinor][]"]').val(),
         'minor',
         'full'
     )
@@ -69,8 +69,8 @@ $('#form-story-character-assignment-public-other').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'character',
-        '#story-storycharacterassignmentchoicespublicother',
-        $(this).find('[name="Story[storyCharacterAssignmentChoicesPublicOther][]"]').val(),
+        '#storycharacterassignmentmodel-storycharacterassignmentchoicespublicother',
+        $(this).find('[name="StoryCharacterAssignmentModel[storyCharacterAssignmentChoicesPublicOther][]"]').val(),
         'other',
         'full'
     )
@@ -80,8 +80,8 @@ $('#form-story-character-assignment-private-vital').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'character',
-        '#story-storycharacterassignmentchoicesprivatevital',
-        $(this).find('[name="Story[storyCharacterAssignmentChoicesPrivateVital][]"]').val(),
+        '#storycharacterassignmentmodel-storycharacterassignmentchoicesprivatevital',
+        $(this).find('[name="StoryCharacterAssignmentModel[storyCharacterAssignmentChoicesPrivateVital][]"]').val(),
         'vital',
         'gm'
     );
@@ -91,8 +91,8 @@ $('#form-story-character-assignment-private-major').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'character',
-        '#story-storycharacterassignmentchoicesprivatemajor',
-        $(this).find('[name="Story[storyCharacterAssignmentChoicesPrivateMajor][]"]').val(),
+        '#storycharacterassignmentmodel-storycharacterassignmentchoicesprivatemajor',
+        $(this).find('[name="StoryCharacterAssignmentModel[storyCharacterAssignmentChoicesPrivateMajor][]"]').val(),
         'major',
         'gm'
     );
@@ -102,8 +102,8 @@ $('#form-story-character-assignment-private-minor').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'character',
-        '#story-storycharacterassignmentchoicesprivateminor',
-        $(this).find('[name="Story[storyCharacterAssignmentChoicesPrivateMinor][]"]').val(),
+        '#storycharacterassignmentmodel-storycharacterassignmentchoicesprivateminor',
+        $(this).find('[name="StoryCharacterAssignmentModel[storyCharacterAssignmentChoicesPrivateMinor][]"]').val(),
         'minor',
         'gm'
     )
@@ -113,8 +113,8 @@ $('#form-story-character-assignment-private-other').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'character',
-        '#story-storycharacterassignmentchoicesprivateother',
-        $(this).find('[name="Story[storyCharacterAssignmentChoicesPrivateOther][]"]').val(),
+        '#storycharacterassignmentmodel-storycharacterassignmentchoicesprivateother',
+        $(this).find('[name="StoryCharacterAssignmentModel[storyCharacterAssignmentChoicesPrivateOther][]"]').val(),
         'other',
         'gm'
     )
@@ -124,8 +124,8 @@ $('#form-story-group-assignment-public-vital').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'group',
-        '#story-storygroupassignmentchoicespublicvital',
-        $(this).find('[name="Story[storyGroupAssignmentChoicesPublicVital][]"]').val(),
+        '#storygroupassignmentmodel-storygroupassignmentchoicespublicvital',
+        $(this).find('[name="StoryGroupAssignmentModel[storyGroupAssignmentChoicesPublicVital][]"]').val(),
         'vital',
         'full'
     );
@@ -135,8 +135,8 @@ $('#form-story-group-assignment-public-major').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'group',
-        '#story-storygroupassignmentchoicespublicmajor',
-        $(this).find('[name="Story[storyGroupAssignmentChoicesPublicMajor][]"]').val(),
+        '#storygroupassignmentmodel-storygroupassignmentchoicespublicmajor',
+        $(this).find('[name="StoryGroupAssignmentModel[storyGroupAssignmentChoicesPublicMajor][]"]').val(),
         'major',
         'full'
     );
@@ -146,8 +146,8 @@ $('#form-story-group-assignment-public-minor').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'group',
-        '#story-storygroupassignmentchoicespublicminor',
-        $(this).find('[name="Story[storyGroupAssignmentChoicesPublicMinor][]"]').val(),
+        '#storygroupassignmentmodel-storygroupassignmentchoicespublicminor',
+        $(this).find('[name="StoryGroupAssignmentModel[storyGroupAssignmentChoicesPublicMinor][]"]').val(),
         'minor',
         'full'
     )
@@ -157,8 +157,8 @@ $('#form-story-group-assignment-public-other').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'group',
-        '#story-storygroupassignmentchoicespublicother',
-        $(this).find('[name="Story[storyGroupAssignmentChoicesPublicOther][]"]').val(),
+        '#storygroupassignmentmodel-storygroupassignmentchoicespublicother',
+        $(this).find('[name="StoryGroupAssignmentModel[storyGroupAssignmentChoicesPublicOther][]"]').val(),
         'other',
         'full'
     )
@@ -168,8 +168,8 @@ $('#form-story-group-assignment-private-vital').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'group',
-        '#story-storygroupassignmentchoicesprivatevital',
-        $(this).find('[name="Story[storyGroupAssignmentChoicesPrivateVital][]"]').val(),
+        '#storygroupassignmentmodel-storygroupassignmentchoicesprivatevital',
+        $(this).find('[name="StoryGroupAssignmentModel[storyGroupAssignmentChoicesPrivateVital][]"]').val(),
         'vital',
         'gm'
     );
@@ -179,8 +179,8 @@ $('#form-story-group-assignment-private-major').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'group',
-        '#story-storygroupassignmentchoicesprivatemajor',
-        $(this).find('[name="Story[storyGroupAssignmentChoicesPrivateMajor][]"]').val(),
+        '#storygroupassignmentmodel-storygroupassignmentchoicesprivatemajor',
+        $(this).find('[name="StoryGroupAssignmentModel[storyGroupAssignmentChoicesPrivateMajor][]"]').val(),
         'major',
         'gm'
     );
@@ -190,8 +190,8 @@ $('#form-story-group-assignment-private-minor').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'group',
-        '#story-storygroupassignmentchoicesprivateminor',
-        $(this).find('[name="Story[storyGroupAssignmentChoicesPrivateMinor][]"]').val(),
+        '#storygroupassignmentmodel-storygroupassignmentchoicesprivateminor',
+        $(this).find('[name="StoryGroupAssignmentModel[storyGroupAssignmentChoicesPrivateMinor][]"]').val(),
         'minor',
         'gm'
     )
@@ -201,8 +201,8 @@ $('#form-story-group-assignment-private-other').on('submit', function (ev) {
     ev.preventDefault();
     setActors(
         'group',
-        '#story-storygroupassignmentchoicesprivateother',
-        $(this).find('[name="Story[storyGroupAssignmentChoicesPrivateOther][]"]').val(),
+        '#storygroupassignmentmodel-storygroupassignmentchoicesprivateother',
+        $(this).find('[name="StoryGroupAssignmentModel[storyGroupAssignmentChoicesPrivateOther][]"]').val(),
         'other',
         'gm'
     )

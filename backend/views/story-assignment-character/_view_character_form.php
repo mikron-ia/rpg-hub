@@ -1,11 +1,11 @@
 <?php
 
-use common\models\Story;
+use common\models\assignment\StoryCharacterAssignmentModel;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/* @var $model Story */
+/* @var $model StoryCharacterAssignmentModel */
 /* @var $formId string */
 /* @var $attribute string */
 /* @var $charactersForDropdown array<int,string> */
