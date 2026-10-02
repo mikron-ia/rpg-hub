@@ -46,8 +46,8 @@ use yii2tech\ar\position\PositionBehavior;
 class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSightings, HasKey, HasVisibility
 {
     use ToolsForEntity;
-    use ToolsForLinkTags;
     use ToolsForHasVisibility;
+    use ToolsForLinkTags;
 
     #[Override]
     public static function tableName(): string

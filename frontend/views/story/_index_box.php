@@ -7,7 +7,6 @@ use yii\helpers\Html;
 /** @var $model Story */
 
 $storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
-
 ?>
 
 <div id="story-<?= $model->story_id ?>">

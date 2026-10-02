@@ -1,12 +1,14 @@
 <?php
 
 use common\models\core\Language;
+use common\models\user\UserSettingsForm;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model common\models\user\UserSettingsForm */
+/* @var $this View */
+/* @var $form ActiveForm */
+/* @var $model UserSettingsForm */
 
 $this->title = Yii::t('app', 'USER_SETTINGS_TITLE');
 $this->params['breadcrumbs'][] = $this->title;

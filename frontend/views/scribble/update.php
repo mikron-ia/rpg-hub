@@ -7,7 +7,7 @@ use yii\web\View;
 /** @var View $this */
 /** @var Scribble $model */
 
-$this->title = 'Update Scribble: ' . $model->scribble_id;
+$this->title = Yii::t('app', 'SCRIBBLES_UPDATE_TITLE') . ': ' . $model->scribble_id;
 $this->params['breadcrumbs'][] = ['label' => 'Scribbles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = [
     'label' => $model->scribble_id,
@@ -16,11 +16,9 @@ $this->params['breadcrumbs'][] = [
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="scribble-update">
-
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
 </div>

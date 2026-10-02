@@ -11,7 +11,6 @@ $favoriteButtonTexts = [
     false => Yii::t('app', 'SCRIBBLES_BUTTON_NO'),
     true => Yii::t('app', 'SCRIBBLES_BUTTON_YES'),
 ];
-
 ?>
 <div class="scribble-view">
     <p id="scribble-modal-error-box" class="error-summary"></p>

@@ -26,7 +26,7 @@ $storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
             <?= $model->showSightingStatus() ?>
         </span>
         <?php if ($model->getVisibility() !== Visibility::Full): ?>
-            <span class="text-center unpublished-tag" title="<?= Yii::t('app', 'TAG_TITLE_UNPUBLISHED_M') ?>">
+            <span class="text-center unpublished-tag" title="<?= Yii::t('app', 'TAG_TITLE_UNPUBLISHED_F') ?>">
                 <?= Yii::t('app', 'TAG_LABEL_UNPUBLISHED_F') ?>
             </span>
         <?php endif; ?>
