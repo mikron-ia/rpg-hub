@@ -1,11 +1,11 @@
 <?php
 
-use common\models\Group;
+use common\models\assignment\GroupStoryAssignmentModel;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/* @var $model Group */
+/* @var $model GroupStoryAssignmentModel */
 /* @var $formId string */
 /* @var $attribute string */
 /* @var $storiesForDropdown array<int,string> */

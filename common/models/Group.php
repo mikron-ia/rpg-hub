@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
 use common\components\service\AssignmentService;
+use common\models\assignment\GroupStoryAssignmentModel;
 use common\models\core\Displayable;
 use common\models\core\HasDescriptions;
 use common\models\core\HasEpicControl;
@@ -80,15 +81,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
 
     public bool $is_off_the_record_change = false;
 
-    public array|string $groupStoryAssignmentChoicesPublicVital = [];
-    public array|string $groupStoryAssignmentChoicesPublicMajor = [];
-    public array|string $groupStoryAssignmentChoicesPublicMinor = [];
-    public array|string $groupStoryAssignmentChoicesPublicOther = [];
-
-    public array|string $groupStoryAssignmentChoicesPrivateVital = [];
-    public array|string $groupStoryAssignmentChoicesPrivateMajor = [];
-    public array|string $groupStoryAssignmentChoicesPrivateMinor = [];
-    public array|string $groupStoryAssignmentChoicesPrivateOther = [];
+    private(set) GroupStoryAssignmentModel $groupStoryAssignments;
 
     #[Override]
     public static function tableName(): string
@@ -186,15 +179,7 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             $this->seenPack->recordNotification();
         }
 
-        $storyAssignments = AssignmentService::extractAssignmentsNarrativeIds($this->getStoryGroupAssignments());
-        $this->groupStoryAssignmentChoicesPublicVital = $storyAssignments->publicVital;
-        $this->groupStoryAssignmentChoicesPublicMajor = $storyAssignments->publicMajor;
-        $this->groupStoryAssignmentChoicesPublicMinor = $storyAssignments->publicMinor;
-        $this->groupStoryAssignmentChoicesPublicOther = $storyAssignments->publicOther;
-        $this->groupStoryAssignmentChoicesPrivateVital = $storyAssignments->privateVital;
-        $this->groupStoryAssignmentChoicesPrivateMajor = $storyAssignments->privateMajor;
-        $this->groupStoryAssignmentChoicesPrivateMinor = $storyAssignments->privateMinor;
-        $this->groupStoryAssignmentChoicesPrivateOther = $storyAssignments->privateOther;
+        $this->groupStoryAssignments = new GroupStoryAssignmentModel($this);
 
         parent::afterFind();
     }
@@ -220,14 +205,6 @@ class Group extends ActiveRecord implements Displayable, HasDescriptions, HasEpi
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
             'display_as_tab' => Yii::t('app', 'GROUP_DISPLAY_AS_TAB_LONG'),
             'is_off_the_record_change' => Yii::t('app', 'CHECK_OFF_THE_RECORD_CHANGE'),
-            'groupStoryAssignmentChoicesPublicVital' => Yii::t('app', 'GROUP_STORY_ASSIGNMENT_CHOICES_PUBLIC_VITAL'),
-            'groupStoryAssignmentChoicesPublicMajor' => Yii::t('app', 'GROUP_STORY_ASSIGNMENT_CHOICES_PUBLIC_MAJOR'),
-            'groupStoryAssignmentChoicesPublicMinor' => Yii::t('app', 'GROUP_STORY_ASSIGNMENT_CHOICES_PUBLIC_MINOR'),
-            'groupStoryAssignmentChoicesPublicOther' => Yii::t('app', 'GROUP_STORY_ASSIGNMENT_CHOICES_PUBLIC_OTHER'),
-            'groupStoryAssignmentChoicesPrivateVital' => Yii::t('app', 'GROUP_STORY_ASSIGNMENT_CHOICES_PRIVATE_VITAL'),
-            'groupStoryAssignmentChoicesPrivateMajor' => Yii::t('app', 'GROUP_STORY_ASSIGNMENT_CHOICES_PRIVATE_MAJOR'),
-            'groupStoryAssignmentChoicesPrivateMinor' => Yii::t('app', 'GROUP_STORY_ASSIGNMENT_CHOICES_PRIVATE_MINOR'),
-            'groupStoryAssignmentChoicesPrivateOther' => Yii::t('app', 'GROUP_STORY_ASSIGNMENT_CHOICES_PRIVATE_OTHER'),
         ];
     }
 
