@@ -36,6 +36,21 @@ class PerformedAction extends ActiveRecord
     public const string PERFORMED_ACTION_MANAGER_DETACH = 'manager-detach';
     public const string PERFORMED_ACTION_OTHER = 'other';
 
+    public const array CLASS_ID_LABELS = [
+        Character::class => 'character_id',
+        CharacterSheet::class => 'character_sheet_id',
+        Epic::class => 'epic_id',
+        Game::class => 'game_id',
+        Group::class => 'group_id',
+        Image::class => 'image_id',
+        Location::class => 'location_id',
+        Project::class => 'project_id',
+        Recap::class => 'recap_id',
+        Secret::class => 'secret_id',
+        Story::class => 'story_id',
+        User::class => 'id',
+    ];
+
     #[Override]
     public static function tableName(): string
     {

@@ -24,7 +24,10 @@ use yii\widgets\ActiveForm;
         ['data' => User::getFullUserList(), 'options' => ['multiple' => true]]
     )->label(Yii::t('app', 'USER_LABEL')) ?>
 
-    <?= $form->field($model, 'class') ?>
+    <?= $form->field($model, 'class')->widget(
+        Select2::class,
+        ['data' => PerformedActionQuery::listClasses(), 'options' => ['multiple' => true]]
+    ) ?>
 
     <?= $form->field($model, 'operation')->widget(
         Select2::class,

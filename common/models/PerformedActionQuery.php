@@ -46,10 +46,25 @@ class PerformedActionQuery extends PerformedAction
             'performed_at' => $this->performed_at,
         ]);
 
-        $query->andFilterWhere(['in', 'operation', $this->operation])
-            ->andFilterWhere(['like', 'class', $this->class])
+        $query
+            ->andFilterWhere(['in', 'operation', $this->operation])
+            ->andFilterWhere(['in', 'class', $this->class])
             ->andFilterWhere(['in', 'user_id', $this->user_id]);
 
         return $dataProvider;
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    public static function listClasses(): array
+    {
+        $classNames = PerformedAction::find()
+                ->select('class', 'UNIQUE')
+                ->orderBy('class')
+                ->column() |> (fn($options) => array_filter($options,
+                fn($option) => !empty($option)));
+
+        return array_combine($classNames, $classNames);
     }
 }
