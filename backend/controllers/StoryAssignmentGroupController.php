@@ -2,21 +2,18 @@
 
 namespace backend\controllers;
 
-use common\models\core\Visibility;
 use common\models\Group;
 use common\models\StoryGroupAssignment;
-use common\models\type\AssignmentRank;
 use Override;
 use Throwable;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\Response;
 
-class StoryAssignmentGroupController extends AssignmentAbstractController
+final class StoryAssignmentGroupController extends AssignmentAbstractController
 {
     #[Override]
     public function behaviors(): array
@@ -72,19 +69,10 @@ class StoryAssignmentGroupController extends AssignmentAbstractController
     public function actionSetStoryGroups(): Response
     {
         $groupIds = Yii::$app->request->post('keys', []);
-        $storyKey = Yii::$app->request->post('storyKey');
-        $rank = Yii::$app->request->post('rank');
-        $visibility = Yii::$app->request->post('visibility');
+        $storyKey = Yii::$app->request->post('storyKey', '');
 
-        $validVisibility = Visibility::tryFrom($visibility);
-        if ($validVisibility === null) {
-            throw new BadRequestHttpException(Yii::t('app', 'ERROR_VISIBILITY_NOT_VALID'));
-        }
-
-        $validRank = AssignmentRank::tryFrom($rank);
-        if ($validRank === null) {
-            throw new BadRequestHttpException(Yii::t('app', 'ERROR_ASSIGNMENT_RANK_NOT_VALID'));
-        }
+        $validRank = $this->processRank(Yii::$app->request);
+        $validVisibility = $this->processVisibility(Yii::$app->request);
 
         $story = $this->findStory($storyKey);
         $groups = $this->findGroups($groupIds, $story->epic);

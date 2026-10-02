@@ -2,20 +2,17 @@
 
 namespace backend\controllers;
 
-use common\models\core\Visibility;
 use common\models\StoryCharacterAssignment;
-use common\models\type\AssignmentRank;
 use Override;
 use Throwable;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\Response;
 
-class CharacterAssignmentStoryController extends AssignmentAbstractController
+final class CharacterAssignmentStoryController extends AssignmentAbstractController
 {
     #[Override]
     public function behaviors(): array
@@ -71,21 +68,10 @@ class CharacterAssignmentStoryController extends AssignmentAbstractController
     public function actionSetCharacterStories(): Response
     {
         $storyIds = Yii::$app->request->post('keys', []);
-        $characterKey = Yii::$app->request->post('characterKey');
-        $rank = Yii::$app->request->post('rank');
-        $visibility = Yii::$app->request->post('visibility');
+        $characterKey = Yii::$app->request->post('characterKey', '');
 
-        $validVisibility = Visibility::tryFrom($visibility);
-
-        if ($validVisibility === null) {
-            throw new BadRequestHttpException(Yii::t('app', 'ERROR_VISIBILITY_NOT_VALID'));
-        }
-
-        $validRank = AssignmentRank::tryFrom($rank);
-
-        if ($validRank === null) {
-            throw new BadRequestHttpException(Yii::t('app', 'ERROR_ASSIGNMENT_RANK_NOT_VALID'));
-        }
+        $validRank = $this->processRank(Yii::$app->request);
+        $validVisibility = $this->processVisibility(Yii::$app->request);
 
         $character = $this->findCharacter($characterKey);
         $stories = $this->findStories($storyIds, $character->epic);

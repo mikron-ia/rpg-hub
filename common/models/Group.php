@@ -3,7 +3,6 @@
 namespace common\models;
 
 use common\behaviours\PerformedActionBehavior;
-use common\components\service\AssignmentService;
 use common\models\assignment\GroupStoryAssignmentModel;
 use common\models\core\Displayable;
 use common\models\core\HasDescriptions;

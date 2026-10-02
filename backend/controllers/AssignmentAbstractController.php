@@ -11,11 +11,12 @@ use common\models\core\Visibility;
 use common\models\Epic;
 use common\models\Group;
 use common\models\Story;
+use common\models\type\AssignmentRank;
 use Yii;
-use yii\db\ActiveRecord;
-use yii\db\Exception;
+use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Request;
 use yii\web\Response;
 use yii\web\ServerErrorHttpException;
 
@@ -206,6 +207,34 @@ class AssignmentAbstractController extends CmsController
     }
 
     /**
+     * @throws BadRequestHttpException
+     */
+    protected function processRank(Request $request): AssignmentRank
+    {
+        $validRank = AssignmentRank::tryFrom($request->post('rank', ''));
+
+        if ($validRank === null) {
+            throw new BadRequestHttpException(Yii::t('app', 'ERROR_ASSIGNMENT_RANK_NOT_VALID'));
+        }
+
+        return $validRank;
+    }
+
+    /**
+     * @throws BadRequestHttpException
+     */
+    protected function processVisibility(Request $request): Visibility
+    {
+        $validVisibility = Visibility::tryFrom($request->post('visibility', ''));
+
+        if ($validVisibility === null) {
+            throw new BadRequestHttpException(Yii::t('app', 'ERROR_VISIBILITY_NOT_VALID'));
+        }
+
+        return $validVisibility;
+    }
+
+    /**
      * @throws ServerErrorHttpException
      */
     protected function respondWithError(string $message): Response
@@ -216,19 +245,5 @@ class AssignmentAbstractController extends CmsController
     protected function respondWithSuccess(): Response
     {
         return new Response();
-    }
-
-    protected function save(ActiveRecord $assignment): Response
-    {
-        $valid = true;
-        try {
-            $valid = $assignment->save();
-            $success = $valid;
-        } catch (Exception) {
-            // todo add logging
-            $success = false;
-        }
-
-        return $this->respondBasedOnSuccessAndValidity($success, $valid);
     }
 }
