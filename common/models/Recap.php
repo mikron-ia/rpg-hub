@@ -7,7 +7,9 @@ use common\models\core\Displayable;
 use common\models\core\HasEpicControl;
 use common\models\core\HasKey;
 use common\models\core\HasSightings;
+use common\models\core\HasVisibility;
 use common\models\tools\ToolsForEntity;
+use common\models\tools\ToolsForHasVisibility;
 use common\models\tools\ToolsForLinkTags;
 use Override;
 use Yii;
@@ -29,6 +31,7 @@ use yii2tech\ar\position\PositionBehavior;
  * @property string $seen_pack_id
  * @property string $point_in_time_id
  * @property int $position
+ * @property string $visibility
  * @property string $utility_bag_id
  *
  * @property Epic $epic
@@ -40,10 +43,11 @@ use yii2tech\ar\position\PositionBehavior;
  * @method moveNext()
  * @method movePrev()
  */
-class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSightings, HasKey
+class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSightings, HasKey, HasVisibility
 {
     use ToolsForEntity;
     use ToolsForLinkTags;
+    use ToolsForHasVisibility;
 
     #[Override]
     public static function tableName(): string
@@ -66,6 +70,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
             [['content', 'notes'], 'string'],
             [['key'], 'string', 'max' => 80],
             [['name'], 'string', 'max' => 120],
+            [['visibility'], 'string', 'max' => 20],
             [
                 ['epic_id'],
                 'exist',
@@ -113,6 +118,7 @@ class Recap extends ActiveRecord implements Displayable, HasEpicControl, HasSigh
             'point_in_time_id' => Yii::t('app', 'LABEL_POINT_IN_TIME'),
             'pointInTime' => Yii::t('app', 'LABEL_POINT_IN_TIME'),
             'position' => Yii::t('app', 'RECAP_POSITION'),
+            'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
             'utility_bag_id' => Yii::t('app', 'UTILITY_BAG'),
         ];
     }

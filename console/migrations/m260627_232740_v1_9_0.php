@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use yii\db\Migration;
 
 class m260627_232740_v1_9_0 extends Migration
@@ -19,10 +20,18 @@ class m260627_232740_v1_9_0 extends Migration
         );
 
         $this->addColumn('{{%user_invitation}}', 'sent_at', $this->integer(11)->unsigned()->after('created_at'));
+
+        $this->addColumn(
+            '{{%recap}}',
+            'visibility',
+            $this->string(20)->notNull()->defaultValue(Visibility::Full->value)->after('position')
+        ); // default is `full` to avoid breaking the existing system and forcing GMs to go through all existing reviews after deployment
     }
 
     public function safeDown(): void
     {
+        $this->dropColumn('{{%recap}}', 'visibility');
+
         $this->dropColumn('{{%user_invitation}}', 'sent_at');
 
         $this->dropForeignKey('project_bestowed_list', '{{%project}}');

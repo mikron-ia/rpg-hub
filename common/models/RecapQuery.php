@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\core\EntityQuery;
+use common\models\core\Visibility;
 use Override;
 use Yii;
 use yii\base\Model;
@@ -52,6 +53,7 @@ final class RecapQuery extends Recap implements EntityQuery
         } else {
             $query->andWhere([
                 'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+                'visibility' => Visibility::determineVisibilityVector(Yii::$app->params['activeEpic']),
             ]);
         }
 
@@ -83,7 +85,10 @@ final class RecapQuery extends Recap implements EntityQuery
             return null;
         }
 
-        $query->andWhere(['epic_id' => Yii::$app->params['activeEpic']->epic_id])->orderBy(['position' => SORT_DESC]);
+        $query->andWhere([
+            'epic_id' => Yii::$app->params['activeEpic']->epic_id,
+            'visibility' => Visibility::Full,
+        ])->orderBy(['position' => SORT_DESC]);
 
         /** @var Recap|null $recap */
         $recap = $query->one();
@@ -94,17 +99,23 @@ final class RecapQuery extends Recap implements EntityQuery
     public function mostRecentForEpic(Epic $epic): ?Recap
     {
         /** @var Recap|null $recap */
-        $recap = Recap::find()->andWhere(['epic_id' => $epic->epic_id])->orderBy(['position' => SORT_DESC])->one();
+        $recap = Recap::find()->andWhere([
+            'epic_id' => $epic->epic_id,
+            'visibility' => Visibility::Full,
+        ])->orderBy(['position' => SORT_DESC])->one();
 
         return $recap;
     }
 
     public function mostRecentByPlayerDataProvider(array $userIds): ?ArrayDataProvider
     {
-        $query = Recap::find()->where(['in', 'epic_id', $userIds])->orderBy([
-            'position' => SORT_DESC,
-            'recap_id' => SORT_DESC
-        ]);
+        $query = Recap::find()
+            ->where(['in', 'epic_id', $userIds])
+            ->andWhere(['visibility' => Visibility::Full])
+            ->orderBy([
+                'position' => SORT_DESC,
+                'recap_id' => SORT_DESC,
+            ]);
 
         $mostRecentRecaps = [];
 
@@ -123,6 +134,8 @@ final class RecapQuery extends Recap implements EntityQuery
 
     /**
      * Provides a list of all recaps from the current epic for use in a selector
+     *
+     * Note: this method does not check visibility, since it is used for CMS only
      *
      * @return string[]
      */

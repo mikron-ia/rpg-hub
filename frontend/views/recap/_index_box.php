@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use common\models\Recap;
 use yii\helpers\Html;
 
@@ -13,6 +14,11 @@ use yii\helpers\Html;
         <span class="text-center <?= $model->showSightingCSS() ?> seen-tag-header">
             <?= $model->showSightingStatus() ?>
         </span>
+        <?php if ($model->getVisibility() !== Visibility::Full): ?>
+            <span class="text-center unpublished-tag" title="<?= Yii::t('app', 'TAG_TITLE_UNPUBLISHED_N') ?>">
+                <?= Yii::t('app', 'TAG_LABEL_UNPUBLISHED_N') ?>
+            </span>
+        <?php endif; ?>
     </h2>
 
     <div class="col-md-12 text-justify">

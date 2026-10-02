@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use common\models\EpicQuery;
 use common\models\PointInTimeQuery;
 use common\models\Recap;
@@ -16,14 +17,20 @@ use yii\widgets\ActiveForm;
 <div class="recap-form">
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-6">
+    <div class="col-md-5">
         <?= $form->field($model, 'epic_id')->widget(
             Select2::class,
             ['data' => EpicQuery::getListOfEpicsForSelector()]
         ); ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-2">
+        <?= $form
+            ->field($model, 'visibility')
+            ->dropDownList(Visibility::visibilityNames(Recap::allowedVisibilities())) ?>
+    </div>
+
+    <div class="col-md-5">
         <?= $form->field($model, 'point_in_time_id')->widget(
             Select2::class,
             ['data' => PointInTimeQuery::getListOfPointsInTimeForSelector()]

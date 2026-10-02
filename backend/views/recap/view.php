@@ -83,6 +83,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => $model->pointInTime?->getLink(),
                 ],
                 [
+                    'attribute' => 'visibility',
+                    'value' => $model->getVisibilityName(),
+                ],
+                [
                     'attribute' => 'position',
                 ],
             ],

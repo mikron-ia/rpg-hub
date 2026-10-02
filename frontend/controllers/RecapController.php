@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\core\Visibility;
 use common\models\Epic;
 use common\models\Recap;
 use common\models\RecapQuery;
@@ -106,7 +107,7 @@ class RecapController extends Controller
     {
         $model = Recap::findOne(['key' => $key]);
 
-        if ($model === null) {
+        if ($model === null || !in_array($model->visibility, Visibility::determineVisibilityVector($model->epic))) {
             throw new NotFoundHttpException(Yii::t('app', 'RECAP_NOT_AVAILABLE'));
         }
 

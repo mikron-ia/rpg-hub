@@ -48,6 +48,12 @@ $mostRecent = $searchModel->mostRecent();
                     'attribute' => 'name',
                 ],
                 [
+                    'attribute' => 'visibility',
+                    'headerOptions' => ['class' => 'text-center'],
+                    'contentOptions' => ['class' => 'text-center'],
+                    'value' => fn(Recap $model) => $model->getVisibilityName(),
+                ],
+                [
                     'attribute' => 'pointInTime',
                     'contentOptions' => ['class' => 'text-center text-nowrap'],
                     'headerOptions' => ['class' => 'text-center'],
