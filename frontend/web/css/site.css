@@ -867,14 +867,6 @@ li.redacted:hover {
     padding: 3px 8px;
 }
 
-.character-list > .summary {
-    margin: 10px;
-}
-
-.character-list > li {
-    margin: 20px 0;
-}
-
 .expanded-image {
     display: block;
     height: auto;
@@ -885,6 +877,38 @@ li.redacted:hover {
 .header-tooltip-available {
     cursor: help;
     display: inline-block;
+}
+
+.object-list-box {
+    display: block;
+    width: 100%;
+}
+
+.object-list-box > .summary {
+    margin: 20px 10px;
+}
+
+.object-list-wall {
+    column-gap: 20px;
+}
+
+.object-list-brick {
+    break-inside: avoid;
+    margin-bottom: 20px;
+    min-height: 28px;
+    width: 100%;
+}
+
+@media (min-width: 992px) {
+    .object-list-wall {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 991px) {
+    .object-list-wall {
+        column-count: 1;
+    }
 }
 
 .secret-text-box {

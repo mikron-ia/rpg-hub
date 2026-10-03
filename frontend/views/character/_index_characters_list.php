@@ -16,8 +16,8 @@ use yii\widgets\ListView;
     <?php echo ListView::widget([
         'dataProvider' => $dataProvider,
         'emptyText' => '<p class="info-box">' . Yii::t('app', 'PROJECTS_NOT_FOUND') . '</p>',
-        'options' => ['tag' => 'ul', 'class' => 'character-list'],
-        'itemOptions' => ['class' => 'item', 'tag' => 'li'],
+        'layout' => '<div class="object-list-box">{summary}  <ul class="object-list-wall">{items}</ul> {pager}</div>',
+        'itemOptions' => ['class' => 'item object-list-brick', 'tag' => 'li'],
         'itemView' => function (Character $model, $key, $index, $widget) {
             $tags = sprintf(
                 '<span class="%s">%s</span>',
