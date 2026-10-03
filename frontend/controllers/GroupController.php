@@ -25,6 +25,9 @@ class GroupController extends Controller
 
     private const int POSITIONS_PER_PAGE = 24;
 
+    private const string MODE_BOX = 'box';
+    private const string MODE_LIST = 'list';
+
     #[Override]
     public function behaviors(): array
     {
@@ -55,7 +58,7 @@ class GroupController extends Controller
     /**
      * @throws HttpException
      */
-    public function actionIndex(?string $key = null): string
+    public function actionIndex(?string $key = null, ?string $mode = self::MODE_BOX): string
     {
         if ($key) {
             $epic = $this->findEpicByKey($key);
@@ -80,11 +83,16 @@ class GroupController extends Controller
         $searchModel = new GroupQuery(self::POSITIONS_PER_PAGE);
         $dataProvider = $searchModel->searchForUser(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'epic' => $epic,
-        ]);
+        return $this->render(
+            view: match ($mode) {
+                self::MODE_LIST => 'index_list',
+                default => 'index'
+            },
+            params: [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'epic' => $epic,
+            ]);
     }
 
     /**

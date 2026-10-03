@@ -26,7 +26,7 @@ $labelForMain = isset(Yii::$app->request->queryParams['GroupQuery'])
 
 $mainTab = [
     'label' => $labelForMain,
-    'content' => $this->render('_index_groups', ['dataProvider' => $dataProvider]),
+    'content' => $this->render('_index_groups_list', ['dataProvider' => $dataProvider]),
     'encode' => false,
     'active' => true,
 ];
@@ -56,10 +56,10 @@ if (isset(Yii::$app->request->queryParams['GroupQuery'])) {
         <?= Html::encode($this->title) ?>
         <div class="buttons-in-header">
             <?= Html::a(
-                '<span class="glyphicon glyphicon-th-list"></span>',
-                ['group/index', 'key' => $epic->key, 'mode' => 'list'],
+                '<span class="glyphicon glyphicon-th"></span>',
+                ['group/index', 'key' => $epic->key, 'mode' => 'box'],
                 [
-                    'title' => Yii::t('app', 'DISPLAY_MODE_SET_LIST'),
+                    'title' => Yii::t('app', 'DISPLAY_MODE_SET_BOX'),
                 ]
             )
             ?>
