@@ -10,9 +10,7 @@ use yii\widgets\ListView;
 ?>
 
 <div id="characters">
-    <p class="beta-feature-warning" title="<?= Yii::t('app', 'ALPHA_WARNING_TITLE') ?>">
-        <?= Yii::t('app', 'ALPHA_WARNING_TEXT') ?>
-    </p>
+    <?= $this->render('../_common/alpha') ?>
     <?php echo ListView::widget([
         'dataProvider' => $dataProvider,
         'emptyText' => '<p class="info-box">' . Yii::t('app', 'PROJECTS_NOT_FOUND') . '</p>',

@@ -163,6 +163,7 @@ p {
     margin: 5px 4px;
 }
 
+.alpha-feature-warning,
 .beta-feature-warning {
     font-family: "Courier New", Courier, monospace;
     font-weight: bold;
