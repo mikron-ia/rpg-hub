@@ -160,7 +160,8 @@ li.redacted {
 }
 
 .expired-tag,
-.unpublished-tag {
+.unpublished-tag,
+.unpublished-tag-line {
     background-color: brown;
     border-color: brown;
     color: white;
