@@ -380,6 +380,8 @@ return [
     'DESCRIPTION_VALID_END {end}' => '? &mdash; {end}',
     'DESCRIPTION_VALID_START {start}' => '{start} onwards',
     'DESCRIPTION_WORDS' => 'Word count',
+    'DISPLAY_MODE_SET_BOX' => 'Display as boxes',
+    'DISPLAY_MODE_SET_LIST' => 'Display as list (alpha version)',
     'EPIC_BASIC' => 'Basics',
     'EPIC_BASIC_COUNT_ARTICLES' => 'Number of texts',
     'EPIC_BASIC_COUNT_CHARACTERS' => 'Number of characters',

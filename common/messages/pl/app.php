@@ -380,6 +380,8 @@ return [
     'DESCRIPTION_VALID_END {end}' => '? &mdash; {end}',
     'DESCRIPTION_VALID_START {start}' => '{start} &mdash; ?',
     'DESCRIPTION_WORDS' => 'Słów',
+    'DISPLAY_MODE_SET_BOX' => 'Wyświetl jako kafelki',
+    'DISPLAY_MODE_SET_LIST' => 'Wyświetl jako listę (wersja alfa)',
     'EPIC_BASIC' => 'Podstawy',
     'EPIC_BASIC_COUNT_ARTICLES' => 'Liczba tekstów',
     'EPIC_BASIC_COUNT_CHARACTERS' => 'Liczba postaci',

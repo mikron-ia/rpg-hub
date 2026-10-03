@@ -138,6 +138,11 @@ p {
     margin: 20px 0 10px 10px;
 }
 
+.buttons-in-header {
+    float: right;
+    margin-right: 20px;
+}
+
 .subtitle {
     font-style: italic;
     text-align: left;

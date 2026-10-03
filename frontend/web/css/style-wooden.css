@@ -48,6 +48,10 @@ a:focus {
     color: chocolate;
 }
 
+.buttons-in-header {
+    color: brown;
+}
+
 .dropdown-menu > .active > a {
     background-color: saddlebrown;
 }

@@ -71,7 +71,19 @@ if (isset(Yii::$app->request->queryParams['CharacterQuery'])) {
 ?>
 
 <div class="person-index">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>
+        <?= Html::encode($this->title) ?>
+        <div class="buttons-in-header">
+            <?= Html::a(
+                '<span class="glyphicon glyphicon-th-list"></span>',
+                ['character/index', 'key' => $epic->key, 'mode' => 'list'],
+                [
+                    'title' => Yii::t('app', 'DISPLAY_MODE_SET_LIST'),
+                ]
+            )
+            ?>
+        </div>
+    </h1>
     <?= Tabs::widget(['items' => $items]) ?>
 </div>
 
