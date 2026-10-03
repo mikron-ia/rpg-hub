@@ -79,15 +79,11 @@ a:focus {
 }
 
 .index-box {
-    border: 3px solid green;
+    border-color: green;
 }
 
 .index-box-header-icon {
     color: green;
-}
-
-.index-box-gm {
-    border: 3px solid darkviolet;
 }
 
 .index-box-designated {
@@ -156,6 +152,10 @@ li.redacted {
     background-color: lightgoldenrodyellow;
     border: palegoldenrod solid 4px;
     border-radius: 15px;
+}
+
+.unpublished-icon {
+    color: green;
 }
 
 .expired-tag,

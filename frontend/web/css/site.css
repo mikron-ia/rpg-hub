@@ -270,6 +270,8 @@ a:focus {
 }
 
 .index-box {
+    border-style: solid;
+    border-width: 3px;
     float: left;
     margin: 1% 0.75%;
     height: 200px;
@@ -336,6 +338,10 @@ a:focus {
 
 .index-box > h3 {
     margin-top: 8px;
+}
+
+.index-box-gm {
+    border-style: dotted;
 }
 
 .index-box-low {
@@ -443,6 +449,16 @@ a:focus {
     margin: 0 5px;
     padding: 2px 10px;
     vertical-align: middle;
+}
+
+.unpublished-icon {
+    cursor: help;
+    font-size: 2.25rem;
+    font-weight: bold;
+    display: inline-block;
+    position: absolute;
+    bottom: 4px;
+    left: 12px;
 }
 
 .designated-tag,

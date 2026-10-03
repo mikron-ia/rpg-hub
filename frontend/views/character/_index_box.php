@@ -82,4 +82,10 @@ $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleTex
         <?= $model->showSightingStatus() ?>
     </p>
 
+    <?php if ($model->getVisibility() !== Visibility::Full): ?>
+        <span class="unpublished-icon" title="<?= Yii::t('app', 'TAG_TITLE_UNPUBLISHED_F') ?>">
+            <span class="glyphicon glyphicon-eye-close"></span>
+        </span>
+    <?php endif; ?>
+
 </div>
