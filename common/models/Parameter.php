@@ -37,6 +37,7 @@ class Parameter extends ActiveRecord implements HasVisibility, HasKey
     use ToolsForEntity;
     use ToolsForHasVisibility;
 
+    public const string CONTENT_WARNING = 'content-warning';
     public const string CS_ACTIVE = 'active-cs';
     public const string DATA_SOURCE_FOR_REPUTATION = 'source-reputation';
     public const string EPIC_STATUS = 'epic-status';
@@ -157,6 +158,7 @@ class Parameter extends ActiveRecord implements HasVisibility, HasKey
     public static function typeNames(): array
     {
         return [
+            self::CONTENT_WARNING => Yii::t('app', 'PARAM_CONTENT_WARNING'),
             self::CS_ACTIVE => Yii::t('app', 'ST_PARAM_CS_ACTIVE'),
             self::DATA_SOURCE_FOR_REPUTATION => Yii::t('app', 'PARAM_DATA_SOURCE_FOR_REPUTATION'),
             self::EPIC_STATUS => Yii::t('app', 'PARAM_EPIC_STATUS'),
@@ -207,6 +209,8 @@ class Parameter extends ActiveRecord implements HasVisibility, HasKey
                 $typeNamesAccepted[$typeKey] = $typeName;
             }
         }
+
+        sort($typeNamesAccepted);
 
         return $typeNamesAccepted;
     }

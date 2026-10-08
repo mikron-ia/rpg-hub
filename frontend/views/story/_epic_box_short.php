@@ -8,6 +8,7 @@ use yii\helpers\Html;
 /** @var $model Story */
 
 $storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
+$storyTriggers = $model->getParameter(Parameter::CONTENT_WARNING);
 ?>
 
 <div id="story-<?= $model->story_id ?>">
@@ -18,6 +19,13 @@ $storyNumberRaw = $model->getParameter(Parameter::STORY_NUMBER);
         ) ?>
         <?php if (!empty($model->displayCodeName())): ?>
             <span class="text-center type-tag tag-smaller"><?= $model->getCodeName() ?></span>
+        <?php endif; ?>
+        <?php if (!empty($storyTriggers)): ?>
+            <span class="header-tooltip-available text-center type-tag tag-smaller"
+                  title="<?= Yii::t('app', 'STORY_TAG_HAS_CONTENT_WARNING_TITLE') ?>"
+            >
+                <?= Yii::t('app', 'STORY_TAG_HAS_CONTENT_WARNING_TEXT') ?>
+            </span>
         <?php endif; ?>
         <?php if ($model->story_id === $model->epic->current_story_id): ?>
             <span class="current-tag tag-smaller"><?= Yii::t('app', 'TAG_CURRENT_F') ?></span>

@@ -1,6 +1,7 @@
 <?php
 
 use common\models\core\Visibility;
+use common\models\Parameter;
 use common\models\Story;
 use frontend\assets\StoryAsset;
 use yii\bootstrap\Tabs;
@@ -74,6 +75,13 @@ if ($showPrivates) {
         <h1>
             <?php if ($model->story_id === $model->epic->current_story_id): ?>
                 <span class="current-tag tag-view-page"><?= Yii::t('app', 'TAG_CURRENT_F') ?></span>
+            <?php endif; ?>
+            <?php if (!empty($model->getParameter(Parameter::CONTENT_WARNING))): ?>
+                <span class="header-tooltip-available type-tag tag-view-page"
+                      title="<?= Yii::t('app', 'STORY_TAG_HAS_CONTENT_WARNING_TITLE') ?>"
+                >
+                    <?= Yii::t('app', 'STORY_TAG_HAS_CONTENT_WARNING_TEXT') ?>
+                </span>
             <?php endif; ?>
             <?php if ($model->displayCodeName()): ?>
                 <span class="type-tag tag-view-page"><?= $model->getCodeName() ?></span>

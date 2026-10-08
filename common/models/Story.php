@@ -410,6 +410,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return [
             Parameter::STORY_NUMBER,
             Parameter::TIME_RANGE,
+            Parameter::CONTENT_WARNING,
             Parameter::LOCATION_POINT_START,
             Parameter::LOCATION_POINT_END,
             Parameter::SESSION_COUNT,
@@ -428,6 +429,7 @@ class Story extends ActiveRecord implements Displayable, HasParameters, HasEpicC
         return [
             Parameter::STORY_NUMBER,
             Parameter::TIME_RANGE,
+            Parameter::CONTENT_WARNING,
             Parameter::LOCATION_POINT_START,
             Parameter::LOCATION_POINT_END,
             Parameter::SESSION_COUNT,
