@@ -911,9 +911,14 @@ li.redacted:hover {
     margin: 0 auto;
 }
 
+.header-icon {
+    display: inline-block;
+    font-size: 0.7em;
+    margin-right: 5px;
+}
+
 .header-tooltip-available {
     cursor: help;
-    display: inline-block;
 }
 
 .object-list-box {

@@ -38,7 +38,7 @@ return [
     'ANNOUNCEMENT_TIME_FORMAT_FROM_TO {from} {to}' => 'Visible from {from} to {to} (UTC)',
     'ANNOUNCEMENT_TIME_FORMAT_INVISIBLE' => 'Not visible - no from date',
     'ANNOUNCEMENT_TITLE' => 'Title',
-    'ANNOUNCEMENT_TITLE_ALL_EPICS' => 'This is a site-wide announcement added by the administration. It is visible to everyone and does not necessarily concern the current epic.',
+    'ANNOUNCEMENT_TITLE_ALL_EPICS' => 'This is a site-wide announcement added by the administration',
     'ANNOUNCEMENT_TITLE_INDEX' => 'Announcements',
     'ANNOUNCEMENT_UPDATED_AT' => 'Updated at',
     'ANNOUNCEMENT_UPDATED_BY' => 'Updated by',

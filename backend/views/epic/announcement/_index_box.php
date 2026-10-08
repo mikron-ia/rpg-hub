@@ -9,7 +9,14 @@ use yii\helpers\Html;
 
 <div id="announcement-<?php echo $model->announcement_id; ?>">
     <h4 class="announcement-box">
-        <?php echo Html::a(Html::encode($model->title), ['announcement/view', 'key' => $model->key]); ?>
+        <?php if($model->epic_id === null):?>
+            <span class="glyphicon glyphicon-bullhorn header-icon header-tooltip-available"
+                  title="<?= Yii::t('app', 'ANNOUNCEMENT_TITLE_ALL_EPICS') ?>"
+            ></span>
+            <?= Html::encode($model->title) ?>
+        <?php else: ?>
+            <?= Html::a(Html::encode($model->title), ['announcement/view', 'key' => $model->key]); ?>
+        <?php endif;?>
     </h4>
 
     <p class="announcement-box-time">

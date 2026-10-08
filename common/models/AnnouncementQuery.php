@@ -83,18 +83,26 @@ class AnnouncementQuery extends Announcement
     /**
      * Creates a data provider instance with the search query applied
      */
-    public function search(array $params, bool $limitByTime = true): ActiveDataProvider
-    {
+    public function search(
+        array $params,
+        bool $limitByTime,
+        bool $showSiteWide,
+    ): ActiveDataProvider {
         $query = Announcement::find();
 
         if (empty(Yii::$app->params['activeEpic'])) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_EPIC_ACTIVE'));
             $query->where('0=1');
         } else {
-            $query->andWhere(new OrCondition([
+            $conditions = [
                 ['epic_id' => Yii::$app->params['activeEpic']->epic_id],
-                ['is', 'epic_id', null],
-            ]));
+            ];
+
+            if ($showSiteWide) {
+                $conditions[] = ['is', 'epic_id', null];
+            }
+
+            $query->andWhere(new OrCondition($conditions));
         }
 
         if ($limitByTime) {

@@ -50,6 +50,9 @@ class AnnouncementController extends Controller
         );
     }
 
+    /**
+     * @throws HttpException
+     */
     public function actionIndex(): string
     {
         if (!empty($epic)) {
@@ -71,7 +74,11 @@ class AnnouncementController extends Controller
         }
 
         $searchModel = new AnnouncementQuery();
-        $dataProvider = $searchModel->search($this->request->queryParams, false);
+        $dataProvider = $searchModel->search(
+            params: $this->request->queryParams,
+            limitByTime: false,
+            showSiteWide: false,
+        );
 
         return $this->render('index', [
             'epic' => $epicObject ?? Yii::$app->params['activeEpic'],

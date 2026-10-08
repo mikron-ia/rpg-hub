@@ -70,7 +70,11 @@ class AnnouncementController extends Controller
         }
 
         $searchModel = new AnnouncementQuery();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, !Announcement::canUserCreateThem());
+        $dataProvider = $searchModel->search(
+            params: Yii::$app->request->queryParams,
+            limitByTime: !Announcement::canUserCreateThem(),
+            showSiteWide: true,
+        );
 
         return $this->render('index', [
             'searchModel' => $searchModel,

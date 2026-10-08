@@ -8,7 +8,7 @@ use yii\helpers\Html;
 <div data-key="<?= $model->key ?>">
     <h4>
         <?php if($model->epic_id === null):?>
-            <span class="glyphicon glyphicon-bullhorn header-tooltip-available"
+            <span class="glyphicon glyphicon-bullhorn header-icon header-tooltip-available"
                   title="<?= Yii::t('app', 'ANNOUNCEMENT_TITLE_ALL_EPICS') ?>"
             ></span>
         <?php endif;?>

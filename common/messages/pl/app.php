@@ -38,7 +38,7 @@ return [
     'ANNOUNCEMENT_TIME_FORMAT_FROM_TO {from} {to}' => 'Widoczne od {from} do {to} (UTC)',
     'ANNOUNCEMENT_TIME_FORMAT_INVISIBLE' => 'Niewidoczne - brak daty początkowej',
     'ANNOUNCEMENT_TITLE' => 'Tytuł',
-    'ANNOUNCEMENT_TITLE_ALL_EPICS' => 'To ogłoszenie zostało dodane przed administrację serwisu i niekoniecznie dotyczy aktualnie widocznej kampanii.',
+    'ANNOUNCEMENT_TITLE_ALL_EPICS' => 'To ogłoszenie zostało dodane przez administrację i dotyczy całego serwisu',
     'ANNOUNCEMENT_TITLE_INDEX' => 'Ogłoszenia',
     'ANNOUNCEMENT_UPDATED_AT' => 'Ostatnio zmieniono',
     'ANNOUNCEMENT_UPDATED_BY' => 'Modyfikowane przez',
