@@ -17,7 +17,10 @@ IndexBoxesGroupAsset::register($this);
 /* @var $dataProvider ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_GROUPS_INDEX');
-$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::$app->params['activeEpic']->name,
+    'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key],
+];
 $this->params['breadcrumbs'][] = $this->title;
 
 $labelForMain = isset(Yii::$app->request->queryParams['GroupQuery'])
@@ -48,7 +51,6 @@ if (isset(Yii::$app->request->queryParams['GroupQuery'])) {
 } else {
     $items = [$mainTab, $searchTab];
 }
-
 ?>
 
 <div class="group-index">

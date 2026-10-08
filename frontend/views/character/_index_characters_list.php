@@ -9,7 +9,7 @@ use yii\widgets\ListView;
 ?>
 
 <div id="characters">
-    <?= $this->render('../_common/alpha') ?>
+    <?= $this->render('../_common/beta') ?>
     <?php echo ListView::widget([
         'dataProvider' => $dataProvider,
         'emptyText' => '<p class="info-box">' . Yii::t('app', 'PROJECTS_NOT_FOUND') . '</p>',

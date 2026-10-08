@@ -41,7 +41,6 @@ $favoriteTitle = $favorite ? Yii::t('app', 'FAVORITE_TITLE_YES') : Yii::t('app',
 $scribbleClass = $scribble ? 'glyphicon-tags' : 'glyphicon-tag';
 $scribbleTitle = $scribble ? Yii::t('app', 'SCRIBBLES_TITLE_YES') : Yii::t('app', 'SCRIBBLES_TITLE_NO');
 $titleText = $model->tagline . ($additionalTitleText ? ' ' . $additionalTitleText : '');
-
 ?>
 
 <div id="character-<?php echo $model->key; ?>" class="<?= $classesForBox ?>" title="<?= $titleText ?>">

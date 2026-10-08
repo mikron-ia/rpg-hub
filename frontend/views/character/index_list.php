@@ -21,7 +21,10 @@ IndexBoxesCharacterAsset::register($this);
 /* @var $favorites ActiveDataProvider */
 
 $this->title = Yii::t('app', 'TITLE_CHARACTER_INDEX');
-$this->params['breadcrumbs'][] = ['label' => Yii::$app->params['activeEpic']->name, 'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::$app->params['activeEpic']->name,
+    'url' => ['epic/view', 'key' => Yii::$app->params['activeEpic']->key],
+];
 $this->params['breadcrumbs'][] = $this->title;
 
 $labelForMain = isset(Yii::$app->request->queryParams['CharacterQuery'])
@@ -68,7 +71,6 @@ if (isset(Yii::$app->request->queryParams['CharacterQuery'])) {
 } else {
     $items = array_merge([$mainTab, $favoriteTab], $groupTabs, [$searchTab]);
 }
-
 ?>
 
 <div class="person-index">

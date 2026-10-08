@@ -48,7 +48,6 @@ if (isset(Yii::$app->request->queryParams['GroupQuery'])) {
 } else {
     $items = [$mainTab, $searchTab];
 }
-
 ?>
 
 <div class="group-index">

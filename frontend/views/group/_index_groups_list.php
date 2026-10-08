@@ -9,6 +9,7 @@ use yii\widgets\ListView;
 ?>
 
 <div id="groups">
+    <?= $this->render('../_common/beta') ?>
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'emptyText' => '<p class="error-box">' . Yii::t('app', 'GROUPS_NOT_FOUND') . '</p>',

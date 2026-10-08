@@ -6,7 +6,6 @@ use yii\widgets\ListView;
 
 /* @var $model Group */
 /* @var $dataProvider ActiveDataProvider */
-
 ?>
 
 <div id="groups">

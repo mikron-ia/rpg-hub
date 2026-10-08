@@ -67,7 +67,6 @@ if (isset(Yii::$app->request->queryParams['CharacterQuery'])) {
 } else {
     $items = array_merge([$mainTab, $favoriteTab], $groupTabs, [$searchTab]);
 }
-
 ?>
 
 <div class="person-index">

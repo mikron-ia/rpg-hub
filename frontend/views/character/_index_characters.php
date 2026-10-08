@@ -1,11 +1,11 @@
 <?php
 
-/* @var $model Character */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
 use common\models\Character;
+use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
 
+/* @var $model Character */
+/* @var $dataProvider ActiveDataProvider */
 ?>
 
 <div id="people">
