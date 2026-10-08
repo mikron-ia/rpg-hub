@@ -5,7 +5,6 @@ namespace common\models;
 use common\behaviours\PerformedActionBehavior;
 use common\models\core\HasKey;
 use common\models\core\HasVisibility;
-use common\models\core\Language;
 use common\models\tools\ToolsForEntity;
 use common\models\tools\ToolsForHasVisibility;
 use Override;
@@ -14,12 +13,11 @@ use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception as DbException;
 use yii\web\HttpException;
 use yii2tech\ar\position\PositionBehavior;
 
 /**
- * This is the model class for table "parameter".
- *
  * @property string $parameter_id
  * @property string $parameter_pack_id
  * @property string $key
@@ -39,18 +37,18 @@ class Parameter extends ActiveRecord implements HasVisibility, HasKey
     use ToolsForEntity;
     use ToolsForHasVisibility;
 
-    const string STORY_NUMBER = 'story-number';
-    const string TIME_RANGE = 'time-range';
-    const string LOCATION_POINT_START = 'point-start';
-    const string LOCATION_POINT_END = 'point-end';
-    const string SESSION_COUNT = 'session-count';
-    const string XP_PARTY = 'party-xp';
-    const string PCS_ACTIVE = 'active-pcs';
-    const string CS_ACTIVE = 'active-cs';
-    const string DATA_SOURCE_FOR_REPUTATION = 'source-reputation';
-    const string EPIC_STATUS = 'epic-status';
-    const string EPIC_SYSTEM_STATE = 'epic-system-state';
-    const string LANGUAGE = 'language';
+    public const string CS_ACTIVE = 'active-cs';
+    public const string DATA_SOURCE_FOR_REPUTATION = 'source-reputation';
+    public const string EPIC_STATUS = 'epic-status';
+    public const string EPIC_SYSTEM_STATE = 'epic-system-state';
+    public const string LANGUAGE = 'language';
+    public const string LOCATION_POINT_END = 'point-end';
+    public const string LOCATION_POINT_START = 'point-start';
+    public const string PCS_ACTIVE = 'active-pcs';
+    public const string SESSION_COUNT = 'session-count';
+    public const string STORY_NUMBER = 'story-number';
+    public const string TIME_RANGE = 'time-range';
+    public const string XP_PARTY = 'party-xp';
 
     #[Override]
     public static function tableName(): string
@@ -102,6 +100,9 @@ class Parameter extends ActiveRecord implements HasVisibility, HasKey
         ];
     }
 
+    /**
+     * @throws DbException
+     */
     #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
@@ -151,31 +152,23 @@ class Parameter extends ActiveRecord implements HasVisibility, HasKey
     }
 
     /**
-     * @return string[]
-     */
-    public function allowedTypes(): array
-    {
-        return array_keys(self::typeNames());
-    }
-
-    /**
      * @return array<string,string>
      */
-    static public function typeNames(): array
+    public static function typeNames(): array
     {
         return [
-            self::STORY_NUMBER => Yii::t('app', 'ST_PARAM_STORY_NUMBER'),
-            self::TIME_RANGE => Yii::t('app', 'ST_PARAM_TIME_RANGE'),
-            self::LOCATION_POINT_START => Yii::t('app', 'ST_PARAM_POINT_START'),
-            self::LOCATION_POINT_END => Yii::t('app', 'ST_PARAM_POINT_END'),
-            self::SESSION_COUNT => Yii::t('app', 'ST_PARAM_SESSION_COUNT'),
-            self::XP_PARTY => Yii::t('app', 'ST_PARAM_XP_PARTY'),
-            self::PCS_ACTIVE => Yii::t('app', 'ST_PARAM_PCS_ACTIVE'),
             self::CS_ACTIVE => Yii::t('app', 'ST_PARAM_CS_ACTIVE'),
             self::DATA_SOURCE_FOR_REPUTATION => Yii::t('app', 'PARAM_DATA_SOURCE_FOR_REPUTATION'),
             self::EPIC_STATUS => Yii::t('app', 'PARAM_EPIC_STATUS'),
             self::EPIC_SYSTEM_STATE => Yii::t('app', 'PARAM_EPIC_SYSTEM_STATE'),
             self::LANGUAGE => Yii::t('app', 'PARAM_LANGUAGE'),
+            self::LOCATION_POINT_END => Yii::t('app', 'ST_PARAM_POINT_END'),
+            self::LOCATION_POINT_START => Yii::t('app', 'ST_PARAM_POINT_START'),
+            self::PCS_ACTIVE => Yii::t('app', 'ST_PARAM_PCS_ACTIVE'),
+            self::SESSION_COUNT => Yii::t('app', 'ST_PARAM_SESSION_COUNT'),
+            self::STORY_NUMBER => Yii::t('app', 'ST_PARAM_STORY_NUMBER'),
+            self::TIME_RANGE => Yii::t('app', 'ST_PARAM_TIME_RANGE'),
+            self::XP_PARTY => Yii::t('app', 'ST_PARAM_XP_PARTY'),
         ];
     }
 
@@ -227,11 +220,6 @@ class Parameter extends ActiveRecord implements HasVisibility, HasKey
     {
         $names = self::typeNames();
         return isset($names[$this->code]) ? $names[$this->code] : '?';
-    }
-
-    public function getLanguage(): ?string
-    {
-        return Language::create($this->lang)->getName();
     }
 
     /**

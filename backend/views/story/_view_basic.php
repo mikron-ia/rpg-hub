@@ -5,6 +5,7 @@ use common\models\Parameter;
 use common\models\Story;
 use yii\bootstrap\Modal;
 use yii\data\ActiveDataProvider;
+use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\web\View;
@@ -25,7 +26,6 @@ $visibilityWarning = $isStoryCurrent && $model->getVisibility() !== Visibility::
         Yii::t('app', 'STORY_VISIBILITY_WARNING_CURRENT')
     )
     : '';
-
 ?>
 
 <div>
@@ -138,9 +138,9 @@ $visibilityWarning = $isStoryCurrent && $model->getVisibility() !== Visibility::
     </div>
 
     <div class="story-view col-md-6">
-        <h2 class="text-center"><?php echo $model->getAttributeLabel('short'); ?></h2>
+        <h2 class="text-center"><?= $model->getAttributeLabel('short') ?></h2>
         <div>
-            <?php echo $model->getShortFormatted(); ?>
+            <?= $model->getShortFormatted(); ?>
         </div>
     </div>
 
@@ -169,67 +169,59 @@ $visibilityWarning = $isStoryCurrent && $model->getVisibility() !== Visibility::
                 [
                     'attribute' => 'code',
                     'enableSorting' => false,
-                    'value' => function (Parameter $model) {
-                        return $model->getCodeName();
-                    },
+                    'value' => fn(Parameter $model) => $model->getCodeName(),
                 ],
                 [
                     'attribute' => 'visibility',
                     'enableSorting' => false,
-                    'value' => function (Parameter $model) {
-                        return $model->getVisibilityName();
-                    },
+                    'value' => fn(Parameter $model) => $model->getVisibilityName(),
                 ],
                 [
                     'attribute' => 'content',
                     'enableSorting' => false,
                 ],
                 [
-                    'class' => 'yii\grid\ActionColumn',
+                    'class' => ActionColumn::class,
+                    'contentOptions' => ['class' => 'action-cell'],
                     'template' => '{update} {delete} {up} {down}',
-                    'contentOptions' => ['class' => 'text-center'],
                     'buttons' => [
-                        'update' => function ($url, Parameter $model, $key) {
-                            return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
+                        'update' => fn($url, Parameter $model, $key) => Html::a(
+                            '<span class="glyphicon glyphicon-cog"></span>',
+                            '#',
+                            [
                                 'class' => 'update-parameter-link',
                                 'title' => Yii::t('app', 'LABEL_UPDATE'),
                                 'data-toggle' => 'modal',
                                 'data-target' => '#update-parameter-modal',
                                 'data-key' => $model->key,
-                            ]);
-                        },
-                        'delete' => function ($url, Parameter $model, $key) {
-                            return Html::a(
-                                '<span class="glyphicon glyphicon-erase"></span>',
-                                ['parameter/delete', 'key' => $model->key],
-                                [
-                                    'title' => Yii::t('app', 'LABEL_DELETE'),
-                                    'data-confirm' => Yii::t(
-                                        'app',
-                                        'CONFIRMATION_DELETE {name}',
-                                        ['name' => $model->getCodeName()]
-                                    ),
-                                    'data-method' => 'post',
-                                ]);
-                        },
-                        'up' => function ($url, Parameter $model, $key) {
-                            return Html::a(
-                                '<span class="glyphicon glyphicon-arrow-up"></span>',
-                                ['parameter/move-up', 'key' => $model->key],
-                                [
-                                    'title' => Yii::t('app', 'LABEL_MOVE_UP'),
-                                ]
-                            );
-                        },
-                        'down' => function ($url, Parameter $model, $key) {
-                            return Html::a(
-                                '<span class="glyphicon glyphicon-arrow-down"></span>',
-                                ['parameter/move-down', 'key' => $model->key],
-                                [
-                                    'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
-                                ]
-                            );
-                        },
+                            ]
+                        ),
+                        'delete' => fn($url, Parameter $model, $key) => Html::a(
+                            '<span class="glyphicon glyphicon-erase"></span>',
+                            ['parameter/delete', 'key' => $model->key],
+                            [
+                                'title' => Yii::t('app', 'LABEL_DELETE'),
+                                'data-confirm' => Yii::t(
+                                    'app',
+                                    'CONFIRMATION_DELETE {name}',
+                                    ['name' => $model->getCodeName()]
+                                ),
+                                'data-method' => 'post',
+                            ]),
+                        'up' => fn($url, Parameter $model, $key) => Html::a(
+                            '<span class="glyphicon glyphicon-arrow-up"></span>',
+                            ['parameter/move-up', 'key' => $model->key],
+                            [
+                                'title' => Yii::t('app', 'LABEL_MOVE_UP'),
+                            ]
+                        ),
+                        'down' => fn($url, Parameter $model, $key) => Html::a(
+                            '<span class="glyphicon glyphicon-arrow-down"></span>',
+                            ['parameter/move-down', 'key' => $model->key],
+                            [
+                                'title' => Yii::t('app', 'LABEL_MOVE_DOWN'),
+                            ]
+                        ),
                     ]
                 ],
             ],

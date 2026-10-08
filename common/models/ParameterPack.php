@@ -11,12 +11,10 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\db\Exception;
+use yii\db\Exception as DbException;
 use yii\web\HttpException;
 
 /**
- * This is the model class for table "parameter_pack".
- *
  * @property string $parameter_pack_id
  * @property string $class
  * @property int $created_at
@@ -69,9 +67,9 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      */
-    static public function create(string $className): ParameterPack
+    public static function create(string $className): ParameterPack
     {
         $pack = new ParameterPack();
         $pack->class = $className;
@@ -83,7 +81,7 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      */
     public function updateSearchableFields(): void
     {

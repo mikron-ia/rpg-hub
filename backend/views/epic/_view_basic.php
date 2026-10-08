@@ -118,29 +118,26 @@ use yii\widgets\DetailView;
                     'class' => ActionColumn::class,
                     'template' => '{update} {delete}',
                     'buttons' => [
-                        'update' => function ($url, Participant $model, $key) {
-                            return Html::a(
-                                '<span class="glyphicon glyphicon-pencil"></span>',
-                                ['participant-edit', 'key' => $model->key],
-                                ['title' => Yii::t('app', 'LABEL_UPDATE')],
-                            );
-                        },
-                        'delete' => function ($url, Participant $model, $key) {
-                            return empty($model->participantRoles)
-                                ? Html::a(
-                                    '<span class="glyphicon glyphicon-erase"></span>',
-                                    ['participant-delete', 'key' => $model->key],
-                                    [
-                                        'title' => Yii::t('app', 'LABEL_DELETE'),
-                                        'data-confirm' => Yii::t(
-                                            'app',
-                                            'CONFIRMATION_PARTICIPANT_REMOVE {name}',
-                                            ['name' => $model->user->username]
-                                        ),
-                                        'data-method' => 'delete',
-                                    ])
-                                : '';
-                        },
+                        'update' => fn($url, Participant $model, $key) => Html::a(
+                            '<span class="glyphicon glyphicon-pencil"></span>',
+                            ['participant-edit', 'key' => $model->key],
+                            ['title' => Yii::t('app', 'LABEL_UPDATE')],
+                        ),
+                        'delete' => fn($url, Participant $model, $key) => empty($model->participantRoles)
+                            ? Html::a(
+                                '<span class="glyphicon glyphicon-erase"></span>',
+                                ['participant-delete', 'key' => $model->key],
+                                [
+                                    'title' => Yii::t('app', 'LABEL_DELETE'),
+                                    'data-confirm' => Yii::t(
+                                        'app',
+                                        'CONFIRMATION_PARTICIPANT_REMOVE {name}',
+                                        ['name' => $model->user->username]
+                                    ),
+                                    'data-method' => 'delete',
+                                ]
+                            )
+                            : '',
                     ],
                 ],
             ],
@@ -196,48 +193,46 @@ use yii\widgets\DetailView;
                 [
                     'attribute' => 'code',
                     'enableSorting' => false,
-                    'value' => function (Parameter $model) {
-                        return $model->getCodeName();
-                    },
+                    'value' => fn(Parameter $model) => $model->getCodeName(),
                 ],
                 [
                     'attribute' => 'visibility',
                     'enableSorting' => false,
-                    'value' => function (Parameter $model) {
-                        return $model->getVisibilityName();
-                    },
+                    'value' => fn(Parameter $model) => $model->getVisibilityName(),
                 ],
                 [
                     'attribute' => 'content',
                     'enableSorting' => false,
                 ],
                 [
-                    'class' => 'yii\grid\ActionColumn',
+                    'class' => ActionColumn::class,
+                    'contentOptions' => ['class' => 'action-cell'],
                     'template' => '{update} {delete}',
                     'buttons' => [
-                        'update' => function ($url, Parameter $model, $key) {
-                            return Html::a('<span class="glyphicon glyphicon-cog"></span>', '#', [
+                        'update' => fn($url, Parameter $model, $key) => Html::a(
+                            '<span class="glyphicon glyphicon-cog"></span>',
+                            '#',
+                            [
                                 'class' => 'update-parameter-link',
                                 'title' => Yii::t('app', 'LABEL_UPDATE'),
                                 'data-toggle' => 'modal',
                                 'data-target' => '#update-parameter-modal',
                                 'data-key' => $model->key,
-                            ]);
-                        },
-                        'delete' => function ($url, Parameter $model, $key) {
-                            return Html::a(
-                                '<span class="glyphicon glyphicon-erase"></span>',
-                                ['parameter/delete', 'key' => $model->key],
-                                [
-                                    'title' => Yii::t('app', 'LABEL_DELETE'),
-                                    'data-confirm' => Yii::t(
-                                        'app',
-                                        'CONFIRMATION_DELETE {name}',
-                                        ['name' => $model->getCodeName()]
-                                    ),
-                                    'data-method' => 'post',
-                                ]);
-                        }
+                            ]
+                        ),
+                        'delete' => fn($url, Parameter $model, $key) => Html::a(
+                            '<span class="glyphicon glyphicon-erase"></span>',
+                            ['parameter/delete', 'key' => $model->key],
+                            [
+                                'title' => Yii::t('app', 'LABEL_DELETE'),
+                                'data-confirm' => Yii::t(
+                                    'app',
+                                    'CONFIRMATION_DELETE {name}',
+                                    ['name' => $model->getCodeName()]
+                                ),
+                                'data-method' => 'post',
+                            ]
+                        ),
                     ],
                 ],
             ],

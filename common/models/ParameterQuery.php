@@ -6,9 +6,6 @@ use Override;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-/**
- * ParameterQuery represents the model behind the search form about `common\models\Parameter`.
- */
 final class ParameterQuery extends Parameter
 {
     #[Override]
@@ -26,9 +23,6 @@ final class ParameterQuery extends Parameter
         return Model::scenarios();
     }
 
-    /**
-     * Creates a data provider instance with a search query applied
-     */
     public function search(array $params): ActiveDataProvider
     {
         $query = Parameter::find();
