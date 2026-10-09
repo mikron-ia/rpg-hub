@@ -62,8 +62,7 @@ class PerformedActionQuery extends PerformedAction
         $classNames = PerformedAction::find()
                 ->select('class', 'UNIQUE')
                 ->orderBy('class')
-                ->column() |> (fn($options) => array_filter($options,
-                fn($option) => !empty($option)));
+                ->column() |> (fn(array $options) => array_filter($options, fn($option) => !empty($option)));
 
         return array_combine($classNames, $classNames);
     }

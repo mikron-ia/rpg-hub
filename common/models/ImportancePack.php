@@ -6,14 +6,13 @@ use common\models\core\HasImportance;
 use common\models\core\IsSelfFillingPack;
 use common\models\exceptions\InvalidBackendConfigurationException;
 use common\models\tools\ToolsForSelfFillingPacks;
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\db\Exception;
+use yii\db\Exception as DbException;
 
 /**
- * This is the model class for table "importance_pack".
- *
  * @property string $importance_pack_id
  * @property string $class
  * @property bool $flagged
@@ -50,35 +49,23 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getCharacters(): ActiveQuery
     {
         return $this->hasMany(Character::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getGroups(): ActiveQuery
     {
         return $this->hasMany(Group::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getImportances(): ActiveQuery
     {
         return $this->hasMany(Importance::class, ['importance_pack_id' => 'importance_pack_id']);
     }
 
     /**
-     * @param string $class
-     *
-     * @return ImportancePack
-     * @throws Exception
+     * @throws DbException
      */
     public static function create(string $class): ImportancePack
     {
@@ -108,6 +95,7 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
         return ($controllingObject ?? $this->getControllingObject())->getEpic()->one();
     }
 
+    #[Override]
     public function createEmptyContent(int $userId): Importance
     {
         return Importance::createEmptyForPack($userId, $this);
@@ -116,7 +104,7 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
     /**
      * Recalculates the pack's importance objects
      *
-     * @throws Exception
+     * @throws DbException
      * @throws InvalidBackendConfigurationException
      */
     public function recalculatePack(): bool
@@ -143,22 +131,24 @@ class ImportancePack extends ActiveRecord implements IsSelfFillingPack
     /**
      * Flags the pack for recalculation
      *
-     * @throws Exception
+     * @throws DbException
      */
     public function flagForRecalculation(): bool
     {
         $this->flagged = true;
+
         return $this->save();
     }
 
     /**
      * Removes the recalculation flag
      *
-     * @throws Exception
+     * @throws DbException
      */
     public function unflagForRecalculation(): bool
     {
         $this->flagged = false;
+
         return $this->save();
     }
 

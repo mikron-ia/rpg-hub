@@ -23,6 +23,7 @@ trait ToolsForMultipleChoiceFields
 
     /**
      * @param array $input
+     *
      * @return array<int>
      */
     private function normalizeIntegerInput(array $input): array

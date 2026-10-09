@@ -7,14 +7,13 @@ use common\components\ImportanceParametersDto;
 use common\models\core\HasImportance;
 use common\models\exceptions\InvalidBackendConfigurationException;
 use DateTimeImmutable;
+use Override;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\db\Exception;
+use yii\db\Exception as DbException;
 
 /**
- * This is the model class for table "importance".
- *
  * @property string $importance_id
  * @property string $importance_pack_id
  * @property string $user_id
@@ -25,11 +24,13 @@ use yii\db\Exception;
  */
 class Importance extends ActiveRecord
 {
+    #[Override]
     public static function tableName(): string
     {
         return 'importance';
     }
 
+    #[Override]
     public function rules(): array
     {
         return [
@@ -39,18 +40,19 @@ class Importance extends ActiveRecord
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => ImportancePack::class,
-                'targetAttribute' => ['importance_pack_id' => 'importance_pack_id']
+                'targetAttribute' => ['importance_pack_id' => 'importance_pack_id'],
             ],
             [
                 ['user_id'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => User::class,
-                'targetAttribute' => ['user_id' => 'id']
+                'targetAttribute' => ['user_id' => 'id'],
             ],
         ];
     }
 
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -61,9 +63,6 @@ class Importance extends ActiveRecord
         ];
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getImportancePack(): ActiveQuery
     {
         return $this->hasOne(ImportancePack::class, ['importance_pack_id' => 'importance_pack_id']);
@@ -77,6 +76,7 @@ class Importance extends ActiveRecord
     public static function createEmptyForPack(int $userId, ImportancePack $pack): self
     {
         $object = new Importance();
+
         $object->user_id = $userId;
         $object->importance_pack_id = $pack->importance_pack_id;
         $object->importance = 0;
@@ -94,12 +94,13 @@ class Importance extends ActiveRecord
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      * @throws InvalidBackendConfigurationException
      */
     public function calculateAndSave(HasImportance $controllingObject): bool
     {
         $this->importance = $this->calculate($controllingObject);
+
         return $this->save();
     }
 }

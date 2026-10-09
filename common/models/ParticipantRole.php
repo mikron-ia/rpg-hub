@@ -8,8 +8,6 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "participant_role".
- *
  * @property string $participant_id
  * @property string $role
  *
@@ -80,10 +78,8 @@ final class ParticipantRole extends ActiveRecord
     public function getRoleDescribed(): string
     {
         $names = self::roleNames();
-        if (isset($names[$this->role])) {
-            return $names[$this->role];
-        }
-
-        return Yii::t('app', 'PARTICIPANT_ROLE_UNKNOWN');
+        return isset($names[$this->role])
+            ? $names[$this->role]
+            : Yii::t('app', 'PARTICIPANT_ROLE_UNKNOWN');
     }
 }

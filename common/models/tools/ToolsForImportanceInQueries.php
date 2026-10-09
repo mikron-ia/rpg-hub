@@ -24,7 +24,7 @@ trait ToolsForImportanceInQueries
     }
 
     /**
-     * Adds sorting by last update to the data provider
+     * Adds sorting by the last update to the data provider
      */
     private function setUpSearchForOperator(ActiveDataProvider $search): ActiveDataProvider
     {

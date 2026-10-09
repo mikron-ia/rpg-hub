@@ -59,6 +59,7 @@ trait ToolsForLinkTags
         /**
          * Disabling encoding is needed to accommodate text pre-processing in some objects
          * Do not use this unless necessary for legacy reasons
+         *
          * @todo Hopefully fix in #576
          */
         return $textForEncoding

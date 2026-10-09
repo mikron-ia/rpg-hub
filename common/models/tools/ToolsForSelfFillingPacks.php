@@ -9,7 +9,6 @@ trait ToolsForSelfFillingPacks
 {
     private function createAbsentRecords(Epic $epic, IsSelfFillingPack $pack, array $objectsRaw): bool
     {
-        $users = $epic->participants;
         $objectsOrdered = [];
 
         foreach ($objectsRaw as $object) {
@@ -18,13 +17,14 @@ trait ToolsForSelfFillingPacks
 
         $result = true;
 
-        foreach ($users as $user) {
+        foreach ($epic->participants as $user) {
             if (!isset($objectsOrdered[$user->user_id])) {
                 $newObject = $pack->createEmptyContent($user->user_id);
                 $saveResult = $newObject->save();
                 $result = $result && $saveResult;
             }
         }
+
         return $result;
     }
 }

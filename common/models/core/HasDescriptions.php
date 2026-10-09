@@ -6,7 +6,7 @@ use common\models\type\DescriptionType;
 use yii\db\ActiveQuery;
 
 /**
- * Interface HasDescriptions describes classes with attached DescriptionPack that want to use full functionality of the pack
+ * Describes classes with attached DescriptionPack that want to use full functionality of the pack
  */
 interface HasDescriptions
 {

@@ -292,7 +292,6 @@ class User extends ActiveRecord implements IdentityInterface, HasKey
 
     public function getEpics(): ActiveQuery
     {
-
         return Epic::find()
             ->joinWith('participants')
             ->joinWith('participants.participantRoles')
