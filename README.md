@@ -92,7 +92,7 @@ messaging or commenting system.
 1. Update the code base from an archive pack or a git tag
     - If you are feeling adventurous, use the `master` branch, but its content, while usually free of breaking bugs, is
       not guaranteed to work at all times; moreover, the migrations are now per-release, which means they can change
-      before given release tag is set; to be safe, use the released/tagged code only
+      before any given release tag is set; to be safe, use the released/tagged code only
 1. Run `composer install`
 1. Ensure your `.env` file is up to date, based on `.env.example`
     - `./yii config/check-env` can be helpful here as well since it should include checks for recently introduced
@@ -117,17 +117,16 @@ As mentioned in the setup instructions, the project is composed of several modul
 
 The hub allows handling of the following:
 
-- `Epic` - the basic container, representing the campaign / epic and containing virtually everything else that is not an
-  user
+- `Epic` - the basic container, representing the campaign / epic and containing almost everything that is not a user
 - `Story` - an adventure, plot, etc. - in other words, a time-limited element of the `Epic`
 - `Recap` - a description of events, intended to keep the players up to date
     - It can encompass any number of sessions
 - `Game` - a discrete gaming session, often associated with a `Recap`
 - `Character` - a character (either a Player Character or an NPC) present in the story, most often described from the
   perspective of the players
-- `CharacterSheet` - a detailed set of mechanical data on `Character`, usually in a form of numbers and traits
-    - This is still a very underdeveloped component, requiring using a dedicated and undocumented data format to display
-      properly
+- `CharacterSheet` - a detailed set of mechanical data on a `Character`, usually in the form of numbers and traits
+    - This is still a very underdeveloped component, requiring using a dedicated and barely documented data format to
+      display properly
     - It is linked to a single `Character` from a list of `Character`s that have it set as their sheet
 - `Group` - a group of `Character`s - a party, an organization, or anything that justifies putting a few `Character`s
   together; can have other `Groups` as members as well
@@ -135,13 +134,13 @@ The hub allows handling of the following:
 - `Project` - a less structured, more distributed, and usually player-driven set of events and actions, usually
   resulting in a creation of something or accomplishment of a goal independently of a story
 - `Scenario` - a plan for events for a `Story`
-    - This is the only "large" component that exists solely on the Game Master side and cannot be displayed on the
-      presentation/front side
+    - This is the only "large" component that exists solely for the Game Master and is not displayed for the players
 - `Article` - miscellaneous texts
 - `Announcement` - news, information, and other OOC updates directed at users
 - `PointInTime` - auxiliary information, used to put in-story date/time on descriptions
-- `Secret` - auxiliary information, used to put in-story secrets in texts
+- `Secret` - auxiliary information directed at specific users, used to put in-story secrets in descriptions and texts
 - `Image` - a set of links to an image file that can in turn be embedded in most text fields
+    - there is no way to upload images directly; the system intentionally relies entirely on external image hosting
 - `User` - as the name suggests, this is the user, i.e. person accessing the hub; no further explanation should be
   needed
 
