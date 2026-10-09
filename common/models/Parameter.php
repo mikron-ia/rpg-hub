@@ -91,13 +91,13 @@ class Parameter extends ActiveRecord implements HasVisibility, HasKey
     public function attributeLabels(): array
     {
         return [
+            'code' => Yii::t('app', 'PARAMETER_CODE'),
+            'content' => Yii::t('app', 'PARAMETER_CONTENT'),
+            'key' => Yii::t('app', 'PARAMETER_KEY'),
             'parameter_id' => Yii::t('app', 'PARAMETER_ID'),
             'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK'),
-            'key' => Yii::t('app', 'PARAMETER_KEY'),
-            'code' => Yii::t('app', 'PARAMETER_CODE'),
-            'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
             'position' => Yii::t('app', 'LABEL_POSITION'),
-            'content' => Yii::t('app', 'PARAMETER_CONTENT'),
+            'visibility' => Yii::t('app', 'LABEL_VISIBILITY'),
         ];
     }
 
@@ -200,17 +200,14 @@ class Parameter extends ActiveRecord implements HasVisibility, HasKey
 
         $class = 'common\models\\' . $this->parameterPack->class;
 
+        /** @var string[] $typesAllowed */
         $typesAllowed = method_exists($class, $methodToUse)
             ? call_user_func([$class, $methodToUse])
             : array_keys($typeNamesAll);
 
-        foreach ($typeNamesAll as $typeKey => $typeName) {
-            if (in_array($typeKey, $typesAllowed, true)) {
-                $typeNamesAccepted[$typeKey] = $typeName;
-            }
+        foreach ($typesAllowed as $typeKey) {
+            $typeNamesAccepted[$typeKey] = $typeNamesAll[$typeKey];
         }
-
-        sort($typeNamesAccepted);
 
         return $typeNamesAccepted;
     }

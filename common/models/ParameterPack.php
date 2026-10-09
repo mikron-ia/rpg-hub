@@ -53,8 +53,8 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
     public function attributeLabels(): array
     {
         return [
-            'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK_ID'),
             'class' => Yii::t('app', 'PARAMETER_PACK_CLASS'),
+            'parameter_pack_id' => Yii::t('app', 'PARAMETER_PACK_ID'),
         ];
     }
 
@@ -127,6 +127,7 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
     public function getControllingObject(): HasEpicControl|Epic
     {
         $className = 'common\models\\' . $this->class;
+
         /** @var HasEpicControl|Epic $object */
         return ($className)::findOne(['parameter_pack_id' => $this->parameter_pack_id]);
     }
@@ -140,7 +141,7 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
     {
         return Parameter::findOne([
             'parameter_pack_id' => $this->parameter_pack_id,
-            'code' => $code
+            'code' => $code,
         ]);
     }
 
@@ -156,8 +157,10 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
     public function canUserReadYou(): bool
     {
         $className = 'common\models\\' . $this->class;
+
         /** @var HasEpicControl $object */
         $object = ($className)::findOne(['parameter_pack_id' => $this->parameter_pack_id]);
+
         return $object->canUserViewYou();
     }
 
@@ -168,8 +171,10 @@ class ParameterPack extends ActiveRecord implements IsEditablePack
     public function canUserControlYou(): bool
     {
         $className = 'common\models\\' . $this->class;
+
         /** @var HasEpicControl $object */
         $object = ($className)::findOne(['parameter_pack_id' => $this->parameter_pack_id]);
+
         return $object->canUserControlYou();
     }
 }
