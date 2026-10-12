@@ -21,6 +21,7 @@ use yii\db\ActiveRecord;
 use yii\db\Exception as DbException;
 use yii\helpers\Html;
 use yii\web\HttpException;
+use yii\web\IdentityInterface;
 
 /**
  * @property string $epic_id
@@ -468,7 +469,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return false;
     }
 
-    public function isUserYourParticipant(?User $user): bool
+    public function isUserYourParticipant(IdentityInterface|User|null $user): bool
     {
         if (!$user) {
             return false;
@@ -477,7 +478,7 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
         return Participant::participantExists($user, $this);
     }
 
-    public function isUserYourManager(?User $user): bool
+    public function isUserYourManager(IdentityInterface|User|null $user): bool
     {
         if (!$user) {
             return false;
@@ -489,7 +490,6 @@ class Epic extends ActiveRecord implements Displayable, HasParameters, HasSighti
     public function attachCurrentUserAsManager(): bool
     {
         try {
-            /** @var User $user */
             $user = Yii::$app->user->identity;
 
             if ($this->isUserYourManager($user)) {

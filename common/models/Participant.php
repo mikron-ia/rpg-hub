@@ -10,6 +10,7 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
 use yii\web\HttpException;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "participant".
@@ -180,7 +181,7 @@ class Participant extends ActiveRecord implements HasKey
     /**
      * Informs whether a given user is a participant of a given epic
      */
-    public static function participantExists(User $user, Epic $epic): bool
+    public static function participantExists(IdentityInterface|User $user, Epic $epic): bool
     {
         return (bool)Participant::findOne(['user_id' => $user->id, 'epic_id' => $epic->epic_id]);
     }
@@ -188,7 +189,7 @@ class Participant extends ActiveRecord implements HasKey
     /**
      * Informs whether a given user has a given role in a given epic
      */
-    public static function participantHasRole(User $user, Epic $epic, string $role): bool
+    public static function participantHasRole(IdentityInterface|User $user, Epic $epic, string $role): bool
     {
         $participant = Participant::find()
             ->joinWith('participantRoles')

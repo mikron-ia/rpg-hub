@@ -52,10 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function (Epic $model) {
                     $tags = [];
 
-                    /** @var User $user */
-                    $user = Yii::$app->user->identity;
-
-                    if ($model->isUserYourManager($user)) {
+                    if ($model->isUserYourManager(Yii::$app->user->identity)) {
                         $tags[] = '<span class="table-tag managed-tag">'
                             . Yii::t('app', 'MANAGE_EPIC_TAG_MANAGED')
                             . '</span>';
@@ -69,10 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{action}',
                 'buttons' => [
                     'action' => function ($url, Epic $model, $key) {
-                        /** @var User $user */
-                        $user = Yii::$app->user->identity;
-
-                        if ($model->isUserYourManager($user)) {
+                        if ($model->isUserYourManager(Yii::$app->user->identity)) {
                             $action = 'epic/manager-detach';
                             $confirmationText = Yii::t('app', 'MANAGE_EPIC_CONFIRMATION_DETACH');
                             $glyph = 'glyphicon-log-out';

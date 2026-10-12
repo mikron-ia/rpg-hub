@@ -5,19 +5,20 @@ namespace common\components;
 use common\models\EpicQuery;
 use yii\base\Application;
 use yii\base\BootstrapInterface;
+use yii\web\Application as WebApplication;
 
 class EpicSelector implements BootstrapInterface
 {
     /**
      * @param Application $app
      */
-    public function bootstrap($app)
+    public function bootstrap($app): void
     {
         $cookies = $app->request->cookies;
         $chosenEpicKey = isset($cookies['_epic']) ? (string)$cookies['_epic'] : null;
         $chosenEpic = EpicQuery::findOne(['key' => $chosenEpicKey]);
 
-        if ($chosenEpic === null || $chosenEpic->isUserYourParticipant($app->user->identity)) {
+        if ($chosenEpic === null || ($app instanceof WebApplication && $chosenEpic->isUserYourParticipant($app->user->identity))) {
             $app->params['activeEpic'] = $chosenEpic;
         } else {
             $app->response->cookies->remove('_epic');
