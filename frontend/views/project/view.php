@@ -1,6 +1,7 @@
 <?php
 
 use common\models\core\Visibility;
+use common\models\Parameter;
 use common\models\Project;
 use frontend\assets\ProjectAsset;
 use yii\bootstrap\Tabs;
@@ -55,6 +56,13 @@ if ($showPrivates) {
 <div class="project-view">
     <div class="buttoned-header">
         <h1>
+            <?php if (!empty($model->getParameter(Parameter::CONTENT_WARNING))): ?>
+                <span class="header-tooltip-available type-tag tag-view-page"
+                      title="<?= Yii::t('app', 'STORY_TAG_HAS_CONTENT_WARNING_TITLE') ?>"
+                >
+                    <?= Yii::t('app', 'STORY_TAG_HAS_CONTENT_WARNING_TEXT') ?>
+                </span>
+            <?php endif; ?>
             <?php if ($model->displayCodeName()): ?>
                 <span class="type-tag tag-view-page"><?= $model->getCodeName() ?></span>
             <?php endif; ?>

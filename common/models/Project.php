@@ -369,6 +369,7 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
             Parameter::LOCATION_POINT_END,
             Parameter::PCS_ACTIVE,
             Parameter::CS_ACTIVE,
+            Parameter::CONTENT_WARNING,
         ];
     }
 
@@ -384,6 +385,7 @@ class Project extends ActiveRecord implements HasKey, HasParameters, HasEpicCont
             Parameter::LOCATION_POINT_END,
             Parameter::PCS_ACTIVE,
             Parameter::CS_ACTIVE,
+            Parameter::CONTENT_WARNING,
         ];
     }
 
