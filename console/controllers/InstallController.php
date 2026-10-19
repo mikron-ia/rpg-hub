@@ -1,11 +1,10 @@
 <?php
 
-
 namespace console\controllers;
-
 
 use common\models\User;
 use common\models\user\PasswordChange;
+use yii\base\Exception;
 use yii\console\Controller;
 use yii\console\ExitCode;
 use yii\helpers\BaseConsole;
@@ -17,11 +16,13 @@ class InstallController extends Controller
 {
     /**
      * Adds an admin user to an empty database
+     *
+     * @throws Exception
      */
     public function actionAddAdministrator(): void
     {
         if (User::find()->count() > 0) {
-            echo 'Users already exist, refusing to create admin';
+            $this->error('Users already exist, refusing to create admin');
             exit(ExitCode::UNSPECIFIED_ERROR);
         }
 
@@ -29,7 +30,7 @@ class InstallController extends Controller
 
         $password = PasswordChange::generatePassword(4);
 
-        echo 'Admin user creation initiated; all following fields are mandatory' . PHP_EOL . PHP_EOL;
+        $this->output('Admin user creation initiated; all following fields are mandatory');
 
         $user->username = $this->input('username');
         $user->email = $this->input('email');
@@ -37,14 +38,12 @@ class InstallController extends Controller
         $user->setPassword($password);
         $user->generateAuthKey();
 
-        echo PHP_EOL;
-
         if (!$user->save()) {
-            echo 'Unable to save: ' . implode(', ', $user->getErrorSummary(true));
+            $this->error('Unable to save: ' . implode(', ', $user->getErrorSummary(true)));
             exit(ExitCode::CANTCREAT);
         }
 
-        echo 'Admin user created successfully; password: ' . $password;
+        $this->output('Admin user created successfully; password: ' . $password);
 
         exit(ExitCode::OK);
     }
@@ -54,7 +53,7 @@ class InstallController extends Controller
      */
     public function actionGeneratePasswordSimple(): void
     {
-        echo 'Generated password: ' . PasswordChange::generatePassword(4);
+        $this->output('Generated password: ' . PasswordChange::generatePassword(4));
     }
 
     /**
@@ -62,7 +61,12 @@ class InstallController extends Controller
      */
     public function actionGeneratePasswordComplex(): void
     {
-        echo 'Generated password: ' . PasswordChange::generatePassword(4, 0, 0, 2, 2);
+        $this->output('Generated password: ' . PasswordChange::generatePassword(4, 0, 0, 2, 2));
+    }
+
+    private function error(string $message): void
+    {
+        BaseConsole::error(PHP_EOL . $message . PHP_EOL);
     }
 
     private function input(string $label): string
@@ -70,10 +74,15 @@ class InstallController extends Controller
         $input = BaseConsole::input('Enter ' . $label . ': ');
 
         if (empty($input)) {
-            BaseConsole::error('The ' . $label . ' must not be empty' . PHP_EOL);
+            $this->error('The ' . $label . ' must not be empty');
             exit(ExitCode::NOINPUT);
         }
 
         return $input;
+    }
+
+    private function output(string $message): void
+    {
+        BaseConsole::output(PHP_EOL . $message . PHP_EOL);
     }
 }
