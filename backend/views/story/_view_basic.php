@@ -28,7 +28,7 @@ $visibilityWarning = $isStoryCurrent && $model->getVisibility() !== Visibility::
     : '';
 ?>
 
-<div>
+<div class="story-basics-container">
     <div class="col-md-6">
         <h2 class="text-center"><?= Yii::t('app', 'LABEL_BASIC_DATA_AND_OPERATIONS'); ?></h2>
         <?= DetailView::widget([
@@ -160,6 +160,13 @@ $visibilityWarning = $isStoryCurrent && $model->getVisibility() !== Visibility::
                     'data-key' => $model->key,
                 ]
             ); ?>
+            <?= Html::a(
+                '<span class="btn btn-default">' . Yii::t('app', 'DESCRIPTION_BUTTON_HELP') . '</span>',
+                '#',
+                [
+                    'class' => 'open-parameter-help',
+                ]
+            ); ?>
         </div>
 
         <?= GridView::widget([
@@ -266,6 +273,7 @@ $visibilityWarning = $isStoryCurrent && $model->getVisibility() !== Visibility::
     <?php Modal::begin([
         'id' => 'create-parameter-modal',
         'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_CREATE') . '</h2>',
+        'bodyOptions' => ['class' => 'modal-body modal-body-to-fill'],
         'clientOptions' => ['backdrop' => 'static'],
         'size' => Modal::SIZE_LARGE,
     ]); ?>
@@ -275,9 +283,18 @@ $visibilityWarning = $isStoryCurrent && $model->getVisibility() !== Visibility::
     <?php Modal::begin([
         'id' => 'update-parameter-modal',
         'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_UPDATE') . '</h2>',
+        'bodyOptions' => ['class' => 'modal-body modal-body-to-fill'],
         'clientOptions' => ['backdrop' => 'static'],
         'size' => Modal::SIZE_LARGE,
     ]); ?>
 
+    <?php Modal::end(); ?>
+
+    <?php Modal::begin([
+        'id' => 'parameter-help-modal',
+        'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_HELP') . '</h2>',
+        'size' => Modal::SIZE_DEFAULT,
+    ]); ?>
+    <?= $this->render('_help', ['model' => $model]) ?>
     <?php Modal::end(); ?>
 </div>

@@ -175,6 +175,19 @@ class Parameter extends ActiveRecord implements HasVisibility, HasKey
     }
 
     /**
+     * @return array<string,string>
+     */
+    public static function effectDescriptions(): array
+    {
+        return [
+            self::CONTENT_WARNING => Yii::t('app', 'PARAM_EFFECT_CONTENT_WARNING'),
+            self::DATA_SOURCE_FOR_REPUTATION => Yii::t('app', 'PARAM_EFFECT_DATA_SOURCE_FOR_REPUTATION'),
+            self::LANGUAGE => Yii::t('app', 'PARAM_EFFECT_LANGUAGE'),
+            self::STORY_NUMBER => Yii::t('app', 'PARAM_EFFECT_STORY_NUMBER'),
+        ];
+    }
+
+    /**
      * @return string[]
      */
     public function typeNamesForThisClassForAdd(): array

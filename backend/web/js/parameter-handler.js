@@ -5,7 +5,7 @@ $('.create-parameter-link').click(function () {
             key: $(this).data('key')
         },
         function (data) {
-            $('.modal-body').html(data);
+            $('.modal-body-to-fill').html(data);
             $('#create-parameter-modal').modal();
         }
     );
@@ -18,7 +18,7 @@ $('.update-parameter-link').click(function () {
             key: $(this).data('key')
         },
         function (data) {
-            $('.modal-body').html(data);
+            $('.modal-body-to-fill').html(data);
             $('#update-parameter-modal').modal();
         }
     );

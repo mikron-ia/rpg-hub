@@ -152,6 +152,7 @@ use yii\widgets\DetailView;
     <?php Modal::begin([
         'id' => 'create-parameter-modal',
         'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_CREATE') . '</h2>',
+        'bodyOptions' => ['class' => 'modal-body modal-body-to-fill'],
         'clientOptions' => ['backdrop' => 'static'],
         'size' => Modal::SIZE_LARGE,
     ]); ?>
@@ -161,6 +162,7 @@ use yii\widgets\DetailView;
     <?php Modal::begin([
         'id' => 'update-parameter-modal',
         'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_TITLE_UPDATE') . '</h2>',
+        'bodyOptions' => ['class' => 'modal-body modal-body-to-fill'],
         'clientOptions' => ['backdrop' => 'static'],
         'size' => Modal::SIZE_LARGE,
     ]); ?>
