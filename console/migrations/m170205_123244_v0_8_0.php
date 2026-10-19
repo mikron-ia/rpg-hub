@@ -1,6 +1,7 @@
 <?php
 
 use common\models\core\Visibility;
+use common\models\GroupMembership;
 use common\models\Scenario;
 use common\models\state\GameStatus;
 use yii\db\Migration;
@@ -22,7 +23,7 @@ class m170205_123244_v0_8_0 extends Migration
             'time_ic' => $this->string(),
             'public_text' => $this->text()->notNull(),
             'private_text' => $this->text(),
-            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::GameMaster),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::GameMaster->value),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -58,7 +59,7 @@ class m170205_123244_v0_8_0 extends Migration
         );
 
         /* Visibility & descriptions for groups */
-        $this->addColumn('group', 'visibility', $this->string(20)->notNull()->defaultValue(Visibility::GameMaster));
+        $this->addColumn('group', 'visibility', $this->string(20)->notNull()->defaultValue(Visibility::GameMaster->value));
         $this->addColumn('group', 'description_pack_id', $this->integer(11)->unsigned());
         $this->addForeignKey(
             'group_description_pack',
@@ -89,8 +90,8 @@ class m170205_123244_v0_8_0 extends Migration
             'group_membership_id' => $this->primaryKey()->unsigned(),
             'character_id' => $this->integer(11)->unsigned()->notNull(),
             'group_id' => $this->integer(11)->unsigned()->notNull(),
-            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::GameMaster),
-            'status' => $this->string(20)->notNull()->defaultValue(\common\models\GroupMembership::STATUS_ACTIVE),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::GameMaster->value),
+            'status' => $this->string(20)->notNull()->defaultValue(GroupMembership::STATUS_ACTIVE),
             'position' => $this->integer()->defaultValue(0),
             'short_text' => $this->string(80),
             'public_text' => $this->text(),
@@ -116,8 +117,8 @@ class m170205_123244_v0_8_0 extends Migration
             'group_membership_id' => $this->integer(11)->unsigned()->notNull(),
             'created_at' => $this->integer(11)->unsigned(),
             'time_ic' => $this->string(),
-            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::GameMaster),
-            'status' => $this->string(20)->notNull()->defaultValue(\common\models\GroupMembership::STATUS_ACTIVE),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::GameMaster->value),
+            'status' => $this->string(20)->notNull()->defaultValue(GroupMembership::STATUS_ACTIVE),
             'short_text' => $this->string(80),
             'public_text' => $this->text(),
             'private_text' => $this->text(),
@@ -131,7 +132,7 @@ class m170205_123244_v0_8_0 extends Migration
         );
 
         /* Visibility for story */
-        $this->addColumn('story', 'visibility', $this->string(20)->notNull()->defaultValue(Visibility::GameMaster)->after('position'));
+        $this->addColumn('story', 'visibility', $this->string(20)->notNull()->defaultValue(Visibility::GameMaster->value)->after('position'));
     }
 
     public function down()

@@ -1,5 +1,6 @@
 <?php
 
+use common\models\core\Visibility;
 use yii\db\Migration;
 
 class m161109_184132_v0_5_0 extends Migration
@@ -19,7 +20,7 @@ class m161109_184132_v0_5_0 extends Migration
             'external_data_pack_id' => $this->integer(11)->unsigned(),
             'code' => $this->string(40)->notNull(),
             'data' => $this->text()->notNull(),
-            'visibility' => $this->string(20)->notNull()->defaultValue(\common\models\core\Visibility::GameMaster),
+            'visibility' => $this->string(20)->notNull()->defaultValue(Visibility::GameMaster->value),
         ], $tableOptions);
 
         $this->addForeignKey('external_data_pack', '{{%external_data}}', 'external_data_pack_id', '{{%external_data_pack}}', 'external_data_pack_id', 'RESTRICT', 'CASCADE');
