@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m250802_225652_v1_4_0 extends Migration
 {
-    public function safeUp(): void
+    public function up(): void
     {
         $this->addColumn('{{%group}}', 'display_as_tab', $this->boolean()->notNull()->defaultValue(false));
 
@@ -12,7 +12,7 @@ class m250802_225652_v1_4_0 extends Migration
         $this->addColumn('{{%story}}', 'long_expanded', $this->text()->after('short_expanded'));
     }
 
-    public function safeDown(): void
+    public function down(): void
     {
         $this->dropColumn('{{%group}}', 'display_as_tab');
 

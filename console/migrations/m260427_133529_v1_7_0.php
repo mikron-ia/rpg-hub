@@ -10,7 +10,7 @@ use yii\db\Migration;
 class m260427_133529_v1_7_0 extends Migration
 {
     #[Override]
-    public function safeUp(): void
+    public function up(): void
     {
         $this->createTable('{{%location}}', [
             'location_id' => $this->primaryKey()->unsigned(),
@@ -118,7 +118,7 @@ class m260427_133529_v1_7_0 extends Migration
     }
 
     #[Override]
-    public function safeDown(): void
+    public function down(): void
     {
         $this->dropColumn('{{%seen}}', 'times_seen_since_update');
         $this->dropColumn('{{%seen}}', 'times_seen');

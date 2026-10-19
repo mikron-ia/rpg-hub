@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m161203_152029_external_data_timestamping extends Migration
 {
-    public function up()
+    public function up(): void
     {
         $this->addColumn('external_data', 'created_at', $this->integer()->notNull());
         $this->addColumn('external_data', 'updated_at', $this->integer()->notNull());
@@ -40,7 +40,7 @@ class m161203_152029_external_data_timestamping extends Migration
         $this->addForeignKey('parameter_updater', 'parameter', 'updated_by', 'user', 'id');
     }
 
-    public function down()
+    public function down(): void
     {
         $this->dropForeignKey('parameter_creator', 'parameter');
         $this->dropForeignKey('parameter_updater', 'parameter');

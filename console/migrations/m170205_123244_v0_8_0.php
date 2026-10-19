@@ -8,7 +8,7 @@ use yii\db\Migration;
 
 class m170205_123244_v0_8_0 extends Migration
 {
-    public function up()
+    public function up(): void
     {
         $this->addColumn('character', 'updated_at', $this->integer()->notNull()->after('importance'));
         $this->update('character', ['updated_at' => time()]);
@@ -135,7 +135,7 @@ class m170205_123244_v0_8_0 extends Migration
         $this->addColumn('story', 'visibility', $this->string(20)->notNull()->defaultValue(Visibility::GameMaster->value)->after('position'));
     }
 
-    public function down()
+    public function down(): void
     {
         $this->dropColumn('character', 'updated_at');
 

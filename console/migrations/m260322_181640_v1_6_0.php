@@ -20,7 +20,7 @@ class m260322_181640_v1_6_0 extends Migration
     /**
      * @throws Exception
      */
-    public function safeUp(): void
+    public function up(): void
     {
         $this->addColumn('{{%description}}', 'outdated', $this->boolean()->defaultValue(false)->notNull());
 
@@ -85,7 +85,7 @@ class m260322_181640_v1_6_0 extends Migration
         $this->createIndex('story_group_assignment_key', '{{%story_group_assignment}}', 'key', true);
     }
 
-    public function safeDown(): void
+    public function down(): void
     {
         $this->dropColumn('{{%story_group_assignment}}', 'key');
 

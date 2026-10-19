@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m161201_234950_movement_log extends Migration
 {
-    public function up()
+    public function up(): void
     {
         $this->alterColumn('performed_action', 'class', $this->string(80));
         $this->alterColumn('performed_action', 'object_id', $this->integer(11)->unsigned());
@@ -29,7 +29,7 @@ class m161201_234950_movement_log extends Migration
         $this->addForeignKey('performed_action_user_agent', 'performed_action', 'user_agent_id', 'user_agent', 'id', 'RESTRICT', 'RESTRICT');
     }
 
-    public function down()
+    public function down(): void
     {
         $this->execute('SET foreign_key_checks = 0;');
 

@@ -6,7 +6,7 @@ use yii\db\Migration;
 class m260528_132626_v1_8_0 extends Migration
 {
     #[Override]
-    public function safeUp(): void
+    public function up(): void
     {
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
@@ -92,7 +92,7 @@ class m260528_132626_v1_8_0 extends Migration
     }
 
     #[Override]
-    public function safeDown(): void
+    public function down(): void
     {
         $this->dropColumn('{{%story}}', 'notes_expanded');
         $this->dropColumn('{{%story}}', 'notes');

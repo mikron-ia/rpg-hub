@@ -8,7 +8,7 @@ use yii\db\Migration;
 class m180620_211700_description_dating extends Migration
 {
 
-    public function safeUp()
+    public function up(): void
     {
         $this->addColumn('description', 'point_in_time_id', $this->integer()->unsigned());
         $this->addColumn('description_history', 'point_in_time_id', $this->integer()->unsigned());

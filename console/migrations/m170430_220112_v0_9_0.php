@@ -6,7 +6,7 @@ use yii\db\Migration;
 
 class m170430_220112_v0_9_0 extends Migration
 {
-    public function up()
+    public function up(): void
     {
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
@@ -72,7 +72,7 @@ class m170430_220112_v0_9_0 extends Migration
         );
     }
 
-    public function down()
+    public function down(): void
     {
         $this->dropColumn('group', 'importance_category');
 

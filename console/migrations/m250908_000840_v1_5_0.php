@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m250908_000840_v1_5_0 extends Migration
 {
-    public function safeUp(): void
+    public function up(): void
     {
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
@@ -67,7 +67,7 @@ class m250908_000840_v1_5_0 extends Migration
         );
     }
 
-    public function safeDown(): void
+    public function down(): void
     {
         $this->dropForeignKey('story_group_assignment_story', 'story_group_assignment');
         $this->dropForeignKey('story_group_assignment_group', 'story_group_assignment');

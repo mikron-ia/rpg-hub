@@ -10,7 +10,7 @@ use yii\db\Migration;
  */
 class m160602_230625_v0_3_0 extends Migration
 {
-    public function safeUp()
+    public function up(): void
     {
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
@@ -125,7 +125,7 @@ class m160602_230625_v0_3_0 extends Migration
         $this->execute("ALTER TABLE `group` CHANGE `data` `data` LONGTEXT NOT NULL;"); // patch for large values stored as story data
     }
 
-    public function safeDown()
+    public function down(): void
     {
         $this->execute('SET foreign_key_checks = 0;');
         $this->dropTable('{{%description}}');

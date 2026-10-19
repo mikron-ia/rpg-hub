@@ -5,7 +5,7 @@ use yii\db\Migration;
 
 class m250501_163847_v1_3_0 extends Migration
 {
-    public function safeUp(): void
+    public function up(): void
     {
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
@@ -51,7 +51,7 @@ class m250501_163847_v1_3_0 extends Migration
         ], $tableOptions);
     }
 
-    public function safeDown(): void
+    public function down(): void
     {
         $this->dropTable('{{%announcement}}');
 

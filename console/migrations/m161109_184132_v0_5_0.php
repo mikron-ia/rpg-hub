@@ -5,7 +5,7 @@ use yii\db\Migration;
 
 class m161109_184132_v0_5_0 extends Migration
 {
-    public function up()
+    public function up(): void
     {
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
@@ -26,7 +26,7 @@ class m161109_184132_v0_5_0 extends Migration
         $this->addForeignKey('external_data_pack', '{{%external_data}}', 'external_data_pack_id', '{{%external_data_pack}}', 'external_data_pack_id', 'RESTRICT', 'CASCADE');
     }
 
-    public function down()
+    public function down(): void
     {
         $this->execute('SET foreign_key_checks = 0;');
 

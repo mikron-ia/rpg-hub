@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m161129_215430_refactor_person extends Migration
 {
-    public function up()
+    public function up(): void
     {
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
@@ -29,7 +29,7 @@ class m161129_215430_refactor_person extends Migration
         $this->addForeignKey('character_sheet_character', '{{%character_sheet}}', 'currently_delivered_character_id', 'character', 'character_id', 'RESTRICT', 'CASCADE');
     }
 
-    public function down()
+    public function down(): void
     {
         $this->dropForeignKey('character_sheet_character', '{{%character_sheet}}');
         $this->dropTable('character');

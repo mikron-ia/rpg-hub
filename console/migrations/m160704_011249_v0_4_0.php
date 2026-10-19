@@ -4,7 +4,7 @@ require Yii::getAlias('@yii') . '/rbac/migrations/m140506_102106_rbac_init.php';
 
 class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
 {
-    public function up()
+    public function up(): void
     {
         $this->dropColumn('description_pack', 'name');
         $this->dropColumn('parameter_pack', 'name');
@@ -41,7 +41,7 @@ class m160704_011249_v0_4_0 extends m140506_102106_rbac_init
         parent::up();
     }
 
-    public function down()
+    public function down(): void
     {
         parent::down();
 

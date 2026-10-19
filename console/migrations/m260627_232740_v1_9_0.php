@@ -5,7 +5,7 @@ use yii\db\Migration;
 
 class m260627_232740_v1_9_0 extends Migration
 {
-    public function safeUp(): void
+    public function up(): void
     {
         $this->addColumn('{{%project}}', 'bestowed_list_id', $this->integer(11)->unsigned()->after('based_on_id'));
 
@@ -28,7 +28,7 @@ class m260627_232740_v1_9_0 extends Migration
         ); // default is `full` to avoid breaking the existing system and forcing GMs to go through all existing reviews after deployment
     }
 
-    public function safeDown(): void
+    public function down(): void
     {
         $this->dropColumn('{{%recap}}', 'visibility');
 

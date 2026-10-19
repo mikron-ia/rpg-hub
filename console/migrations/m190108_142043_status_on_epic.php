@@ -8,7 +8,7 @@ use yii\db\Migration;
  */
 class m190108_142043_status_on_epic extends Migration
 {
-    public function safeUp()
+    public function up(): void
     {
         $this->addColumn(
             '{{%epic}}',

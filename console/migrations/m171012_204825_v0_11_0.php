@@ -5,7 +5,7 @@ use yii\db\Migration;
 
 class m171012_204825_v0_11_0 extends Migration
 {
-    public function safeUp()
+    public function up(): void
     {
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 

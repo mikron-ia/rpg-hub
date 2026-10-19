@@ -8,7 +8,7 @@ use yii\db\Migration;
  */
 class m240601_230544_v1_2_0 extends Migration
 {
-    public function safeUp(): void
+    public function up(): void
     {
         // modified_at separated from updated_at - #399
         $this->addColumn('{{%character}}', 'modified_at', $this->integer()->notNull()->after('updated_at'));
@@ -47,7 +47,7 @@ class m240601_230544_v1_2_0 extends Migration
         );
     }
 
-    public function safeDown(): void
+    public function down(): void
     {
         // Current story - #371
         $this->dropForeignKey('current_story_ibfk_1', '{{%epic}}');

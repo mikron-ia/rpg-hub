@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m161207_225337_seen_by extends Migration
 {
-    public function up()
+    public function up(): void
     {
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
@@ -41,7 +41,7 @@ class m161207_225337_seen_by extends Migration
         $this->addForeignKey('story_seen', 'story', 'seen_pack_id', 'seen_pack', 'seen_pack_id', 'RESTRICT', 'CASCADE');
     }
 
-    public function down()
+    public function down(): void
     {
         $this->dropForeignKey('seen_pack', '{{%seen}}');
         $this->dropForeignKey('user', '{{%seen}}');

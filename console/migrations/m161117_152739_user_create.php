@@ -8,7 +8,7 @@ use yii\db\Migration;
  */
 class m161117_152739_user_create extends Migration
 {
-    public function up()
+    public function up(): void
     {
         $tableOptions = "CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB";
 
@@ -32,7 +32,7 @@ class m161117_152739_user_create extends Migration
         $this->addForeignKey('user_invitation_user', 'user_invitation', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
     }
 
-    public function down()
+    public function down(): void
     {
         $this->dropForeignKey('user_invitation_user', 'user_invitation');
         $this->dropTable('user_invitation');
