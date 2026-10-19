@@ -66,7 +66,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                     'itemOptions' => ['class' => 'item'],
                     'itemView' => function ($model, $key, $index, $widget) {
                         return $this->render(
-                            '../story/_index_box',
+                            '../story/_site_box',
                             ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
                         );
                     },
@@ -85,7 +85,7 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                 'itemOptions' => ['class' => 'item'],
                 'itemView' => function ($model, $key, $index, $widget) {
                     return $this->render(
-                        '../project/_index_box',
+                        '../project/_site_box',
                         ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
                     );
                 },

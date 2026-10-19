@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'itemOptions' => ['class' => 'item'],
         'itemView' => function (Story $model, $key, $index, $widget) {
             return $this->render(
-                '_epic_box',
+                '_index_box',
                 [
                     'model' => $model,
                     'key' => $key,

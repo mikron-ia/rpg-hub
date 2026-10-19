@@ -141,7 +141,7 @@ $this->title = $epic ? $epic->name . ' - ' . Yii::t('app', 'FRONTPAGE_TITLE') : 
                         'itemOptions' => ['class' => 'item'],
                         'itemView' => function (Story $model, $key, $index, $widget) {
                             return $this->render(
-                                '../story/_epic_box_short',
+                                '../story/_epic_front_box',
                                 ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
                             );
                         },
@@ -167,7 +167,7 @@ $this->title = $epic ? $epic->name . ' - ' . Yii::t('app', 'FRONTPAGE_TITLE') : 
                         'itemOptions' => ['class' => 'item'],
                         'itemView' => function (Project $model, $key, $index, $widget) {
                             return $this->render(
-                                '../project/_epic_box_short',
+                                '../project/_epic_front_box',
                                 ['model' => $model, 'key' => $key, 'index' => $index, 'widget' => $widget]
                             );
                         },
