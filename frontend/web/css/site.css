@@ -204,7 +204,7 @@ p {
     }
 }
 
-.welcome-box>p {
+.welcome-box > p {
     margin: 20px 0;
     text-align: center;
 }
@@ -412,7 +412,7 @@ a:focus {
 
 .seen-tag-seen {
     color: white;
-    display: none;
+    display: none!important;
 }
 
 .seen-tag-box {
@@ -429,8 +429,8 @@ a:focus {
 
 @media (max-width: 575px) {
     .seen-tag-box {
-        width: 88%;
-        right: 6%;
+        width: 84%;
+        right: 3%;
     }
 }
 
@@ -464,8 +464,8 @@ a:focus {
     display: inline-block;
     font-size: 2.25rem;
     position: absolute;
-    bottom: 4px;
-    left: 12px;
+    bottom: 6px;
+    left: 15px;
 }
 
 .designated-tag,
@@ -942,6 +942,7 @@ li.redacted:hover {
 }
 
 .object-list-brick-tags {
+    display: inline-block;
 }
 
 .object-list-brick-text {
