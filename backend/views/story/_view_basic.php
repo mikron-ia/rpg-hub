@@ -161,7 +161,7 @@ $visibilityWarning = $isStoryCurrent && $model->getVisibility() !== Visibility::
                 ]
             ); ?>
             <?= Html::a(
-                '<span class="btn btn-default">' . Yii::t('app', 'DESCRIPTION_BUTTON_HELP') . '</span>',
+                '<span class="btn btn-default">' . Yii::t('app', 'PARAMETER_BUTTON_HELP') . '</span>',
                 '#',
                 [
                     'class' => 'open-parameter-help',
@@ -295,6 +295,6 @@ $visibilityWarning = $isStoryCurrent && $model->getVisibility() !== Visibility::
         'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_HELP') . '</h2>',
         'size' => Modal::SIZE_DEFAULT,
     ]); ?>
-    <?= $this->render('_help', ['model' => $model]) ?>
+    <?= $this->render('../parameter/_help', ['model' => $model]) ?>
     <?php Modal::end(); ?>
 </div>

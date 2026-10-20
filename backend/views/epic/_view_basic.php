@@ -16,7 +16,7 @@ use yii\widgets\DetailView;
 /* @var $externalDataDataProvider ActiveDataProvider */
 ?>
 
-<div>
+<div class="epic-basics-container">
     <div class="col-lg-6">
         <h2><?= Yii::t('app', 'EPIC_BASIC') ?></h2>
         <?= DetailView::widget([
@@ -185,6 +185,13 @@ use yii\widgets\DetailView;
                     'data-target' => '#create-parameter-modal'
                 ]
             ); ?>
+            <?= Html::a(
+                '<span class="btn btn-default">' . Yii::t('app', 'PARAMETER_BUTTON_HELP') . '</span>',
+                '#',
+                [
+                    'class' => 'open-parameter-help',
+                ]
+            ); ?>
         </div>
 
         <?= GridView::widget([
@@ -257,5 +264,13 @@ use yii\widgets\DetailView;
         'size' => Modal::SIZE_LARGE,
     ]); ?>
 
+    <?php Modal::end(); ?>
+
+    <?php Modal::begin([
+        'id' => 'parameter-help-modal',
+        'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_HELP') . '</h2>',
+        'size' => Modal::SIZE_DEFAULT,
+    ]); ?>
+    <?= $this->render('../parameter/_help', ['model' => $model]) ?>
     <?php Modal::end(); ?>
 </div>

@@ -14,7 +14,7 @@ use yii\widgets\DetailView;
 /* @var $model Project */
 ?>
 
-<div>
+<div class="project-basics-container">
     <div class="col-md-6">
         <h2 class="text-center"><?= Yii::t('app', 'LABEL_BASIC_DATA_AND_OPERATIONS'); ?></h2>
         <?= DetailView::widget([
@@ -151,6 +151,13 @@ use yii\widgets\DetailView;
                     'data-key' => $model->key,
                 ]
             ); ?>
+            <?= Html::a(
+                '<span class="btn btn-default">' . Yii::t('app', 'PARAMETER_BUTTON_HELP') . '</span>',
+                '#',
+                [
+                    'class' => 'open-parameter-help',
+                ]
+            ); ?>
         </div>
 
         <?= GridView::widget([
@@ -280,5 +287,13 @@ use yii\widgets\DetailView;
         'size' => Modal::SIZE_LARGE,
     ]); ?>
 
+    <?php Modal::end(); ?>
+
+    <?php Modal::begin([
+        'id' => 'parameter-help-modal',
+        'header' => '<h2 class="modal-title">' . Yii::t('app', 'PARAMETER_HELP') . '</h2>',
+        'size' => Modal::SIZE_DEFAULT,
+    ]); ?>
+    <?= $this->render('../parameter/_help', ['model' => $model]) ?>
     <?php Modal::end(); ?>
 </div>
