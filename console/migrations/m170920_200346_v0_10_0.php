@@ -29,7 +29,7 @@ class m170920_200346_v0_10_0 extends Migration
         $this->execute("ALTER TABLE `character_sheet` CHANGE `data` `data` LONGTEXT NOT NULL;"); // @todo Remove when upload system uses ExternalData
     }
 
-    public function safeDown()
+    public function down(): void
     {
         $this->execute("ALTER TABLE `character_sheet` CHANGE `data` `data` TEXT NOT NULL;"); // @todo Remove when upload system uses ExternalData
 

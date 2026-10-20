@@ -2,9 +2,6 @@
 
 use yii\db\Migration;
 
-/**
- * Class m180620_211700_description_dating
- */
 class m180620_211700_description_dating extends Migration
 {
 
@@ -28,7 +25,7 @@ class m180620_211700_description_dating extends Migration
         );
     }
 
-    public function safeDown()
+    public function down(): void
     {
         $this->dropForeignKey('description_history_point_in_time', 'description_history');
         $this->dropForeignKey('description_point_in_time', 'description');

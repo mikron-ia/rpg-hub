@@ -3,7 +3,6 @@
 use yii\db\Migration;
 
 /**
- * Class m161117_152739_user_create
  * @todo Adopt into v0.6.0
  */
 class m161117_152739_user_create extends Migration

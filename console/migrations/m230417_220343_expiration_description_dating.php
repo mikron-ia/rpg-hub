@@ -2,9 +2,6 @@
 
 use yii\db\Migration;
 
-/**
- * Class m230417_220343_expiration_description_dating
- */
 class m230417_220343_expiration_description_dating extends Migration
 {
     public function up(): void
@@ -47,7 +44,7 @@ class m230417_220343_expiration_description_dating extends Migration
         );
     }
 
-    public function safeDown()
+    public function down(): void
     {
         $this->dropForeignKey('description_history_point_in_time_start', 'description_history');
         $this->dropForeignKey('description_point_in_time_start', 'description');

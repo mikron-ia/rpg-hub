@@ -97,7 +97,7 @@ class m171012_204825_v0_11_0 extends Migration
         $this->addForeignKey('group_master', 'group', 'master_group_id', 'group', 'group_id', 'RESTRICT', 'CASCADE');
     }
 
-    public function safeDown()
+    public function down(): void
     {
         /* Subgroups */
         $this->dropForeignKey('group_master', 'group');

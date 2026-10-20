@@ -3,9 +3,6 @@
 use common\models\Flag;
 use yii\db\Migration;
 
-/**
- * Class m240601_230544_v1_2_0
- */
 class m240601_230544_v1_2_0 extends Migration
 {
     public function up(): void

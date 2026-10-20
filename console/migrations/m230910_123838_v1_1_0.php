@@ -2,9 +2,6 @@
 
 use yii\db\Migration;
 
-/**
- * Class m230910_123838_v1_1_0
- */
 class m230910_123838_v1_1_0 extends Migration
 {
     public function up(): void
@@ -99,7 +96,7 @@ class m230910_123838_v1_1_0 extends Migration
         $this->addColumn('{{%epic}}', 'style', $this->string(20)->after('system'));
     }
 
-    public function safeDown()
+    public function down(): void
     {
         /* Epic styling removed */
         $this->dropColumn('{{%epic}}', 'style');

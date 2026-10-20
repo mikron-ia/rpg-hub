@@ -3,7 +3,6 @@
 use yii\db\Migration;
 
 /**
- * Class m161127_211224_refactor_character
  * @todo Adopt into v0.6.0
  */
 class m161127_211224_refactor_character extends Migration

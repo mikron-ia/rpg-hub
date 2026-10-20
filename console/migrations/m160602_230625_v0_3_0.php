@@ -4,8 +4,6 @@ use common\models\core\Visibility;
 use yii\db\Migration;
 
 /**
- * Class m160602_230625_v0_3_0
- *
  * Consolidates previous migrations
  */
 class m160602_230625_v0_3_0 extends Migration

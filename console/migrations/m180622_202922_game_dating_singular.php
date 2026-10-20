@@ -2,9 +2,6 @@
 
 use yii\db\Migration;
 
-/**
- * Class m180622_202922_game_dating_singular
- */
 class m180622_202922_game_dating_singular extends Migration
 {
     public function up(): void
@@ -12,7 +9,7 @@ class m180622_202922_game_dating_singular extends Migration
         $this->addColumn('game', 'planned_date', $this->date()->after('basics'));
     }
 
-    public function safeDown()
+    public function down(): void
     {
         $this->dropColumn('game', 'planned_date');
     }
