@@ -18,7 +18,7 @@ use common\models\StoryQuery;
 use Override;
 use Throwable;
 use Yii;
-use yii\db\Exception;
+use yii\db\Exception as DbException;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -32,6 +32,8 @@ final class EpicController extends CmsController
     use EpicAssistance;
 
     private const int POSITIONS_PER_PAGE = 8;
+    private const int PROJECTS_PER_FRONT_PAGE = 4;
+    private const int STORIES_PER_FRONT_PAGE = 4;
 
     #[Override]
     public function behaviors(): array
@@ -124,7 +126,7 @@ final class EpicController extends CmsController
     /**
      * Displays the Epic's main page
      *
-     * @throws Exception
+     * @throws DbException
      * @throws HttpException
      */
     public function actionFront(string $key): string
@@ -143,7 +145,7 @@ final class EpicController extends CmsController
         $recap?->recordSighting();
 
         /* Get Stories */
-        $searchModel = new StoryQuery(4);
+        $searchModel = new StoryQuery(self::STORIES_PER_FRONT_PAGE);
         $stories = $searchModel->searchForEpic(Yii::$app->request->queryParams, $model);
         $showCurrentStorySeparately =
             isset($model->current_story_id) &&
@@ -155,7 +157,7 @@ final class EpicController extends CmsController
             );
 
         /* Get Projects */
-        $searchModel = new ProjectQuery(4);
+        $searchModel = new ProjectQuery(self::PROJECTS_PER_FRONT_PAGE);
         $projects = $searchModel->searchForEpic(Yii::$app->request->queryParams, $model);
 
         /* Get Sessions */
@@ -178,7 +180,6 @@ final class EpicController extends CmsController
     }
 
     /**
-     * @throws NotFoundHttpException
      * @throws HttpException
      */
     public function actionView(string $key): string
@@ -193,7 +194,7 @@ final class EpicController extends CmsController
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      * @throws HttpException
      */
     public function actionCreateAsGm(): Response|string
@@ -207,15 +208,15 @@ final class EpicController extends CmsController
                 Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_GM_ADDED'));
             }
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('create-as-gm', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('create-as-gm', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      * @throws HttpException
      */
     public function actionCreateAsManager(): Response|string
@@ -229,15 +230,15 @@ final class EpicController extends CmsController
                 Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_NO_MANAGER_ADDED'));
             }
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('create-as-manager', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('create-as-manager', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      * @throws HttpException
      */
     public function actionUpdate(string $key): Response|string
@@ -254,11 +255,11 @@ final class EpicController extends CmsController
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'key' => $model->key]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -278,7 +279,7 @@ final class EpicController extends CmsController
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      * @throws NotFoundHttpException
      */
     public function actionParticipantAdd(string $key): Response|string
@@ -299,7 +300,7 @@ final class EpicController extends CmsController
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      * @throws NotFoundHttpException
      */
     public function actionParticipantEdit(string $key): Response|string
@@ -318,9 +319,9 @@ final class EpicController extends CmsController
     }
 
     /**
-     * @throws Throwable
-     * @throws StaleObjectException
      * @throws NotFoundHttpException
+     * @throws StaleObjectException
+     * @throws Throwable
      */
     public function actionParticipantDelete(string $key): Response
     {
@@ -411,7 +412,7 @@ final class EpicController extends CmsController
         $saveSuccessful = false;
         try {
             $saveSuccessful = $epic->save(false);
-        } catch (Exception) {
+        } catch (DbException) {
             // @todo Add logging
         }
 
@@ -424,7 +425,7 @@ final class EpicController extends CmsController
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      * @throws HttpException
      */
     public function actionSwitchState(string $key, string $command): Response
@@ -456,7 +457,7 @@ final class EpicController extends CmsController
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      * @throws HttpException
      */
     public function actionCreateParameter(string $key): Response|string

@@ -10,7 +10,7 @@ use common\models\Epic;
 use Override;
 use Throwable;
 use Yii;
-use yii\db\Exception;
+use yii\db\Exception as DbException;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -89,7 +89,6 @@ class ArticleController extends CmsController
     }
 
     /**
-     * @throws NotFoundHttpException
      * @throws HttpException
      */
     public function actionView(string $key): string
@@ -104,7 +103,7 @@ class ArticleController extends CmsController
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      * @throws HttpException
      */
     public function actionCreate(?string $epic = null): Response|string
@@ -128,8 +127,7 @@ class ArticleController extends CmsController
     }
 
     /**
-     * @throws NotFoundHttpException
-     * @throws Exception
+     * @throws DbException
      * @throws HttpException
      */
     public function actionUpdate(string $key): Response|string

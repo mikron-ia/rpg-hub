@@ -10,7 +10,7 @@ use common\models\state\GameStatus;
 use Override;
 use Throwable;
 use Yii;
-use yii\db\Exception;
+use yii\db\Exception as DbException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\HttpException;
@@ -103,7 +103,7 @@ class GameController extends CmsController
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      * @throws HttpException
      */
     public function actionCreate(?string $epic = null): Response|string
@@ -124,7 +124,7 @@ class GameController extends CmsController
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      * @throws HttpException
      */
     public function actionUpdate(string $key): Response|string
@@ -203,7 +203,7 @@ class GameController extends CmsController
     }
 
     /**
-     * @throws Exception
+     * @throws DbException
      * @throws HttpException
      */
     public function actionSwitchState(string $key, string $command): Response
