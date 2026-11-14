@@ -10,12 +10,15 @@ use yii\widgets\ListView;
 
 /* @var $this View */
 /* @var $epic Epic */
+
 /* @var $announcements ActiveDataProvider */
 /* @var $sessions ActiveDataProvider */
 /* @var $stories ActiveDataProvider */
 /* @var $projects ActiveDataProvider */
 
 /* @var $recap Recap */
+
+/* @var $showCurrentStorySeparately bool */
 
 $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
 ?>
@@ -151,6 +154,11 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                     } ?>
                 </div>
 
+                <?php if ($showCurrentStorySeparately): ?>
+                    <h2><?= Yii::t('app', 'EPIC_CURRENT_STORY'); ?></h2>
+                    <span><?= $epic->getCurrentStory()->one(); ?></span>
+                <?php endif; ?>
+
                 <h2 title="<?= Yii::t('app', 'FRONTPAGE_STORIES_TITLE_TEXT') ?>">
                     <?= Yii::t('app', 'FRONTPAGE_STORIES') ?>
                 </h2>
@@ -199,12 +207,6 @@ $this->title = Yii::t('app', 'FRONTPAGE_TITLE');
                 <span class="epic-status <?= $epic->getStatus()->getClass(); ?>"
                       title="<?= $epic->getStatus()->getDescription(); ?>"
                 ><?= $epic->getStatus()->getName(); ?></span>
-
-                <?php if (isset($epic->current_story_id)): ?>
-                    <h2><?= Yii::t('app', 'EPIC_CURRENT_STORY'); ?></h2>
-
-                    <span><?= $epic->getCurrentStory()->one(); ?></span>
-                <?php endif; ?>
 
                 <h2><?= Yii::t('app', 'EPIC_CARD_SESSIONS'); ?></h2>
 

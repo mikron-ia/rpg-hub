@@ -145,6 +145,14 @@ final class EpicController extends CmsController
         /* Get Stories */
         $searchModel = new StoryQuery(4);
         $stories = $searchModel->searchForEpic(Yii::$app->request->queryParams, $model);
+        $showCurrentStorySeparately =
+            isset($model->current_story_id) &&
+            $model->currentStory->canUserViewYou() &&
+            !array_reduce(
+                $stories->models,
+                fn(bool $carry, Story $story) => $carry || $story->story_id === $model->current_story_id,
+                false
+            );
 
         /* Get Projects */
         $searchModel = new ProjectQuery(4);
@@ -165,6 +173,7 @@ final class EpicController extends CmsController
             'stories' => $stories,
             'projects' => $projects,
             'recap' => $recap,
+            'showCurrentStorySeparately' => $showCurrentStorySeparately,
         ]);
     }
 
